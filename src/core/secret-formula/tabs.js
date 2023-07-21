@@ -498,7 +498,7 @@ export const tabs = [
       {
         key: "two",
         name: "test",
-        symbol: "!",
+        symbol: ".",
         component: "MendingSubtabTwo",
         id: 1,
         hidable: true,
