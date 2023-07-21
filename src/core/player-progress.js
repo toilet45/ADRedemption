@@ -72,7 +72,7 @@ export class PlayerProgress {
   //Custom Progress booleans starts here
 
   get isMendingUnlocked() {
-    return this._player.mends > 0;
+    return new Decimal(this._player.mends).gt(new Decimal(0));
   }
 
   static mendingUnlocked(){
