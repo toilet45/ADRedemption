@@ -7,7 +7,7 @@
     "build:steam-development": "node build/pre-build.js && vue-cli-service build --mode steam-development",
     "build:steam-release": "node build/pre-build.js && vue-cli-service build --mode steam-release",
     "lint": "vue-cli-service lint",
-	"deploy": "npm run build:release && gh-pages -d dist"
+	  "deploy": "npm run build:release && gh-pages -d dist"
   },
   "dependencies": {
     "@antimatter-dimensions/notations": "^3.1.0",
