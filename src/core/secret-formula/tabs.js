@@ -479,12 +479,39 @@ export const tabs = [
     ]
   },
   {
+    key: "mending",
+    name: "Mending",
+    hideAt: 2.3,
+    UIClass: "o-tab-btn--mending",
+    //condition: () => PlayerProgress.mendingUnlocked(),
+    id: 10,
+    hidable: true,
+    subtabs: [
+      {
+        key: "mendupgrades",
+        name: "Mending Upgrades",
+        symbol: "?",
+        component: "MendingUpgrades",
+        id: 0,
+        hidable: true,
+      },
+      {
+        key: "two",
+        name: "test",
+        symbol: "!",
+        component: "MendingSubtabTwo",
+        id: 1,
+        hidable: true,
+      }
+    ]
+  },
+  {
     key: "shop",
     name: "Shop",
     newUIClass: "shop",
     hideAt: 1.5,
     condition: () => Cloud.isAvailable,
-    id: 10,
+    id: 11,
     hidable: true,
     subtabs: [
       {

@@ -1372,8 +1372,21 @@ export const normalAchievements = [
   },
   {
     id: 188,
-    name: "The End",
-    description: "Beat the game.",
+    name: "The End?",
+    description: "'Beat' the game.",
+    checkRequirement: () => GameEnd.endState > END_STATE_MARKERS.GAME_END && !GameEnd.removeAdditionalEnd,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+
+  //Custom Achievements Start Here
+  {
+    id: 191,
+    //displayID: 191,
+    name: "I can fix it",
+    description: "Mend the Multiverse.",
+    get reward(){
+      return "[TBD]"
+    },
     checkRequirement: () => GameEnd.endState > END_STATE_MARKERS.GAME_END && !GameEnd.removeAdditionalEnd,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },

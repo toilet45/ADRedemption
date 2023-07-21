@@ -17,7 +17,7 @@ export class PlayerProgress {
   }
 
   get isRealityUnlocked() {
-    return this._player.realities > 0;
+    return this._player.realities > 0 || this.isMendingUnlocked;
   }
 
   get hasFullCompletion() {
@@ -68,4 +68,16 @@ export class PlayerProgress {
   static infinityChallengeCompleted() {
     return InfinityChallenges.all.some(c => c.isCompleted);
   }
+
+  //Custom Progress booleans starts here
+
+  get isMendingUnlocked() {
+    return this._player.mends > 0;
+  }
+
+  static mendingUnlocked(){
+    return PlayerProgress.current.isMendingUnlocked
+  }
+
+
 }

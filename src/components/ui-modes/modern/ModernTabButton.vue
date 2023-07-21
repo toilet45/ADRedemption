@@ -151,4 +151,9 @@ export default {
   border-bottom-right-radius: var(--var-border-radius, 0.5rem);
   transition: border-radius 0s;
 }
+
+.o-tab-btn--mending::before {
+  background-color: var(--color-mending);
+}
+
 </style>

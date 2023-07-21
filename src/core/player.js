@@ -261,6 +261,9 @@ window.player = {
       maxGlyphs: 0,
       slowestBH: 1,
     },
+    mending:{
+        isEnd: true
+    },
     permanent: {
       emojiGalaxies: 0,
       singleTickspeed: 0,
@@ -339,6 +342,15 @@ window.player = {
       iMCapSet: [],
       laitelaSet: [],
     },
+    bestMend:{
+        time: Number.MAX_VALUE,
+        realTime: Number.MAX_VALUE,
+        maxAM: DC.D0,
+        maxIP: DC.D0,
+        maxEP: DC.D0,
+        maxRM: DC.D0,
+        maxiM: DC.D0
+    }
   },
   speedrun: {
     isUnlocked: false,
@@ -909,6 +921,9 @@ window.player = {
       id: false,
     }
   },
+
+  //custom things start here
+  mends: 0
 };
 
 export const Player = {

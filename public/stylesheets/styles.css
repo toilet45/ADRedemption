@@ -104,6 +104,10 @@ html {
 
   --color-pelle--base: crimson;
   --color-pelle--secondary: #00bcd4;
+
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-metro,
@@ -123,6 +127,9 @@ html {
   --color-reality: #3a823d;
   --color-reality-light: #d5ffd7;
   --color-celestials: #00bcd4;
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-dark {
@@ -142,6 +149,9 @@ html {
 
   --color-laitela--base: black;
   --color-laitela--accent: white;
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-dark-metro {
@@ -167,6 +177,9 @@ html {
 
   --color-laitela--base: black;
   --color-laitela--accent: white;
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-amoled {
@@ -207,6 +220,9 @@ html {
 
   --color-laitela--base: black;
   --color-laitela--accent: white;
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-s1 {
@@ -228,6 +244,9 @@ html {
   --color-prestige--accent: #dbd242;
 
   --color-pelle--base: #7cb727;
+  /*Custom Stuff Starts Here*/
+
+  --color-mending: #cc2988;
 }
 
 :root .t-s4 {
@@ -754,6 +773,17 @@ button:focus {
   background: var(--color-celestials);
 }
 
+/*Custom tabs start here*/
+
+.o-tab-btn--mending {
+  color: var(--color-mending);
+  background-color: var(--color-prestige--accent);
+  border-color: var(--color-mending);
+}
+
+.o-tab-btn--mending:hover {
+  background: var(--color-mending);
+}
 /* #endregion tab buttons */
 
 #loading {

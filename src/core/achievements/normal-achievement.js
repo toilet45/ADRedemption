@@ -82,6 +82,12 @@ class AchievementState extends GameMechanicState {
     Achievements._power.invalidate();
     EventHub.dispatch(GAME_EVENT.ACHIEVEMENT_UNLOCKED);
   }
+
+  // Additional Code Starts Here
+
+  get isPreMend(){
+    return this.row < 19;
+  }
 }
 
 /**

@@ -477,3 +477,31 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
     player.celestials.pelle.galaxyGenerator.spentGalaxies += spent;
   }
 }();
+
+//new currencies start here
+
+Currency.mendingPoints = new class extends DecimalCurrency {
+  get value() { return player.mendingPoints; }
+  set value(value) {
+    player.mendingPoints = value;
+    /*player.records.thisReality.maxEP = player.records.thisReality.maxEP.max(value);
+    if (player.records.bestReality.bestEP.lt(value)) {
+      player.records.bestReality.bestEP = value;
+      player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
+    }
+
+    if (Pelle.isDoomed) {
+      player.celestials.pelle.records.totalEternityPoints =
+        player.celestials.pelle.records.totalEternityPoints.max(value);
+    }*/
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    super.reset();
+    //player.records.thisReality.maxEP = this.startingValue;
+  }
+}();
