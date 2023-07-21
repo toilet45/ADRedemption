@@ -481,28 +481,36 @@ export const tabs = [
   {
     key: "mending",
     name: "Mending",
-    hideAt: 2.3,
+    //hideAt: 2.3, //Sequence is disabled
     UIClass: "o-tab-btn--mending",
-    //condition: () => PlayerProgress.mendingUnlocked(),
+    condition: () => true,//PlayerProgress.mendingUnlocked(),
     id: 10,
     hidable: true,
     subtabs: [
       {
         key: "mendupgrades",
         name: "Mending Upgrades",
-        symbol: "?",
+        symbol: "<i class='fas fa-arrow-up'></i>",
         component: "MendingUpgrades",
         id: 0,
         hidable: true,
       },
       {
-        key: "two",
-        name: "test",
-        symbol: ".",
-        component: "MendingSubtabTwo",
+        key: "mendmilestones",
+        name: "Mending Milestones",
+        symbol: "<i class='fas fa-star'></i>",
+        component: "MendingMilestones",
         id: 1,
         hidable: true,
-      }
+      },
+      {
+        key: "kohlerrealm",
+        name: "Kohler's Realm [NYI]",
+        symbol: "☤",
+        component: "KohlersRealm",
+        id: 2,
+        hidable: true,
+      },
     ]
   },
   {

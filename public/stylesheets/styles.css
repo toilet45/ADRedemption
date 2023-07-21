@@ -9332,3 +9332,41 @@ input.o-automator-block-input {
   width: 100%;
   height: 100%;
 }
+
+/*Custom Styles Start Here*/
+
+/* #region mending-tab */
+
+.c-mending-tab__header {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.c-mending-tab__mending-points {
+  color: var(--color-mending);
+}
+
+/* #region themes */
+
+/* #region t-dark t-s6 t-s10 */
+
+.t-dark .c-mending-tab__mending-points,
+.t-s6 .c-mending-tab__mending-points,
+.t-s10 .c-mending-tab__mending-points {
+  color: white;
+  text-shadow: 0 0 0.7rem;
+}
+
+/* #endregion t-dark t-s6 t-s10 */
+
+/* #region t-s1 */
+
+.t-s1 .c-mending-tab__mending-points {
+  text-shadow: 0.1rem 0.1rem 0 black;
+}
+
+/* #endregion t-s1 */
+
+/* #endregion themes */
+
+/* #endregion infinity-tab */

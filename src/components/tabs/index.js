@@ -41,7 +41,12 @@ import TimeDilationTab from "./time-dilation/TimeDilationTab";
 import TimeDimensionsTab from "./time-dimensions/TimeDimensionsTab";
 import TimeStudiesTab from "./time-studies/TimeStudiesTab";
 import VTab from "./celestial-v/VTab";
+
+//Custom Tabs Start Here
 import MendingUpgrades from "./mending/MendingUpgrades";
+import MendingMilestones from "./mending/MendingUpgrades";
+import KohlersRealm from "./mending/MendingUpgrades";
+
 
 const TabComponents = {
   AntimatterDimensionsTab,

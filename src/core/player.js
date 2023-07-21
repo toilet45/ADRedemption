@@ -342,7 +342,7 @@ window.player = {
       iMCapSet: [],
       laitelaSet: [],
     },
-    bestMend:{
+    bestMend:{ //new in Redemption
         time: Number.MAX_VALUE,
         realTime: Number.MAX_VALUE,
         maxAM: DC.D0,
@@ -923,7 +923,8 @@ window.player = {
   },
 
   //custom things start here
-  mends: 0
+  mends: DC.D0,
+  mendingPoints: DC.D0
 };
 
 export const Player = {
@@ -994,6 +995,10 @@ export const Player = {
 
   get automatorUnlocked() {
     return AutomatorPoints.totalPoints >= AutomatorPoints.pointsForAutomator || player.reality.automator.forceUnlock;
+  },
+
+  get canMend(){
+    return player.isGameEnd //|| (player.isWarped() && player.antimatter.gte(DC.END))
   },
 
   resetRequirements(key) {

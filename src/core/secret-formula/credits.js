@@ -10,7 +10,7 @@ export const credits = {
     7: "[Vanilla] Developer",
     8: "[Vanilla] Lead Design Consultant",
     9: "[Vanilla] Design Consultant",
-    10: "[Vanilla] Modal Maker, Lady Taker, Pie Baker",
+    10: "[Vanilla] Modal Maker, Lady Taker, Pie Baker, Tutorial Creater",
     11: "[Vanilla] Lurker Tester",
     12: "[Vanilla] Web Tester",
     13: "[Vanilla] Android Tester",
@@ -444,6 +444,10 @@ export const credits = {
     },
     {
       name: "Miabread",
+      roles: 15
+    },
+    {
+      name: "incremental_gamer",
       roles: 15
     }
   ]

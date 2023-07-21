@@ -22,7 +22,12 @@ import { GameKeyboard } from "./keyboard";
 // for the other modifier keys (#3093).
 
 // Free keys:
-// i, j, k, l, n, o, p, q, v, w, x
+// i, j, k, l, o, p, q, v, w, x
+
+/*Modded Keys: 
+N: Mending
+P: Rapture
+*/
 
 
 export const shortcuts = [
@@ -304,6 +309,13 @@ export const shortcuts = [
     type: "bind",
     function: () => keyboardEditAutobuyers(),
     visible: () => Autobuyers.hasAutobuyersForEditModal
+  },
+  {
+    name: "[Redemption] Mend",
+    keys: ["n"],
+    type: "bind",
+    //function: () => keyboardEditAutobuyers(),
+    visible: () => true
   },
   {
     name: "Fullscreen",
