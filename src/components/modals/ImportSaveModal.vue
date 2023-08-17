@@ -100,7 +100,7 @@ export default {
       return currSets.filter(set => !importedSets.includes(set)).length > 0;
     },
     willLoseSpeedrun() {
-      return player.speedrun.isUnlocked && !this.player.speedrun?.isUnlocked;
+      return false;//player.speedrun.isUnlocked && !this.player.speedrun?.isUnlocked;
     }
   },
   mounted() {
