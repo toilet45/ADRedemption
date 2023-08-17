@@ -1,7 +1,9 @@
 <script>
+import MendingPointsHeader from "../../MendingPointsHeader.vue";
 import BigCrunchButton from "../BigCrunchButton";
 import GameHeader from "../GameHeader";
 import NewsTicker from "../NewsTicker";
+import MendingButton from "../prestige-header/MendingButton.vue";
 
 
 import ClassicSubtabBar from "./ClassicSubtabBar";
@@ -18,13 +20,17 @@ export default {
     NewsTicker,
     InfinityPointsHeader,
     EternityPointsHeader,
-    BigCrunchButton
-  },
+    BigCrunchButton,
+    MendingButton,
+    MendingPointsHeader,
+},
   data() {
     return {
       bigCrunch: false,
       smallCrunch: false,
       newGameKey: "",
+      hasMendingButton: false,
+      mendingPoints: new Decimal(0)
     };
   },
   computed: {
@@ -40,6 +46,8 @@ export default {
       // This only exists to force a key-swap after pressing the button to start a new game; the news ticker can break
       // if it isn't redrawn
       this.newGameKey = Pelle.isDoomed;
+      this.hasMendingButton = PlayerProgress.mendingUnlocked() || player.isGameEnd;
+      this.mendingPoints.copyFrom(Currency.mendingPoints.value.floor());
     }
   },
 };
@@ -62,6 +70,12 @@ export default {
         v-if="news"
         class="l-old-ui__news-bar"
       />
+      <div 
+      v-if="hasMendingButton"
+      class="c-mending-points">
+        <MendingPointsHeader />
+        <MendingButton />
+    </div>
       <GameHeader class="l-old-ui__header" />
       <ClassicTabBar />
       <component
@@ -77,5 +91,8 @@ export default {
 </template>
 
 <style scoped>
-
+.c-mending-points {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
 </style>

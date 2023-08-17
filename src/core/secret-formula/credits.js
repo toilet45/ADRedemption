@@ -15,7 +15,9 @@ export const credits = {
     12: "[Vanilla] Web Tester",
     13: "[Vanilla] Android Tester",
     14: "Redemption Developer",
-    15: "[Redemption] Tutorial Maker"
+    15: "[Redemption] Development Assistant",
+    16: "[Redemption] Balancing Assistant",
+    17: "[Redemption] Artist"
   },
 
   // Each person must have a name and at least one role (the index of the desired role in roles). They can also have a
@@ -28,7 +30,7 @@ export const credits = {
     }, {
       name: "Razenpok",
       name2: "Andrei Andreev",
-      roles: 2
+      roles: [2, 15]
     }, {
       name: "garnet420",
       roles: 3
@@ -38,10 +40,10 @@ export const credits = {
     }, {
       name: "SpectralFlame",
       name2: "Christopher Yip",
-      roles: 3
+      roles: [3, 15]
     }, {
       name: "WaitingIdly",
-      roles: [3, 7, 9, 12, 13]
+      roles: [3, 7, 9, 12, 13, 15]
     }, {
       name: "kajfik",
       name2: "Jakub Kajfosz",
@@ -62,7 +64,7 @@ export const credits = {
       roles: [7, 10, 12, 13, 15]
     }, {
       name: "Hira",
-      roles: [7, 12, 13]
+      roles: [7, 12, 13, 15]
     }, {
       name: "IkerStream",
       name2: "Iker de Aguirre",
@@ -449,7 +451,31 @@ export const credits = {
     {
       name: "incremental_gamer",
       roles: 15
-    }
+    },
+    {
+      name: "Merlyn",
+      roles: 15
+    },
+    {
+      name: "Plasmawario",
+      roles: 15
+    },
+    {
+      name: "Hexa",
+      roles: [15, 16]
+    },
+    {
+      name: "MrKrutaman",
+      roles: 15
+    },
+    {
+      name: "BsonHK",
+      roles: 16
+    },
+    {
+      name: "ArchercatNEO",
+      roles: 15
+    },
   ]
 };
 

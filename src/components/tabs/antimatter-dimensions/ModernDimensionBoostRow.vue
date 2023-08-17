@@ -53,7 +53,7 @@ export default {
       this.imaginaryBoosts = DimBoost.imaginaryBoosts;
       this.lockText = DimBoost.lockText;
       this.unlockedByBoost = DimBoost.unlockedByBoost;
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       if (this.isDoomed) this.requirementText = formatInt(this.purchasedBoosts);
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.DIMBOOST);
     },

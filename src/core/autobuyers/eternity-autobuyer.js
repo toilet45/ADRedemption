@@ -1,4 +1,5 @@
 import { AutobuyerState } from "./autobuyer";
+import { PlayerProgress } from "../player-progress";
 
 export class EternityAutobuyerState extends AutobuyerState {
   get data() {
@@ -10,7 +11,7 @@ export class EternityAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return EternityMilestone.autobuyerEternity.isReached;
+    return EternityMilestone.autobuyerEternity.isReached || PlayerProgress.mendingUnlocked();
   }
 
   get mode() {

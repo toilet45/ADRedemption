@@ -67,6 +67,10 @@ const perkColors = () => ({
     primary: "#fdd835",
     secondary: "#e3ba02"
   },
+  [PERK_FAMILY.MENDING]:{
+    primary: "#FFFFFF",
+    secondary: "#808080"
+  }
 });
 
 // Coordinate specifications are sometimes given in a grid index, so we need to spread them out to the proper scaling.

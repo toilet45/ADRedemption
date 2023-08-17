@@ -5,6 +5,8 @@ import HeaderChallengeDisplay from "../HeaderChallengeDisplay";
 import HeaderChallengeEffects from "../HeaderChallengeEffects";
 import HeaderPrestigeGroup from "../HeaderPrestigeGroup";
 import NewsTicker from "../NewsTicker";
+import MendingButton from "../prestige-header/MendingButton.vue";
+import MendingPointsHeader from "../../MendingPointsHeader.vue";
 
 import GameSpeedDisplay from "@/components/GameSpeedDisplay";
 
@@ -19,12 +21,16 @@ export default {
     HeaderBlackHole,
     HeaderPrestigeGroup,
     GameSpeedDisplay,
+    MendingPointsHeader,
+    MendingButton,
   },
   data() {
     return {
       bigCrunch: false,
       hasReality: false,
       newGameKey: "",
+      hasMendingButton: false,
+      mendingPoints: new Decimal(0)
     };
   },
   computed: {
@@ -43,6 +49,8 @@ export default {
       // This only exists to force a key-swap after pressing the button to start a new game; the news ticker can break
       // if it isn't redrawn
       this.newGameKey = Pelle.isDoomed;
+      this.hasMendingButton = PlayerProgress.mendingUnlocked() || player.isGameEnd;
+      this.mendingPoints.copyFrom(Currency.mendingPoints.value.floor());
     },
     handleClick() {
       if (PlayerProgress.infinityUnlocked()) manualBigCrunchResetRequest();
@@ -67,6 +75,12 @@ export default {
       <NewsTicker
         v-if="news"
       />
+      <div 
+      v-if="hasMendingButton"
+      class="c-mending-points">
+        <MendingPointsHeader />
+        <MendingButton />
+    </div>
       <BigCrunchButton />
       <div
         v-if="!bigCrunch"
@@ -87,5 +101,8 @@ export default {
 </template>
 
 <style scoped>
-
+.c-mending-points {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
 </style>

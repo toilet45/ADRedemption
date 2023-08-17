@@ -12,7 +12,7 @@ export class ECTimeStudyState extends TimeStudyState {
   }
 
   purchase(auto) {
-    if (GameEnd.creditsEverClosed) return false;
+    if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return false;
     EternityChallenge(this.id).hasUnlocked = true;
     const clickTime = Date.now();
 

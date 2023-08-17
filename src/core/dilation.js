@@ -39,7 +39,7 @@ export function startDilatedEternityRequest() {
 
 export function startDilatedEternity(auto) {
   if (!PlayerProgress.dilationUnlocked()) return false;
-  if (GameEnd.creditsEverClosed) return false;
+  if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return false;
   if (player.dilation.active) {
     eternity(false, auto, { switchingDilation: true });
     return false;
@@ -58,7 +58,7 @@ const DIL_UPG_NAMES = [
 ];
 
 export function buyDilationUpgrade(id, bulk = 1) {
-  if (GameEnd.creditsEverClosed) return false;
+  if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return false;
   // Upgrades 1-3 are rebuyable, and can be automatically bought in bulk with a perk shop upgrade
   const upgrade = DilationUpgrade[DIL_UPG_NAMES[id]];
   if (id > 3 && id < 11) {
@@ -68,12 +68,13 @@ export function buyDilationUpgrade(id, bulk = 1) {
     if (id === 4) player.dilation.totalTachyonGalaxies *= 2;
   } else {
     const upgAmount = player.dilation.rebuyables[id];
-    if (Currency.dilatedTime.lt(upgrade.cost) || upgAmount >= upgrade.config.purchaseCap) return false;
+    let whichCap = Pelle.isDoomed ? upgrade.config.pellePurchaseCap : upgrade.config.purchaseCap
+    if (Currency.dilatedTime.lt(upgrade.cost) || upgAmount >= whichCap) return false;
 
     let buying = Decimal.affordGeometricSeries(Currency.dilatedTime.value,
       upgrade.config.initialCost, upgrade.config.increment, upgAmount).toNumber();
     buying = Math.clampMax(buying, bulk);
-    buying = Math.clampMax(buying, upgrade.config.purchaseCap - upgAmount);
+    buying = Math.clampMax(buying, whichCap - upgAmount);
     const cost = Decimal.sumGeometricSeries(buying, upgrade.config.initialCost, upgrade.config.increment, upgAmount);
     Currency.dilatedTime.subtract(cost);
     player.dilation.rebuyables[id] += buying;
@@ -128,8 +129,12 @@ export function getDilationGainPerSecond() {
       RealityUpgrade(1),
       AlchemyResource.dilation,
       Ra.unlocks.continuousTTBoost.effects.dilatedTime,
-      Ra.unlocks.peakGamespeedDT
+      Ra.unlocks.peakGamespeedDT,
+      DilationUpgrade.dtGainPelle,
     );
+  if (MendingMilestone.one.isReached){
+    dtRate = dtRate.times(100);
+  }
   dtRate = dtRate.times(getAdjustedGlyphEffect("dilationDT"));
   dtRate = dtRate.times(ShopPurchase.dilatedTimePurchases.currentMult);
   dtRate = dtRate.times(
@@ -226,8 +231,17 @@ class DilationUpgradeState extends SetPurchasableMechanicState {
   }
 
   onPurchased() {
-    if (this.id === 4) player.dilation.totalTachyonGalaxies *= 2;
-    if (this.id === 10) SpeedrunMilestones(15).tryComplete();
+    switch(this.id){
+      case 4:{
+        player.dilation.totalTachyonGalaxies *= 2;
+      }
+      case 10:{
+        SpeedrunMilestones(15).tryComplete();
+      }
+      default:{
+          //pass
+      }
+    }
   }
 }
 

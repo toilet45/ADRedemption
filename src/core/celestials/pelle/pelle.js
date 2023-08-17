@@ -116,6 +116,21 @@ export const Pelle = {
     for (let tabIndex = 0; tabIndex < GameDatabase.tabs.length; tabIndex++) {
       player.options.hiddenSubtabBits[tabIndex] &= ignoredIDs.includes(tabIndex) ? -1 : 0;
     }
+
+    if(MendingMilestone.one.isReached){
+      PelleUpgrade.antimatterDimAutobuyers1.isBought = true;
+      PelleUpgrade.antimatterDimAutobuyers2.isBought = true;
+      PelleUpgrade.tickspeedAutobuyer.isBought = true;
+      PelleUpgrade.dimBoostAutobuyer.isBought = true;
+      PelleUpgrade.galaxyAutobuyer.isBought = true;
+      PelleUpgrade.keepAutobuyers.isBought = true;
+      PelleUpgrade.IDAutobuyers.isBought = true;
+      PelleUpgrade.replicantiAutobuyers.isBought = true;
+      PelleUpgrade.TDAutobuyers.isBought = true;
+      for (const autobuyer of Autobuyers.all) {
+        if (autobuyer.data.interval !== undefined) autobuyer.maxIntervalForFree();
+      }
+    }
     Pelle.quotes.initial.show();
     GameStorage.save(true);
   },
@@ -271,6 +286,7 @@ export const Pelle = {
     let am = this.cel.records.totalAntimatter.plus(1).log10();
     let ip = this.cel.records.totalInfinityPoints.plus(1).log10();
     let ep = this.cel.records.totalEternityPoints.plus(1).log10();
+    let MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
 
     if (PelleStrikes.dilation.hasStrike) {
       am *= 500;
@@ -279,14 +295,15 @@ export const Pelle = {
     }
 
     const gain = (
-      (Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) / 1.64
+      (Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2) * MMBoostRem)/ 1.64
     ) ** 7.5;
 
     return gain < 1 ? gain : Math.floor(gain - this.cel.remnants);
   },
 
   realityShardGain(remnants) {
-    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3);
+    const MMBoostRS = MendingMilestone.one.isReached ? 10 : 1;
+    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3).times(MMBoostRS);
   },
 
   get realityShardGainPerSecond() {
@@ -342,7 +359,7 @@ export const Pelle = {
     return zalgo(str, Math.floor(stage ** 2 * 7));
   },
 
-  endTabNames: "End Is Nigh Destruction Is Imminent Help Us Good Bye Forever".split(" "),
+  endTabNames: "Never Gonna Give You Up Never Gonna Let You Down :)".split(" "),//"End? Is Nigh Destruction Is Imminent Help Us Good Bye Forever".split(" "),
 
   quotes: Quotes.pelle,
 };

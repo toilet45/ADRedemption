@@ -257,6 +257,7 @@ export const Ra = {
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res *= pet.memoryProductionMultiplier;
     }
+    if (MendingMilestone.one.isReached) res = res * 25;
     return res;
   },
   get memoryBoostResources() {
@@ -266,6 +267,7 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
+    if (MendingMilestone.one.isReached) boostList.push("1 Mend Milestone");
 
     if (boostList.length === 1) return `${boostList[0]}`;
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;

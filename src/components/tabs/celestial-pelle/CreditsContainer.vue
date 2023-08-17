@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     update() {
-      this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
+      this.rolling = false;//GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
       this.scroll = (
         Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START
       ) * 60;

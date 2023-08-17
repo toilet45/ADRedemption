@@ -314,7 +314,7 @@ export const shortcuts = [
     name: "[Redemption] Mend",
     keys: ["n"],
     type: "bind",
-    //function: () => keyboardEditAutobuyers(),
+    function: () => mendingResetRequest(),
     visible: () => true
   },
   {

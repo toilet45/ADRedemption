@@ -178,6 +178,10 @@ body.t-s12 {
   color: var(--color-pelle--base);
 }
 
+.o-sidebar-currency--mending {
+  color: var(--color-mending);
+}
+
 .resource-infinity-canreset,
 .resource-eternity-canreset {
   background-color: black;

@@ -286,7 +286,8 @@ Currency.infinityPoints = new class extends DecimalCurrency {
       0,
       Perk.startIP1,
       Perk.startIP2,
-      Achievement(104)
+      Achievement(104),
+      MendingUpgrade(2[1])
     ).toDecimal();
   }
 
@@ -309,7 +310,8 @@ Currency.eternities = new class extends DecimalCurrency {
     if (Pelle.isDoomed) return new Decimal(0);
     return Effects.max(
       0,
-      RealityUpgrade(10)
+      RealityUpgrade(10),
+      MendingUpgrade(2[0])
     ).toDecimal();
   }
 }();
@@ -481,19 +483,11 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
 //new currencies start here
 
 Currency.mendingPoints = new class extends DecimalCurrency {
-  get value() { return player.mendingPoints; }
+  get value() { 
+    return player.mending.mendingPoints; 
+  }
   set value(value) {
-    player.mendingPoints = value;
-    /*player.records.thisReality.maxEP = player.records.thisReality.maxEP.max(value);
-    if (player.records.bestReality.bestEP.lt(value)) {
-      player.records.bestReality.bestEP = value;
-      player.records.bestReality.bestEPSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
-    }
-
-    if (Pelle.isDoomed) {
-      player.celestials.pelle.records.totalEternityPoints =
-        player.celestials.pelle.records.totalEternityPoints.max(value);
-    }*/
+    player.mending.mendingPoints = value;
   }
 
   get startingValue() {
@@ -501,7 +495,23 @@ Currency.mendingPoints = new class extends DecimalCurrency {
   }
 
   reset() {
-    super.reset();
-    //player.records.thisReality.maxEP = this.startingValue;
+    //super.reset();
+  }
+}();
+
+Currency.mends = new class extends DecimalCurrency {
+  get value() { 
+    return player.mends; 
+  }
+  set value(value) {
+    player.mends = value;
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
   }
 }();

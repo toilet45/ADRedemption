@@ -137,7 +137,7 @@ export const news = [
   {
     id: "a29",
     text: `If you are not playing on Kongregate, Steam, or https://ivark.github.io/AntimatterDimensions/,
-      the site is bootleg.`
+      the site is bootleg...but this is a mod, so that doesn't matter.`
   },
   {
     id: "a30",
@@ -412,52 +412,17 @@ export const news = [
     get text() {
       const games = [
         {
-          name: "Antimatter Dimensions",
+          name: "Vanilla Antimatter Dimensions",
           link: "https://ivark.github.io/"
         },
         {
-          name: "FE000000",
-          link: "https://dan-simon.github.io/misc/fe000000/"
-        },
-        {
-          name: "Trimps",
-          link: "https://trimps.github.io/"
-        },
-        {
-          name: "Mine Defense (the game's ui is broken on https so make sure you're on http!)",
-          link: "http://scholtek.com/minedefense"
-        },
-        {
-          name: "Wizard and Minion Idle",
-          link: "https://www.kongregate.com/games/Oninou/wami"
-        },
-        {
-          name: "Anti-Idle",
-          link: "https://www.kongregate.com/games/Tukkun/anti-idle-the-game"
-        },
-        {
-          name: "Synergism",
-          link: "https://pseudo-corp.github.io/SynergismOfficial/"
-        },
-        {
-          name: "Universal Paperclips",
-          link: "https://www.decisionproblem.com/paperclips/index2.html"
-        },
-        {
-          name: "Monies<sup>2</sup",
-          link: "https://sneekxy.nmtechgroup.com/monies2/"
-        },
-        {
-          name: "The First Alkahistorian stages 1, 2, and 3",
-          link: "https://nagshell.github.io/elemental-inception-incremental/"
-        },
-        {
-          name: "Melvor Idle",
-          link: "https://melvoridle.com/"
+          name: "Antimatter Dimensions Unorginal",
+          link: "https://hexavault.github.io/AntimatterDimensions-Unoriginal/"
         }
+        //add more mod links when more stuff is released
       ];
       const game = games.randomElement();
-      return `An unidentified developer of Antimatter Dimensions would like to
+      return `An unidentified developer of Antimatter Dimensions Redemption would like to
         recommend that you play <a href="${game.link}" target="_blank">${game.name}</a>`;
     },
   },
@@ -2592,6 +2557,26 @@ export const news = [
       `Can you believe it guys? Update, just 5 hours away. Update is in a 5 hours. Wahoo. I'm so happy about this
       information. Update just 5 hours away. Oh wow. Can you believe it? Update just in a 5 hours. It got here so
       fast. Update, just 5 hours.`
+  },
+  //Custom Newstickers start here
+  {
+    id: "a391",
+    text:
+      `I'll make my own newstickers, with blackjack and hookers.`
+  },
+  {
+    id: "a392",
+    text:
+      `Will Royal put in all the rejected newstickers from #android-newsticker-event and #newsticker-suggestions? The world may never know (no).`
+  },
+  {
+    id: "a393",
+    text:
+      `Don't forget to vote in the Ass Election 2023 -Mage`
+  },
+  {
+    id: "a392",
+    text: "Looking for more mods to play? Check out https://github.com/ArchercatNEO/AD-Mod-DB."
   },
   {
     id: "l1",

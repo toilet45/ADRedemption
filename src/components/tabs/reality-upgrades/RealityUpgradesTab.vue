@@ -14,6 +14,7 @@ export default {
       still possible.`,
     lockTooltip: () => `This will only function if you have not already failed the condition or
       unlocked the upgrade.`,
+    grid: () => []
   },
   methods: {
     id(row, column) {

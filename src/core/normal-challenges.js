@@ -70,7 +70,7 @@ class NormalChallengeState extends GameMechanicState {
 
   requestStart() {
     if (!Tab.challenges.isUnlocked) return;
-    if (GameEnd.creditsEverClosed) return;
+    if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
     if (!player.options.confirmations.challenges) {
       this.start();
       return;

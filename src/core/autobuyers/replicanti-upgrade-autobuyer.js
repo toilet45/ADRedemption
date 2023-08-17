@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { IntervaledAutobuyerState } from "./autobuyer";
 
 export class ReplicantiUpgradeAutobuyerState extends IntervaledAutobuyerState {
@@ -17,7 +18,7 @@ export class ReplicantiUpgradeAutobuyerState extends IntervaledAutobuyerState {
 
   get isUnlocked() {
     return ReplicantiUpgrade[this._upgradeName].autobuyerMilestone.isReached ||
-      PelleUpgrade.replicantiAutobuyers.canBeApplied;
+      PelleUpgrade.replicantiAutobuyers.canBeApplied || PlayerProgress.mendingUnlocked();
   }
 
   get resetTickOn() {

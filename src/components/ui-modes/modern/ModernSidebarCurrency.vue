@@ -9,11 +9,13 @@ export default {
       RM: new Decimal(0),
       IM: 0,
       RS: new Decimal(0),
+      MvR: new Decimal(0),
       machineStr: "",
       showIP: false,
       showEP: false,
       showRM: false,
       showRS: false,
+      showMvR: false
     };
   },
   methods: {
@@ -24,11 +26,13 @@ export default {
       this.RM.copyFrom(Currency.realityMachines.value.floor());
       this.IM = Currency.imaginaryMachines.value;
       this.RS.copyFrom(Currency.realityShards);
+      this.MvR.copyFrom(Currency.mendingPoints);
       this.machineStr = formatMachines(this.RM, this.IM);
       this.showIP = PlayerProgress.infinityUnlocked();
       this.showEP = PlayerProgress.eternityUnlocked();
       this.showRM = PlayerProgress.realityUnlocked();
       this.showRS = Pelle.isDoomed;
+      this.showMvR = PlayerProgress.mendingUnlocked();
     }
   },
 };
@@ -36,7 +40,15 @@ export default {
 
 <template>
   <div class="c-sidebar-resource">
-    <template v-if="showRS">
+    <template v-if="showMvR">
+      <h2 class="o-sidebar-currency--mending">
+        {{ format(MvR, 2) }}
+      </h2>
+      <div class="c-sidebar-resource__information">
+        <span class="c-sidebar-resource__name">{{ pluralize("Multiversal Remain", MvR) }}</span>
+      </div>
+    </template>
+    <template v-else-if="showRS">
       <h2 class="o-sidebar-currency--pelle">
         {{ format(RS, 2) }}
       </h2>

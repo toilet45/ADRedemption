@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { AutobuyerState } from "./autobuyer";
 
 export class TimeTheoremAutobuyerState extends AutobuyerState {
@@ -10,7 +11,7 @@ export class TimeTheoremAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return Perk.ttBuySingle.isBought && !Pelle.isDisabled("timeTheoremAutobuyer");
+    return (Perk.ttBuySingle.isBought && !Pelle.isDisabled("timeTheoremAutobuyer")) || PlayerProgress.mendingUnlocked();
   }
 
   get hasUnlimitedBulk() {

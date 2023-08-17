@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { IntervaledAutobuyerState } from "./autobuyer";
 
 export class TimeDimensionAutobuyerState extends IntervaledAutobuyerState {
@@ -22,7 +23,7 @@ export class TimeDimensionAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get isUnlocked() {
-    return RealityUpgrade(13).isBought && (!Pelle.isDoomed || PelleUpgrade.TDAutobuyers.canBeApplied);
+    return (RealityUpgrade(13).isBought && (!Pelle.isDoomed || PelleUpgrade.TDAutobuyers.canBeApplied)) || PlayerProgress.mendingUnlocked();
   }
 
   get resetTickOn() {

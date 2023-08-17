@@ -1,5 +1,6 @@
 <script>
 import ExpandingControlBox from "@/components/ExpandingControlBox";
+import { PlayerProgress } from "../../../core/player-progress";
 
 export default {
   name: "RemnantGainFactor",
@@ -22,7 +23,8 @@ export default {
       },
       dilationMult: [1, 1, 1],
       remnants: 0,
-      remnantsGain: 0
+      remnantsGain: 0,
+      MendingUnlocked: false
     };
   },
   computed: {
@@ -38,6 +40,7 @@ export default {
       this.dilationMult = PelleStrikes.dilation.hasStrike ? [500, 10, 5] : [1, 1, 1];
       this.remnants = Pelle.cel.remnants;
       this.remnantsGain = Pelle.remnantsGain;
+      this.MendingUnlocked = PlayerProgress.mendingUnlocked()
     }
   }
 };
@@ -58,13 +61,18 @@ export default {
           <div class="l-remnant-factors-row">
             <div class="l-remnant-factors-col l-remnant-factors-col--first">
               <div class="l-remnant-factors-item">
-                log10(log10(am){{ dilationMult[0] > 1 ? `*${dilationMult[0]}` : "" }} + 2)
+                log10(log10(AM){{ dilationMult[0] > 1 ? `*${dilationMult[0]}` : "" }} + 2)
               </div>
               <div class="l-remnant-factors-item">
-                log10(log10(ip){{ dilationMult[1] > 1 ? `*${dilationMult[1]}` : "" }} + 2)
+                log10(log10(IP){{ dilationMult[1] > 1 ? `*${dilationMult[1]}` : "" }} + 2)
               </div>
               <div class="l-remnant-factors-item">
-                log10(log10(ep){{ dilationMult[2] > 1 ? `*${dilationMult[2]}` : "" }} + 2)
+                log10(log10(EP){{ dilationMult[2] > 1 ? `*${dilationMult[2]}` : "" }} + 2)
+              </div>
+              <div 
+              v-show="MendingUnlocked"
+              class="l-remnant-factors-item">
+                1 Mend Milestone
               </div>
               <div class="l-remnant-factors-item">
                 Static divisor
@@ -87,6 +95,11 @@ export default {
               <div class="l-remnant-factors-item">
                 +
               </div>
+              <div
+              v-show="MendingUnlocked"
+              class="l-remnant-factors-item">
+                *
+              </div>
               <div class="l-remnant-factors-item">
                 /
               </div>
@@ -106,6 +119,11 @@ export default {
               </div>
               <div class="l-remnant-factors-item">
                 {{ format(Math.log10(best.ep.add(1).log10()*dilationMult[0] + 2), 2, 2) }}
+              </div>
+              <div
+              v-show="MendingUnlocked" 
+              class="l-remnant-factors-item">
+                {{ format(1.1, 2, 1) }}
               </div>
               <div class="l-remnant-factors-item">
                 {{ format(1.64, 2, 2) }}

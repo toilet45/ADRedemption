@@ -160,7 +160,7 @@ window.player = {
       isActive: false,
     },
     dilationUpgrades: {
-      all: Array.range(0, 3).map(() => ({
+      all: Array.range(0, 3).concat(Array.range(11, 14)).map(() => ({
         isActive: false,
         lastTick: 0,
       })),
@@ -262,7 +262,7 @@ window.player = {
       slowestBH: 1,
     },
     mending:{
-        isEnd: true
+      isEnd: false
     },
     permanent: {
       emojiGalaxies: 0,
@@ -342,18 +342,23 @@ window.player = {
       iMCapSet: [],
       laitelaSet: [],
     },
-    bestMend:{ //new in Redemption
-        time: Number.MAX_VALUE,
-        realTime: Number.MAX_VALUE,
-        maxAM: DC.D0,
-        maxIP: DC.D0,
-        maxEP: DC.D0,
-        maxRM: DC.D0,
-        maxiM: DC.D0
+    thisMend: {
+      time: Number.MAX_VALUE,
+      realTime: Number.MAX_VALUE,
+      maxAM: DC.D0,
+      maxIP: DC.D0,
+      maxEP: DC.D0,
+      maxRM: DC.D0,
+      maxiM: 0,
+      maxRem: 0,
+    },
+    bestMend: {
+      time: Number.MAX_VALUE,
+      realTime: Number.MAX_VALUE,
     }
   },
   speedrun: {
-    isUnlocked: false,
+    isUnlocked: true,
     isActive: false,
     isSegmented: false,
     usedSTD: false,
@@ -371,7 +376,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 23,
+  version: 32,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -381,6 +386,17 @@ window.player = {
   timeShards: DC.D0,
   totalTickGained: 0,
   totalTickBought: 0,
+  mends: DC.D0,
+  mending:{
+    mendingPoints: DC.D0,
+    upgradeBits: 0,
+    reqLock: {
+      mending: 0,
+    },
+    rebuyables: {
+      1: 0,
+    },
+  },
   replicanti: {
     unl: false,
     amount: DC.D0,
@@ -769,6 +785,9 @@ window.player = {
         galaxies: false
       },
       showBought: false,
+    },
+    destroyer:{
+      quoteBits: 0,
     }
   },
   isGameEnd: false,
@@ -871,7 +890,8 @@ window.player = {
       antimatterGalaxy: true,
       dimensionBoost: true,
       switchAutomatorMode: true,
-      respecIAP: true
+      respecIAP: true,
+      mending: true
     },
     awayProgress: {
       antimatter: true,
@@ -897,7 +917,9 @@ window.player = {
       singularities: true,
       celestialMemories: true,
       blackHole: true,
-      realityShards: true
+      realityShards: true,
+      mends: true,
+      mendingPoints: true
     },
     hiddenTabBits: 0,
     hiddenSubtabBits: Array.repeat(0, 11),
@@ -921,10 +943,10 @@ window.player = {
       id: false,
     }
   },
-
-  //custom things start here
+  mendingPoints: DC.D0,
   mends: DC.D0,
-  mendingPoints: DC.D0
+  mendingUpgrades: new Set(),
+  mvrmultUpgrades: 0
 };
 
 export const Player = {
@@ -960,7 +982,9 @@ export const Player = {
   get canEternity() {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
-
+  get canMend(){
+    return player.isGameEnd;
+  },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;
   },
@@ -997,14 +1021,14 @@ export const Player = {
     return AutomatorPoints.totalPoints >= AutomatorPoints.pointsForAutomator || player.reality.automator.forceUnlock;
   },
 
-  get canMend(){
-    return player.isGameEnd //|| (player.isWarped() && player.antimatter.gte(DC.END))
-  },
-
   resetRequirements(key) {
     const glyphCount = player.requirementChecks.reality.maxGlyphs;
     // This switch case intentionally falls through because every lower layer should be reset as well
     switch (key) {
+      case "mending":
+        player.requirementChecks.mending = {
+          noAM: true,
+        }
       case "reality":
         player.requirementChecks.reality = {
           noAM: true,

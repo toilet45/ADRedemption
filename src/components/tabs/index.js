@@ -44,8 +44,9 @@ import VTab from "./celestial-v/VTab";
 
 //Custom Tabs Start Here
 import MendingUpgrades from "./mending/MendingUpgrades";
-import MendingMilestones from "./mending/MendingUpgrades";
-import KohlersRealm from "./mending/MendingUpgrades";
+import MendingMilestones from "./mending/MendingMilestones";
+import WarpReality from "./mending/WarpReality";
+import KohlersRealm from "./mending/KohlersRealm";
 
 
 const TabComponents = {
@@ -91,7 +92,10 @@ const TabComponents = {
   CelestialNavigationTab,
   ShopTab,
   MultiplierBreakdownTab,
-  MendingUpgrades
+  MendingUpgrades,
+  MendingMilestones,
+  WarpReality,
+  KohlersRealm
 };
 
 export default TabComponents;

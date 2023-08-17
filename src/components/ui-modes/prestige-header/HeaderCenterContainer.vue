@@ -1,10 +1,13 @@
 <script>
 import ArmageddonButton from "../../tabs/celestial-pelle/ArmageddonButton";
 import RealityCurrencyHeader from "../../RealityCurrencyHeader";
+import MendingButton from "./MendingButton";
 
 import HeaderTickspeedInfo from "../HeaderTickspeedInfo";
 
 import RealityButton from "./RealityButton";
+import { PlayerProgress } from "../../../core/player-progress";
+import MendingPointsHeader from "../../MendingPointsHeader.vue";
 
 // This component contains antimatter and antimatter rate at the start of the game, as well as some additional
 // information depending on the UI (tickspeed for Classic, game speed for Modern). Everything but antimatter is
@@ -13,25 +16,29 @@ export default {
   name: "HeaderCenterContainer",
   components: {
     HeaderTickspeedInfo,
+    MendingButton,
     RealityCurrencyHeader,
     RealityButton,
     ArmageddonButton,
-  },
+    MendingPointsHeader
+},
   data() {
     return {
       shouldDisplay: true,
       isModern: false,
       hasRealityButton: false,
+      hasMendingButton: false,
       isDoomed: false,
       antimatter: new Decimal(0),
       antimatterPerSec: new Decimal(0),
+      mendingPoints: new Decimal(0)
     };
   },
   methods: {
     update() {
       this.shouldDisplay = player.break || !Player.canCrunch;
       if (!this.shouldDisplay) return;
-
+      this.mendingPoints.copyFrom(Currency.mendingPoints.value.floor())
       this.isModern = player.options.newUI;
       this.isDoomed = Pelle.isDoomed;
       this.antimatter.copyFrom(Currency.antimatter);
@@ -47,7 +54,7 @@ export default {
     v-if="shouldDisplay"
     class="c-prestige-button-container"
   >
-    <span>You have <span class="c-game-header__antimatter">{{ format(antimatter, 2, 1) }}</span> antimatter.</span>
+      <span>You have <span class="c-game-header__antimatter">{{ format(antimatter, 2, 1) }}</span> antimatter.</span>
     <div
       v-if="hasRealityButton"
       class="c-reality-container"
@@ -73,5 +80,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.c-mending-points {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
 }
 </style>

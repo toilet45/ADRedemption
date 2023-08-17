@@ -1,4 +1,5 @@
 import { SetPurchasableMechanicState } from "./game-mechanics";
+import { MendingMilestone } from "./mending";
 
 class PerkState extends SetPurchasableMechanicState {
   constructor(config) {
@@ -38,7 +39,8 @@ class PerkState extends SetPurchasableMechanicState {
   }
 
   get canBeApplied() {
-    return this.isBought && !(Pelle.isDoomed && Pelle.uselessPerks.includes(this.id));
+    if(this.id === 0 && MendingMilestone.three.isReached) return true;
+    else return this.isBought && !(Pelle.isDoomed && Pelle.uselessPerks.includes(this.id));
   }
 
   initializeConnections() {

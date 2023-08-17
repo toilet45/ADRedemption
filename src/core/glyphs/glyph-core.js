@@ -1,4 +1,5 @@
 import { GameMechanicState } from "../game-mechanics";
+import { RealityUpgrade } from "../reality-upgrades";
 
 export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "timepow",
   "dilationpow", "timeshardpow", "powermult", "powerdimboost", "powerbuy10",
@@ -33,6 +34,25 @@ export const Glyphs = {
   levelBoost: 0,
   factorsOpen: false,
   bestUndoGlyphCount: 0,
+  get maxSlots() {
+    if (Pelle.isDoomed){
+      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+    }
+    else{
+      let i = 3;
+      if (RealityUpgrade(9).isBought){
+        i++
+      }
+      if (RealityUpgrade(24).isBought){
+        i++
+      }
+      if (MendingMilestone.five.isReached){
+        i += 3;
+      }
+      return i
+    }
+    //return MendingMilestone.five.isReached ? 8 : 5
+  }, //will be a function later for further upgrades
   get inventoryList() {
     return player.reality.glyphs.inventory;
   },
@@ -65,10 +85,9 @@ export const Glyphs = {
   },
   get activeSlotCount() {
     if (Pelle.isDoomed) {
-      if (PelleRifts.vacuum.milestones[0].canBeApplied) return 1;
-      return 0;
+      return PelleRifts.vacuum.milestones[0].canBeApplied ?  1 : 0;
     }
-    return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24));
+    return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },
   get protectedSlots() {
     return 10 * player.reality.glyphs.protectedRows;
@@ -265,7 +284,7 @@ export const Glyphs = {
   equip(glyph, targetSlot) {
     const forbiddenByPelle = Pelle.isDisabled("glyphs") || ["effarig", "reality", "cursed"].includes(glyph.type);
     if (Pelle.isDoomed && forbiddenByPelle) return;
-    if (GameEnd.creditsEverClosed) return;
+    if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
 
     if (glyph.type !== "companion") {
       if (RealityUpgrade(9).isLockingMechanics) {
@@ -292,13 +311,14 @@ export const Glyphs = {
     if (this.findByInventoryIndex(glyph.idx) !== glyph) {
       throw new Error("Inconsistent inventory indexing");
     }
-    let sameSpecialTypeIndex = -1;
+    let canEquipSpecial = false;
+    const maxSpecial = 2;
     if (["effarig", "reality"].includes(glyph.type)) {
-      sameSpecialTypeIndex = this.active.findIndex(x => x && x.type === glyph.type);
+      canEquipSpecial = this.active.countWhere(x => x && x.type === glyph.type) < maxSpecial;
     }
-    if (this.active[targetSlot] === null) {
-      if (sameSpecialTypeIndex >= 0) {
-        Modal.message.show(`You may only have one ${glyph.type.capitalize()} Glyph equipped!`,
+    if (this.active[targetSlot] === null) { //if slot is empty
+      if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { //have we hit the max number of special glyphs?
+        Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
@@ -312,10 +332,34 @@ export const Glyphs = {
       EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
       EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
       this.validate();
-    } else {
+    } 
+    else {
+      // Royal's psudocode for the Glyph drag replace starts here
+      /* check if the Glyph we're dragging in is not an Effarig/Reality
+        true -> allow replace
+        false -> then check are we replacing an Effarig with an Effarig or Reality with Reality
+          true -> allow replace
+          false -> have we hit the max of that type?
+            true -> deny replace
+            false -> allow replace
+      */
+     //Hexa saved me from a ton of spagetti code, so thanks to him
+      if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
+        if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
+           Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
+          { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
+          return; // If both the above conditions are true, this bit of code runs
+        }
+      } // However if its not true, we then run this lower code
+      if (!player.options.confirmations.glyphReplace) {
+        this.swapIntoActive(glyph, targetSlot); // Run this code if the player does NOT have the glyph replace confirmation enabled
+        return;
+      }
+      Modal.glyphReplace.show({ targetSlot, inventoryIndex: glyph.idx });
+    }
       // We can only replace effarig/reality glyph
-      if (sameSpecialTypeIndex >= 0 && sameSpecialTypeIndex !== targetSlot) {
-        Modal.message.show(`You may only have one ${glyph.type.capitalize()} Glyph equipped!`,
+/*      if (sameSpecialTypeIndex >= 0 && sameSpecialTypeIndex !== targetSlot) { 
+        Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
@@ -324,7 +368,7 @@ export const Glyphs = {
         return;
       }
       Modal.glyphReplace.show({ targetSlot, inventoryIndex: glyph.idx });
-    }
+    }*/
     // Loading glyph sets might directly choose glyphs, bypassing the hover-over flag-clearing code
     this.removeVisualFlag("unseen", glyph);
     this.removeVisualFlag("unequipped", glyph);
@@ -533,14 +577,18 @@ export const Glyphs = {
   // If there are enough glyphs that are better than the specified glyph, in every way, then
   // the glyph is objectively a useless piece of garbage.
   isObjectivelyUseless(glyph, threshold, inventoryIn) {
-    if (player.reality.applyFilterToPurge && AutoGlyphProcessor.wouldKeep(glyph)) return false;
+    if (player.reality.applyFilterToPurge && AutoGlyphProcessor.wouldKeep(glyph)) {
+      return false;
+    }
     function hasSomeBetterEffects(glyphA, glyphB, comparedEffects) {
       for (const effect of comparedEffects) {
         const c = effect.compareValues(
           effect.effect(glyphA.level, glyphA.strength),
           effect.effect(glyphB.level, glyphB.strength));
         // If the glyph in question is better in even one effect, it passes this comparison
-        if (c > 0) return true;
+        if (c > 0) {
+          return true;
+        }
       }
       return false;
     }
@@ -551,8 +599,13 @@ export const Glyphs = {
         (g.level >= glyph.level || g.strength >= glyph.strength) &&
         ((g.effects & glyph.effects) === glyph.effects));
     let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : 5;
+    if (MendingMilestone.five.isReached){
+      compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 2 : 8;
+    }
     compareThreshold = Math.clampMax(compareThreshold, threshold);
-    if (toCompare.length < compareThreshold) return false;
+    if (toCompare.length < compareThreshold) {
+      return false;
+    }
     const comparedEffects = getGlyphEffectsFromBitmask(glyph.effects).filter(x => x.id.startsWith(glyph.type));
     const betterCount = toCompare.countWhere(other => !hasSomeBetterEffects(glyph, other, comparedEffects));
     return betterCount >= compareThreshold;
@@ -561,8 +614,8 @@ export const Glyphs = {
   // If deleteGlyphs === false, we are running this from the modal and are doing so purely to *count* the number of
   // removed glyphs. In this case, we copy the inventory and run the purge on the copy - we need to be able to remove
   // glyphs as we go, or else the purge logic will be wrong (eg. 7 identical glyphs will all be "worse than 5 others")
-  autoClean(threshold = 5, deleteGlyphs = true) {
-    const isHarsh = threshold < 5;
+  autoClean(threshold = Glyphs.maxSlots, deleteGlyphs = true) {
+    const isHarsh = threshold < Glyphs.maxSlots;
     let toBeDeleted = 0;
     const inventoryCopy = deleteGlyphs ? undefined : this.fakePurgeInventory();
     // If the player hasn't unlocked sacrifice yet, prevent them from removing any glyphs.

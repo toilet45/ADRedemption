@@ -32,6 +32,10 @@ class AchievementState extends GameMechanicState {
     return this.row < 18;
   }
 
+  get isPreMend() {
+    return this.row < 19;
+  }
+
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -116,6 +120,10 @@ export const Achievements = {
     return Achievements.all.filter(ach => ach.isPrePelle);
   },
 
+  get preMend() {
+    return Achievements.all.filter(ach => ach.isPreMend);
+  },
+
   get allRows() {
     const count = Achievements.all.map(a => a.row).max();
     return Achievements.rows(1, count);
@@ -128,6 +136,11 @@ export const Achievements = {
 
   get prePelleRows() {
     const count = Achievements.prePelle.map(a => a.row).max();
+    return Achievements.rows(1, count);
+  },
+
+  get preMendRows() {
+    const count = Achievements.preMend.map(a => a.row).max();
     return Achievements.rows(1, count);
   },
 
@@ -154,7 +167,6 @@ export const Achievements = {
 
     player.reality.achTimer += diff;
     if (player.reality.achTimer < this.period) return;
-
     for (const achievement of Achievements.preReality.filter(a => !a.isUnlocked)) {
       achievement.unlock(true);
       player.reality.achTimer -= this.period;

@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { PlayerProgress } from "../player-progress";
 
 import { UpgradeableAutobuyerState } from "./autobuyer";
 
@@ -12,12 +13,13 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get isUnlocked() {
-    if (Pelle.isDisabled("tickspeedAutobuyer")) return false;
+    if (PlayerProgress.mendingUnlocked()) return true;
+    else if (Pelle.isDisabled("tickspeedAutobuyer")) return false;
     return this.canBeUpgraded;
   }
 
   get canBeUpgraded() {
-    return NormalChallenge(9).isCompleted;
+    return NormalChallenge(9).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get baseInterval() {
@@ -33,7 +35,7 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get canBeBought() {
-    return !Pelle.isDoomed;
+    return !Pelle.isDoomed || PlayerProgress.mendingUnlocked();
   }
 
   get disabledByContinuum() {

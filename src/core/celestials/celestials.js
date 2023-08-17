@@ -1,3 +1,4 @@
+import { Destroyer } from "./destroyer";
 import { Effarig } from "./effarig";
 import { Enslaved } from "./enslaved";
 import { Laitela } from "./laitela/laitela";
@@ -13,7 +14,9 @@ export const Celestials = {
   v: V,
   ra: Ra,
   laitela: Laitela,
-  pelle: Pelle
+  pelle: Pelle,
+  destroyer: Destroyer,
+  //kohler: Kohler
 };
 
 GameDatabase.celestials.descriptions = [

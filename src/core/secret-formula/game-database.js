@@ -19,6 +19,7 @@ import { shopPurchases } from "./shop-purchases";
 import { speedrunMilestones } from "./speedrun-milestones";
 import { tabNotifications } from "./tab-notifications";
 import { tabs } from "./tabs";
+import { mending } from "./mending";
 
 export const GameDatabase = {
   achievements,
@@ -41,7 +42,8 @@ export const GameDatabase = {
   shopPurchases,
   speedrunMilestones,
   tabNotifications,
-  tabs
+  tabs,
+  mending
 };
 
 window.GameDatabase = GameDatabase;

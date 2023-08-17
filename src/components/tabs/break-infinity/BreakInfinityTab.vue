@@ -1,4 +1,5 @@
 <script>
+import { PlayerProgress } from "../../../core/player-progress";
 import BreakInfinityButton from "./BreakInfinityButton";
 import InfinityUpgradeButton from "@/components/InfinityUpgradeButton";
 
@@ -41,7 +42,7 @@ export default {
   },
   methods: {
     update() {
-      this.isUnlocked = Autobuyer.bigCrunch.hasMaxedInterval;
+      this.isUnlocked = Autobuyer.bigCrunch.hasMaxedInterval || PlayerProgress.mendingUnlocked();
     },
     btnClassObject(column) {
       return {

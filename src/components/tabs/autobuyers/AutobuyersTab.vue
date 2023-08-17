@@ -9,6 +9,7 @@ import OpenModalHotkeysButton from "@/components/OpenModalHotkeysButton";
 import RealityAutobuyerBox from "./RealityAutobuyerBox";
 import SimpleAutobuyersMultiBox from "./SimpleAutobuyersMultiBox";
 import TickspeedAutobuyerBox from "./TickspeedAutobuyerBox";
+import { PlayerProgress } from "../../../core/player-progress";
 
 export default {
   name: "AutobuyersTab",
@@ -44,7 +45,7 @@ export default {
   },
   methods: {
     update() {
-      this.hasInfinity = PlayerProgress.infinityUnlocked();
+      this.hasInfinity = PlayerProgress.infinityUnlocked() || PlayerProgress.mendingUnlocked();
       this.hasContinuum = Laitela.continuumActive;
       this.checkADAutoStatus();
     },

@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { AutobuyerState } from "./autobuyer";
 
 export class SacrificeAutobuyerState extends AutobuyerState {
@@ -10,7 +11,7 @@ export class SacrificeAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return EternityMilestone.autoIC.isReached || InfinityChallenge(2).isCompleted;
+    return EternityMilestone.autoIC.isReached || InfinityChallenge(2).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get multiplier() {

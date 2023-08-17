@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { UpgradeableAutobuyerState } from "./autobuyer";
 
 export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
@@ -10,13 +11,14 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get isUnlocked() {
+    if (PlayerProgress.mendingUnlocked()) return true;
     return Pelle.isDoomed
       ? PelleStrikes.infinity.hasStrike
       : this.canBeUpgraded;
   }
 
   get canBeUpgraded() {
-    return NormalChallenge(12).isCompleted;
+    return NormalChallenge(12).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get baseInterval() {

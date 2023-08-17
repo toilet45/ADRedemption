@@ -82,7 +82,7 @@ export default {
       this.canSpeedrun = player.speedrun.isUnlocked;
       this.inSpeedrun = player.speedrun.isActive;
       this.canModifySeed = Speedrun.canModifySeed();
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       if (!this.loggedIn) return;
       this.userName = Cloud.user.displayName;
     },

@@ -1,22 +1,79 @@
 <script>
-
-import PrimaryButton from "@/components/PrimaryButton";
+import MendingUpgradeButton from "./MendingUpgradeButton";
+import ModalWrapper from "@/components/modals/ModalWrapper";
 
 export default {
   name: "MendingUpgrades",
   components: {
-    PrimaryButton,
+    MendingUpgradeButton
+  },
+  data() {
+    return{
+      mendingPoints: new Decimal(0)
+    };
+  },
+  computed: {
+    upgrades: () => MendingUpgrades.all,
+    costScalingTooltip: () => `Prices start increasing faster above ${format(1e30)} RM and then even faster
+      above ${format(Decimal.NUMBER_MAX_VALUE, 1)} RM`,
+    possibleTooltip: () => `Checkered upgrades are impossible to unlock this Reality. Striped upgrades are
+      still possible.`,
+    lockTooltip: () => `This will only function if you have not already failed the condition or
+      unlocked the upgrade.`,
+    grid: () => []
+  },
+  methods: {
+    id(row, column) {
+      return (row - 1) * 5 + column - 1;
+    },
+    update(){
+      this.mendingPoints.copyFrom(Currency.mendingPoints.value)
+    }
   }
 };
 
 </script>
 
 <template>
-    <div class="l-break-infinity-tab">
-        <h1>test</h1>
+<div class="c-remains-amount">
+  You have <span class="c-remains-amount__accent">{{ format(mendingPoints, 2) }}</span> {{ pluralize("Multiversal Remain", mendingPoints )}}.
+    <div class="l-mending-upgrade-grid">
+      <div
+        v-for=" row in 1"
+        key="row"
+        class="l-mending-upgrade-grid__row">
+      <MendingUpgradeButton 
+        v-for="column in 3"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+        class="l-mending-upgrade-grid__cell"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
+.c-remains-amount {
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
 
+.l-mending-upgrade-grid{
+  display: flex;
+  flex-direction: column;
+}
+
+.l-mending-upgrade-grid__row{
+  display: flex;
+  flex-direction: row;
+}
+
+.l-mending-upgrade-grid__cell{
+  margin: 0.5rem 0.8rem;
+}
+.c-remains-amount__accent {
+  font-size: 2rem;
+  color: var(--color-mending);
+}
 </style>

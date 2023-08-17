@@ -2,6 +2,7 @@
 import NormalAchievementRow from "./NormalAchievementRow";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import SwapAchievementImagesButton from "./SwapAchievementImagesButton";
+import { PlayerProgress } from "../../../core/player-progress";
 
 export default {
   name: "NormalAchievementsTab",
@@ -120,7 +121,29 @@ export default {
       return this.renderedRowIndices.includes(row);
     },
     isObscured(row) {
-      return this.isDoomed ? false : row === 17;
+      switch(true){
+        case PlayerProgress.mendingUnlocked():{
+          return false; //temporary show all until Rapture (or Kohler's Realm) is implemented
+        }
+        case this.isDoomed:{ //show row 18*, but not beyond, don't want to spoil the new content for people that don't read the feature list *(row is a zero based index)
+          return row >= 18; //acutally >=17
+        }
+        case PlayerProgress.realityUnlocked():{  //vanilla logic applies
+          return row >= 17;
+        }
+        case PlayerProgress.eternityUnlocked():{ //hide "Snap Back to Reality" and beyond :trollye: (idk why I'm doing this, you've probably already played vanilla before playing this)
+          return row >= 13;
+        }
+        case PlayerProgress.hasBroken():{ //hide "8 nobody got time for that" and beyond
+          return row >= 11
+        }
+        case PlayerProgress.infinityUnlocked():{ //hide "Limit Break" and beyond
+          return row >= 6;
+        }
+        default:{ //hide everything except row 1
+         return row >= 1;
+        }
+      }
     },
     timeDisplay,
     timeDisplayNoDecimals,

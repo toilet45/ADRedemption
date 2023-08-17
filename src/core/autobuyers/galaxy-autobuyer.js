@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { UpgradeableAutobuyerState } from "./autobuyer";
 
 export class GalaxyAutobuyerState extends UpgradeableAutobuyerState {
@@ -10,12 +11,13 @@ export class GalaxyAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get isUnlocked() {
+    if(PlayerProgress.mendingUnlocked()) return true;
     if (Pelle.isDisabled("galaxyAutobuyer")) return false;
     return this.canBeUpgraded;
   }
 
   get canBeUpgraded() {
-    return NormalChallenge(11).isCompleted;
+    return NormalChallenge(11).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get baseInterval() {

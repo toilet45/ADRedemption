@@ -1,4 +1,6 @@
 <script>
+import { PlayerProgress } from '../../../core/player-progress';
+
 export default {
   name: "BigCrunchButton",
   data() {
@@ -79,7 +81,7 @@ export default {
       this.infinityGoal.copyFrom(Player.infinityGoal);
       this.inAntimatterChallenge = Player.isInAntimatterChallenge;
       this.headerTextColored = player.options.headerTextColored;
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
 
       const gainedIP = gainedInfinityPoints();
       this.currentIP.copyFrom(Currency.infinityPoints);

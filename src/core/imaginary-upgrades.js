@@ -65,10 +65,13 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return (player.reality.imaginaryUpgReqs & (1 << this.id)) !== 0;
+    return (player.reality.imaginaryUpgReqs & (1 << this.id)) !== 0 || (MendingMilestone.four.isReached && this.id !=25 && this.id != 15);
   }
 
   get isPossible() {
+    if(MendingMilestone.four.isReached && this.id != 25 && this.id != 15){
+      return true;
+    }
     return this.config.hasFailed ? !this.config.hasFailed() : true;
   }
 

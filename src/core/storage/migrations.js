@@ -1,4 +1,5 @@
 import { deepmergeAll } from "@/utility/deepmerge";
+import { DC } from "../constants";
 
 // WARNING: Don't use state accessors and functions from global scope here, that's not safe in long-term
 export const migrations = {
@@ -404,6 +405,54 @@ export const migrations = {
         }
       }
     },
+    32: player => {
+      //this is the 8-16-23 Redemption Release
+
+      player.auto.dilationUpgrades.all[11] = { isActive: false, lastTick: 0};
+      player.auto.dilationUpgrades.all[12] = { isActive: false, lastTick: 0};
+      player.auto.dilationUpgrades.all[13] = { isActive: false, lastTick: 0};
+      player.requirementChecks.mending = {
+        isEnd: false
+      };
+      player.records.thisMend = {
+        time: Number.MAX_VALUE,
+        realTime: Number.MAX_VALUE,
+        maxAM: DC.D0,
+        maxIP: DC.D0,
+        maxEP: DC.D0,
+        maxRM: DC.D0,
+        maxiM: 0,
+        maxRem: 0,
+      };
+      player.records.bestMend = {
+        time: Number.MAX_VALUE,
+        realTime: Number.MAX_VALUE,
+      };
+      player.speedrun.isUnlocked = true;
+      player.mends = DC.D0,
+      player.mending = {
+        mendingPoints: DC.D0,
+        upgradeBits: 0,
+        reqLock: {
+          mending: 0,
+        },
+        rebuyables: {
+          1: 0,
+        },
+      };
+      player.celestials.destroyer = {
+        quoteBits: 0,
+      };
+      player.options.confirmations.mending = true;
+      player.options.awayProgress = {      
+        mends: true,
+        mendingPoints: true
+      };
+      player.mendingPoints = DC.D0;
+      player.mends = DC.D0;
+      player.mendingUpgrades = new Set();
+      player.mvrmultUpgrades = 0;
+    }
   },
 
   normalizeTimespans(player) {

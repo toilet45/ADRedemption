@@ -1,4 +1,6 @@
 <script>
+import { MendingMilestone } from "../../../core/mending";
+import { PlayerProgress } from "../../../core/player-progress";
 import DilationButton from "./DilationButton";
 import DilationUpgradeButton from "./DilationUpgradeButton";
 
@@ -106,7 +108,7 @@ export default {
       this.galaxyThreshold.copyFrom(player.dilation.nextThreshold);
       this.baseGalaxies = player.dilation.baseTachyonGalaxies;
       this.totalGalaxies = player.dilation.totalTachyonGalaxies;
-      this.hasPelleDilationUpgrades = PelleRifts.paradox.milestones[0].canBeApplied;
+      this.hasPelleDilationUpgrades = PelleRifts.paradox.milestones[0].canBeApplied || MendingMilestone.two.isReached;
       if (this.baseGalaxies < 500 && DilationUpgrade.doubleGalaxies.isBought) {
         this.tachyonGalaxyGain = DilationUpgrade.doubleGalaxies.effectValue;
       } else {

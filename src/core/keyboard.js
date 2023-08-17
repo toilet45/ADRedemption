@@ -121,7 +121,7 @@ export class GameKeyboard {
 const spins = [];
 
 function executeKey(action) {
-  if (ui.$viewModel.modal.progressBar !== undefined || GameEnd.endState >= END_STATE_MARKERS.INTERACTIVITY_DISABLED) {
+  if (ui.$viewModel.modal.progressBar !== undefined){// || GameEnd.endState >= END_STATE_MARKERS.INTERACTIVITY_DISABLED) {
     return undefined;
   }
   return action();

@@ -181,7 +181,7 @@ export const GameStorage = {
   },
 
   importAsFile() {
-    if (GameEnd.creditsEverClosed) return;
+    if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
     const reader = new FileReader();
     const text = reader.readAsText(file);
     this.import(text);

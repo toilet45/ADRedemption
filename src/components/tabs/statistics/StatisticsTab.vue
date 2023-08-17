@@ -49,6 +49,16 @@ export default {
         bestRate: new Decimal(0),
         bestRarity: 0,
       },
+      mending: {
+        isUnlocked: false,
+        count: 0,
+        best: TimeSpan.zero,
+        bestReal: TimeSpan.zero,
+        this: TimeSpan.zero,
+        thisReal: TimeSpan.zero,
+        totalTimePlayed: TimeSpan.zero,
+        bestRate: new Decimal(0),
+      },
       matterScale: [],
       lastMatterTime: 0,
       paperclips: 0,
@@ -96,6 +106,8 @@ export default {
       const infinity = this.infinity;
       const bestInfinity = records.bestInfinity;
       infinity.isUnlocked = isInfinityUnlocked;
+
+
       if (isInfinityUnlocked) {
         infinity.count.copyFrom(Currency.infinities);
         infinity.banked.copyFrom(Currency.infinitiesBanked);
@@ -141,6 +153,20 @@ export default {
         reality.bestRate.copyFrom(bestReality.RMmin);
         reality.bestRarity = Math.max(strengthToRarity(bestReality.glyphStrength), 0);
       }
+
+      const isMendingUnlocked = progress.isMendingUnlocked;
+      const mending = this.mending;
+      mending.isUnlocked = isMendingUnlocked;
+      const bestMend = records.bestMend;
+      if (isMendingUnlocked) {
+        mending.count = Decimal.floor(Currency.mends.value);
+        mending.best.setFrom(bestMend.time);
+        mending.bestReal.setFrom(bestMend.realTime);
+        mending.this.setFrom(records.thisMend.time);
+        mending.thisReal.setFrom(records.thisMend.realTime);
+        mending.totalTimePlayed.setFrom(records.totalTimePlayed);
+      }
+
       this.updateMatterScale();
 
       this.isDoomed = Pelle.isDoomed;
@@ -320,6 +346,24 @@ export default {
       <div>Your best Glyph rarity is {{ formatRarity(reality.bestRarity) }}.</div>
       <br>
     </div>
+    <div
+      v-if="mending.isUnlocked"
+      class="c-stats-tab-subheader c-stats-tab-general"
+    >
+      <div class="c-stats-tab-title c-stats-tab-mending">
+        Mending
+      </div>
+      <div>
+        You have mended the Mulitverse {{ quantifyInt("time", mending.count) }}.
+      </div>
+      <div v-if="mending.hasBest">
+        Your fastest Mend was {{ mending.best.toStringShort() }}.
+      </div>
+      <div>
+        You have spent {{ mending.this.toStringShort() }} in this Mend. ({{ mending.thisReal.toStringShort() }} real time)
+      </div>
+      <br>
+    </div>
   </div>
 </template>
 
@@ -355,5 +399,9 @@ export default {
 
 .c-stats-tab-doomed {
   color: var(--color-pelle--base);
+}
+
+.c-stats-tab-mending {
+  color: var(--color-mending);
 }
 </style>

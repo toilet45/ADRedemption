@@ -157,7 +157,7 @@ export default {
       this.peakEPRateVal.copyFrom(player.records.thisEternity.bestEPminVal);
       this.peakEPRate.copyFrom(player.records.thisEternity.bestEPmin);
       this.showEPRate = this.peakEPRate.lte(this.rateThreshold);
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
     },
     updateChallengeWithRUPG() {
       const ec = EternityChallenge.current;

@@ -104,7 +104,7 @@ export default {
       this.remoteStart = Galaxy.remoteStart;
       this.lockText = Galaxy.lockText;
       this.canBulkBuy = EternityMilestone.autobuyMaxGalaxies.isReached;
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.GALAXY);
     },
     buyGalaxy(bulk) {

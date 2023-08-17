@@ -1,4 +1,6 @@
 import { DC } from "./constants";
+import { Currency } from "./currency";
+import { MendingUpgrade } from "./mending-upgrades";
 
 /**
  * Object that manages the selection of glyphs offered to the player
@@ -119,7 +121,7 @@ export function simulatedRealityCount(advancePartSimCounters) {
  */
 export function requestManualReality() {
   if (GlyphSelection.active || !isRealityAvailable()) return;
-  if (GameEnd.creditsEverClosed) return;
+  if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
   if (player.options.confirmations.glyphSelection || ui.view.shiftDown) {
     Modal.reality.show();
     return;
@@ -291,10 +293,16 @@ function giveRealityRewards(realityProps) {
     realityProps.gainedGlyphLevel.actualLevel, realityAndPPMultiplier, multiplier,
     MachineHandler.projectedIMCap);
   Currency.realities.add(realityAndPPMultiplier);
-  Currency.perkPoints.add(realityAndPPMultiplier);
+  if(MendingMilestone.one.isReached){
+    Currency.perkPoints.add(5 * realityAndPPMultiplier);
+  }
+  else{
+    Currency.perkPoints.add(realityAndPPMultiplier);
+  }
   if (TeresaUnlocks.effarig.canBeApplied) {
     Currency.relicShards.add(realityProps.gainedShards * multiplier);
   }
+
   if (multiplier > 1 && Enslaved.boostReality) {
     // Real time amplification is capped at 1 second of reality time; if it's faster then using all time at once would
     // be wasteful. Being faster than 1 second will only use as much time as needed to get the 1-second factor instead.
@@ -603,6 +611,7 @@ export function finishProcessReality(realityProps) {
   initializeChallengeCompletions(true);
 
   Currency.infinities.reset();
+  if (MendingUpgrade(2).isBought) Currency.infinities.bumpTo(DC.E12)
   Currency.infinitiesBanked.reset();
   player.records.bestInfinity.time = 999999999999;
   player.records.bestInfinity.realTime = 999999999999;
@@ -613,11 +622,15 @@ export function finishProcessReality(realityProps) {
   player.galaxies = 0;
   player.partInfinityPoint = 0;
   player.partInfinitied = 0;
-  player.break = false;
+  if (!PlayerProgress.mendingUnlocked()) player.break = false;
   player.IPMultPurchases = 0;
   Currency.infinityPower.reset();
   Currency.timeShards.reset();
   Replicanti.reset(true);
+  if(MendingUpgrade(2).isBought){
+    Replicanti.amount = Replicanti.amount.clampMin(1);
+    Replicanti.unlock(true);
+  }
 
   Currency.eternityPoints.reset();
 
@@ -630,7 +643,7 @@ export function finishProcessReality(realityProps) {
   player.records.bestEternity.realTime = 999999999999;
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;
-  if (!PelleUpgrade.keepEternityChallenges.canBeApplied) player.eternityChalls = {};
+  if (!PelleUpgrade.keepEternityChallenges.canBeApplied && !MendingUpgrade(3).isBought) player.eternityChalls = {};
   player.reality.unlockedEC = 0;
   player.reality.lastAutoEC = 0;
   player.challenge.eternity.current = 0;
@@ -705,8 +718,8 @@ export function finishProcessReality(realityProps) {
   resetTickspeed();
   AchievementTimers.marathon2.reset();
   Currency.infinityPoints.reset();
-
-  if (RealityUpgrade(10).isBought) applyRUPG10();
+  if (MendingUpgrade(2).isBought) Currency.eternities.bumpTo(DC.E6)
+  else if (RealityUpgrade(10).isBought) applyRUPG10();
   else Tab.dimensions.antimatter.show();
 
   Lazy.invalidateAll();

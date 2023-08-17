@@ -14,7 +14,11 @@ function rebuyable(config) {
     formatEffect: config.formatEffect,
     formatCost: config.formatCost,
     purchaseCap: config.purchaseCap,
-    reachedCap: () => player.dilation.rebuyables[config.id] >= config.purchaseCap,
+    pellePurchaseCap: config.pellePurchaseCap, //we now need a new pellePurchaseCap to uncap certain rebuyables depending on if you're in Pelle or not, thanks to Spec for the fix
+    reachedCap: () =>{ 
+      if (Pelle.isDoomed) return player.dilation.rebuyables[config.id] >= config.pellePurchaseCap;
+      return player.dilation.rebuyables[config.id] >= config.purchaseCap;
+    },
     pelleOnly: Boolean(config.pelleOnly),
     rebuyable: true
   };
@@ -45,7 +49,8 @@ export const dilationUpgrades = {
       return formatX(value, 2, nonInteger ? 2 : 0);
     },
     formatCost: value => format(value, 2),
-    purchaseCap: Number.MAX_VALUE
+    purchaseCap: Number.MAX_VALUE,
+    pellePurchaseCap: Number.MAX_VALUE,
   }),
   galaxyThreshold: rebuyable({
     id: 2,
@@ -64,7 +69,8 @@ export const dilationUpgrades = {
         Next: ${formatX(getTachyonGalaxyMult(nextEffect), 4, 4)}`;
     },
     formatCost: value => format(value, 2),
-    purchaseCap: 38
+    purchaseCap: 38,
+    pellePurchaseCap: 38,
   }),
   tachyonGain: rebuyable({
     id: 3,
@@ -82,7 +88,8 @@ export const dilationUpgrades = {
     },
     formatEffect: value => formatX(value, 2),
     formatCost: value => format(value, 2),
-    purchaseCap: Number.MAX_VALUE
+    purchaseCap: Number.MAX_VALUE, //cap at x1e2000
+    pellePurchaseCap: Number.MAX_VALUE,
   }),
   doubleGalaxies: {
     id: 4,
@@ -150,11 +157,18 @@ export const dilationUpgrades = {
     initialCost: 1e14,
     increment: 100,
     pelleOnly: true,
-    description: () => `${formatX(5)} Dilated Time gain`,
-    effect: bought => Decimal.pow(5, bought),
-    formatEffect: value => formatX(value, 2),
+    description: () =>{
+      if(Pelle.isDoomed) return`${formatX(5)} Dilated Time gain`; 
+      return `${formatX(1.75, 2, 2)} Dilated Time gain`;
+    },
+    effect: bought =>  {
+      if (Pelle.isDoomed) return Decimal.pow(5, bought);
+      return Decimal.pow(1.75, bought);
+    },
+    formatEffect: value => formatX(value, 2, 2),
     formatCost: value => format(value, 2),
-    purchaseCap: Number.MAX_VALUE
+    purchaseCap: 206, //cap at e50
+    pellePurchaseCap: Number.MAX_VALUE,
   }),
   galaxyMultiplier: rebuyable({
     id: 12,
@@ -162,10 +176,17 @@ export const dilationUpgrades = {
     increment: 1000,
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
-    effect: bought => bought + 1,
-    formatEffect: value => `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`,
+    effect: bought => {
+      if (Pelle.isDoomed) return bought + 1;
+      return (bought * 0.1) + 1;
+    },
+    formatEffect: value => {
+      if (Pelle.isDoomed) return `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`;
+      return `${formatX(value, 2, 1)} ➜ ${formatX(value + 0.1, 2, 1)}`;
+    },
     formatCost: value => format(value, 2),
-    purchaseCap: Number.MAX_VALUE
+    purchaseCap: 10,
+    pellePurchaseCap: Number.MAX_VALUE,
   }),
   tickspeedPower: rebuyable({
     id: 13,
@@ -173,17 +194,29 @@ export const dilationUpgrades = {
     increment: 1e4,
     pelleOnly: true,
     description: "Gain a power to Tickspeed",
-    effect: bought => 1 + bought * 0.03,
-    formatEffect: value => `${formatPow(value, 2, 2)} ➜ ${formatPow(value + 0.03, 2, 2)}`,
+    effect: bought => {
+      if (Pelle.isDoomed) return 1 + bought * 0.03;
+      return 1 + bought * 0.02;
+    },
+    formatEffect: value =>{ 
+      if (Pelle.isDoomed) return `${formatPow(value, 2, 2)} ➜ ${formatPow(value + 0.03, 2, 2)}`;
+      return `${formatPow(value, 2, 2)} ➜ ${formatPow(value + 0.02, 2, 2)}`;
+    },
     formatCost: value => format(value, 2),
-    purchaseCap: Number.MAX_VALUE
+    purchaseCap: 10,
+    pellePurchaseCap: Number.MAX_VALUE,
   }),
   galaxyThresholdPelle: {
     id: 14,
     cost: 1e45,
     pelleOnly: true,
-    description: "Apply a cube root to the Tachyon Galaxy threshold",
-    effect: 1 / 3
+    get description () {
+      return Pelle.isDoomed ? "Apply a cube root to the Tachyon Galaxy threshold" : "Apply a 1.1th root to the Tachyon Galaxy threshold";
+    },
+    effect: () => {
+      if (Pelle.isDoomed) return 1/3;
+      return 1/1.1;
+    },
   },
   flatDilationMult: {
     id: 15,

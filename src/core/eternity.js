@@ -1,6 +1,8 @@
 import { GameMechanicState, SetPurchasableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
+import { MendingUpgrade } from "./mending-upgrades";
+import { Currency } from "./currency";
 
 function giveEternityRewards(auto) {
   player.records.bestEternity.time = Math.min(player.records.thisEternity.time, player.records.bestEternity.time);
@@ -60,7 +62,7 @@ export function eternityAnimation() {
 
 export function eternityResetRequest() {
   if (!Player.canEternity) return;
-  if (GameEnd.creditsEverClosed) return;
+  if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
   askEternityConfirmation();
 }
 
@@ -121,7 +123,10 @@ export function eternity(force, auto, specialConditions = {}) {
     respecTimeStudies(auto);
     player.respec = false;
   }
-
+  Currency.infinities.reset();
+  if(MendingUpgrade(2).isBought){
+    Currency.infinities.bumpTo(DC.E12);
+  }
   Currency.infinityPoints.reset();
   InfinityDimensions.resetAmount();
   player.records.thisInfinity.bestIPmin = DC.D0;
@@ -174,7 +179,7 @@ export function animateAndEternity(callback) {
 export function initializeChallengeCompletions(isReality) {
   NormalChallenges.clearCompletions();
   if (!PelleUpgrade.keepInfinityChallenges.canBeApplied) InfinityChallenges.clearCompletions();
-  if (!isReality && EternityMilestone.keepAutobuyers.isReached || Pelle.isDoomed) {
+  if ((!isReality && EternityMilestone.keepAutobuyers.isReached) || Pelle.isDoomed || MendingMilestone.one.isReached) {
     NormalChallenges.completeAll();
   }
   if (Achievement(133).isUnlocked && !Pelle.isDoomed) InfinityChallenges.completeAll();
@@ -233,9 +238,13 @@ function askEternityConfirmation() {
 }
 
 export function gainedEternities() {
+  let eternityGain = new Decimal(1);
+  if (MendingMilestone.one.isReached){
+    eternityGain = eternityGain.times(10000);
+  }
   return Pelle.isDisabled("eternityMults")
-    ? new Decimal(1)
-    : new Decimal(getAdjustedGlyphEffect("timeetermult"))
+    ? eternityGain
+    : eternityGain.times(getAdjustedGlyphEffect("timeetermult"))
       .timesEffectsOf(RealityUpgrade(3), Achievement(113))
       .pow(AlchemyResource.eternity.effectValue);
 }

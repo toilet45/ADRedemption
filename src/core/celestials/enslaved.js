@@ -281,7 +281,7 @@ export const Tesseracts = {
 
   buyTesseract() {
     if (!this.canBuyTesseract) return;
-    if (GameEnd.creditsEverClosed) return;
+    if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
     player.celestials.enslaved.tesseracts++;
   },
 

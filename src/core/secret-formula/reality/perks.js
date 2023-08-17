@@ -8,6 +8,7 @@ export const PERK_FAMILY = {
   REALITY: "REALITY",
   AUTOMATION: "AUTOMATION",
   ACHIEVEMENT: "ACHIEVEMENT",
+  MENDING: "MENDING",
 };
 
 // This function isn't used in-game, see note below for its intended usage
@@ -163,14 +164,24 @@ export const perks = {
     id: 42,
     label: "DU1",
     family: PERK_FAMILY.DILATION,
-    description: "After unlocking Dilation, automatically unlock the second row of Dilation Upgrades for free.",
+    get description(){ 
+      if (MendingMilestone.two.isReached){
+        return "After unlocking Dilation, automatically unlock the third row of Dilation Upgrades for free."
+      }
+      return "After unlocking Dilation, automatically unlock the second row of Dilation Upgrades for free."
+    },
     layoutPosList: [125433, 81801, 79803, 79398, 80200, 97510],
   },
   autounlockDilation2: {
     id: 43,
     label: "DU2",
     family: PERK_FAMILY.DILATION,
-    description: "After unlocking Dilation, automatically unlock the third row of Dilation Upgrades for free.",
+    get description(){ 
+      if (MendingMilestone.two.isReached){
+        return "After unlocking Dilation, automatically unlock the fourth and fifth row of Dilation Upgrades for free."
+      }
+      return "After unlocking Dilation, automatically unlock the third row of Dilation Upgrades for free."
+    },
     layoutPosList: [128662, 82201, 79403, 79397, 80203, 85513],
   },
   autounlockDilation3: {
@@ -507,7 +518,27 @@ export const perks = {
     automatorPoints: 10,
     shortDescription: () => "Keep Achievements on Reality",
     layoutPosList: [29761, 81402, 81403, 79404, 79803, 84639],
-  }
+  },
+  /*startRealityUpgrades: {
+    id: 300,
+    label: "SRU",
+    family: PERK_FAMILY.MENDING,
+    get description(){
+      return `Start every Mend with all Reality Upgrades.`;
+    },
+    //effect: 10,
+    layoutPosList: [91508, 83000, 79000, 80196, 80212, 71046],
+  },
+  startTeresaBest: {
+    id: 301,
+    label: "STB",
+    family: PERK_FAMILY.MENDING,
+    get description(){
+      return `Start every Mend with Teresa's Reality completed, and its best antimatter at ${format(DC.E1E9)}.`;
+    },
+    //effect: 10,
+    layoutPosList: [94343, 83000, 79000, 80196, 80212, 71046],
+  }*/
 };
 
 export const perkConnections = (function() {
@@ -550,6 +581,7 @@ export const perkConnections = (function() {
     [p.achievementGroup2, p.achievementGroup3],
     [p.achievementGroup3, p.achievementGroup4],
     [p.achievementGroup4, p.achievementGroup5],
+    //[p.startRealityUpgrades, p.startTeresaBest],
   ];
   const connections = {};
   for (const perk of Object.values(perks)) {

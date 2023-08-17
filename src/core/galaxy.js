@@ -134,7 +134,7 @@ function galaxyReset() {
 
 export function manualRequestGalaxyReset(bulk) {
   if (!Galaxy.canBeBought || !Galaxy.requirement.isSatisfied) return;
-  if (GameEnd.creditsEverClosed) return;
+  if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
   if (RealityUpgrade(7).isLockingMechanics && player.galaxies > 0) {
     RealityUpgrade(7).tryShowWarningModal();
     return;

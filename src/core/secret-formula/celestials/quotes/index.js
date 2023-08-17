@@ -1,3 +1,4 @@
+import { destroyerQuotes } from "./destroyer";
 import { effarigQuotes } from "./effarig";
 import { enslavedQuotes } from "./enslaved";
 import { laitelaQuotes } from "./laitela";
@@ -13,5 +14,6 @@ export const quotes = {
   v: vQuotes,
   ra: raQuotes,
   laitela: laitelaQuotes,
-  pelle: pelleQuotes
+  pelle: pelleQuotes,
+  destroyer: destroyerQuotes,
 };

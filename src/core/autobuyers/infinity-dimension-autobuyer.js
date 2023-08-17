@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { IntervaledAutobuyerState } from "./autobuyer";
 
 export class InfinityDimensionAutobuyerState extends IntervaledAutobuyerState {
@@ -26,7 +27,7 @@ export class InfinityDimensionAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get isUnlocked() {
-    return EternityMilestone[`autobuyerID${this.tier}`].isReached || PelleUpgrade.IDAutobuyers.canBeApplied;
+    return EternityMilestone[`autobuyerID${this.tier}`].isReached || PelleUpgrade.IDAutobuyers.canBeApplied || PlayerProgress.mendingUnlocked();
   }
 
   get resetTickOn() {

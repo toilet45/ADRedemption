@@ -27,7 +27,7 @@ export default {
       this.lastLocalSave = GameStorage.lastSaveTime;
       this.lastCloudSave = GameStorage.lastCloudSave;
       this.showTimeSinceSave = player.options.showTimeSinceSave;
-      this.saveDisabled = GameEnd.endState >= END_STATE_MARKERS.INTERACTIVITY_DISABLED;
+      this.saveDisabled = (GameEnd.endState >= END_STATE_MARKERS.INTERACTIVITY_DISABLED); //&& PlayerProgress.mendingUnlocked();
     },
     save() {
       GameStorage.save(false, true);
@@ -42,7 +42,7 @@ export default {
     class="o-save-timer"
     @click="save"
   >
-    <b v-if="saveDisabled">There is nothing left to save.</b>
+    <b v-if="saveDisabled">There is nothing left to save...Or is there?</b>
     <span v-else>Time since last save: {{ timeString }}</span>
   </div>
 </template>

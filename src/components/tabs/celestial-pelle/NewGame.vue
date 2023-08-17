@@ -3,6 +3,7 @@ export default {
   name: "NewGame",
   data() {
     return {
+      gainedMvR: new Decimal(0),
       opacity: 0,
       visible: false,
       hasMoreCosmetics: false,
@@ -19,13 +20,15 @@ export default {
   },
   methods: {
     update() {
+      this.gainedMvR.copyFrom(gainedMendingPoints());
       this.visible = GameEnd.endState > END_STATE_MARKERS.SHOW_NEW_GAME && !GameEnd.removeAdditionalEnd;
       this.opacity = (GameEnd.endState - END_STATE_MARKERS.SHOW_NEW_GAME) * 2;
       this.hasMoreCosmetics = GlyphAppearanceHandler.lockedSets.length > 0;
       this.selectedSetName = GlyphAppearanceHandler.chosenFromModal?.name ?? "None (will choose randomly)";
     },
     startNewGame() {
-      NG.startNewGame();
+      mendingResetRequest();
+      //NG.startNewGame();
     },
     openSelectionModal() {
       Modal.cosmeticSetChoice.show();
@@ -40,20 +43,20 @@ export default {
     :style="style"
   >
     <h2>
-      Reset the entire game, but keep Automator Scripts, Secret Themes, Secret Achievements, and Options.
+      ...I have won, but at what cost. Surely there has to be another way...
     </h2>
-    <h3>You can use the button in the top-right to view the game as it is right now.</h3>
+    <h3>Reset the entire game (including best Challenge Times and Best AM), but keep Automator Scripts, Secret Themes, Achievements, and Options.</h3>
     <div class="c-new-game-button-container">
       <button
         class="c-new-game-button"
         @click="startNewGame"
       >
-        Start over?
+        Mend the Multiverse <!--for <span>{{ format(gainedMvR, 2) }}</span> Multiversal {{ pluralize("Remain", gainedMvR) }}-->
       </button>
     </div>
     <br>
     <h3 v-if="hasMoreCosmetics">
-      For completing the game, you also unlock a new cosmetic set of your choice for Glyphs. These are freely
+      Since Royal is feeling generous today, you also unlock a new cosmetic set of your choice for Glyphs. These are freely
       modifiable once you reach Reality again, but are purely visual and offer no gameplay bonuses.
       <br>
       <button
@@ -71,7 +74,7 @@ export default {
     </h3>
     <br>
     <h3>
-      You can also import "speedrun" to start the game again with additional tracking for speedrunning purposes.
+      This screen is temporary until the fancy graphics are done.
     </h3>
   </div>
 </template>

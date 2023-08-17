@@ -38,6 +38,10 @@ export class DilationTimeStudyState extends TimeStudyState {
       }
       if (Perk.autounlockDilation2.canBeApplied) {
         for (const id of [7, 8, 9]) player.dilation.upgrades.add(id);
+        if (MendingMilestone.two.isReached){
+          player.dilation.upgrades.add(14);
+          player.dilation.upgrades.add(15);
+        }
       }
       if (!Pelle.isDoomed) Currency.tachyonParticles.bumpTo(Perk.startTP.effectOrDefault(0));
       if (Ra.unlocks.unlockDilationStartingTP.canBeApplied && !isInCelestialReality() && !Pelle.isDoomed) {

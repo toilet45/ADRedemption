@@ -34,6 +34,7 @@ export * from "./celestials/pelle/strikes";
 export * from "./celestials/pelle/rifts";
 export * from "./celestials/pelle/galaxy-generator";
 export * from "./celestials/pelle/game-end";
+export * from "./celestials/destroyer";
 export * from "./celestials/celestials";
 
 export * from "./automator";
@@ -90,3 +91,5 @@ export * from "./tab-notifications";
 export * from "./speedrun";
 
 export * from "./automator/script-templates";
+export * from "./mending";
+export * from "./mending-upgrades";

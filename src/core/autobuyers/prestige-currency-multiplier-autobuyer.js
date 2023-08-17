@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { AutobuyerState } from "./autobuyer";
 
 export class IPMultAutobuyerState extends AutobuyerState {
@@ -10,7 +11,7 @@ export class IPMultAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return EternityMilestone.autobuyerIPMult.isReached && !Pelle.isDoomed;
+    return (EternityMilestone.autobuyerIPMult.isReached && !Pelle.isDoomed) || PlayerProgress.mendingUnlocked();
   }
 
   get hasUnlimitedBulk() {
@@ -32,7 +33,7 @@ export class EPMultAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return RealityUpgrade(13).isBought && !Pelle.isDoomed;
+    return (RealityUpgrade(13).isBought && !Pelle.isDoomed) || PlayerProgress.mendingUnlocked();
   }
 
   get hasUnlimitedBulk() {

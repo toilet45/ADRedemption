@@ -73,10 +73,16 @@ class RealityUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
+    if (MendingMilestone.four.isReached){
+      return true;
+    }
     return (player.reality.upgReqs & (1 << this.id)) !== 0;
   }
 
   get isPossible() {
+    if(MendingMilestone.four.isReached){
+        return true;
+    }
     return this.config.hasFailed ? !this.config.hasFailed() : true;
   }
 

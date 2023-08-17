@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { UpgradeableAutobuyerState } from "./autobuyer";
 
 export class DimBoostAutobuyerState extends UpgradeableAutobuyerState {
@@ -10,12 +11,13 @@ export class DimBoostAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get isUnlocked() {
+    if (PlayerProgress.mendingUnlocked()) return true;
     if (Pelle.isDisabled("dimBoostAutobuyer")) return false;
     return this.canBeUpgraded;
   }
 
   get canBeUpgraded() {
-    return NormalChallenge(10).isCompleted;
+    return NormalChallenge(10).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get baseInterval() {

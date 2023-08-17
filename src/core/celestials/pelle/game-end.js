@@ -6,6 +6,7 @@ export const END_STATE_MARKERS = {
   FADE_AWAY: 2.5,
   SAVE_DISABLED: 4, //WILL KEEP SAVE ENABLED FOR MENDING AND BEYOND
   END_NUMBERS: 4.2,
+  DISPLAY_DESTROYER_QUOTES: 4.5,
   CREDITS_START: 4.5, //WILL DISABLE CREDITS ROLL FOR NOW, UNLESS I CAN HAVE TWO SEPERATE SETS OF CREDITS
   SHOW_NEW_GAME: 13, //WE'RE NOT DONE YET, YOU STILL HAVE ANOTHER LAYER TO GO THROUGH
   SPECTATE_GAME: 13.5, //*SEE ABOVE*
@@ -43,7 +44,12 @@ export const GameEnd = {
     if (!this.removeAdditionalEnd && this.endState >= END_STATE_MARKERS.GAME_END &&
         ui.$viewModel.modal.progressBar === undefined) {
       player.isGameEnd = true;
-      this.additionalEnd += Math.min(diff / 1000 / 20, 0.1);
+      if(this.endState < 4.5){
+        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 10;
+      }
+      else{
+        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 50;
+      }
     }
   }
 };

@@ -1,3 +1,5 @@
+import { PlayerProgress } from "../player-progress";
+
 export const progressStages = [
   /**
    * This is used in both the catchup modal and for cloud save comparisons. Due to the fact that it's used for
@@ -159,4 +161,10 @@ export const progressStages = [
     suggestedResource: "Remnants",
     subProgressValue: save => Math.log10(1 + save.celestials.pelle.remnants) / 9,
   },
+  /*{
+    id: PROGRESS_STAGE.MENDING,
+    name: "Mending",
+    hasReached: save => save.celestials?.pelle?.doomed,
+    suggestedResource: "Multiversal Remains"
+  },*/
 ];

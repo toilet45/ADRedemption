@@ -38,7 +38,7 @@ export default {
       } else {
         this.requiredForGain.copyFrom(getTachyonReq());
       }
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
     },
     dilate() {
       if (this.creditsClosed) return;

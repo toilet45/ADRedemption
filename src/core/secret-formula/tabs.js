@@ -1,3 +1,5 @@
+import { PlayerProgress } from "../player-progress";
+
 export const tabs = [
   {
     key: "dimensions",
@@ -176,7 +178,7 @@ export const tabs = [
     name: "Automation",
     id: 4,
     hideAt: 2.1,
-    condition: () => player.records.totalAntimatter.gte(1e40),
+    condition: () => player.records.totalAntimatter.gte(1e40) || PlayerProgress.mendingUnlocked(),
     hidable: true,
     subtabs: [
       {
@@ -365,7 +367,7 @@ export const tabs = [
         name: "Imaginary Upgrades",
         symbol: "<i class='fas fa-level-up-alt'></i>",
         component: "ImaginaryUpgradesTab",
-        condition: () => MachineHandler.isIMUnlocked,
+        condition: () => MachineHandler.isIMUnlocked || PlayerProgress.mendingUnlocked(),
         id: 2,
         hidable: true,
       },
@@ -391,7 +393,7 @@ export const tabs = [
         name: "Glyph Alchemy",
         symbol: "<i class='fas fa-vial'></i>",
         component: "AlchemyTab",
-        condition: () => Ra.unlocks.unlockGlyphAlchemy.canBeApplied,
+        condition: () => Ra.unlocks.unlockGlyphAlchemy.canBeApplied || PlayerProgress.mendingUnlocked(),
         id: 5,
         hidable: true,
       },
@@ -402,7 +404,7 @@ export const tabs = [
     name: "Celestials",
     hideAt: 2.4,
     UIClass: "o-tab-btn--celestial",
-    condition: () => Teresa.isUnlocked,
+    condition: () => Teresa.isUnlocked || PlayerProgress.mendingUnlocked(),
     id: 9,
     hidable: true,
     subtabs: [
@@ -421,6 +423,7 @@ export const tabs = [
         component: "TeresaTab",
         id: 1,
         hidable: true,
+        condition: () => Teresa.isUnlocked 
       },
       {
         key: "effarig",
@@ -445,7 +448,7 @@ export const tabs = [
         name: "V",
         symbol: "⌬",
         component: "VTab",
-        condition: () => Achievement(151).isUnlocked,
+        condition: () => Achievement(151).isUnlocked && player.celestials.enslaved.completed,
         id: 4,
         hidable: true,
       },
@@ -481,9 +484,9 @@ export const tabs = [
   {
     key: "mending",
     name: "Mending",
-    //hideAt: 2.3, //Sequence is disabled
+    hideAt: 2.7, //Sequence is disabled
     UIClass: "o-tab-btn--mending",
-    condition: () => true,//PlayerProgress.mendingUnlocked(),
+    condition: () => PlayerProgress.mendingUnlocked(),
     id: 10,
     hidable: true,
     subtabs: [
@@ -504,11 +507,19 @@ export const tabs = [
         hidable: true,
       },
       {
+        key: "warpreality",
+        name: "Warp Reality [NYI]",
+        symbol: "Ϟ",
+        component: "WarpReality",
+        id: 2,
+        hidable: true,
+      },
+      {
         key: "kohlerrealm",
         name: "Kohler's Realm [NYI]",
-        symbol: "☤",
+        symbol: "<i class='fa-solid fa-staff-snake'></i>",
         component: "KohlersRealm",
-        id: 2,
+        id: 3,
         hidable: true,
       },
     ]

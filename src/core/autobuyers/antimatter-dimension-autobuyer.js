@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { PlayerProgress } from "../player-progress";
 
 import { UpgradeableAutobuyerState } from "./autobuyer";
 
@@ -24,6 +25,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   }
 
   get isUnlocked() {
+    if (PlayerProgress.mendingUnlocked()) return true;
     if (Pelle.isDisabled(`antimatterDimAutobuyer${this.tier}`)) return false;
     return this.data.isBought || this.canBeUpgraded;
   }
@@ -41,7 +43,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   }
 
   get canBeUpgraded() {
-    return NormalChallenge(this.tier).isCompleted;
+    return NormalChallenge(this.tier).isCompleted || PlayerProgress.mendingUnlocked();
   }
 
   get disabledByContinuum() {

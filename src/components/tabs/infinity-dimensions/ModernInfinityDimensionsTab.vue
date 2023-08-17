@@ -69,7 +69,7 @@ export default {
       this.enslavedCompleted = Enslaved.isCompleted;
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
-      this.creditsClosed = GameEnd.creditsEverClosed;
+      this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
     },
     maxAll() {
       InfinityDimensions.buyMax();

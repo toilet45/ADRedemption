@@ -4,13 +4,13 @@ export default {
   data() {
     return {
       mendingPoints: new Decimal(),
-      isVisible: true
+      isVisible: false
     };
   },
   methods: {
     update() {
       this.mendingPoints.copyFrom(Currency.mendingPoints);
-      this.isVisible = true;//PlayerProgress.mendingUnlocked();
+      this.isVisible = PlayerProgress.mendingUnlocked();
     }
   }
 };
@@ -19,7 +19,7 @@ export default {
 <template>
   <div
     v-show="isVisible"
-    class="c-mending-tab__header"
+    class="c-mending-points"
   >
     You have
     <span class="c-mending-tab__mending-points">{{ format(mendingPoints, 2) }}</span>
@@ -28,5 +28,8 @@ export default {
 </template>
 
 <style scoped>
-
+.c-mending-points {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
 </style>

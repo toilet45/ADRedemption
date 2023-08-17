@@ -175,4 +175,8 @@ export const Quotes = {
     GameDatabase.celestials.quotes.pelle,
     config => new CelQuotes(config, "pelle")
   ),
+  destroyer: mapGameDataToObject(
+    GameDatabase.celestials.quotes.destroyer,
+    config => new CelQuotes(config, "destroyer")
+  ),
 };

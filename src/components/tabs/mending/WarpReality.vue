@@ -3,7 +3,7 @@
 import PrimaryButton from "@/components/PrimaryButton";
 
 export default {
-  name: "KohlersRealm",
+  name: "WarpReality",
   components: {
     PrimaryButton,
   }
@@ -13,7 +13,7 @@ export default {
 
 <template>
     <div class="l-break-infinity-tab">
-        <h1>Coming in 5 Hours(tm)</h1>
+        <h1>Coming if post END doesn't break everything</h1>
     </div>
 </template>
 

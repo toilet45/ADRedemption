@@ -1,4 +1,6 @@
 <script>
+import { PlayerProgress } from '../../../core/player-progress';
+
 export default {
   name: "BreakInfinityButton",
   data() {
@@ -30,8 +32,8 @@ export default {
   },
   methods: {
     update() {
-      this.isBroken = player.break;
-      this.isUnlocked = Autobuyer.bigCrunch.hasMaxedInterval;
+      this.isBroken = player.break || PlayerProgress.mendingUnlocked();
+      this.isUnlocked = Autobuyer.bigCrunch.hasMaxedInterval || PlayerProgress.mendingUnlocked();
       this.isEnslaved = Enslaved.isRunning;
     },
     clicked() {

@@ -10,6 +10,8 @@ import { Cloud } from "./core/storage";
 import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
+import { MendingUpgrade } from "./core/mending-upgrades";
+import { MendingMilestone } from "./core/mending";
 
 if (GlobalErrorHandler.handled) {
   throw new Error("Initialization failed");
@@ -101,6 +103,9 @@ export function gainedInfinityPoints() {
   let ip = player.break
     ? Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
     : new Decimal(308 / div);
+  if(MendingMilestone.one.isReached){
+    ip = ip.times(1e20);
+  }
   if (Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY) {
     ip = ip.min(DC.E200);
   }
@@ -117,6 +122,10 @@ export function gainedInfinityPoints() {
   }
 
   return ip.floor();
+}
+
+export function gainedMendingPoints(){
+  return new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1)
 }
 
 function totalEPMult() {
@@ -138,7 +147,9 @@ function totalEPMult() {
 export function gainedEternityPoints() {
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
     gainedInfinityPoints()).log10() / (308 - PelleRifts.recursion.effectValue.toNumber()) - 0.7).times(totalEPMult());
-
+  if (MendingMilestone.one.isReached){
+    ep = ep.times(1e5);
+  }
   if (Teresa.isRunning) {
     ep = ep.pow(0.55);
   } else if (V.isRunning) {
@@ -226,6 +237,14 @@ export function addEternityTime(time, realTime, ep, eternities) {
 
 export function resetEternityRuns() {
   player.records.recentEternities = Array.from(
+    { length: 10 },
+    () => [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]
+  );
+  GameCache.averageRealTimePerEternity.invalidate();
+}
+
+export function resetRealityRuns() {
+  player.records.recentRealities = Array.from(
     { length: 10 },
     () => [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]
   );
@@ -427,7 +446,7 @@ export function gameLoop(passDiff, options = {}) {
   // In certain cases we want to allow the player to interact with the game's settings and tabs, but prevent any actual
   // resource generation from happening - in these cases, we have to make sure this all comes before the hibernation
   // check or else it'll attempt to run the game anyway
-  if (Speedrun.isPausedAtStart() || GameEnd.creditsEverClosed) {
+  if (Speedrun.isPausedAtStart() || (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked())) {
     GameUI.update();
     return;
   }
@@ -520,7 +539,7 @@ export function gameLoop(passDiff, options = {}) {
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
   // updating and game time updating. This is only particularly noticeable when game speed is 1 and the player
   // expects to see identical numbers. We also don't increment the timers if the game has been beaten (Achievement 188)
-  if (!Achievement(188).isUnlocked) {
+  if (!Achievement(188).isUnlocked || (PlayerProgress.mendingUnlocked() && !player.isGameEnd)) {
     player.records.realTimeDoomed += realDiff;
     player.records.realTimePlayed += realDiff;
     player.records.totalTimePlayed += diff;
@@ -534,6 +553,8 @@ export function gameLoop(passDiff, options = {}) {
     }
     player.records.thisReality.realTime += realDiff;
     player.records.thisReality.time += diff;
+    player.records.thisMend.realTime += realDiff;
+    player.records.thisMend.time += diff;
   }
 
   DeltaTimeState.update(realDiff, diff);

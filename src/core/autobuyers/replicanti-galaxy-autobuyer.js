@@ -1,3 +1,4 @@
+import { PlayerProgress } from "../player-progress";
 import { AutobuyerState } from "./autobuyer";
 
 export class ReplicantiGalaxyAutobuyerState extends AutobuyerState {
@@ -10,7 +11,7 @@ export class ReplicantiGalaxyAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return EternityMilestone.autobuyerReplicantiGalaxy.isReached;
+    return EternityMilestone.autobuyerReplicantiGalaxy.isReached || PlayerProgress.mendingUnlocked();
   }
 
   get isEnabled() {

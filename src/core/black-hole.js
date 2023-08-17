@@ -138,7 +138,7 @@ class BlackHoleState {
   }
 
   get isUnlocked() {
-    return this._data.unlocked && !Enslaved.isRunning && !Pelle.isDisabled("blackhole");
+    return (this._data.unlocked && !Enslaved.isRunning && !Pelle.isDisabled("blackhole")) || (MendingMilestone.three.isReached && !Enslaved.isRunning && !Pelle.isDisabled("blackhole"));
   }
 
   get isCharged() {
@@ -221,7 +221,7 @@ class BlackHoleState {
   }
 
   get isPermanent() {
-    return this.dutyCycle >= 0.9999;
+    return this.dutyCycle >= 0.9999 || MendingMilestone.three.isReached;
   }
 
   /**
