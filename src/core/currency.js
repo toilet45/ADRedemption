@@ -484,10 +484,10 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
 
 Currency.mendingPoints = new class extends DecimalCurrency {
   get value() { 
-    return player.mending.mendingPoints; 
+    return player.mendingPoints; 
   }
   set value(value) {
-    player.mending.mendingPoints = value;
+    player.mendingPoints = value;
   }
 
   get startingValue() {

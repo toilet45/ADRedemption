@@ -830,7 +830,7 @@ export function isInCelestialReality() {
 }
 
 function lockAchievementsOnReality() {
-  if (Perk.achievementGroup5.isBought) return;
+  if (Perk.achievementGroup5.isBought || PlayerProgress.mendingUnlocked()) return;
   for (const achievement of Achievements.preReality) {
     achievement.lock();
   }

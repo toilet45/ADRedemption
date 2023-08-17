@@ -879,7 +879,7 @@ button:focus {
 }
 
 .c-mending-button {
-  width: 75%;
+  width: 50rem;
   height: 100%;
   font-family: Typewriter;
   font-size: 1.2rem;
@@ -9538,7 +9538,7 @@ input.o-automator-block-input {
 .t-s6 .o-mending-milestone__reward--locked,
 .t-s10 .o-mending-milestone__reward--locked {
   color: var(--color-mending);
-  background-color: black;
+  background-color: #7F7F7F;
   border-color: var(--color-mending);
   animation: a-time-study 7s infinite;
 }
@@ -9623,13 +9623,13 @@ input.o-automator-block-input {
 }
 
 .c-mending-upgrade-btn--unavailable {
-  color: var(--color-mending-light);
+  color: #000000;
   background-color: var(--color-glyph-undo-disabled);
   cursor: default;
 }
 
 .c-mending-upgrade-btn--unavailable:hover {
-  color: var(--color-mending-light);
+  color: #000000;
   background-color: var(--color-glyph-undo-disabled);
 }
 

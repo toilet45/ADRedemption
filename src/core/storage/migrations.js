@@ -452,6 +452,10 @@ export const migrations = {
       player.mends = DC.D0;
       player.mendingUpgrades = new Set();
       player.mvrmultUpgrades = 0;
+    },
+    34: player =>{
+      player.options.hiddenTabBits = 0;
+      player.mendingPoints = player.mending.mendingPoints;
     }
   },
 

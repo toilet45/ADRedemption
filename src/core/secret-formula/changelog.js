@@ -9,6 +9,44 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 17],
+    name: "The first bugifx",
+    info: 
+    `No new Content this update, just some bugfixes.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: still 7 Mends and both Mending Upgrades.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed Parity of Singularity's timer after the first Mend.</li>
+    <li>Fixed the Mending button being too wide in Modern UI.</li>
+    <li>Fixed readibility of unbought Mending Upgrades in some themes.</li>
+    <li>Fixed readibility of unachieved Mending Milestones in some themes.</li>
+    <li>Fixed save importing disabiling the ability to do speedruns.</li>
+    <li>Fixed pre-Reality achievements reseting on Reality (post Mend).</li>
+    <li>Fixed Mending tab being hidden post-Mend on some imported saves.</li>
+    <li>probably some other stuff I forgot.</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way.</li>
+    <li>The Invert BH button still shows up when Hard V is locked</li>
+    <li>Glyph preset importing can equip more than 1 Effarig/Reality Glyph before the 7 Mend milestone. Please unequip before importing :).</li>
+    <li>Viewing the credits in the "About the game" modal displays incorrectly, you should be able to hit the Escape key to exit.</li>
+    <li>The 2 Mend Milestone is also supposed to give autobuyers for the rebuyable Pelle dilation upgrades, but are currently non-functional. Tip: you can click on them once, then hold the Enter key to rebuy them rapidly.</li>
+    <li>The Mending tab has no icon in the Aero theme</li>
+    </ul>`
+    
+  },
+  {
     date: [2023, 8, 16],
     name: "The 'get a very primitive alpha out before college starts back up'",
     info: 
