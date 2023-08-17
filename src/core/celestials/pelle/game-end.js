@@ -45,10 +45,10 @@ export const GameEnd = {
         ui.$viewModel.modal.progressBar === undefined) {
       player.isGameEnd = true;
       if(this.endState < 4.5){
-        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 10;
+        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1);
       }
       else{
-        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 50;
+        this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 200;
       }
     }
   }

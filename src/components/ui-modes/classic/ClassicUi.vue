@@ -46,7 +46,7 @@ export default {
       // This only exists to force a key-swap after pressing the button to start a new game; the news ticker can break
       // if it isn't redrawn
       this.newGameKey = Pelle.isDoomed;
-      this.hasMendingButton = PlayerProgress.mendingUnlocked() || player.isGameEnd;
+      this.hasMendingButton = PlayerProgress.mendingUnlocked() || (player.isGameEnd && GameEnd.endState >= 14.5);
       this.mendingPoints.copyFrom(Currency.mendingPoints.value.floor());
     }
   },

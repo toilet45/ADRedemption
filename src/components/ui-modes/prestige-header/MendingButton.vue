@@ -1,5 +1,6 @@
 <script>
 import { DC } from '../../../core/constants';
+import { GameEnd } from '../../../core/globals';
 import { PlayerProgress } from '../../../core/player-progress';
 import MendingPointsHeader from '../../MendingPointsHeader.vue';
 
@@ -24,7 +25,7 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = player.isGameEnd;
+            this.canMend = player.isGameEnd && GameEnd.endState >= 14.5;
             this.firstMend = !PlayerProgress.mendingUnlocked();
         },
         mend() {
