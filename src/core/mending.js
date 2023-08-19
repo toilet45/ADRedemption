@@ -70,6 +70,7 @@ export function mendingReset() {
     player.celestials.effarig.unlockBits = 0;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = 0;
+    player.celestials.enslaved.storedReal = 0;
     player.celestials.enslaved.isAutoReleasing = false;
     player.celestials.enslaved.unlocks = [];
     player.celestials.enslaved.run = false;
@@ -80,6 +81,19 @@ export function mendingReset() {
     V.reset();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
+    player.celestials.ra.alchemy = Array.repeat(0, 21)
+      .map(() => ({
+        amount: 0,
+        reaction: false
+      }));
+    player.celestials.ra.highestRefinementValue = {
+      power: 0,
+      infinity: 0,
+      time: 0,
+      replication: 0,
+      dilation: 0,
+      effarig: 0
+    };
     player.celestials.ra.quoteBits = 16383;
     Laitela.reset();
     player.celestials.laitela.quoteBits = 1023;
@@ -127,6 +141,8 @@ export function mendingReset() {
     player.celestials.pelle.collapsed.rifts = false;
     player.celestials.pelle.collapsed.galaxies = false;
     //Reality
+    player.reality.autoAutoClean = false;
+    player.reality.glyphs.trash = 0;
     resetRealityRuns();
     player.records.thisReality = {
       time: 0,
@@ -204,7 +220,10 @@ export function mendingReset() {
     }
     for (let i = 0; i < 2; i++){
       player.blackHole[i].intervalUpgrades = 0;
-      player.blackHole[i].powerUpgrades = MendingMilestone.three.isReached ? 3 : 0;
+      player.blackHole[i].powerUpgrades = 0;
+      if(MendingMilestone.three.isReached){
+        player.blackHole[i].powerUpgrades = 3;
+      }
       player.blackHole[i].durationUpgrades = 0;
       player.blackHole[i].phase = 0;
       player.blackHole[i].unlocked = false;

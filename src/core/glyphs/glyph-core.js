@@ -312,7 +312,10 @@ export const Glyphs = {
       throw new Error("Inconsistent inventory indexing");
     }
     let canEquipSpecial = false;
-    const maxSpecial = 2;
+    let maxSpecial = 1;
+    if (MendingMilestone.five.isReached){
+      maxSpecial = 2;
+    }
     if (["effarig", "reality"].includes(glyph.type)) {
       canEquipSpecial = this.active.countWhere(x => x && x.type === glyph.type) < maxSpecial;
     }

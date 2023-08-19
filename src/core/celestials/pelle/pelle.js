@@ -359,7 +359,7 @@ export const Pelle = {
     return zalgo(str, Math.floor(stage ** 2 * 7));
   },
 
-  endTabNames: "Never Gonna Give You Up Never Gonna Let You Down :)".split(" "),//"End? Is Nigh Destruction Is Imminent Help Us Good Bye Forever".split(" "),
+  endTabNames: "Never Gonna Give You Up Never Gonna Let You Down :) :3".split(" "),//"End? Is Nigh Destruction Is Imminent Help Us Good Bye Forever (NOT)".split(" "),
 
   quotes: Quotes.pelle,
 };

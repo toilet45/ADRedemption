@@ -448,7 +448,7 @@ export const tabs = [
         name: "V",
         symbol: "⌬",
         component: "VTab",
-        condition: () => Achievement(151).isUnlocked && player.celestials.enslaved.completed,
+        condition: () => Achievement(151).isUnlocked && EffarigUnlock.eternity.isUnlocked,
         id: 4,
         hidable: true,
       },
@@ -529,7 +529,7 @@ export const tabs = [
     name: "Shop",
     newUIClass: "shop",
     hideAt: 1.5,
-    condition: () => Cloud.isAvailable,
+    condition: () => true,
     id: 11,
     hidable: true,
     subtabs: [
