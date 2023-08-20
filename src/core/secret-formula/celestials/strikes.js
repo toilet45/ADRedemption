@@ -5,7 +5,7 @@ export const pelleStrikes = {
   infinity: {
     id: 1,
     requirementDescription: "Reach Infinity",
-    penaltyDescription: () => `Antimatter Dimensions are raised to ${formatPow(0.5, 1, 1)}`,
+    penaltyDescription: () => MendingUpgrade(10).isBought ? `Nullified by Mending Upgrade 10` : `Antimatter Dimensions are raised to ${formatPow(0.5, 1, 1)}`,
     rewardDescription: () => `Unlock ${wordShift.wordCycle(PelleRifts.vacuum.name)}
       and get a permanent Infinity Autobuyer`,
     rift: () => PelleRifts.vacuum
@@ -13,14 +13,14 @@ export const pelleStrikes = {
   powerGalaxies: {
     id: 2,
     requirementDescription: "Power-up Galaxies",
-    penaltyDescription: () => `Infinity Dimensions are raised to ${formatPow(0.5, 1, 1)}`,
+    penaltyDescription: () => MendingUpgrade(10).isBought ? `Nullified by Mending Upgrade 10` : `Infinity Dimensions are raised to ${formatPow(0.5, 1, 1)}`,
     rewardDescription: () => `Unlock ${wordShift.wordCycle(PelleRifts.decay.name)}`,
     rift: () => PelleRifts.decay
   },
   eternity: {
     id: 3,
     requirementDescription: "Reach Eternity",
-    penaltyDescription: () => `Replicanti speed slows down even more above ${format(DC.E2000)}`,
+    penaltyDescription: () => MendingUpgrade(10).isBought ? `Nullified by Mending Upgrade 10` : `Replicanti speed slows down even more above ${format(DC.E2000)}`,
     rewardDescription: () => `Unlock ${wordShift.wordCycle(PelleRifts.chaos.name)}`,
     rift: () => PelleRifts.chaos
   },

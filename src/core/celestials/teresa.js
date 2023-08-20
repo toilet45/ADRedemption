@@ -1,4 +1,5 @@
 import { BitUpgradeState, RebuyableMechanicState } from "../game-mechanics";
+import { Pelle } from "../globals";
 import { GameDatabase } from "../secret-formula/game-database";
 
 import { Quotes } from "./quotes";
@@ -128,10 +129,12 @@ class TeresaUnlockState extends BitUpgradeState {
   }
 
   get isEffectActive() {
+    if(MendingUpgrade(5).isBought && this.id === 1 && !Pelle.isDoomed) return true;
     return !this.pelleDisabled;
   }
 
   get canBeUnlocked() {
+    if(MendingUpgrade(5).isBought && this.id === 1 && !Pelle.isDoomed) return true;
     return !this.isUnlocked && Teresa.pouredAmount >= this.price;
   }
 

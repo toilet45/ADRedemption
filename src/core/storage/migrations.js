@@ -456,6 +456,11 @@ export const migrations = {
     34: player =>{
       player.options.hiddenTabBits = 0;
       player.mendingPoints = player.mending.mendingPoints;
+    },
+    35: player =>{
+      if (MendingMilestone.three.isReached){
+        player.celestials.ra.unlockBits += 2097152;
+      }
     }
   },
 

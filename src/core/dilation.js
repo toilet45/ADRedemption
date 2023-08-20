@@ -115,10 +115,11 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
 
 export function getDilationGainPerSecond() {
   if (Pelle.isDoomed) {
+    let x = MendingMilestone.one.isReached ? 100 : 1;
     const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
     return new Decimal(tachyonEffect)
       .timesEffectsOf(DilationUpgrade.dtGain, DilationUpgrade.dtGainPelle, DilationUpgrade.flatDilationMult)
-      .times(ShopPurchase.dilatedTimePurchases.currentMult ** 0.5)
+      .times(ShopPurchase.dilatedTimePurchases.currentMult ** 0.5).times(x)
       .times(Pelle.specialGlyphEffect.dilation).div(1e5);
   }
   let dtRate = new Decimal(Currency.tachyonParticles.value)
@@ -234,9 +235,11 @@ class DilationUpgradeState extends SetPurchasableMechanicState {
     switch(this.id){
       case 4:{
         player.dilation.totalTachyonGalaxies *= 2;
+        break;
       }
       case 10:{
         SpeedrunMilestones(15).tryComplete();
+        break;
       }
       default:{
           //pass

@@ -7,7 +7,7 @@ export const ReplicantiGrowth = {
     return Math.log10(Number.MAX_VALUE);
   },
   get scaleFactor() {
-    if (PelleStrikes.eternity.hasStrike && Replicanti.amount.gte(DC.E2000)) return 10;
+    if (PelleStrikes.eternity.hasStrike && Replicanti.amount.gte(DC.E2000) && !MendingUpgrade(10).isBought) return 10;
     if (Pelle.isDoomed) return 2;
     return AlchemyResource.cardinality.effectValue;
   }
@@ -102,7 +102,7 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
 
   if (overCap) {
     let increases = (amount.log10() - replicantiCap().log10()) / ReplicantiGrowth.scaleLog10;
-    if (PelleStrikes.eternity.hasStrike && amount.gte(DC.E2000)) {
+    if (PelleStrikes.eternity.hasStrike && amount.gte(DC.E2000) && !MendingUpgrade(10).isBought) {
       // The above code assumes in this case there's 10x scaling for every 1e308 increase;
       // in fact, before e2000 it's only 2x.
       increases -= Math.log10(5) * (2000 - replicantiCap().log10()) / ReplicantiGrowth.scaleLog10;
@@ -131,6 +131,9 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(PelleRifts.decay.effectValue);
   totalMult = totalMult.times(Pelle.specialGlyphEffect.replication);
   totalMult = totalMult.times(ShopPurchase.replicantiPurchases.currentMult);
+  if(MendingMilestone.one.isReached){
+    totalMult = totalMult.times(1000);
+  }
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
   const preCelestialEffects = Effects.product(
@@ -143,9 +146,6 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(preCelestialEffects);
   if (TimeStudy(132).isBought && Perk.studyPassive.isBought) {
     totalMult = totalMult.times(3);
-  }
-  if(MendingMilestone.one.isReached){
-    totalMult = totalMult.times(1000);
   }
 
   if (!overCap && Achievement(134).isUnlocked) {

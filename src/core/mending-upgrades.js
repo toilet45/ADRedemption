@@ -1,5 +1,6 @@
 import { Currency } from "./currency";
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
+import { DC } from "./constants";
 
 class MendingUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
@@ -70,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id <= 3;
+    return this.id <= 3 || this.id === 5 || this.id === 9;
   }
 
   get isPossible() {
@@ -102,6 +103,17 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
           EternityChallenge(i).completions = 5;
           if (i === 12) break;
         }
+      }
+      case 5:{
+        player.celestials.teresa.unlockBits += 2;
+        break;
+      }
+      case 9:{
+        player.celestials.teresa.unlockBits += 1;
+        if (player.celestials.teresa.bestRunAM.lt(DC.E1E10)){
+          player.celestials.teresa.bestRunAM = DC.E1E10;
+        }
+        break;
       }
       default:{
           //apparently leaving this blank is equivalent to Python's "pass"

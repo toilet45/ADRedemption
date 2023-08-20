@@ -34,8 +34,10 @@ function askMendingConfirmation() {
 export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
+    player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
+    player.options.hiddenTabBits = 0;
     Currency.mendingPoints.add(gainedMendingPoints());
     Currency.mends.add(1);
     //Start reseting all the things
@@ -61,8 +63,14 @@ export function mendingReset() {
     //Celestials
     player.celestials.teresa.pouredAmount = 0;
     player.celestials.teresa.unlockBits = 0;
+    if (MendingUpgrade(5).isBought){
+      player.celestials.teresa.unlockBits += 2;
+    }
+    if (MendingUpgrade(9).isBought){
+      player.celestials.teresa.unlockBits += 1;
+    }
     player.celestials.teresa.run = false;
-    player.celestials.teresa.bestRunAM = DC.D1;
+    player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
@@ -81,6 +89,9 @@ export function mendingReset() {
     V.reset();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
+    if (MendingMilestone.three.isReached){
+      player.celestials.ra.unlockBits += 2097152;
+    }
     player.celestials.ra.alchemy = Array.repeat(0, 21)
       .map(() => ({
         amount: 0,
@@ -178,7 +189,6 @@ export function mendingReset() {
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     Glyphs.deleteAllUnprotected();
-    console.log("blob");
     player.reality.glyphs.protectedRows = x;
     Perks.find(0).isBought = true; //give START to fix a bug for hardcoded first Reality Glyph reward
     Perks.find(0).onPurchased();

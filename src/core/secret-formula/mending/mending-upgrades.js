@@ -47,8 +47,8 @@ export const mendingUpgrades = [
   },
   {
     id: 5,
-    cost: 1e300,
-    description: () => `Always Have TS181 and ${format(1e18)} RM Teresa Milestone`,
+    cost: 15,
+    description: () => `Always Have TS181 and ${format(1e18)} RM Teresa Milestone (No Effect in Pelle)`,
   },
   rebuyable({
     id: 6,
@@ -69,13 +69,13 @@ export const mendingUpgrades = [
   },
   {
     id: 9,
-    cost: 1e300,
+    cost: 15,
     description: () => `Start every Mend with Teresa Completed and Best AM in their Reality at ${format(DC.E1E10)}`,
   },
   {
     id: 10,
-    cost: 1e300,
-    description: () => "Nullify Pelle Strike penalties (except 5th)",
+    cost: 20,
+    description: () => "Nullify the first 3 Pelle Strike penalties",
   },
   rebuyable({
     id: 11,

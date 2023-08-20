@@ -9,6 +9,44 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 20],
+    name: "Bugfixes, and finally more upgrades",
+    info: 
+    `Even more bugfixes that fix things I overlooked. Note: Since school is starting back up for me. this might be the last patch for a while.
+    Due to this, the new upgrades weren't tested as much
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added Black Hole and Rebuyable Reality Upgrade Autobuyers to 3 Mend Milestone</li>
+    <li>Implemented Mending Upgrades 5 and 9</li>
+    <li>Endgame: 7 Mend Milestone, all non-stripped Mending Upgrades.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed the Inverted BH appearing without Hard V being Unlocked</li>
+    <li>Fixed being able to enter Pelle immediately after Mend</li>
+    <li>Fixed some 1 Mend Milestone multipliers not working in Pelle</li>
+    <li>Made all tabs unhidden on Mend</li>
+    <li>Added "break" statements to some switch statements to avoid uninteneded behavior</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way.</li>
+    <li>Glyph preset importing can equip more than 1 Effarig/Reality Glyph before the 7 Mend milestone. Please unequip before importing :).</li>
+    <li>Viewing the credits in the "About the game" modal displays incorrectly, you should be able to hit the Escape key to exit.</li>
+    <li>The 2 Mend Milestone is also supposed to give autobuyers for the rebuyable Pelle dilation upgrades, but are currently non-functional. Tip: you can click on them once, then hold the Enter key to rebuy them rapidly.</li>
+    <li>The Mending tab has no icon in the Aero theme</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
+    <li>Multipliers fromthe 1 Mend Milestone do not show up on the Multiplier Breakdown</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 19],
     name: "New Content!? no just more bugfixes",
     info: 
@@ -47,7 +85,6 @@ export const changelog = [
     <li>Multipliers fromthe 1 Mend Milestone do not show up on the Multiplier Breakdown</li>
     <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
     </ul>`
-    
   },
   {
     date: [2023, 8, 18],

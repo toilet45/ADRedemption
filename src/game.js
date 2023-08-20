@@ -95,9 +95,10 @@ export function gainedInfinityPoints() {
     TimeStudy(111)
   );
   if (Pelle.isDisabled("IPMults")) {
+    let x = MendingMilestone.one.isReached ? 1e20 : 1;
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)
-      .times(Pelle.specialGlyphEffect.infinity)
+      .times(Pelle.specialGlyphEffect.infinity).times(x)
       .floor();
   }
   let ip = player.break

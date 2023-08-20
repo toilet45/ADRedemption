@@ -173,7 +173,7 @@ class InfinityDimensionState extends DimensionState {
       mult = mult.pow(0.5);
     }
 
-    if (PelleStrikes.powerGalaxies.hasStrike) {
+    if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {
       mult = mult.pow(0.5);
     }
 

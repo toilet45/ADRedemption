@@ -169,7 +169,7 @@ function applyNDPowers(mult, tier) {
 
   multiplier = multiplier.pow(VUnlocks.adPow.effectOrDefault(1));
 
-  if (PelleStrikes.infinity.hasStrike) {
+  if (PelleStrikes.infinity.hasStrike && !MendingUpgrade(10).isBought) {
     multiplier = multiplier.pow(0.5);
   }
 
