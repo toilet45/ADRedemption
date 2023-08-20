@@ -89,9 +89,6 @@ export function mendingReset() {
     V.reset();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
-    if (MendingMilestone.three.isReached){
-      player.celestials.ra.unlockBits += 2097152;
-    }
     player.celestials.ra.alchemy = Array.repeat(0, 21)
       .map(() => ({
         amount: 0,

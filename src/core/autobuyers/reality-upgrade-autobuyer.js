@@ -10,7 +10,10 @@ export class RealityUpgradeAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied || MendingMilestone.three.isReached;
+    if (MendingMilestone.three.isReached){
+      return true;
+    }
+    return Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
   }
 
   get hasUnlimitedBulk() {

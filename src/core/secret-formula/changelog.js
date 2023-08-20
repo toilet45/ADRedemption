@@ -10,6 +10,39 @@ export const changelog = [
    */
   {
     date: [2023, 8, 20],
+    name: "EMERGENCY HOTFIX 1",
+    info: 
+    `out of like Infinite. I was an idiot and tried to do a lazy-man's fix, but it accidently made Mending Upgrade 3 obsolete.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: 7 Mend Milestone, all non-stripped Mending Upgrades.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed 3 Mend Milestone giving Instant ECs (forgot to edit a vue file). If this affects you currently, enjoy the free ECs this Mend</li>
+    <li>Fixed the update notification using my immature username I made when I was 14 (even though it's still in the address bar)</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way.</li>
+    <li>Glyph preset importing can equip more than 1 Effarig/Reality Glyph before the 7 Mend milestone. Please unequip before importing :).</li>
+    <li>Viewing the credits in the "About the game" modal displays incorrectly, you should be able to hit the Escape key to exit.</li>
+    <li>The 2 Mend Milestone is also supposed to give autobuyers for the rebuyable Pelle dilation upgrades, but are currently non-functional. Tip: you can click on them once, then hold the Enter key to rebuy them rapidly.</li>
+    <li>The Mending tab has no icon in the Aero theme</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
+    <li>Multipliers fromthe 1 Mend Milestone do not show up on the Multiplier Breakdown</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 20],
     name: "Bugfixes, and finally more upgrades",
     info: 
     `Even more bugfixes that fix things I overlooked. Note: Since school is starting back up for me. this might be the last patch for a while.

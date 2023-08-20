@@ -21,7 +21,7 @@ export function watchLatestCommit() {
 
         Modal.message.show(
           "Refresh the page (game will be saved), we've got new stuff: " +
-          `"${json.message}" by ${json.author}`,
+          `"${json.message}" - Royal`,
           {
             callback: updateRefresh,
             closeButton: true
