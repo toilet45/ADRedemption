@@ -165,8 +165,8 @@ export const realityUpgrades = [
     id: 12,
     cost: 50,
     requirement: () => `Eternity for ${format(DC.E70)} Eternity Points without completing Eternity Challenge 1`,
-    hasFailed: () => EternityChallenge(1).completions !== 0,
-    checkRequirement: () => Currency.eternityPoints.exponent >= 70 && EternityChallenge(1).completions === 0,
+    hasFailed: () => (EternityChallenge(1).completions !== 0 && !MendingUpgrade(3).isBought),
+    checkRequirement: () => (Currency.eternityPoints.exponent >= 70 && EternityChallenge(1).completions === 0) || (Currency.eternityPoints.exponent >= 70 && MendingUpgrade(3).isBought),
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     canLock: true,
     lockEvent: "complete Eternity Challenge 1",
@@ -223,7 +223,7 @@ export const realityUpgrades = [
     name: "Disparity of Rarity",
     id: 16,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped of uncommon or better rarity
+    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped of uncommon or better rarity
       (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.strength >= 1.5))} equipped)`,
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.strength >= 1.5);
@@ -231,7 +231,7 @@ export const realityUpgrades = [
       const availableSlots = Glyphs.activeSlotCount - Glyphs.activeList.length;
       return equipped + Math.min(availableGlyphs, availableSlots) < 4;
     },
-    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5) === 4,
+    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5) >= 4,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Improve the Glyph rarity formula",
     effect: 1.3,
@@ -241,7 +241,7 @@ export const realityUpgrades = [
     name: "Duplicity of Potency",
     id: 17,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped, each having at least ${formatInt(2)} effects
+    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped, each having at least ${formatInt(2)} effects
       (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && countValuesFromBitmask(g.effects) >= 2))}
       equipped)`,
     hasFailed: () => {
@@ -250,7 +250,7 @@ export const realityUpgrades = [
       const availableSlots = Glyphs.activeSlotCount - Glyphs.activeList.length;
       return equipped + Math.min(availableGlyphs, availableSlots) < 4;
     },
-    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => countValuesFromBitmask(g.effects) >= 2) === 4,
+    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => countValuesFromBitmask(g.effects) >= 2) >= 4,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: () => `${formatPercents(0.5)} chance to get an additional effect on Glyphs`,
     effect: 0.5,
@@ -260,7 +260,7 @@ export const realityUpgrades = [
     name: "Measure of Forever",
     id: 18,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped, each at level ${formatInt(10)} or higher
+    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped, each at level ${formatInt(10)} or higher
       (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.level >= 10))} equipped)`,
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.level >= 10);
@@ -268,7 +268,7 @@ export const realityUpgrades = [
       const availableSlots = Glyphs.activeSlotCount - Glyphs.activeList.length;
       return equipped + Math.min(availableGlyphs, availableSlots) < 4;
     },
-    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.level >= 10) === 4,
+    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.level >= 10) >= 4,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Eternity count boosts Glyph level",
     effect: () => Math.max(Math.sqrt(Currency.eternities.value.plus(1).log10()) * 0.45, 1),

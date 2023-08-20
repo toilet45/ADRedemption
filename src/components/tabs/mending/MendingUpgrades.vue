@@ -39,11 +39,11 @@ export default {
   You have <span class="c-remains-amount__accent">{{ format(mendingPoints, 2) }}</span> {{ pluralize("Multiversal Remain", mendingPoints )}}.
     <div class="l-mending-upgrade-grid">
       <div
-        v-for=" row in 1"
+        v-for=" row in 4"
         key="row"
         class="l-mending-upgrade-grid__row">
       <MendingUpgradeButton 
-        v-for="column in 3"
+        v-for="column in 5"
         :key="id(row, column)"
         :upgrade="upgrades[id(row, column)]"
         class="l-mending-upgrade-grid__cell"

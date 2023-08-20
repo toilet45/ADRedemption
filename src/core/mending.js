@@ -172,14 +172,21 @@ export function mendingReset() {
       iMCapSet: [],
       laitelaSet: [],
     },
+    player.options.confirmations.glyphSelection = true;
     player.reality.unlockedEC = 0;
     Glyphs.unequipAll(true);
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     Glyphs.deleteAllUnprotected();
+    console.log("blob");
     player.reality.glyphs.protectedRows = x;
+    Perks.find(0).isBought = true; //give START to fix a bug for hardcoded first Reality Glyph reward
+    Perks.find(0).onPurchased();
+    if (MendingUpgrade(2).isBought){
+      Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: 70, rawLevel:70 },undefined, 'power'));
+    } // thanks to yodi555
     player.realities = MendingUpgrade(2).isBought ? 10000 : 0;
-    for (const perkId of [0, 10, 12, 13, 14, 15, 16, 17, 30, 31, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 70, 71, 72, 73, 80, 81, 82, 83, 100, 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205]) {
+    for (const perkId of [10, 12, 13, 14, 15, 16, 17, 30, 31, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 70, 71, 72, 73, 80, 81, 82, 83, 100, 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205]) {
       const perk = Perks.find(perkId); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
       perk.isBought = false;
       if (MendingMilestone.three.isReached){

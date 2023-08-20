@@ -1,8 +1,8 @@
 export const mendingMilestones = {
   one: {
     mends: 1,
-    reward: "Start with Infinity broken and all pre-Reality autobuyers maxed (Kept on Doomed Reality). Gain a multiplier to various resources (hover for detals).",
-    activeCondition: () => (true ? `${formatX(1e20,0)} IP, ${formatX(100000,0)} EP, ${formatX(10000,0)} Eternities, ${formatX(100,0)} Dilated Time, ${formatX(5,0)} Perk Points, ${formatX(25,0)} Memory Gain, ${formatX(50, 0, )} Dark Energy Gain, ${formatX(5, 0)} Singulatity Gain, ${formatX(1.1, 0, 1)} Remnant Gain, ${formatX(10, 0)} Reality Shard Gain` : "this is a bug if this text appears"),
+    reward: "Start with Infinity broken, all pre-Reality autobuyers maxed (Kept on Doomed Reality), and the START perk. Gain a multiplier to various resources (hover for detals).",
+    activeCondition: () => (true ? `${formatX(1e20,0)} IP, ${formatX(1000,0)} Replicanti Gain, ${formatX(100000,0)} EP, ${formatX(10000,0)} Eternities, ${formatX(100,0)} Dilated Time, ${formatX(5,0)} Perk Points, ${formatX(25,0)} Memory Gain, ${formatX(50, 0, )} Dark Energy Gain, ${formatX(5, 0)} Singulatity Gain, ${formatX(1.1, 0, 1)} Remnant Gain, ${formatX(10, 0)} Reality Shard Gain` : "this is a bug if this text appears"),
   },
   two: {
     mends: 2,
@@ -22,6 +22,6 @@ export const mendingMilestones = {
   },
   six: {
     mends: 10,
-    reward: "TO BE IMPLEMENTED",//"[NYI] Unlock additional Time Studies and Perks (these Perks are not affected by 3 Mend milestone, but are kept on Mend).",
+    reward: "TO BE IMPLEMENTED",
   }
 };

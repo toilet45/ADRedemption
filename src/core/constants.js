@@ -195,6 +195,7 @@ export const DC = deepFreeze({
   //new Constants are here
   END:                new Decimal("1e9000000000000000"),
   E1E9:                 new Decimal("1e1000000000"),
+  E1E10:                 new Decimal("1e10000000000"),
 });
 
 window.AUTOBUYER_MODE = {

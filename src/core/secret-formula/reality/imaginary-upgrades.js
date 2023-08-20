@@ -190,10 +190,10 @@ export const imaginaryUpgrades = [
     name: "Chiral Oscillation",
     id: 17,
     cost: 6e9,
-    requirement: () => `Automatically condense at least ${formatInt(20)} Singularities at once`,
+    requirement: () => `Automatically condense at least ${formatInt(20)} Singularities at once and have the 2nd Dark Matter Dimension`,
     hasFailed: () => false,
     checkRequirement: () => Singularity.singularitiesGained >= 20 &&
-      Currency.darkEnergy.gte(Singularity.cap * SingularityMilestone.autoCondense.effectOrDefault(Infinity)),
+      Currency.darkEnergy.gte(Singularity.cap * SingularityMilestone.autoCondense.effectOrDefault(Infinity)) && ImaginaryUpgrade(16).isBought,
     checkEvent: GAME_EVENT.SINGULARITY_RESET_BEFORE,
     description: "Unlock the 3rd Dark Matter Dimension",
   },
@@ -202,10 +202,10 @@ export const imaginaryUpgrades = [
     id: 18,
     cost: 1.5e10,
     formatCost: x => format(x, 1),
-    requirement: () => `Have ${formatInt(80000)} total Galaxies`,
+    requirement: () => `Have ${formatInt(80000)} total Galaxies and have the 3rd Dark Matter Dimension`,
     hasFailed: () => false,
-    checkRequirement: () => Replicanti.galaxies.total + player.galaxies +
-      player.dilation.totalTachyonGalaxies >= 80000,
+    checkRequirement: () => (Replicanti.galaxies.total + player.galaxies +
+      player.dilation.totalTachyonGalaxies >= 80000) && ImaginaryUpgrade(17).isBought,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Unlock the 4th Dark Matter Dimension",
   },

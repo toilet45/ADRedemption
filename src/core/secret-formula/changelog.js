@@ -9,6 +9,47 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 19],
+    name: "New Content!? no just more bugfixes",
+    info: 
+    `Even more bugfixes that fix things I overlooked. Note: Since school is starting back up for me. this might be the last patch for a while.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Reality Upgrades that required 4 Glyphs now require at LEAST 4 Glyphs</li>
+    <li>Added x1,000 Replicanti Speed to 1 Mend Milestone</li>
+    <li>Added more Mending Upgrades, but they're not implemented (these might change)</li>
+    <li>Changed Dark Matter Dimension Imaginary Upgrades to require the Previous Dark Matter Dimension</li>
+    <li>Endgame: still 7 Mends, Mending Upgrades 2 and 3 (the non-stripped ones).</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Gave "START" perk after every mend to get around the hardcoded first Reality glyph reward</li>
+    <li>Likewise, gave a power Glyph after Mending Upgrade 2 and every Mend after to simulate it</li>
+    <li>Changed the Remnant gain formula so the x1.1 from 1 Mend Mlestone applies properly</li>
+    <li>Made the Glyph Selection conformation default to ON on Mend</li>
+    <li>Improved Mending Upgrade Readability in some themes</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way.</li>
+    <li>The Invert BH button still shows up when Hard V is locked</li>
+    <li>Glyph preset importing can equip more than 1 Effarig/Reality Glyph before the 7 Mend milestone. Please unequip before importing :).</li>
+    <li>Viewing the credits in the "About the game" modal displays incorrectly, you should be able to hit the Escape key to exit.</li>
+    <li>The 2 Mend Milestone is also supposed to give autobuyers for the rebuyable Pelle dilation upgrades, but are currently non-functional. Tip: you can click on them once, then hold the Enter key to rebuy them rapidly.</li>
+    <li>The Mending tab has no icon in the Aero theme</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
+    <li>Multipliers fromthe 1 Mend Milestone do not show up on the Multiplier Breakdown</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    </ul>`
+    
+  },
+  {
     date: [2023, 8, 18],
     name: "The second bugifx",
     info: 

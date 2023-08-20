@@ -388,13 +388,15 @@ window.player = {
   totalTickBought: 0,
   mends: DC.D0,
   mending:{
-    mendingPoints: DC.D0,
     upgradeBits: 0,
     reqLock: {
       mending: 0,
     },
     rebuyables: {
       1: 0,
+      6: 0,
+      11: 0,
+      16: 0,
     },
   },
   replicanti: {

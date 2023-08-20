@@ -109,7 +109,7 @@ html {
 
   --color-mending: #cc2988;
   --color-mending-dark: #57113a;
-  --color-mending-light: #d697bc;
+  --color-mending-light: #f0dde8;
 
   --color-destroyer--base: rgb(18, 190, 243);
   --color-kohler--base: rgb(252, 110, 245);
@@ -9623,8 +9623,8 @@ input.o-automator-block-input {
 }
 
 .c-mending-upgrade-btn--unavailable {
-  color: #000000;
-  background-color: var(--color-glyph-undo-disabled);
+  color: #C0C0C0;
+  background-color: #404040;/*var(--color-glyph-undo-disabled);*/
   cursor: default;
 }
 

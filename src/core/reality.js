@@ -1,6 +1,7 @@
 import { DC } from "./constants";
 import { Currency } from "./currency";
 import { MendingUpgrade } from "./mending-upgrades";
+import { PlayerProgress } from "./player-progress";
 
 /**
  * Object that manages the selection of glyphs offered to the player
@@ -700,6 +701,9 @@ export function finishProcessReality(realityProps) {
   InfinityDimensions.fullReset();
   fullResetTimeDimensions();
   resetChallengeStuff();
+  if(PlayerProgress.mendingUnlocked()){
+    NormalChallenges.completeAll();
+  }
   AntimatterDimensions.reset();
   secondSoftReset(false);
   player.celestials.ra.peakGamespeed = 1;

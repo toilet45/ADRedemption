@@ -144,6 +144,9 @@ export function totalReplicantiSpeedMult(overCap) {
   if (TimeStudy(132).isBought && Perk.studyPassive.isBought) {
     totalMult = totalMult.times(3);
   }
+  if(MendingMilestone.one.isReached){
+    totalMult = totalMult.times(1000);
+  }
 
   if (!overCap && Achievement(134).isUnlocked) {
     totalMult = totalMult.times(2);

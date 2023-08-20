@@ -70,7 +70,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return true;//(player.mending.upgReqs & (1 << this.id)) !== 0;
+    return this.id <= 3;
   }
 
   get isPossible() {
@@ -94,6 +94,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         Currency.infinities.bumpTo(1e12);
         Currency.realities.bumpTo(10000);
         player.replicanti.unl = true;
+        Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: 70, rawLevel:70 },undefined, 'power'));
         break;
       }
       case 3:{
@@ -125,7 +126,7 @@ class RebuyableMendingUpgradeState extends RebuyableMechanicState {
 
 MendingUpgradeState.index = mapGameData(
   GameDatabase.mending.upgrades,
-  config => (config.id < 2
+  config => (config.id % 5 === 1
     ? new RebuyableMendingUpgradeState(config)
     : new MendingUpgradeState(config))
 );

@@ -2,7 +2,7 @@ import { GameDatabase } from "./secret-formula/game-database";
 import { GameMechanicState } from "./game-mechanics";
 
 export const Speedrun = {
-  officialFixedSeed: 69420,
+  officialFixedSeed: 31337,
   unlock() {
     if (player.speedrun.isUnlocked) return;
     Modal.message.show(`You have unlocked Speedrun Mode! This allows you to start a new save file with some slight

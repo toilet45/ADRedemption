@@ -13,7 +13,7 @@ export default {
 
 <template>
     <div class="l-break-infinity-tab">
-        <h1>Coming if post END doesn't break everything</h1>
+        <h1>Have all Mending Upgrades and your fastest Mend be at most ??:??:?? (real time) to Warp Reality</h1>
     </div>
 </template>
 
