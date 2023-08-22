@@ -73,7 +73,10 @@ export default {
   },
   watch: {
     isAutobuyerOn(newValue) {
-      Autobuyer.dilationUpgrade(this.upgrade.id).isActive = newValue;
+      if (this.upgrade.id < 4) {
+        Autobuyer.dilationUpgrade(this.upgrade.id).isActive = newValue;
+      }
+      Autobuyer.dilationUpgrade(this.upgrade.id - 7).isActive = newValue;
     }
   },
   methods: {
@@ -86,10 +89,16 @@ export default {
       if (this.isRebuyable) {
         this.isAffordable = upgrade.isAffordable;
         this.isCapped = upgrade.isCapped;
-        const autobuyer = Autobuyer.dilationUpgrade(upgrade.id);
+        let autobuyer = Autobuyer.dilationUpgrade(upgrade.id);
+        if (upgrade.id > 3) {
+          autobuyer = Autobuyer.dilationUpgrade(upgrade.id - 7)
+        }
         this.boughtAmount = upgrade.boughtAmount;
         this.rebuyableBoost = PelleRifts.paradox.milestones[2].canBeApplied;
-        if (!autobuyer) return;
+        if (!autobuyer) {
+          console.log("return");
+          return;
+        }
         this.isAutoUnlocked = autobuyer.isUnlocked;
         this.isAutobuyerOn = autobuyer.isActive;
         return;

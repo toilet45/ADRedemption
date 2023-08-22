@@ -1,4 +1,4 @@
-import { PlayerProgress } from "../player-progress";
+
 import { IntervaledAutobuyerState } from "./autobuyer";
 import { MendingMilestone } from "../mending";
 
@@ -20,10 +20,9 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   get isUnlocked() {
     const upgradeName = this._upgradeName;
     if (upgradeName == "dtGainPelle" || upgradeName == "galaxyMultiplier" || upgradeName == "tickspeedPower"){
-      if (Pelle.isDoomed) return false;
-      return true;
+      return MendingMilestone.two.isReached
     }
-    return (Perk.autobuyerDilation.isEffectActive && !Pelle.isDoomed) || PlayerProgress.mendingUnlocked();
+    return (Perk.autobuyerDilation.isEffectActive && !Pelle.isDoomed) || (MendingMilestone.one.isReached);
   }
 
   get resetTickOn() {
@@ -41,10 +40,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   static get entryCount() { 
-    if (MendingMilestone.two.isReached){
-      return 6;
-    }
-    return 3; 
+    return 6
   }
   static get autobuyerGroupName() { return "Dilation Upgrade"; }
   static get isActive() { return player.auto.dilationUpgrades.isActive; }
