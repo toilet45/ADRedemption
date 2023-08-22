@@ -461,6 +461,14 @@ export const migrations = {
       if (MendingMilestone.three.isReached){
         player.celestials.ra.unlockBits += 2097152;
       }
+    },
+    36: player => {
+      player.auto.dilationUpgrades.all = Array.range(0, 3).concat(Array.range(11, 14)).map(() => ({
+        isActive: false,
+        lastTick: 0,
+      }))
+      player.mends = new Decimal(player.mends)
+      player.mendingPoints = new Decimal(player.mendingPoints)
     }
   },
 
