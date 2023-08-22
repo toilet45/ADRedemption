@@ -220,7 +220,7 @@ export const v = {
       effect: () => Achievements.power,
       // Base rate is 60 ECs at 20 minutes each
       format: x =>{
-        if (MendingUpgrade(2).isBought) return "Instant (Mending Upgrade)";
+        if (MendingUpgrade(3).isBought) return "Instant (Mending Upgrade)";
         else if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied) return "Instant (Ra upgrade)";
         return `${TimeSpan.fromMinutes(60 * 20 / x).toStringShort()} for full completion`;
       },

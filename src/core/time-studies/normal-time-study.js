@@ -24,7 +24,6 @@ export class NormalTimeStudyState extends TimeStudyState {
   }
 
   get isUnlocked() {
-    if (this.config.id === 181 && MendingUpgrade(5).isBought && !Pelle.isDoomed) return true;
     return this.config.unlocked?.() ?? true;
   }
 
@@ -33,7 +32,6 @@ export class NormalTimeStudyState extends TimeStudyState {
   }
 
   get isBought() {
-    if (this.config.id === 181 && MendingUpgrade(5).isBought && !Pelle.isDoomed) return true;
     return GameCache.timeStudies.value[this.id];
   }
 

@@ -829,18 +829,41 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
-
-  if (TeresaUnlocks.epGen.canBeApplied) {
-    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01)
-      .times(getGameSpeedupFactor() * diff / 1000).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+  if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
+    player.infinityPoints = gainedInfinityPoints().times(Time.deltaTime / 100).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige);   
+  }
+  else{
+    Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
   }
 
-  if (InfinityUpgrade.ipGen.isCharged) {
+  if (TeresaUnlocks.epGen.canBeApplied || (MendingUpgrade(5).isBought && !Pelle.isDoomed)) {
+    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01).times(getGameSpeedupFactor() * diff / 1000).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+  }
+
+  if (InfinityUpgrade.ipGen.isCharged || MendingUpgrade(5).isBought) {
     const addedRM = MachineHandler.gainedRealityMachines
       .timesEffectsOf(InfinityUpgrade.ipGen.chargedEffect)
       .times(diff / 1000);
     Currency.realityMachines.add(addedRM);
+  }
+
+  if(Pelle.isDoomed && MendingUpgrade(5).isBought){
+    let am = player.celestials.pelle.records.totalAntimatter.plus(1).log10();
+    let ip = player.celestials.pelle.records.totalInfinityPoints.plus(1).log10();
+    let ep = player.celestials.pelle.records.totalEternityPoints.plus(1).log10();
+    let MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
+
+    if (PelleStrikes.dilation.hasStrike) {
+      am *= 500;
+      ip *= 10;
+      ep *= 5;
+    }
+
+    const gain = (
+      ((Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) * MMBoostRem)/ 1.64
+    ) ** 7.5;
+    let curr = player.celestials.pelle.remnants;
+    player.celestials.pelle.remnants = Math.max(curr, gain);
   }
 
   if (PelleRifts.chaos.milestones[2].canBeApplied) {

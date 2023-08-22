@@ -487,7 +487,7 @@ Currency.mendingPoints = new class extends DecimalCurrency {
     return player.mendingPoints; 
   }
   set value(value) {
-    player.mendingPoints = value.toDecimal();
+    player.mendingPoints = new Decimal(value);
   }
 
   get startingValue() {
@@ -504,7 +504,7 @@ Currency.mends = new class extends DecimalCurrency {
     return player.mends; 
   }
   set value(value) {
-    player.mends = value.toDecimal();
+    player.mends = new Decimal(value);
   }
 
   get startingValue() {

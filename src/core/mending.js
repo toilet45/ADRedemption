@@ -34,6 +34,7 @@ function askMendingConfirmation() {
 export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
+    Tab.dimensions.antimatter.show();
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -63,9 +64,6 @@ export function mendingReset() {
     //Celestials
     player.celestials.teresa.pouredAmount = 0;
     player.celestials.teresa.unlockBits = 0;
-    if (MendingUpgrade(5).isBought){
-      player.celestials.teresa.unlockBits += 2;
-    }
     if (MendingUpgrade(9).isBought){
       player.celestials.teresa.unlockBits += 1;
     }
@@ -210,6 +208,10 @@ export function mendingReset() {
       player.reality.upgradeBits += 1048576;
     }
     player.reality.imaginaryUpgradeBits = 0;
+    if (MendingMilestone.three.isReached){
+      player.reality.imaginaryUpgReqs += 1048576; //give Vacuum
+      player.reality.imaginaryUpgradeBits += 1048576;
+    }
 
     player.reality.realityMachines = DC.D0;
     player.reality.reqLock.reality = 0;
