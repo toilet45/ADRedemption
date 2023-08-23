@@ -148,7 +148,7 @@ export const v = {
       name: "Requiem for a Glyph",
       description: value => `Unlock Reality with at most ${formatInt(-value)} Glyphs equipped for the entire Reality.`,
       // This achievement has internally negated values since the check is always greater than
-      values: [-4, -3, -2, -1, 0],
+      values: [1, 4, 7, 10, 13],
       condition: () => V.isRunning && TimeStudy.reality.isBought && V.isFlipped,
       currentValue: () => -player.requirementChecks.reality.maxGlyphs,
       formatRecord: x => formatInt(-x),

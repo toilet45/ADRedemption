@@ -47,7 +47,7 @@ export const Glyphs = {
       if (RealityUpgrade(24).isBought){
         i++
       }
-      if (MendingMilestone.five.isReached && !V.isRunning && !V.beingInitialized){
+      if (MendingMilestone.five.isReached){
         i += 3;
       }
       return i
@@ -88,7 +88,7 @@ export const Glyphs = {
     if (Pelle.isDoomed) {
       return PelleRifts.vacuum.milestones[0].canBeApplied ?  1 : 0;
     }
-    return !V.beingInitialized && !V.isRunning && MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
+    return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },
   get protectedSlots() {
     return 10 * player.reality.glyphs.protectedRows;
