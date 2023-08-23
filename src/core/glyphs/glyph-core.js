@@ -356,7 +356,7 @@ export const Glyphs = {
             false -> allow replace
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
-     if (!Pelle.isDoomed && MendingUpgrade(7).isBought) {
+     if (!(Pelle.isDoomed && MendingUpgrade(7).isBought)) {
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -377,7 +377,7 @@ export const Glyphs = {
       }
       else {
         Modal.message.show("You can only have one of each glyph type equipped while Doomed!",
-        { closeEvent: GAME_EVEMT.GLYPHS_CHANGED })
+        { closeEvent: GAME_EVENT.GLYPHS_CHANGED })
         return;
       }
     }
@@ -433,6 +433,7 @@ export const Glyphs = {
     return !player.reality.glyphs.active.length;
   },
   unequipNonCursed(forceToUnprotected = false) {
+    this.active = this.active.sort(function(x,y){ return x.type == "cursed" ? -1 : y .type == "cursed" ? 1 : 0; });
     this.unequipped = [];
     const targetRegion = forceToUnprotected ? false : player.options.respecIntoProtected;
     let repeat = 0
@@ -441,12 +442,20 @@ export const Glyphs = {
     while (repeat < total) {
       const freeIndex = this.findFreeIndex(targetRegion);
       if (freeIndex < 0) break;
-      if (player.reality.glyphs.active[player.reality.glyphs.active.length - 1].type !== "cursed") {
-        const glyph = player.reality.glyphs.active.pop();
+      console.log(this.active)
+      while (this.active[this.active.length - 1] == null) {
+        this.active.pop()
+        repeat++
+      }
+      console.log(this.active[this.active.length - 1].type == "cursed")
+      if (this.active[this.active.length - 1].type == "cursed") break
+        const glyph = this.active.pop();
         this.active[glyph.idx] = null;
         this.addToInventory(glyph, freeIndex, true);
-      }
       repeat++
+    }
+    while (this.active.length < 5){
+      this.active.append(null)
     }
     this.updateRealityGlyphEffects();
     this.updateMaxGlyphCount(true);
