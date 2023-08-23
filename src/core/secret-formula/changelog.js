@@ -34,32 +34,68 @@ export const changelog = [
     </ul>`
   },
   {
-    date: [2023, 8, 23],
-    name: "No new content #5",
+    date: [2023, 8, 22],
+    name: "HEXA HOTFIX UPDATE 2, ELECTRIC BOOGALOO",
     info: 
-    `Hexa hopefully fixed some stuff. No new content this update, just bug fixes.
+    `Hexa hopefully fixed some stuff. No new content this update, just bug fixes. (I think this was 5 hours after the last one)
     <br>
     <br>
     <b>New things:</b>
     <br>
     <ul>
-    <li>None</li>
+    <li>7 Mend Milestone does not work in V anymore (temporary until we find a fix)</li>
     </ul>
     <b>Bugfixes:</b>
     <br>
     <ul>
+    <li>3 Mend Milestone actually states it gives Vacuum Acceleration (this was done by Royal, Hexa did the rest)</li>
     <li>Fixed some spelling mistakes.</li>
-    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before Mending Milestone 7 - They might still be broken</li>
+    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before 7 Mend Milestone</li>
     <li>Added an icon for the Mending tab in the Aero theme</li>
     <li>Multipliers from Mending Milestone 1 are now present in the Multiplier Breakdown</li>
-    <li>Fixed the Credits Modal</li>
-    <li>Temporarily limited glyphs in V's reality to 5 to prevent the game hardlocking. - Please still make a backup before entering
+    <li>Fixed the Credits Modal in "About the Game"</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (We (Royal and Hexa) didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way, however TS192 is entirely missing.</li>
+    <li>Glyph presets might still be broken (or more broken).</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 22],
+    name: "EMERGENCY HOTFIX 2 and minor additions",
+    info: 
+    `Hexa broke some things internally (we (me and Hexa) couldn't test them until now)
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>3 Mend Milestone now also gives iU upgrade "Vaccum Acceleration"</li>
+    <li>Mending Upgrade 5 now also gives Reality Machine generation and sets Remnants to max</li>
+    <li>You can now hold shift to display Mending Upgrade names (no, I don't plan to be creative like the Reality and Imaginary ones)</li>
+    <li>Endgame: 7 Mend Milestone, all non-stripped Mending Upgrades.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed "Multiversal Remains and Mends becoming a number instead of a Decimal" fix preventing mends.</li>
+    <li>Fixed 10 V-Achievement Milestone text updating with the wrong Mending Upgrade</li>
     </ul>
     <b>Known Issues:</b>
     <br>
     <ul>
     <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
-    this doesn't seem to affect gameplay in any way, however ts192 is entirely missing.</li>
+    this doesn't seem to affect gameplay in any way.</li>
+    <li>Glyph preset importing can equip more than 1 Effarig/Reality Glyph before the 7 Mend milestone. Please unequip before importing :).</li>
+    <li>Viewing the credits in the "About the game" modal displays incorrectly, you should be able to hit the Escape key to exit.</li>
+    <li>The Mending tab has no icon in the Aero theme</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
+    <li>Multipliers fromthe 1 Mend Milestone do not show up on the Multiplier Breakdown</li>
     <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
     </ul>`
   },
