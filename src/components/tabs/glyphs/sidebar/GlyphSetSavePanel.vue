@@ -108,8 +108,30 @@ export default {
       // match more glyphs than we have room for
       const selectedFromInventory = this.findSelectedGlyphs(remainingOptions,
         Glyphs.active.countWhere(g => g === null));
-      for (const glyph of selectedFromInventory) glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
-
+      for (const glyph of selectedFromInventory) {
+        // The below code is terrible but in theory it should work so idc
+        let specialLimit = 1
+        if (MendingMilestone.five.isReached) specialLimit = 2
+        let effLimit = specialLimit
+        let realLimit = specialLimit
+        for (const specGlyph of Glyph.active) {
+          let GlyphPos = 0
+          for (Sel of selectedFromInventory) {
+            if (!(effLimit == 0)) {
+              if (Sel.type == "effarig" && Sel.type == specGlyph.type)
+                effLimit -= 1
+                selectedFromInventory.splice(n, GlyphPos)
+            }
+            if (!(realLimit == 0)) {
+              if (Sel.type == "reality" && Sel.type == specGlyph.type)
+                realLimit -= 1
+                selectedFromInventory.splice(n, GlyphPos)
+            }
+            GlyphPos++
+          }
+        glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
+      }
+    }
       // Actually equip the glyphs and then notify how successful (or not) the loading was
       let missingGlyphs = glyphsToLoad.length;
       for (const glyph of selectedFromInventory) {

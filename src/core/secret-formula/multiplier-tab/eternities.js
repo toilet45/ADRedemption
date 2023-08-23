@@ -39,4 +39,10 @@ export const eternities = {
     isActive: () => AlchemyResource.eternity.canBeApplied,
     icon: MultiplierTabIcons.ALCHEMY,
   },
+  mendingMilestones: {
+    name: "Mending Milestone 1",
+    multValue: 1e4,
+    isActive: () => PlayerProgress.mendingUnlocked(),
+    icon: MultiplierTabIcons.MENDINGMILESTONE,
+  },
 };

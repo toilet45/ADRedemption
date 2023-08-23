@@ -1,5 +1,4 @@
 import { DC } from "../../constants";
-
 import { MultiplierTabIcons } from "./icons";
 
 // See index.js for documentation
@@ -73,6 +72,12 @@ export const replicanti = {
     multValue: () => PelleRifts.decay.effectValue,
     isActive: () => Pelle.isDoomed && PelleRifts.decay.effectValue.gt(1),
     icon: MultiplierTabIcons.PELLE,
+  },
+  mendingMilestones: {
+    name: "Mending Milestone 1",
+    multValue: 1e3,
+    isActive: () => PlayerProgress.mendingUnlocked(),
+    icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
   iap: {
     name: "Shop Tab Purchases",

@@ -1,6 +1,4 @@
 import { DC } from "../../constants";
-import { PlayerProgress } from "../../player-progress";
-
 import { MultiplierTabIcons } from "./icons";
 
 // See index.js for documentation
@@ -81,6 +79,12 @@ export const EP = {
     multValue: () => PelleRifts.vacuum.milestones[2].effectOrDefault(1),
     isActive: () => PelleRifts.vacuum.milestones[2].canBeApplied,
     icon: MultiplierTabIcons.PELLE,
+  },
+  mendingMilestones: {
+    name: "Mending Milestone 1",
+    multValue: 1e5,
+    isActive: () => PlayerProgress.mendingUnlocked(),
+    icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
   iap: {
     name: "Shop Tab Purchases",
