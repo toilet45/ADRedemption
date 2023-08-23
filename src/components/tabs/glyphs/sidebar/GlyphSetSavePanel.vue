@@ -116,19 +116,19 @@ export default {
         let realLimit = specialLimit
         for (const specGlyph of Glyph.active) {
           let GlyphPos = 0
-          for (Sel of selectedFromInventory) {
             if (!(effLimit == 0)) {
-              if (Sel.type == "effarig" && Sel.type == specGlyph.type)
+              if (glyph.type == "effarig" && glyph.type == specGlyph.type)
                 effLimit -= 1
                 selectedFromInventory.splice(n, GlyphPos)
             }
             if (!(realLimit == 0)) {
-              if (Sel.type == "reality" && Sel.type == specGlyph.type)
+              if (glyph.type == "reality" && glyph.type == specGlyph.type)
                 realLimit -= 1
                 selectedFromInventory.splice(n, GlyphPos)
             }
             GlyphPos++
-          }
+      }
+      for (const selGlyph of selectedFromInventory) {
         glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
       }
     }
