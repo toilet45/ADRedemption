@@ -24,18 +24,17 @@ export const changelog = [
     <br>
     <ul>
     <li>Fixed some spelling mistakes.</li>
-    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before Mending Milestone 7</li>
+    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before Mending Milestone 7 - They might still be broken</li>
     <li>Added an icon for the Mending tab in the Aero theme</li>
     <li>Multipliers from Mending Milestone 1 are now present in the Multiplier Breakdown</li>
     <li>Fixed the Credits Modal</li>
+    <li>Temporarily limited glyphs in V's reality to 5 to prevent the game hardlocking. - Please still make a backup before entering
     </ul>
     <b>Known Issues:</b>
     <br>
     <ul>
     <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
     this doesn't seem to affect gameplay in any way, however ts192 is entirely missing.</li>
-    <li>Glyph presets might still be broken (or more broken).</li>
-    <li>V's reality can hardlock the game, make a backup save before entering</li>
     <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
     </ul>`
   },
