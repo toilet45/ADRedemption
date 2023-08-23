@@ -9,32 +9,34 @@ export const changelog = [
    * }
    */
   {
-    date: [2023, 8, 23],
-    name: "No new content #5",
+    date: [2023, 8, 22],
+    name: "HEXA HOTFIX UPDATE 2, ELECTRIC BOOGALOO",
     info: 
-    `Hexa hopefully fixed some stuff. No new content this update, just bug fixes.
+    `Hexa hopefully fixed some stuff. No new content this update, just bug fixes. (I think this was 5 hours after the last one)
     <br>
     <br>
     <b>New things:</b>
     <br>
     <ul>
-    <li>None</li>
+    <li>7 Mend Milestone does not work in V anymore (temporary until we find a fix)</li>
     </ul>
     <b>Bugfixes:</b>
     <br>
     <ul>
+    <li>3 Mend Milestone actually states it gives Vacuum Acceleration (this was done by Royal, Hexa did the rest)</li>
     <li>Fixed some spelling mistakes.</li>
-    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before Mending Milestone 7 - They might still be broken</li>
+    <li>Hopefully fixed Glyph Presets allowing duplicate special glyphs before 7 Mend Milestone</li>
     <li>Added an icon for the Mending tab in the Aero theme</li>
     <li>Multipliers from Mending Milestone 1 are now present in the Multiplier Breakdown</li>
-    <li>Fixed the Credits Modal</li>
-    <li>Temporarily limited glyphs in V's reality to 5 to prevent the game hardlocking. - Please still make a backup before entering
+    <li>Fixed the Credits Modal in "About the Game"</li>
     </ul>
     <b>Known Issues:</b>
     <br>
     <ul>
-    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
-    this doesn't seem to affect gameplay in any way, however ts192 is entirely missing.</li>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (We (Royal and Hexa) didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way, however TS192 is entirely missing.</li>
+    <li>Glyph presets might still be broken (or more broken).</li>
+    <li>V's reality can hardlock the game, make a backup save before entering</li>
     <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
     </ul>`
   },

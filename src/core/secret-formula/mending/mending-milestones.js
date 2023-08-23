@@ -10,7 +10,7 @@ export const mendingMilestones = {
   },
   three: {
     mends: 3,
-    reward: "Start every Mend with all perks, the Reality Upgrade and Black Hole Autobuyers, and both Black Holes unlocked and permanent, with 3 Power Upgrades each.",
+    reward: "Start every Mend with all perks, the Reality Upgrade and Black Hole Autobuyers, and both Black Holes unlocked and permanent, with 3 Power Upgrades each. Start with Vacuum Acceleration.",
   },
   four: {
     mends: 5,
