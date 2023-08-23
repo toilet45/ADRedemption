@@ -10,6 +10,31 @@ export const changelog = [
    */
   {
     date: [2023, 8, 23],
+    name: "No new content #7",
+    info: 
+    `Hexa hopefully fixed some things he broke last update again, kind of.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>For the time being, requiem only requires V hard to be shown and 4-0 max glyphs equipped.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>V again unequips all glyphs, however you now have the appropriate numbers of glyph slots.
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (I didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way, however ts192 is entirely missing.</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 23],
     name: "No new content #6",
     info: 
     `Hexa hopefully fixed some things he broke last update. No new content this update, just bug fixes, and backend stuff.`

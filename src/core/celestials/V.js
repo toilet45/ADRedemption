@@ -1,4 +1,5 @@
 import { BitUpgradeState, GameMechanicState } from "../game-mechanics";
+import { Glyphs } from "../globals";
 import { GameDatabase } from "../secret-formula/game-database";
 
 import { SpeedrunMilestones } from "../speedrun";
@@ -183,7 +184,7 @@ export const V = {
   },
   initializeRun() {
     player.celestials.v.beingInitialized = true
-    if (!Glyphs.unequipNonCursed()) {
+    if (!Glyphs.unequipAll()) {
       Modal.hideAll();
       player.celestials.v.beingInitialized = false
       Modal.message.show(`Entering V's Reality unequips your glyphs. Some of your
@@ -192,7 +193,8 @@ export const V = {
     }
     clearCelestialRuns();
     player.celestials.v.run = true;
-    player.celestials.v.beingInitialized = false
+    player.celestials.v.beingInitialized = false;
+    Glyphs.updateMaxGlyphCount()
     this.quotes.realityEnter.show();
   },
   updateTotalRunUnlocks() {
@@ -212,7 +214,7 @@ export const V = {
       goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       STSpent: 0,
       runGlyphs: [[], [], [], [], [], [], [], [], []],
-      runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0],
+      runRecords: [-10, 0, 0, 0, 0, 0, -10, 0, 0],
     };
     this.spaceTheorems = 0;
   },
