@@ -1,5 +1,5 @@
 import { GameMechanicState } from "../game-mechanics";
-import { V } from "../globals";
+import { MendingUpgrade, V } from "../globals";
 import { RealityUpgrade } from "../reality-upgrades";
 
 export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "timepow",
@@ -37,7 +37,7 @@ export const Glyphs = {
   bestUndoGlyphCount: 0,
   get maxSlots() {
     if (Pelle.isDoomed){
-      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+      return PelleRifts.vacuum.milestones[0].canBeApplied ? MendingUpgrade(4).isBought ? 5 : 1 : 0;
     }
     else{
       let i = 3;
@@ -47,7 +47,7 @@ export const Glyphs = {
       if (RealityUpgrade(24).isBought){
         i++
       }
-      if (MendingMilestone.five.isReached && !V.isRunning()){
+      if (MendingMilestone.five.isReached && !V.isRunning && !V.beingInitialized){
         i += 3;
       }
       return i
@@ -88,7 +88,7 @@ export const Glyphs = {
     if (Pelle.isDoomed) {
       return PelleRifts.vacuum.milestones[0].canBeApplied ?  1 : 0;
     }
-    return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
+    return !V.beingInitialized && !V.isRunning && MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },
   get protectedSlots() {
     return 10 * player.reality.glyphs.protectedRows;
@@ -320,11 +320,19 @@ export const Glyphs = {
     if (["effarig", "reality"].includes(glyph.type)) {
       canEquipSpecial = this.active.countWhere(x => x && x.type === glyph.type) < maxSpecial;
     }
+    let equippedInDoom = this.active.countWhere(x => x && x.type === glyph.type) > 0;
     if (this.active[targetSlot] === null) { //if slot is empty
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { //have we hit the max number of special glyphs?
         Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
+      }
+      if (Pelle.isDoomed && MendingUpgrade(7).isBought) {
+        if (equippedInDoom) {
+          Modal.message.show(`You can only have one of each glyph type equipped while Doomed!`,
+          { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
+        return;
+        }
       }
       this.removeFromInventory(glyph);
       this.saveUndo(targetSlot);
@@ -348,6 +356,7 @@ export const Glyphs = {
             false -> allow replace
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
+     if (!Pelle.isDoomed && MendingUpgrade(7).isBought) {
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -361,6 +370,18 @@ export const Glyphs = {
       }
       Modal.glyphReplace.show({ targetSlot, inventoryIndex: glyph.idx });
     }
+    else {
+      if (this.active[targetSlot].type == glyph.type) {
+        this.swapIntoActive(glyph, targetSlot);
+        return;
+      }
+      else {
+        Modal.message.show("You can only have one of each glyph type equipped while Doomed!",
+        { closeEvent: GAME_EVEMT.GLYPHS_CHANGED })
+        return;
+      }
+    }
+  }
       // We can only replace effarig/reality glyph
 /*      if (sameSpecialTypeIndex >= 0 && sameSpecialTypeIndex !== targetSlot) { 
         Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -410,6 +431,44 @@ export const Glyphs = {
     EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
     EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
     return !player.reality.glyphs.active.length;
+  },
+  unequipNonCursed(forceToUnprotected = false) {
+    this.unequipped = [];
+    const targetRegion = forceToUnprotected ? false : player.options.respecIntoProtected;
+    let repeat = 0
+    let total = 5
+    if (MendingMilestone.five.isReached) total = 8
+    while (repeat < total) {
+      const freeIndex = this.findFreeIndex(targetRegion);
+      if (freeIndex < 0) break;
+      if (player.reality.glyphs.active[player.reality.glyphs.active.length - 1].type !== "cursed") {
+        const glyph = player.reality.glyphs.active.pop();
+        this.active[glyph.idx] = null;
+        this.addToInventory(glyph, freeIndex, true);
+      }
+      repeat++
+    }
+    this.updateRealityGlyphEffects();
+    this.updateMaxGlyphCount(true);
+
+    // We need to add a slight delay as a setTimeout in order to make sure that the EventHub calls following this
+    // don't immediately close this modal after it's shown. Additionally, we want to prevent the modal from appearing
+    // for realities shorter than a few seconds in order to stop a UI-based softlock; however at this point the time
+    // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
+    // when restarting, but that's not easily avoidable)
+    const fastReality = player.records.recentRealities[0][1] < 3000;
+    if (repeat < total && !fastReality) {
+      const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
+      const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
+      setTimeout(() => Modal.message.show(`${quantifyInt("Glyph", (total-repeat))} could not be unequipped due to lack
+        of space. Free up some space in your ${target}${hasOther ? " or switch where you are unequipping to" : ""}
+        in order to unequip ${repeat === total-1 ? "it" : "them"}.`, { closeEvent: GAME_EVENT.GLYPHS_CHANGED }),
+      50);
+    }
+
+    EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
+    EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
+    return repeat == total;
   },
   unequip(activeIndex, requestedInventoryIndex) {
     if (this.active[activeIndex] === null) return;

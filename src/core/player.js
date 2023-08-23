@@ -628,6 +628,7 @@ window.player = {
     v: {
       unlockBits: 0,
       run: false,
+      beingInitialized: false,
       quoteBits: 0,
       runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -9,6 +9,12 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 23],
+    name: "No new content #6",
+    info: 
+    `Hexa hopefully fixed some things he broke last update. No new content this update, just bug fixes, and backend stuff.`
+  },
+  {
     date: [2023, 8, 22],
     name: "HEXA HOTFIX UPDATE 2, ELECTRIC BOOGALOO",
     info: 
