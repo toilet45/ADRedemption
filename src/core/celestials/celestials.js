@@ -1,3 +1,4 @@
+import { MendingMilestone } from "../mending";
 import { Destroyer } from "./destroyer";
 import { Effarig } from "./effarig";
 import { Enslaved } from "./enslaved";
@@ -58,12 +59,17 @@ GameDatabase.celestials.descriptions = [
       const vEffect = `All Dimension multipliers, Eternity Point gain, Infinity Point gain, and Dilated Time gain\
       per second are square-rooted. 
       The Replicanti interval is squared.`;
-      const vEffectAdditional = `
-      The Exponential Glyph Alchemy effect is disabled.`;
+      const vEffectAdditional = ` The Exponential Glyph Alchemy effect is disabled.`;
+      const vEffectMend7Additional = ` Mending Milestone 7 is disabled`
 
-      return Ra.unlocks.unlockGlyphAlchemy.canBeApplied
-        ? vEffect + vEffectAdditional
-        : vEffect;
+      let returnVal = vEffect
+      if (Ra.unlocks.unlockGlyphAlchemy.canBeApplied) {
+        returnVal += vEffectAdditional
+      }
+      if (player.mends.gte(7)) {
+        returnVal += vEffectMend7Additional
+      }
+      return returnVal
     }
   },
   {
