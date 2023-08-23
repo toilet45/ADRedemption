@@ -1,4 +1,5 @@
 import { GameMechanicState } from "../game-mechanics";
+import { V } from "../globals";
 import { RealityUpgrade } from "../reality-upgrades";
 
 export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "timepow",
@@ -46,7 +47,7 @@ export const Glyphs = {
       if (RealityUpgrade(24).isBought){
         i++
       }
-      if (MendingMilestone.five.isReached){
+      if (MendingMilestone.five.isReached && !V.isRunning()){
         i += 3;
       }
       return i

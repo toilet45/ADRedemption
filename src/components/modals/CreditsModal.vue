@@ -38,6 +38,6 @@ export default {
 .c-credits-modal__body {
   overflow-y: scroll;
   /* stylelint-disable-next-line unit-allowed-list */
-  height: 500vh;
+  height: 85vh;
 }
 </style>

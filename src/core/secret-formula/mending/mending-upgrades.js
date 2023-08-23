@@ -34,7 +34,7 @@ export const mendingUpgrades = [
     id: 2,
     name: "Mending Upgrade 2",
     cost: 2,
-    description: () => `Start every Mend with ${format(1e4)} Realities, every Mend and Reality with ${format(1e6)} Eternities, and all prestiges with ${format(1e12)} Infinities. (applies immedately when bought)`,
+    description: () => `Start every Mend with ${format(1e4)} Realities, every Mend and Reality with ${format(1e6)} Eternities, and all prestiges with ${format(1e12)} Infinities. (applies immediately when bought)`,
     effect: () => [1e6, 1e12],
   },
   {
@@ -53,7 +53,7 @@ export const mendingUpgrades = [
     id: 5,
     name: "Mending Upgrade 5",
     cost: 15,
-    description: () => `Always have passive Infinity Point, Eternity Point, and Reality Machine gain (IP and EP gen do not work in Pelle). Remants are alway equal to your max this Mend.`,
+    description: () => `Always have passive Infinity Point, Eternity Point, and Reality Machine gain (IP and EP gen do not work in Pelle). Remnants are always equal to your max this Mend.`,
   },
   rebuyable({
     id: 6,
@@ -105,7 +105,7 @@ export const mendingUpgrades = [
     id: 13,
     name: "Mending Upgrade 13",
     cost: 1e300,
-    description: () => "Glyphs are boosted to a minium level of 10,000 in Nameless' Reality, and real time is stored at 500% efficiency",
+    description: () => "Glyphs are boosted to a minimum level of 10,000 in Nameless' Reality, and real time is stored at 500% efficiency",
   },
   {
     id: 14,
@@ -131,7 +131,7 @@ export const mendingUpgrades = [
     id: 17,
     name: "Mending Upgrade 17",
     cost: 1e300,
-    description: () => "Disable Distant Antimatter Galaxy Scaling and move Remote Scaling to 500,000 Galaxies. Replcanti Galaxy cost scaling is moved to 1,500 and 10,000",
+    description: () => "Disable Distant Antimatter Galaxy Scaling and move Remote Scaling to 500,000 Galaxies. Replicanti Galaxy cost scaling is moved to 1,500 and 10,000",
   },
   {
     id: 18,

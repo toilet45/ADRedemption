@@ -1,6 +1,5 @@
 import { DC } from "../../constants";
 import { PlayerProgress } from "../../player-progress";
-
 import { MultiplierTabIcons } from "./icons";
 
 // See index.js for documentation
@@ -75,6 +74,12 @@ export const DT = {
     multValue: () => AlchemyResource.dilation.effectOrDefault(1),
     isActive: () => Ra.unlocks.unlockGlyphAlchemy.canBeApplied && getDilationGainPerSecond().neq(0),
     icon: MultiplierTabIcons.ALCHEMY,
+  },
+  mendingMilestones: {
+    name: "Mending Milestone 1",
+    multValue: 100,
+    isActive: () => PlayerProgress.mendingUnlocked(),
+    icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
   iap: {
     name: "Shop Tab Purchases",
