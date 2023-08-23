@@ -183,18 +183,9 @@ export const V = {
     V.quotes.unlock.show();
   },
   initializeRun() {
-    player.celestials.v.beingInitialized = true
-    if (!Glyphs.unequipAll()) {
-      Modal.hideAll();
-      player.celestials.v.beingInitialized = false
-      Modal.message.show(`Entering V's Reality unequips your glyphs. Some of your
-        Glyphs could not be unequipped due to lack of inventory space.`, 1);
-      return;
-    }
+  
     clearCelestialRuns();
     player.celestials.v.run = true;
-    player.celestials.v.beingInitialized = false;
-    Glyphs.updateMaxGlyphCount()
     this.quotes.realityEnter.show();
   },
   updateTotalRunUnlocks() {
