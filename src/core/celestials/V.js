@@ -79,9 +79,12 @@ class VRunUnlockState extends GameMechanicState {
       playerData.runGlyphs[this.id] = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
     }
 
+    let forceCap = 0
     while (this.completions < this.config.values.length &&
-    Decimal.gte(playerData.runRecords[this.id], this.conditionValue)) {
-      if (!V.isFlipped && this.config.isHard) continue;
+    Decimal.gte(playerData.runRecords[this.id], this.conditionValue) &&
+    forceCap < 20) {
+      forceCap++
+      if (!V.isFlipped && this.config.isHard) break;
       this.completions++;
       GameUI.notify.success(`You have unlocked V-Achievement
         '${this.config.name}' tier ${formatInt(this.completions)}`);
@@ -183,7 +186,6 @@ export const V = {
     V.quotes.unlock.show();
   },
   initializeRun() {
-  
     clearCelestialRuns();
     player.celestials.v.run = true;
     this.quotes.realityEnter.show();

@@ -60,14 +60,10 @@ GameDatabase.celestials.descriptions = [
       per second are square-rooted. 
       The Replicanti interval is squared.`;
       const vEffectAdditional = ` The Exponential Glyph Alchemy effect is disabled.`;
-      const vEffectMend7Additional = ` Mending Milestone 7 is disabled`
 
       let returnVal = vEffect
       if (Ra.unlocks.unlockGlyphAlchemy.canBeApplied) {
         returnVal += vEffectAdditional
-      }
-      if (player.mends.gte(7)) {
-        returnVal += vEffectMend7Additional
       }
       return returnVal
     }
