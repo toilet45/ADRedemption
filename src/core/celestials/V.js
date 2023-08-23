@@ -182,14 +182,17 @@ export const V = {
     V.quotes.unlock.show();
   },
   initializeRun() {
-    if (!Glyphs.unequipAll()) {
+    player.celestials.v.beingInitialized = true
+    if (!Glyphs.unequipNonCursed()) {
       Modal.hideAll();
+      player.celestials.v.beingInitialized = false
       Modal.message.show(`Entering V's Reality unequips your glyphs. Some of your
         Glyphs could not be unequipped due to lack of inventory space.`, 1);
       return;
     }
     clearCelestialRuns();
     player.celestials.v.run = true;
+    player.celestials.v.beingInitialized = false
     this.quotes.realityEnter.show();
   },
   updateTotalRunUnlocks() {
@@ -218,6 +221,9 @@ export const V = {
   },
   get isRunning() {
     return player.celestials.v.run;
+  },
+  get beingInitialized() {
+    return player.celestials.v.beingInitialized;
   },
   get isFlipped() {
     return Ra.unlocks.unlockHardV.isUnlocked;

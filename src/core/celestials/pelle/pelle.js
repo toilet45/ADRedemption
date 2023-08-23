@@ -8,6 +8,7 @@ import { Quotes } from "../quotes";
 import wordShift from "../../word-shift";
 
 import zalgo from "./zalgo";
+import { MendingUpgrade } from "../../mending-upgrades";
 
 
 const disabledMechanicUnlocks = {
@@ -219,6 +220,7 @@ export const Pelle = {
   },
 
   get specialGlyphEffect() {
+    if (!MendingUpgrade(7).isBought) {
     const isUnlocked = this.isDoomed && PelleRifts.chaos.milestones[1].canBeApplied;
     const description = this.getSpecialGlyphEffectDescription(this.activeGlyphType);
     const isActive = type => isUnlocked && this.activeGlyphType === type;
@@ -244,7 +246,38 @@ export const Pelle = {
         ? 1.34
         : 1,
       isScaling: () => ["infinity", "time", "replication", "dilation"].includes(this.activeGlyphType),
-    };
+      };
+    }
+    else {
+      const isUnlocked = this.isDoomed && PelleRifts.chaos.milestones[1].canBeApplied;
+      for (let glyph in player.reality.glyphs.active) {
+        const description = this.getSpecialGlyphEffectDescription(this.activeGlyphType);
+        const isActive = type => isUnlocked && glyph.type === type;
+        return {
+          isUnlocked,
+          description,
+          infinity: (isActive("infinity") && player.challenge.eternity.current <= 8)
+            ? Currency.infinityPoints.value.plus(1).pow(0.2)
+            : DC.D1,
+          time: isActive("time")
+            ? Currency.eternityPoints.value.plus(1).pow(0.3)
+            : DC.D1,
+          replication: isActive("replication")
+            ? 10 ** 53 ** (PelleRifts.vacuum.percentage)
+            : 1,
+          dilation: isActive("dilation")
+            ? Decimal.pow(player.dilation.totalTachyonGalaxies, 1.5).max(1)
+            : DC.D1,
+          power: isActive("power")
+            ? 1.02
+            : 1,
+          companion: isActive("companion")
+            ? 1.34
+            : 1,
+          isScaling: () => ["infinity", "time", "replication", "dilation"].includes(this.activeGlyphType),
+          };
+      }
+    }
   },
   getSpecialGlyphEffectDescription(type) {
     switch (type) {
