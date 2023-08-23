@@ -10,6 +10,31 @@ export const changelog = [
    */
   {
     date: [2023, 8, 23],
+    name: "Final V patch",
+    info: 
+    `Hexa hopefully has patched V for good, undone previous changes to V.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None.</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>V no longer hardlocks in a loop
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>Time Study 192 is entirely missing in The Nameless Ones' Reality (rather than unpurchaseable), causing console errors.</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    <li>Dilation autobuyers cause console errors, however they function normally.</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 23],
     name: "No new content #7",
     info: 
     `Hexa hopefully fixed some things he broke last update again, kind of.
