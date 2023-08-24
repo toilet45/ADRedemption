@@ -75,8 +75,9 @@ export default {
     isAutobuyerOn(newValue) {
       if (this.upgrade.id < 4) {
         Autobuyer.dilationUpgrade(this.upgrade.id).isActive = newValue;
+      } else {
+        Autobuyer.dilationUpgrade(this.upgrade.id - 7).isActive = newValue;
       }
-      Autobuyer.dilationUpgrade(this.upgrade.id - 7).isActive = newValue;
     }
   },
   methods: {
