@@ -42,7 +42,7 @@ export default {
     <div class="l-mending-upgrade-grid">
       <div
         v-for=" row in 4"
-        key="row"
+        :key="row"
         class="l-mending-upgrade-grid__row">
       <MendingUpgradeButton 
         v-for="column in 5"
