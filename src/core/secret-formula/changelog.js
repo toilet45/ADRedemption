@@ -10,6 +10,34 @@ export const changelog = [
    */
   {
     date: [2023, 8, 24],
+    name: "EMERGENCY HOTFIX 3",
+    info: 
+    `More Hexa fixes, and some Wellington fixes
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: 7 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>made the Mending button actually work after 10 Mend Milestone</li>
+    <li>the Mending Upgrade tab no longer causes a duplicate key error</li>
+    <li>the Pelle Dilation autobuyers no longer console spam</li>
+    <li>Importing Glyph sets is no longer broken</li>
+    <li>TS192 is now visible in Nameless again (needs further testing)</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>None...for now</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 24],
     name: "the 'Hey, Royal finally did something'",
     info: 
     `More Hexa fixes, and new content by yours truly

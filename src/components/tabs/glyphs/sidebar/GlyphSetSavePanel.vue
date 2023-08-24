@@ -114,11 +114,11 @@ export default {
       if (MendingMilestone.five.isReached) specialLimit = 2
       let effLimit = specialLimit
       let realLimit = specialLimit
+      let GlyphPos = 0;
       for (const glyph of selectedFromInventory) {
         // The below code is terrible but in theory it should work so idc
         for (const specGlyph of Glyphs.active) {
           if (specGlyph != null) {
-          let GlyphPos = 0
             if (!(effLimit == 0)) {
               if ((glyph.type == "effarig") && (glyph.type == specGlyph.type)) {
                 effLimit = effLimit - 1
@@ -131,8 +131,8 @@ export default {
                 finalGlyphs.splice(GlyphPos - counter, 1)
                 counter++
             }}}
-            GlyphPos++
       }
+      GlyphPos++
     }
     for (const selGlyph of finalGlyphs) {
         glyphsToLoad = glyphsToLoad.filter(g => g !== selGlyph);
