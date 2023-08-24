@@ -26,14 +26,14 @@ export const changelog = [
     <br>
     <ul>
     <li>V should no longer hardlock the game</li>
+    <li>Importing Glyph sets is no longer broken</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought (by Wellington, not Hexa)</li>
+    <li>ts192 is now visible in Nameless again</li>
     </ul>
     <b>Known Issues:</b>
     <br>
     <ul>
-    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (We didn't edit anything there). However
-    this doesn't seem to affect gameplay in any way, however TS192 is entirely missing (in Nameless).</li>
-    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
-    <li>Importing Glyph sets is currently broken</li>
+    <li>None, for a change</li>
     </ul>`
   },
   {
