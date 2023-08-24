@@ -104,20 +104,16 @@ export default {
         remainingOptions[index] = { glyph, options };
       }
 
-      // This is scanned through similarly to the active slot glyphs, except we need to make sure we don't try to
-      // match more glyphs than we have room for
-      const selectedFromInventory = this.findSelectedGlyphs(remainingOptions,
-        Glyphs.active.countWhere(g => g === null));
       let counter = 0
-      let finalGlyphs = selectedFromInventory
+      let finalGlyphs = remainingOptions
       let specialLimit = 1
       if (MendingMilestone.five.isReached) specialLimit = 2
       let effLimit = specialLimit
       let realLimit = specialLimit
-      for (const glyph of selectedFromInventory) {
+      for (const glyph of remainingOptions) {
         // The below code is terrible but in theory it should work so idc
         for (const specGlyph of Glyphs.active) {
-          console.log(specGlyph)
+          if (specGlyph != null) {
           let GlyphPos = 0
             if (!(effLimit == 0)) {
               if ((glyph.type == "effarig") && (glyph.type == specGlyph.type)) {
@@ -130,10 +126,16 @@ export default {
                 realLimit = realLimit - 1
                 finalGlyphs.splice(GlyphPos - counter, 1)
                 counter++
-            }}
+            }}}
             GlyphPos++
       }
     }
+
+      // This is scanned through similarly to the active slot glyphs, except we need to make sure we don't try to
+      // match more glyphs than we have room for
+      const selectedFromInventory = this.findSelectedGlyphs(finalGlyphs,
+        Glyphs.active.countWhere(g => g === null));
+      
     for (const selGlyph of finalGlyphs) {
         glyphsToLoad = glyphsToLoad.filter(g => g !== selGlyph);
       }

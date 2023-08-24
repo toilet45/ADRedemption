@@ -19,7 +19,8 @@ export default {
       realityShards: new Decimal(0),
       shardRate: new Decimal(0),
       upgrades: [],
-      boughtUpgrades: []
+      boughtUpgrades: [],
+      mendupg5: false
     };
   },
   computed: {
@@ -38,7 +39,7 @@ export default {
       return upgrades;
     },
     showImprovedEstimate() {
-      return this.isHovering && !this.shardRate.eq(0);
+      return this.isHovering && !this.shardRate.eq(0) && !this.mendupg5;
     }
   },
   methods: {
@@ -50,6 +51,7 @@ export default {
       this.shardRate.copyFrom(Pelle.realityShardGainPerSecond);
       this.upgrades = PelleUpgrade.singles.filter(u => !u.isBought);
       this.boughtUpgrades = PelleUpgrade.singles.filter(u => u.isBought);
+      this.mendupg5 = MendingUpgrades.all[5].isBought;
     },
     toggleBought() {
       Pelle.cel.showBought = !Pelle.cel.showBought;
