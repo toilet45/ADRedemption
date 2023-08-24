@@ -469,6 +469,20 @@ export const migrations = {
       }))
       player.mends = new Decimal(player.mends)
       player.mendingPoints = new Decimal(player.mendingPoints)
+    },
+    40: player => {
+      if (MendingUpgrade(2).isPurchased){
+       player.mendingPoints = player.mendingPoints.add(1);
+      }
+      if (MendingUpgrade(3).isPurchased) {
+        player.mendingPoints = player.mendingPoints.add(4);
+      }
+      if (MendingUpgrade(5).isPurchased) {
+        player.mendingPoints = player.mendingPoints.add(10);
+      }
+      if (MendingUpgrade(9).isPurchased) {
+        player.mendingPoints = player.mendingPoints.add(12);
+      }
     }
   },
 

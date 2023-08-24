@@ -114,17 +114,17 @@ export default {
         if (MendingMilestone.five.isReached) specialLimit = 2
         let effLimit = specialLimit
         let realLimit = specialLimit
-        for (const specGlyph of Glyph.active) {
+        for (const specGlyph of Glyphs.active) {
           let GlyphPos = 0
             if (!(effLimit == 0)) {
               if (glyph.type == "effarig" && glyph.type == specGlyph.type)
                 effLimit -= 1
-                selectedFromInventory.splice(n, GlyphPos)
+                selectedFromInventory.splice(GlyphPos, 1)
             }
             if (!(realLimit == 0)) {
               if (glyph.type == "reality" && glyph.type == specGlyph.type)
                 realLimit -= 1
-                selectedFromInventory.splice(n, GlyphPos)
+                selectedFromInventory.splice(GlyphPos, 1)
             }
             GlyphPos++
       }

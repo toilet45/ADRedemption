@@ -1,4 +1,6 @@
 <script>
+import { MendingMilestone } from '../core/mending';
+
 export default {
   name: "RealityCurrencyHeader",
   data() {
@@ -6,10 +8,14 @@ export default {
       isDoomed: false,
       currencyValue: new Decimal(),
       currencyName: "",
+      remnants: 0,
+      showRemnants: false,
     };
   },
   methods: {
     update() {
+      this.showRemnants = MendingMilestone.six.isReached && this.isDoomed;
+      this.remnants = Currency.remnants.value;
       this.isDoomed = Pelle.isDoomed;
       if (this.isDoomed) {
         const shards = Currency.realityShards.value;

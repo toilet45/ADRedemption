@@ -1386,8 +1386,14 @@ export const normalAchievements = [
   },
   {
     id: 192,
-    name: "192",
-    description: "placeholder",
+    name: "I am no longer trapped here",
+    description: "Unlock the 6th (10) Mend Milestone",
+    checkRequirement: () => MendingMilestone.six.isReached,
+    get reward() {
+      return `Multiply Multiversal Remain Gain by ${formatX(3, 0)}.`;
+    },
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    effect: 2,
   },
   {
     id: 193,

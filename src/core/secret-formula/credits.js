@@ -462,7 +462,7 @@ export const credits = {
     },
     {
       name: "Hexa",
-      roles: [15, 16]
+      roles: [14, 15, 16, 17]
     },
     {
       name: "MrKrutaman",
@@ -479,6 +479,10 @@ export const credits = {
     {
       name: "yodi555",
       roles: 15
+    },
+    {
+      name: "Amity",
+      roles: 16
     }
   ]
 };

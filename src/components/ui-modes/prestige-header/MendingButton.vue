@@ -1,6 +1,6 @@
 <script>
 import { DC } from '../../../core/constants';
-import { GameEnd } from '../../../core/globals';
+import { GameEnd, MendingMilestone } from '../../../core/globals';
 import { PlayerProgress } from '../../../core/player-progress';
 import MendingPointsHeader from '../../MendingPointsHeader.vue';
 
@@ -11,7 +11,8 @@ export default {
             gainedMvR: new Decimal(0),
             canMend: false,
             firstMend: true,
-            END: DC.END
+            END: DC.END,
+            needDoom: true
         };
     },
     computed: {
@@ -25,8 +26,9 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = player.isGameEnd && GameEnd.endState >= 14.5;
+            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.gte(this.END));
             this.firstMend = !PlayerProgress.mendingUnlocked();
+            this.needDoom = !MendingMilestone.six.isReached;
         },
         mend() {
             mendingResetRequest();
@@ -45,8 +47,11 @@ export default {
     <template v-if="firstMend">
       There is another way...You need to Mend the Multiverse.
     </template>
-    <template v-else-if="!canMend">
+    <template v-else-if="needDoom">
       Reach <span>{{ format(END, 2, 2) }}</span> Antimatter in Doomed Reality to Mend the Multiverse
+    </template>
+    <template v-else-if="!canMend">
+      Reach <span>{{ format(END, 2, 2) }}</span> Antimatter to Mend the Multiverse
     </template>
     <template v-else>
       Mend the Multiverse for

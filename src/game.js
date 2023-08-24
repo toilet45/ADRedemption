@@ -126,7 +126,11 @@ export function gainedInfinityPoints() {
 }
 
 export function gainedMendingPoints(){
-  return new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1)
+  let MvRGain = new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
+  if (MendingMilestone.six.isReached){
+    MvRGain = MvRGain.times(3);
+  }
+  return MvRGain;
 }
 
 function totalEPMult() {

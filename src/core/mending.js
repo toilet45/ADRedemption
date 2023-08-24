@@ -87,6 +87,7 @@ export function mendingReset() {
     V.reset();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
+    player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)
       .map(() => ({
         amount: 0,
@@ -386,7 +387,6 @@ export function mendingReset() {
 
 
     NormalChallenges.completeAll();
-    //console.log(`New MvR: ${Currency.mendingPoints.value}\nNew mends: ${Currency.mends.value}`);
     player.break = true;
     for (const autobuyer of Autobuyers.all) {
       if (autobuyer.data.interval !== undefined) autobuyer.maxIntervalForFree();

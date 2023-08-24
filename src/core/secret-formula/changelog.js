@@ -9,6 +9,34 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 24],
+    name: "the 'Hey, Royal finally did something'",
+    info: 
+    `More Hexa fixes, and new content by yours truly
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Reduced Mending Upgrade prices (say "thanks Amity"), and refunded the difference</li>
+    <li>Implemented Mending Upgrade 15</li>
+    <li>Endgame: 7 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>V should no longer hardlock the game</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>There are console errors when viewing the Time Study Tree in Nameless' Reality (We didn't edit anything there). However
+    this doesn't seem to affect gameplay in any way, however TS192 is entirely missing (in Nameless).</li>
+    <li>Viewing the Mending Upgrades Screen puts a duplicate key error, but Upgrades can still be bought</li>
+    <li>Importing Glyph sets is currently broken</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 23],
     name: "Final V patch",
     info: 

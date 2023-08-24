@@ -205,9 +205,12 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    const newMemories = seconds * (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+    let newMemories = seconds * (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
       this.memoryUpgradeCurrentMult;
     this.memoryChunks += newMemoryChunks;
+    if (MendingUpgrade(15).isBought){
+      newMemories = Math.pow(newMemories, 1.5);
+    }
     this.memories += newMemories;
   }
 
@@ -268,6 +271,7 @@ export const Ra = {
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
     if (MendingMilestone.one.isReached) boostList.push("1 Mend Milestone");
+    if (MendingUpgrade(15).isBought) boostList.push("Mending Upgrade 15");
 
     if (boostList.length === 1) return `${boostList[0]}`;
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;

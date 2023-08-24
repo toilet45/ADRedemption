@@ -6,7 +6,7 @@ export const mendingMilestones = {
   },
   two: {
     mends: 2,
-    reward: "The Pelle exclusive dilation upgrades are available outside of Doomed Reality, but are nerfed outside of it.",
+    reward: "The Pelle exclusive dilation upgrades are available outside of Doomed Reality, and gain autobuyers for them, but are nerfed outside of it.",
   },
   three: {
     mends: 3,
@@ -22,6 +22,6 @@ export const mendingMilestones = {
   },
   six: {
     mends: 10,
-    reward: "TO BE IMPLEMENTED",
+    reward: "You can now Mend outside of Doomed Reality",
   }
 };

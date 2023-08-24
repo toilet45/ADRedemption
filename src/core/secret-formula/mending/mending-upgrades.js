@@ -25,7 +25,7 @@ export const mendingUpgrades = [
   rebuyable({
     id: 1,
     name: "Mending Upgrade 1",
-    initialCost: 20,
+    initialCost: 10,
     costMult: 9,
     textTemplate: "Multiply Multiversal Remain gain by 3",
     effect: 3
@@ -33,26 +33,26 @@ export const mendingUpgrades = [
   {
     id: 2,
     name: "Mending Upgrade 2",
-    cost: 2,
+    cost: 1,
     description: () => `Start every Mend with ${format(1e4)} Realities, every Mend and Reality with ${format(1e6)} Eternities, and all prestiges with ${format(1e12)} Infinities. (applies immediately when bought)`,
     effect: () => [1e6, 1e12],
   },
   {
     id: 3,
     name: "Mending Upgrade 3",
-    cost: 5,
+    cost: 1,
     description: () => "Start Every Mend and Reality with all Eternity Challenges completed 5 times (applies immedately)",
   },
   {
     id: 4,
     name: "Mending Upgrade 4",
-    cost: 10,
+    cost: 2,
     description: "Have 5 Glyph slots in Doomed Reality (but you can only equip 1 of each Glyph type)",
   },
   {
     id: 5,
     name: "Mending Upgrade 5",
-    cost: 15,
+    cost: 5,
     description: () => `Always have passive Infinity Point, Eternity Point, and Reality Machine gain (IP and EP gen do not work in Pelle). Remnants are always equal to your max this Mend.`,
   },
   rebuyable({
@@ -66,25 +66,25 @@ export const mendingUpgrades = [
   {
     id: 7,
     name: "Mending Upgrade 7",
-    cost: 5,
+    cost: 2,
     description: () => "Unlock Tesseract Autobuyer and start every Mend with Tesseracts unlocked",
   },
   {
     id: 8,
     name: "Mending Upgrade 8",
-    cost: 20,
+    cost: 2,
     description: () => "Reduce post-Infinity Antimatter Dimension cost scaling to x1.5 and post-Infinity Tickspeed cost scaling to x1.2",
   },
   {
     id: 9,
     name: "Mending Upgrade 9",
-    cost: 15,
+    cost: 3,
     description: () => `Start every Mend with Teresa Completed and Best AM in their Reality at ${format(DC.E1E10)}`,
   },
   {
     id: 10,
     name: "Mending Upgrade 10",
-    cost: 20,
+    cost: 5,
     description: () => "Nullify the first 3 Pelle Strike penalties",
   },
   rebuyable({
@@ -116,8 +116,8 @@ export const mendingUpgrades = [
   {
     id: 15,
     name: "Mending Upgrade 15",
-    cost: 1e300,
-    description: () => "Square Memory Gain",
+    cost: 5,
+    description: () => "Raise Memory Gain to the ^1.5",
   },
   rebuyable({
     id: 16,
@@ -131,7 +131,7 @@ export const mendingUpgrades = [
     id: 17,
     name: "Mending Upgrade 17",
     cost: 1e300,
-    description: () => "Disable Distant Antimatter Galaxy Scaling and move Remote Scaling to 500,000 Galaxies. Replicanti Galaxy cost scaling is moved to 1,500 and 10,000",
+    description: () => "Move Remote Scaling to 500,000 Galaxies. Replicanti Galaxy cost scaling is moved to 1,500 and 10,000",
   },
   {
     id: 18,
@@ -148,7 +148,7 @@ export const mendingUpgrades = [
   {
     id: 20,
     name: "Mending Upgrade 20",
-    cost: 1e300,
+    cost: 20,
     description: () => "Unlock Amalgam Glyphs.",
   }
 ];
