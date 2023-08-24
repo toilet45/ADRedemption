@@ -2,6 +2,7 @@
 import CostDisplay from "@/components/CostDisplay";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 
 export default {
   name: "PelleUpgrade",
@@ -39,7 +40,8 @@ export default {
       hovering: false,
       hasRemnants: false,
       galaxyCap: 0,
-      notAffordable: false
+      notAffordable: false,
+      mendupg5: false,
     };
   },
   computed: {
@@ -62,7 +64,8 @@ export default {
       return this.currentTimeEstimate;
     },
     hasTimeEstimate() {
-      return !(this.canBuy ||
+      return !(this.mendupg5 ||
+        this.canBuy ||
         this.isBought ||
         this.isCapped ||
         (this.galaxyGenerator && this.config.currencyLabel !== "Galaxy")
@@ -74,6 +77,7 @@ export default {
     estimateImprovement() {
       if (!this.shouldEstimateImprovement) return "";
       if (!Pelle.canArmageddon) return `${this.currentTimeEstimate}`;
+      if (this.mendupg5) return `${this.currentTimeEstimate}`;
       // If the improved value is still "> 1 year" then we only show it once
       if (this.projectedTimeEstimate.startsWith(">")) return this.projectedTimeEstimate;
       return `${this.currentTimeEstimate} ➜ ${this.projectedTimeEstimate}`;
@@ -95,6 +99,7 @@ export default {
       this.hasRemnants = Pelle.cel.remnants > 0;
       this.galaxyCap = GalaxyGenerator.generationCap;
       const genDB = GameDatabase.celestials.pelle.galaxyGeneratorUpgrades;
+      this.mendupg5 = MendingUpgrades.all[5].isBought,
       this.notAffordable = (this.config === genDB.additive || this.config === genDB.multiplicative) &&
         (Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies));
     },

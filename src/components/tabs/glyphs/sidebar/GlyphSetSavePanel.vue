@@ -117,7 +117,7 @@ export default {
       for (const glyph of selectedFromInventory) {
         // The below code is terrible but in theory it should work so idc
         for (const specGlyph of Glyphs.active) {
-          console.log(specGlyph)
+          if (specGlyph != null) {
           let GlyphPos = 0
             if (!(effLimit == 0)) {
               if ((glyph.type == "effarig") && (glyph.type == specGlyph.type)) {
@@ -130,7 +130,7 @@ export default {
                 realLimit = realLimit - 1
                 finalGlyphs.splice(GlyphPos - counter, 1)
                 counter++
-            }}
+            }}}
             GlyphPos++
       }
     }

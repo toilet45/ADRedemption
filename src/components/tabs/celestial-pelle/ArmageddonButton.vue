@@ -14,11 +14,15 @@ export default {
       realityShardGain: new Decimal(0),
       nextRealityShardGain: new Decimal(0),
       canArmageddon: false,
+      mendupg5: false
     };
   },
   computed: {
     remnants() {
       return format(this.remnantsGain, 2, this.remnantsGain > 1 ? 0 : 2);
+    },
+    remnantsTotal() {
+      return format(player.celestials.pelle.remnants, 3);
     },
     buttonClassObject() {
       return {
@@ -35,7 +39,8 @@ export default {
       this.remnantsGain = Pelle.remnantsGain;
       this.realityShardGain.copyFrom(Pelle.realityShardGainPerSecond);
       this.nextRealityShardGain.copyFrom(Pelle.nextRealityShardGain);
-      this.canArmageddon = Pelle.canArmageddon;
+      this.canArmageddon = (Pelle.canArmageddon && !MendingUpgrades.all[4].isBought);
+      this.mendupg5 = MendingUpgrades.all[4].isBought
     },
     manualArmageddon() {
       if (!this.canArmageddon) return;
@@ -53,15 +58,20 @@ export default {
     @click="manualArmageddon"
   >
     <span v-if="isHeader">You cannot escape a Doomed Reality!<br></span>
-    <span class="c-remnant-gain-display">
+    <span v-if="!this.mendupg5" class="c-remnant-gain-display">
       Armageddon for
       <span class="c-remnant-gain">{{ remnants }}</span>
       Remnants
     </span>
+    <span v-if="this.mendupg5">
+      You have
+      <span class="c-remnant-gain">{{ remnantsTotal }}</span>
+      Remnants
+    </span>
     <br>
     Reality Shards
-    <span class="c-reality-shard-gain">{{ format(realityShardGain, 2, 2) }}</span>/s ➜
-    <span class="c-reality-shard-gain">{{ format(nextRealityShardGain, 2, 2) }}</span>/s
+    <span class="c-reality-shard-gain">{{ format(realityShardGain, 2, 2) }}</span>/s <span v-if="!this.mendupg5">➜</span>
+    <span v-if="!this.mendupg5" class="c-reality-shard-gain">{{ format(nextRealityShardGain, 2, 2) }}</span><span v-if="!this.mendupg5">/s</span>
   </button>
 </template>
 
