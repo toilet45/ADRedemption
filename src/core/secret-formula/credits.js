@@ -483,6 +483,10 @@ export const credits = {
     {
       name: "Amity",
       roles: 16
+    },
+    {
+      name: "Wellington",
+      roles: 14
     }
   ]
 };

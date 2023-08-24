@@ -109,7 +109,9 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         break;
       }
       case 9:{
-        player.celestials.teresa.unlockBits += 1;
+        if (player.celestials.teresa.unlockBits % 2 != 1){
+          player.celestials.teresa.unlockBits += 1;
+        }
         if (player.celestials.teresa.bestRunAM.lt(DC.E1E10)){
           player.celestials.teresa.bestRunAM = DC.E1E10;
         }

@@ -26,7 +26,7 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.gte(this.END));
+            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
         },

@@ -986,7 +986,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return player.isGameEnd;
+    return player.isGameEnd || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;
