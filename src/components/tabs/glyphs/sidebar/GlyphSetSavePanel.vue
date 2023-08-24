@@ -108,30 +108,35 @@ export default {
       // match more glyphs than we have room for
       const selectedFromInventory = this.findSelectedGlyphs(remainingOptions,
         Glyphs.active.countWhere(g => g === null));
+      let counter = 0
+      let finalGlyphs = selectedFromInventory
+      let specialLimit = 1
+      if (MendingMilestone.five.isReached) specialLimit = 2
+      let effLimit = specialLimit
+      let realLimit = specialLimit
       for (const glyph of selectedFromInventory) {
         // The below code is terrible but in theory it should work so idc
-        let specialLimit = 1
-        if (MendingMilestone.five.isReached) specialLimit = 2
-        let effLimit = specialLimit
-        let realLimit = specialLimit
         for (const specGlyph of Glyphs.active) {
+          console.log(specGlyph)
           let GlyphPos = 0
             if (!(effLimit == 0)) {
-              if (glyph.type == "effarig" && glyph.type == specGlyph.type)
-                effLimit -= 1
-                selectedFromInventory.splice(GlyphPos, 1)
-            }
+              if ((glyph.type == "effarig") && (glyph.type == specGlyph.type)) {
+                effLimit = effLimit - 1
+                finalGlyphs.splice(GlyphPos - counter, 1)
+                counter++
+            }}
             if (!(realLimit == 0)) {
-              if (glyph.type == "reality" && glyph.type == specGlyph.type)
-                realLimit -= 1
-                selectedFromInventory.splice(GlyphPos, 1)
-            }
+              if ((glyph.type == "reality") && (glyph.type == specGlyph.type)) {
+                realLimit = realLimit - 1
+                finalGlyphs.splice(GlyphPos - counter, 1)
+                counter++
+            }}
             GlyphPos++
       }
-      for (const selGlyph of selectedFromInventory) {
-        glyphsToLoad = glyphsToLoad.filter(g => g !== glyph);
-      }
     }
+    for (const selGlyph of finalGlyphs) {
+        glyphsToLoad = glyphsToLoad.filter(g => g !== selGlyph);
+      }
       // Actually equip the glyphs and then notify how successful (or not) the loading was
       let missingGlyphs = glyphsToLoad.length;
       for (const glyph of selectedFromInventory) {
