@@ -86,7 +86,7 @@ export const Glyphs = {
   },
   get activeSlotCount() {
     if (Pelle.isDoomed) {
-      return PelleRifts.vacuum.milestones[0].canBeApplied ?  1 : 0;
+      return PelleRifts.vacuum.milestones[0].canBeApplied ? MendingUpgrade(4).isBought ? 5 : 1 : 0;
     }
     return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },

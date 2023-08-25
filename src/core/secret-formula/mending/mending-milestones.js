@@ -23,17 +23,5 @@ export const mendingMilestones = {
   six: {
     mends: 10,
     reward: "You can now Mend outside of Doomed Reality",
-  },
-  seven: {
-    mends: 12,
-    reward: "Keep Charged Infinity Upgrades on Mend",
-  },
-  eight: {
-    mends: 15,
-    reward: "Alchemy Resources are always equal to their Cap",
-  },
-  nine: {
-    mends: 20,
-    reward: "Start with Triad Studies Unlocked, and all V-Achievements at tier 3 (includes Hard)",
   }
 };

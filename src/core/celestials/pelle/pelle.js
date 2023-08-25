@@ -349,7 +349,7 @@ export const Pelle = {
 
   // Calculations assume this is in units of proportion per second (eg. 0.03 is 3% drain per second)
   get riftDrainPercent() {
-    return 0.03;
+    return 0.3;
   },
 
   get glyphMaxLevel() {
