@@ -1,4 +1,6 @@
 <script>
+import { Autobuyer } from "../../../core/globals";
+import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import InfinityDimensionRow from "./ModernInfinityDimensionRow";
 import PrimaryButton from "@/components/PrimaryButton";
 
@@ -6,8 +8,9 @@ export default {
   name: "ModernInfinityDimensionsTab",
   components: {
     PrimaryButton,
-    InfinityDimensionRow
-  },
+    InfinityDimensionRow,
+    PrimaryToggleButton
+},
   data() {
     return {
       infinityPower: new Decimal(0),
@@ -29,6 +32,8 @@ export default {
       extraTesseracts: 0,
       creditsClosed: false,
       showLockedDimCostNote: true,
+      isAutoTessUnlocked: false,
+      isAutoTessOn: false,
     };
   },
   computed: {
@@ -42,6 +47,11 @@ export default {
       const extra = this.extraTesseracts > 0 ? ` + ${format(this.extraTesseracts, 2, 2)}` : "";
       return `${formatInt(this.boughtTesseracts)}${extra}`;
     },
+  },
+  watch: {
+    isAutoTessOn(newValue){
+      Autobuyer.tesseract.isActive = newValue;
+    }
   },
   methods: {
     update() {
@@ -66,6 +76,8 @@ export default {
       this.tesseractCost.copyFrom(Tesseracts.nextCost);
       this.totalDimCap = InfinityDimensions.totalDimCap;
       this.canBuyTesseract = Tesseracts.canBuyTesseract;
+      this.isAutoTessUnlocked = Autobuyer.tesseract.isUnlocked;
+      this.isAutoTessOn = Autobuyer.tesseract.isActive;
       this.enslavedCompleted = Enslaved.isCompleted;
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
@@ -124,7 +136,7 @@ export default {
     </div>
     <div
       v-if="enslavedCompleted"
-      class="l-infinity-dim-tab__enslaved-reward-container"
+      class="l-infinity-dim-tab__enslaved-reward-container l-spoon-btn-group"
     >
       <button
         class="c-infinity-dim-tab__tesseract-button"
@@ -140,6 +152,12 @@ export default {
         <p>Increase dimension caps by {{ format(nextDimCapIncrease, 2) }}</p>
         <p><b>Costs: {{ format(tesseractCost) }} IP</b></p>
       </button>
+      <PrimaryToggleButton
+        v-if="isAutoTessUnlocked"
+        v-model="isAutoTessOn"
+        label="Auto:"
+        style="margin-top: -1rem;"
+      />
     </div>
     <div v-if="isEnslavedRunning">
       All Infinity Dimensions are limited to a single purchase.
