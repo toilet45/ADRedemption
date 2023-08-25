@@ -65,7 +65,7 @@ export const GalaxyGenerator = {
       Pelle.quotes.galaxyGeneratorRifts.show();
     }
     if (this.sacrificeActive) {
-      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - 0.03 * diff / 1000, 0);
+      this.capRift.reducedTo = Math.max(this.capRift.reducedTo - 0.3 * diff / 1000, 0);
       if (this.capRift.reducedTo === 0) {
         player.celestials.pelle.galaxyGenerator.sacrificeActive = false;
         player.celestials.pelle.galaxyGenerator.phase++;

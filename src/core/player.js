@@ -119,6 +119,10 @@ window.player = {
       multiplier: DC.D2,
       isActive: true
     },
+    tesseract: {
+      isUnlocked: false,
+      isActive: false,
+    },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,

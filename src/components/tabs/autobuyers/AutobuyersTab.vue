@@ -10,7 +10,6 @@ import RealityAutobuyerBox from "./RealityAutobuyerBox";
 import SimpleAutobuyersMultiBox from "./SimpleAutobuyersMultiBox";
 import TickspeedAutobuyerBox from "./TickspeedAutobuyerBox";
 import { PlayerProgress } from "../../../core/player-progress";
-
 export default {
   name: "AutobuyersTab",
   components: {
