@@ -20,6 +20,10 @@ export const mendingMilestones = {
     mends: 7,
     reward: "Gain 3 additional Glyph slots (no effect in Doomed Reality), and have the ability to equip TWO Effarig and Reality Glyphs each",
   },
+  seven: {
+    mends: 8,
+    reward: "Begin each Mend with Teresa's perk shop max, and gain an autobuyer which will automatically purchase and remove Music Glyphs",
+  },
   six: {
     mends: 10,
     reward: "You can now Mend outside of Doomed Reality",

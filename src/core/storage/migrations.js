@@ -483,6 +483,15 @@ export const migrations = {
       if (MendingUpgrade(9).isPurchased) {
         player.mendingPoints = player.mendingPoints.add(12);
       }
+    },
+    41: player => {
+      if (player.mends.gte(8)) {
+        player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+      }
+      player.auto.musicglyph = {
+        isUnlocked: false,
+        isActive: false,
+      }
     }
   },
 
