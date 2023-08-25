@@ -71,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id <= 3 || this.id === 5 || this.id === 9 || this.id === 15;
+    return this.id <= 3 || this.id === 5 || this.id === 7 || this.id === 9 || this.id === 15;
   }
 
   get isPossible() {
@@ -107,6 +107,11 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
       case 5:{
         player.celestials.teresa.unlockBits += 2;
         break;
+      }
+      case 7:{
+        player.celestials.enslaved.unlocks = [0, 1];
+        player.celestials.enslaved.completed = true;
+        break
       }
       case 9:{
         if (player.celestials.teresa.unlockBits % 2 != 1){

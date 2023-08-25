@@ -74,6 +74,7 @@ export const Enslaved = {
     return this.canModifyRealTimeStorage && player.celestials.enslaved.isStoringReal;
   },
   get storedRealTimeEfficiency() {
+    if (MendingUpgrade(7).isBought) return 5;
     return 0.7;
   },
   get storedRealTimeCap() {

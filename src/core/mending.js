@@ -64,16 +64,16 @@ export function mendingReset() {
     //Celestials
     player.celestials.teresa.pouredAmount = 0;
     player.celestials.teresa.unlockBits = 0;
-    if (MendingUpgrade(9).isBought){
-      player.celestials.teresa.unlockBits += 1;
-    }
     player.celestials.teresa.run = false;
     player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
+    if (MendingUpgrade(9).isBought){
+      player.celestials.teresa.unlockBits += 1;
+    }
     player.celestials.effarig.relicShards = 0;
-    player.celestials.effarig.unlockBits = 0;
+    player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = 0;
     player.celestials.enslaved.storedReal = 0;
@@ -84,6 +84,10 @@ export function mendingReset() {
     player.celestials.enslaved.tesseracts = 0;
     player.celestials.enslaved.hasSecretStudy = false;
     player.celestials.enslaved.progressBits = 0;
+    if(MendingUpgrade(7).isBought){
+      player.celestials.enslaved.unlocks = [0, 1];
+      player.celestials.enslaved.completed = true;
+    }
     V.reset();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
