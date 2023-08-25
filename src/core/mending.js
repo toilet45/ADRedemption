@@ -68,6 +68,9 @@ export function mendingReset() {
     player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
+    if (MendingMilestone.seven.isReached) {
+      player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+    }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     if (MendingUpgrade(9).isBought){
       player.celestials.teresa.unlockBits += 1;
