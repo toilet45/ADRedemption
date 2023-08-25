@@ -73,7 +73,7 @@ export function mendingReset() {
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     player.celestials.effarig.relicShards = 0;
-    player.celestials.effarig.unlockBits = 0;
+    player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = 0;
     player.celestials.enslaved.storedReal = 0;
