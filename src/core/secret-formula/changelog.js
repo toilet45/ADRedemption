@@ -9,6 +9,31 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 25],
+    name: "the Reality Automation",
+    info: 
+    `Added some autobuyers to some Reality Mechanics.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added Milestone for 8 Mends</li>
+    <li>Implemented Mending Upgrade 7</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>none that I can remember</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 24],
     name: "EMERGENCY HOTFIX 3",
     info: 

@@ -22,10 +22,18 @@ export const mendingMilestones = {
   },
   seven: {
     mends: 8,
-    reward: "Begin each Mend with Teresa's perk shop max, and gain an autobuyer which will automatically purchase and remove Music Glyphs",
+    reward: "Begin each Mend with Teresa's perk shop maxed, and gain an autobuyer which will automatically purchase and remove Music Glyphs",
   },
   six: {
     mends: 10,
     reward: "You can now Mend outside of Doomed Reality",
-  }
+  },
+  eight: {
+    mends: 12,
+    reward: "[TBD]",
+  },
+  nine: {
+    mends: 15,
+    reward: "[TBD]",
+  },
 };

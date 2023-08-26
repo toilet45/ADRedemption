@@ -105,7 +105,7 @@ export const mendingUpgrades = [
     id: 13,
     name: "Mending Upgrade 13",
     cost: 1e300,
-    description: () => "[TBD]",
+    description: () => "Simulate 2 extra Realities for every Reality",
   },
   {
     id: 14,
