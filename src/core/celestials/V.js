@@ -1,5 +1,5 @@
 import { BitUpgradeState, GameMechanicState } from "../game-mechanics";
-import { Glyphs } from "../globals";
+import { Glyphs, MendingUpgrade } from "../globals";
 import { GameDatabase } from "../secret-formula/game-database";
 
 import { SpeedrunMilestones } from "../speedrun";
@@ -191,13 +191,21 @@ export const V = {
     this.quotes.realityEnter.show();
   },
   updateTotalRunUnlocks() {
-    let sum = 0;
-    for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
-      if (i < 6) sum += player.celestials.v.runUnlocks[i];
-      else sum += player.celestials.v.runUnlocks[i] * 2;
+let sum = 0;
+    if (MendingUpgrade(14).isBought) {
+      sum += 36
+  for (let i = 0; i< player.celestials.v.runUnlocks.length; i++) {
+    if (i < 6) sum += (player.celestials.v.runUnlocks[i] - 3) * 3;
+    else sum += (player.celestials.v.runUnlocks [i] - 3) * 2;
+  }
+} else {
+  for (let i = 0; i< player.celestials.v.runUnlocks.length; i++) {
+    if (i < 6) sum += player.celestials.v.runUnlocks[i];
+      else sum += (player.celestials.v.runUnlocks [i]) * 2;
     }
-    this.spaceTheorems = sum;
-  },
+  }
+  this.spaceTheorems = sum;
+},
   reset() {
     player.celestials.v = {
       unlockBits: 0,

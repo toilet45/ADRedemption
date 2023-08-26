@@ -122,6 +122,13 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         }
         break;
       }
+      case 14:{
+        player.celestials.v.runUnlocks.forEach((unlock, index) => {
+          player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
+        });
+        V.updateTotalRunUnlocks();
+        break;
+      }
       default:{
           //apparently leaving this blank is equivalent to Python's "pass"
       }
