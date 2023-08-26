@@ -66,8 +66,8 @@ export const mendingUpgrades = [
   {
     id: 7,
     name: "Mending Upgrade 7",
-    cost: 2,
-    description: () => "Unlock Tesseract Autobuyer and start every Mend with Tesseracts unlocked",
+    cost: 4,
+    description: () => "Start every Mend with Nameless completed and all their upgrades and unlocks. Real time is stored at 500% efficiency. Unlock Autobuyer for Tesseracts.",
   },
   {
     id: 8,
@@ -105,7 +105,7 @@ export const mendingUpgrades = [
     id: 13,
     name: "Mending Upgrade 13",
     cost: 1e300,
-    description: () => "Glyphs are boosted to a minimum level of 10,000 in Nameless' Reality, and real time is stored at 500% efficiency",
+    description: () => "Simulate 2 extra Realities for every Reality",
   },
   {
     id: 14,

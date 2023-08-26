@@ -123,6 +123,10 @@ window.player = {
       isUnlocked: false,
       isActive: false,
     },
+    musicglyph: {
+      isUnlocked: false,
+      isActive: false,
+    },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,

@@ -466,7 +466,7 @@ export const credits = {
     },
     {
       name: "MrKrutaman",
-      roles: 15
+      roles: [15, 17]
     },
     {
       name: "BsonHK",
@@ -482,7 +482,7 @@ export const credits = {
     },
     {
       name: "Amity",
-      roles: 16
+      roles: [14, 16]
     },
     {
       name: "Wellington",
