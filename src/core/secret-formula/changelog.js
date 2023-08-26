@@ -10,6 +10,30 @@ export const changelog = [
    */
   {
     date: [2023, 8, 25],
+    name: "EMERGENCY HOTFIX 4",
+    info: 
+    `typos strike again
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed not being able to swap Glyphs in Pelle</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 25],
     name: "the Reality Automation",
     info: 
     `Added some autobuyers to some Reality Mechanics.
