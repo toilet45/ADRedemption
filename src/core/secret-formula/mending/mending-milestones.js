@@ -12,6 +12,10 @@ export const mendingMilestones = {
     mends: 3,
     reward: "Start every Mend with all perks, the rebuyable Reality Upgrade and Black Hole Autobuyers, Vacuum Acceleration, and both Black Holes unlocked and permanently active, with 3 power upgrades each.",
   },
+  ten: {
+    mends: 4,
+    reward: "Unlock memory autobuyers.",
+  },
   four: {
     mends: 5,
     reward: "Remove all requirements for Reality/Imaginary Upgrades (except for Lai'tela and Pelle Unlocks) and start with 5 of each rebuyable Reality Upgrade.",
