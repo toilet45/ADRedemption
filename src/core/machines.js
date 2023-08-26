@@ -1,5 +1,4 @@
 import { DC } from "./constants";
-import { isRealityAvailable } from "./reality.js";
 
 export const MachineHandler = {
   get baseRMCap() { return DC.E1000; },
@@ -18,8 +17,6 @@ export const MachineHandler = {
   },
 
   get uncappedRM() {
-    if (!isRealityAvailable()) return DC.D0;
-    
     let log10FinalEP = player.records.thisReality.maxEP.plus(gainedEternityPoints()).log10();
     if (!PlayerProgress.realityUnlocked()) {
       if (log10FinalEP > 8000) log10FinalEP = 8000;
