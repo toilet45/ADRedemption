@@ -71,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id <= 3 || this.id === 5 || this.id === 9 || this.id === 15;
+    return this.id <= 3 || this.id === 5 || this.id === 9 ||this.id === 14 || this.id === 15;
   }
 
   get isPossible() {
@@ -115,6 +115,13 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         if (player.celestials.teresa.bestRunAM.lt(DC.E1E10)){
           player.celestials.teresa.bestRunAM = DC.E1E10;
         }
+        break;
+      }
+      case 14:{
+        player.celestials.v.runUnlocks.forEach((unlock, index) => {
+          player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
+        });
+        V.updateTotalRunUnlocks();
         break;
       }
       default:{
