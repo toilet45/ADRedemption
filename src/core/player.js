@@ -192,6 +192,32 @@ window.player = {
       })),
       isActive: true,
     },
+    pets: {
+      teresa: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+      effarig: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+      enslaved: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+      v: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+    },
     darkMatterDims: {
       isActive: false,
       lastTick: 0,
