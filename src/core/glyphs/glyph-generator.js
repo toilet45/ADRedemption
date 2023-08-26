@@ -234,10 +234,11 @@ export const GlyphGenerator = {
     // Call the RNG twice before anything else to advance the RNG seed properly, even if the whole method returns early.
     // This prevents the position of effarig glyphs in the choice list from affecting the choices themselves, as well
     // as preventing all of the glyphs changing drastically when RU17 is purchased.
-    const random1 = rng.uniform();
+     const random1 = rng.uniform();
     const random2 = rng.uniform();
+    if (MendingUpgrade(12).isBought) return type === "effarig" ? 7 : 4;
     if (type !== "effarig" && Ra.unlocks.glyphEffectCount.canBeApplied) return 4;
-    const maxEffects = Ra.unlocks.glyphEffectCount.canBeApplied ? 7 : 4;
+    const maxEffects = (Ra.unlocks.glyphEffectCount.canBeApplied || MendingUpgrade(12).isBought) ? 7 : 4;
     let num = Math.min(
       maxEffects,
       Math.floor(Math.pow(random1, 1 - (Math.pow(level * strength, 0.5)) / 100) * 1.5 + 1)
