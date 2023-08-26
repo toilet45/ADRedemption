@@ -45,13 +45,13 @@ export default {
       @click="mend"
     >
     <template v-if="firstMend">
-      There is another way...You need to Mend the Multiverse.
+      There is another way... You need to Mend the Multiverse.
     </template>
     <template v-else-if="needDoom">
-      Reach <span>{{ format(END, 2, 2) }}</span> Antimatter in Doomed Reality to Mend the Multiverse
+      Reach <span>{{ format(END, 2, 2) }}</span> antimatter in a Doomed Reality to Mend the Multiverse
     </template>
     <template v-else-if="!canMend">
-      Reach <span>{{ format(END, 2, 2) }}</span> Antimatter to Mend the Multiverse
+      Reach <span>{{ format(END, 2, 2) }}</span> antimatter to Mend the Multiverse
     </template>
     <template v-else>
       Mend the Multiverse for
