@@ -262,7 +262,7 @@ export const GlyphTypes = {
     */
   random(rng, blacklisted = []) {
     const types = generatedTypes.filter(
-      x => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x));
+      x => ((EffarigUnlock.reality.isUnlocked || MendingUpgrade(12).isBought)|| x !== "effarig") && !blacklisted.includes(x));
     return types[Math.floor(rng.uniform() * types.length)];
   },
   get list() {

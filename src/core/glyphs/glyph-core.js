@@ -327,7 +327,7 @@ export const Glyphs = {
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
-      if (Pelle.isDoomed && MendingUpgrade(7).isBought) {
+      if (Pelle.isDoomed && MendingUpgrade(4).isBought) {
         if (equippedInDoom) {
           Modal.message.show(`You can only have one of each glyph type equipped while Doomed!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
@@ -356,7 +356,7 @@ export const Glyphs = {
             false -> allow replace
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
-     if (!(Pelle.isDoomed && MendingUpgrade(7).isBought)) {
+     if (!(Pelle.isDoomed && MendingUpgrade(4).isBought)) {
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,

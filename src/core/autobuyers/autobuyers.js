@@ -21,6 +21,13 @@ import { TickspeedAutobuyerState } from "./tickspeed-autobuyer";
 import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TesseractAutobuyerState } from "./tesseract-autobuyer";
+import { MusicGlyphAutobuyerState } from "./music-glyph-autobuyer";
+
+import { TeresaMemoryAutobuyerState } from "./memory-autobuyer"
+import { EffarigMemoryAutobuyerState } from "./memory-autobuyer"
+import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer"
+import { VMemoryAutobuyerState } from "./memory-autobuyer"
+
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
   antimatterDimension: AntimatterDimensionAutobuyerState.createAccessor(),
@@ -46,6 +53,11 @@ export const Autobuyer = {
   timeDimension: TimeDimensionAutobuyerState.createAccessor(),
   timeTheorem: new TimeTheoremAutobuyerState(),
   tesseract: new TesseractAutobuyerState(),
+  musicglyph: new MusicGlyphAutobuyerState(),
+  teresaMem: TeresaMemoryAutobuyerState.createAccessor(),
+  effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
+  enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
+  vMem: VMemoryAutobuyerState.createAccessor(),
 };
 
 export const Autobuyers = (function() {
@@ -72,6 +84,7 @@ export const Autobuyers = (function() {
     Autobuyer.singularity,
     Autobuyer.annihilation,
     Autobuyer.tesseract,
+    Autobuyer.musicglyph,
   ];
 
   const singleComplex = [
@@ -86,6 +99,10 @@ export const Autobuyers = (function() {
     Autobuyer.blackHolePower.zeroIndexed,
     Autobuyer.realityUpgrade.zeroIndexed,
     Autobuyer.imaginaryUpgrade.zeroIndexed,
+    Autobuyer.teresaMem.zeroIndexed,
+    Autobuyer.effarigMem.zeroIndexed,
+    Autobuyer.enslavedMem.zeroIndexed,
+    Autobuyer.vMem.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -97,6 +114,10 @@ export const Autobuyers = (function() {
     Autobuyer.blackHolePower,
     Autobuyer.realityUpgrade,
     Autobuyer.imaginaryUpgrade,
+    Autobuyer.teresaMem,
+    Autobuyer.effarigMem,
+    Autobuyer.enslavedMem,
+    Autobuyer.vMem,
   ];
 
   return {

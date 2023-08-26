@@ -46,8 +46,8 @@ export const glyphTypes = {
     id: "effarig",
     symbol: GLYPH_SYMBOLS.effarig,
     color: "#e21717",
-    isUnlocked: () => EffarigUnlock.reality.isUnlocked,
-    canCustomize: () => EffarigUnlock.reality.isUnlocked,
+    isUnlocked: () => EffarigUnlock.reality.isUnlocked || MendingUpgrade(12).isBought,
+    canCustomize: () => EffarigUnlock.reality.isUnlocked || MendingUpgrade(12).isBought,
     alchemyResource: ALCHEMY_RESOURCE.EFFARIG,
     hasRarity: true
     // Effarig glyphs have no primary effect; all are equally likely

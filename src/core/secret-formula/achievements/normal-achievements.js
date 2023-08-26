@@ -1387,7 +1387,7 @@ export const normalAchievements = [
   {
     id: 192,
     name: "I am no longer trapped here",
-    description: "Unlock the 6th (10) Mend Milestone",
+    description: "Unlock the 7th (10) Mend Milestone",
     checkRequirement: () => MendingMilestone.six.isReached,
     get reward() {
       return `Multiply Multiversal Remain Gain by ${formatX(3, 0)}.`;
