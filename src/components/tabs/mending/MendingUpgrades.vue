@@ -38,7 +38,7 @@ export default {
 <div class="c-remains-amount">
   You have <span class="c-remains-amount__accent">{{ format(mendingPoints, 2) }}</span> {{ pluralize("Multiversal Remain", mendingPoints )}}.
   <br><br>
-  <div class="c-mending-upgrade-infotext">Every complete row also multiplies Multiversal Remain gain by 2</div>
+  <div class="c-mending-upgrade-infotext">Every completed row of purchased upgrades multiplies Multiversal Remain gain by 2.</div>
     <div class="l-mending-upgrade-grid">
       <div
         v-for=" row in 4"
