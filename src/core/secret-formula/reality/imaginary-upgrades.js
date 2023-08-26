@@ -300,7 +300,7 @@ export const imaginaryUpgrades = [
     canLock: true,
     // Three locking events: uninvert, discharge, and entering (but not auto-completing) EC12
     description: "Increase free Dimboost strength based on Singularity count",
-    effect: () => Decimal.pow(player.celestials.laitela.singularities, 300),
+    effect: () => (Decimal.pow(player.celestials.laitela.singularities, 300)).clampMin(1),
     formatEffect: value => `${formatX(value, 2, 1)}`,
     isDisabledInDoomed: true
   },

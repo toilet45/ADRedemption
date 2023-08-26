@@ -450,7 +450,7 @@ export const credits = {
     },
     {
       name: "incremental_gamer",
-      roles: 15
+      roles: [14, 15]
     },
     {
       name: "Merlyn",

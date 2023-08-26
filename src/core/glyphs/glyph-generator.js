@@ -217,7 +217,7 @@ export const GlyphGenerator = {
   randomStrength(rng) {
     // Technically getting this upgrade really changes glyph gen but at this point almost all
     // the RNG is gone anyway.
-    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied) return rarityToStrength(100);
+    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || MendingUpgrade(12).isBought) return rarityToStrength(100);
     let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
     const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
     const increasedRarity = relicShardFactor * Effarig.maxRarityBoost +
@@ -236,9 +236,9 @@ export const GlyphGenerator = {
     // as preventing all of the glyphs changing drastically when RU17 is purchased.
      const random1 = rng.uniform();
     const random2 = rng.uniform();
-    if (MendingUpgrade(12).isBought) return type === "effarig" ? 7 : 4;
-    if (type !== "effarig" && Ra.unlocks.glyphEffectCount.canBeApplied) return 4;
-    const maxEffects = (Ra.unlocks.glyphEffectCount.canBeApplied || MendingUpgrade(12).isBought) ? 7 : 4;
+    if (type !== "effarig" && (Ra.unlocks.glyphEffectCount.canBeApplied || MendingUpgrade(12).isBought)) return 4;
+    if (MendingUpgrade(12).isBought) return 7;
+    const maxEffects = (Ra.unlocks.glyphEffectCount.canBeApplied || MendingUpgrade(12).isBought)? 7 : 4;
     let num = Math.min(
       maxEffects,
       Math.floor(Math.pow(random1, 1 - (Math.pow(level * strength, 0.5)) / 100) * 1.5 + 1)
@@ -282,7 +282,7 @@ export const GlyphGenerator = {
   },
 
   randomType(rng, typesSoFar = []) {
-    const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
+    const generatable = generatedTypes.filter(x => (EffarigUnlock.reality.isUnlocked || MendingUpgrade(12).isBought) || x !== "effarig");
     const maxOfSameTypeSoFar = generatable.map(x => typesSoFar.countWhere(y => y === x)).max();
     const blacklisted = typesSoFar.length === 0
       ? [] : generatable.filter(x => typesSoFar.countWhere(y => y === x) === maxOfSameTypeSoFar);

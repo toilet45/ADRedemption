@@ -98,7 +98,7 @@ export const mendingUpgrades = [
   {
     id: 12,
     name: "Mending Upgrade 12",
-    cost: 1e300,
+    cost: 6,
     description: () => "Glyphs always have 100% rarity and 4 effects (7 if Effarig). Start every Mend with Effarig Glyphs unlocked.",
   },
   {
