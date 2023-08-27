@@ -65,7 +65,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return (player.reality.imaginaryUpgReqs & (1 << this.id)) !== 0 || (MendingMilestone.four.isReached && ![25, 15].includes(this.id)) || (MendingMilestone.three.isReached && this.id === 20);
+    return (player.reality.imaginaryUpgReqs & (1 << this.id)) !== 0 || (MendingMilestone.four.isReached && ![25, 15, 16, 17, 18, 19].includes(this.id)) || (MendingMilestone.three.isReached && this.id === 20);
   }
 
   get isPossible() {
@@ -106,7 +106,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
     }
     if (this.id === 22) {
       for (const key of Object.keys(player.reality.glyphs.sac)) {
-        player.reality.glyphs.sac[key] = ImaginaryUpgrade(22).effectValue;
+        if (player.reality.glyphs.sac[key] < 1e100) player.reality.glyphs.sac[key] = ImaginaryUpgrade(22).effectValue;
       }
     }
     if (this.id === 25) {

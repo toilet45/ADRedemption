@@ -7,7 +7,7 @@ export class MusicGlyphAutobuyerState extends AutobuyerState {
   }
 
   get name() {
-    return `Music Glyph`;
+    return `Auto Purchase and Purge Music Glyphs`;
   }
 
   get isUnlocked() {

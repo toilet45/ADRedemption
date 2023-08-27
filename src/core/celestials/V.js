@@ -191,21 +191,14 @@ export const V = {
     this.quotes.realityEnter.show();
   },
   updateTotalRunUnlocks() {
-let sum = 0;
-    if (MendingUpgrade(14).isBought) {
-      sum += 36
-  for (let i = 0; i< player.celestials.v.runUnlocks.length; i++) {
-    if (i < 6) sum += (player.celestials.v.runUnlocks[i] - 3) * 3;
-    else sum += (player.celestials.v.runUnlocks [i] - 3) * 2;
-  }
-} else {
-  for (let i = 0; i< player.celestials.v.runUnlocks.length; i++) {
-    if (i < 6) sum += player.celestials.v.runUnlocks[i];
-      else sum += (player.celestials.v.runUnlocks [i]) * 2;
+    let sum = 0
+    let mult = MendingUpgrade(14).isBought ? 3 : 1
+    for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
+      sum += player.celestials.v.runUnlocks[i] * mult
+      if (!(i < 6)) sum += player.celestials.v.runUnlocks[i] * mult
     }
-  }
-  this.spaceTheorems = sum;
-},
+    this.spaceTheorems = sum;
+  },
   reset() {
     player.celestials.v = {
       unlockBits: 0,
@@ -232,7 +225,8 @@ let sum = 0;
     return Ra.unlocks.unlockHardV.isUnlocked;
   },
   get isFullyCompleted() {
-    return this.spaceTheorems >= 66;
+    let x =  MendingUpgrade(14).isBought? 198 : 66;
+    return this.spaceTheorems >= x;
   },
   nextNormalReductionCost() {
     return 1000;

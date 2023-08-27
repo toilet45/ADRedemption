@@ -457,7 +457,7 @@ export const tabs = [
         name: "Ra",
         symbol: "<i class='fas fa-sun'></i>",
         component: "RaTab",
-        condition: () => VUnlocks.raUnlock.isUnlocked,
+        condition: () => VUnlocks.raUnlock.isUnlocked && EffarigUnlock.eternity.isUnlocked,
         id: 5,
         hidable: true,
       },

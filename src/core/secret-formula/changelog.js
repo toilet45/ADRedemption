@@ -9,6 +9,31 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 26],
+    name: "OMG 2 Upgrades this time",
+    info: 
+    `Finally an update that adds more than 1 Upgrade
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Implemented Mending Upgrades 12 and 14</li>
+    <li>Added a Mending Milestone for 4 Mends (effect temporary until MU19 is implemented)</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed some Glyphs not being deleted on Mend</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 25],
     name: "EMERGENCY HOTFIX 4",
     info: 

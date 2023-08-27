@@ -280,7 +280,7 @@ export const imaginaryUpgrades = [
       gainedGlyphLevel().actualLevel >= 20000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Increase free Dimboost count based on Tesseract count",
-    effect: () => Math.floor(0.25 * Math.pow(Tesseracts.effectiveCount, 2)),
+    effect: () => Math.max((Math.floor(0.25 * Math.pow(Tesseracts.effectiveCount, 2))), 1),
     formatEffect: value => `${formatX(value)}`,
     isDisabledInDoomed: true
   },

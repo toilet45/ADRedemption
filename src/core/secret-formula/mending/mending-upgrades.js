@@ -53,7 +53,7 @@ export const mendingUpgrades = [
     id: 5,
     name: "Mending Upgrade 5",
     cost: 5,
-    description: () => `Always have passive Infinity Point, Eternity Point, and Reality Machine gain (IP and EP gen do not work in Pelle). Remnants are always equal to your best-ever Remnants this Mend.`,
+    description: () => `Always have passive IP, EP, and RM gain (IP and EP gen do not work in Pelle). Remnants are always equal to your best-ever Remnants this Mend.`,
   },
   rebuyable({
     id: 6,
@@ -111,7 +111,7 @@ export const mendingUpgrades = [
     id: 14,
     name: "Mending Upgrade 14",
     cost: 8,
-    description: () => "Gain 3 Space Theorems per V-Achievement and start every Mend with all V-Achievements at tier 3 (4 ST and completions for Hard)",
+    description: () => "Gain 3 Space Theorems per V-Achievement (4 ST for Hard) and start every Mend with all V-Achievements at tier 3",
   },
   {
     id: 15,

@@ -209,7 +209,7 @@ export const v = {
       id: 2,
       reward: "Antimatter Dimension power based on total Space Theorems.",
       description: () => `Have ${formatInt(5)} V-Achievements`,
-      effect: () => 1 + Math.sqrt(V.spaceTheorems) / 100,
+      effect: () => 1 + Math.sqrt(V.spaceTheorems) / 100, //this should be about ^1.13
       format: x => formatPow(x, 3, 3),
       requirement: () => V.spaceTheorems >= 5
     },
@@ -220,7 +220,7 @@ export const v = {
       effect: () => Achievements.power,
       // Base rate is 60 ECs at 20 minutes each
       format: x =>{
-        if (MendingUpgrade(3).isBought) return "Instant (Mending Upgrade)";
+        if (MendingUpgrade(3).isBought) return "Instant (Mending Upgrade 3)";
         else if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied) return "Instant (Ra upgrade)";
         return `${TimeSpan.fromMinutes(60 * 20 / x).toStringShort()} for full completion`;
       },

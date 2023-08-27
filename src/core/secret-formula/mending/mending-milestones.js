@@ -14,11 +14,11 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "Unlock memory autobuyers.",
+    reward: "[TEMP] Unlock Autobuyers for Ra Memory Levels, Recollections, and Fragmentations.",
   },
   four: {
     mends: 5,
-    reward: "Remove all requirements for Reality/Imaginary Upgrades (except for Lai'tela and Pelle Unlocks) and start with 5 of each rebuyable Reality Upgrade.",
+    reward: "Remove all requirements for Reality/Imaginary Upgrades (except for Lai'tela,  Pelle and their Unlocks) and start with 5 of each rebuyable Reality Upgrade.",
   },
   five: {
     mends: 7,

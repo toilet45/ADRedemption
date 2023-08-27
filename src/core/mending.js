@@ -35,6 +35,17 @@ export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
     Tab.dimensions.antimatter.show();
+    for (let i = 0; i < Glyphs.active.length; i++){
+      console.log(i);
+      Glyphs.active[i] = null
+    }
+    let x = player.reality.glyphs.protectedRows;
+    player.reality.glyphs.protectedRows = 0;
+    for (let g = 0; g < 120; g++){
+      let glyph = Glyphs.inventory[g];
+      if (glyph != null) GlyphSacrificeHandler.deleteGlyph(glyph, true);
+    }
+    player.reality.glyphs.protectedRows = x;
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -92,6 +103,12 @@ export function mendingReset() {
       player.celestials.enslaved.completed = true;
     }
     V.reset();
+    if(MendingUpgrade(14).isBought){
+      player.celestials.v.runUnlocks.forEach((unlock, index) => {
+        player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
+      });
+    }
+    V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
     Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
@@ -188,11 +205,6 @@ export function mendingReset() {
     },
     player.options.confirmations.glyphSelection = true;
     player.reality.unlockedEC = 0;
-    Glyphs.unequipAll(true);
-    let x = player.reality.glyphs.protectedRows;
-    player.reality.glyphs.protectedRows = 0;
-    Glyphs.deleteAllUnprotected();
-    player.reality.glyphs.protectedRows = x;
     Perks.find(0).isBought = true; //give START to fix a bug for hardcoded first Reality Glyph reward
     Perks.find(0).onPurchased();
     if (MendingUpgrade(2).isBought){
