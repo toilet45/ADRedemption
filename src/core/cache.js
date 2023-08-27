@@ -1,3 +1,5 @@
+import { MendingUpgrade } from "./mending-upgrades";
+
 class Lazy {
   constructor(getValue) {
     this._getValue = getValue;
@@ -57,15 +59,15 @@ export const GameCache = {
     .map(run => run[1])
     .reduce(Number.sumReducer) / (1000 * player.records.recentEternities.length)),
 
-  tickSpeedMultDecrease: new Lazy(() => 10 - Effects.sum(
+  tickSpeedMultDecrease: new Lazy(() => 10 - (MendingUpgrade(8).isBought ? 1.2 : Effects.sum(
     BreakInfinityUpgrade.tickspeedCostMult,
     EternityChallenge(11).reward
-  )),
+  ))),
 
-  dimensionMultDecrease: new Lazy(() => 10 - Effects.sum(
+  dimensionMultDecrease: new Lazy(() => 10 - (MendingUpgrade(8).isBought ? 1.5 : Effects.sum(
     BreakInfinityUpgrade.dimCostMult,
     EternityChallenge(6).reward
-  )),
+  ))),
 
   timeStudies: new Lazy(() => NormalTimeStudyState.studies
     .map(s => player.timestudy.studies.includes(s.id))),

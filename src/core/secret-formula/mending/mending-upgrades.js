@@ -46,8 +46,8 @@ export const mendingUpgrades = [
   {
     id: 4,
     name: "Mending Upgrade 4",
-    cost: 2,
-    description: "Increase the maximum amount of glyph spots to 5 in Doomed Reality (but you can only equip 1 of each Glyph type).",
+    cost: 1e300,
+    description: "TBD",
   },
   {
     id: 5,
@@ -85,7 +85,7 @@ export const mendingUpgrades = [
     id: 10,
     name: "Mending Upgrade 10",
     cost: 5,
-    description: () => "Nullify the first 3 Pelle Strike penalties.",
+    description: () => "Weaken the first 3 Pelle Strike penalties.",
   },
   rebuyable({
     id: 11,

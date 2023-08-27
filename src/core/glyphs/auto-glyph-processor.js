@@ -18,6 +18,7 @@ export const AutoGlyphProcessor = {
   bitmaskIndexOffset(type) {
     switch (type) {
       case "time":
+      case "amalgam":
         return 0;
       case "dilation":
         return 4;
@@ -39,7 +40,7 @@ export const AutoGlyphProcessor = {
   filterValue(glyph) {
     const typeCfg = this.types[glyph.type];
     if (["companion", "reality"].includes(glyph.type)) return Infinity;
-    if (glyph.type === "cursed") return -Infinity;
+    if (glyph.type === "cursed" || this.type === "amalgam") return -Infinity;
     switch (this.scoreMode) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         // Picked glyphs are never kept in this mode. Sacrifice cap needs to be checked since effarig caps

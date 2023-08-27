@@ -315,7 +315,8 @@ window.GLYPH_TYPES = [
   "effarig",
   "reality",
   "cursed",
-  "companion"
+  "companion",
+  "amalgam"
 ];
 
 window.BASIC_GLYPH_TYPES = [
@@ -344,7 +345,8 @@ window.GLYPH_SYMBOLS = {
   effarig: "Ϙ",
   reality: "Ϟ",
   cursed: "⸸",
-  companion: "♥"
+  companion: "♥",
+  amalgam: "?"
 };
 
 window.CANCER_GLYPH_SYMBOLS = {
@@ -356,7 +358,8 @@ window.CANCER_GLYPH_SYMBOLS = {
   effarig: "🦒",
   reality: "⛧",
   cursed: "☠",
-  companion: "³"
+  companion: "³",
+  amalgam: "?"
 };
 
 window.ALTERATION_TYPE = {

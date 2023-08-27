@@ -4,6 +4,10 @@ const GLYPH_NAMES = {
     adjective: "Huggable",
     noun: "Companion"
   },
+  amalgam: {
+    adjective: "Amalgamated",
+    noun: "Amalgam"
+  },
   reality: {
     adjective: "Real",
     noun: "Reality"
@@ -72,6 +76,7 @@ export default {
         { type: "reality", perc: 0, adjOrder: 4 },
         { type: "companion", perc: 0, adjOrder: 5 },
         { type: "cursed", perc: 0, adjOrder: 6 },
+        { type: "amalgam", perc: 0, adjOrder: 7 },
       ],
       sortedGlyphs: [],
       slotCount: 0
@@ -165,7 +170,7 @@ export default {
       // This returns the type of Glyph that we want for color determinations.
       // The priority is Empty > Cursed > Companion > Reality > 50% or more normal Glyphs > Effarig > any normal Glyph
       if (this.sortedGlyphs.length === 0) return { id: "none", currentColor: { border: "#888888" } };
-      if (this.calculateGlyphPercent("cursed")) return CosmeticGlyphTypes.cursed;
+      if (this.calculateGlyphPercent("cursed") || this.calculateGlyphPercent("amalgam")) return CosmeticGlyphTypes.cursed;
       if (this.calculateGlyphPercent("companion")) return CosmeticGlyphTypes.companion;
       if (this.calculateGlyphPercent("reality")) return CosmeticGlyphTypes.reality;
       if (this.calculateGlyphPercent("music") >= 50) return CosmeticGlyphTypes.music;
