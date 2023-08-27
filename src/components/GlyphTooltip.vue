@@ -101,7 +101,7 @@ export default {
       const color = GlyphAppearanceHandler.getRarityColor(this.strength, this.type);
       const cursedColor = GlyphAppearanceHandler.isLightBG ? "white" : "black";
       return {
-        color: this.type === "cursed" ? cursedColor : color,
+        color: this.type === "cursed" || this.type === "amalgam" ? cursedColor : color,
         animation: this.type === "reality" ? "a-reality-glyph-name-cycle 10s infinite" : undefined
       };
     },
@@ -114,6 +114,8 @@ export default {
           return "Cursed Glyph";
         case "reality":
           return `Pure Glyph of ${glyphName}`;
+        case "amalgam":
+          return `Amalgam Glyph`
         default:
           return `${this.rarityInfo.name} Glyph of ${glyphName}`;
       }
@@ -154,7 +156,7 @@ export default {
     glyphTooltipStyle() {
       // With computer mice, it's nice to just totally disable mouse events on the tooltip,
       // which reduces the chances for stupidity
-      const borderColor = this.type === "cursed" ? this.textColor : GlyphAppearanceHandler.getBorderColor(this.type);
+      const borderColor = this.type === "cursed" || this.type === "amalgam" ? this.textColor : GlyphAppearanceHandler.getBorderColor(this.type);
       return {
         "pointer-events": this.onTouchDevice ? undefined : "none",
         "border-color": borderColor,
@@ -169,7 +171,7 @@ export default {
       const isReality = this.type === "reality";
 
       let color = GlyphAppearanceHandler.getRarityColor(this.strength, this.type);
-      if (isCursed) color = this.textColor;
+      if (isCursed || this.type === "amalgam") color = this.textColor;
       if (this.type === "companion") color = GlyphAppearanceHandler.getBorderColor(this.type);
       return {
         "border-color": color,
@@ -227,7 +229,7 @@ export default {
       return Theme.current().isDark() ? "#cccccc" : "black";
     },
     sacrificeText() {
-      if (this.type === "companion" || this.type === "cursed") return "";
+      if (this.type === "companion" || this.type === "cursed" || this.type === "amalgam") return "";
       const powerText = `${format(this.sacrificeReward, 2, 2)}`;
       const isCurrentAction = this.currentAction === "sacrifice";
       return `<span style="font-weight: ${isCurrentAction ? "bold" : ""};">
@@ -235,7 +237,7 @@ export default {
               </span>`;
     },
     refineText() {
-      if (this.type === "companion" || this.type === "cursed" || this.type === "reality") return "";
+      if (this.type === "companion" || this.type === "cursed" || this.type === "reality" || this.type === "amalgam") return "";
       if (!AlchemyResource[this.type].isUnlocked) return "";
       let refinementText = `${format(this.uncappedRefineReward, 2, 2)} ${GLYPH_SYMBOLS[this.type]}`;
       if (this.uncappedRefineReward !== this.refineReward) {
@@ -247,7 +249,7 @@ export default {
               </span>`;
     },
     scoreText() {
-      if (this.type === "companion" || this.type === "cursed" || this.type === "reality") return "";
+      if (this.type === "companion" || this.type === "cursed" || this.type === "reality" || this.type === "amalgam") return "";
       const showFilterScoreModes = [AUTO_GLYPH_SCORE.SPECIFIED_EFFECT, AUTO_GLYPH_SCORE.EFFECT_SCORE];
       if (!showFilterScoreModes.includes(this.scoreMode)) return "";
       return `Score: ${format(AutoGlyphProcessor.filterValue(this.$parent.glyph), 1, 1)}`;

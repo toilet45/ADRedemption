@@ -35,6 +35,7 @@ export default {
 
       let glyphColor = typeObject.currentColor.border;
       if (typeObject.id === "cursed") glyphColor = "var(--color-celestials)";
+      if (typeObject.id === "amalgam") glyphColor = "#000000";
 
       return {
         color: glyphColor,

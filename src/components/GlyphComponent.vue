@@ -311,7 +311,7 @@ export default {
       if (this.glyph.color) overrideColor = GlyphAppearanceHandler.getColorProps(this.glyph.color);
       if (this.glyph.cosmetic) {
         if (this.glyph.cosmetic === this.glyph.type) {
-          overrideColor = this.glyph.type === "cursed"
+          overrideColor = this.glyph.type === "cursed" || this.glyph.type === "amalgam"
             ? GlyphAppearanceHandler.getBaseColor(true)
             : this.cosmeticConfig.currentColor;
         } else {
@@ -416,6 +416,7 @@ export default {
         case "time":
         case "cursed":
         case "companion":
+        case "amalgam":
           minEffectID = 0;
           break;
         case "dilation":
@@ -700,7 +701,7 @@ export default {
       return { dx, dy };
     },
     glyphEffectDots(id) {
-      if (["companion", "cursed"].includes(this.glyph.type)) return {};
+      if (["companion", "cursed", "amalgam"].includes(this.glyph.type)) return {};
       const pos = this.effectIconPos(id);
 
       return {
@@ -716,7 +717,7 @@ export default {
     glyphBorderStyle() {
       if (!this.showBorders) return null;
       let borderAttrs;
-      if (this.isCursedGlyph) borderAttrs = rarityBorderStyles.cursed;
+      if (this.isCursedGlyph || this.glyph.type === "amalgam") borderAttrs = rarityBorderStyles.cursed;
       else if (this.isCompanionGlyph) borderAttrs = rarityBorderStyles.companion;
       else borderAttrs = rarityBorderStyles[getRarity(this.glyph.strength).name.toLowerCase()];
       const lines = borderAttrs.map(attr => generateGradient(attr, this.borderColor, this.glyph, this.circular));

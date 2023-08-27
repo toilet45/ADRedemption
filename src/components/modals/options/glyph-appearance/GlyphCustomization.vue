@@ -73,6 +73,7 @@ export default {
       let typeName = "power";
       if (type === "reality") typeName = "reality";
       if (type === "cursed") typeName = "cursed";
+      if (type === "amalgam") typeName = "amalgam";
       return {
         // This are just dummy values to make sure that GlyphComponent doesn't throw errors; only the cosmetic aspects
         // will end up being visible in this case anyway (as they override anything type would otherwise show). Type

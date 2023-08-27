@@ -29,7 +29,7 @@ class CosmeticGlyphType {
     const isNormallyDark = !GlyphAppearanceHandler.isLightBG;
     return {
       border: color,
-      bg: (isNormallyDark === (this.id === "cursed")) ? "white" : "black",
+      bg: (isNormallyDark === (this.id === "cursed" || this.id === "amalgam")) ? "white" : "black",
     };
   }
 
@@ -167,7 +167,7 @@ export const GlyphAppearanceHandler = {
     }
   },
   getBorderColor(type) {
-    if (type === "cursed" && !CosmeticGlyphTypes.cursed.currentColor.str) return this.isLightBG ? "#ffffff" : "#000000";
+    if ((type === "cursed" || this.type === "amalgam") && !CosmeticGlyphTypes.cursed.currentColor.str) return this.isLightBG ? "#ffffff" : "#000000";
     return CosmeticGlyphTypes[type].currentColor.border;
   },
   getRarityColor(strength, type) {
