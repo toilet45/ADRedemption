@@ -111,7 +111,7 @@ export const mendingUpgrades = [
     id: 14,
     name: "Mending Upgrade 14",
     cost: 8,
-    description: () => "Gain 3 Space Theorems per V-Achievement (4 ST for Hard) and start every Mend with all V-Achievements at tier 3",
+    description: () => "Gain 3 Space Theorems per V-Achievement and start every Mend with all V-Achievements at tier 3 (includes Hard)",
   },
   {
     id: 15,

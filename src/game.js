@@ -127,8 +127,11 @@ export function gainedInfinityPoints() {
 
 export function gainedMendingPoints(){
   let MvRGain = new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
-  if (MendingMilestone.six.isReached){
+  if (Achievement(192).isUnlocked){
     MvRGain = MvRGain.times(3);
+  }
+  if(MendingUpgrade(12).isBought && MendingUpgrade(13).isBought && MendingUpgrade(14).isBought && MendingUpgrade(15).isBought){
+    MvRGain = MvRGain.times(2);
   }
   return MvRGain;
 }
@@ -691,7 +694,7 @@ function updatePrestigeRates() {
 }
 
 function passivePrestigeGen() {
-  let eternitiedGain = 0;
+  let eternitiedGain = DC.D0;
   if (RealityUpgrade(14).isBought) {
     eternitiedGain = DC.D1.timesEffectsOf(
       Achievement(113),

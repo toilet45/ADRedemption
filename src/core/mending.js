@@ -35,15 +35,16 @@ export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
     Tab.dimensions.antimatter.show();
-    for (let i = 0; i < Glyphs.active.length; i++){
-      console.log(i);
-      Glyphs.active[i] = null
-    }
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){
       let glyph = Glyphs.inventory[g];
-      if (glyph != null) GlyphSacrificeHandler.deleteGlyph(glyph, true);
+      if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
+    }
+    Glyphs.unequipAll(true);
+    for (let h = 0; h < 120; h++){
+      let glyph = Glyphs.inventory[h];
+      if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;
     player.blackHoleNegative = 1;
@@ -104,9 +105,7 @@ export function mendingReset() {
     }
     V.reset();
     if(MendingUpgrade(14).isBought){
-      player.celestials.v.runUnlocks.forEach((unlock, index) => {
-        player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
-      });
+      player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3];
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
@@ -410,7 +409,10 @@ export function mendingReset() {
     for (const autobuyer of Autobuyers.all) {
       if (autobuyer.data.interval !== undefined) autobuyer.maxIntervalForFree();
     }
-    EventHub.dispatch(GAME_EVENT.MENDING_RESET_AFTER)
+    EventHub.dispatch(GAME_EVENT.MENDING_RESET_AFTER);
+
+    Glyphs.refreshActive(); 
+    EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
 }
 
 
