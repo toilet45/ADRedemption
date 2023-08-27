@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { MendingUpgrade } from "./mending-upgrades";
 
 // Slowdown parameters for replicanti growth, interval will increase by scaleFactor for every scaleLog10
 // OoM past the cap (default is 308.25 (log10 of 1.8e308), 1.2, Number.MAX_VALUE)
@@ -427,11 +428,11 @@ export const ReplicantiUpgrade = {
     set baseCost(value) { player.replicanti.galCost = value; }
 
     get distantRGStart() {
-      return 100 + Effects.sum(GlyphSacrifice.replication);
+      return 100 + Effects.sum(GlyphSacrifice.replication) + (MendingUpgrade(17).isBought ? 1400 : 0);
     }
 
     get remoteRGStart() {
-      return 1000 + Effects.sum(GlyphSacrifice.replication);
+      return 1000 + Effects.sum(GlyphSacrifice.replication) + (MendingUpgrade(17).isBought ? 9000 : 0);
     }
 
     get costIncrease() {
@@ -473,8 +474,8 @@ export const ReplicantiUpgrade = {
       const logBase = 170;
       const logBaseIncrease = EternityChallenge(6).isRunning ? 2 : 25;
       const logCostScaling = EternityChallenge(6).isRunning ? 2 : 5;
-      const distantReplicatedGalaxyStart = 100 + Effects.sum(GlyphSacrifice.replication);
-      const remoteReplicatedGalaxyStart = 1000 + Effects.sum(GlyphSacrifice.replication);
+      const distantReplicatedGalaxyStart = 100 + Effects.sum(GlyphSacrifice.replication) + (MendingUpgrade(17).isBought ? 1400 : 0);
+      const remoteReplicatedGalaxyStart = 1000 + Effects.sum(GlyphSacrifice.replication) + (MendingUpgrade(17).isBought ? 9000 : 0);
       let logCost = logBase + count * logBaseIncrease + (count * (count - 1) / 2) * logCostScaling;
       if (count > distantReplicatedGalaxyStart) {
         const logDistantScaling = 50;

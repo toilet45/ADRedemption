@@ -1,6 +1,6 @@
 import { DC } from "./constants";
 import { Currency } from "./currency";
-import { MendingUpgrade } from "./mending-upgrades";
+import { MendingUpgrade, MendingUpgrades } from "./mending-upgrades";
 import { PlayerProgress } from "./player-progress";
 
 /**
@@ -109,7 +109,7 @@ export function isRealityAvailable() {
 export function simulatedRealityCount(advancePartSimCounters) {
   const amplifiedSim = Enslaved.boostReality ? Enslaved.realityBoostRatio - 1 : 0;
   const multiversalSim = AlchemyResource.multiversal.effectValue;
-  const simCount = (multiversalSim + 1) * (amplifiedSim + 1) + player.partSimulatedReality - 1;
+  const simCount = (multiversalSim + 1) * (amplifiedSim + 1) + player.partSimulatedReality - 1 + (MendingUpgrade(13).isBought ? 2 : 0);
   if (advancePartSimCounters) {
     player.partSimulatedReality = simCount - Math.floor(simCount);
   }

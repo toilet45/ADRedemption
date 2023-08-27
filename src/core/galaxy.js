@@ -18,7 +18,7 @@ class GalaxyRequirement {
 
 export class Galaxy {
   static get remoteStart() {
-    return RealityUpgrade(21).effectOrDefault(800);
+    return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }
 
   static get requirement() {

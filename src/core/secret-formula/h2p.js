@@ -381,9 +381,9 @@ another ${formatInt(60)} more.
 increase by ${formatInt(2)} per Galaxy, making the next Galaxy cost ${formatInt(62)} more, then ${formatInt(64)} more,
 etc.
 <br>
-<b>Remote Galaxy scaling:</b> Above ${formatInt(Galaxy.remoteStart)} Antimatter Galaxies, the <i>total</i> cost
-increases by another ${formatPercents(0.002, 1)} per Galaxy, on top of Distant scaling.
-<br>
+<b>Remote Galaxy scaling:` +  (!MendingUpgrade(17).isBought ? `</b> Above ${formatInt(Galaxy.remoteStart)} Antimatter Galaxies, the <i>total</i> cost
+increases by another ${formatPercents(0.002, 1)} per Galaxy, on top of Distant scaling.` : `</b> Since you have Mending Upgrade 17, Remote Galaxy scaling no longer occurs.`)
++ `<br>
 <br>
 <b>Hotkey: G</b> will try to purchase an Antimatter Galaxy.
 `,

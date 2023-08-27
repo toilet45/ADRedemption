@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
 
 import { DarkMatterDimensions } from "./dark-matter-dimension";
@@ -46,7 +47,7 @@ export const Laitela = {
   },
   get matterExtraPurchaseFactor() {
     return (1 + 0.5 * Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
-      (1 + SingularityMilestone.continuumMult.effectOrDefault(0)));
+      (1 + SingularityMilestone.continuumMult.effectOrDefault(0))) * (MendingUpgrade(18).isBought ? 1.5 : 1);
   },
   get realityReward() {
     return Math.clampMin(Math.pow(100, this.difficultyTier) *

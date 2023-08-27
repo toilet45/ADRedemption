@@ -104,7 +104,7 @@ export const mendingUpgrades = [
   {
     id: 13,
     name: "Mending Upgrade 13",
-    cost: 1e300,
+    cost: 15,
     description: () => "Simulate 2 extra Realities for every Reality.",
   },
   {
@@ -130,13 +130,13 @@ export const mendingUpgrades = [
   {
     id: 17,
     name: "Mending Upgrade 17",
-    cost: 1e300,
-    description: () => "Move Remote Galaxy scaling to 500,000 Galaxies. Replicanti Galaxy scaling is moved to 1,500 and 10,000.",
+    cost: 65,
+    description: () => "Disable Remote Galaxy Scaling. Replicanti Galaxy scaling is moved to 1,500 and 10,000.",
   },
   {
     id: 18,
     name: "Mending Upgrade 18",
-    cost: 1e300,
+    cost: 25,
     description: () => "Continuum gives 50% more purchases.",
   },
   {
