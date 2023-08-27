@@ -9,8 +9,8 @@ export const changelog = [
    * }
    */
   {
-    date: [2023, 8, 26],
-    name: "OMG 2 Upgrades this time",
+    date: [2023, 8, 27],
+    name: "Upgrade Explosion",
     info: 
     `Finally an update that adds more than 1 Upgrade
     <br>
@@ -18,7 +18,7 @@ export const changelog = [
     <b>New things:</b>
     <br>
     <ul>
-    <li>Implemented Mending Upgrades 12 and 14</li>
+    <li>Implemented Mending Upgrades 12, 13, 14, 17 and 18</li>
     <li>Added a Mending Milestone for 4 Mends (effect temporary until MU19 is implemented)</li>
     <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
     </ul>
@@ -26,6 +26,7 @@ export const changelog = [
     <br>
     <ul>
     <li>Fixed some Glyphs not being deleted on Mend</li>
+    <li>Improved Mending Upgrade readability</li>
     </ul>
     <b>Known Issues:</b>
     <br>

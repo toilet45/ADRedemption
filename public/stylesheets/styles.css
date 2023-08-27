@@ -9601,7 +9601,7 @@ input.o-automator-block-input {
   text-align: center;
   font-family: Typewriter, serif;
   font-size: 1rem;
-  color: var(--color-reality-dark);
+  color: var(--color-mending-dark);
   background-color: var(--color-background);
   border: var(--var-border-width, 0.2rem) solid var(--color-mending-dark);
   border-radius: var(--var-border-radius, 0.5rem);
@@ -9610,7 +9610,7 @@ input.o-automator-block-input {
 }
 
 .s-base--dark .c-mending-upgrade-btn {
-  color: var(--color-mending-light);
+  color: #FFFFFF;
 }
 
 .c-mending-upgrade-btn__requirement {

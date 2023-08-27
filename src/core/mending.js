@@ -35,14 +35,15 @@ export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
     Tab.dimensions.antimatter.show();
-    for (let i = 0; i < Glyphs.active.length; i++){
-      console.log(i);
-      Glyphs.active[i] = null
-    }
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){
       let glyph = Glyphs.inventory[g];
+      if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
+    }
+    Glyphs.unequipAll(true);
+    for (let h = 0; h < 120; h++){
+      let glyph = Glyphs.inventory[h];
       if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;

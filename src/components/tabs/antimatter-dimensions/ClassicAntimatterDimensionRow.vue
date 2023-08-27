@@ -61,7 +61,8 @@ export default {
       return `${prefix} ${format(this.until10Cost)} ${suffix}`;
     },
     continuumString() {
-      return formatFloat(this.continuumValue, 2);
+      if (this.continuumValue < 1e9) return formatFloat(this.continuumValue, 2);
+      return format(this.continuumValue, 2, 2);
     },
     showRow() {
       return this.isShown || this.isUnlocked || this.amount.gt(0);
