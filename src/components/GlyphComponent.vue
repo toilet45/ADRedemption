@@ -459,7 +459,7 @@ export default {
       return player.options.showHintText.glyphEffectDots;
     },
     displayedInfo() {
-      const blacklist = ["companion", "cursed"];
+      const blacklist = ["companion", "cursed", "amalgam"];
       if (!this.isInventoryGlyph || blacklist.includes(this.glyph.type)) return null;
 
       const options = player.options.showHintText;
