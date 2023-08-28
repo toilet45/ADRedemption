@@ -71,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return [2, 3, 5, 7, 9, 12, 13, 14, 15, 17, 18].includes(this.id);
+    return ![4, 19, 20].includes(this.id);
   }
 
   get isPossible() {

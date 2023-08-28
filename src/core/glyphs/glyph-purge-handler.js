@@ -26,6 +26,9 @@ export const GlyphSacrificeHandler = {
       case "cursed":
         Glyphs.removeFromInventory(glyph);
         return true;
+        case "amalgam":
+          Glyphs.removeFromInventory(glyph);
+          return true;
     }
     return false;
   },
@@ -103,6 +106,7 @@ export const GlyphSacrificeHandler = {
   },
   attemptRefineGlyph(glyph, force) {
     if (glyph.type === "reality") return;
+    if (glyph.type === "amalgam") return;
     if (glyph.type === "cursed") {
       Glyphs.removeFromInventory(glyph);
       return;

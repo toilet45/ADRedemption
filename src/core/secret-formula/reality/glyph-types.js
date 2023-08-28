@@ -77,6 +77,15 @@ export const glyphTypes = {
     isUnlocked: () => false,
     canCustomize: () => false,
   },
+  amalgam: {
+    id: "amalgam",
+    symbol: GLYPH_SYMBOLS.amalgam,
+    color: "#000000",
+    fixedSymbolColor: true,
+    isUnlocked: () => false,
+    canCustomize: () => false,
+    hasRarity: false,
+  },
 };
 
 export const cosmeticGlyphs = {

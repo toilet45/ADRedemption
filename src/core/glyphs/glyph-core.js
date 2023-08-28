@@ -283,7 +283,7 @@ export const Glyphs = {
     return this.active[activeIndex];
   },
   equip(glyph, targetSlot) {
-    const forbiddenByPelle = Pelle.isDisabled("glyphs") || ["effarig", "reality", "cursed"].includes(glyph.type);
+    const forbiddenByPelle = Pelle.isDisabled("glyphs") || ["effarig", "reality", "cursed", "amalgam"].includes(glyph.type);
     if (Pelle.isDoomed && forbiddenByPelle) return;
     if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
 
@@ -598,7 +598,7 @@ export const Glyphs = {
     const glyphsToSort = player.reality.glyphs.inventory.filter(g => g.idx >= this.protectedSlots);
     const freeSpace = GameCache.glyphInventorySpace.value;
     const sortOrder = ["power", "infinity", "replication", "time", "dilation", "effarig",
-      "reality", "cursed", "companion"];
+      "reality", "cursed", "amalgam", "companion"];
     const byType = sortOrder.mapToObject(g => g, () => ({ glyphs: [], padding: 0 }));
     for (const g of glyphsToSort) byType[g.type].glyphs.push(g);
     let totalDesiredPadding = 0;
@@ -696,7 +696,7 @@ export const Glyphs = {
     for (let inventoryIndex = this.totalSlots - 1; inventoryIndex >= this.protectedSlots; --inventoryIndex) {
       const glyph = (inventoryCopy ?? this.inventory)[inventoryIndex];
       // Never clean companion, and only clean cursed if we choose to sacrifice all
-      if (glyph === null || glyph.type === "companion" || (glyph.type === "cursed" && threshold !== 0)) continue;
+      if (glyph === null || glyph.type === "companion" || (glyph.type === "cursed" && threshold !== 0) || this.type === "amalgam") continue;
       // Don't auto-clean custom glyphs (eg. music glyphs) unless it's harsh or delete all
       const isCustomGlyph = glyph.color !== undefined || glyph.symbol !== undefined;
       if (isCustomGlyph && !isHarsh) continue;
@@ -911,8 +911,8 @@ export const Glyphs = {
       return;
     }
     const cursedCount = this.allGlyphs.filter(g => g !== null && g.type === "cursed").length;
-    if (cursedCount >= 5) {
-      GameUI.notify.error(`You don't need more than ${format(5)} Cursed Glyphs!`);
+    if (cursedCount >= 8) {
+      GameUI.notify.error(`You don't need more than ${format(8)} Cursed Glyphs!`);
     } else {
       this.addToInventory(GlyphGenerator.cursedGlyph());
       GameUI.notify.error("Created a Cursed Glyph");

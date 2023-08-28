@@ -75,7 +75,7 @@ export default {
       return {
         color: GlyphAppearanceHandler.getBorderColor(this.type),
         "font-weight": "bold",
-        "text-shadow": this.type === "cursed" ? "0.05rem 0.05rem var(--color-text)" : undefined,
+        "text-shadow": this.type === "cursed"  || this.type === "amalgam"? "0.05rem 0.05rem var(--color-text)" : undefined,
         animation: this.type === "reality" ? "a-reality-glyph-description-cycle 10s infinite" : undefined,
       };
     },
@@ -106,7 +106,7 @@ export default {
       return effectStrings.filter(s => s !== "undefined");
     },
     rarityPercent() {
-      if (this.glyph.type === "companion" || this.glyph.type === "cursed") return "";
+      if (this.glyph.type === "companion" || this.glyph.type === "cursed" || this.type === "amalgam") return "";
       return formatRarity(strengthToRarity(this.glyph.strength));
     },
   },
