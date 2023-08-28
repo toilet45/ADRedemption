@@ -1,9 +1,13 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
+import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
 
 class RaUnlockState extends BitUpgradeState {
   get bits() { return player.celestials.ra.unlockBits; }
   set bits(value) { player.celestials.ra.unlockBits = value; }
+
+  get modBits() { return player.celestials.ra.modUnlockBits; }
+  set modBits(value) { player.celestials.ra.modUnlockBits = value; }
 
   get disabledByPelle() {
     return Pelle.isDoomed && this.config.disabledByPelle;
@@ -245,6 +249,7 @@ export const Ra = {
   reset() {
     const data = player.celestials.ra;
     data.unlockBits = 0;
+    data.modUnlockBits = [0, 0, 0];
     data.run = false;
     data.charged = new Set();
     data.disCharge = false;
@@ -287,10 +292,11 @@ export const Ra = {
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
     // Quadratic formula for growth (uses constant growth for a = 0)
+    const x = MendingUpgrade(15).isBought? 1.5:1;
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond / 2;
-    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks;
+      : Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond, x) / 2;
+    const b = Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks, x);
     const c = -expToGain;
     const estimate = a === 0
       ? -c / b
@@ -304,7 +310,7 @@ export const Ra = {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
   },
   get levelCap() {
-    return 25;
+    return MendingUpgrade(19).isBought?100:25;
   },
   get maxTotalPetLevel() {
     return this.levelCap * this.pets.all.length;

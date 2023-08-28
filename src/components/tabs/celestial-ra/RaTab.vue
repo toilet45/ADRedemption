@@ -56,7 +56,22 @@ export default {
           const triadCount = Ra.unlocks.unlockHardV.effectOrDefault(0);
           return `You have unlocked ${quantifyInt("Triad Study", triadCount)}.`;
         },
-      }
+      },
+      {
+        pet: Ra.pets.ra,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
+      {
+        pet: Ra.pets.laitela,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
+      {
+        pet: Ra.pets.pelle,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
     ],
     petStyle() {
       return {
@@ -85,7 +100,7 @@ export default {
   methods: {
     update() {
       this.memoriesPerChunk = Ra.productionPerMemoryChunk;
-      this.isRaCapped = Ra.totalPetLevel === 100;
+      this.isRaCapped = MendingUpgrade(19).isBought?RaPetRemembranceButton.totalPetLevel === 700 : Ra.totalPetLevel === 100;
       this.totalLevels = Ra.totalPetLevel;
       this.showRemembrance = Ra.unlocks.effarigUnlock.canBeApplied;
       this.hasRemembrance = Ra.remembrance.isUnlocked;

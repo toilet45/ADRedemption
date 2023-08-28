@@ -1,4 +1,5 @@
 <script>
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 import RaPetLevelBar from "./RaPetLevelBar";
 import RaUpgradeIcon from "./RaUpgradeIcon";
 
@@ -35,6 +36,7 @@ export default {
       currentChunkMult: 0,
       nextMemoryUpgradeEstimate: "",
       nextMemoryChunkUpgradeEstimate: "",
+      mu19Bought: false,
     };
   },
   computed: {
@@ -90,6 +92,8 @@ export default {
 
       this.nextMemoryUpgradeEstimate = Ra.timeToGoalString(pet, this.memoryUpgradeCost - this.memories);
       this.nextMemoryChunkUpgradeEstimate = Ra.timeToGoalString(pet, this.chunkUpgradeCost - this.memories);
+
+      this.mu19Bought = MendingUpgrade(19).isBought;
     },
     nextUnlockLevel() {
       const missingUpgrades = this.pet.unlocks
@@ -277,7 +281,15 @@ export default {
       <div class="l-ra-pet-milestones">
         <!-- This choice of key forces a UI update every level up -->
         <RaUpgradeIcon
-          v-for="(unlock, i) in unlocks"
+          v-for="(unlock, i) in unlocks.slice(0,7)"
+          :key="25 * level + i"
+          :unlock="unlock"
+        />
+      </div>
+      <div v-if="mu19Bought" class="l-ra-pet-milestones">
+        <!-- This choice of key forces a UI update every level up -->
+        <RaUpgradeIcon
+          v-for="(unlock, i) in unlocks.slice(7)"
           :key="25 * level + i"
           :unlock="unlock"
         />

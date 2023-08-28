@@ -37,6 +37,10 @@ export class GameMechanicState extends Effect {
     return this.config.id;
   }
 
+  get id2() {
+    return this.config.id2;
+  }
+
   registerEvents(events, callback) {
     if (events === undefined) return;
     for (const event of events instanceof Array ? events : [events]) {

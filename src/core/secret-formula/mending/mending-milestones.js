@@ -14,7 +14,7 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "[TEMP] Unlock Autobuyers for Ra Memory Levels, Recollections, and Fragmentations.",
+    reward: "[TBD]",
   },
   four: {
     mends: 5,
