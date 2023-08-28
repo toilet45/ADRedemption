@@ -186,6 +186,7 @@ export default {
       // And if we have none of the above (which is most common), lets get the color of the main Glyph.
       if (this.isDoomed && this.glyphSet.length === 1) return "var(--color-pelle--base)";
       if (this.mainGlyphName.id === "cursed") return "var(--color-celestials)";
+      if (this.mainGlyphName.id === "amalgam") return "#ffffff";
       if (this.mainGlyphName.id === "music") return CosmeticGlyphTypes.music.currentColor.border;
       if (this.sortedGlyphs.length >= 3 && this.sortedGlyphs[0].perc <= 30) return "#C46200";
       return this.mainGlyphName.currentColor.border;
