@@ -22,11 +22,13 @@ import { TimeDimensionAutobuyerState } from "./time-dimension-autobuyer";
 import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TesseractAutobuyerState } from "./tesseract-autobuyer";
 import { MusicGlyphAutobuyerState } from "./music-glyph-autobuyer";
-
-import { TeresaMemoryAutobuyerState } from "./memory-autobuyer"
-import { EffarigMemoryAutobuyerState } from "./memory-autobuyer"
-import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer"
-import { VMemoryAutobuyerState } from "./memory-autobuyer"
+import { TeresaMemoryAutobuyerState } from "./memory-autobuyer";
+import { EffarigMemoryAutobuyerState } from "./memory-autobuyer";
+import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer";
+import { VMemoryAutobuyerState } from "./memory-autobuyer";
+import { RaMemoryAutobuyerState } from "./memory-autobuyer";
+import { LaitelaMemoryAutobuyerState } from "./memory-autobuyer";
+import { PelleMemoryAutobuyerState } from "./memory-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -58,6 +60,9 @@ export const Autobuyer = {
   effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
+  raMem: RaMemoryAutobuyerState.createAccessor(),
+  laitelaMem: LaitelaMemoryAutobuyerState.createAccessor(),
+  pelleMem: PelleMemoryAutobuyerState.createAccessor(),
 };
 
 export const Autobuyers = (function() {
@@ -103,6 +108,9 @@ export const Autobuyers = (function() {
     Autobuyer.effarigMem.zeroIndexed,
     Autobuyer.enslavedMem.zeroIndexed,
     Autobuyer.vMem.zeroIndexed,
+    Autobuyer.raMem.zeroIndexed,
+    Autobuyer.laitelaMem.zeroIndexed,
+    Autobuyer.pelleMem.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -118,6 +126,9 @@ export const Autobuyers = (function() {
     Autobuyer.effarigMem,
     Autobuyer.enslavedMem,
     Autobuyer.vMem,
+    Autobuyer.raMem,
+    Autobuyer.laitelaMem,
+    Autobuyer.pelleMem,
   ];
 
   return {

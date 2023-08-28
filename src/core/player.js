@@ -217,6 +217,24 @@ window.player = {
         })),
         isActive: true,
       },
+      ra: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+      laitela: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
+      pelle: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: false,
+        })),
+        isActive: true,
+      },
     },
     darkMatterDims: {
       isActive: false,
@@ -701,6 +719,27 @@ window.player = {
           memoryChunks: 0,
           memoryUpgrades: 0,
           chunkUpgrades: 0
+        },
+        ra: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
+        },
+        laitela: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
+        },
+        pelle: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
         }
       },
       alchemy: Array.repeat(0, 21)
@@ -719,6 +758,7 @@ window.player = {
       quoteBits: 0,
       momentumTime: 0,
       unlockBits: 0,
+      modUnlockBits: [0, 0, 0],
       run: false,
       charged: new Set(),
       disCharge: false,

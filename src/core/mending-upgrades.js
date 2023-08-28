@@ -129,6 +129,9 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         V.updateTotalRunUnlocks();
         break;
       }
+      case 19:{
+        Ra.checkForUnlocks();
+      }
       default:{
           //apparently leaving this blank is equivalent to Python's "pass"
       }

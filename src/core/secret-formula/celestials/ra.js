@@ -39,6 +39,36 @@ export const ra = {
       requiredUnlock: () => Ra.unlocks.vUnlock,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
+    },
+    ra: {
+      id: "ra",
+      name: "Ra",
+      color: "#9575cd",
+      chunkGain: "Dimension Boosts",
+      memoryGain: "?",
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      memoryProductionMultiplier: () => 1
+    },
+    laitela: {
+      id: "laitela",
+      name: "Lai 'tela",
+      color: "white",
+      chunkGain: "Continuum",
+      memoryGain: "?",
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      memoryProductionMultiplier: () => 1
+    },
+    pelle: {
+      id: "pelle",
+      name: "Pelle",
+      color: "crimson",
+      chunkGain: "Remnants (Only increases in Doomed Reality)",
+      memoryGain: "?",
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      memoryProductionMultiplier: () => 1
     }
   },
   unlocks: {
@@ -291,6 +321,566 @@ export const ra = {
       level: 25,
       displayIcon: `<i class="fab fa-buffer"></i>`,
       disabledByPelle: true
-    }
+    },
+    placeholderT1: {
+      id: 0,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderT2: {
+      id: 1,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderT3: {
+      id: 2,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderT4: {
+      id: 3,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderT5: {
+      id: 4,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderT6: {
+      id: 5,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderT7: {
+      id: 6,
+      id2: 0,
+      reward: "TBD",
+      pet: "teresa",
+      level: 100,
+      displayIcon: "?"
+    },
+    placeholderE1: {
+      id: 8,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderE2: {
+      id: 9,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderE3: {
+      id: 10,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderE4: {
+      id: 11,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderE5: {
+      id: 12,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderE6: {
+      id: 13,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderE7: {
+      id: 14,
+      id2: 0,
+      reward: "TBD",
+      pet: "effarig",
+      level: 100,
+      displayIcon: "?"
+    },
+    placeholderN1: {
+      id: 15,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderN2: {
+      id: 16,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderN3: {
+      id: 17,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderN4: {
+      id: 18,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderN5: {
+      id: 19,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderN6: {
+      id: 20,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderN7: {
+      id: 21,
+      id2: 0,
+      reward: "TBD",
+      pet: "enslaved",
+      level: 100,
+      displayIcon: "?"
+    },
+    placeholderV1: {
+      id: 22,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderV2: {
+      id: 23,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderV3: {
+      id: 24,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderV4: {
+      id: 25,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderV5: {
+      id: 26,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderV6: {
+      id: 27,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderV7: {
+      id: 28,
+      id2: 0,
+      reward: "TBD",
+      pet: "v",
+      level: 100,
+      displayIcon: "?"
+    },
+    rautobuyers: {
+      id: 29,
+      id2: 0,
+      reward: "Memory Levels, Recollections and Fragmentations are bought automatically.",
+      pet: "ra",
+      level: 1,
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
+    },
+    placeholderR1: {
+      id: 30,
+      id2: 0,
+      reward: "TBD",
+      pet: "ra",
+      level: 2,
+      displayIcon: "?"
+    },
+    placeholderR2: {
+      id: 31,
+      id2: 0,
+      reward: "TBD",
+      pet: "ra",
+      level: 5,
+      displayIcon: "?"
+    },
+    placeholderR3: {
+      id: 0,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 8,
+      displayIcon: "?"
+    },
+    placeholderR4: {
+      id: 1,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 10,
+      displayIcon: "?"
+    },
+    placeholderR5: {
+      id: 2,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 15,
+      displayIcon: "?"
+    },
+    placeholderR6: {
+      id: 3,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 25,
+      displayIcon: "?"
+    },
+    placeholderR7: {
+      id: 4,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderR8: {
+      id: 5,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderR9: {
+      id: 6,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderR10: {
+      id: 7,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderR11: {
+      id: 8,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderR12: {
+      id: 9,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderR13: {
+      id: 10,
+      id2: 1,
+      reward: "TBD",
+      pet: "ra",
+      level: 100,
+      displayIcon: "?"
+    },
+    placeholderL1: {
+      id: 11,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 1,
+      displayIcon: "?"
+    },
+    placeholderL2: {
+      id: 12,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 2,
+      displayIcon: "?"
+    },
+    placeholderL3: {
+      id: 13,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 5,
+      displayIcon: "?"
+    },
+    placeholderL4: {
+      id: 14,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 8,
+      displayIcon: "?"
+    },
+    placeholderL5: {
+      id: 15,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 10,
+      displayIcon: "?"
+    },
+    placeholderL6: {
+      id: 16,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 15,
+      displayIcon: "?"
+    },
+    placeholderL7: {
+      id: 17,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 25,
+      displayIcon: "?"
+    },
+    placeholderL8: {
+      id: 18,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderL9: {
+      id: 19,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderL10: {
+      id: 20,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderL11: {
+      id: 21,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderL12: {
+      id: 22,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderL13: {
+      id: 23,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderL14: {
+      id: 24,
+      id2: 1,
+      reward: "TBD",
+      pet: "laitela",
+      level: 100,
+      displayIcon: "?"
+    },
+    placeholderP1: {
+      id: 25,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 1,
+      displayIcon: "?"
+    },
+    placeholderP2: {
+      id: 26,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 2,
+      displayIcon: "?"
+    },
+    placeholderP3: {
+      id: 27,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 5,
+      displayIcon: "?"
+    },
+    placeholderP4: {
+      id: 28,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 8,
+      displayIcon: "?"
+    },
+    placeholderP5: {
+      id: 29,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 10,
+      displayIcon: "?"
+    },
+    placeholderP6: {
+      id: 30,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 15,
+      displayIcon: "?"
+    },
+    placeholderP7: {
+      id: 31,
+      id2: 1,
+      reward: "TBD",
+      pet: "pelle",
+      level: 25,
+      displayIcon: "?"
+    },
+    placeholderP8: {
+      id: 0,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 30,
+      displayIcon: "?"
+    },
+    placeholderP9: {
+      id: 1,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 40,
+      displayIcon: "?"
+    },
+    placeholderP10: {
+      id: 2,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 50,
+      displayIcon: "?"
+    },
+    placeholderP11: {
+      id: 3,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 65,
+      displayIcon: "?"
+    },
+    placeholderP12: {
+      id: 4,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 75,
+      displayIcon: "?"
+    },
+    placeholderP13: {
+      id: 5,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 90,
+      displayIcon: "?"
+    },
+    placeholderP14: {
+      id: 6,
+      id2: 2,
+      reward: "TBD",
+      pet: "pelle",
+      level: 100,
+      displayIcon: "?"
+    },
   }
 };
