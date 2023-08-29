@@ -2278,6 +2278,17 @@ br {
   text-shadow: none;
 }
 
+.l-hint-text--mending-upgrade {
+  top: -1.7rem;
+  font-size: 1rem;
+}
+
+.c-hint-text--mending-upgrade {
+  font-weight: bold;
+  color: var(--color-text);
+  text-shadow: none;
+}
+
 .l-hint-text--achievement {
   top: -2rem;
   z-index: 1;

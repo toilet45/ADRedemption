@@ -341,6 +341,8 @@ function giveRealityRewards(realityProps) {
 
   if (Effarig.isRunning && !EffarigUnlock.reality.isUnlocked) {
     EffarigUnlock.reality.unlock();
+    EffarigUnlock.eternity.unlock();
+    EffarigUnlock.infinity.unlock();
     Effarig.quotes.completeReality.show();
   }
 
