@@ -46,7 +46,7 @@ export const ra = {
       color: "#9575cd",
       chunkGain: "Dimension Boosts",
       memoryGain: "?",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => 1
     },
@@ -56,7 +56,7 @@ export const ra = {
       color: "white",
       chunkGain: "Continuum",
       memoryGain: "?",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => 1
     },
@@ -66,7 +66,7 @@ export const ra = {
       color: "crimson",
       chunkGain: "Remnants (Only increases in Doomed Reality)",
       memoryGain: "?",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : null,
+      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => 1
     }
