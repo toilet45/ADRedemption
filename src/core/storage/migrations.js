@@ -492,6 +492,9 @@ export const migrations = {
         isUnlocked: false,
         isActive: false,
       }
+    },
+    42: player => {
+      player.options.showHintText.mendingUpgrades = true;
     }
   },
 

@@ -22,7 +22,7 @@ export default {
     class="c-mending-points"
   >
     You have
-    <span class="c-mending-tab__mending-points">{{ format(mendingPoints, 2) }}</span>
+    <span class="c-mending-tab__mending-points">{{ formatNE(mendingPoints, 2) }}</span>
     {{ pluralize("Multiversal Remain", mendingPoints) }}.
   </div>
 </template>
