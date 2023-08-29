@@ -9,6 +9,30 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 28],
+    name: "Even More Upgrades",
+    info: 
+    `Hopefully 2nd to last Mending Upgrade Update
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added Mending Upgrades 4, 8, and 10</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>I forgor</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 27],
     name: "EMERGENCY HOTFIX 5",
     info: 

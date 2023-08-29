@@ -106,10 +106,11 @@ export const breakInfinityUpgrades = {
     costIncrease: 5,
     maxUpgrades: 8,
     description: "Reduce post-infinity Tickspeed Upgrade cost multiplier scaling",
-    afterEC: () => (MendingUpgrade(8).isBought ? 1.2 : EternityChallenge(11).completions > 0
-      ? `After EC11: ${formatX(Player.tickSpeedMultDecrease, 2, 2)}`
-      : ""
-    ),
+    afterEC: () =>{
+      if (MendingUpgrade(8).isBought) return `After Mending Upgrade 8: ${formatX(1.2, 2, 2)}`
+      if (EternityChallenge(11).completions > 0) return `After EC11: ${formatX(Player.tickSpeedMultDecreaseMultDecrease, 2, 1)}`
+      return ""
+    },
     noLabel: true,
     onPurchased: () => GameCache.tickSpeedMultDecrease.invalidate()
   }),
@@ -119,10 +120,11 @@ export const breakInfinityUpgrades = {
     costIncrease: 5e3,
     maxUpgrades: 7,
     description: "Reduce post-infinity Antimatter Dimension cost multiplier scaling",
-    afterEC: () => (MendingUpgrade(8).isBought ? 1.5 : EternityChallenge(6).completions > 0
-      ? `After EC6: ${formatX(Player.dimensionMultDecrease, 2, 2)}`
-      : ""
-    ),
+    afterEC: () =>{
+      if (MendingUpgrade(8).isBought) return `After Mending Upgrade 8: ${formatX(1.5, 2, 2)}`
+      if (EternityChallenge(6).completions > 0) return `After EC6: ${formatX(Player.dimensionMultDecrease, 2, 1)}`
+      return ""
+    },
     noLabel: true,
     onPurchased: () => GameCache.dimensionMultDecrease.invalidate()
   }),

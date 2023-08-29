@@ -33,11 +33,27 @@ export const mendingMilestones = {
     reward: "You can now Mend outside of Doomed Reality.",
   },
   eight: {
-    mends: 12,
-    reward: "[TBD]",
+    mends: 20,
+    reward: "[NYI] Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
   },
   nine: {
-    mends: 15,
+    mends: 35,
+    reward: "[TBD]",
+  },
+  eleven: {
+    mends: 50,
+    reward: "[TBD]",
+  },
+  twelve: {
+    mends: 75,
+    reward: "[TBD]",
+  },
+  thirteen: {
+    mends: 100,
+    reward: "[TBD]",
+  },
+  fourteen: {
+    mends: 200,
     reward: "[TBD]",
   },
 };

@@ -46,8 +46,8 @@ export const mendingUpgrades = [
   {
     id: 4,
     name: "Mending Upgrade 4",
-    cost: 1e300,
-    description: "TBD",
+    cost: 15,
+    description: "Start every Mend with Lai'tela's Reality fully destabilized.",
   },
   {
     id: 5,

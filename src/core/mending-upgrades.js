@@ -71,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return ![4, 19, 20].includes(this.id);
+    return ![19, 20].includes(this.id);
   }
 
   get isPossible() {
@@ -103,6 +103,12 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
           EternityChallenge(i).completions = 5;
           if (i === 12) break;
         }
+      }
+      case 4:{
+        if (player.reality.imaginaryUpgReqs < 32768) player.reality.imaginaryUpgReqs += 32768;
+        if (player.reality.imaginaryUprgadeBits < 32768) player.reality.imaginaryUpgradeBits += 32768;
+        if (player.celestials.laitela.difficultyTier < 8) player.celestials.laitela.difficultyTier = 8; //futureproffing, but idk how that would make sense
+        break
       }
       case 5:{
         player.celestials.teresa.unlockBits += 2;
