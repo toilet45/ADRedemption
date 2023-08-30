@@ -55,7 +55,7 @@ export default {
     </template>
     <template v-else>
       Mend the Multiverse for
-      <span>{{ format(gainedMvR, 2) }}</span>
+      <span>{{ formatNE(gainedMvR, 2) }}</span>
       Multiversal {{ pluralize("Remain", gainedMvR) }}
     </template>
     </button>

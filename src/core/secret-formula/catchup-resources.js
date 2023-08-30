@@ -367,4 +367,11 @@ export const catchupResources = [
       another nerf to the Doomed Reality. Accompanying every Strike is a Rift, which is a mechanic which lets you drain
       a different resource in exchange for a boost. These are permanent and remain unlocked after Armageddon.`
   },
+  {
+    name: "Multiversal Remains",
+    id: 47,
+    openH2pEntry: "Mending",
+    requiredStage: PROGRESS_STAGE.MENDING,
+    description: `*placeholder*`
+  },
 ];

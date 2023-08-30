@@ -364,15 +364,15 @@ export const Glyphs = {
       Modal.glyphReplace.show({ targetSlot, inventoryIndex: glyph.idx });
     }
     else {
-      if (this.active[targetSlot].type == glyph.type) {
+      //if (this.active[targetSlot].type == glyph.type) {
         this.swapIntoActive(glyph, targetSlot);
         return;
-      }
-      else {
+      //}
+      /*else {
         Modal.message.show("You can only have one of each glyph type equipped while Doomed!",
         { closeEvent: GAME_EVENT.GLYPHS_CHANGED })
         return;
-      }
+      }*/
     }
   }
       // We can only replace effarig/reality glyph

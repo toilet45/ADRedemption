@@ -9,6 +9,30 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 30],
+    name: "Doom Glyph Slot Hotfix",
+    info: 
+    `More MU4 remnants we missed
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed Glyph swapping in Doomed Reality</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 29],
     name: "the MU4 effect Remnant fix and other crap",
     info: 
