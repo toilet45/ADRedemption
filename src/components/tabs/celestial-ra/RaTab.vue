@@ -96,6 +96,7 @@ export default {
         will be generated based on certain resource amounts.`;
     },
     isDoomed: () => Pelle.isDoomed,
+    dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
   },
   methods: {
     update() {
@@ -168,6 +169,7 @@ export default {
         <span
           v-for="(line, lineId) in runDescription"
           :key="lineId + '-ra-run-desc'"
+          :class="{ 'o-pelle-disabled': lineId===0 && dimboostUncapped}"
         >
           {{ line }}
         </span>

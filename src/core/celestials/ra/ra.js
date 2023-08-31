@@ -128,14 +128,14 @@ class RaPetState extends GameMechanicState {
   get memoryChunksPerSecond() {
     if (!this.canGetMemoryChunks) return 0;
     let res = this.rawMemoryChunksPerSecond * this.chunkUpgradeCurrentMult *
-      Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality);
+      Math.max(Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality), 1);
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
     return res;
   }
 
   get canGetMemoryChunks() {
-    return this.isUnlocked && Ra.isRunning;
+    return this.isUnlocked && (Ra.isRunning || (this.id === "pelle" && Pelle.isDoomed));
   }
 
   get hasRemembrance() {
@@ -316,7 +316,7 @@ export const Ra = {
     return this.levelCap * this.pets.all.length;
   },
   checkForUnlocks() {
-    if (!VUnlocks.raUnlock.canBeApplied) return;
+    if (!VUnlocks.raUnlock.canBeApplied && !MendingUpgrade(19).isBought) return;
     for (const unl of Ra.unlocks.all) {
       unl.unlock();
     }

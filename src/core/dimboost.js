@@ -57,7 +57,7 @@ export class DimBoost {
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
       // when giving initial boosts, so the player will still get those.
-      return 0;
+      return Ra.unlocks.raRealUncapDimboost.isUnlocked? Infinity: 0;
     }
     if (InfinityChallenge(1).isRunning) {
       // Usually, in Challenge 8, the only boosts that are useful are the first 5
