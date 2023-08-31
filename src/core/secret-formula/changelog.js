@@ -9,6 +9,84 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 30],
+    name: "Doom Glyph Slot Hotfix",
+    info: 
+    `More MU4 remnants we missed
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>None</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed Glyph swapping in Doomed Reality</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 29],
+    name: "the MU4 effect Remnant fix and other crap",
+    info: 
+    `Accidently left MU4's old effect
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added a new loading splash screen (thanks Kruta).</li>
+    <li>Added fancy names to the Mendning Upgrades (thanks Kruta)</li>
+    <li>When completing a tier of Effarig's Reality, it completes all tiers before it. (i.e. Completing Effarig's Eternity also completes their Infinity)</li>
+    <li>Added a Mending entry in the "How to Play" modal</li>
+    <li>Added common Mending Abbrevations in the "Common Abbreviations" section in "How to Play"</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed EC6 and 11's reward displaying incorrectly when MU8 is purchased</li>
+    <li>Fixed MU8 scailing not applying correctly</li>
+    <li>Fixed having 5 glyph slots in Pelle when MU4 is purchased</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
+    date: [2023, 8, 28],
+    name: "Even More Upgrades",
+    info: 
+    `Hopefully 2nd to last Mending Upgrade Update
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added Mending Upgrades 4, 8, and 10</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>I forgor</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 27],
     name: "EMERGENCY HOTFIX 5",
     info: 

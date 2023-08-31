@@ -37,7 +37,7 @@ export const Glyphs = {
   bestUndoGlyphCount: 0,
   get maxSlots() {
     if (Pelle.isDoomed){
-      return PelleRifts.vacuum.milestones[0].canBeApplied ? MendingUpgrade(4).isBought ? 5 : 1 : 0;
+      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
     }
     else{
       let i = 3;
@@ -86,7 +86,7 @@ export const Glyphs = {
   },
   get activeSlotCount() {
     if (Pelle.isDoomed) {
-      return PelleRifts.vacuum.milestones[0].canBeApplied ? MendingUpgrade(4).isBought ? 5 : 1 : 0;
+      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
     }
     return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },
@@ -327,13 +327,6 @@ export const Glyphs = {
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
-      if (Pelle.isDoomed && MendingUpgrade(4).isBought) {
-        if (equippedInDoom) {
-          Modal.message.show(`You can only have one of each glyph type equipped while Doomed!`,
-          { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
-        return;
-        }
-      }
       this.removeFromInventory(glyph);
       this.saveUndo(targetSlot);
       player.reality.glyphs.active.push(glyph);
@@ -356,7 +349,7 @@ export const Glyphs = {
             false -> allow replace
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
-     if (!(Pelle.isDoomed && MendingUpgrade(4).isBought)) {
+     if (!Pelle.isDoomed) {
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -371,15 +364,15 @@ export const Glyphs = {
       Modal.glyphReplace.show({ targetSlot, inventoryIndex: glyph.idx });
     }
     else {
-      if (this.active[targetSlot].type == glyph.type) {
+      //if (this.active[targetSlot].type == glyph.type) {
         this.swapIntoActive(glyph, targetSlot);
         return;
-      }
-      else {
+      //}
+      /*else {
         Modal.message.show("You can only have one of each glyph type equipped while Doomed!",
         { closeEvent: GAME_EVENT.GLYPHS_CHANGED })
         return;
-      }
+      }*/
     }
   }
       // We can only replace effarig/reality glyph

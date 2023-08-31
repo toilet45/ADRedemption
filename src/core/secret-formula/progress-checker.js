@@ -161,10 +161,10 @@ export const progressStages = [
     suggestedResource: "Remnants",
     subProgressValue: save => Math.log10(1 + save.celestials.pelle.remnants) / 9,
   },
-  /*{
+  {
     id: PROGRESS_STAGE.MENDING,
     name: "Mending",
-    hasReached: save => save.celestials?.pelle?.doomed,
+    hasReached: save => PlayerProgress.mendingUnlocked(),
     suggestedResource: "Multiversal Remains"
-  },*/
+  },
 ];

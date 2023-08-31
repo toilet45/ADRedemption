@@ -43,6 +43,7 @@ export default {
       return this.buyUntil10 ? format(this.until10Cost) : format(this.singleCost);
     },
     continuumString() {
+      if (this.continuumValue >= 1e9) return format(this.continuumValue, 2, 2);
       return formatFloat(this.continuumValue, 2);
     },
     showRow() {

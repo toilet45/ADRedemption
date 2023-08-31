@@ -3,7 +3,7 @@ function isEND() {
     ? 1
     : (GameEnd.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
   // Using the Pelle.isDoomed getter here causes this to not update properly after a game restart
-  return player.celestials.pelle.doomed && Math.random() < threshold;
+  return (player.celestials.pelle.doomed && Math.random() < threshold);// || player.antimatter.exponent >= 9e15;
 }
 
 window.format = function format(value, places = 0, placesUnder1000 = 0) {
@@ -12,7 +12,7 @@ window.format = function format(value, places = 0, placesUnder1000 = 0) {
 };
 
 window.formatNE = function formatNE(value, places = 0, placesUnder1000 = 0) {
-  return Notations.current.formatNE(value, places, placesUnder1000, 3);
+  return Notations.current.format(value, places, placesUnder1000, 3);
 };
 
 window.formatInt = function formatInt(value) {

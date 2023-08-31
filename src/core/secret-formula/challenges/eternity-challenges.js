@@ -91,6 +91,7 @@ export const eternityChallenges = [
       description: "Further reduce Antimatter Dimension cost multiplier growth",
       effect: completions => completions * 0.2,
       formatEffect: value => {
+        if(MendingUpgrade(8).isBought) return `${formatX(1.5, 2, 2)} (Mending Upgrade 8)`
         const total = Math.round(Player.dimensionMultDecrease + Effects.sum(EternityChallenge(6).reward)) - value;
         return `-${format(value, 2, 1)} (${formatX(total, 2, 1)} total)`;
       }
@@ -181,6 +182,7 @@ export const eternityChallenges = [
       description: "Further reduce Tickspeed cost multiplier growth",
       effect: completions => completions * 0.07,
       formatEffect: value => {
+        if(MendingUpgrade(8).isBought) return `${formatX(1.2, 2, 2)} (Mending Upgrade 8)`
         const total = Math.round(Player.tickSpeedMultDecrease + Effects.sum(EternityChallenge(11).reward)) - value;
         return `-${format(value, 2, 2)} (${formatX(total, 2, 2)} total)`;
       }

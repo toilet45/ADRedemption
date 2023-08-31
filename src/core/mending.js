@@ -126,6 +126,9 @@ export function mendingReset() {
     };
     player.celestials.ra.quoteBits = 16383;
     Laitela.reset();
+    if (MendingUpgrade(4).isBought){
+      player.celestials.laitela.difficultyTier = 8;
+    }
     player.celestials.laitela.quoteBits = 1023;
     player.celestials.pelle.upgrades.clear();
     player.celestials.pelle.remnants = 0;
@@ -268,6 +271,10 @@ export function mendingReset() {
         player.blackHole[i].unlocked = true;
       }
       player.blackHole[i].activations = 0;
+    }
+    if (MendingUpgrade(4).isBought){
+      player.reality.imaginaryUpgReqs += 32768;
+      player.reality.imaginaryUpgradeBits += 32768;
     }
     //Eternity
     resetEternityRuns();

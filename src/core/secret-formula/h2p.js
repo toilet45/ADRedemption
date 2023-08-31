@@ -248,6 +248,9 @@ ${PlayerProgress.realityUnlocked() ? "- <b>BH</b>: Black Hole<br>" : ""}
 ${MachineHandler.isIMUnlocked ? "- <b>iM</b>: Imaginary Machine<br>" : ""}
 ${Laitela.isUnlocked ? "- <b>DM</b>: Dark Matter<br>" : ""}
 ${Laitela.isUnlocked ? "- <b>DE</b>: Dark Energy<br>" : ""}
+${PlayerProgress.mendingUnlocked() ? "- <b>MvR</b>: Mulitversal Remain<br>" : ""}
+${PlayerProgress.mendingUnlocked() ? "- <b>MUx</b>: Mending Upgrade x<br>" : ""}
+${PlayerProgress.mendingUnlocked() ? "- <b>xMM</b>: x Mend Milestone<br>" : ""}
 `,
       isUnlocked: () => true,
       tags: ["abbreviation", "shorten", "am", "ad", "ag", "ip", "nc", "ic", "id", "rg", "ep", "tt", "td", "ec", "tp",
@@ -1834,7 +1837,25 @@ Rifts once the current cap has been reached.`,
       tags: ["reality", "antimatter", "lategame", "endgame", "final", "pelle", "galaxy",
         "galaxies", "generator", "celestial"],
       tab: "celestials/pelle"
-    }
+    },
+    {
+      name: "Mending",
+      info: () => `
+Congratulations, you have reached the 4th major prestige later!
+<br>
+<br>
+Mending the Multiverse resets everything before this point (including best AM and Challenge times), but unlock powerful upgrades in exchange
+<br>
+<br>
+Hotkey: N will try to perform a Mend.
+<br>
+<br>
+Note: Yell at Royal to put something fancier here.
+`,
+      isUnlocked: () => PlayerProgress.mendingUnlocked(),
+      tags: ["mending", "new content"],
+      tab: ""
+    },
   ]
 };
 

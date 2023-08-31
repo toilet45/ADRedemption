@@ -428,7 +428,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 40,
+  version: 42,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -932,6 +932,7 @@ window.player = {
       studies: true,
       glyphEffectDots: true,
       realityUpgrades: true,
+      mendingUpgrades: true,
       perks: true,
       alchemy: true,
       glyphInfoType: GlyphInfo.types.NONE,
