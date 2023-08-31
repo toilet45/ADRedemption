@@ -146,7 +146,7 @@ export const mendingUpgrades = [
   {
     id: 19,
     name: "Deus Memorias",
-    cost: 1e300,
+    cost: 80,
     description: () => "Unlock Ra, Lai'tela, and Pelle Memories, and increase the level cap to 100.",
   },
   {

@@ -71,7 +71,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return ![19, 20].includes(this.id);
+    return ![20].includes(this.id);
   }
 
   get isPossible() {
@@ -137,6 +137,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
       }
       case 19:{
         Ra.checkForUnlocks();
+        break;
       }
       default:{
           //apparently leaving this blank is equivalent to Python's "pass"
