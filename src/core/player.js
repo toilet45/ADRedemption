@@ -195,45 +195,45 @@ window.player = {
     pets: {
       teresa: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       effarig: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       enslaved: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       v: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       ra: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       laitela: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       pelle: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
     },
     darkMatterDims: {
