@@ -81,6 +81,7 @@ export default {
       this.memoryChunks = pet.memoryChunks;
       this.memoryChunksPerSecond = pet.memoryChunksPerSecond;
       this.memoriesPerSecond = pet.memoryChunks * Ra.productionPerMemoryChunk * this.currentMemoryMult;
+      if(MendingUpgrade(15).isBought) this.memoriesPerSecond = Math.pow(this.memoriesPerSecond, 1.5);
       this.canGetMemoryChunks = pet.canGetMemoryChunks;
       this.memoryMultiplier = pet.memoryProductionMultiplier;
       this.memoryUpgradeCost = pet.memoryUpgradeCost;

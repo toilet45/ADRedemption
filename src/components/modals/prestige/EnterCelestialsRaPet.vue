@@ -27,9 +27,10 @@ export default {
       const isPlural = this.pet.id === "enslaved";
       const gain = isPlural ? "gain" : "gains";
       const has = isPlural ? "have" : "has";
-      return this.pet.level === 25
+      const gainText = this.pet.id === "pelle"? "only gains Memory Chunks in a Doomed Reality" : `${gain} Memory Chunks based on ${this.chunkGain}`;
+      return this.pet.level === (MendingUpgrade(19).isBought?100:25)
         ? `${has} regained all Memories`
-        : `${gain} Memory Chunks based on ${this.chunkGain}`;
+        : gainText;
     },
     chunkGain() {
       return this.pet.chunkGain;

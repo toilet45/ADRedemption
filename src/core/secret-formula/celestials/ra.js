@@ -47,7 +47,7 @@ export const ra = {
       chunkGain: "Dimension Boosts",
       memoryGain: "?",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      rawMemoryChunksPerSecond: () => 4 * Math.pow(DimBoost.purchasedBoosts/7e4, 1.5),
       memoryProductionMultiplier: () => 1
     },
     laitela: {
@@ -57,7 +57,9 @@ export const ra = {
       chunkGain: "Continuum",
       memoryGain: "?",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      rawMemoryChunksPerSecond: () => (
+        4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)
+      ),
       memoryProductionMultiplier: () => 1
     },
     pelle: {
@@ -67,7 +69,7 @@ export const ra = {
       chunkGain: "Remnants (Only increases in Doomed Reality)",
       memoryGain: "?",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      rawMemoryChunksPerSecond: () => player.celestials.pelle.remnants,
       memoryProductionMultiplier: () => 1
     }
   },
@@ -546,21 +548,21 @@ export const ra = {
       level: 100,
       displayIcon: "?"
     },
-    rautobuyers: {
+    raRealUncapDimboost: {
       id: 29,
+      id2: 0,
+      reward: "Uncap Dimension Boosts in Ra's reality.",
+      pet: "ra",
+      level: 1,
+      displayIcon: GLYPH_SYMBOLS.power
+    },
+    rautobuyers: {
+      id: 30,
       id2: 0,
       reward: "Memory Levels, Recollections and Fragmentations are bought automatically.",
       pet: "ra",
-      level: 1,
-      displayIcon: `<span class="fas fa-sync-alt"</span>`
-    },
-    placeholderR1: {
-      id: 30,
-      id2: 0,
-      reward: "TBD",
-      pet: "ra",
       level: 2,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
     placeholderR2: {
       id: 31,

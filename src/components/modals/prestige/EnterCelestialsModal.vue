@@ -66,7 +66,8 @@ export default {
         case 6: return "";
         default: throw new Error(`Attempted to start an Unknown Celestial in Celestial Modal Confirmation.`);
       }
-    }
+    },
+    dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
   },
   methods: {
     update() {
@@ -110,6 +111,7 @@ export default {
           v-for="(effect, i) in effects"
           :key="i"
           class="c-modal-celestial__run-effects__line"
+          :class="{ 'o-pelle-disabled': number === 4 && i===0 && dimboostUncapped}"
         >
           <b v-if="effect.trim()">&bull;</b>
           <b>&nbsp;</b>
@@ -129,7 +131,7 @@ export default {
       </div>
       <span v-if="number === 4">
         <EnterCelestialsRaPet
-          v-for="id in 4"
+          v-for="id in 7"
           :key="id"
           :pet-id="id - 1"
         />
