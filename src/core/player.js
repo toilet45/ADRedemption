@@ -410,7 +410,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 42,
+  version: 43,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,

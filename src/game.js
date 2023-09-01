@@ -554,21 +554,22 @@ export function gameLoop(passDiff, options = {}) {
   // updating and game time updating. This is only particularly noticeable when game speed is 1 and the player
   // expects to see identical numbers. We also don't increment the timers if the game has been beaten (Achievement 188)
   if (!Achievement(188).isUnlocked || (PlayerProgress.mendingUnlocked() && !player.isGameEnd)) {
-    player.records.realTimeDoomed += realDiff;
-    player.records.realTimePlayed += realDiff;
-    player.records.totalTimePlayed += diff;
-    player.records.thisInfinity.realTime += realDiff;
-    player.records.thisInfinity.time += diff;
-    player.records.thisEternity.realTime += realDiff;
+    player.records.realTimeDoomed = Math.min(1e308, player.records.realTimeDoomed + realDiff);
+    player.records.realTimePlayed = Math.min(1e308,player.records.realTimePlayed + realDiff);
+    player.records.totalTimePlayed = Math.min(1e308,player.records.totalTimePlayed + diff);
+    player.records.thisInfinity.realTime = Math.min(1e308,player.records.thisInfinity.realTime + realDiff);
+    player.records.thisInfinity.time = Math.min(1e308,player.records.thisInfinity.time + diff);
+    player.records.thisEternity.realTime= Math.min(1e308, player.records.thisEternity.realTime + realDiff);
     if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
-      player.records.thisEternity.time += diff * (1 + Currency.eternities.value.clampMax(1e66).toNumber());
-    } else {
-      player.records.thisEternity.time += diff;
+      player.records.thisEternity.time = Math.min(1e308, player.records.thisEternity.time + diff * (1 + Currency.eternities.value.clampMax(1e66).toNumber()));
+    } 
+    else {
+      player.records.thisEternity.time = Math.min(1e308, player.records.thisEternity.time + diff);
     }
-    player.records.thisReality.realTime += realDiff;
-    player.records.thisReality.time += diff;
-    player.records.thisMend.realTime += realDiff;
-    player.records.thisMend.time += diff;
+    player.records.thisReality.realTime = Math.min(1e308, player.records.thisReality.realTime + realDiff);
+    player.records.thisReality.time = Math.min(1e308, player.records.thisReality.time + diff);
+    player.records.thisMend.realTime = Math.min(1e308, player.records.thisMend.realTime + realDiff);
+    player.records.thisMend.time = Math.min(1e308, player.records.thisMend.time + diff);
   }
 
   DeltaTimeState.update(realDiff, diff);

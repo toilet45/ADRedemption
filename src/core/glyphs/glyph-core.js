@@ -774,6 +774,12 @@ export const Glyphs = {
   get hyperInstabilityThreshold() {
     return 3000 + this.instabilityThreshold;
   },
+  get ultraInstabilityThreshold(){
+    return 45000 + (500 * MendingUpgrade(6).boughtAmount);
+  },
+  get hardcap(){
+    return 100000;
+  },
   clearUndo() {
     player.reality.glyphs.undo = [];
   },

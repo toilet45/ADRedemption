@@ -9,6 +9,31 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 8, 31],
+    name: "The Glyph Nerf and Game Time fix",
+    info: 
+    `Apparently people were getting lv. 200k Glyphs, let's change that
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Added a 3rd Glyph instability threshold (good luck getting your level 100k+ Glyphs now >:))</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Hardcapped playtime to 1e308 (this should fix some freezes caused by Infinite time played)</li>
+    <li>Fixed display bugs on EC6 and EC11's Effects and the Dimension and Tickspeed scaling Break Infinity Upgrades</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 30],
     name: "Doom Glyph Slot Hotfix",
     info: 

@@ -59,9 +59,9 @@ export const mendingUpgrades = [
     id: 6,
     name: "Mending Upgrade 6",
     initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "Multiply Infinity Point Gain by [TBD]",
-    effect: 2
+    costMult: 20,
+    textTemplate: "Delay post-Lv. 45,000 Glyph scaling by 500",
+    effect: 500
   }),
   {
     id: 7,
@@ -135,7 +135,7 @@ export const mendingUpgrades = [
   },
   {
     id: 18,
-    name: "Mending Upgrade 18",
+    name: "Confortatus Tenebris",
     cost: 25,
     description: () => "Continuum gives 50% more purchases.",
   },
