@@ -11,12 +11,12 @@ const rebuyable = props => {
     1e3,
     props.initialCost * props.costMult
   );
-  const { effect } = props;
+  const { effect, effectType } = props;
   props.effect = () => Math.pow(
     effect,
     player.mending.rebuyables[props.id]);
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
-  props.formatEffect = value => formatX(value, 2, 0);
+  props.formatEffect = value => effectType + `${format(value, 2, 0)}`;
   props.formatCost = value => format(value, 2, 0);
   return props;
 };
@@ -28,7 +28,8 @@ export const mendingUpgrades = [
     initialCost: 10,
     costMult: 9,
     textTemplate: "Multiply Multiversal Remain gain by 3.",
-    effect: 3
+    effect: 3,
+    effectType: "×"
   }),
   {
     id: 2,
@@ -58,10 +59,11 @@ export const mendingUpgrades = [
   rebuyable({
     id: 6,
     name: "Mending Upgrade 6",
-    initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "Multiply Infinity Point Gain by [TBD]",
-    effect: 2
+    initialCost: 2000,
+    costMult: 20,
+    textTemplate: "Delay post-Lv. 45,000 Glyph scaling by 500",
+    effect: 500,
+    effectType: "+"
   }),
   {
     id: 7,
@@ -93,7 +95,8 @@ export const mendingUpgrades = [
     initialCost: 1e300,
     costMult: 9,
     textTemplate: "Multiply Eternity Point Gain by [TBD].",
-    effect: 2
+    effect: 2,
+    effectType: "×"
   }),
   {
     id: 12,
@@ -125,7 +128,8 @@ export const mendingUpgrades = [
     initialCost: 1e300,
     costMult: 9,
     textTemplate: "Multiply Reality Machine Gain by [TBD].",
-    effect: 2
+    effect: 2,
+    effectType: "×"
   }),
   {
     id: 17,
@@ -135,7 +139,7 @@ export const mendingUpgrades = [
   },
   {
     id: 18,
-    name: "Mending Upgrade 18",
+    name: "Confortatus Tenebris",
     cost: 25,
     description: () => "Continuum gives 50% more purchases.",
   },

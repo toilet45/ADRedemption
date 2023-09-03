@@ -324,37 +324,39 @@ export const ra = {
       displayIcon: `<i class="fab fa-buffer"></i>`,
       disabledByPelle: true
     },
-    placeholderT1: {
+    imaginaryMachinesSetToCap: {
       id: 0,
       id2: 0,
-      reward: "TBD",
+      reward: "Current Imaginary Machine amount is always set to cap and the cap passively increases",
       pet: "teresa",
       level: 30,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`
     },
-    placeholderT2: {
+    chargedBreakInfinityUpgrades: {
       id: 1,
       id2: 0,
-      reward: "TBD",
+      reward: () => `Unlock Charged Break Infinity Upgrades. You get one more maximum
+        Charged Break Infinity Upgrade every ${formatInt(5)} levels`,
+      effect: () => Math.min(12, Math.floor((Ra.pets.teresa.level-40) / 5)),
       pet: "teresa",
       level: 40,
-      displayIcon: "?"
+      displayIcon: "∝"
     },
-    placeholderT3: {
+    uncapGlyphSacEffects: {
       id: 2,
       id2: 0,
-      reward: "TBD",
+      reward: "Some Glyph Sacrifice effects are uncapped",
       pet: "teresa",
       level: 50,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-clone"></span>`
     },
-    placeholderT4: {
+    retroactiveTeresaRealityReward: {
       id: 3,
       id2: 0,
-      reward: "TBD",
+      reward: () => `Your record antimatter in Teresa's Reality is retroactively set to the square root of your total antimatter`,
       pet: "teresa",
       level: 65,
-      displayIcon: "?"
+      displayIcon: "Ϟ"
     },
     placeholderT5: {
       id: 4,
@@ -362,7 +364,7 @@ export const ra = {
       reward: "TBD",
       pet: "teresa",
       level: 75,
-      displayIcon: "?"
+      displayIcon: "T"
     },
     placeholderT6: {
       id: 5,
@@ -370,7 +372,7 @@ export const ra = {
       reward: "TBD",
       pet: "teresa",
       level: 90,
-      displayIcon: "?"
+      displayIcon: "B"
     },
     placeholderT7: {
       id: 6,
@@ -378,7 +380,7 @@ export const ra = {
       reward: "TBD",
       pet: "teresa",
       level: 100,
-      displayIcon: "?"
+      displayIcon: "D"
     },
     placeholderE1: {
       id: 8,
@@ -772,13 +774,13 @@ export const ra = {
       level: 100,
       displayIcon: "?"
     },
-    placeholderP1: {
+    pelleAutobuyers: {
       id: 25,
       id2: 1,
-      reward: "TBD",
+      reward: "Pelle Upgrades are purchased automatically",
       pet: "pelle",
       level: 1,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
     placeholderP2: {
       id: 26,

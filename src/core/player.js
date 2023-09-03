@@ -251,6 +251,13 @@ window.player = {
     singularity: { isActive: false },
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
+    pelleRebuyableUpgrades: {
+      all: Array.range(0, 5).map(() => ({
+        isActive: false,
+      })),
+      isActive: true,
+    },
+    pelleUpgrades: { isActive: false },
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,
@@ -428,7 +435,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 42,
+  version: 43,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,

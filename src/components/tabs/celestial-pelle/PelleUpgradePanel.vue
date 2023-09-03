@@ -1,4 +1,5 @@
 <script>
+import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import ArmageddonButton from "./ArmageddonButton";
 import PelleUpgradeVue from "./PelleUpgrade";
 import RemnantGainFactor from "./RemnantGainFactor";
@@ -9,7 +10,8 @@ export default {
     ArmageddonButton,
     PelleUpgradeVue,
     RemnantGainFactor,
-  },
+    PrimaryToggleButton
+},
   data() {
     return {
       showBought: false,
@@ -20,7 +22,9 @@ export default {
       shardRate: new Decimal(0),
       upgrades: [],
       boughtUpgrades: [],
-      mendupg5: false
+      mendupg5: false,
+      isAutoUnlocked: false,
+      isAutobuyerOn: false,
     };
   },
   computed: {
@@ -42,6 +46,11 @@ export default {
       return this.isHovering && !this.shardRate.eq(0) && !this.mendupg5;
     }
   },
+  watch: {
+    isAutobuyerOn(newValue){
+      Autobuyer.pelleUpgrade.isActive = newValue;
+    }
+  },
   methods: {
     update() {
       this.showBought = Pelle.cel.showBought;
@@ -52,6 +61,8 @@ export default {
       this.upgrades = PelleUpgrade.singles.filter(u => !u.isBought);
       this.boughtUpgrades = PelleUpgrade.singles.filter(u => u.isBought);
       this.mendupg5 = MendingUpgrades.all[5].isBought;
+      this.isAutoUnlocked = Autobuyer.pelleUpgrade.isUnlocked;
+      this.isAutobuyerOn = Autobuyer.pelleUpgrade.isActive;
     },
     toggleBought() {
       Pelle.cel.showBought = !Pelle.cel.showBought;
@@ -105,14 +116,24 @@ export default {
           :key="upgrade.config.id"
           :upgrade="upgrade"
           :show-improved-estimate="showImprovedEstimate"
+          :isRebuyable="true"
         />
       </div>
-      <button
-        class="o-pelle-button"
-        @click="toggleBought"
-      >
-        {{ showBought ? "Showing bought upgrades" : "Bought upgrades hidden" }}
-      </button>
+      <div class="l-spoon-btn-group">
+        <button
+          class="o-pelle-button"
+          @click="toggleBought"
+        >
+          {{ showBought ? "Showing bought upgrades" : "Bought upgrades hidden" }}
+        </button>
+        <PrimaryToggleButton
+          v-if="isAutoUnlocked"
+          v-model="isAutobuyerOn"
+          label="Auto"
+          class="l--spoon-btn-group__little-spoon"
+          style="margin-top: -.3rem;"
+        />
+      </div>
       <div
         v-if="allUpgrades.length"
         class="c-pelle-upgrade-container"
