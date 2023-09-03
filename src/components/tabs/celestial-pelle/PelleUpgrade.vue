@@ -3,14 +3,17 @@ import CostDisplay from "@/components/CostDisplay";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
 import { MendingUpgrade } from "../../../core/mending-upgrades";
+import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
+import { Autobuyer } from "../../../core/globals";
 
 export default {
   name: "PelleUpgrade",
   components: {
     DescriptionDisplay,
     CostDisplay,
-    CustomizeableTooltip
-  },
+    CustomizeableTooltip,
+    PrimaryToggleButton
+},
   props: {
     upgrade: {
       type: Object,
@@ -28,6 +31,11 @@ export default {
       type: Boolean,
       required: false,
     },
+    isRebuyable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -42,6 +50,9 @@ export default {
       galaxyCap: 0,
       notAffordable: false,
       mendupg5: false,
+      isAutoUnlocked: false,
+      isAutobuyerOn: false,
+      rebuyableId: 0,
     };
   },
   computed: {
@@ -83,6 +94,11 @@ export default {
       return `${this.currentTimeEstimate} ➜ ${this.projectedTimeEstimate}`;
     },
   },
+  watch: {
+    isAutobuyerOn(newValue){
+      Autobuyer.rebuyablePelle(this.rebuyableId).isActive = newValue;
+    }
+  },
   methods: {
     update() {
       this.canBuy = this.upgrade.canBeBought && !this.faded;
@@ -102,6 +118,13 @@ export default {
       this.mendupg5 = MendingUpgrades.all[5].isBought,
       this.notAffordable = (this.config === genDB.additive || this.config === genDB.multiplicative) &&
         (Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies));
+      if(this.isRebuyable){
+        const upgrades = ["antimatterDimensionMult", "timeSpeedMult", "glyphLevels", "infConversion", "galaxyPower"];
+        this.rebuyableId = upgrades.findIndex(id => id === this.upgrade.id)+1;
+        const autobuyer = Autobuyer.rebuyablePelle(this.rebuyableId);
+        this.isAutoUnlocked = autobuyer.isUnlocked;
+        this.isAutobuyerOn = autobuyer.isActive;
+      }
     },
     secondsUntilCost(rate) {
       const value = this.galaxyGenerator ? player.galaxies + GalaxyGenerator.galaxies : Currency.realityShards.value;
@@ -112,59 +135,68 @@ export default {
 </script>
 
 <template>
-  <button
-    class="c-pelle-upgrade"
-    :class="{
-      'c-pelle-upgrade--unavailable': !canBuy && !(isBought || isCapped),
-      'c-pelle-upgrade--bought': isBought || isCapped,
-      'c-pelle-upgrade--faded': faded,
-      'c-pelle-upgrade--galaxyGenerator': galaxyGenerator
-    }"
-    @click="!faded && upgrade.purchase()"
-    @mouseover="hovering = true"
-    @mouseleave="hovering = false"
-  >
-    <CustomizeableTooltip
-      :show="shouldEstimateImprovement"
-      left="50%"
-      top="0"
+  <div class="l-spoon-btn-group">
+    <button
+      class="c-pelle-upgrade"
+      :class="{
+        'c-pelle-upgrade--unavailable': !canBuy && !(isBought || isCapped),
+        'c-pelle-upgrade--bought': isBought || isCapped,
+        'c-pelle-upgrade--faded': faded,
+        'c-pelle-upgrade--galaxyGenerator': galaxyGenerator
+      }"
+      @click="!faded && upgrade.purchase()"
+      @mouseover="hovering = true"
+      @mouseleave="hovering = false"
     >
-      <template #tooltipContent>
-        {{ estimateImprovement }}
-      </template>
-    </CustomizeableTooltip>
-    <CustomizeableTooltip
-      v-if="timeEstimate"
-      left="50%"
-      top="0"
-      content-class="l-fill-container"
-    >
-      <template #tooltipContent>
-        {{ timeEstimate }}
-      </template>
-    </CustomizeableTooltip>
-    <DescriptionDisplay :config="config" />
-    <div class="l-pelle-upgrade-gap" />
-    <div v-if="effectText">
-      {{ effectText.prefix }} {{ effectText.value }}
-      <template v-if="effectText.next">
-        ➜ <span
-          :class="{
-            'c-improved-effect': canBuy,
-            'c-improved-effect--unavailable': !canBuy,
-          }"
-        >
-          {{ effectText.next }}
-        </span>
-      </template>
+      <CustomizeableTooltip
+        :show="shouldEstimateImprovement"
+        left="50%"
+        top="0"
+      >
+        <template #tooltipContent>
+          {{ estimateImprovement }}
+        </template>
+      </CustomizeableTooltip>
+      <CustomizeableTooltip
+        v-if="timeEstimate"
+        left="50%"
+        top="0"
+        content-class="l-fill-container"
+      >
+        <template #tooltipContent>
+          {{ timeEstimate }}
+        </template>
+      </CustomizeableTooltip>
+      <DescriptionDisplay :config="config" />
       <div class="l-pelle-upgrade-gap" />
-    </div>
-    <CostDisplay
-      v-if="!isCapped"
-      :config="config"
-      :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'"
+      <div v-if="effectText">
+        {{ effectText.prefix }} {{ effectText.value }}
+        <template v-if="effectText.next">
+          ➜ <span
+            :class="{
+              'c-improved-effect': canBuy,
+              'c-improved-effect--unavailable': !canBuy,
+            }"
+          >
+            {{ effectText.next }}
+          </span>
+        </template>
+        <div class="l-pelle-upgrade-gap" />
+      </div>
+      <CostDisplay
+        v-if="!isCapped"
+        :config="config"
+        :name="galaxyGenerator ? config.currencyLabel : 'Reality Shard'"
+      />
+    </button>
+    <PrimaryToggleButton
+      v-if="isRebuyable && isAutoUnlocked"
+      v-model="isAutobuyerOn"
+      label="Auto:"
+      class="l--spoon-btn-group__little-spoon"
+      style="margin-top: -.5rem; width: 18.5rem; margin-left: 0.3rem;"
     />
-  </button>
+  </div>
 </template>
 
 <style scoped>

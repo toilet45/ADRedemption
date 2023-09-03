@@ -29,6 +29,8 @@ import { VMemoryAutobuyerState } from "./memory-autobuyer";
 import { RaMemoryAutobuyerState } from "./memory-autobuyer";
 import { LaitelaMemoryAutobuyerState } from "./memory-autobuyer";
 import { PelleMemoryAutobuyerState } from "./memory-autobuyer";
+import { PelleRebuyableUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
+import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -63,6 +65,8 @@ export const Autobuyer = {
   raMem: RaMemoryAutobuyerState.createAccessor(),
   laitelaMem: LaitelaMemoryAutobuyerState.createAccessor(),
   pelleMem: PelleMemoryAutobuyerState.createAccessor(),
+  rebuyablePelle: PelleRebuyableUpgradeAutobuyerState.createAccessor(),
+  pelleUpgrade: new PelleUpgradeAutobuyerState(),
 };
 
 export const Autobuyers = (function() {
@@ -90,6 +94,7 @@ export const Autobuyers = (function() {
     Autobuyer.annihilation,
     Autobuyer.tesseract,
     Autobuyer.musicglyph,
+    Autobuyer.pelleUpgrade,
   ];
 
   const singleComplex = [
@@ -111,6 +116,7 @@ export const Autobuyers = (function() {
     Autobuyer.raMem.zeroIndexed,
     Autobuyer.laitelaMem.zeroIndexed,
     Autobuyer.pelleMem.zeroIndexed,
+    Autobuyer.rebuyablePelle.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -129,6 +135,7 @@ export const Autobuyers = (function() {
     Autobuyer.raMem,
     Autobuyer.laitelaMem,
     Autobuyer.pelleMem,
+    Autobuyer.rebuyablePelle,
   ];
 
   return {

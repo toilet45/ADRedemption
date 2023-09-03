@@ -327,7 +327,7 @@ export const ra = {
     imaginaryMachinesSetToCap: {
       id: 0,
       id2: 0,
-      reward: "Current Imaginary Machine amount is always set to cap",
+      reward: "Current Imaginary Machine amount is always set to cap and the cap passively increases",
       pet: "teresa",
       level: 30,
       displayIcon: `<span class="fas fa-level-up-alt"></span>`
@@ -353,7 +353,7 @@ export const ra = {
     retroactiveTeresaRealityReward: {
       id: 3,
       id2: 0,
-      reward: () => `Your record antimatter in Teresa's Reality is retroactively set to your total antimatter raised to ${formatPow(0.45, 1, 2)}`,
+      reward: () => `Your record antimatter in Teresa's Reality is retroactively set to the square root of your total antimatter`,
       pet: "teresa",
       level: 65,
       displayIcon: "Ϟ"
@@ -774,13 +774,13 @@ export const ra = {
       level: 100,
       displayIcon: "?"
     },
-    placeholderP1: {
+    pelleAutobuyers: {
       id: 25,
       id2: 1,
-      reward: "TBD",
+      reward: "Pelle Upgrades are purchased automatically",
       pet: "pelle",
       level: 1,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
     placeholderP2: {
       id: 26,

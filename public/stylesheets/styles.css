@@ -7471,6 +7471,18 @@ kbd {
   color: var(--color-ra-pet--v);
 }
 
+.c-ra-upgrade-icon--ra .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--ra);
+}
+
+.c-ra-upgrade-icon--laitela .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--laitela);
+}
+
+.c-ra-upgrade-icon--pelle .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--pelle);
+}
+
 .c-ra-upgrade-icon--inactive .c-ra-pet-upgrade__tooltip {
   color: #888888;
 }
