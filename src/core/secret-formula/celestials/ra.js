@@ -337,7 +337,7 @@ export const ra = {
       id2: 0,
       reward: () => `Unlock Charged Break Infinity Upgrades. You get one more maximum
         Charged Break Infinity Upgrade every ${formatInt(5)} levels`,
-      effect: () => Math.min(12, Math.floor((Ra.pets.teresa.level-40) / 5)),
+      effect: () => Math.min(12, Math.floor((Ra.pets.teresa.level-35) / 5)),
       pet: "teresa",
       level: 40,
       displayIcon: "∝"
