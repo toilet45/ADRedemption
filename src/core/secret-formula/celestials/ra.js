@@ -666,43 +666,44 @@ export const ra = {
       level: 100,
       displayIcon: "?"
     },
-    placeholderL1: {
+    raiseDarkMatterCap: {
       id: 11,
       id2: 1,
       reward: "Raise dark matter cap based on Laitela level",
-      effect: () => (Ra.pets.laitela.level + 1),
+      effect: () => (Ra.pets.laitela.level),
       pet: "laitela",
       level: 1,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL2: {
+    annihilationDarkEnergyBoost: {
       id: 12,
       id2: 1,
       reward: "Annihilation increases dark energy production with reduced effect",
       pet: "laitela",
       level: 2,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL3: {
+    laitelaXP: {
       id: 13,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on Singularities",
       pet: "laitela",
       level: 5,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL4: {
+    totalAntimatterDarkMatterBoost: {
       id: 14,
       id2: 1,
       reward: "Total Antimatter boosts dark matter gain",
       pet: "laitela",
       level: 8,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL5: {
+    infinityPowerConversionBoost: {
       id: 15,
       id2: 1,
-      reward:() => `increase the base infinity power conversion by ${formatFloat(0.25, 2)} every 10 levels`,
+      reward:() => `Increase the base infinity power conversion by ${formatFloat(0.25, 2)} every 10 levels`,
+      effect: () => .25 * Math.floor(Ra.pets.laitela.level/10),
       pet: "laitela",
       level: 10,
       displayIcon: '<i class="fa-solid fa-check"></i>'
