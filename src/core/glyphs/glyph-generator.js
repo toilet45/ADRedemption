@@ -217,7 +217,7 @@ export const GlyphGenerator = {
   randomStrength(rng) {
     // Technically getting this upgrade really changes glyph gen but at this point almost all
     // the RNG is gone anyway.
-    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || MendingUpgrade(12).isBought) return rarityToStrength(100 + 20 * Math.random());
+    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || MendingUpgrade(12).isBought) return rarityToStrength(100 + 20 * rng.uniform());
     let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
     const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
     const increasedRarity = relicShardFactor * Effarig.maxRarityBoost +
