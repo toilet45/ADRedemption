@@ -336,8 +336,8 @@ export const ra = {
       id: 1,
       id2: 0,
       reward: () => `Unlock Charged Break Infinity Upgrades. You get one more maximum
-        Charged Break Infinity Upgrade every ${formatInt(6)} levels`,
-      effect: () => Math.min(9, Math.floor((Ra.pets.teresa.level-35) / 6)),
+        Charged Break Infinity Upgrade every ${formatInt(6)} levels past 40`,
+      effect: () => Math.min(9, Math.floor((Ra.pets.teresa.level-40) / 6)),
       pet: "teresa",
       level: 40,
       displayIcon: "∝",
@@ -383,31 +383,33 @@ export const ra = {
       level: 100,
       displayIcon: "D"
     },
-    placeholderE1: {
+    alchSetToCapAndCapIncrease: {
       id: 8,
       id2: 0,
-      reward: "Alchemy Resources are always set to current cap when you reality, and increase the hardcap by 100 for every effarig level",
+      reward: "Alchemy Resources are always set to current cap when you reality, and increase the hardcap by 100 per level",
+      effect: () => 100 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderE2: {
+    passiveRelicShardGain: {
       id: 9,
       id2: 0,
-      reward: "you gain 100% of relic shards on reality every second",
+      reward: "You gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderE3: {
+    harshInstabilityDelay: {
       id: 10,
       id2: 0,
-      reward: "maximum reality glyph level is increased by 1,000 for every 5 effarig levels",
+      reward: () => `Harsh glyph instability is delayed by ${formatInt(1000)} for every 5 levels past 50`,
+      effect: () => 1000*Math.floor((Ra.pets.effarig.level-50)/5),
       pet: "effarig",
       level: 50,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderE4: {
+    relicShardBoost: {
       id: 11,
       id2: 0,
       reward: "Relic shards boost dimsac, inf power, replicant speed, time shards, and dilated time gain",
@@ -423,19 +425,19 @@ export const ra = {
       level: 75,
       displayIcon: "?"
     },
-    placeholderE6: {
+    maxGlyphRarityIncrease: {
       id: 13,
       id2: 0,
-      reward: "Maximum Glyph rarity is increased based on the highest Glyph level",
-      Effect: () => (100+(player.records.bestReality.glyphLevel+1)^0.25),
+      reward: () => `Maximum Glyph rarity is increased by ${formatPercents(.02)} per level past 90`,
+      effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderE7: {
+    effarigMendUnlock: {
       id: 14,
       id2: 0,
-      reward: "Unlock effarig's Mend",
+      reward: "Unlock Effarig's Mend",
       pet: "effarig",
       level: 100,
       displayIcon: '<i class="fa-solid fa-check"></i>'
