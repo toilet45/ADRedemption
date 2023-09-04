@@ -769,6 +769,8 @@ window.player = {
       run: false,
       charged: new Set(),
       disCharge: false,
+      breakCharged: new Set(),
+      breakDischarge: false,
       peakGamespeed: 1,
       petWithRemembrance: ""
     },

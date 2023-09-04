@@ -32,7 +32,15 @@ export const breakInfinityUpgrades = {
     cost: 1e4,
     description: "Antimatter Dimensions gain a multiplier based on total antimatter produced",
     effect: () => Math.pow(player.records.totalAntimatter.exponent + 1, 0.5),
-    formatEffect: value => formatX(value, 2, 2)
+    formatEffect: value => formatX(value, 2, 2),
+    charged: {
+      description: () =>
+        `Antimatter Dimensions gain a power effect based on total antimatter and Teresa level`,
+      effect: () => 1 +
+                    Math.log(Math.log10(player.records.totalAntimatter.exponent)) *
+                    Math.pow(Ra.pets.teresa.level, 0.5) / 150,
+      formatEffect: value => formatPow(value, 4, 4)
+    }
   },
   currentAMMult: {
     id: "currentMult",

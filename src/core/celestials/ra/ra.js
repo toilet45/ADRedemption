@@ -358,6 +358,12 @@ export const Ra = {
   get chargesLeft() {
     return this.totalCharges - player.celestials.ra.charged.size;
   },
+  get totalBreakCharges() {
+    return Ra.unlocks.chargedBreakInfinityUpgrades.effectOrDefault(0);
+  },
+  get breakChargesLeft(){
+    return this.totalBreakCharges - player.celestials.ra.breakCharged.size;
+  },
   get canBuyTriad() {
     return Ra.unlocks.unlockHardV.canBeApplied;
   },

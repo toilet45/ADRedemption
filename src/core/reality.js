@@ -592,6 +592,9 @@ export function finishProcessReality(realityProps) {
     if (player.celestials.ra.disCharge) {
       disChargeAll();
     }
+    if(player.celestials.ra.breakDischarge){
+      disChargeAllBreak();
+    }
   }
   if (player.options.automatorEvents.clearOnReality) AutomatorData.clearEventLog();
   if (Player.automatorUnlocked && AutomatorBackend.state.forceRestart) {
