@@ -386,34 +386,34 @@ export const ra = {
     placeholderE1: {
       id: 8,
       id2: 0,
-      reward: "TBD",
+      reward: "Alchemy Resources are always set to current cap when you reality, and increase the hardcap by 100 for every effarig level",
       pet: "effarig",
       level: 30,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderE2: {
       id: 9,
       id2: 0,
-      reward: "TBD",
+      reward: "you gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderE3: {
       id: 10,
       id2: 0,
-      reward: "TBD",
+      reward: "maximum reality glyph level is increased by 1,000 for every 5 effarig levels",
       pet: "effarig",
       level: 50,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderE4: {
       id: 11,
       id2: 0,
-      reward: "TBD",
+      reward: "Relic shards boost dimsac, inf power, replicant speed, time shards, and dilated time gain",
       pet: "effarig",
       level: 65,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderE5: {
       id: 12,
@@ -426,18 +426,19 @@ export const ra = {
     placeholderE6: {
       id: 13,
       id2: 0,
-      reward: "TBD",
+      reward: "Maximum Glyph rarity is increased based on the highest Glyph level",
+      Effect: () => (100+(player.records.bestReality.glyphLevel+1)^0.25),
       pet: "effarig",
       level: 90,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderE7: {
       id: 14,
       id2: 0,
-      reward: "TBD",
+      reward: "Unlock effarig's Mend",
       pet: "effarig",
       level: 100,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderN1: {
       id: 15,
@@ -666,7 +667,8 @@ export const ra = {
     placeholderL1: {
       id: 11,
       id2: 1,
-      reward: "TBD",
+      reward: "Raise dark matter cap based on Laitela level",
+      effect: () => (Ra.pets.laitela.level + 1),
       pet: "laitela",
       level: 1,
       displayIcon: "?"
@@ -674,7 +676,7 @@ export const ra = {
     placeholderL2: {
       id: 12,
       id2: 1,
-      reward: "TBD",
+      reward: "Annihilation increases dark energy production with reduced effect",
       pet: "laitela",
       level: 2,
       displayIcon: "?"
@@ -682,7 +684,7 @@ export const ra = {
     placeholderL3: {
       id: 13,
       id2: 1,
-      reward: "TBD",
+      reward: "All Memory Chunks produce more Memories based on Singularities",
       pet: "laitela",
       level: 5,
       displayIcon: "?"
@@ -690,7 +692,7 @@ export const ra = {
     placeholderL4: {
       id: 14,
       id2: 1,
-      reward: "TBD",
+      reward: "Total Antimatter boosts dark matter gain",
       pet: "laitela",
       level: 8,
       displayIcon: "?"
@@ -698,10 +700,10 @@ export const ra = {
     placeholderL5: {
       id: 15,
       id2: 1,
-      reward: "TBD",
+      reward:() => `increase the base infinity power conversion by ${formatFloat(0.25, 2)} every 10 levels`,
       pet: "laitela",
       level: 10,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderL6: {
       id: 16,
