@@ -22,13 +22,12 @@ export function mendingResetRequest() {
     
   
 function askMendingConfirmation() {
-  mendingReset();
-  /*if (player.options.confirmations.mending) {
+  if (player.options.confirmations.mending) {
     Modal.mending.show();
   } 
   else {
       mendingReset();
-  }*/
+  }
 }
 
 export function mendingReset() {

@@ -12,9 +12,12 @@ const rebuyable = props => {
     props.initialCost * props.costMult
   );
   const { effect, effectType } = props;
-  props.effect = () => Math.pow(
-    effect,
-    player.mending.rebuyables[props.id]);
+  props.effect = () =>{ 
+    if (props.effectType === "+" || props.effectType === "-"){
+      return effect * player.mending.rebuyables[props.id];
+    }
+    return Math.pow(effect, player.mending.rebuyables[props.id]);
+  }
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
   props.formatEffect = value => effectType + `${format(value, 2, 0)}`;
   props.formatCost = value => format(value, 2, 0);
@@ -94,9 +97,9 @@ export const mendingUpgrades = [
     name: "Mending Upgrade 11",
     initialCost: 1e300,
     costMult: 9,
-    textTemplate: "Multiply Eternity Point Gain by [TBD].",
-    effect: 2,
-    effectType: "×"
+    textTemplate: "Weaken the first Tachyon Galaxy Threshold softcap by x",
+    effect: 0.05,
+    effectType: "-"
   }),
   {
     id: 12,
@@ -126,10 +129,10 @@ export const mendingUpgrades = [
     id: 16,
     name: "Mending Upgrade 16",
     initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "Multiply Reality Machine Gain by [TBD].",
-    effect: 2,
-    effectType: "×"
+    costMult: 1e300,
+    textTemplate: "Delay Obscure Galaxy Scaling by x.",
+    effect: 5000,
+    effectType: "+"
   }),
   {
     id: 17,
@@ -152,7 +155,7 @@ export const mendingUpgrades = [
   {
     id: 20,
     name: "Mending Upgrade 20",
-    cost: 1e300,
-    description: () => "[TBD]",
+    cost: 5000,
+    description: () => "Unlock autobuyer for Mends",
   }
 ];

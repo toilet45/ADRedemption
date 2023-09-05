@@ -273,6 +273,45 @@ export const Time = {
     this.toMilliseconds(timespan, value => player.records.bestReality.realTime = value);
   },
 
+   /**
+   * @returns {TimeSpan}
+   */
+   get bestMend() {
+    return this.fromMilliseconds(() => player.records.bestMend.time);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set bestMend(timespan) {
+    this.toMilliseconds(timespan, value => player.records.bestMend.time = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get bestMendRealTime() {
+    return this.fromMilliseconds(() => player.records.bestMend.realTime);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set bestMendRealTime(timespan) {
+    this.toMilliseconds(timespan, value => player.records.bestMend.realTime = value);
+  },
+
+  /**
+   * @returns {TimeSpan}
+   */
+  get thisMendRealTime() {
+    return this.fromMilliseconds(() => player.records.thisMend.realTime);
+  },
+  /**
+   * @param {TimeSpan} timespan
+   */
+  set thisMendRealTime(timespan) {
+    this.toMilliseconds(timespan, value => player.records.thisMend.realTime = value);
+  },
+
   /**
    * @return {TimeSpan}
    */

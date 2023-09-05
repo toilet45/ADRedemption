@@ -33,6 +33,7 @@ import { PelleRebuyableUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { GalaxyGeneratorUpgradeAutobuyerState } from "./galgen-autobuyer";
 import { GalaxyGeneratorSacrificeAutobuyerState } from "./galgen-autobuyer";
+import { MendingAutobuyerState } from "./mending-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -71,6 +72,7 @@ export const Autobuyer = {
   pelleUpgrade: new PelleUpgradeAutobuyerState(),
   galgenUpgrade: GalaxyGeneratorUpgradeAutobuyerState.createAccessor(),
   galgenSac: new GalaxyGeneratorSacrificeAutobuyerState(),
+  mending: new MendingAutobuyerState(),
 };
 
 export const Autobuyers = (function() {
@@ -84,6 +86,7 @@ export const Autobuyers = (function() {
     Autobuyer.bigCrunch,
     Autobuyer.eternity,
     Autobuyer.reality,
+    Autobuyer.mending,
   ];
 
   const single = [
@@ -164,7 +167,8 @@ export const Autobuyers = (function() {
         Autobuyer.galaxy,
         Autobuyer.bigCrunch,
         Autobuyer.eternity,
-        Autobuyer.reality].some(autobuyer => autobuyer.isUnlocked);
+        Autobuyer.reality,
+        Autobuyer.mending].some(autobuyer => autobuyer.isUnlocked);
     },
 
     toggle() {
@@ -201,6 +205,7 @@ export const Autobuyers = (function() {
 
 EventHub.logic.on(GAME_EVENT.ETERNITY_RESET_AFTER, () => Autobuyers.reset());
 EventHub.logic.on(GAME_EVENT.REALITY_RESET_AFTER, () => Autobuyers.reset());
+EventHub.logic.on(GAME_EVENT.MENDING_RESET_AFTER, () => Autobuyers.reset());
 
 EventHub.logic.on(GAME_EVENT.DIMBOOST_AFTER, () => Autobuyers.resetTick(PRESTIGE_EVENT.DIMENSION_BOOST));
 EventHub.logic.on(GAME_EVENT.GALAXY_RESET_AFTER, () => Autobuyers.resetTick(PRESTIGE_EVENT.ANTIMATTER_GALAXY));
