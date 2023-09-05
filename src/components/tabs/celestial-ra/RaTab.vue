@@ -32,7 +32,9 @@ export default {
       {
         pet: Ra.pets.teresa,
         scalingUpgradeVisible: () => Ra.unlocks.chargedInfinityUpgrades.isUnlocked,
-        scalingUpgradeText: () => `You can Charge ${quantifyInt("Infinity Upgrade", Ra.totalCharges)}.`,
+        scalingUpgradeText: () => Ra.unlocks.chargedBreakInfinityUpgrades.isUnlocked? 
+                                  `You can Charge ${quantifyInt("Break Infinity Upgrade", Ra.totalBreakCharges)}.`:
+                                  `You can Charge ${quantifyInt("Infinity Upgrade", Ra.totalCharges)}.`,
       },
       {
         pet: Ra.pets.effarig,
