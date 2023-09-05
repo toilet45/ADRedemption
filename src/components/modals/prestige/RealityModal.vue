@@ -2,6 +2,7 @@
 import GlyphComponent from "@/components/GlyphComponent";
 import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 import PrimaryButton from "@/components/PrimaryButton";
+import { MendingMilestone } from "../../../core/mending";
 
 export default {
   name: "RealityModal",
@@ -58,7 +59,7 @@ export default {
     gained() {
       const gainedResources = [];
       gainedResources.push(`${quantifyInt("Reality", this.simRealities)}`);
-      gainedResources.push(`${quantifyInt("Perk Point", this.simRealities)}`);
+      gainedResources.push(`${quantifyInt("Perk Point", this.simRealities*MendingMilestone.one.isReached?5:1)}`);
       gainedResources.push(`${quantify("Reality Machine", this.realityMachines, 2)}`);
       if (this.effarigUnlocked) {
         gainedResources.push(`${quantify("Relic Shard", this.shardsGained, 2)}`);
