@@ -60,7 +60,7 @@ export const ra = {
       rawMemoryChunksPerSecond: () => (
         4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)
       ),
-      memoryProductionMultiplier: () => 1
+      memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },
     pelle: {
       id: "pelle",
@@ -336,7 +336,7 @@ export const ra = {
       id: 1,
       id2: 0,
       reward: () => `Unlock Charged Break Infinity Upgrades. You get one more maximum
-        Charged Break Infinity Upgrade every ${formatInt(6)} levels past 40`,
+        Charged Break Infinity Upgrade every ${formatInt(6)} levels past ${formatInt(40)}`,
       effect: () => Math.min(9, Math.floor((Ra.pets.teresa.level-40) / 6)),
       pet: "teresa",
       level: 40,
@@ -359,26 +359,26 @@ export const ra = {
       level: 65,
       displayIcon: "Ϟ"
     },
-    placeholderT5: {
+    realityMachinesBoostIpAndEpGain: {
       id: 4,
       id2: 0,
-      reward: "TBD",
+      reward: "Reality Machines boost Infinity Point and Eternity Point gain",
       pet: "teresa",
       level: 75,
       displayIcon: "T"
     },
-    placeholderT6: {
+    realitiesBoostInfinityAndEternityProduction: {
       id: 5,
       id2: 0,
-      reward: "TBD",
+      reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
       displayIcon: "B"
     },
-    placeholderT7: {
+    postWarpRealityMachineBoost: {
       id: 6,
       id2: 0,
-      reward: "TBD",
+      reward: "Post-Warp Reality Machine gain is affected by Elliptic Materiality",
       pet: "teresa",
       level: 100,
       displayIcon: "D"
@@ -386,7 +386,7 @@ export const ra = {
     alchSetToCapAndCapIncrease: {
       id: 8,
       id2: 0,
-      reward: "Alchemy Resources are always set to current cap when you reality, and increase the hardcap by 100 per level",
+      reward: () => `Alchemy Resources are always set to current cap when you reality, and increase the hardcap by ${formatInt(100)} per level`,
       effect: () => 100 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
@@ -403,7 +403,7 @@ export const ra = {
     harshInstabilityDelay: {
       id: 10,
       id2: 0,
-      reward: () => `Harsh glyph instability is delayed by ${formatInt(1000)} for every 5 levels past 50`,
+      reward: () => `Harsh glyph instability is delayed by ${formatInt(1000)} for every ${formatInt(5)} levels past ${formatInt(50)}`,
       effect: () => 1000*Math.floor((Ra.pets.effarig.level-50)/5),
       pet: "effarig",
       level: 50,
@@ -428,7 +428,7 @@ export const ra = {
     maxGlyphRarityIncrease: {
       id: 13,
       id2: 0,
-      reward: () => `Maximum Glyph rarity is increased by ${formatPercents(.02)} per level past 90`,
+      reward: () => `Maximum Glyph rarity is increased by ${formatPercents(.02)} per level past ${formatInt(90)}`,
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
@@ -687,6 +687,7 @@ export const ra = {
       id: 13,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on Singularities",
+      effect: () => 1,
       pet: "laitela",
       level: 5,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -702,7 +703,7 @@ export const ra = {
     infinityPowerConversionBoost: {
       id: 15,
       id2: 1,
-      reward:() => `Increase the base infinity power conversion by ${formatFloat(0.25, 2)} every 10 levels`,
+      reward:() => `Increase the base infinity power conversion by ${formatFloat(0.25, 2)} every ${formatInt(10)} levels`,
       effect: () => .25 * Math.floor(Ra.pets.laitela.level/10),
       pet: "laitela",
       level: 10,
