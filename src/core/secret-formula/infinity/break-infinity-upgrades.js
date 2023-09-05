@@ -47,13 +47,25 @@ export const breakInfinityUpgrades = {
     cost: 5e4,
     description: "Antimatter Dimensions gain a multiplier based on current antimatter",
     effect: () => Math.pow(Currency.antimatter.exponent + 1, 0.5),
-    formatEffect: value => formatX(value, 2, 2)
+    formatEffect: value => formatX(value, 2, 2),
+    charged: {
+      description: () =>
+        `Antimatter Dimensions gain a power effect based on current antimatter and Teresa level`,
+      effect: () => 1 +
+                    Math.log(Math.log10(Currency.antimatter.exponent)) *
+                    Math.pow(Ra.pets.teresa.level, 0.5) / 150,
+      formatEffect: value => formatPow(value, 4, 4)
+    }
   },
   galaxyBoost: {
     id: "postGalaxy",
     cost: 5e11,
     description: () => `All Galaxies are ${formatPercents(0.5)} stronger`,
-    effect: 1.5
+    effect: 1.5,
+    charged: {
+      description: () => `All Galaxies are ${formatPercents(1)} stronger`,
+      effect: 2
+    }
   },
   infinitiedMult: {
     id: "infinitiedMult",
