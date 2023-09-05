@@ -58,6 +58,16 @@ window.player = {
   auto: {
     autobuyersOn: true,
     disableContinuum: false,
+    mending: {
+      mode: 0,
+      amount: DC.D1,
+      interval: 100,
+      increaseWithMult: true,
+      time: 1,
+      xHighest: DC.D1,
+      isActive: false,
+      lastTick: 0
+    },
     reality: {
       mode: 0,
       rm: DC.D1,
@@ -410,7 +420,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 43,
+  version: 45,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,

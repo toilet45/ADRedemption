@@ -508,6 +508,18 @@ export const migrations = {
       if(player.records.thisReality.time > 1e308) player.records.thisReality.time = 1e308;
       if(player.records.thisMend.realTime > 1e308) player.records.thisMend.realTime = 1e308;
       if(player.records.thisMend.time > 1e308) player.records.thisMend.time = 1e308;
+    },
+    45: player =>{
+      player.auto.mending = {
+        mode: 0,
+        amount: DC.D1,
+        interval: 100,
+        increaseWithMult: true,
+        time: 1,
+        xHighest: DC.D1,
+        isActive: false,
+        lastTick: 0
+      };
     }
   },
 

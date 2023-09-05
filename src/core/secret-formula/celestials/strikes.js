@@ -37,7 +37,7 @@ export const pelleStrikes = {
     id: 5,
     requirementDescription: "Dilate Time",
     penaltyDescription: "Time Dilation is permanently active",
-    rewardDescription: () => `Keep the Time Dilation study across Armageddon, boost Remnant gain, and unlock
+    rewardDescription: () => `Keep the Time Dilation study across Armageddon, boost Remnant gain, remove TG softcaps, and unlock
       ${wordShift.wordCycle(PelleRifts.paradox.name)}`,
     rift: () => PelleRifts.paradox
   }

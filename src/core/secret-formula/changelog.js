@@ -9,6 +9,31 @@ export const changelog = [
    * }
    */
   {
+    date: [2023, 9, "??"],
+    name: "idk yet",
+    info: 
+    `
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Implemented Mending Upgrades 6 and 20</li>
+    <li>Endgame: 10 Mend Milestone and all available Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>idk</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    <li>There are console errors when viewing the TS tree when unlocking a Triad Study (this doesn't effect gameplay)</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 31],
     name: "The Glyph Nerf and Game Time fix",
     info: 

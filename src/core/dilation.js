@@ -105,12 +105,16 @@ export function buyDilationUpgrade(id, bulk = 1) {
 export function getTachyonGalaxyMult(thresholdUpgrade) {
   // This specifically needs to be an undefined check because sometimes thresholdUpgrade is zero
   const upgrade = thresholdUpgrade === undefined ? DilationUpgrade.galaxyThreshold.effectValue : thresholdUpgrade;
-  const thresholdMult = 3.65 * upgrade + 0.35;
+  let thresholdMult = 3.65 * upgrade + 0.35;
   const glyphEffect = getAdjustedGlyphEffect("dilationgalaxyThreshold");
   const glyphReduction = glyphEffect === 0 ? 1 : glyphEffect;
-  const power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
+  let power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
     ? DilationUpgrade.galaxyThresholdPelle.effectValue : 1;
-  return (1 + thresholdMult * glyphReduction) ** power;
+  let tgSoftcapOne = 50000
+  if (player.dilation.totalTachyonGalaxies >= tgSoftcapOne && !Pelle.isDoomed){
+    power *= 5;
+  }
+  return Math.max(1, ((1 + thresholdMult * glyphReduction) ** power));
 }
 
 export function getDilationGainPerSecond() {
