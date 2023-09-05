@@ -365,7 +365,7 @@ export const ra = {
       reward: "Reality Machines boost Infinity Point and Eternity Point gain",
       pet: "teresa",
       level: 75,
-      displayIcon: "T"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     realitiesBoostInfinityAndEternityProduction: {
       id: 5,
@@ -373,7 +373,7 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: "B"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     postWarpRealityMachineBoost: {
       id: 6,
@@ -381,7 +381,7 @@ export const ra = {
       reward: "Post-Warp Reality Machine gain is affected by Elliptic Materiality",
       pet: "teresa",
       level: 100,
-      displayIcon: "D"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     alchSetToCapAndCapIncrease: {
       id: 8,
