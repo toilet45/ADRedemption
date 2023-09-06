@@ -417,13 +417,13 @@ export const ra = {
       level: 65,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderE5: {
+    effarigGlyphIncreaseImCap: {
       id: 12,
       id2: 0,
-      reward: "TBD",
+      reward: "Effarig Glyphs' first effect increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     maxGlyphRarityIncrease: {
       id: 13,
