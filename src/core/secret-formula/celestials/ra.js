@@ -442,69 +442,69 @@ export const ra = {
       level: 100,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN1: {
+    uncapGamespeed: {
       id: 15,
       id2: 0,
-      reward: "TBD",
+      reward: "Game Speed cap is removed",
       pet: "enslaved",
       level: 30,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN2: {
+    uncap8TdPurchaseMult: {
       id: 16,
       id2: 0,
-      reward: "TBD",
+      reward: "Uncap 8th Time Dimension purchase multiplier",
       pet: "enslaved",
       level: 40,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN3: {
+    unlock3rdBH: {
       id: 17,
       id2: 0,
-      reward: "TBD",
+      reward: "Unlock the 3rd Black Hole which costs Imaginary Machines and boosts Game Speed exponentially instead of multiplicatively",
       pet: "enslaved",
       level: 50,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN4: {
+    twinTachyonGalaxyCapIncrease: {
       id: 18,
       id2: 0,
-      reward: "TBD",
+      reward: "Increase double Tachyon Galaxy upgrade cap based on Dilated Time",
       pet: "enslaved",
       level: 65,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN5: {
+    gamespeedGalaxyBoost: {
       id: 19,
       id2: 0,
-      reward: "TBD",
+      reward: "Game Speed increases Galaxy strength",
       pet: "enslaved",
       level: 75,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN6: {
+    freeTickspeedSoftcapDelay: {
       id: 20,
       id2: 0,
-      reward: "TBD",
+      reward: "Tesseracts increase free tickspeed upgrade softcap",
       pet: "enslaved",
       level: 90,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderN7: {
+    improvedTesseractFormula: {
       id: 21,
       id2: 0,
-      reward: "TBD",
+      reward: "Improve Tesseract formula",
       pet: "enslaved",
       level: 100,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderV1: {
+    improvedECRewards: {
       id: 22,
       id2: 0,
-      reward: "TBD",
+      reward: "Improve some Eternity Challenge rewards",
       pet: "v",
       level: 30,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderV2: {
       id: 23,
@@ -514,29 +514,29 @@ export const ra = {
       level: 40,
       displayIcon: "?"
     },
-    placeholderV3: {
+    vAchMilestone2AffectsIDsAndTDs: {
       id: 24,
       id2: 0,
-      reward: "TBD",
+      reward: "The 5 V-Achievement milestone affects Infinity and Time Dimensions with reduced effect",
       pet: "v",
       level: 50,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderV4: {
+    repIncreasesAchMult: {
       id: 25,
       id2: 0,
-      reward: "TBD",
+      reward: "Replicanti increases achievement multiplier",
       pet: "v",
       level: 65,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderV5: {
+    totalSTBoostTTGen: {
       id: 26,
       id2: 0,
-      reward: "TBD",
+      reward: "Total Space Theorems boost Time Theorem generation",
       pet: "v",
       level: 75,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderV6: {
       id: 27,
@@ -570,13 +570,13 @@ export const ra = {
       level: 2,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
-    placeholderR2: {
+    raXP: {
       id: 31,
       id2: 0,
-      reward: "TBD",
+      reward: "All Memory Chunks produce more Memories based on Imaginary Machines",
       pet: "ra",
       level: 5,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderR3: {
       id: 0,
@@ -602,13 +602,13 @@ export const ra = {
       level: 15,
       displayIcon: "?"
     },
-    placeholderR6: {
+    generateMemChunksOutOfRasReality: {
       id: 3,
       id2: 1,
-      reward: "TBD",
+      reward: "You can generate Memory Chunks outside of Ra's reality at a reduced rate",
       pet: "ra",
       level: 25,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderR7: {
       id: 4,
@@ -666,10 +666,10 @@ export const ra = {
       level: 100,
       displayIcon: "?"
     },
-    raiseDarkMatterCap: {
+    increaseDarkMatterCap: {
       id: 11,
       id2: 1,
-      reward: "Raise dark matter cap based on Laitela level",
+      reward: "Increase dark matter cap based on Laitela level",
       effect: () => (Ra.pets.laitela.level),
       pet: "laitela",
       level: 1,
@@ -709,29 +709,29 @@ export const ra = {
       level: 10,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL6: {
+    passiveAnnihilationGen: {
       id: 16,
       id2: 1,
-      reward: "TBD",
+      reward: "Passively generate half of your Annihilation multiplier every second",
       pet: "laitela",
       level: 15,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL7: {
+    unlockDMD: {
       id: 17,
       id2: 1,
-      reward: "TBD",
+      reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels`,
       pet: "laitela",
       level: 25,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL8: {
+    continuumBoost: {
       id: 18,
       id2: 1,
-      reward: "TBD",
+      reward: () => `Improve Continuum effect for every ${format("1e308")} Dark Matter`,
       pet: "laitela",
       level: 30,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderL9: {
       id: 19,
@@ -789,21 +789,22 @@ export const ra = {
       level: 1,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
-    placeholderP2: {
+    boostMVRGain: {
       id: 26,
       id2: 1,
-      reward: "TBD",
+      reward: "Triple Multiversal remains gained when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
+      effect: () => 3,
       pet: "pelle",
       level: 2,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderP3: {
+    pelleXP: {
       id: 27,
       id2: 1,
-      reward: "TBD",
+      reward: "All Memory Chunks produce more Memories based on Remnants",
       pet: "pelle",
       level: 5,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderP4: {
       id: 28,
@@ -885,13 +886,13 @@ export const ra = {
       level: 90,
       displayIcon: "?"
     },
-    placeholderP14: {
+    kohlersRealmUnlock: {
       id: 6,
       id2: 2,
-      reward: "TBD",
+      reward: () => `Unlock ${Ra.unlocks.kohlersRealmUnlock.isUnlocked?"Kohler":"???"}'s Realm (Requires all celestials to be level ${formatInt(100)})`,
       pet: "pelle",
       level: 100,
-      displayIcon: "?"
+      displayIcon: `<i class="fa-solid fa-staff-snake"></i>`
     },
   }
 };
