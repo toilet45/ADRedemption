@@ -1,4 +1,5 @@
 <script>
+import { Pelle } from "../../../core/globals";
 import { MendingMilestone } from "../../../core/mending";
 import { PlayerProgress } from "../../../core/player-progress";
 import DilationButton from "./DilationButton";
@@ -24,6 +25,12 @@ export default {
       maxDT: new Decimal(),
       toMaxTooltip: "",
       isHovering: false,
+      isPastSCone: false,
+      scOneStart: 50000,
+      scOnePower: 5,
+      isPastSCtwo: false,
+      scTwoStart: 150000,
+      scTwoPower: 1.5,
     };
   },
   computed: {
@@ -120,6 +127,12 @@ export default {
       const estimateText = getDilationTimeEstimate(this.maxDT);
       if (this.dilatedTimeIncome.lte(0)) this.toMaxTooltip = "No DT gain";
       else this.toMaxTooltip = estimateText.startsWith("<") ? "Currently Increasing" : estimateText;
+      this.isPastSCone = player.dilation.totalTachyonGalaxies >= this.scOneStart && !Pelle.isDoomed;
+      this.scOneStart = 50000
+      this.scOnePower = 1.5 - (0.005 * player.mending.rebuyables[11]);
+      this.isPastSCtwo = player.dilation.totalTachyonGalaxies >= this.scTwoStart && !Pelle.isDoomed;
+      this.scTwoStart = 150000;
+      this.scTwoPower = 1.5;
     }
   }
 };
@@ -165,6 +178,12 @@ export default {
         v-tooltip="toMaxTooltip"
         class="max-accent"
       >{{ format(maxDT, 2, 1) }}</span>.
+    </span>
+    <span>
+      Rebuyable costs jump and scale much faster past 5,000 purchases.
+    </span>
+    <span v-if="isPastSCone" class="sc-one">
+      Every {{ formatInt(scOneStart) }} Tachyon Galaxies, TG threshold is {{ formatPow(scOnePower, 3, 3) }}.
     </span>
     <div class="l-dilation-upgrades-grid">
       <div
@@ -220,5 +239,13 @@ export default {
 
 .l-dilation-upgrades-grid__cell {
   margin: 1.2rem 1.5rem;
+}
+
+.sc-one {
+  color: #FF0000;
+}
+
+.sc-two {
+  color: #ffA000;
 }
 </style>

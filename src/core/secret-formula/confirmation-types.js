@@ -86,6 +86,6 @@ export const confirmationTypes = [
   }, {
     name: "Mending",
     option: "mending",
-    isUnlocked: () => true
+    isUnlocked: () => PlayerProgress.mendingUnlocked()
   }
 ];

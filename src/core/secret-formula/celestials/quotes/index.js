@@ -6,6 +6,7 @@ import { pelleQuotes } from "./pelle";
 import { raQuotes } from "./ra";
 import { teresaQuotes } from "./teresa";
 import { vQuotes } from "./v";
+import { kohlerQuotes } from "./kohler";
 
 export const quotes = {
   teresa: teresaQuotes,
@@ -16,4 +17,5 @@ export const quotes = {
   laitela: laitelaQuotes,
   pelle: pelleQuotes,
   destroyer: destroyerQuotes,
+  kohler: kohlerQuotes,
 };

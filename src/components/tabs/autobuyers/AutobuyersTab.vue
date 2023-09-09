@@ -10,6 +10,8 @@ import RealityAutobuyerBox from "./RealityAutobuyerBox";
 import SimpleAutobuyersMultiBox from "./SimpleAutobuyersMultiBox";
 import TickspeedAutobuyerBox from "./TickspeedAutobuyerBox";
 import { PlayerProgress } from "../../../core/player-progress";
+import MendingAutobuyerBox from "./MendingAutobuyerBox.vue";
+
 export default {
   name: "AutobuyersTab",
   components: {
@@ -22,7 +24,8 @@ export default {
     DimensionBoostAutobuyerBox,
     TickspeedAutobuyerBox,
     DimensionAutobuyerBox,
-    SimpleAutobuyersMultiBox
+    SimpleAutobuyersMultiBox,
+    MendingAutobuyerBox
   },
   data() {
     return {
@@ -83,6 +86,7 @@ export default {
       Antimatter Dimension Autobuyers can have their bulk upgraded once interval is below {{ formatInt(100) }} ms.
     </b>
     <b v-if="hasInstant">Autobuyers with "Instant" interval will trigger every game tick ({{ gameTickLength }}).</b>
+    <MendingAutobuyerBox class="c-mending-pos"/>
     <RealityAutobuyerBox class="c-reality-pos" />
     <EternityAutobuyerBox class="c-eternity-pos" />
     <BigCrunchAutobuyerBox class="c-infinity-pos" />
@@ -105,6 +109,11 @@ export default {
 when they're open. It looks slightly hacky but actually can't be done any other way; each AutobuyerBox creates
 its own stacking context, which means that all z-indices specified within are essentially scoped and the
 AutobuyerBox components will always render in page order regardless of internal z-indices without these. */
+
+.c-mending-pos {
+  z-index: 4;
+}
+
 .c-reality-pos {
   z-index: 3;
 }

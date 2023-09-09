@@ -5,7 +5,21 @@ class RealityUpgradeState extends BitPurchasableMechanicState {
     super(config);
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
+  get isBought() {
+    if(MendingMilestone.eight.isReached && player.records.thisMend.maxRM.gte(RealityUpgrade(this.id).cost)){
+      RealityUpgrade(this.id).onPurchased;
+       return true;
+    }
+    return (this.bits & (1 << this.bitIndex)) !== 0;
+  }
 
+  set isBought(value) {
+    if (value) {
+      this.bits |= (1 << this.bitIndex);
+    } else {
+      this.bits &= ~(1 << this.bitIndex);
+    }
+  }
   get automatorPoints() {
     return this.config.automatorPoints ? this.config.automatorPoints : 0;
   }

@@ -6,9 +6,13 @@ function rebuyableCost(initialCost, increment, id) {
 function rebuyable(config) {
   return {
     id: config.id,
-    cost: () => rebuyableCost(config.initialCost, config.increment, config.id),
+    cost: () => {
+      if (player.dilation.rebuyables[config.id] > 5000) return rebuyableCost(config.initialCost, config.incrementSC, config.id);
+      return rebuyableCost(config.initialCost, config.increment, config.id);
+    },
     initialCost: config.initialCost,
     increment: config.increment,
+    incrementSC: config.incrementSC,
     description: config.description,
     effect: () => config.effect(player.dilation.rebuyables[config.id]),
     formatEffect: config.formatEffect,
@@ -29,6 +33,7 @@ export const dilationUpgrades = {
     id: 1,
     initialCost: 1e4,
     increment: 10,
+    incrementSC: 100,
     description: () =>
       ((SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(187).canBeApplied)
         ? `${formatX(2 * Effects.product(
@@ -56,6 +61,7 @@ export const dilationUpgrades = {
     id: 2,
     initialCost: 1e6,
     increment: 100,
+    incrementSC: 100, //it shouldn't matter for this one
     description: () =>
       (Perk.bypassTGReset.isBought && !Pelle.isDoomed
         ? "Reset Tachyon Galaxies, but lower their threshold"
@@ -76,6 +82,7 @@ export const dilationUpgrades = {
     id: 3,
     initialCost: 1e7,
     increment: 20,
+    incrementSC: 4000,
     description: () => {
       if (Pelle.isDoomed) return `Multiply the amount of Tachyon Particles gained by ${formatInt(1)}`;
       if (Enslaved.isRunning) return `Multiply the amount of Tachyon Particles gained
@@ -156,6 +163,7 @@ export const dilationUpgrades = {
     id: 11,
     initialCost: 1e14,
     increment: 100,
+    incrementSC: 100, //these are hardcapped anyway
     pelleOnly: true,
     description: () =>{
       if(Pelle.isDoomed) return`${formatX(5)} Dilated Time gain`; 
@@ -174,6 +182,7 @@ export const dilationUpgrades = {
     id: 12,
     initialCost: 1e15,
     increment: 1000,
+    incrementSC: 1000,
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
     effect: bought => {
@@ -182,6 +191,7 @@ export const dilationUpgrades = {
     },
     formatEffect: value => {
       if (Pelle.isDoomed) return `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`;
+      else if (player.dilation.rebuyables[12] >= 10) return `${formatX(value, 2)}`;
       return `${formatX(value, 2, 1)} ➜ ${formatX(value + 0.1, 2, 1)}`;
     },
     formatCost: value => format(value, 2),
@@ -192,6 +202,7 @@ export const dilationUpgrades = {
     id: 13,
     initialCost: 1e16,
     increment: 1e4,
+    incrementSC: 1e4,
     pelleOnly: true,
     description: "Gain a power to Tickspeed",
     effect: bought => {
@@ -200,6 +211,7 @@ export const dilationUpgrades = {
     },
     formatEffect: value =>{ 
       if (Pelle.isDoomed) return `${formatPow(value, 2, 2)} ➜ ${formatPow(value + 0.03, 2, 2)}`;
+      else if(player.dilation.rebuyables[13] >= 10) return `${formatPow(value, 2, 2)}`;
       return `${formatPow(value, 2, 2)} ➜ ${formatPow(value + 0.02, 2, 2)}`;
     },
     formatCost: value => format(value, 2),

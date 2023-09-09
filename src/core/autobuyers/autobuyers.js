@@ -27,6 +27,7 @@ import { TeresaMemoryAutobuyerState } from "./memory-autobuyer"
 import { EffarigMemoryAutobuyerState } from "./memory-autobuyer"
 import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer"
 import { VMemoryAutobuyerState } from "./memory-autobuyer"
+import { MendingAutobuyerState } from "./mending-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -58,6 +59,7 @@ export const Autobuyer = {
   effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
+  mending: new MendingAutobuyerState(),
 };
 
 export const Autobuyers = (function() {
@@ -71,6 +73,7 @@ export const Autobuyers = (function() {
     Autobuyer.bigCrunch,
     Autobuyer.eternity,
     Autobuyer.reality,
+    Autobuyer.mending,
   ];
 
   const single = [
@@ -139,7 +142,8 @@ export const Autobuyers = (function() {
         Autobuyer.galaxy,
         Autobuyer.bigCrunch,
         Autobuyer.eternity,
-        Autobuyer.reality].some(autobuyer => autobuyer.isUnlocked);
+        Autobuyer.reality,
+        Autobuyer.mending].some(autobuyer => autobuyer.isUnlocked);
     },
 
     toggle() {
@@ -176,6 +180,7 @@ export const Autobuyers = (function() {
 
 EventHub.logic.on(GAME_EVENT.ETERNITY_RESET_AFTER, () => Autobuyers.reset());
 EventHub.logic.on(GAME_EVENT.REALITY_RESET_AFTER, () => Autobuyers.reset());
+EventHub.logic.on(GAME_EVENT.MENDING_RESET_AFTER, () => Autobuyers.reset());
 
 EventHub.logic.on(GAME_EVENT.DIMBOOST_AFTER, () => Autobuyers.resetTick(PRESTIGE_EVENT.DIMENSION_BOOST));
 EventHub.logic.on(GAME_EVENT.GALAXY_RESET_AFTER, () => Autobuyers.resetTick(PRESTIGE_EVENT.ANTIMATTER_GALAXY));

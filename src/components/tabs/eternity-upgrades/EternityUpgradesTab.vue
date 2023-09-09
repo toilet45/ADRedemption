@@ -51,6 +51,8 @@ export default {
       {{ formatPostBreak(costIncreases[1], 2) }}, and {{ formatPostBreak(costIncreases[2]) }} Eternity Points.
       <br>
       The cost increases super-exponentially after {{ formatPostBreak(costIncreases[3]) }} Eternity Points.
+      <br>
+      The {{ formatX(5) }} multiplier is capped at {{ format(5e8) }} purchases.
     </div>
   </div>
 </template>

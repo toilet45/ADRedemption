@@ -58,6 +58,16 @@ window.player = {
   auto: {
     autobuyersOn: true,
     disableContinuum: false,
+    mending: {
+      mode: 0,
+      amount: DC.D1,
+      interval: 100,
+      increaseWithMult: true,
+      time: 1,
+      xHighest: DC.D1,
+      isActive: false,
+      lastTick: 0
+    },
     reality: {
       mode: 0,
       rm: DC.D1,
@@ -410,7 +420,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 43,
+  version: 46,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -484,6 +494,7 @@ window.player = {
   realities: 0,
   partSimulatedReality: 0,
   reality: {
+    warped: false,
     realityMachines: DC.D0,
     maxRM: DC.D0,
     imaginaryMachines: 0,
@@ -825,6 +836,9 @@ window.player = {
     },
     destroyer:{
       quoteBits: 0,
+    },
+    kohler:{
+      quoteBits: 0,
     }
   },
   isGameEnd: false,
@@ -1046,7 +1060,8 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 
   get eternityGoal() {

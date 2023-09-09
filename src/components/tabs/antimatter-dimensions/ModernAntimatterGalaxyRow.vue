@@ -1,4 +1,6 @@
 <script>
+import { GALAXY_TYPE } from '../../../core/galaxy';
+
 export default {
   name: "ModernAntimatterGalaxyRow",
   data() {
@@ -16,6 +18,7 @@ export default {
       canBeBought: false,
       distantStart: 0,
       remoteStart: 0,
+      obscureStart: 0,
       lockText: null,
       canBulkBuy: false,
       creditsClosed: false,
@@ -55,6 +58,7 @@ export default {
         case GALAXY_TYPE.NORMAL: return "Antimatter Galaxies";
         case GALAXY_TYPE.DISTANT: return "Distant Antimatter Galaxies";
         case GALAXY_TYPE.REMOTE: return "Remote Antimatter Galaxies";
+        case GALAXY_TYPE.THIRD: return "Obscure Antimatter Galaxies"
       }
       return undefined;
     },
@@ -74,6 +78,9 @@ export default {
             .map(scaling => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`)
             .join(", ").capitalize()}`;
         }
+        case GALAXY_TYPE.THIRD:
+          let x = 750000 + (5000 * player.mending.rebuyables[16]); //plus whatever
+          return MendingUpgrade(17).isBought ? `the Remote Galaxy cost scaling is reinstated and applied twice past ${formatInt(x)} Galaxies` : `the Remote Galaxy cost scaling is applied twice past ${formatInt(x)} Galaxies`;
       }
       return undefined;
     },
@@ -98,6 +105,7 @@ export default {
       this.canBeBought = requirement.isSatisfied && Galaxy.canBeBought;
       this.distantStart = EternityChallenge(5).isRunning ? 0 : Galaxy.costScalingStart;
       this.remoteStart = Galaxy.remoteStart;
+      this.obscureStart = Galaxy.scalingThreeStart;
       this.lockText = Galaxy.lockText;
       this.canBulkBuy = EternityMilestone.autobuyMaxGalaxies.isReached;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));

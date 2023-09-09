@@ -402,6 +402,7 @@ Currency.realityMachines = new class extends DecimalCurrency {
     const addedThisReality = newValue.minus(player.reality.realityMachines);
     player.reality.realityMachines = newValue;
     player.reality.maxRM = Decimal.max(player.reality.maxRM, newValue);
+    if (player.reality.realityMachines.gte(player.records.thisMend.maxRM)) player.records.thisMend.maxRM = player.reality.realityMachines;
     if (player.records.bestReality.RM.lt(addedThisReality)) {
       player.records.bestReality.RM = addedThisReality;
       player.records.bestReality.RMSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
@@ -422,6 +423,7 @@ Currency.relicShards = new class extends NumberCurrency {
 Currency.imaginaryMachines = new class extends NumberCurrency {
   get value() { return player.reality.imaginaryMachines; }
   set value(value) {
+    if(player.reality.imaginaryMachines > player.records.thisMend.maxiM) player.records.thisMend.maxiM = player.reality.imaginaryMachines;
     player.reality.imaginaryMachines = Math.clampMax(value, MachineHandler.currentIMCap);
   }
 }();

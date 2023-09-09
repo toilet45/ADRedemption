@@ -19,6 +19,7 @@ export default {
       incomeType: "",
       areAutobuyersUnlocked: false,
       showLockedDimCostNote: true,
+      shortenTSU: false
     };
   },
   computed: {
@@ -35,6 +36,7 @@ export default {
       this.shardsPerSecond.copyFrom(TimeDimension(1).productionPerRealSecond);
       this.incomeType = EternityChallenge(7).isRunning ? "Eighth Infinity Dimensions" : "Time Shards";
       this.areAutobuyersUnlocked = Autobuyer.timeDimension(1).isUnlocked;
+      this.shortenTSU = FreeTickspeed.amount >= 1e11;
     },
     maxAll() {
       tryUnlockTimeDimensions();
@@ -64,7 +66,20 @@ export default {
         Toggle all autobuyers
       </PrimaryButton>
     </div>
-    <div>
+    <div v-if="shortenTSU">
+      <p>
+        You have gained
+        <span class="c-time-dim-description__accent">{{ format(totalUpgrades, 2, 2) }}</span> Tickspeed upgrades from
+        <span class="c-time-dim-description__accent">{{ format(timeShards, 2, 1) }}</span> Time Shards.
+      </p>
+      <p>
+        Next Tickspeed upgrade at
+        <span class="c-time-dim-description__accent">{{ format(upgradeThreshold, 2, 1) }}</span>, increasing by
+        <span class="c-time-dim-description__accent">{{ formatX(multPerTickspeed, 2, 2) }}</span> per
+        Tickspeed upgrade gained.
+      </p>
+    </div>
+    <div v-else>
       <p>
         You have gained
         <span class="c-time-dim-description__accent">{{ formatInt(totalUpgrades) }}</span> Tickspeed upgrades from

@@ -196,6 +196,7 @@ export const DC = deepFreeze({
   END:                new Decimal("1e9000000000000000"),
   E1E9:                 new Decimal("1e1000000000"),
   E1E10:                 new Decimal("1e10000000000"),
+  WARP_LIMIT: new Decimal("1e1000000000000000000000"),
 });
 
 window.AUTOBUYER_MODE = {
@@ -223,6 +224,11 @@ window.AUTO_REALITY_MODE = {
   BOTH: 3,
   TIME: 4,
   RELIC_SHARD: 5,
+};
+
+window.AUTO_MEND_MODE = {
+  AMOUNT: 0,
+  TIME: 1
 };
 
 window.RECENT_PRESTIGE_RESOURCE = {
@@ -317,6 +323,17 @@ window.GLYPH_TYPES = [
   "cursed",
   "companion",
   "amalgam"
+];
+
+window.FUNCTIONAL_GLYPH_TYPES = [
+  "power",
+  "infinity",
+  "replication",
+  "time",
+  "dilation",
+  "effarig",
+  "reality",
+  "cursed"
 ];
 
 window.BASIC_GLYPH_TYPES = [

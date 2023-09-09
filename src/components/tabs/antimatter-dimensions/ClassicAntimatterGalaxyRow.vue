@@ -1,5 +1,6 @@
 <script>
 import PrimaryButton from "@/components/PrimaryButton";
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 
 export default {
   name: "ClassicAntimatterGalaxyRow",
@@ -21,6 +22,7 @@ export default {
       canBeBought: false,
       distantStart: 0,
       remoteStart: 0,
+      obscureStart: 0,
       lockText: null,
       canBulkBuy: false,
       creditsClosed: false,
@@ -60,6 +62,7 @@ export default {
         case GALAXY_TYPE.NORMAL: return "Antimatter Galaxies";
         case GALAXY_TYPE.DISTANT: return "Distant Antimatter Galaxies";
         case GALAXY_TYPE.REMOTE: return "Remote Antimatter Galaxies";
+        case GALAXY_TYPE.THIRD: return "Obscure Antimatter Galaxies";
       }
       return undefined;
     },
@@ -70,7 +73,8 @@ export default {
       switch (this.type) {
         case GALAXY_TYPE.DISTANT:
           return `Each Galaxy is more expensive past ${quantifyInt("Galaxy", this.distantStart)}`;
-        case GALAXY_TYPE.REMOTE: {
+        case GALAXY_TYPE.REMOTE: 
+        {
           const scalings = [
             { type: "distant", function: "quadratic", amount: this.distantStart },
             { type: "remote", function: "exponential", amount: this.remoteStart }
@@ -79,6 +83,9 @@ export default {
             .map(scaling => `${scaling.function} scaling past ${this.formatGalaxies(scaling.amount)} (${scaling.type})`)
             .join(", ").capitalize()}`;
         }
+        case GALAXY_TYPE.THIRD:
+        let x = 750000 + (5000 * player.mending.rebuyables[16]); //plus whatever
+          return MendingUpgrade(17).isBought ? `the Remote Galaxy cost scaling is reinstated and applied twice past ${formatInt(x)} Galaxies` : `the Remote Galaxy cost scaling is applied twice past ${formatInt(x)} Galaxies`;
       }
       return undefined;
     },
@@ -106,6 +113,7 @@ export default {
       this.canBulkBuy = EternityMilestone.autobuyMaxGalaxies.isReached;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.GALAXY);
+      this.obscureStart = Galaxy.scalingThreeStart;
     },
     buyGalaxy(bulk) {
       if (!this.canBeBought) return;

@@ -49,6 +49,9 @@ export const GameEnd = {
       }
       else{
         this.additionalEnd += Math.min(diff / 1000 / 20, 0.1) * 200;
+        /*if(this.endState >= 14.5){
+          Quotes.destroyer.preMend.show()
+        }*/
       }
     }
   }

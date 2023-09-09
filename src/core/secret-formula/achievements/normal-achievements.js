@@ -1397,13 +1397,22 @@ export const normalAchievements = [
   },
   {
     id: 193,
-    name: "193",
-    description: "placeholder",
+    displayId: 297,
+    name: "TRUE Royal flush",
+    description: "Reality with one of each Glyph type (not counting Companion).",
+    checkRequirement: () => FUNCTIONAL_GLYPH_TYPES
+      .every(type => Glyphs.activeList.some(g => g.type === type)),
+    checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
+    reward: "Gained Glyph level is ×1.0808.",
+    effect: 1.0808
   },
   {
     id: 194,
-    name: "194",
-    description: "placeholder",
+    name: "Limit Break^2",
+    description: "Warp Reality",
+    checkRequirement: () => player.reality.warped,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    effect: 1,
   },
   {
     id: 195,

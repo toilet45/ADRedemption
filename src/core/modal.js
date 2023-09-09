@@ -78,6 +78,7 @@ import SwitchAutomatorEditorModal from "@/components/modals/SwitchAutomatorEdito
 import UiChoiceModal from "@/components/modals/UiChoiceModal";
 import UndoGlyphModal from "@/components/modals/UndoGlyphModal";
 import UpgradeMechanicLockModal from "@/components/modals/UpgradeMechanicLockModal";
+import WarpRealityModal from "@/components/modals/WarpRealityModal";
 
 import S12GamesModal from "@/components/modals/secret-themes/S12GamesModal";
 
@@ -270,6 +271,7 @@ Modal.pelleEffects = new Modal(PelleEffectsModal);
 Modal.sacrifice = new Modal(SacrificeModal, 1, GAME_EVENT.DIMBOOST_AFTER);
 Modal.breakInfinity = new Modal(BreakInfinityModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
 Modal.respecIAP = new Modal(RespecIAPModal);
+Modal.warpReality = new Modal(WarpRealityModal);
 
 Modal.s12Games = new Modal(S12GamesModal);
 

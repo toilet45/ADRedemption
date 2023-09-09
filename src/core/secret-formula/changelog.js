@@ -9,6 +9,36 @@ export const changelog = [
    * }
    */
   {
+    date: ["20??", "??", "??"],
+    name: "idk yet",
+    info: 
+    `
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Implemented Mending Upgrades 6, 20, and all rebuyables</li>
+    <li>Implemented 20 Mend Milestone</li>
+    <li>Endgame: 20 Mend Milestone and all Mending Upgrades</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed Pelle Time Dilation Rebuyables' display when their cap is reached</li>
+    <li>Made Glyph Sacrifice mode defalut to "Always Sacrifice" on Mend</li>
+    <li>Glyph Filter Mode is set to "Lowest Total Glyph Sacrifice" on Mend</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>When importing a Vanilla save, rebuyable Mending Upgrade costs and effects don't get initalized properly, saving and refreshing should fix it</li>
+    <li>The amount of Glyph Slots sometimes doesn't update properly when 20MM buys them, performing a Reality Reset while not on the Glyph tab should fix it</li>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    <li>There are console errors when viewing the TS tree when unlocking a Triad Study (this doesn't effect gameplay)</li>
+    </ul>`
+  },
+  {
     date: [2023, 8, 31],
     name: "The Glyph Nerf and Game Time fix",
     info: 

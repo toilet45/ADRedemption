@@ -1,7 +1,8 @@
 export const GALAXY_TYPE = {
   NORMAL: 0,
   DISTANT: 1,
-  REMOTE: 2
+  REMOTE: 2,
+  THIRD: 3
 };
 
 class GalaxyRequirement {
@@ -17,6 +18,9 @@ class GalaxyRequirement {
 }
 
 export class Galaxy {
+  static get scailingThreeStart(){
+    return 750000 + (5000 * player.mending.rebuyables[16]);
+  }
   static get remoteStart() {
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }
@@ -54,6 +58,10 @@ export class Galaxy {
 
     if (type === GALAXY_TYPE.REMOTE) {
       amount *= Math.pow(1.002, galaxies - (Galaxy.remoteStart - 1));
+    }
+
+    if (type === GALAXY_TYPE.THIRD) {
+      amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scailingThreeStart - 1)), 2);
     }
 
     amount -= Effects.sum(InfinityUpgrade.resetBoost);
@@ -109,6 +117,9 @@ export class Galaxy {
   }
 
   static typeAt(galaxies) {
+    if (galaxies >= Galaxy.scailingThreeStart) {
+      return GALAXY_TYPE.THIRD;
+    }
     if (galaxies >= Galaxy.remoteStart) {
       return GALAXY_TYPE.REMOTE;
     }

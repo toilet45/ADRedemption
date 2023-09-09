@@ -514,6 +514,14 @@ export const tabs = [
         id: 2,
         hidable: true,
       },
+      /*{
+        key: "corruption",
+        name: "Dilation 2 [NYI]",
+        symbol: "?",
+        component: "Courrption",
+        id: 9999999999,
+        hidable: true,
+      },*/
       {
         key: "kohlerrealm",
         name: "Kohler's Realm [NYI]",

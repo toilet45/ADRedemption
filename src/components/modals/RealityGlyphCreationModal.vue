@@ -1,6 +1,7 @@
 <script>
 import ModalWrapper from "@/components/modals/ModalWrapper";
 import PrimaryButton from "@/components/PrimaryButton";
+import { MendingMilestone } from "../../core/mending";
 
 export default {
   name: "RealityGlyphCreationModal",
@@ -14,10 +15,12 @@ export default {
       realityGlyphLevel: 0,
       // This contains an array where each entry is an array looking like [4000, "realitygalaxies"]
       possibleEffects: [],
+      mm8: false
     };
   },
   methods: {
     update() {
+      this.mm8 = MendingMilestone.five.isReached;
       this.isDoomed = Pelle.isDoomed;
       this.realityGlyphLevel = AlchemyResource.reality.effectValue;
       const realityEffectConfigs = GlyphEffects.all
@@ -55,7 +58,15 @@ export default {
       Reality Glyph Creation
     </template>
     <div class="c-reality-glyph-creation">
-      <div>
+      <div v-if="this.mm8">
+        Create a level {{ formatInt(realityGlyphLevel) }} Reality Glyph.
+        Rarity will always be {{ formatPercents(1) }} and
+        level scales on your current Reality Resource amount (which is all consumed). All other Alchemy Resources will
+        be unaffected. Reality Glyphs have unique effects, some of which are only available with higher level Glyphs.
+        Reality Glyphs can also be sacrificed to increase all Memory Chunk gain. Like Effarig Glyphs,
+        you cannot equip more than two at the same time.
+      </div>
+      <div v-else>
         Create a level {{ formatInt(realityGlyphLevel) }} Reality Glyph.
         Rarity will always be {{ formatPercents(1) }} and
         level scales on your current Reality Resource amount (which is all consumed). All other Alchemy Resources will

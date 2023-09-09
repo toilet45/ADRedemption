@@ -1,4 +1,5 @@
 <script>
+import { MendingMilestone } from "../../../core/mending";
 import CurrentGlyphEffect from "./CurrentGlyphEffect";
 import GlyphSetName from "@/components/GlyphSetName";
 
@@ -28,6 +29,7 @@ export default {
       hasReality: false,
       logTotalSacrifice: 0,
       pelleChaosEffect: {},
+      mm8: ["one", "Glyph"]
     };
   },
   computed: {
@@ -41,8 +43,8 @@ export default {
         `<span style="color: ${GlyphAppearanceHandler.getBorderColor("effarig")};">Effarig</span>`);
       if (this.hasReality) uniqueGlyphs.push(
         `<span style="animation: a-reality-glyph-description-cycle 10s infinite;">Reality</span>`);
-      return `You cannot have more than one ${uniqueGlyphs.join(" or ")}
-        Glyph equipped${uniqueGlyphs.length > 1 ? " each." : "."}`;
+      return `You cannot have more than ` + this.mm8[0] + ` ${uniqueGlyphs.join(" or ")} ` +
+        this.mm8[1] + ` equipped${uniqueGlyphs.length > 1 ? " each." : "."}`;
     },
     noEffects() {
       return !this.effects.length;
@@ -74,6 +76,7 @@ export default {
   },
   methods: {
     update() {
+      this.mm8 = MendingMilestone.five.isReached ? ["two", "Glyphs"] : ["one", "Glyph"];
       this.isColored = player.options.glyphTextColors;
       this.hasEffarig = Glyphs.active.some(g => g && g.type === "effarig");
       this.hasReality = Glyphs.active.some(g => g && g.type === "reality");
