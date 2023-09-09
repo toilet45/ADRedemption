@@ -19,7 +19,7 @@ class GalaxyRequirement {
 
 export class Galaxy {
   static get scailingThreeStart(){
-    return 750000;
+    return 750000 + (5000 * player.mending.rebuyables[16]);
   }
   static get remoteStart() {
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);

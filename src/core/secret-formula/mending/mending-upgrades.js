@@ -19,7 +19,11 @@ const rebuyable = props => {
     return Math.pow(effect, player.mending.rebuyables[props.id]);
   }
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
-  props.formatEffect = value => effectType + `${format(value, 2, 0)}`;
+  props.formatEffect = value => {
+    if (props.id === 6 || props.id === 16) return effectType + `${formatInt(value)}`
+    if (props.id === 11) return effectType + `${formatFloat(value, 3)}`
+    return effectType + `${format(value, 2, 0)}`
+  };
   props.formatCost = value => format(value, 2, 0);
   return props;
 };
@@ -63,7 +67,7 @@ export const mendingUpgrades = [
     id: 6,
     name: "Mending Upgrade 6",
     initialCost: 2000,
-    costMult: 20,
+    costMult: 50,
     textTemplate: "Delay post-Lv. 45,000 Glyph scaling by 500",
     effect: 500,
     effectType: "+"
@@ -95,10 +99,10 @@ export const mendingUpgrades = [
   rebuyable({
     id: 11,
     name: "Mending Upgrade 11",
-    initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "Weaken the first Tachyon Galaxy Threshold softcap by x",
-    effect: 0.05,
+    initialCost: 1e6,
+    costMult: 1e4,
+    textTemplate: "Weaken the post 50,000 TG scailing by 0.005",
+    effect: 0.005,
     effectType: "-"
   }),
   {
@@ -128,9 +132,9 @@ export const mendingUpgrades = [
   rebuyable({
     id: 16,
     name: "Mending Upgrade 16",
-    initialCost: 1e300,
-    costMult: 1e300,
-    textTemplate: "Delay Obscure Galaxy Scaling by x.",
+    initialCost: 1e9,
+    costMult: 1e6,
+    textTemplate: `Delay Obscure Galaxy Scaling by 5,000.`,
     effect: 5000,
     effectType: "+"
   }),

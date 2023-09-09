@@ -112,7 +112,7 @@ html {
   --color-mending-light: #f0dde8;
 
   --color-destroyer--base: rgb(18, 190, 243);
-  --color-kohler--base: rgb(252, 110, 245);
+  --color-kohler--base: #be1c37;
 }
 
 :root .t-metro,
@@ -9747,4 +9747,99 @@ input.o-automator-block-input {
 .l-mending-upgrade-grid__row {
   display: flex;
   flex-direction: row;
+}
+
+.o-warp-btn {
+  width: 19rem;
+  height: 9rem;
+  font-family: Typewriter, serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #1f1f1f;
+  border: 0.1rem solid black;
+  border-radius: var(--var-border-radius, 0.4rem);
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+
+.t-s6 .o-warp-btn,
+.t-s10 .o-warp-btn {
+  box-shadow: 0 0 0.7rem 0.2rem #111111;
+}
+
+.o-warp-btn:hover {
+  color: var(--color-text-inverted);
+}
+
+.o-warp-btn--color-2.o-warp-btn--available:hover {
+  background-color: #00c000;
+}
+
+.t-dark .o-warp-btn--color-2.o-warp-btn--available:hover,
+.t-s6 .o-warp-btn--color-2.o-warp-btn--available:hover,
+.t-s10 .o-warp-btn--color-2.o-warp-btn--available:hover {
+  background-color: #d50000;
+}
+
+.s-base--metro .o-warp--color-2.o-warp-btn--available:hover {
+  background-color: #f44336;
+}
+
+.o-warp-btn--unavailable {
+  color: black;
+  background-color: #f7f7f7;
+}
+
+.o-warp-btn--unclickable {
+  cursor: auto;
+}
+
+.o-warp-btn--unavailable:hover {
+  color: var(--color-text);
+  background-color: var(--color-text-inverted);
+  cursor: default;
+}
+
+.t-dark .o-warp-btn--unavailable {
+  background-color: #263238;
+  border-color: black;
+}
+
+.t-dark .o-warp-btn--unavailable:hover {
+  background-color: #37474f;
+}
+
+.s-base--metro .o-warp-btn--unavailable {
+  background-color: #9e9e9e;
+  border-color: #616161;
+}
+
+.s-base--metro .o-warp-btn--unavailable:hover {
+  color: var(--color-text-inverted);
+  background-color: #bdbdbd;
+}
+
+.t-s1 .o-warp-btn--unavailable {
+  background-color: #9a921d;
+  border-color: black;
+}
+
+.t-s1 .o-warp-btn--unavailable:hover {
+  background-color: #c5ba26;
+}
+
+.t-s6 .o-warp-btn--unavailable,
+.t-s10 .o-warp-btn--unavailable {
+  color: grey;
+  background-color: black;
+  border-color: grey;
+}
+
+.t-s6 .o-warp-btn--unavailable:hover,
+.t-s10 .o-warp-btn--unavailable:hover {
+  background-color: #222222;
+}
+.o-warp-btn--unclickable {
+  cursor: auto;
 }

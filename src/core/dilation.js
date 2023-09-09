@@ -110,10 +110,15 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
   const glyphReduction = glyphEffect === 0 ? 1 : glyphEffect;
   let power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
     ? DilationUpgrade.galaxyThresholdPelle.effectValue : 1;
-  let tgSoftcapOne = 50000
+  let tgSoftcapOne = 50000;
+  let tgSoftcapOneApplytimes = Math.floor(player.dilation.totalTachyonGalaxies / 50000);
+  //let tgSoftcapTwo = 150000;
   if (player.dilation.totalTachyonGalaxies >= tgSoftcapOne && !Pelle.isDoomed){
-    power *= 5;
+    power *= Math.pow((1.5 - (0.005 * player.mending.rebuyables[11])), tgSoftcapOneApplytimes);
   }
+  /*if (player.dilation.totalTachyonGalaxies >= tgSoftcapTwo && !Pelle.isDoomed){
+    power *= 1.5;
+  }*/
   return Math.max(1, ((1 + thresholdMult * glyphReduction) ** power));
 }
 

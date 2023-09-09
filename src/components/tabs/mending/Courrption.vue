@@ -1,13 +1,11 @@
 <script>
 
 import PrimaryButton from "@/components/PrimaryButton";
-import WarpRealityButton from "./WarpRealityButton";
 
 export default {
-  name: "WarpReality",
+  name: "Courrption",
   components: {
     PrimaryButton,
-    WarpRealityButton,
   }
 };
 
@@ -15,8 +13,7 @@ export default {
 
 <template>
     <div class="l-break-infinity-tab">
-        <h1>*insert condition here*</h1>
-        <WarpRealityButton />
+        <h1>:blob:</h1>
     </div>
 </template>
 

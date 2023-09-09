@@ -46,6 +46,8 @@ export function mendingReset() {
       if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;
+    player.reality.glyphs.filter.trash = 0;
+    player.reality.glyphs.filter.select = 0;
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -403,7 +405,7 @@ export function mendingReset() {
       maxIP: DC.D0,
       maxEP: DC.D0,
       maxRM: DC.D0,
-      maxiM: DC.D0,
+      maxiM: 0,
       maxRem: 0,
     },
     Player.resetRequirements("mending");

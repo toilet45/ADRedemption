@@ -170,6 +170,9 @@ export const Enslaved = {
   },
   completeRun() {
     player.celestials.enslaved.completed = true;
+    if (EternityChallenge(1).completions > 5){
+      EternityChallenge(1).completions = 5;
+    }
     this.quotes.completeReality.show();
   },
   get isCompleted() {

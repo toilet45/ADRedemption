@@ -420,7 +420,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 45,
+  version: 46,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -494,6 +494,7 @@ window.player = {
   realities: 0,
   partSimulatedReality: 0,
   reality: {
+    warped: false,
     realityMachines: DC.D0,
     maxRM: DC.D0,
     imaginaryMachines: 0,
@@ -835,6 +836,9 @@ window.player = {
     },
     destroyer:{
       quoteBits: 0,
+    },
+    kohler:{
+      quoteBits: 0,
     }
   },
   isGameEnd: false,
@@ -1056,7 +1060,8 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 
   get eternityGoal() {

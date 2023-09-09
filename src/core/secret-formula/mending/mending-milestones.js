@@ -34,7 +34,7 @@ export const mendingMilestones = {
   },
   eight: {
     mends: 20,
-    reward: "[NYI] Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
+    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
   },
   nine: {
     mends: 35,
