@@ -177,23 +177,28 @@ class RaPetState extends GameMechanicState {
   purchaseMemoryUpgrade() {
     if (!this.canBuyMemoryUpgrade || this.memoryUpgradeCapped) return;
 
-    this.memories -= this.memoryUpgradeCost;
+    if(this.spendsMemories) this.memories -= this.memoryUpgradeCost;
     this.data.memoryUpgrades++;
   }
 
   purchaseChunkUpgrade() {
     if (!this.canBuyChunkUpgrade || this.chunkUpgradeCapped) return;
 
-    this.memories -= this.chunkUpgradeCost;
+    if(this.spendsMemories) this.memories -= this.chunkUpgradeCost;
     this.data.chunkUpgrades++;
   }
 
   levelUp() {
     if (this.memories < this.requiredMemories) return;
+    if(this.id === 'pelle' && this.level === 99 && Ra.totalPetLevel != 699) return;
 
-    this.memories -= this.requiredMemories;
+    if(this.spendsMemories) this.memories -= this.requiredMemories;
     this.level++;
     Ra.checkForUnlocks();
+  }
+
+  get spendsMemories() {
+    return !Ra.unlocks.upgradesDontSpendMems.isUnlocked;
   }
 
   get unlocks() {
@@ -209,12 +214,11 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    let newMemories = seconds * (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult;
+    const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+      this.memoryUpgradeCurrentMult, MendingUpgrade(15).isBought?1.5:1);
+
+    let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
-    if (MendingUpgrade(15).isBought){
-      newMemories = Math.pow(newMemories, 1.5);
-    }
     this.memories += newMemories;
   }
 
@@ -287,7 +291,8 @@ export const Ra = {
     if (level >= Ra.levelCap) return Infinity;
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
-    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * 1e6);
+    const post40Scaling = Math.pow(3, Math.max(0, level-40));
+    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * post40Scaling * 1e6);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
@@ -389,6 +394,11 @@ export const Ra = {
       reaction.combineReagents();
     }
     this.updateAlchemyFlow(realityRealTime);
+    if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+      AlchemyResources.all.forEach((resource, id, resources) => {
+        resources[id].amount = Math.min(resource.cap, this.alchemyResourceCap);
+      });
+    }
   },
   get alchemyResourceCap() {
     return 25000;

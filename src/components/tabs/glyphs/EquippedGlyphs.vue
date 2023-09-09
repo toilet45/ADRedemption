@@ -100,8 +100,8 @@ export default {
       switch(this.slotCount){
         case 7:
           if(idx > 0){
-            dx = calcDx(idx, 6, 7);
-            dy = calcDy(idx, 6, 7);
+            dx = calcDx(idx-1, 6, 7);
+            dy = calcDy(idx-1, 6, 7);
           } else {
             dx = -this.GLYPH_SIZE/2;
             dy = -this.GLYPH_SIZE/2;

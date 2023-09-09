@@ -96,7 +96,8 @@ export default {
   },
   watch: {
     isAutobuyerOn(newValue){
-      Autobuyer.rebuyablePelle(this.rebuyableId).isActive = newValue;
+      if(this.isRebuyable) Autobuyer.rebuyablePelle(this.rebuyableId).isActive = newValue;
+      else Autobuyer.galgenUpgrade(this.rebuyableId).isActive = newValue;
     }
   },
   methods: {
@@ -118,13 +119,18 @@ export default {
       this.mendupg5 = MendingUpgrades.all[5].isBought,
       this.notAffordable = (this.config === genDB.additive || this.config === genDB.multiplicative) &&
         (Decimal.gt(this.upgrade.cost, this.galaxyCap - GalaxyGenerator.generatedGalaxies + player.galaxies));
+      let autobuyer = {isUnlocked: false, isActive: false};
       if(this.isRebuyable){
         const upgrades = ["antimatterDimensionMult", "timeSpeedMult", "glyphLevels", "infConversion", "galaxyPower"];
         this.rebuyableId = upgrades.findIndex(id => id === this.upgrade.id)+1;
-        const autobuyer = Autobuyer.rebuyablePelle(this.rebuyableId);
-        this.isAutoUnlocked = autobuyer.isUnlocked;
-        this.isAutobuyerOn = autobuyer.isActive;
+        autobuyer = Autobuyer.rebuyablePelle(this.rebuyableId);
+      } else if(this.galaxyGenerator){
+        const upgrades = GalaxyGeneratorUpgrades.all.map(upgrade => upgrade.id);
+        this.rebuyableId = upgrades.findIndex(id => id === this.upgrade.id)+1;
+        autobuyer = Autobuyer.galgenUpgrade(this.rebuyableId);
       }
+      this.isAutoUnlocked = autobuyer.isUnlocked;
+      this.isAutobuyerOn = autobuyer.isActive;
     },
     secondsUntilCost(rate) {
       const value = this.galaxyGenerator ? player.galaxies + GalaxyGenerator.galaxies : Currency.realityShards.value;
@@ -190,7 +196,7 @@ export default {
       />
     </button>
     <PrimaryToggleButton
-      v-if="isRebuyable && isAutoUnlocked"
+      v-if="(isRebuyable || galaxyGenerator) && isAutoUnlocked"
       v-model="isAutobuyerOn"
       label="Auto:"
       class="l--spoon-btn-group__little-spoon"

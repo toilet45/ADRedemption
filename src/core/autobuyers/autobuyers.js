@@ -31,6 +31,8 @@ import { LaitelaMemoryAutobuyerState } from "./memory-autobuyer";
 import { PelleMemoryAutobuyerState } from "./memory-autobuyer";
 import { PelleRebuyableUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
+import { GalaxyGeneratorUpgradeAutobuyerState } from "./galgen-autobuyer";
+import { GalaxyGeneratorSacrificeAutobuyerState } from "./galgen-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -67,6 +69,8 @@ export const Autobuyer = {
   pelleMem: PelleMemoryAutobuyerState.createAccessor(),
   rebuyablePelle: PelleRebuyableUpgradeAutobuyerState.createAccessor(),
   pelleUpgrade: new PelleUpgradeAutobuyerState(),
+  galgenUpgrade: GalaxyGeneratorUpgradeAutobuyerState.createAccessor(),
+  galgenSac: new GalaxyGeneratorSacrificeAutobuyerState(),
 };
 
 export const Autobuyers = (function() {
@@ -95,6 +99,7 @@ export const Autobuyers = (function() {
     Autobuyer.tesseract,
     Autobuyer.musicglyph,
     Autobuyer.pelleUpgrade,
+    Autobuyer.galgenSac,
   ];
 
   const singleComplex = [
@@ -117,6 +122,7 @@ export const Autobuyers = (function() {
     Autobuyer.laitelaMem.zeroIndexed,
     Autobuyer.pelleMem.zeroIndexed,
     Autobuyer.rebuyablePelle.zeroIndexed,
+    Autobuyer.galgenUpgrade.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -136,6 +142,7 @@ export const Autobuyers = (function() {
     Autobuyer.laitelaMem,
     Autobuyer.pelleMem,
     Autobuyer.rebuyablePelle,
+    Autobuyer.galgenUpgrade,
   ];
 
   return {

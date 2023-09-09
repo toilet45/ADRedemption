@@ -557,7 +557,7 @@ export const ra = {
     raRealUncapDimboost: {
       id: 29,
       id2: 0,
-      reward: "Uncap Dimension Boosts in Ra's reality.",
+      reward: "Uncap Dimension Boosts in Ra's reality",
       pet: "ra",
       level: 1,
       displayIcon: GLYPH_SYMBOLS.power
@@ -565,7 +565,7 @@ export const ra = {
     rautobuyers: {
       id: 30,
       id2: 0,
-      reward: "Memory Levels, Recollections and Fragmentations are bought automatically.",
+      reward: "Memory Levels, Recollections and Fragmentations are bought automatically",
       pet: "ra",
       level: 2,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
@@ -578,13 +578,13 @@ export const ra = {
       level: 5,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderR3: {
+    upgradesDontSpendMems: {
       id: 0,
       id2: 1,
-      reward: "TBD",
+      reward: "Level Up, Recollection and Fragmentation don't spend memories",
       pet: "ra",
       level: 8,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     placeholderR4: {
       id: 1,
@@ -634,13 +634,13 @@ export const ra = {
       level: 50,
       displayIcon: "?"
     },
-    placeholderR10: {
+    raNoReset: {
       id: 7,
       id2: 1,
-      reward: "TBD",
+      reward: "Ra no longer resets on Mend",
       pet: "ra",
       level: 65,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderR11: {
       id: 8,
@@ -889,7 +889,12 @@ export const ra = {
     kohlersRealmUnlock: {
       id: 6,
       id2: 2,
-      reward: () => `Unlock ${Ra.unlocks.kohlersRealmUnlock.isUnlocked?"Kohler":"???"}'s Realm (Requires all celestials to be level ${formatInt(100)})`,
+      reward: () => {
+        const remainingLevels = 600 - (Ra.totalPetLevel-Ra.pets.pelle.level);
+        const remainingText = remainingLevels===0?"":` (Requires all celestials to be level ${formatInt(100)}, ${quantifyInt("level", remainingLevels)} remaining)`;
+        const kohlerName = Ra.unlocks.kohlersRealmUnlock.isUnlocked?"Kohler":"???";
+        return `Unlock ${kohlerName}'s Realm${remainingText}`;
+      },
       pet: "pelle",
       level: 100,
       displayIcon: `<i class="fa-solid fa-staff-snake"></i>`

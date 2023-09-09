@@ -1,4 +1,6 @@
 <script>
+import { Ra } from '../../../core/globals';
+
 export default {
   name: "RaPetLevelBar",
   props: {
@@ -14,6 +16,7 @@ export default {
       memories: 0,
       requiredMemories: 0,
       nextLevelEstimate: 0,
+      reward: "",
     };
   },
   computed: {
@@ -54,10 +57,11 @@ export default {
     classObject() {
       const available = this.memories >= this.requiredMemories;
       const pet = this.pet;
+      const finalPelleLevel = !(pet.id === 'pelle' && this.level === 99 && Ra.totalPetLevel != 699);
       return {
         "c-ra-level-up-btn": true,
-        "c-ra-pet-btn--available": available,
-        [`c-ra-pet-btn--${pet.id}`]: available
+        "c-ra-pet-btn--available": available && finalPelleLevel,
+        [`c-ra-pet-btn--${pet.id}`]: available && finalPelleLevel
       };
     },
     nextUnlock() {
@@ -67,7 +71,9 @@ export default {
     showNextScalingUpgrade() {
       switch (this.pet.name) {
         case "Teresa":
-          return Math.min(12, Math.floor(this.level / 2)) !== Math.min(12, Math.floor((this.level + 1) / 2));
+          const nextChargedIU = Math.min(12, Math.floor(this.level / 2)) !== Math.min(12, Math.floor((this.level + 1) / 2));
+          const nextChargedBIU = Math.min(9, Math.floor((this.level-40) / 6)) !== Math.min(9, Math.floor((this.level-39) / 6));
+          return this.level>=40?nextChargedBIU:nextChargedIU;
         case "Effarig":
           return AlchemyResources.all.filter(res => res.unlockedAt === this.level + 1).length > 0;
         case "Enslaved":
@@ -82,7 +88,8 @@ export default {
       const effarigAlchemyResource = AlchemyResources.all.filter(res => res.unlockedAt === this.level + 1)[0];
       switch (this.pet.name) {
         case "Teresa":
-          return "You can charge an additional Infinity Upgrade";
+          const upgradeType = this.level>=40?"Break Infinity Upgrade":"Infinity Upgrade";
+          return `You can charge an additional ${upgradeType}`;
         case "Effarig":
           return `Unlock the ${effarigAlchemyResource.name} resource in Glyph Alchemy, which
           ${effarigAlchemyResource.description}`;
@@ -93,9 +100,6 @@ export default {
         default:
           return "false";
       }
-    },
-    reward() {
-      return (typeof this.nextUnlock.reward === "function") ? this.nextUnlock.reward() : this.nextUnlock.reward;
     }
   },
   methods: {
@@ -107,6 +111,7 @@ export default {
       this.level = pet.level;
       this.requiredMemories = pet.requiredMemories;
       this.nextLevelEstimate = Ra.timeToGoalString(this.pet, this.requiredMemories - this.memories);
+      this.reward = (typeof this.nextUnlock.reward === "function") ? this.nextUnlock.reward() : this.nextUnlock.reward;
     },
     isImportant(level) {
       return this.importantLevels.includes(level);

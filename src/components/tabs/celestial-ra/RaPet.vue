@@ -97,10 +97,11 @@ export default {
       this.mu19Bought = MendingUpgrade(19).isBought;
     },
     nextUnlockLevel() {
+      const levelCap = MendingUpgrade(19).isBought?100:25;
       const missingUpgrades = this.pet.unlocks
         .map(u => u.level)
         .filter(goal => goal > this.level);
-      return missingUpgrades.length === 0 ? 25 : missingUpgrades.min();
+      return missingUpgrades.length === 0 ? levelCap : missingUpgrades.min();
     },
     upgradeClassObject(type) {
       const available = type === "memory"
