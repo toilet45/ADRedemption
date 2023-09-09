@@ -1,6 +1,7 @@
 <script>
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
+import { AntimatterDimension } from "../../../core/globals";
 
 export default {
   name: "ClassicAntimatterDimensionRow",
@@ -43,7 +44,7 @@ export default {
     },
     amountText() {
       if (this.formattedAmount) return this.formattedAmount;
-      const amount = this.tier < 8 ? format(this.amount, 2) : formatInt(this.amount);
+      const amount = this.tier < 8 ? format(this.amount, 2) :formatInt(this.amount);
       return `${amount} (${formatInt(this.boughtBefore10)})`;
     },
     singleText() {
@@ -93,7 +94,8 @@ export default {
   methods: {
     update() {
       const tier = this.tier;
-      if (tier === 8 && this.isDoomed) this.formattedAmount = formatInt(this.amount);
+      if (tier === 8) this.formattedAmount = formatInt(this.amount);
+      if (tier === 8 && AntimatterDimension(8).totalAmount.gte(1e12)) this.formattedAmount = format(this.amount, 2);
       if (tier > DimBoost.maxDimensionsUnlockable) return;
       const dimension = AntimatterDimension(tier);
       this.isUnlocked = dimension.isAvailableForPurchase;

@@ -287,7 +287,7 @@ class EPMultiplierState extends GameMechanicState {
   }
 
   get isAffordable() {
-    return !Pelle.isDoomed && Currency.eternityPoints.gte(this.cost);
+    return !Pelle.isDoomed && Currency.eternityPoints.gte(this.cost) && player.epmultUpgrades < 5e8;
   }
 
   get cost() {
@@ -302,7 +302,7 @@ class EPMultiplierState extends GameMechanicState {
     // Reality resets will make this bump amount negative, causing it to visually appear as 0 even when it isn't.
     // A dev migration fixes bad autobuyer states and this change ensures it doesn't happen again
     const diff = Math.clampMin(value - player.epmultUpgrades, 0);
-    player.epmultUpgrades = value;
+    player.epmultUpgrades = Math.min(value, 5e8);
     this.cachedCost.invalidate();
     this.cachedEffectValue.invalidate();
     Autobuyer.eternity.bumpAmount(DC.D5.pow(diff));

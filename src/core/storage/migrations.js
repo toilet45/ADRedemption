@@ -520,7 +520,21 @@ export const migrations = {
         isActive: false,
         lastTick: 0
       };
-    }
+    },
+    46: player =>{
+      player.celestials.kohler = {
+        quoteBits: 0,
+      };
+      player.reality.warped = false;
+      player.mending = {
+        rebuyables: {
+          1: 0,
+          6: 0,
+          11: 0,
+          16: 0,
+        },
+      };
+    },
   },
 
   normalizeTimespans(player) {

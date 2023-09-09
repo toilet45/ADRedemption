@@ -1535,6 +1535,7 @@ export const devMigrations = {
       delete player.options.forceDarkGlyphs;
     },
     player =>{
+      player.reality.warped = false;
       if(player.records.realTimeDoomed > 1e308) player.records.realTimeDoomed = 1e308;
       if(player.records.realTimePlayed > 1e308) player.records.realTimePlayed = 1e308;
       if(player.records.totalTimePlayed > 1e308) player.records.totalTimePlayed = 1e308;
@@ -1546,6 +1547,90 @@ export const devMigrations = {
       if(player.records.thisReality.time > 1e308) player.records.thisReality.time = 1e308;
       if(player.records.thisMend.realTime > 1e308) player.records.thisMend.realTime = 1e308;
       if(player.records.thisMend.time > 1e308) player.records.thisMend.time = 1e308;
+    }, 
+    player =>{
+      //this is the 8-16-23 Redemption Release
+      if(!PlayerProgress.mendingUnlocked){
+      player.auto.dilationUpgrades.all[11] = { isActive: false, lastTick: 0};
+      player.auto.dilationUpgrades.all[12] = { isActive: false, lastTick: 0};
+      player.auto.dilationUpgrades.all[13] = { isActive: false, lastTick: 0};
+      player.requirementChecks.mending = {
+        isEnd: false
+      };
+      player.records.thisMend = {
+        time: Number.MAX_VALUE,
+        realTime: Number.MAX_VALUE,
+        maxAM: DC.D0,
+        maxIP: DC.D0,
+        maxEP: DC.D0,
+        maxRM: DC.D0,
+        maxiM: 0,
+        maxRem: 0,
+      };
+      player.records.bestMend = {
+        time: Number.MAX_VALUE,
+        realTime: Number.MAX_VALUE,
+      };
+      player.speedrun.isUnlocked = true;
+      player.mends = DC.D0,
+      player.mending = {
+        mendingPoints: DC.D0,
+        upgradeBits: 0,
+        reqLock: {
+          mending: 0,
+        },
+        rebuyables: {
+          1: 0,
+          6: 0,
+          11: 0,
+          16: 0,
+        },
+      };
+      player.celestials.destroyer = {
+        quoteBits: 0,
+      };
+      player.celestials.kohler = {
+        quoteBits: 0,
+      };
+      player.options.confirmations.mending = true;
+      player.options.awayProgress = {      
+        mends: true,
+        mendingPoints: true
+      };
+      player.mendingPoints = DC.D0;
+      player.mends = DC.D0;
+      player.mendingUpgrades = new Set();
+      player.mvrmultUpgrades = 0;
+      player.options.hiddenTabBits = 0;
+      player.mendingPoints = player.mending.mendingPoints;
+      if (MendingMilestone.three.isReached){
+        player.celestials.ra.unlockBits += 2097152;
+      }
+      player.auto.dilationUpgrades.all = Array.range(0, 3).concat(Array.range(11, 14)).map(() => ({
+        isActive: false,
+        lastTick: 0,
+      }));
+      player.mends = new Decimal(player.mends);
+      player.mendingPoints = new Decimal(player.mendingPoints);
+      if (player.mends.gte(8)) {
+        player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+      }
+      player.auto.musicglyph = {
+        isUnlocked: false,
+        isActive: false,
+      }
+      player.options.showHintText.mendingUpgrades = true;
+      player.auto.mending = {
+        mode: 0,
+        amount: DC.D1,
+        interval: 100,
+        increaseWithMult: true,
+        time: 1,
+        xHighest: DC.D1,
+        isActive: false,
+        lastTick: 0
+      };
+      }
     }
   ],
 

@@ -6,7 +6,21 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
     super(config);
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
+  get isBought() {
+    if(MendingMilestone.eight.isReached && player.records.thisMend.maxiM >= ImaginaryUpgrade(this.id).cost){
+      ImaginaryUpgrade(this.id).onPurchased; 
+      return true;
+    }
+    return (this.bits & (1 << this.bitIndex)) !== 0;
+  }
 
+  set isBought(value) {
+    if (value) {
+      this.bits |= (1 << this.bitIndex);
+    } else {
+      this.bits &= ~(1 << this.bitIndex);
+    }
+  }
   get name() {
     return this.config.name;
   }
@@ -65,11 +79,15 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
+    if(MendingMilestone.eight.isReached) return true;
     return (player.reality.imaginaryUpgReqs & (1 << this.id)) !== 0 || (MendingMilestone.four.isReached && ![25, 15, 16, 17, 18, 19].includes(this.id)) || (MendingMilestone.three.isReached && this.id === 20);
   }
 
   get isPossible() {
-    if(MendingMilestone.four.isReached && ![25, 15].includes(this.id) || (this.id === 20 && MendingMilestone.three.isReached)){
+    if ((this.id === 15 || this.id === 25) && MendingMilestone.eight.isReached){
+      return true
+    }
+    if(MendingMilestone.four.isReached || (this.id === 20 && MendingMilestone.three.isReached) || (this.id === 15 && MendingUpgrade(4).isBought)){
       return true;
     }
     return this.config.hasFailed ? !this.config.hasFailed() : true;
