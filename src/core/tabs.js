@@ -195,7 +195,7 @@ export const Tabs = (function() {
     get current() {
       return Tabs.all.find(tab => tab.isOpen);
     },
-    oldUI: [
+    Classic: [
       Tab.dimensions,
       Tab.options,
       Tab.statistics,
@@ -209,7 +209,7 @@ export const Tabs = (function() {
       Tab.mending,
       Tab.shop
     ],
-    newUI: [
+    Modern: [
       Tab.dimensions,
       Tab.automation,
       Tab.challenges,
@@ -224,7 +224,7 @@ export const Tabs = (function() {
       Tab.shop
     ],
     get currentUIFormat() {
-      return ui.view.newUI ? this.newUI : this.oldUI;
+      return ui.view.UIType == 'Modern' ? this.Modern : this.Classic;
     },
   };
 }());

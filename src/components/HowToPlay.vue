@@ -22,7 +22,7 @@ export default {
   methods: {
     update() {
       this.hasTutorial = Tutorial.emphasizeH2P();
-      this.isModern = player.options.newUI;
+      this.isModern = player.options.UIType == "Modern";
     },
     showH2P() {
       Modal.h2p.show();

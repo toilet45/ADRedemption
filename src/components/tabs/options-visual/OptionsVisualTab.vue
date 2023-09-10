@@ -36,7 +36,7 @@ export default {
       return `Notation: ${this.notation}`;
     },
     UILabel() {
-      return `UI: ${this.$viewModel.newUI ? "Modern" : "Classic"}`;
+      return `UI: ${this.$viewModel.UIType == 'Modern' ? "Modern" : "Classic"}`;
     }
   },
   watch: {

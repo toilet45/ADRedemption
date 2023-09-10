@@ -30,10 +30,10 @@ export default {
     },
     uiLayout() {
       if (this.isThemeS12) return "S12Ui";
-      return this.view.newUI ? "ModernUi" : "ClassicUi";
+      return this.view.UIType == "Modern" ? "ModernUi" : "ClassicUi";
     },
     containerClass() {
-      return this.view.newUI ? "new-ui" : "old-ui";
+      return this.view.UIType == "Modern" ? "Modern" : "Classic";
     },
     page() {
       const subtab = Tabs.current[this.$viewModel.subtab];

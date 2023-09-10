@@ -1504,7 +1504,7 @@ export const devMigrations = {
       }
     },
     player => {
-      if (player.options.newUI) {
+      if (player.options.UIType == 'Modern') {
         player.options.themeModern = player.options.theme ?? player.options.themeModern;
       } else {
         player.options.themeClassic = player.options.theme ?? player.options.themeClassic;

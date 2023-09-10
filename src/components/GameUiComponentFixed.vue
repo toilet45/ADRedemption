@@ -70,7 +70,7 @@ export default {
       class="l-time-studies-tab__tt-shop"
     />
     <ModernSidebar
-      v-if="view.newUI && view.theme !== 'S12'"
+      v-if="view.UIType == `Modern` && view.theme !== 'S12'"
       :style="hideIfMatoFullscreen"
     />
     <SaveTimer :style="hideIfMatoFullscreen" />

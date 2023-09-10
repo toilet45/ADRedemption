@@ -94,7 +94,7 @@ export const migrations = {
         player.lastTenEternities[i][2] = player.lastTenEternities[i][0];
         player.lastTenRuns[i][2] = player.lastTenRuns[i][0];
       }
-      player.options.newUI = false;
+      player.options.UIType == 'Classic';
       window.uiChoiceModalInterval = setInterval(() => {
         if (GameUI.initialized) {
           Modal.uiChoice.show();
