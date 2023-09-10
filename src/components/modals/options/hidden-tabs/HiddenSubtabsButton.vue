@@ -36,7 +36,7 @@ export default {
       };
     },
     isModernUI() {
-      return this.$viewModel.newUI;
+      return this.$viewModel.UIType == "Modern";
     },
   },
   methods: {

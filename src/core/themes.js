@@ -5,7 +5,7 @@ export const Theme = function Theme(name, config) {
 
   this.isDark = function() {
     return (this.isDefault() || name === "S12")
-      ? player.options.newUI
+      ? player.options.UIType == 'Modern'
       : config.isDark;
   };
 
@@ -44,7 +44,7 @@ export const Theme = function Theme(name, config) {
     } else {
       document.getElementById("background-animations").style.display = "none";
     }
-    if (player.options.newUI) {
+    if (player.options.UIType == 'Modern') {
       player.options.themeModern = name;
     } else {
       player.options.themeClassic = name;
@@ -60,7 +60,7 @@ export const Theme = function Theme(name, config) {
 };
 
 Theme.currentName = function() {
-  return player.options.newUI
+  return player.options.UIType == 'Modern'
     ? player.options.themeModern
     : player.options.themeClassic;
 };

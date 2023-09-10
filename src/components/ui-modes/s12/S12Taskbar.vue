@@ -20,12 +20,12 @@ export default {
     };
   },
   computed: {
-    tabs: () => Tabs.newUI
+    tabs: () => Tabs.UIType == 'Modern'
   },
   methods: {
     update() {
       this.isHidden = AutomatorData.isEditorFullscreen;
-      this.tabVisibilities = Tabs.newUI.map(x => !x.isHidden && x.isAvailable);
+      this.tabVisibilities = Tabs.UIType == 'Modern'.map(x => !x.isHidden && x.isAvailable);
     },
   },
 };

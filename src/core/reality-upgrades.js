@@ -6,10 +6,6 @@ class RealityUpgradeState extends BitPurchasableMechanicState {
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
   get isBought() {
-    if(MendingMilestone.eight.isReached && player.records.thisMend.maxRM.gte(RealityUpgrade(this.id).cost)){
-      RealityUpgrade(this.id).onPurchased;
-       return true;
-    }
     return (this.bits & (1 << this.bitIndex)) !== 0;
   }
 

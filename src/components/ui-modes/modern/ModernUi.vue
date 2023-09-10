@@ -65,7 +65,7 @@ export default {
     <link
       rel="stylesheet"
       type="text/css"
-      href="stylesheets/new-ui-styles.css"
+      href="stylesheets/modern-styles.css"
     >
     <div
       :key="newGameKey"

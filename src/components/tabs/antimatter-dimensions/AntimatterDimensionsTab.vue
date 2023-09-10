@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     activeComponent() {
-      return this.$viewModel.newUI
+      return this.$viewModel.UIType == 'Modern'
         ? "ModernAntimatterDimensionsTab"
         : "ClassicAntimatterDimensionsTab";
     }

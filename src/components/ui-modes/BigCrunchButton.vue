@@ -12,7 +12,7 @@ export default {
     update() {
       this.shouldDisplay = !player.break && Player.canCrunch;
       if (!this.shouldDisplay) return;
-      this.isModern = player.options.newUI;
+      this.isModern = player.options.UIType == 'Modern';
       this.smallCrunch = Time.bestInfinityRealTime.totalMinutes <= 1;
     },
     handleClick() {
@@ -47,8 +47,8 @@ export default {
         :class="{
           'o-tab-btn': true,
           'o-big-crunch-btn': true,
-          'l-old-ui__big-crunch-btn': true,
-          'l-old-ui__big-crunch-btn--overlay': smallCrunch
+          'l-classic__big-crunch-btn': true,
+          'l-classic__big-crunch-btn--overlay': smallCrunch
         }"
         @click="handleClick"
       >

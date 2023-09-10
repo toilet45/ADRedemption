@@ -469,7 +469,7 @@ export const GameStorage = {
     }
 
     ui.view.news = player.options.news.enabled;
-    ui.view.newUI = player.options.newUI;
+    ui.view.UIType = player.options.UIType;
     ui.view.tutorialState = player.tutorialState;
     ui.view.tutorialActive = player.tutorialActive;
 
