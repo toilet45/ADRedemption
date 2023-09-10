@@ -126,19 +126,12 @@ export function gainedInfinityPoints() {
 }
 
 export function gainedMendingPoints(){
-  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ? Decimal.pow(2, (Decimal.log10(player.antimatter) / 9e15)): new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
-  if (Achievement(192).isUnlocked){
-    MvRGain = MvRGain.times(3);
-  }
-  if(MendingUpgrade(2).isBought && MendingUpgrade(3).isBought && MendingUpgrade(4).isBought && MendingUpgrade(5).isBought){
-    MvRGain = MvRGain.times(2);
-  }
-  if(MendingUpgrade(7).isBought && MendingUpgrade(8).isBought && MendingUpgrade(9).isBought && MendingUpgrade(10).isBought){
-    MvRGain = MvRGain.times(2);
-  }
-  if(MendingUpgrade(12).isBought && MendingUpgrade(13).isBought && MendingUpgrade(14).isBought && MendingUpgrade(15).isBought){
-    MvRGain = MvRGain.times(2);
-  }
+  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
+    Decimal.pow(2, (Decimal.log10(player.antimatter) / 9e15)) :
+    new Decimal(1);
+
+  MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier);
+
   return MvRGain;
 }
 export function warpReality(){
