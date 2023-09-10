@@ -546,6 +546,8 @@ export const migrations = {
         isActive: false,
         lastTick: 0
       }    
+      player.options.UIType = player.options.newUI ? "Modern" : "Classic"
+      ui.view.UIType = player.options.UIType
     }
   },
 
