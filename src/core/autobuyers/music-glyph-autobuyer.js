@@ -14,10 +14,6 @@ export class MusicGlyphAutobuyerState extends AutobuyerState {
     return MendingMilestone.seven.isReached;
   }
 
-  get isEnabled() {
-    return true
-  }
-
   get bulk() {
     return 0;
   }

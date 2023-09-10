@@ -7,10 +7,6 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
   get isBought() {
-    if(MendingMilestone.eight.isReached && player.records.thisMend.maxiM >= ImaginaryUpgrade(this.id).cost){
-      ImaginaryUpgrade(this.id).onPurchased; 
-      return true;
-    }
     return (this.bits & (1 << this.bitIndex)) !== 0;
   }
 

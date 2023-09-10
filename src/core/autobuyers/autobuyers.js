@@ -23,6 +23,9 @@ import { TimeTheoremAutobuyerState } from "./time-theorem-autobuyer";
 import { TesseractAutobuyerState } from "./tesseract-autobuyer";
 import { MusicGlyphAutobuyerState } from "./music-glyph-autobuyer";
 
+import { NonRepeatableRealityUpgradeAutobuyerState } from "./nr-reality-upgrade-autobuyer";
+import { NonRepeatableImaginaryUpgradeAutobuyerState } from "./nr-imaginary-upgrade-autobuyer";
+
 import { TeresaMemoryAutobuyerState } from "./memory-autobuyer"
 import { EffarigMemoryAutobuyerState } from "./memory-autobuyer"
 import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer"
@@ -55,6 +58,8 @@ export const Autobuyer = {
   timeTheorem: new TimeTheoremAutobuyerState(),
   tesseract: new TesseractAutobuyerState(),
   musicglyph: new MusicGlyphAutobuyerState(),
+  nrru: new NonRepeatableRealityUpgradeAutobuyerState(),
+  nriu: new NonRepeatableImaginaryUpgradeAutobuyerState(),
   teresaMem: TeresaMemoryAutobuyerState.createAccessor(),
   effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
@@ -88,6 +93,8 @@ export const Autobuyers = (function() {
     Autobuyer.annihilation,
     Autobuyer.tesseract,
     Autobuyer.musicglyph,
+    Autobuyer.nrru,
+    Autobuyer.nriu,
   ];
 
   const singleComplex = [

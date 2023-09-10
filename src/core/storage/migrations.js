@@ -528,13 +528,25 @@ export const migrations = {
       player.reality.warped = false;
       player.mending = {
         rebuyables: {
-          1: 0,
+          1: Math.max(0, player.mending.rebuyables[1]),
           6: 0,
           11: 0,
           16: 0,
         },
+        upgradeBits: Math.max(0, player.mending.upgradeBits)
       };
     },
+  47: player => {
+    //for some reason doing this in dev-migrations threw errors, so idk
+      player.auto.nrru = {
+        isActive: false,
+        lastTick: 0
+      }
+      player.auto.nriu = {
+        isActive: false,
+        lastTick: 0
+      }    
+    }
   },
 
   normalizeTimespans(player) {
