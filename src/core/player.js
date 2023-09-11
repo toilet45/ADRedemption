@@ -243,6 +243,14 @@ window.player = {
     singularity: { isActive: false },
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
+    nrru :{
+      isActive: false,
+      lastTick: 0
+    },
+    nriu: {
+      isActive: false,
+      lastTick: 0
+    }  
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,

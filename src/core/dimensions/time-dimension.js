@@ -4,6 +4,7 @@ import { DimensionState } from "./dimension";
 
 export function buySingleTimeDimension(tier, auto = false) {
   const dim = TimeDimension(tier);
+  if (TimeDimension(tier).bought >= 5e14) return false;
   if (tier > 4) {
     if (!TimeStudy.timeDimension(tier).isBought) return false;
     if (RealityUpgrade(13).isLockingMechanics && Currency.eternityPoints.gte(dim.cost)) {
@@ -25,6 +26,7 @@ export function buySingleTimeDimension(tier, auto = false) {
   dim.amount = dim.amount.plus(1);
   dim.bought += 1;
   dim.cost = dim.nextCost(dim.bought);
+  if(TimeDimension(tier).bought > 5e14) TimeDimension(tier).bought = 5e14;
   return true;
 }
 
@@ -52,6 +54,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
   const canSpend = Currency.eternityPoints.value.times(portionToSpend);
   const dim = TimeDimension(tier);
   if (canSpend.lt(dim.cost)) return false;
+  if (TimeDimension(tier).bought >= 5e14) return false;
   if (tier > 4) {
     if (!TimeStudy.timeDimension(tier).isBought) return false;
     if (RealityUpgrade(13).isLockingMechanics) {
@@ -77,6 +80,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
   dim.amount = dim.amount.plus(bulk.quantity);
   dim.bought += bulk.quantity;
   dim.cost = dim.nextCost(dim.bought);
+  if(TimeDimension(tier).bought > 5e14) TimeDimension(tier).bought = 5e14;
   return true;
 }
 

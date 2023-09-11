@@ -3,6 +3,7 @@ import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import InfinityDimensionRow from "./ClassicInfinityDimensionRow";
 import PrimaryButton from "@/components/PrimaryButton";
 
+
 export default {
   name: "ClassicInfinityDimensionsTab",
   components: {
@@ -33,6 +34,8 @@ export default {
       showLockedDimCostNote: true,
       isAutoTessUnlocked: false,
       isAutoTessOn: false,
+      atCap: false,
+      end: new Decimal("1e9000000000000000"),
     };
   },
   computed: {
@@ -75,6 +78,8 @@ export default {
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
+      this.atCap = player.infinityPower.exponent >= 9e15;
+      this.end = new Decimal("1e9000000000000000");
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -160,6 +165,9 @@ export default {
       purchases each.
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
+    <br>
+    <span v-if="atCap">Due to the instability of a Warped Reality, your Infinity Power is hardcapped at {{ format(end) }}</span>
+    <br>
     <b
       v-if="isEC8Running"
       class="l-infinity-dim-tab__ec8-purchases"

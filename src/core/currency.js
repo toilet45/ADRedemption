@@ -299,7 +299,13 @@ Currency.infinityPoints = new class extends DecimalCurrency {
 
 Currency.infinityPower = new class extends DecimalCurrency {
   get value() { return player.infinityPower; }
-  set value(value) { player.infinityPower = value; }
+  set value(value) { 
+    if (player.infinityPower.exponent >= 9e15 && value != DC.D0){
+      player.infinityPower = DC.END;
+      return;
+    }
+    player.infinityPower = value; 
+  }
 }();
 
 Currency.eternities = new class extends DecimalCurrency {

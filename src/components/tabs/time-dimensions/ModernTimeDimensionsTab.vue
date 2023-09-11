@@ -115,6 +115,8 @@ export default {
         Hold shift to see the Eternity Point cost for locked Time Dimensions.
       </div>
       Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
+      <br>
+      Time Dimensions can only be purchased up to {{ format(5e14) }} times.
     </div>
   </div>
 </template>

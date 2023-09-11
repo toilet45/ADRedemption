@@ -85,8 +85,8 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         }
       }
       case 4:{
-        if (player.reality.imaginaryUpgReqs < 32768) player.reality.imaginaryUpgReqs += 32768;
-        if (player.reality.imaginaryUprgadeBits < 32768) player.reality.imaginaryUpgradeBits += 32768;
+        if (!ImaginaryUpgrade(15).isAvailableForPurchase ) ImaginaryUpgrade(15).isAvailableForPurchase ;
+        if (!ImaginaryUpgrade(15).isBought) ImaginaryUpgrade(15).isBought = true;
         if (player.celestials.laitela.difficultyTier < 8) player.celestials.laitela.difficultyTier = 8; //futureproffing, but idk how that would make sense
         break
       }
