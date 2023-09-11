@@ -3,6 +3,7 @@ import BackgroundAnimations from "@/components/BackgroundAnimations";
 import ClassicUi from "@/components/ui-modes/classic/ClassicUi";
 import GameUiComponentFixed from "@/components/GameUiComponentFixed";
 import ModernUi from "@/components/ui-modes/modern/ModernUi";
+import SynergismUi from "@/components/ui-modes/synergism/SynergismUi";
 import TabComponents from "@/components/tabs";
 
 import S12DesktopIcons from "@/components/ui-modes/s12/DesktopIcons";
@@ -14,6 +15,7 @@ export default {
   components: {
     ...TabComponents,
     ClassicUi,
+    SynergismUi,
     ModernUi,
     GameUiComponentFixed,
     BackgroundAnimations,
@@ -30,10 +32,10 @@ export default {
     },
     uiLayout() {
       if (this.isThemeS12) return "S12Ui";
-      return this.view.UIType == "Modern" ? "ModernUi" : "ClassicUi";
+      return this.view.UIType == "Modern" ? "ModernUi" : this.view.UIType == "Classic" ? "ClassicUi" : "SynergismUi";
     },
     containerClass() {
-      return this.view.UIType == "Modern" ? "Modern" : "Classic";
+      return this.view.UIType == "Modern" ? "Modern" : this.view.UIType == "Classic" ? "Classic" : "SynergismUi";
     },
     page() {
       const subtab = Tabs.current[this.$viewModel.subtab];

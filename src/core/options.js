@@ -15,8 +15,8 @@ export class GameOptions {
   }
 
   static toggleUI() {
-    player.options.UIType == "Modern" ? player.options.UIType = "Classic" : player.options.UIType = "Modern"
-    ui.view.UIType == "Modern" ? ui.view.UIType = "Classic" : ui.view.UIType = "Modern"
+    player.options.UIType == "Modern" ? player.options.UIType = "Classic" : player.options.UIType = "Classic" ? player.options.UIType = "Synergism" : player.options.UIType = "Modern"
+    ui.view.UIType == "Modern" ? ui.view.UIType = "Classic" : ui.view.UIType == "Classic" ? ui.view.UIType = "Synergism" : ui.view.UIType = "Modern"
     // This is needed because .s-base--dark is on UIType == 'Modern'/normal but not on oldUI/normal
     // So the classes on body need to be updated
     Themes.find(Theme.currentName()).set();

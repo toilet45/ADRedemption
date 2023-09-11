@@ -1004,6 +1004,11 @@ button:focus {
   cursor: pointer;
 }
 
+.syn-button-size {
+  width: 3rem;
+  height: 3rem;
+}
+
 [draggable] {
   -webkit-user-select: none;
   user-select: none;
