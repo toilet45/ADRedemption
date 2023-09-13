@@ -1,10 +1,14 @@
 <script>
 import SynergismBigCrunchButton from "./SynergismBigCrunchButton";
+import SynergismRealityButton from "./SynergismRealityButton";
+import SynergismEternityButton from "./SynergismEternityButton.vue";
 
 export default {
   name: "HeaderInfinityContainer",
   components: {
     SynergismBigCrunchButton,
+    SynergismRealityButton,
+    SynergismEternityButton,
   },
   data() {
     return {
@@ -46,7 +50,11 @@ export default {
         v-html="tesseractText"
       />
     </div>
+    <div class="flex">
     <SynergismBigCrunchButton />
+    <SynergismEternityButton />
+    <SynergismRealityButton />
+  </div>
   </div>
 </template>
 

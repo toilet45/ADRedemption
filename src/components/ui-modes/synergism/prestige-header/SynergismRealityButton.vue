@@ -9,19 +9,14 @@ export default {
   computed: {
     classObject() {
       return {
-        "c-reality-button--unlocked": this.canReality,
-        "c-reality-button--locked": !this.canReality,
-        "c-reality-button--special": this.showSpecialEffect,
+        "syn-reality-button--unlocked": this.canReality,
+        "syn-reality-button--locked": !this.canReality,
       };
     }
   },
   methods: {
     update() {
       this.canReality = isRealityAvailable();
-      if (!this.canReality) {
-        this.shardsGained = 0;
-        return;
-      }
     },
     handleClick() {
       if (this.canReality) {
@@ -33,19 +28,10 @@ export default {
 </script>
 
 <template>
-  <div class="syn-button-size">
-    <button
-      class="c-reality-button infotooltip"
-      :class="classObject"
-      @click="handleClick"
-    >
-    <div class="l-reality-button__contents">
-          <div class="c-reality-button__header">
-            R
-          </div>
-        </div>
-    </button>
-  </div>
+  <img 
+  class="syn-button-size"
+  :src="`images/synergismUI/reality.png`"
+  v-on:click=handleClick />
 </template>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <script>
 import HeaderCenterContainer from "./prestige-header/SynergismHeaderCenterContainer";
-import HeaderEternityContainer from "../prestige-header/HeaderEternityContainer";
+import HeaderEternityContainer from "./prestige-header/SynergismEPHeaderContainer.vue";
 import HeaderInfinityContainer from "./prestige-header/SynergismHeaderInfinityContainer";
 
 export default {

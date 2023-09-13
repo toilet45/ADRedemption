@@ -4,8 +4,6 @@ import EternityButton from "./SynergismEternityButton";
 export default {
   name: "HeaderEternityContainer",
   components: {
-    EternityButton,
-    UnlockInfinityDimButton,
   },
   data() {
     return {
@@ -43,7 +41,6 @@ export default {
       {{ pluralize("Eternity Point", eternityPoints) }}.
       <span v-if="showNextEP">(Next EP at {{ format(nextEP, 1) }} IP)</span>
     </div>
-    <EternityButton />
   </div>
 </template>
 

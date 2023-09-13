@@ -5,7 +5,6 @@ import MendingButton from "./MendingButton";
 
 import HeaderTickspeedInfo from "../../HeaderTickspeedInfo";
 
-import SynergismRealityButton from "./SynergismRealityButton";
 import { PlayerProgress } from "../../../../core/player-progress";
 import MendingPointsHeader from "../../../MendingPointsHeader.vue";
 
@@ -18,7 +17,6 @@ export default {
     HeaderTickspeedInfo,
     MendingButton,
     RealityCurrencyHeader,
-    SynergismRealityButton,
     ArmageddonButton,
     MendingPointsHeader
 },
@@ -64,7 +62,6 @@ export default {
         v-if="isDoomed"
         :is-header="true"
       />
-      <SynergismRealityButton v-else/>
     </div>
     <div v-else>
       <br>
