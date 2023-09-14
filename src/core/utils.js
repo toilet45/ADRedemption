@@ -12,3 +12,5 @@ import "./async-utils";
 import "./event-hub";
 
 export * from "./game-mechanics";
+
+export * from "./garble-text";

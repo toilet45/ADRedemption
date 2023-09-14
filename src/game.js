@@ -130,7 +130,7 @@ export function gainedMendingPoints(){
     Decimal.pow(2, (Decimal.log10(player.antimatter) / 9e15)) :
     new Decimal(1);
 
-  MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier);
+  MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
 
   return MvRGain;
 }

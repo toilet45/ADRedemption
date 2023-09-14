@@ -37,7 +37,8 @@ export default {
     runUnlocks: () => [
       EffarigUnlock.infinity,
       EffarigUnlock.eternity,
-      EffarigUnlock.reality
+      EffarigUnlock.reality,
+      EffarigUnlock.mend
     ],
     symbol: () => GLYPH_SYMBOLS.effarig,
     runButtonOuterClass() {

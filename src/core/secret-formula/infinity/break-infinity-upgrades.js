@@ -37,7 +37,7 @@ export const breakInfinityUpgrades = {
       description: () =>
         `Antimatter Dimensions gain a power effect based on total antimatter and Teresa level`,
       effect: () => 1 +
-                    Math.log(Math.log10(player.records.totalAntimatter.exponent)) *
+                    Math.log(1+Math.log10(player.records.totalAntimatter.exponent)) *
                     Math.pow(Ra.pets.teresa.level, 0.5) / 150,
       formatEffect: value => formatPow(value, 4, 4)
     }

@@ -257,6 +257,8 @@ export const Ra = {
     data.run = false;
     data.charged = new Set();
     data.disCharge = false;
+    data.breakCharged = new Set();
+    data.breakDischarge = false;
     data.peakGamespeed = 1;
     for (const pet of Ra.pets.all) pet.reset();
   },

@@ -33,6 +33,8 @@ function askMendingConfirmation() {
 export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
+    Currency.mendingPoints.add(gainedMendingPoints());
+    Currency.mends.add(1);
     Tab.dimensions.antimatter.show();
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
@@ -52,8 +54,6 @@ export function mendingReset() {
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
-    Currency.mendingPoints.add(gainedMendingPoints());
-    Currency.mends.add(1);
     //Start reseting all the things
     player.records.totalAntimatter = DC.E1,
     //Challenge Times
@@ -110,7 +110,7 @@ export function mendingReset() {
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
-    Ra.reset();
+    if(!Ra.unlocks.raNoReset.isUnlocked) Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)
       .map(() => ({

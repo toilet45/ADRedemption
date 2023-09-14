@@ -67,7 +67,9 @@ export const MachineHandler = {
   },
 
   gainedImaginaryMachines(diff) {
-    return (this.currentIMCap - Currency.imaginaryMachines.value) *
+    const baseIMGain = this.currentIMCap - Currency.imaginaryMachines.value;
+    if(Ra.unlocks.imaginaryMachinesSetToCap.isUnlocked) return baseIMGain;
+    return (baseIMGain) *
       (1 - Math.pow(2, (-diff / 1000 / this.scaleTimeForIM)));
   },
 

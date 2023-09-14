@@ -327,7 +327,7 @@ export const ra = {
     imaginaryMachinesSetToCap: {
       id: 0,
       id2: 0,
-      reward: "Current Imaginary Machine amount is always set to cap and the cap passively increases",
+      reward: "Current Imaginary Machine amount is always set to cap",
       pet: "teresa",
       level: 30,
       displayIcon: `<span class="fas fa-level-up-alt"></span>`
@@ -640,7 +640,7 @@ export const ra = {
       reward: "Ra no longer resets on Mend",
       pet: "ra",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     placeholderR11: {
       id: 8,
@@ -793,10 +793,10 @@ export const ra = {
       id: 26,
       id2: 1,
       reward: "Triple Multiversal remains gained when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
-      effect: () => 3,
+      effect: () => Pelle.isDoomed?3:1,
       pet: "pelle",
       level: 2,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     pelleXP: {
       id: 27,
@@ -892,12 +892,13 @@ export const ra = {
       reward: () => {
         const remainingLevels = 600 - (Ra.totalPetLevel-Ra.pets.pelle.level);
         const remainingText = remainingLevels===0?"":` (Requires all celestials to be level ${formatInt(100)}, ${quantifyInt("level", remainingLevels)} remaining)`;
-        const kohlerName = Ra.unlocks.kohlersRealmUnlock.isUnlocked?"Kohler":"???";
+        const kohlerUnlocked = Ra.unlocks.kohlersRealmUnlock.isUnlocked;
+        const kohlerName = processText("Kohler", makeGarbledTemplate("Kohler"), kohlerUnlocked);
         return `Unlock ${kohlerName}'s Realm${remainingText}`;
       },
       pet: "pelle",
       level: 100,
-      displayIcon: `<i class="fa-solid fa-staff-snake"></i>`
+      displayIcon: () => Ra.unlocks.kohlersRealmUnlock.isUnlocked?`<i class="fa-solid fa-staff-snake"></i>`:"?"
     },
   }
 };
