@@ -329,11 +329,18 @@ class EPMultiplierState extends GameMechanicState {
       if (!auto) RealityUpgrade(15).tryShowWarningModal();
       return false;
     }
-    const bulk = bulkBuyBinarySearch(Currency.eternityPoints.value, {
-      costFunction: this.costAfterCount,
-      cumulative: true,
-      firstCost: this.cost,
-    }, this.boughtAmount);
+    let bulk = null;
+    try{
+      bulk = bulkBuyBinarySearch(Currency.eternityPoints.value, {
+        costFunction: this.costAfterCount,
+        cumulative: true,
+        firstCost: this.cost,
+      }, this.boughtAmount);
+    }
+    catch{
+      this.boughtAmount = 5e8;
+      return true;
+    }
     if (!bulk) return false;
     Currency.eternityPoints.subtract(bulk.purchasePrice);
     this.boughtAmount += bulk.quantity;

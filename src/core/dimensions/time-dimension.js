@@ -70,11 +70,18 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
     return false;
   }
   if (Enslaved.isRunning) return buySingleTimeDimension(tier);
-  const bulk = bulkBuyBinarySearch(canSpend, {
-    costFunction: bought => dim.nextCost(bought),
-    cumulative: true,
-    firstCost: dim.cost,
-  }, dim.bought);
+  let bulk = null;
+  try{
+    bulk = bulkBuyBinarySearch(canSpend, {
+      costFunction: bought => dim.nextCost(bought),
+      cumulative: true,
+      firstCost: dim.cost,
+    }, dim.bought);
+  }
+  catch{
+    dim.bought = 5e14;
+    return true;
+  }
   if (!bulk) return false;
   Currency.eternityPoints.subtract(bulk.purchasePrice);
   dim.amount = dim.amount.plus(bulk.quantity);

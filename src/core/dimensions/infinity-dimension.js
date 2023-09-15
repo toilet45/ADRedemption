@@ -24,7 +24,6 @@ export function infinityDimensionCommonMultiplier() {
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
     mult = mult.times(replicantiMult());
   }
-
   return mult;
 }
 
@@ -378,8 +377,14 @@ export const InfinityDimensions = {
       if (!NormalChallenge(10).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);
       }
-    } else {
-      InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
+    } 
+    else { 
+      if(player.infinityPower.exponent >= 9e15){ 
+        InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
+      }
+      else {
+        InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
+      }
     }
 
     player.requirementChecks.reality.maxID1 = player.requirementChecks.reality.maxID1
@@ -410,6 +415,6 @@ export const InfinityDimensions = {
 
   get powerConversionRate() {
     const multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
-    return Math.min(9, (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0)) * multiplier);
+    return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0)) * multiplier;
   }
 };

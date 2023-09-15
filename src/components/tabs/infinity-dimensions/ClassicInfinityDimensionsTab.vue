@@ -166,7 +166,7 @@ export default {
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>
-    <span v-if="atCap">Due to the instability of a Warped Reality, your Infinity Power is hardcapped at {{ format(end) }}</span>
+    <span v-if="atCap" class="sc-one">Due to the instability of a Warped Reality, your Infinity Power gain is softcapped after {{ format(end) }}</span>
     <br>
     <b
       v-if="isEC8Running"
@@ -186,3 +186,9 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.sc-one {
+  color: #FF0000;
+}
+</style>
