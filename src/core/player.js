@@ -137,6 +137,14 @@ window.player = {
       isUnlocked: false,
       isActive: false,
     },
+    nrru: {
+      isUnlocked: false,
+      isActive: false,
+    },
+    nriu: {
+      isUnlocked: false,
+      isActive: false,
+    },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,
