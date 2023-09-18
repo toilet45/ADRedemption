@@ -574,7 +574,7 @@ class AntimatterDimensionState extends DimensionState {
       InfinityChallenge.isRunning ||
       Enslaved.isRunning;
     const postWarp = player.reality.warped;
-    if (Pelle.isDoomed || !postWarp) return postBreak ? Decimal.MAX_VALUE : DC.E315;
+    if (Teresa.isRunning || Pelle.isDoomed || !postWarp) return postBreak ? Decimal.MAX_VALUE : DC.E315;
     return postBreak ? DC.WARP_LIMIT : DC.E315;
   }
 

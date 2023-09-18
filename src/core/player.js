@@ -1069,7 +1069,7 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    if (Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (Teresa.isRunning ||Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 

@@ -444,7 +444,7 @@ Currency.darkMatter = new class extends DecimalCurrency {
 
 Currency.darkEnergy = new class extends NumberCurrency {
   get value() { return player.celestials.laitela.darkEnergy; }
-  set value(value) { player.celestials.laitela.darkEnergy = value; }
+  set value(value) { player.celestials.laitela.darkEnergy = Math.min(value, 1e300); }
 
   get productionPerSecond() {
     return DarkMatterDimensions.all

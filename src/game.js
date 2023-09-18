@@ -697,7 +697,7 @@ function updatePrestigeRates() {
     player.records.thisEternity.bestEPminVal = gainedEternityPoints();
   }
 
-  const currentRSmin = Effarig.shardsGained / Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes);
+  const currentRSmin = Math.min(Effarig.shardsGained / Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes), 1e300);
   if (currentRSmin > player.records.thisReality.bestRSmin && isRealityAvailable()) {
     player.records.thisReality.bestRSmin = currentRSmin;
     player.records.thisReality.bestRSminVal = Effarig.shardsGained;
