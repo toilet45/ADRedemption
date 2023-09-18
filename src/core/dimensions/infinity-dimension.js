@@ -24,7 +24,6 @@ export function infinityDimensionCommonMultiplier() {
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
     mult = mult.times(replicantiMult());
   }
-
   return mult;
 }
 
@@ -136,6 +135,13 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
+    if (player.infinityPower.exponent > 9e15){
+      let x = player.infinityPower;
+      let y = 1; //insert decrease fromula here
+      production = production.times(this.multiplier);
+      production = production.pow(1/(x.log10()**y));
+      return production;
+    }
     return production.times(this.multiplier);
   }
 
@@ -216,7 +222,7 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
     return InfinityDimensions.capIncrease + (this.tier === 8
-      ? Number.MAX_VALUE
+      ? 1e10
       : InfinityDimensions.HARDCAP_PURCHASES);
   }
 
@@ -394,7 +400,8 @@ export const InfinityDimensions = {
       if (!NormalChallenge(10).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);
       }
-    } else {
+    } 
+    else { 
       InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
     }
 

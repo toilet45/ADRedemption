@@ -50,7 +50,7 @@ export default {
 </script>
 
 <template>
-  <div class="l-old-ui-antimatter-dim-tab">
+  <div class="l-classic-antimatter-dim-tab">
     <AntimatterDimensionsTabHeader />
     {{ multiplierText }}
     <TickspeedRow />

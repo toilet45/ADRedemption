@@ -7,7 +7,7 @@ export default {
     ClassicTabButton,
   },
   computed: {
-    tabs: () => Tabs.oldUI,
+    tabs: () => Tabs.Classic,
   },
 };
 </script>

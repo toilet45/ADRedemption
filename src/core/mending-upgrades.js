@@ -42,33 +42,13 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get hasPlayerLock() {
-    return (player.mending.reqLock.mending & (1 << this.bitIndex)) !== 0;
+    return false
   }
 
-  set hasPlayerLock(value) {
-    if (value) player.mending.reqLock.mending |= 1 << this.bitIndex;
-    else player.mending.reqLock.mending &= ~(1 << this.bitIndex);
-  }
 
   get isLockingMechanics() {
     const shouldBypass = this.config.bypassLock?.() ?? false;
     return this.hasPlayerLock && this.isPossible && !shouldBypass && !this.isAvailableForPurchase;
-  }
-
-  // Required to be changed this way to avoid direct prop mutation in Vue components
-  setMechanicLock(value) {
-    this.hasPlayerLock = value;
-  }
-
-  toggleMechanicLock() {
-    this.hasPlayerLock = !this.hasPlayerLock;
-  }
-
-  // Note we don't actually show the modal if we already failed or unlocked it
-  tryShowWarningModal(specialLockText) {
-    if (this.isPossible && !this.isAvailableForPurchase) {
-      Modal.upgradeLock.show({ upgrade: this, isImaginary: false, specialLockText });
-    }
   }
 
   get isAvailableForPurchase() {
@@ -106,8 +86,8 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         }
       }
       case 4:{
-        if (player.reality.imaginaryUpgReqs < 32768) player.reality.imaginaryUpgReqs += 32768;
-        if (player.reality.imaginaryUprgadeBits < 32768) player.reality.imaginaryUpgradeBits += 32768;
+        if (!ImaginaryUpgrade(15).isAvailableForPurchase ) ImaginaryUpgrade(15).isAvailableForPurchase ;
+        if (!ImaginaryUpgrade(15).isBought) ImaginaryUpgrade(15).isBought = true;
         if (player.celestials.laitela.difficultyTier < 8) player.celestials.laitela.difficultyTier = 8; //futureproffing, but idk how that would make sense
         break
       }

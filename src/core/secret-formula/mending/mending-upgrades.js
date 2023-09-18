@@ -81,7 +81,7 @@ export const mendingUpgrades = [
   {
     id: 8,
     name: "Propius ad Scalas",
-    cost: 2,
+    cost: 10,
     description: () => "Reduce post-Infinity Antimatter Dimension cost scaling to x1.5 and post-Infinity Tickspeed cost scaling to x1.2.",
   },
   {

@@ -44,8 +44,8 @@ export default {
     topPadding() {
       return this.$viewModel.news ? "" : "padding-top: 3.9rem";
     },
-    isOldUi() {
-      return !this.$viewModel.newUI;
+    isClassic() {
+      return this.$viewModel.UIType == 'Classic';
     },
   },
   methods: {
@@ -71,7 +71,7 @@ export default {
     <link
       rel="stylesheet"
       type="text/css"
-      :href="isOldUi ? 'stylesheets/old-ui.css' : 'stylesheets/new-ui-styles.css'"
+      :href="isClassic ? 'stylesheets/classic.css' : 'stylesheets/modern-styles.css'"
     >
     <span
       class="c-s12-close-button"
@@ -83,7 +83,7 @@ export default {
     <div
       :key="newGameKey"
       class="game-container c-s12-window__inner"
-      :class="isOldUi ? 'c-old-ui l-old-ui' : ''"
+      :class="isClassic ? 'c-classic l-classic' : ''"
       :style="topPadding"
     >
       <GameUiComponentFixed />
@@ -155,7 +155,7 @@ export default {
   box-shadow: 0 0 0.4rem 0.2rem rgba(255, 255, 255, 0.5);
 }
 
-.c-old-ui.c-s12-window__inner {
+.c-classic.c-s12-window__inner {
   background-color: white;
 }
 

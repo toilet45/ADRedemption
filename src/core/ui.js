@@ -210,8 +210,8 @@ export const ui = new Vue({
     scrollWindow() {
       return this.view.scrollWindow;
     },
-    newUI() {
-      return this.view.newUI;
+    UIType() {
+      return this.view.UIType;
     },
   },
   watch: {

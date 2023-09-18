@@ -261,6 +261,14 @@ window.player = {
     singularity: { isActive: false },
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
+    nrru :{
+      isActive: false,
+      lastTick: 0
+    },
+    nriu: {
+      isActive: false,
+      lastTick: 0
+    },
     pelleRebuyableUpgrades: {
       all: Array.range(0, 5).map(() => ({
         isActive: false,
@@ -922,9 +930,10 @@ window.player = {
     hotkeys: true,
     themeClassic: "Normal",
     themeModern: "Normal",
+    themeSynergism: "Normal",
     commas: true,
     updateRate: 33,
-    newUI: true,
+    UIType: "Modern",
     offlineProgress: true,
     loadBackupWithoutOffline: false,
     automaticTabSwitching: true,
@@ -1116,7 +1125,7 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    if (Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (Teresa.isRunning ||Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 

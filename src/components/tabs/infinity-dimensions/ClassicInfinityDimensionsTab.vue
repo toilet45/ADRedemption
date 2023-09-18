@@ -3,6 +3,7 @@ import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import InfinityDimensionRow from "./ClassicInfinityDimensionRow";
 import PrimaryButton from "@/components/PrimaryButton";
 
+
 export default {
   name: "ClassicInfinityDimensionsTab",
   components: {
@@ -33,6 +34,8 @@ export default {
       showLockedDimCostNote: true,
       isAutoTessUnlocked: false,
       isAutoTessOn: false,
+      atCap: false,
+      end: new Decimal("1e9000000000000000"),
     };
   },
   computed: {
@@ -75,6 +78,8 @@ export default {
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
+      this.atCap = player.infinityPower.exponent >= 9e15;
+      this.end = new Decimal("1e9000000000000000");
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -158,8 +163,13 @@ export default {
     <div v-else>
       All Infinity Dimensions except for the 8th are limited to a maximum of {{ format(totalDimCap, 2) }}
       purchases each.
+      <br>
+      The 8th Infinity Dimension is limited to {{ format(1e10, 2) }} purchases.
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
+    <br>
+    <span v-if="atCap" class="sc-one">Due to the instability of a Warped Reality, your Infinity Power gain is softcapped after {{ format(end) }}</span>
+    <br>
     <b
       v-if="isEC8Running"
       class="l-infinity-dim-tab__ec8-purchases"
@@ -178,3 +188,9 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.sc-one {
+  color: #FF0000;
+}
+</style>

@@ -73,7 +73,7 @@ export class DimBoost {
       // this case would trigger when we're in IC1.
       return 5;
     }
-    return Infinity;
+    return 1e9;
   }
 
   static get canBeBought() {
@@ -246,7 +246,7 @@ function maxBuyDimBoosts() {
   // so a = req2 - req1, b = req1 - a = 2 req1 - req2, num = (dims - b) / a
   const increase = req2.amount - req1.amount;
   const dim = AntimatterDimension(req1.tier);
-  let maxBoosts = Math.min(Number.MAX_VALUE,
+  let maxBoosts = Math.min(1e9,
     1 + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);

@@ -19,7 +19,7 @@ class GalaxyRequirement {
 
 export class Galaxy {
   static get scailingThreeStart(){
-    return 750000 + (5000 * player.mending.rebuyables[16]);
+    return 750000 + (5000 * MendingUpgrade(16).boughtAmount);
   }
   static get remoteStart() {
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
@@ -35,10 +35,16 @@ export class Galaxy {
    * @returns {number} Max number of galaxies (total)
    */
   static buyableGalaxies(currency) {
-    const bulk = bulkBuyBinarySearch(new Decimal(currency), {
-      costFunction: x => this.requirementAt(x).amount,
-      cumulative: false,
-    }, player.galaxies);
+    let bulk = null;
+    try{
+      bulk = bulkBuyBinarySearch(new Decimal(currency), {
+        costFunction: x => this.requirementAt(x).amount,
+        cumulative: false,
+      }, player.galaxies);
+    }
+    catch{
+      return 1e9;
+    }
     if (!bulk) throw new Error("Unexpected failure to calculate galaxy purchase");
     return player.galaxies + bulk.quantity;
   }
@@ -61,7 +67,13 @@ export class Galaxy {
     }
 
     if (type === GALAXY_TYPE.THIRD) {
-      amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scailingThreeStart - 1)), 2);
+      let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+      let a = n ** 5;
+      let b = 5 * (n ** 4);
+      let c = 5 * (n ** 3);
+      let d = 5 * (n ** 2);
+      amount += (a + b + c - d - (6 * n)) / 60;
+      //amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scailingThreeStart - 1)), 2);
     }
 
     amount -= Effects.sum(InfinityUpgrade.resetBoost);

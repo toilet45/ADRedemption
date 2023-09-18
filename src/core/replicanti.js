@@ -18,8 +18,18 @@ export const ReplicantiGrowth = {
 // Internal function to add RGs; called both from within the fast replicanti code and from the function
 // used externally. Only called in cases of automatic RG and does not actually modify replicanti amount
 function addReplicantiGalaxies(newGalaxies) {
+  if (player.replicanti.galaxies > 250000){
+    player.replicanti.galaxies = 250000;
+    return;
+  }
   if (newGalaxies > 0) {
-    player.replicanti.galaxies += newGalaxies;
+    let x = player.replicanti.galaxies > 250000 ? 0 : newGalaxies;
+    if (player.replicanti.galaxies + x < 250000){
+      player.replicanti.galaxies += x;
+    }
+    else{
+      player.replicanti.galaxies = 250000;
+    }
     player.requirementChecks.eternity.noRG = false;
     if (!EternityMilestone.replicantiNoReset.isReached || Pelle.isDoomed) {
       player.dimensionBoosts = 0;
@@ -305,6 +315,7 @@ class ReplicantiUpgradeState {
   get autobuyerMilestone() { throw new NotImplementedError(); }
 
   get canBeBought() {
+    if (this.id === 3 && this.isCapped) return false;
     return !this.isCapped && Currency.infinityPoints.gte(this.cost) && player.eterc8repl !== 0;
   }
 
@@ -453,6 +464,13 @@ export const ReplicantiUpgrade = {
     get autobuyerMilestone() {
       return EternityMilestone.autobuyerReplicantiMaxGalaxies;
     }
+    get cap(){
+      return 250000;
+    }
+
+    get isCapped() {
+      return this.value > this.cap;
+    }
 
     get extra() {
       return Effects.max(0, TimeStudy(131)) + PelleRifts.decay.milestones[2].effectOrDefault(0);
@@ -460,15 +478,22 @@ export const ReplicantiUpgrade = {
 
     autobuyerTick() {
       // This isn't a hot enough autobuyer to worry about doing an actual inverse.
-      const bulk = bulkBuyBinarySearch(Currency.infinityPoints.value, {
-        costFunction: x => this.baseCostAfterCount(x).dividedByEffectOf(TimeStudy(233)),
-        firstCost: this.cost,
-        cumulative: true,
-      }, this.value);
+      let bulk = null;
+      try{
+        bulk = bulkBuyBinarySearch(Currency.infinityPoints.value, {
+          costFunction: x => this.baseCostAfterCount(x).dividedByEffectOf(TimeStudy(233)),
+          firstCost: this.cost,
+          cumulative: true,
+        }, this.value);
+      }
+      catch{
+        return;
+      }
       if (!bulk) return;
       Currency.infinityPoints.subtract(bulk.purchasePrice);
-      this.value += bulk.quantity;
-      this.baseCost = this.baseCostAfterCount(this.value);
+
+        this.value += bulk.quantity;
+        this.baseCost = this.baseCostAfterCount(this.value);
     }
 
     baseCostAfterCount(count) {
@@ -538,21 +563,22 @@ export const Replicanti = {
   galaxies: {
     isPlayerHoldingR: false,
     get bought() {
-      return player.replicanti.galaxies;
+      return Math.min(250000, player.replicanti.galaxies);
     },
     get extra() {
-      return Math.floor((Effects.sum(
+      return Math.min(Math.floor((Effects.sum(
         TimeStudy(225),
         TimeStudy(226)
-      ) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1));
+      ) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1)), 350000);
     },
     get total() {
       return this.bought + this.extra;
     },
     get max() {
-      return ReplicantiUpgrade.galaxies.value + ReplicantiUpgrade.galaxies.extra;
+      return Math.min(250000, ReplicantiUpgrade.galaxies.value) + Math.min(350000, ReplicantiUpgrade.galaxies.extra);
     },
     get canBuyMore() {
+      if (this.bought >= 250000) return false;
       if (!Replicanti.amount.gte(Decimal.NUMBER_MAX_VALUE)) return false;
       return this.bought < this.max;
     },

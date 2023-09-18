@@ -39,7 +39,7 @@ export default {
       this.shouldDisplay = player.break || !Player.canCrunch;
       if (!this.shouldDisplay) return;
       this.mendingPoints.copyFrom(Currency.mendingPoints.value.floor())
-      this.isModern = player.options.newUI;
+      this.isModern = player.options.UIType == 'Modern';
       this.isDoomed = Pelle.isDoomed;
       this.antimatter.copyFrom(Currency.antimatter);
       this.hasRealityButton = PlayerProgress.realityUnlocked() || TimeStudy.reality.isBought;

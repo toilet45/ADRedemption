@@ -57,18 +57,18 @@ export default {
   <div
     id="container"
     :key="newGameKey"
-    class="container c-old-ui l-old-ui"
+    class="container c-classic l-Classic"
   >
     <link
       rel="stylesheet"
       type="text/css"
-      href="stylesheets/old-ui.css"
+      href="stylesheets/classic.css"
     >
     <BigCrunchButton />
     <template v-if="!bigCrunch">
       <NewsTicker
         v-if="news"
-        class="l-old-ui__news-bar"
+        class="l-classic__news-bar"
       />
       <div 
       v-if="hasMendingButton"
@@ -76,14 +76,14 @@ export default {
         <MendingPointsHeader />
         <MendingButton />
     </div>
-      <GameHeader class="l-old-ui__header" />
+      <GameHeader class="l-classic__header" />
       <ClassicTabBar />
       <component
         :is="tab.config.before"
         v-if="tab.config.before"
       />
       <ClassicSubtabBar />
-      <div class="l-old-ui__page">
+      <div class="l-classic__page">
         <slot />
       </div>
     </template>

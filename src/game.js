@@ -127,7 +127,7 @@ export function gainedInfinityPoints() {
 
 export function gainedMendingPoints(){
   let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
-    Decimal.pow(2, (Decimal.log10(player.antimatter) / 9e15)) :
+    (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
     new Decimal(1);
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
@@ -690,7 +690,7 @@ function updatePrestigeRates() {
     player.records.thisEternity.bestEPminVal = gainedEternityPoints();
   }
 
-  const currentRSmin = Effarig.shardsGained / Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes);
+  const currentRSmin = Math.min(Effarig.shardsGained / Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes), 1e300);
   if (currentRSmin > player.records.thisReality.bestRSmin && isRealityAvailable()) {
     player.records.thisReality.bestRSmin = currentRSmin;
     player.records.thisReality.bestRSminVal = Effarig.shardsGained;

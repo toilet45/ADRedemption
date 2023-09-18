@@ -2575,8 +2575,12 @@ export const news = [
       `Don't forget to vote in the Ass Election 2023 -Mage`
   },
   {
-    id: "a392",
+    id: "a394",
     text: "Looking for more mods to play? Check out https://github.com/ArchercatNEO/AD-Mod-DB."
+  },
+  {
+    id: "a395",
+    text: "moist."
   },
   {
     id: "l1",

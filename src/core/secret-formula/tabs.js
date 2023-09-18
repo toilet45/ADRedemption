@@ -535,7 +535,7 @@ export const tabs = [
   {
     key: "shop",
     name: "Shop",
-    newUIClass: "shop",
+    ModernUIClass: "shop",
     hideAt: 1.5,
     condition: () => true,
     id: 11,
