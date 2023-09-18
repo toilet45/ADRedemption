@@ -208,7 +208,8 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const bought = tier === 8 ? Math.clampMax(dim.bought, 1e8) : dim.bought;
+    const value = Laitela.continuumActive?dim.continuumValue:dim.bought
+    const bought = tier === 8 ? Math.clampMax(value, 1e8) : value;
     mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
 
     mult = mult.pow(getAdjustedGlyphEffect("timepow"));
@@ -238,9 +239,9 @@ class TimeDimensionState extends DimensionState {
       return DC.D0;
     }
     if (EternityChallenge(11).isRunning) {
-      return this.amount;
+      return this.totalAmount;
     }
-    let production = this.amount.times(this.multiplier);
+    let production = this.totalAmount.times(this.multiplier);
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
@@ -267,7 +268,7 @@ class TimeDimensionState extends DimensionState {
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
-    return this.amount.gt(0);
+    return this.totalAmount.gt(0);
   }
 
   get baseCost() {
@@ -295,6 +296,39 @@ class TimeDimensionState extends DimensionState {
   get requirementReached() {
     return this._tier < 5 ||
       (TimeStudy.timeDimension(this._tier).isAffordable && TimeStudy.timeDimension(this._tier - 1).isBought);
+  }
+
+  get continuumValue() {
+    if(!this.isUnlocked) return 0;
+    if(!Laitela.continuumActive) return 0;
+    const firstThreshold = [null, 647, 323, 214, 160, 0, 0, 0, 0][this.tier];
+    const secondThreshold = [null, 1991, 1150, 808, 623, 0, 0, 0, 0][this.tier];
+    const e6kThreshold = this.e6000ScalingAmount;
+    const mult = this.costMultiplier;
+
+    const logMoney = Currency.eternityPoints.value.log10();
+    let logMult = Math.log10(mult);
+    const logBase = this.baseCost.log10();
+    let contValue = (logMoney - logBase)/logMult;
+
+    if(this.tier < 5){
+      if(contValue > firstThreshold){
+        logMult = Math.log10(mult*1.5);
+        contValue = firstThreshold + (logMoney - logBase)/logMult;
+      }
+      if(contValue > secondThreshold){
+        logMult = Math.log10(mult*2.2);
+        contValue = secondThreshold + (logMoney - logBase)/logMult;
+      }
+    }
+    contValue = Math.min(contValue, (contValue-e6kThreshold)/TimeDimensions.scalingPast1e6000 + e6kThreshold);
+    contValue *= 1 + Laitela.matterExtraPurchaseFactor * .05;
+    if(this.tier < 8) contValue = Math.clampMax(contValue, this.purchaseCap);
+    return Math.clampMin(contValue, 0);
+  }
+
+  get totalAmount(){
+    return this.amount.max(this.continuumValue);
   }
 
   tryUnlock() {

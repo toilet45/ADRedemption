@@ -88,7 +88,7 @@ export default {
       this.isCapped = Enslaved.isRunning && dimension.bought > 0;
       this.isUnlocked = dimension.isUnlocked;
       this.multiplier.copyFrom(dimension.multiplier);
-      this.amount.copyFrom(dimension.amount);
+      this.amount.copyFrom(dimension.totalAmount);
       this.bought = dimension.bought;
       if (tier < 8) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);

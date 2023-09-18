@@ -733,13 +733,13 @@ export const ra = {
       level: 30,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL9: {
+    continuumAffectsIDsAndTDs: {
       id: 19,
       id2: 1,
-      reward: "TBD",
+      reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 40,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderL10: {
       id: 20,
