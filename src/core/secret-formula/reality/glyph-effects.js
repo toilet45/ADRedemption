@@ -109,9 +109,15 @@ export const glyphEffects = {
     singleDesc: "Multiply Dilated Time gain by {value}",
     totalDesc: "Dilated Time gain ×{value}",
     shortDesc: "DT ×{value}",
-    effect: (level, strength) => (GlyphAlteration.isEmpowered("dilation")
-      ? DC.D1_005.pow(level).times(15)
-      : Decimal.pow(level * strength, 1.5).times(2)),
+    effect: (level, strength) => {
+      let a = DC.D1;
+      if (GlyphAlteration.isEmpowered("dilation")) a = DC.D1_005.pow(level).times(15);
+      else{ a = Decimal.pow(level * strength, 1.5).times(2);}
+      if (a.gte(new Decimal("1e500"))){
+        a = a.div(DC.E500).pow(0.5).times(DC.E500);
+      }
+      return a;
+    },
     formatEffect: x => format(x, 2, 1),
     combine: GlyphCombiner.multiplyDecimal,
     alteredColor: () => GlyphAlteration.getEmpowermentColor("dilation"),
@@ -125,16 +131,19 @@ export const glyphEffects = {
     singleDesc: "Tachyon Galaxy threshold multiplier ×{value}",
     genericDesc: "Tachyon Galaxy cost multiplier",
     shortDesc: "TG threshold ×{value}",
-    effect: (level, strength) => 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 -
-      GlyphAlteration.sacrificeBoost("dilation") / 50,
+    effect: (level, strength) => {
+      let a = 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 - GlyphAlteration.sacrificeBoost("dilation") / 50;
+      if (a > 0.3){
+        return a;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
     alterationType: ALTERATION_TYPE.BOOST,
     combine: effects => {
       const prod = effects.reduce(Number.prodReducer, 1);
-      return prod < 0.4
-        ? { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true }
-        : { value: prod, capped: false };
+      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3-Math.pow(0.7+(0.4 - Math.pow(0.4 - prod, 1.7)), 0.333), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
     },
     enabledInDoomed: true,
   },
@@ -189,9 +198,12 @@ export const glyphEffects = {
     totalDesc: "Replication speed ×{value}",
     genericDesc: "Replication speed multiplier",
     shortDesc: "Replication speed ×{value}",
-    effect: (level, strength) => (GlyphAlteration.isEmpowered("replication")
-      ? DC.D1_007.pow(level).times(10)
-      : Decimal.times(level, strength).times(3)),
+    effect: (level, strength) =>{ let a = (GlyphAlteration.isEmpowered("replication")? DC.D1_007.pow(level).times(10): Decimal.times(level, strength).times(3));
+      if (a.gte(new Decimal("1e600"))){
+        return a.pow(0.45);
+      }
+      return a;
+    },
     formatEffect: x => format(x, 2, 1),
     combine: GlyphCombiner.multiplyDecimal,
     alteredColor: () => GlyphAlteration.getEmpowermentColor("replication"),
@@ -278,8 +290,13 @@ export const glyphEffects = {
     singleDesc: "Infinity Dimension power +{value}",
     totalDesc: "Infinity Dimension multipliers ^{value}",
     shortDesc: "ID power +{value}",
-    effect: (level, strength) => 1.007 + Math.pow(level, 0.21) * Math.pow(strength, 0.4) / 75 +
-      GlyphAlteration.sacrificeBoost("infinity") / 50,
+    effect: (level, strength) => {
+      let a = 1.007 + Math.pow(level, 0.21) * Math.pow(strength, 0.4) / 75 + GlyphAlteration.sacrificeBoost("infinity") / 50;
+      if (a > 3){
+        return a / 3;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 3, 3),
     formatSingleEffect: x => format(x - 1, 3, 3),
     combine: GlyphCombiner.addExponents,
@@ -298,7 +315,13 @@ export const glyphEffects = {
       ➜ ^(${formatInt(7)} + {value})`,
     genericDesc: "Infinity Power conversion rate",
     shortDesc: "Infinity Power conversion +{value}",
-    effect: (level, strength) => Math.pow(level, 0.2) * Math.pow(strength, 0.4) * 0.04,
+    effect: (level, strength) => {
+      let a = Math.pow(level, 0.2) * Math.pow(strength, 0.4) * 0.04;
+      if (a > 8.5){
+        return a/20;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 2, 2),
     combine: GlyphCombiner.add,
     enabledInDoomed: true,
@@ -444,7 +467,13 @@ export const glyphEffects = {
     singleDesc: "Glyph Instability starting level +{value}",
     genericDesc: "Glyph Instability delay",
     shortDesc: "Instability delay +{value}",
-    effect: (level, strength) => Math.floor(10 * Math.pow(level * strength, 0.5)),
+    effect: (level, strength) => {
+      let a = Math.floor(10 * Math.pow(level * strength, 0.5));
+      if (a > 5000){
+        return a / 5;
+      }
+      return a;
+    },
     formatEffect: x => formatInt(x),
     combine: GlyphCombiner.add,
   },
@@ -457,7 +486,13 @@ export const glyphEffects = {
     totalDesc: "Game speed ^{value}",
     genericDesc: "Game speed ^x",
     shortDesc: "Game speed power +{value}",
-    effect: (level, strength) => 1 + Math.pow(level, 0.25) * Math.pow(strength, 0.4) / 75,
+    effect: (level, strength) =>{
+      let a = 1 + Math.pow(level, 0.25) * Math.pow(strength, 0.4) / 75;
+      if (a > 1.4){
+        return a / 200;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 3, 3),
     formatSingleEffect: x => format(x - 1, 3, 3),
     combine: GlyphCombiner.addExponents,
@@ -496,7 +531,13 @@ export const glyphEffects = {
     shortDesc: () => (GlyphAlteration.isAdded("effarig")
       ? `Buy ${formatInt(10)} mult. ^{value}, Dimboost mult. ^{value2}`
       : `Buy ${formatInt(10)} mult. ^{value}`),
-    effect: (level, strength) => 1 + 2 * Math.pow(level, 0.25) * Math.pow(strength, 0.4),
+    effect: (level, strength) => {
+      let a = 1 + 2 * Math.pow(level, 0.25) * Math.pow(strength, 0.4);
+      if (a > 100){
+        return a / 5;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 2, 2),
     combine: GlyphCombiner.multiply,
     conversion: x => Math.pow(x, 0.4),
@@ -526,7 +567,13 @@ export const glyphEffects = {
     singleDesc: () => `Antimatter production:\n${formatInt(10)}^x ➜ ${formatInt(10)}^(x^{value})`,
     genericDesc: "Antimatter production exponent power",
     shortDesc: "AM production exponent ^{value}",
-    effect: (level, strength) => 1 + Math.pow(level, 0.25) * Math.pow(strength, 0.4) / 5000,
+    effect: (level, strength) => {
+      let a = 1 + Math.pow(level, 0.25) * Math.pow(strength, 0.4) / 5000;
+      if (a > 1.01){
+        return a / 5;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 4, 4),
     combine: GlyphCombiner.multiply,
   },
@@ -617,7 +664,13 @@ export const glyphEffects = {
     singleDesc: "All Galaxies are {value} stronger",
     totalDesc: "All Galaxy strength +{value}",
     shortDesc: "Galaxy Strength +{value}",
-    effect: level => 1 + Math.pow(level / 100000, 0.5),
+    effect: level => {
+      let a = 1 + Math.pow(level / 100000, 0.5);
+      if (a > 1.6){
+        return a / 4;
+      }
+      return a;
+  },
     formatEffect: x => formatPercents(x - 1, 2),
     combine: GlyphCombiner.multiply,
   },
@@ -629,7 +682,13 @@ export const glyphEffects = {
     singleDesc: "Multiplier from Reality Upgrade Amplifiers ^{value}",
     totalDesc: "Reality Upgrade Amplifier multiplier ^{value}",
     shortDesc: "Amplifier Multiplier ^{value}",
-    effect: level => 1 + level / 125000,
+    effect: level => {
+      let a = 1 + level / 125000;
+      if (a > 1.2){
+        return a ** 0.2;
+      }
+      return a;
+    },
     formatEffect: x => format(x, 3, 3),
     combine: GlyphCombiner.addExponents,
   },

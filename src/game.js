@@ -126,7 +126,7 @@ export function gainedInfinityPoints() {
 }
 
 export function gainedMendingPoints(){
-  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ? (10000 ** (Math.log10(player.antimatter.exponent / 9e15))).toDecimal() : new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
+  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ? (new Decimal(10000).pow(Math.log10(player.antimatter.exponent / 9e15)).times(new Decimal(3).pow(MendingUpgrade(1).boughtAmount))): new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
   if (Achievement(192).isUnlocked){
     MvRGain = MvRGain.times(3);
   }

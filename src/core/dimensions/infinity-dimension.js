@@ -135,6 +135,13 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
+    if (player.infinityPower.exponent > 9e15){
+      let x = player.infinityPower;
+      let y = 1; //insert decrease fromula here
+      production = production.times(this.multiplier);
+      production = production.pow(1/(x.log10()**y));
+      return production;
+    }
     return production.times(this.multiplier);
   }
 
@@ -215,7 +222,7 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
     return InfinityDimensions.capIncrease + (this.tier === 8
-      ? Number.MAX_VALUE
+      ? 1e10
       : InfinityDimensions.HARDCAP_PURCHASES);
   }
 
@@ -379,12 +386,7 @@ export const InfinityDimensions = {
       }
     } 
     else { 
-      if(player.infinityPower.exponent >= 9e15){ 
-        InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
-      }
-      else {
-        InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
-      }
+      InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
     }
 
     player.requirementChecks.reality.maxID1 = player.requirementChecks.reality.maxID1

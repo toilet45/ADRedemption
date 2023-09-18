@@ -35,6 +35,7 @@ export default {
       isAutoTessUnlocked: false,
       isAutoTessOn: false,
       atCap: false,
+      end: 0,
     };
   },
   computed: {
@@ -84,6 +85,7 @@ export default {
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       this.atCap = player.infinityPower.exponent >= 9e15;
+      this.end = new Decimal("1e9000000000000000");
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -170,7 +172,7 @@ export default {
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>
-    <span v-if="atCap" class="sc-one">Due to the instability of a Warped Reality, your Infinity Power gain is softcapped after {{ format(end) }}</span>
+    <span v-if="atCap" class="sc-one">Due to the instability of a Warped Reality, your Infinity Power gain is softcapped after {{ format(this.end) }}</span>
     <br>
     <b
       v-if="isEC8Running"
