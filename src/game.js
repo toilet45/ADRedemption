@@ -128,7 +128,7 @@ export function gainedInfinityPoints() {
 export function gainedMendingPoints(){
   let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
     (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
-    new Decimal(1);
+    DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
 
