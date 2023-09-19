@@ -287,7 +287,7 @@ class EPMultiplierState extends GameMechanicState {
   }
 
   get isAffordable() {
-    return !Pelle.isDoomed && Currency.eternityPoints.gte(this.cost) && player.epmultUpgrades < 5e8;
+    return !Pelle.isDoomed && !this.isCapped && Currency.eternityPoints.gte(this.cost);
   }
 
   get cost() {
@@ -296,6 +296,14 @@ class EPMultiplierState extends GameMechanicState {
 
   get boughtAmount() {
     return player.epmultUpgrades;
+  }
+
+  get purchaseCap() {
+    return 5e8;
+  }
+
+  get isCapped() {
+    return player.epmultUpgrades >= this.purchaseCap;
   }
 
   set boughtAmount(value) {

@@ -6,6 +6,7 @@ export default {
       canReality: false,
       isVisible: false,
       isExpanded: false,
+      epMultCapped: false,
       ecCount: 0,
       missingAchievements: 0,
       unpurchasedDilationUpgrades: 0,
@@ -15,6 +16,7 @@ export default {
       purchasableTS: 0,
       hasDilated: 0,
       availableCharges: 0,
+      availableBreakCharges: 0,
     };
   },
   computed: {
@@ -32,7 +34,7 @@ export default {
       if (this.currLog10EP > 1.3 * this.cheapestLog10TD) {
         arr.push(`Purchase more TDs (cheapest: ${format(Decimal.pow10(this.cheapestLog10TD))} EP)`);
       }
-      if (this.currLog10EP > 1.3 * this.multEPLog10Cost) {
+      if (!this.epMultCapped && this.currLog10EP > 1.3 * this.multEPLog10Cost) {
         arr.push(`Purchase more ${formatX(5)} EP (cost: ${format(Decimal.pow10(this.multEPLog10Cost))} EP)`);
       }
       if (this.ecCount < 60) {
@@ -43,6 +45,9 @@ export default {
       }
       if (this.availableCharges > 0) {
         arr.push(`Charge more Infinity Upgrades (${formatInt(this.availableCharges)} available)`);
+      }
+      if (this.availableBreakCharges > 0) {
+        arr.push(`Charge more Break Infinity Upgrades (${formatInt(this.availableBreakCharges)} available)`);
       }
       return arr;
     },
@@ -84,6 +89,7 @@ export default {
       // Repeatable dilation upgrades don't have isBought, but do have boughtAmount
       this.unpurchasedDilationUpgrades = DilationUpgrade.all
         .countWhere(u => (u.isBought === undefined ? u.boughtAmount === 0 : !u.isBought) && !u.config.pelleOnly);
+      this.epMultCapped = EternityUpgrade.epMult.isCapped;
       this.currLog10EP = player.eternityPoints.log10();
       this.cheapestLog10TD = Math.min(...TimeDimensions.all.map(x => x.cost.log10()));
       this.multEPLog10Cost = EternityUpgrade.epMult.cost.log10();
@@ -91,6 +97,7 @@ export default {
       this.hasDilated = Perk.startTP.canBeApplied ? player.dilation.lastEP.gt(0)
         : player.dilation.tachyonParticles.gt(0);
       this.availableCharges = Ra.chargesLeft;
+      this.availableBreakCharges = Ra.breakChargesLeft;
     },
     clicked() {
       if (!this.canBeExpanded) return;
