@@ -236,7 +236,7 @@ class InfinityDimensionState extends DimensionState {
 
   get continuumValue() {
     if(!this.isUnlocked) return 0;
-    if(!Laitela.continuumActive) return 0;
+    if(!Ra.continuumActive) return 0;
     const logMoney = Currency.infinityPoints.value.log10();
     const logMult = Math.log10(this.costMultiplier);
     const logBase = this.baseCost.log10();
