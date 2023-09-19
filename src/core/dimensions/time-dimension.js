@@ -268,7 +268,7 @@ class TimeDimensionState extends DimensionState {
       return DC.D0;
     }
     const toGain = TimeDimension(tier + 1).productionPerSecond;
-    const current = Decimal.max(this.amount, 1);
+    const current = Decimal.max(this.totalAmount, 1);
     return toGain.times(10).dividedBy(current).times(getGameSpeedupForDisplay());
   }
 
@@ -309,6 +309,14 @@ class TimeDimensionState extends DimensionState {
       (TimeStudy.timeDimension(this._tier).isAffordable && TimeStudy.timeDimension(this._tier - 1).isBought);
   }
 
+  get purchaseCap() {
+    return 5e14;
+  }
+
+  get isCapped() {
+    return this.bought >= this.purchaseCap;
+  }
+
   get continuumValue() {
     if(!this.isUnlocked) return 0;
     if(!Laitela.continuumActive) return 0;
@@ -319,22 +327,24 @@ class TimeDimensionState extends DimensionState {
 
     const logMoney = Currency.eternityPoints.value.log10();
     let logMult = Math.log10(mult);
-    const logBase = this.baseCost.log10();
+    let logBase = this.baseCost.log10();
     let contValue = (logMoney - logBase)/logMult;
 
     if(this.tier < 5){
       if(contValue > firstThreshold){
         logMult = Math.log10(mult*1.5);
+        logBase = this.nextCost(firstThreshold).log10();
         contValue = firstThreshold + (logMoney - logBase)/logMult;
       }
       if(contValue > secondThreshold){
         logMult = Math.log10(mult*2.2);
+        logBase = this.nextCost(firstThreshold).log10();
         contValue = secondThreshold + (logMoney - logBase)/logMult;
       }
     }
     contValue = Math.min(contValue, (contValue-e6kThreshold)/TimeDimensions.scalingPast1e6000 + e6kThreshold);
-    contValue *= 1 + Laitela.matterExtraPurchaseFactor * .05;
-    if(this.tier < 8) contValue = Math.clampMax(contValue, this.purchaseCap);
+    contValue *= 1 + Laitela.matterExtraPurchaseFactor;
+    contValue = Math.clampMax(contValue, this.purchaseCap);
     return Math.clampMin(contValue, 0);
   }
 
