@@ -409,6 +409,9 @@ export const Ra = {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
     return Math.clampMax(1 + 0.005 * hoursFromUnlock, AlchemyResource.momentum.effectValue);
   },
+  get continuumActive() {
+    return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;
+  },
   quotes: Quotes.ra,
   symbol: "<i class='fas fa-sun'></i>"
 };
