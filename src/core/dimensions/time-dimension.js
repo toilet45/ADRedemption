@@ -219,7 +219,7 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const value = Laitela.continuumActive?dim.continuumValue:dim.bought
+    const value = Ra.continuumActive?dim.continuumValue:dim.bought
     const bought = tier === 8 ? Math.clampMax(value, 1e8) : value;
     mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
 
@@ -319,7 +319,7 @@ class TimeDimensionState extends DimensionState {
 
   get continuumValue() {
     if(!this.isUnlocked) return 0;
-    if(!Laitela.continuumActive) return 0;
+    if(!Ra.continuumActive) return 0;
     const firstThreshold = [null, 647, 323, 214, 160, 0, 0, 0, 0][this.tier];
     const secondThreshold = [null, 1991, 1150, 808, 623, 0, 0, 0, 0][this.tier];
     const e6kThreshold = this.e6000ScalingAmount;
