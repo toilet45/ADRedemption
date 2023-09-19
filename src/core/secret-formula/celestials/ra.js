@@ -618,13 +618,13 @@ export const ra = {
       level: 30,
       displayIcon: "?"
     },
-    placeholderR8: {
+    remembranceAlwaysActiveAndShopUnlock: {
       id: 5,
       id2: 1,
-      reward: "TBD",
+      reward: "Remembrance has no downside, affects all celestials and is always active, unlock Ra's Shop",
       pet: "ra",
       level: 40,
-      displayIcon: "?"
+      displayIcon: '<i class="fa-solid fa-check"></i>'
     },
     placeholderR9: {
       id: 6,
