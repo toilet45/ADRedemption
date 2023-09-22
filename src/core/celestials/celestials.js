@@ -116,5 +116,10 @@ GameDatabase.celestials.descriptions = [
       Doing this ${formatInt(8)} times will also give a ${formatX(8)} to Dark Energy gain.`;
     }
   },
-
+  {
+    name: "Kohler",
+    effects(){
+      return "TBD";
+    }
+  }
 ];

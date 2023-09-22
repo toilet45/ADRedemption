@@ -84,6 +84,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
           EternityChallenge(i).completions = 5;
           if (i === 12) break;
         }
+        break;
       }
       case 4:{
         if (!ImaginaryUpgrade(15).isAvailableForPurchase ) ImaginaryUpgrade(15).isAvailableForPurchase ;

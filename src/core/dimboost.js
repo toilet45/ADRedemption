@@ -89,7 +89,7 @@ export class DimBoost {
       if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
       if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
     }
-    return null;
+    return player.dimensionBoosts >= this.maxBoosts ? "Capped" : null;
   }
 
   static get requirement() {

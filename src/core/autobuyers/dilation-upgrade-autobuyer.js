@@ -30,6 +30,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get bulk() {
+    if (MendingMilestone.two.isReached) return 100000; //lazy man's fix until a better solution is implemented
     return PerkShopUpgrade.bulkDilation.effectOrDefault(1);
   }
 
