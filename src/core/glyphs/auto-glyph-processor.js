@@ -348,6 +348,10 @@ export function getGlyphLevelInputs() {
   const incAfterInstability = staticFactors.realityUpgrades + staticFactors.achievements;
   baseLevel += incAfterInstability;
   scaledLevel += incAfterInstability;
+  if (Achievement(193).isUnlocked){
+    scaledLevel *= 1.0808;
+  }
+  scaledLevel = Math.min(100000, scaledLevel);
   return {
     ep: sources.ep,
     repl: sources.repl,

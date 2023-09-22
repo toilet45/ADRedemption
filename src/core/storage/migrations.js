@@ -548,6 +548,11 @@ export const migrations = {
       }    
       player.options.UIType = player.options.newUI ? "Modern" : "Classic"
       ui.view.UIType = player.options.UIType
+    },
+  50: player => {
+      player.celestials.kohler = {
+        run: false,
+      }
     }
   },
 

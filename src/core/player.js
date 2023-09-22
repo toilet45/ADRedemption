@@ -428,7 +428,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 46,
+  version: 50,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -846,6 +846,7 @@ window.player = {
       quoteBits: 0,
     },
     kohler:{
+      run: false,
       quoteBits: 0,
     }
   },
