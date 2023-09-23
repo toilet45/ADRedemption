@@ -296,9 +296,14 @@ export const Tesseracts = {
   // aren't and can go a tiny bit past it.
   // The formula is a hardcoded 2, 4, 6 followed by successive multiplication by 2x, 4x, 6x, and so on.
   BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
+  COST_SCALER: [0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18],
   costs(index) {
-    // In practice this should never happen, but have it just to be safe
-    if (index >= this.BASE_COSTS.length) return Decimal.pow10(Number.MAX_VALUE);
+    while (index >= this.BASE_COSTS.length) {
+      let TesseractScaler = this.COST_SCALER[this.COST_SCALER.length-1] + 2;
+      let nextTesseractCost = this.BASE_COSTS[this.BASE_COSTS.length-1] * TesseractScaler;
+      this.BASE_COSTS.push(nextTesseractCost)
+      this.COST_SCALER.push(TesseractScaler)
+    }
     return Decimal.pow10(1e7 * this.BASE_COSTS[Math.floor(index)]);
   },
 
