@@ -490,10 +490,10 @@ export const ra = {
       level: 90,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    improvedTesseractFormula: {
+    improvedIpowConversion: {
       id: 21,
       id2: 0,
-      reward: "Improve Tesseract formula",
+      reward: "Improve Infinity Power conversion (based on effective Tesseract count)",
       pet: "enslaved",
       level: 100,
       displayIcon: '<i class="fa-solid fa-check"></i>'
