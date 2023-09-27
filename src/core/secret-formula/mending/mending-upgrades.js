@@ -109,7 +109,7 @@ export const mendingUpgrades = [
     id: 12,
     name: "Prior Lingua Adeptus",
     cost: 6,
-    description: () => "Glyphs always have 100% rarity and 4 effects (7 if Effarig). Start every Mend with Effarig Glyphs unlocked.",
+    description: () => "Glyphs always have a minimum 100% rarity and 4 effects (7 if Effarig). Start every Mend with Effarig Glyphs unlocked.",
   },
   {
     id: 13,

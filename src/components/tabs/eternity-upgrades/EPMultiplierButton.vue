@@ -14,7 +14,8 @@ export default {
       isAutoUnlocked: false,
       isAffordable: false,
       multiplier: new Decimal(),
-      cost: new Decimal()
+      cost: new Decimal(),
+      isCapped: false
     };
   },
   computed: {
@@ -35,11 +36,15 @@ export default {
       }
       return {
         "o-eternity-upgrade": true,
-        "o-eternity-upgrade--available": this.isAffordable,
-        "o-eternity-upgrade--unavailable": !this.isAffordable
+        "o-eternity-upgrade--bought": this.isCapped,
+        "o-eternity-upgrade--available": !this.isCapped && this.isAffordable,
+        "o-eternity-upgrade--unavailable": !this.isCapped && !this.isAffordable
       };
     },
     isDoomed: () => Pelle.isDoomed,
+    effectLabel() {
+      return `${this.isCapped?"Capped":"Currently"}:`
+    }
   },
   watch: {
     isAutobuyerActive(newValue) {
@@ -54,6 +59,7 @@ export default {
       this.multiplier.copyFrom(upgrade.effectValue);
       this.cost.copyFrom(upgrade.cost);
       this.isAffordable = upgrade.isAffordable;
+      this.isCapped = this.upgrade.isCapped;
     },
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();
@@ -72,10 +78,15 @@ export default {
       <div :class="{ 'o-pelle-disabled': isDoomed }">
         Multiply Eternity Points from all sources by {{ formatX(5) }}
         <br>
-        Currently: {{ formatX(multiplier, 2, 0) }}
+        {{ effectLabel }} {{ formatX(multiplier, 2, 0) }}
       </div>
-      <br>
-      Cost: {{ quantify("Eternity Point", cost, 2, 0) }}
+      <template v-if="!isCapped">
+        <br>
+        Cost: {{ quantify("Eternity Point", cost, 2, 0) }}
+      </template>
+      <template v-if="isCapped">
+        <span>(Capped at {{ quantify("purchase", upgrade.purchaseCap) }})</span>
+      </template>
     </button>
     <PrimaryButton
       class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon"

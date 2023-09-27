@@ -22,7 +22,8 @@ export default {
       return this.unlock.pet.name;
     },
     icon() {
-      return this.unlock.displayIcon;
+      const icon = this.unlock.displayIcon;
+      return typeof icon === "function"?icon():icon;
     },
     classObject() {
       return {

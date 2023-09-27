@@ -1393,7 +1393,7 @@ export const normalAchievements = [
       return `Multiply Multiversal Remain Gain by ${formatX(3, 0)}.`;
     },
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    effect: 2,
+    effect: 3,
   },
   {
     id: 193,

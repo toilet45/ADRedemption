@@ -32,7 +32,9 @@ export default {
       {
         pet: Ra.pets.teresa,
         scalingUpgradeVisible: () => Ra.unlocks.chargedInfinityUpgrades.isUnlocked,
-        scalingUpgradeText: () => `You can Charge ${quantifyInt("Infinity Upgrade", Ra.totalCharges)}.`,
+        scalingUpgradeText: () => Ra.unlocks.chargedBreakInfinityUpgrades.isUnlocked? 
+                                  `You can Charge ${quantifyInt("Break Infinity Upgrade", Ra.totalBreakCharges)}.`:
+                                  `You can Charge ${quantifyInt("Infinity Upgrade", Ra.totalCharges)}.`,
       },
       {
         pet: Ra.pets.effarig,
@@ -56,7 +58,22 @@ export default {
           const triadCount = Ra.unlocks.unlockHardV.effectOrDefault(0);
           return `You have unlocked ${quantifyInt("Triad Study", triadCount)}.`;
         },
-      }
+      },
+      {
+        pet: Ra.pets.ra,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
+      {
+        pet: Ra.pets.laitela,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
+      {
+        pet: Ra.pets.pelle,
+        scalingUpgradeVisible: () => false,
+        scalingUpgradeText: () => ""
+      },
     ],
     petStyle() {
       return {
@@ -81,11 +98,12 @@ export default {
         will be generated based on certain resource amounts.`;
     },
     isDoomed: () => Pelle.isDoomed,
+    dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
   },
   methods: {
     update() {
       this.memoriesPerChunk = Ra.productionPerMemoryChunk;
-      this.isRaCapped = Ra.totalPetLevel === 100;
+      this.isRaCapped = MendingUpgrade(19).isBought?RaPetRemembranceButton.totalPetLevel === 700 : Ra.totalPetLevel === 100;
       this.totalLevels = Ra.totalPetLevel;
       this.showRemembrance = Ra.unlocks.effarigUnlock.canBeApplied;
       this.hasRemembrance = Ra.remembrance.isUnlocked;
@@ -153,6 +171,7 @@ export default {
         <span
           v-for="(line, lineId) in runDescription"
           :key="lineId + '-ra-run-desc'"
+          :class="{ 'o-pelle-disabled': lineId===0 && dimboostUncapped}"
         >
           {{ line }}
         </span>

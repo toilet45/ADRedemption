@@ -128,7 +128,7 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
-    let production = this.amount;
+    let production = this.totalAmount;
     if (EternityChallenge(11).isRunning) {
       return production;
     }
@@ -193,7 +193,7 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
-    return this.amount.gt(0);
+    return this.totalAmount.gt(0);
   }
 
   get baseCost() {
@@ -232,6 +232,22 @@ class InfinityDimensionState extends DimensionState {
 
   get hardcapIPAmount() {
     return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
+  }
+
+  get continuumValue() {
+    if(!this.isUnlocked) return 0;
+    if(!Ra.continuumActive) return 0;
+    const logMoney = Currency.infinityPoints.value.log10();
+    const logMult = Math.log10(this.costMultiplier);
+    const logBase = this.baseCost.log10();
+    let contValue = (logMoney - logBase)/logMult;
+    contValue *= 1 + Laitela.matterExtraPurchaseFactor * .1;
+    if(this.tier < 8) contValue = Math.clampMax(contValue, this.purchaseCap);
+    return Math.clampMin(contValue, 0);
+  }
+
+  get totalAmount() {
+    return this.amount.max(this.continuumValue*10);
   }
 
   resetAmount() {

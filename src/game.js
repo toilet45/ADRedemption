@@ -126,19 +126,12 @@ export function gainedInfinityPoints() {
 }
 
 export function gainedMendingPoints(){
-  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ? (new Decimal(10000).pow(Math.log10(player.antimatter.exponent / 9e15)).times(new Decimal(3).pow(MendingUpgrade(1).boughtAmount))): new Decimal(3 ** MendingUpgrade(1).boughtAmount).clampMin(1);
-  if (Achievement(192).isUnlocked){
-    MvRGain = MvRGain.times(3);
-  }
-  if(MendingUpgrade(2).isBought && MendingUpgrade(3).isBought && MendingUpgrade(4).isBought && MendingUpgrade(5).isBought){
-    MvRGain = MvRGain.times(2);
-  }
-  if(MendingUpgrade(7).isBought && MendingUpgrade(8).isBought && MendingUpgrade(9).isBought && MendingUpgrade(10).isBought){
-    MvRGain = MvRGain.times(2);
-  }
-  if(MendingUpgrade(12).isBought && MendingUpgrade(13).isBought && MendingUpgrade(14).isBought && MendingUpgrade(15).isBought){
-    MvRGain = MvRGain.times(2);
-  }
+  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
+    (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
+    DC.D1;
+
+  MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
+
   return MvRGain;
 }
 export function warpReality(){
@@ -553,6 +546,11 @@ export function gameLoop(passDiff, options = {}) {
   }
   player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, getGameSpeedupFactor());
   Enslaved.isReleaseTick = false;
+
+  if(Ra.unlocks.retroactiveTeresaRealityReward.isUnlocked) {
+    const currentBest = player.celestials.teresa.bestRunAM;
+    player.celestials.teresa.bestRunAM.copyFrom(player.records.totalAntimatter.sqrt().max(currentBest));
+  }
 
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
   // updating and game time updating. This is only particularly noticeable when game speed is 1 and the player

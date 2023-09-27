@@ -1,4 +1,6 @@
 <script>
+import { MendingMilestone } from '../../../core/mending';
+
 export default {
   name: "RealityButton",
   data() {
@@ -99,6 +101,7 @@ export default {
       this.nextGlyphPercent = this.percentToNextGlyphLevelText();
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
       this.ppGained = multiplier;
+      if(MendingMilestone.one.isReached) this.ppGained *= 5;
       this.shardsGained = Effarig.shardsGained * multiplier;
       this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
       this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;

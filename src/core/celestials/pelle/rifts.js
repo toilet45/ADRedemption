@@ -135,9 +135,13 @@ class RiftState extends GameMechanicState {
     return this.config.galaxyGeneratorText;
   }
 
+  get activeCap() {
+    return Ra.unlocks.boostMVRGain.isUnlocked?5:2;
+  }
+
   toggle() {
     const active = PelleRifts.all.filter(r => r.isActive).length;
-    if (!this.isActive && active === 2) GameUI.notify.error(`You can only have 2 rifts active at the same time!`);
+    if (!this.isActive && active === this.activeCap) GameUI.notify.error(`You can only have 2 rifts active at the same time!`);
     else this.rift.active = !this.rift.active;
   }
 

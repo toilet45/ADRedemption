@@ -98,6 +98,9 @@ html {
   --color-ra-pet--effarig: #ea8585;
   --color-ra-pet--enslaved: #f1aa7f;
   --color-ra-pet--v: #ead584;
+  --color-ra-pet--ra: #9575cd;
+  --color-ra-pet--laitela: white;
+  --color-ra-pet--pelle: crimson;
 
   --color-laitela--base: white;
   --color-laitela--accent: black;
@@ -7469,6 +7472,18 @@ kbd {
   color: var(--color-ra-pet--v);
 }
 
+.c-ra-upgrade-icon--ra .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--ra);
+}
+
+.c-ra-upgrade-icon--laitela .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--laitela);
+}
+
+.c-ra-upgrade-icon--pelle .c-ra-pet-upgrade__tooltip {
+  color: var(--color-ra-pet--pelle);
+}
+
 .c-ra-upgrade-icon--inactive .c-ra-pet-upgrade__tooltip {
   color: #888888;
 }
@@ -7560,6 +7575,33 @@ kbd {
 .c-ra-pet-btn--v:hover,
 .c-ra-pet-btn--v__capped {
   background: var(--color-ra-pet--v);
+}
+
+.c-ra-pet-btn--ra {
+  color: var(--color-ra-pet--ra);
+}
+
+.c-ra-pet-btn--ra:hover,
+.c-ra-pet-btn--ra__capped {
+  background: var(--color-ra-pet--ra);
+}
+
+.c-ra-pet-btn--laitela {
+  color: var(--color-ra-pet--laitela);
+}
+
+.c-ra-pet-btn--laitela:hover,
+.c-ra-pet-btn--laitela__capped {
+  background: var(--color-ra-pet--laitela);
+}
+
+.c-ra-pet-btn--pelle {
+  color: var(--color-ra-pet--pelle);
+}
+
+.c-ra-pet-btn--pelle:hover,
+.c-ra-pet-btn--pelle__capped {
+  background: var(--color-ra-pet--pelle);
 }
 
 .c-ra-pet-btn--available__capped {

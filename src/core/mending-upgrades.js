@@ -1,6 +1,7 @@
 import { Currency } from "./currency";
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
+import { Effect } from "./game-mechanics/effect";
 
 class MendingUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
@@ -51,7 +52,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id != 19;
+    return true;
   }
 
   get isPossible() {
@@ -116,6 +117,10 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
         V.updateTotalRunUnlocks();
         break;
       }
+      case 19:{
+        Ra.checkForUnlocks();
+        break;
+      }
       default:{
           //apparently leaving this blank is equivalent to Python's "pass"
       }
@@ -159,3 +164,13 @@ export const MendingUpgrades = {
     return (player.mending.upgradeBits >> 6) + 1 === 1 << (GameDatabase.mending.upgrades.length - 5);
   }
 };
+
+export const MendingUpgradeMultiplier = new Effect(()=>{
+  const upgradeBought = id => MendingUpgrade(id).isBought;
+  let effect = 1;
+
+  for(let i = 1; i < 20; i+=5){
+    effect = effect << (upgradeBought(i+1) && upgradeBought(i+2) && upgradeBought(i+3) && upgradeBought(i+4));
+  }
+  return effect;
+});

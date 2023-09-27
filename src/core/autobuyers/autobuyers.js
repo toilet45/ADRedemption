@@ -25,11 +25,17 @@ import { MusicGlyphAutobuyerState } from "./music-glyph-autobuyer";
 
 import { NonRepeatableRealityUpgradeAutobuyerState } from "./nr-reality-upgrade-autobuyer";
 import { NonRepeatableImaginaryUpgradeAutobuyerState } from "./nr-imaginary-upgrade-autobuyer";
-
-import { TeresaMemoryAutobuyerState } from "./memory-autobuyer"
-import { EffarigMemoryAutobuyerState } from "./memory-autobuyer"
-import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer"
-import { VMemoryAutobuyerState } from "./memory-autobuyer"
+import { TeresaMemoryAutobuyerState } from "./memory-autobuyer";
+import { EffarigMemoryAutobuyerState } from "./memory-autobuyer";
+import { EnslavedMemoryAutobuyerState } from "./memory-autobuyer";
+import { VMemoryAutobuyerState } from "./memory-autobuyer";
+import { RaMemoryAutobuyerState } from "./memory-autobuyer";
+import { LaitelaMemoryAutobuyerState } from "./memory-autobuyer";
+import { PelleMemoryAutobuyerState } from "./memory-autobuyer";
+import { PelleRebuyableUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
+import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
+import { GalaxyGeneratorUpgradeAutobuyerState } from "./galgen-autobuyer";
+import { GalaxyGeneratorSacrificeAutobuyerState } from "./galgen-autobuyer";
 import { MendingAutobuyerState } from "./mending-autobuyer";
 
 export const Autobuyer = {
@@ -64,6 +70,13 @@ export const Autobuyer = {
   effarigMem: EffarigMemoryAutobuyerState.createAccessor(),
   enslavedMem: EnslavedMemoryAutobuyerState.createAccessor(),
   vMem: VMemoryAutobuyerState.createAccessor(),
+  raMem: RaMemoryAutobuyerState.createAccessor(),
+  laitelaMem: LaitelaMemoryAutobuyerState.createAccessor(),
+  pelleMem: PelleMemoryAutobuyerState.createAccessor(),
+  rebuyablePelle: PelleRebuyableUpgradeAutobuyerState.createAccessor(),
+  pelleUpgrade: new PelleUpgradeAutobuyerState(),
+  galgenUpgrade: GalaxyGeneratorUpgradeAutobuyerState.createAccessor(),
+  galgenSac: new GalaxyGeneratorSacrificeAutobuyerState(),
   mending: new MendingAutobuyerState(),
 };
 
@@ -95,6 +108,8 @@ export const Autobuyers = (function() {
     Autobuyer.musicglyph,
     Autobuyer.nrru,
     Autobuyer.nriu,
+    Autobuyer.pelleUpgrade,
+    Autobuyer.galgenSac,
   ];
 
   const singleComplex = [
@@ -113,6 +128,11 @@ export const Autobuyers = (function() {
     Autobuyer.effarigMem.zeroIndexed,
     Autobuyer.enslavedMem.zeroIndexed,
     Autobuyer.vMem.zeroIndexed,
+    Autobuyer.raMem.zeroIndexed,
+    Autobuyer.laitelaMem.zeroIndexed,
+    Autobuyer.pelleMem.zeroIndexed,
+    Autobuyer.rebuyablePelle.zeroIndexed,
+    Autobuyer.galgenUpgrade.zeroIndexed,
   ];
   const all = dimensions.concat(prestige, singleComplex, arrays);
   const multiple = [
@@ -128,6 +148,11 @@ export const Autobuyers = (function() {
     Autobuyer.effarigMem,
     Autobuyer.enslavedMem,
     Autobuyer.vMem,
+    Autobuyer.raMem,
+    Autobuyer.laitelaMem,
+    Autobuyer.pelleMem,
+    Autobuyer.rebuyablePelle,
+    Autobuyer.galgenUpgrade,
   ];
 
   return {
