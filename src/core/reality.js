@@ -754,6 +754,15 @@ export function finishProcessReality(realityProps) {
     player.break = true;
   }
   Glyphs.updateMaxGlyphCount();
+
+  if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+    let alchCap = 25000 + (100 * player.celestials.ra.pets["effarig"].level);
+    player.celestials.ra.alchemy = Array.repeat(0, 21)
+    .map(() => ({
+      amount: alchCap,
+      reaction: false
+    }));
+  }
 }
 
 function restoreCelestialRuns(celestialRunState) {

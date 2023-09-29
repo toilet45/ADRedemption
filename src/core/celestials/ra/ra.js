@@ -110,7 +110,7 @@ class RaPetState extends GameMechanicState {
   }
 
   set memories(value) {
-    this.data.memories = value;
+    this.data.memories = value > 1e300 ? 1e300 : value;
   }
 
   get memoryChunks() {
@@ -403,7 +403,7 @@ export const Ra = {
     }
   },
   get alchemyResourceCap() {
-    return 25000;
+    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (100 * player.celestials.ra.pets["effarig"].level) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;

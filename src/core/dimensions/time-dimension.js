@@ -219,8 +219,9 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const value = Ra.continuumActive?dim.continuumValue:dim.bought
-    const bought = tier === 8 ? Math.clampMax(value, 1e8) : value;
+    const value = dim.bought;//Ra.continuumActive?dim.continuumValue:dim.bought;
+    let x = Ra.unlocks.uncap8TdPurchaseMult.isUnlocked ? false : tier === 8;
+    const bought = x ? Math.clampMax(value, 1e8) : value;
     mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
 
     mult = mult.pow(getAdjustedGlyphEffect("timepow"));
@@ -319,7 +320,7 @@ class TimeDimensionState extends DimensionState {
 
   get continuumValue() {
     if(!this.isUnlocked) return 0;
-    if(!Ra.continuumActive) return 0;
+    //if(!Ra.continuumActive) return 0;
     const firstThreshold = [null, 647, 323, 214, 160, 0, 0, 0, 0][this.tier];
     const secondThreshold = [null, 1991, 1150, 808, 623, 0, 0, 0, 0][this.tier];
     const e6kThreshold = this.e6000ScalingAmount;

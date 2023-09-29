@@ -26,7 +26,7 @@ function askMendingConfirmation() {
     Modal.mending.show();
   } 
   else {
-      mendingReset();
+    mendingReset();
   }
 }
 
@@ -397,6 +397,12 @@ export function mendingReset() {
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
     resetTickspeed();
+    if (player.records.thisMend.realTime < player.records.bestMend.realTime){
+      player.records.bestMend.realTime = player.records.thisMend.realTime;
+    }
+    if (player.records.thisMend.time < player.records.bestMend.time){
+      player.records.bestMend.time = player.records.thisMend.time;
+    }
     //Mending Timer
     player.records.thisMend = {
       time: 0,

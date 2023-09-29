@@ -159,6 +159,7 @@ export default {
       mending.isUnlocked = isMendingUnlocked;
       const bestMend = records.bestMend;
       if (isMendingUnlocked) {
+        mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
         mending.best.setFrom(bestMend.time);
         mending.bestReal.setFrom(bestMend.realTime);
@@ -357,7 +358,7 @@ export default {
         You have mended the Mulitverse {{ quantifyInt("time", mending.count) }}.
       </div>
       <div v-if="mending.hasBest">
-        Your fastest Mend was {{ mending.best.toStringShort() }}.
+        Your fastest Mend was {{ mending.best.toStringShort() }} ({{ mending.bestReal.toStringShort() }} real time).
       </div>
       <div>
         You have spent {{ mending.this.toStringShort() }} in this Mend. ({{ mending.thisReal.toStringShort() }} real time)

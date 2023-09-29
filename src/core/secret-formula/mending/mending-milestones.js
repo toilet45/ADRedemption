@@ -14,7 +14,7 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "[TBD]",
+    reward: "Start Every Mend with all 4 Celestial Memories at Level 10",
   },
   four: {
     mends: 5,
@@ -38,7 +38,7 @@ export const mendingMilestones = {
   },
   nine: {
     mends: 35,
-    reward: "[TBD]",
+    reward: "The uncharged (Break) Infinity upgrades are active alongside their charged counterparts",
   },
   eleven: {
     mends: 50,

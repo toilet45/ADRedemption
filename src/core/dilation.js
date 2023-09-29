@@ -119,7 +119,7 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
   /*if (player.dilation.totalTachyonGalaxies >= tgSoftcapTwo && !Pelle.isDoomed){
     power *= 1.5;
   }*/
-  return Math.max(1, ((1 + thresholdMult * glyphReduction) ** power));
+  return Math.min(Math.max(1, ((1 + thresholdMult * glyphReduction) ** power)), 1e300);
 }
 
 export function getDilationGainPerSecond() {

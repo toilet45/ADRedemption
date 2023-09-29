@@ -390,7 +390,7 @@ export const ra = {
       effect: () => 100 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     passiveRelicShardGain: {
       id: 9,
@@ -456,7 +456,7 @@ export const ra = {
       reward: "Uncap 8th Time Dimension purchase multiplier",
       pet: "enslaved",
       level: 40,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     unlock3rdBH: {
       id: 17,

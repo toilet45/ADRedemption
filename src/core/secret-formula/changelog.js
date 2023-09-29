@@ -20,7 +20,8 @@ export const changelog = [
     <ul>
     <li>Implemented Mending Upgrades 6, 20, and all rebuyables</li>
     <li>Implemented 20 Mend Milestone</li>
-    <li>Endgame: 20 Mend Milestone and all Mending Upgrades</li>
+    <li>Implemented Warp Reality</li>
+    <li>Endgame: 20 Mend Milestone and about ee?? antimatter</li>
     </ul>
     <b>Bugfixes:</b>
     <br>
@@ -28,6 +29,8 @@ export const changelog = [
     <li>Fixed Pelle Time Dilation Rebuyables' display when their cap is reached</li>
     <li>Made Glyph Sacrifice mode defalut to "Always Sacrifice" on Mend</li>
     <li>Glyph Filter Mode is set to "Lowest Total Glyph Sacrifice" on Mend</li>
+    <li>Made all pre-Pelle achievements visible again on a new game</li>
+    <li>Fixed progress stage not being updated on Mend</li>
     </ul>
     <b>Known Issues:</b>
     <br>

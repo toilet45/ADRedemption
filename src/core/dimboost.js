@@ -84,12 +84,13 @@ export class DimBoost {
   }
 
   static get lockText() {
+    let boostCap = 1e9;
     if (DimBoost.purchasedBoosts >= this.maxBoosts) {
       if (Ra.isRunning) return "Locked (Ra's Reality)";
       if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
       if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
     }
-    return player.dimensionBoosts >= this.maxBoosts ? "Capped" : null;
+    return player.dimensionBoosts >= this.maxBoosts ? "Capped at " + formatInt(boostCap) +" Dimension Boosts" : null;
   }
 
   static get requirement() {
