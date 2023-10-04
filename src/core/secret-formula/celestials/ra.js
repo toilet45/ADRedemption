@@ -432,7 +432,7 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     effarigMendUnlock: {
       id: 14,
