@@ -137,9 +137,8 @@ class InfinityDimensionState extends DimensionState {
     }
     if (player.infinityPower.exponent > 9e15){
       let x = player.infinityPower;
-      let y = 1; //insert decrease fromula here
       production = production.times(this.multiplier);
-      production = production.pow(1/(x.log10()**y));
+      production = production.pow(1/(x.log10()**0.1));
       return production;
     }
     return production.times(this.multiplier);

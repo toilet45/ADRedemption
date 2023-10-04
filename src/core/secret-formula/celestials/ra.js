@@ -403,11 +403,11 @@ export const ra = {
     harshInstabilityDelay: {
       id: 10,
       id2: 0,
-      reward: () => `Harsh glyph instability is delayed by ${formatInt(1000)} for every ${formatInt(5)} levels past ${formatInt(50)}`,
-      effect: () => 1000*Math.floor((Ra.pets.effarig.level-50)/5),
+      reward: () => `Harsh glyph instability is delayed by ${formatInt(500)} for every ${formatInt(5)} levels past ${formatInt(50)}`,
+      effect: () => 500*Math.floor((Ra.pets.effarig.level-50)/5),
       pet: "effarig",
       level: 50,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     relicShardBoost: {
       id: 11,

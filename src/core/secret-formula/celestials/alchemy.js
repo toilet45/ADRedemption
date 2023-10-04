@@ -325,7 +325,10 @@ export const alchemyResources = {
     name: "Uncountability",
     symbol: "Θ",
     isBaseResource: false,
-    effect: amount => 160 * Math.sqrt(amount / 25000),
+    effect: amount =>{ 
+      let x = BreakInfinityUpgrade.slowestChallengeMult.chargedEffect.isEffectActive ? Math.pow(Ra.pets.teresa.level, 0.5) : 1;
+      return Math.pow(160 * Math.sqrt(amount / 25000), x);
+    },
     tier: 4,
     uiOrder: 3,
     unlockedAt: 19,

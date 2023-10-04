@@ -21,6 +21,7 @@ export const changelog = [
     <li>Implemented Mending Upgrades 6, 20, and all rebuyables</li>
     <li>Implemented 20 Mend Milestone</li>
     <li>Implemented Warp Reality</li>
+    <li>Added Mending content to the catchup modal</li>
     <li>Endgame: 20 Mend Milestone and about ee?? antimatter</li>
     </ul>
     <b>Bugfixes:</b>

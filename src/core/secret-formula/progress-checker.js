@@ -162,7 +162,7 @@ export const progressStages = [
   {
     id: PROGRESS_STAGE.MENDING,
     name: "Mending",
-    hasReached: save => save.mends?.gte(0),
+    hasReached: () => PlayerProgress.mendingUnlocked(),
     suggestedResource: "Multiversal Remains"
   },
 ];

@@ -53,6 +53,7 @@ export default {
     config: {
       immediate: true,
       handler(config) {
+        this.hasCap = false;
         this.updateEffect = () => { };
         this.updateCap = () => { };
         const effect = config?.effect;
