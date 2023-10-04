@@ -299,6 +299,19 @@ export const Time = {
     this.toMilliseconds(timespan, value => player.records.bestMend.realTime = value);
   },
 
+    /**
+   * @returns {TimeSpan}
+   */
+    get thisMend() {
+      return this.fromMilliseconds(() => player.records.thisMend.time);
+    },
+    /**
+     * @param {TimeSpan} timespan
+     */
+    set thisMend(timespan) {
+      this.toMilliseconds(timespan, value => player.records.thisMend.time = value);
+    },
+
   /**
    * @returns {TimeSpan}
    */

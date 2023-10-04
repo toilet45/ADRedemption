@@ -38,7 +38,7 @@ export const breakInfinityUpgrades = {
         `Antimatter Dimensions gain a power effect based on total antimatter and Teresa level`,
       effect: () => 1 +
                     Math.log(1+Math.log10(player.records.totalAntimatter.exponent)) *
-                    Math.pow(Ra.pets.teresa.level, 0.5) / 150,
+                    Math.pow(Ra.pets.teresa.level, 0.2) / 150,
       formatEffect: value => formatPow(value, 4, 4)
     }
   },
@@ -53,7 +53,7 @@ export const breakInfinityUpgrades = {
         `Antimatter Dimensions gain a power effect based on current antimatter and Teresa level`,
       effect: () => 1 +
                     Math.log(Math.log10(Currency.antimatter.exponent)) *
-                    Math.pow(Ra.pets.teresa.level, 0.5) / 150,
+                    Math.pow(Ra.pets.teresa.level, 0.2) / 150,
       formatEffect: value => formatPow(value, 4, 4)
     }
   },
@@ -63,8 +63,8 @@ export const breakInfinityUpgrades = {
     description: () => `All Galaxies are ${formatPercents(0.5)} stronger`,
     effect: 1.5,
     charged: {
-      description: () => `All Galaxies are ${formatPercents(1)} stronger`,
-      effect: 2
+      description: () => `All Galaxies are ${formatPercents(0.66667, 2)} stronger`,
+      effect: 1.66667
     }
   },
   infinitiedMult: {
@@ -74,8 +74,9 @@ export const breakInfinityUpgrades = {
     effect: () => 1 + Currency.infinitiesTotal.value.pLog10() * 10,
     formatEffect: value => formatX(value, 2, 2),
     charged: {
-      description: "NYI",
-      effect: () => 1,
+      description: "Raise TS31's exponent based on Teresa Level and Infinities",
+      effect: () => Math.max(1 + (Currency.infinitiesTotal.value.pLog10() / 10000) * Math.pow(Ra.pets.teresa.level, 0.2) / 150, 1),
+      formatEffect: value => formatPow(value, 4, 4)
     }
   },
   achievementMult: {
@@ -85,7 +86,9 @@ export const breakInfinityUpgrades = {
     effect: () => Math.max(Math.pow((Achievements.effectiveCount - 30), 3) / 40, 1),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
-      description: "NYI"
+      description: "Raise Achievement Multiplier based on Teresa and V Level",
+      effect: () => Math.max(1 + Math.pow(Ra.pets.teresa.level + Ra.pets.v.level, 0.65) / 7.5, 1),
+      formatEffect: value => formatPow(value, 4, 4)
     }
   },
   slowestChallengeMult: {
@@ -97,7 +100,9 @@ export const breakInfinityUpgrades = {
     hasCap: true,
     cap: DC.D3E4,
     charged: {
-      description: "NYI"
+      description: "Raise IC1 Reward based on Teresa Level",
+      effect: () => Ra.pets.teresa.level * 1e11,
+      formatEffect: value => formatPow(value)
     }
   },
   infinitiedGen: {
@@ -120,8 +125,9 @@ export const breakInfinityUpgrades = {
       return `${quantify("Infinity", infinities)} every ${timeStr}`;
     },
     charged: {
-      description: "NYI",
-      effect: () => 1,
+      description: "Remove the Reality hardcap from The Knowing Existence and raise Uncountability based on Teresa Level",
+      effect: () => Math.max(Math.pow(Ra.pets.teresa.level, 0.5), 1),
+      formatEffect: value => formatPow(value, 2, 2)
     }
   },
   autobuyMaxDimboosts: {
@@ -129,7 +135,9 @@ export const breakInfinityUpgrades = {
     cost: 5e9,
     description: "Unlock the buy max Dimension Boost Autobuyer mode",
     charged: {
-      description: "NYI"
+      description: "Multiply free Dimension Boost amount based on Teresa Level",
+      effect: () => Math.pow(Ra.pets.teresa.level, 0.5),
+      formatEffect: value => formatX(value, 2, 2)
     }
   },
   autobuyerSpeed: {
@@ -137,7 +145,9 @@ export const breakInfinityUpgrades = {
     cost: 1e15,
     description: "Autobuyers unlocked or improved by Normal Challenges work twice as fast",
     charged: {
-      description: "NYI"
+      description: "Increase Continuum Purchases based on Teresa and Lai'tela Level",
+      effect: () => Math.max((Ra.pets.teresa.level + Ra.pets.laitela.level) / 125, 1),
+      formatEffect: value => `+${formatPercents(value, 2, 2)}`
     }
   },
   tickspeedCostMult: rebuyable({

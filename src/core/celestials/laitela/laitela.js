@@ -46,8 +46,9 @@ export const Laitela = {
     }
   },
   get matterExtraPurchaseFactor() {
-    return (1 + 0.5 * Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
-      (1 + SingularityMilestone.continuumMult.effectOrDefault(0))) * (MendingUpgrade(18).isBought ? 1.5 : 1);
+    let x = BreakInfinityUpgrade.autobuyerSpeed.chargedEffect.isEffectActive ? Math.max((Ra.pets.teresa.level + Ra.pets.laitela.level) / 125, 1) : 1;
+    return ((1 + 0.5 * Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
+      (1 + SingularityMilestone.continuumMult.effectOrDefault(0))) * (MendingUpgrade(18).isBought ? 1.5 : 1)) + x;
   },
   get realityReward() {
     return Math.clampMin(Math.pow(100, this.difficultyTier) *

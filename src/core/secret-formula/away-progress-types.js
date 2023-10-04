@@ -131,4 +131,9 @@ export const awayProgressTypes = [
     reference: ["celestials", "pelle", "realityShards"],
     isUnlocked: () => Pelle.isDoomed,
   },
+  {
+    name: "multiversalRemains",
+    reference: ["mending", "new content"],
+    isUnlocked: () => PlayerProgress.mendingUnlocked(),
+  },
 ];

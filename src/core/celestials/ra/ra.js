@@ -403,7 +403,7 @@ export const Ra = {
     }
   },
   get alchemyResourceCap() {
-    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (100 * player.celestials.ra.pets["effarig"].level) : 25000;
+    return 25000;//Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
