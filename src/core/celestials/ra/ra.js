@@ -396,14 +396,10 @@ export const Ra = {
       reaction.combineReagents();
     }
     this.updateAlchemyFlow(realityRealTime);
-    if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
-      AlchemyResources.all.forEach((resource, id, resources) => {
-        resources[id].amount = Math.min(resource.cap, this.alchemyResourceCap);
-      });
-    }
   },
   get alchemyResourceCap() {
-    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (100 * player.celestials.ra.pets["effarig"].level) : 25000;
+    //return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (100 * player.celestials.ra.pets["effarig"].level) : 25000;
+    return 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
