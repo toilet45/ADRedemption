@@ -17,7 +17,6 @@ export default {
     SynergismGameHeader,
     SynergismSubtabBar,
     SynergismTabBar,
-    NewsTicker,
     InfinityPointsHeader,
     SynergismEPHeader,
     BigCrunchButton,

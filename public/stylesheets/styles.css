@@ -102,7 +102,7 @@ html {
   --color-laitela--base: white;
   --color-laitela--accent: black;
 
-  --color-pelle--base: crimson;
+  --color-pelle--base: #dc143c;
   --color-pelle--secondary: #00bcd4;
 
   /*Custom Stuff Starts Here*/
