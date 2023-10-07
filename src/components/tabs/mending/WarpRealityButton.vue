@@ -29,7 +29,7 @@ export default {
   methods: {
     update() {
       this.isWarped = player.reality.warped;
-      this.isUnlocked = true;
+      this.isUnlocked = true; //player.mendingPoints.gte(1e5) && player.records.bestMend < 99999999;
     },
     clicked() {
       if (!this.isWarped && this.isUnlocked) Modal.warpReality.show();

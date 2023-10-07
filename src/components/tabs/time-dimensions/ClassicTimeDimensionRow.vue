@@ -37,6 +37,8 @@ export default {
       ttCost: 0,
       ttGen: new Decimal(),
       currTT: new Decimal(),
+      isContinuumActive: false,
+      continuumValue: 0,
     };
   },
   computed: {
@@ -48,10 +50,16 @@ export default {
     },
     buttonContents() {
       if (this.showTTCost) return this.formattedTTCost;
+      if(this.isContinuumActive) return `Continuum: ${this.continuumString}`;
       return this.formattedEPCost;
+    },
+    continuumString() {
+      if (this.continuumValue >= 1e9) return format(this.continuumValue, 2, 2);
+      return formatFloat(this.continuumValue, 2);
     },
     tooltipContents() {
       if (this.showTTCost) return `${this.formattedEPCost}<br>${this.timeEstimate}`;
+      if (this.isContinuumActive) return "Continuum produces all your Time Dimensions";
       if (this.isCapped) return `Nameless prevents the purchase of more than ${format(1)} Time Dimension`;
       return `Purchased ${quantifyInt("time", this.bought)}`;
     },
@@ -88,7 +96,7 @@ export default {
       this.isCapped = Enslaved.isRunning && dimension.bought > 0;
       this.isUnlocked = dimension.isUnlocked;
       this.multiplier.copyFrom(dimension.multiplier);
-      this.amount.copyFrom(dimension.amount);
+      this.amount.copyFrom(dimension.totalAmount);
       this.bought = dimension.bought;
       if (tier < 8) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);
@@ -105,16 +113,26 @@ export default {
       if (this.tier > 4) this.ttCost = TimeStudy.timeDimension(this.tier).cost;
       this.currTT.copyFrom(Currency.timeTheorems.value);
       this.ttGen.copyFrom(getTTPerSecond().times(getGameSpeedupFactor()));
+      this.isContinuumActive = false;//Ra.continuumActive;
+      if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buyTimeDimension() {
       if (!this.isUnlocked) {
         TimeDimension(this.tier).tryUnlock();
         return;
       }
+      if(this.isContinuumActive) return;
       buySingleTimeDimension(this.tier);
     },
     buyMaxTimeDimension() {
+      if(this.isContinuumActive) return;
       buyMaxTimeDimension(this.tier);
+    },
+    buttonClass() {
+      return {
+        'l-dim-row-small-text': this.hasLongText,
+        "o-non-clickable o-continuum": this.isContinuumActive,
+      };
     },
   }
 };
@@ -135,9 +153,9 @@ export default {
     />
     <div class="l-dim-row-multi-button-container">
       <PrimaryButton
-        :enabled="isAvailableForPurchase && !isCapped"
+        :enabled="isAvailableForPurchase && !isCapped && !isContinuumActive"
         class="o-primary-btn--buy-td o-primary-btn--buy-dim c-dim-tooltip-container"
-        :class="{ 'l-dim-row-small-text': hasLongText }"
+        :class="buttonClass()"
         @click="buyTimeDimension"
       >
         {{ buttonContents }}
@@ -146,13 +164,13 @@ export default {
         </div>
       </PrimaryButton>
       <PrimaryToggleButton
-        v-if="areAutobuyersUnlocked"
+        v-if="areAutobuyersUnlocked && !isContinuumActive"
         v-model="isAutobuyerOn"
         class="o-primary-btn--buy-td-auto"
         label="Auto:"
       />
       <PrimaryButton
-        v-else
+        v-else-if="!isContinuumActive"
         :enabled="isAvailableForPurchase && !isCapped"
         class="o-primary-btn--buy-td-auto"
         @click="buyMaxTimeDimension"
@@ -162,3 +180,17 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.o-continuum {
+  border-color: var(--color-laitela--accent);
+  color: var(--color-laitela--accent);
+  background: var(--color-laitela--base);
+}
+
+.o-continuum:hover {
+  border-color: var(--color-laitela--accent);
+  color: var(--color-laitela--base);
+  background: var(--color-laitela--accent);
+}
+</style>

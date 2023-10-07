@@ -62,5 +62,12 @@ export const effarigUnlocks = {
     get description() {
       return " You have unlocked Effarig Glyphs (You may equip at most one and some effects are mutually exclusive)";
     },
+  },
+  mend: {
+    id: 7,
+    label: "Mend",
+    get description() {
+      return ` TBD`
+    }
   }
 };

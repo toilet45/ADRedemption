@@ -93,6 +93,7 @@ export const Pelle = {
     player.IPMultPurchases = 0;
     Autobuyer.bigCrunch.mode = AUTO_CRUNCH_MODE.AMOUNT;
     disChargeAll();
+    disChargeAllBreak();
     clearCelestialRuns();
 
     // Force-enable the group toggle for AD autobuyers to be active; whether or not they can actually tick
@@ -176,6 +177,7 @@ export const Pelle = {
     }
     finishProcessReality({ reset: true, armageddon: true });
     disChargeAll();
+    disChargeAllBreak();
     player.celestials.enslaved.isStoringReal = false;
     player.celestials.enslaved.autoStoreReal = false;
     if (PelleStrikes.dilation.hasStrike) player.dilation.active = true;

@@ -41,6 +41,7 @@ export default {
       scrambledText: "",
       maxReplicanti: new Decimal(),
       estimateToMax: 0,
+      hasFree: false,
     };
   },
   computed: {
@@ -83,12 +84,13 @@ export default {
         upgrade,
         value => {
           let description = `Max Replicanti Galaxies: `;
-          const extra = upgrade.extra;
+          let extra = Math.min(upgrade.extra, 350000);
+          let x = Math.min(250000, value);
           if (extra > 0) {
-            const total = value + extra;
-            description += `<br>${formatInt(value)} + ${formatInt(extra)} = ${formatInt(total)}`;
+            const total = x + extra;
+            description += `<br>${formatInt(x)} + ${formatInt(extra)} = ${formatInt(total)}`;
           } else {
-            description += formatInt(value);
+            description += formatInt(x);
           }
           return description;
         },
@@ -168,6 +170,7 @@ export default {
         Replicanti.galaxies.max >= 1 || PlayerProgress.eternityUnlocked();
       this.maxReplicanti.copyFrom(player.records.thisReality.maxReplicanti);
       this.estimateToMax = this.calculateEstimate();
+      this.hasFree = ReplicantiUpgrade.galaxies.extra > 0;
     },
     vacuumText() {
       return wordShift.wordCycle(PelleRifts.vacuum.name);
@@ -249,6 +252,11 @@ export default {
         <br>
         more rapidly above {{ formatInt(distantRG) }} Replicanti Galaxies
         and even more so above {{ formatInt(remoteRG) }} Replicanti Galaxies.
+        <br>
+        You can only buy a max of {{ formatInt(250000) }} Replicanti Galaxies.
+        <div v-if="hasFree">
+          Free Replicanti Galaxies are capped at {{ formatInt(350000) }}.
+        </div>
       </div>
       <br><br>
       <ReplicantiGainText />

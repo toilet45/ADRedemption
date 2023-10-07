@@ -171,9 +171,9 @@ export const realityUpgrades = [
     canLock: true,
     lockEvent: "complete Eternity Challenge 1",
     description: "Eternity Point multiplier based on Reality and Time Theorem count",
-    effect: () => Currency.timeTheorems.value
-      .minus(DC.E3).clampMin(2)
-      .pow(Math.log2(Math.min(Currency.realities.value, 1e4))).clampMin(1),
+    effect: () => { 
+      let x = BreakInfinityUpgrade.infinitiedGen.chargedEffect.isEffectActive ? Infinity : 10000; 
+      return Currency.timeTheorems.value.minus(DC.E3).clampMin(2).pow(Math.log2(Math.min(Currency.realities.value, x))).clampMin(1)},
     formatEffect: value => formatX(value, 2, 2)
   },
   {

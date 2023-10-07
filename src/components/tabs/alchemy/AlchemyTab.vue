@@ -63,7 +63,7 @@ export default {
   methods: {
     update() {
       this.reactionsAvailable = AlchemyResources.all.filter(res => !res.isBaseResource && res.isUnlocked).length !== 0;
-      this.realityCreationVisible = Ra.pets.effarig.level === 25;
+      this.realityCreationVisible = Ra.pets.effarig.level >= 25;
       this.animationTimer += 35;
       this.alchemyCap = Ra.alchemyResourceCap;
       this.capFactor = 1 / GlyphSacrificeHandler.glyphRefinementEfficiency;

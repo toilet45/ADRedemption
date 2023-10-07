@@ -1,9 +1,13 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
+import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
 
 class RaUnlockState extends BitUpgradeState {
   get bits() { return player.celestials.ra.unlockBits; }
   set bits(value) { player.celestials.ra.unlockBits = value; }
+
+  get modBits() { return player.celestials.ra.modUnlockBits; }
+  set modBits(value) { player.celestials.ra.modUnlockBits = value; }
 
   get disabledByPelle() {
     return Pelle.isDoomed && this.config.disabledByPelle;
@@ -106,7 +110,7 @@ class RaPetState extends GameMechanicState {
   }
 
   set memories(value) {
-    this.data.memories = value;
+    this.data.memories = value > 1e300 ? 1e300 : value;
   }
 
   get memoryChunks() {
@@ -124,14 +128,14 @@ class RaPetState extends GameMechanicState {
   get memoryChunksPerSecond() {
     if (!this.canGetMemoryChunks) return 0;
     let res = this.rawMemoryChunksPerSecond * this.chunkUpgradeCurrentMult *
-      Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality);
+      Math.max(Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality), 1);
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
     return res;
   }
 
   get canGetMemoryChunks() {
-    return this.isUnlocked && Ra.isRunning;
+    return this.isUnlocked && (Ra.isRunning || (this.id === "pelle" && Pelle.isDoomed));
   }
 
   get hasRemembrance() {
@@ -173,23 +177,28 @@ class RaPetState extends GameMechanicState {
   purchaseMemoryUpgrade() {
     if (!this.canBuyMemoryUpgrade || this.memoryUpgradeCapped) return;
 
-    this.memories -= this.memoryUpgradeCost;
+    if(this.spendsMemories) this.memories -= this.memoryUpgradeCost;
     this.data.memoryUpgrades++;
   }
 
   purchaseChunkUpgrade() {
     if (!this.canBuyChunkUpgrade || this.chunkUpgradeCapped) return;
 
-    this.memories -= this.chunkUpgradeCost;
+    if(this.spendsMemories) this.memories -= this.chunkUpgradeCost;
     this.data.chunkUpgrades++;
   }
 
   levelUp() {
     if (this.memories < this.requiredMemories) return;
+    if(this.id === 'pelle' && this.level === 99 && Ra.totalPetLevel != 699) return;
 
-    this.memories -= this.requiredMemories;
+    if(this.spendsMemories) this.memories -= this.requiredMemories;
     this.level++;
     Ra.checkForUnlocks();
+  }
+
+  get spendsMemories() {
+    return !Ra.unlocks.upgradesDontSpendMems.isUnlocked;
   }
 
   get unlocks() {
@@ -205,12 +214,11 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    let newMemories = seconds * (this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult;
+    const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+      this.memoryUpgradeCurrentMult, MendingUpgrade(15).isBought?1.5:1);
+
+    let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
-    if (MendingUpgrade(15).isBought){
-      newMemories = Math.pow(newMemories, 1.5);
-    }
     this.memories += newMemories;
   }
 
@@ -245,9 +253,12 @@ export const Ra = {
   reset() {
     const data = player.celestials.ra;
     data.unlockBits = 0;
+    data.modUnlockBits = [0, 0, 0];
     data.run = false;
     data.charged = new Set();
     data.disCharge = false;
+    data.breakCharged = new Set();
+    data.breakDischarge = false;
     data.peakGamespeed = 1;
     for (const pet of Ra.pets.all) pet.reset();
   },
@@ -282,15 +293,17 @@ export const Ra = {
     if (level >= Ra.levelCap) return Infinity;
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
-    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * 1e6);
+    const post40Scaling = Math.pow(3, Math.max(0, level-40));
+    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * post40Scaling * 1e6);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
     // Quadratic formula for growth (uses constant growth for a = 0)
+    const x = MendingUpgrade(15).isBought? 1.5:1;
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond / 2;
-    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks;
+      : Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond, x) / 2;
+    const b = Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks, x);
     const c = -expToGain;
     const estimate = a === 0
       ? -c / b
@@ -304,13 +317,13 @@ export const Ra = {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
   },
   get levelCap() {
-    return 25;
+    return MendingUpgrade(19).isBought?100:25;
   },
   get maxTotalPetLevel() {
     return this.levelCap * this.pets.all.length;
   },
   checkForUnlocks() {
-    if (!VUnlocks.raUnlock.canBeApplied) return;
+    if (!VUnlocks.raUnlock.canBeApplied && !MendingUpgrade(19).isBought) return;
     for (const unl of Ra.unlocks.all) {
       unl.unlock();
     }
@@ -352,6 +365,12 @@ export const Ra = {
   get chargesLeft() {
     return this.totalCharges - player.celestials.ra.charged.size;
   },
+  get totalBreakCharges() {
+    return Ra.unlocks.chargedBreakInfinityUpgrades.effectOrDefault(0);
+  },
+  get breakChargesLeft(){
+    return this.totalBreakCharges - player.celestials.ra.breakCharged.size;
+  },
   get canBuyTriad() {
     return Ra.unlocks.unlockHardV.canBeApplied;
   },
@@ -377,13 +396,21 @@ export const Ra = {
       reaction.combineReagents();
     }
     this.updateAlchemyFlow(realityRealTime);
+    if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+      AlchemyResources.all.forEach((resource, id, resources) => {
+        resources[id].amount = Math.min(resource.cap, this.alchemyResourceCap);
+      });
+    }
   },
   get alchemyResourceCap() {
-    return 25000;
+    return 25000;//Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
     return Math.clampMax(1 + 0.005 * hoursFromUnlock, AlchemyResource.momentum.effectValue);
+  },
+  get continuumActive() {
+    return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;
   },
   quotes: Quotes.ra,
   symbol: "<i class='fas fa-sun'></i>"

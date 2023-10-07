@@ -196,7 +196,7 @@ export const DC = deepFreeze({
   END:                new Decimal("1e9000000000000000"),
   E1E9:                 new Decimal("1e1000000000"),
   E1E10:                 new Decimal("1e10000000000"),
-  WARP_LIMIT: new Decimal("1e1000000000000000000000"),
+  WARP_LIMIT: new Decimal("1e10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"),
 });
 
 window.AUTOBUYER_MODE = {
@@ -248,6 +248,13 @@ window.GLYPH_MIME_TYPE = "text/x-ivark-glyph";
 // in order for reality glyph color parsing to work properly in the cosmetic handler
 window.GlyphRarities = [
   {
+    minStrength: 3.75,
+    name: "Divine",
+    darkColor: "#ca7cee",
+    lightColor: "#deaaf9",
+    darkHighContrast: "#ff60ff",
+    lightHighContrast: "#600060"
+  },{
     minStrength: 3.5,
     name: "Celestial",
     darkColor: "#3d3dec",
@@ -520,6 +527,7 @@ window.PROGRESS_STAGE = {
   IMAGINARY_MACHINES: 15,
   LAITELA: 16,
   PELLE: 17,
+  MENDING: 18
 };
 
 window.STD_BACKEND_URL = "https://antimatterdimensionspayments.ew.r.appspot.com";

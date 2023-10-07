@@ -1,6 +1,7 @@
 <script>
 import SliderComponent from "@/components/SliderComponent";
 import ToggleButton from "@/components/ToggleButton";
+import { Achievement } from "../../../core/globals";
 
 export default {
   name: "GlyphLevelsAndWeights",
@@ -10,6 +11,7 @@ export default {
   },
   data() {
     return {
+      has193: false,
       perkShopVisible: false,
       penaltyVisible: false,
       rowVisible: false,
@@ -70,6 +72,7 @@ export default {
       if (this.penaltyVisible) rows.push("instability");
       if (this.rowVisible) rows.push("upgrade rows");
       if (this.achievementVisible) rows.push("achievements");
+      if (this.has193) rows.push("193");
       rows.push("level");
       rows.push("info");
       rows.push("info2");
@@ -128,9 +131,9 @@ export default {
         if (Date.now() - this.lastInstability > 2000) this.penaltyVisible = false;
       }
       this.rows = this.visibleRows.length;
-      if (this.adjustVisible && this.rows < 6) {
+      if (this.adjustVisible && this.rows < 7) {
         // Keep UI from getting crammed
-        this.rows = 6;
+        this.rows = 7;
       }
       this.factors = glyphFactors;
       this.shardsGained = Effarig.shardsGained;
@@ -146,6 +149,7 @@ export default {
       }
       this.showAutoAdjustWeights = Achievement(165).isUnlocked;
       this.isAutoAdjustWeightsOn = player.celestials.effarig.autoAdjustGlyphWeights;
+      this.has193 = Achievement(193).isUnlocked;
     },
     rowStyle(factor) {
       const row = this.visibleRows.findIndex(r => r === factor) + 1;
@@ -466,6 +470,26 @@ function roundPreservingSum(data) {
       >
         {{ formatInt(factors.achievementFactor) }}
       </div>
+    </template>
+    <template v-if="this.has193">
+      <div
+        :style="rowStyle('193')"
+        class="l-glyph-levels-and-weights__factor"
+      >
+        TRUE Royal Flush
+      </div>
+      <div
+        :style="rowStyle('193')"
+        class="l-glyph-levels-and-weights__operator"
+      >
+        ×
+      </div>
+      <div
+        :style="rowStyle('193')"
+        class="l-glyph-levels-and-weights__factor-val"
+      >
+        1.0808
+      </div>      
     </template>
     <div
       :style="rowStyle('level')"

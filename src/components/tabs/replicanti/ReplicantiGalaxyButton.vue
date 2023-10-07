@@ -1,6 +1,7 @@
 <script>
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { playerInfinityUpgradesOnReset } from "../../../game";
 
 export default {
   name: "ReplicantiGalaxyButton",
@@ -21,15 +22,18 @@ export default {
   },
   computed: {
     resetActionDisplay() {
+      if (player.replicanti.galaxies + Replicanti.galaxies.extra >= 1e5) return "Gain";
       return this.isDivideUnlocked && !Pelle.isDoomed
-        ? `Divide Replicanti by ${format(Number.MAX_VALUE, 1, 1)}`
-        : "Reset Replicanti amount";
+        ? `Divide Replicanti by ${format(Number.MAX_VALUE, 1, 1)} for`
+        : "Reset Replicanti amount for";
     },
     galaxyCountDisplay() {
       const bought = this.boughtGalaxies;
       const extra = this.extraGalaxies;
       const galaxyCount = extra > 0 ? `${formatInt(bought)}+${formatInt(extra)}` : formatInt(bought);
-      return `Currently: ${galaxyCount}`;
+      let y = bought >= 250000 ? " (hardcapped) " : "";
+      let z = extra >= 350000 ? " (hardcapped)" : "";
+      return bought >= 250000 ? `Currently: ${formatInt(250000)}` + y + `+ ${formatInt(extra)}` + z: `Currently: ${galaxyCount}`;
     },
     autobuyer() {
       return Autobuyer.replicantiGalaxy;
@@ -44,8 +48,8 @@ export default {
     update() {
       const rg = Replicanti.galaxies;
       this.isAvailable = rg.canBuyMore;
-      this.boughtGalaxies = rg.bought;
-      this.extraGalaxies = rg.extra;
+      this.boughtGalaxies = Math.min(rg.bought, 250000);
+      this.extraGalaxies = Math.min(rg.extra, 350000);
       this.isDivideUnlocked = Achievement(126).isUnlocked;
       const auto = Autobuyer.replicantiGalaxy;
       this.isAutoUnlocked = auto.isUnlocked;
@@ -70,7 +74,7 @@ export default {
       class="o-primary-btn--replicanti-galaxy"
       @click="handleClick"
     >
-      {{ resetActionDisplay }} for a Replicanti Galaxy
+      {{ resetActionDisplay }} a Replicanti Galaxy
       <br>
       {{ galaxyCountDisplay }}
     </PrimaryButton>

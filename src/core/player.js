@@ -213,27 +213,45 @@ window.player = {
     pets: {
       teresa: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       effarig: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       enslaved: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
       },
       v: {
         upgrades: Array.range(0, 3).map(() => ({
-          isActive: false,
+          isActive: true,
         })),
-        isActive: true,
+        isActive: false,
+      },
+      ra: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+      laitela: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
+      },
+      pelle: {
+        upgrades: Array.range(0, 3).map(() => ({
+          isActive: true,
+        })),
+        isActive: false,
       },
     },
     darkMatterDims: {
@@ -251,6 +269,28 @@ window.player = {
     singularity: { isActive: false },
     ipMultBuyer: { isActive: false, },
     epMultBuyer: { isActive: false, },
+    nrru :{
+      isActive: false,
+      lastTick: 0
+    },
+    nriu: {
+      isActive: false,
+      lastTick: 0
+    },
+    pelleRebuyableUpgrades: {
+      all: Array.range(0, 5).map(() => ({
+        isActive: false,
+      })),
+      isActive: true,
+    },
+    pelleUpgrades: { isActive: false },
+    galgenUpgrades: {
+      all: Array.range(0, 5).map(() => ({
+        isActive: false,
+      })),
+      isActive: true,
+    },
+    galgenSac: { isActive: false },
   },
   infinityPoints: DC.D0,
   infinities: DC.D0,
@@ -428,7 +468,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 46,
+  version: 50,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -720,6 +760,27 @@ window.player = {
           memoryChunks: 0,
           memoryUpgrades: 0,
           chunkUpgrades: 0
+        },
+        ra: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
+        },
+        laitela: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
+        },
+        pelle: {
+          level: 1,
+          memories: 0,
+          memoryChunks: 0,
+          memoryUpgrades: 0,
+          chunkUpgrades: 0
         }
       },
       alchemy: Array.repeat(0, 21)
@@ -738,9 +799,12 @@ window.player = {
       quoteBits: 0,
       momentumTime: 0,
       unlockBits: 0,
+      modUnlockBits: [0, 0, 0],
       run: false,
       charged: new Set(),
       disCharge: false,
+      breakCharged: new Set(),
+      breakDischarge: false,
       peakGamespeed: 1,
       petWithRemembrance: ""
     },
@@ -846,6 +910,7 @@ window.player = {
       quoteBits: 0,
     },
     kohler:{
+      run: false,
       quoteBits: 0,
     }
   },
@@ -1069,7 +1134,7 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    if (Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (Teresa.isRunning ||Pelle.isDoomed || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 

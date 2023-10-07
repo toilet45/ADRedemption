@@ -299,7 +299,9 @@ Currency.infinityPoints = new class extends DecimalCurrency {
 
 Currency.infinityPower = new class extends DecimalCurrency {
   get value() { return player.infinityPower; }
-  set value(value) { player.infinityPower = value; }
+  set value(value) { 
+    player.infinityPower = value; 
+  }
 }();
 
 Currency.eternities = new class extends DecimalCurrency {
@@ -442,7 +444,7 @@ Currency.darkMatter = new class extends DecimalCurrency {
 
 Currency.darkEnergy = new class extends NumberCurrency {
   get value() { return player.celestials.laitela.darkEnergy; }
-  set value(value) { player.celestials.laitela.darkEnergy = value; }
+  set value(value) { player.celestials.laitela.darkEnergy = Math.min(value, 1e300); }
 
   get productionPerSecond() {
     return DarkMatterDimensions.all

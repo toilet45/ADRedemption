@@ -81,7 +81,7 @@ export const mendingUpgrades = [
   {
     id: 8,
     name: "Propius ad Scalas",
-    cost: 2,
+    cost: 10,
     description: () => "Reduce post-Infinity Antimatter Dimension cost scaling to x1.5 and post-Infinity Tickspeed cost scaling to x1.2.",
   },
   {
@@ -109,7 +109,7 @@ export const mendingUpgrades = [
     id: 12,
     name: "Prior Lingua Adeptus",
     cost: 6,
-    description: () => "Glyphs always have 100% rarity and 4 effects (7 if Effarig). Start every Mend with Effarig Glyphs unlocked.",
+    description: () => "Glyphs always have a minimum 100% rarity and 4 effects (7 if Effarig). Start every Mend with Effarig Glyphs unlocked.",
   },
   {
     id: 13,
@@ -153,13 +153,13 @@ export const mendingUpgrades = [
   {
     id: 19,
     name: "Deus Memorias",
-    cost: 1e300,
+    cost: 100000,
     description: () => "Unlock Ra, Lai'tela, and Pelle Memories, and increase the level cap to 100.",
   },
   {
     id: 20,
     name: "Mending Upgrade 20",
-    cost: 5000,
+    cost: 100000,
     description: () => "Unlock autobuyer for Mends",
   }
 ];

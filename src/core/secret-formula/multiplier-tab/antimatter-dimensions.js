@@ -218,6 +218,11 @@ export const AD = {
       );
       return Decimal.pow(mult, dim ? 1 : MultiplierTabHelper.activeDimCount("AD"));
     },
+    powValue: () => {
+      const allPow = BreakInfinityUpgrade.totalAMMult.chargedEffect.effectOrDefault(1) *
+                     BreakInfinityUpgrade.currentAMMult.chargedEffect.effectOrDefault(1);
+      return allPow;
+    },
     isActive: () => player.break && !EternityChallenge(11).isRunning,
     icon: MultiplierTabIcons.BREAK_INFINITY,
   },

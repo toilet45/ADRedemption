@@ -1393,17 +1393,17 @@ export const normalAchievements = [
       return `Multiply Multiversal Remain Gain by ${formatX(3, 0)}.`;
     },
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    effect: 2,
+    effect: 3,
   },
   {
     id: 193,
     displayId: 297,
     name: "TRUE Royal flush",
-    description: "Reality with one of each Glyph type (not counting Companion).",
+    description: "Have one of each Glyph type equipped at once (not counting Companion).",
     checkRequirement: () => FUNCTIONAL_GLYPH_TYPES
       .every(type => Glyphs.activeList.some(g => g.type === type)),
-    checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    reward: "Gained Glyph level is ×1.0808.",
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    reward: "Gained Glyph level is ×1.0808 after instability.",
     effect: 1.0808
   },
   {

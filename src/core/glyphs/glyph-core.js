@@ -775,7 +775,8 @@ export const Glyphs = {
     return 3000 + this.instabilityThreshold;
   },
   get ultraInstabilityThreshold(){
-    return 45000 + (500 * MendingUpgrade(6).boughtAmount);
+    let effarigMemDelay = Ra.unlocks.harshInstabilityDelay.isUnlocked ? (500 * (Math.max(1, Math.floor(Ra.pets.effarig.level / 5) - 10))) : 0;
+    return 45000 + (500 * MendingUpgrade(6).boughtAmount) + effarigMemDelay;
   },
   get hardcap(){
     return 100000;
@@ -949,10 +950,10 @@ export function calculateGlyph(glyph) {
       // this was merged, so it's not a big deal.
       glyph.rawLevel = glyph.level < 1000 ? glyph.level : (Math.pow(0.004 * glyph.level - 3, 2) - 1) * 125 + 1000;
     }
-
+//Ra.unlocks.brokenLimit.isUnlocked 
     // Used to randomly generate strength in this case; I don't think we actually care.
     if (glyph.strength === 1) glyph.strength = 1.5;
-    glyph.strength = Math.min(rarityToStrength(100), glyph.strength);
+    glyph.strength = Math.min(rarityToStrength(1000), glyph.strength);
   }
 }
 

@@ -26,13 +26,15 @@ function askMendingConfirmation() {
     Modal.mending.show();
   } 
   else {
-      mendingReset();
+    mendingReset();
   }
 }
 
 export function mendingReset() {
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
+    Currency.mendingPoints.add(gainedMendingPoints());
+    Currency.mends.add(1);
     Tab.dimensions.antimatter.show();
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
@@ -52,8 +54,6 @@ export function mendingReset() {
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
-    Currency.mendingPoints.add(gainedMendingPoints());
-    Currency.mends.add(1);
     //Start reseting all the things
     player.records.totalAntimatter = DC.E1,
     //Challenge Times
@@ -110,7 +110,7 @@ export function mendingReset() {
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
-    Ra.reset();
+    if(!Ra.unlocks.raNoReset.isUnlocked) Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)
       .map(() => ({
@@ -397,6 +397,12 @@ export function mendingReset() {
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
     resetTickspeed();
+    if (player.records.thisMend.realTime < player.records.bestMend.realTime){
+      player.records.bestMend.realTime = player.records.thisMend.realTime;
+    }
+    if (player.records.thisMend.time < player.records.bestMend.time){
+      player.records.bestMend.time = player.records.thisMend.time;
+    }
     //Mending Timer
     player.records.thisMend = {
       time: 0,
@@ -421,6 +427,12 @@ export function mendingReset() {
 
     Glyphs.refreshActive(); 
     EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
+    if (player.options.automatorEvents.clearOnReality) AutomatorData.clearEventLog();
+    if (Player.automatorUnlocked && AutomatorBackend.state.forceRestart) {
+      // Make sure to restart the current script instead of using the editor script - the editor script might
+      // not be a valid script to run; this at best stops it from running and at worst causes a crash
+      AutomatorBackend.start(AutomatorBackend.state.topLevelScript);
+    }
 }
 
 

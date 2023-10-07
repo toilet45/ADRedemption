@@ -86,9 +86,36 @@ export default {
       this.cosmeticGlow = player.reality.glyphs.cosmetics.glowNotification;
     },
     glyphPositionStyle(idx) {
-      const angle = 2 * Math.PI * idx / this.slotCount;
-      const dx = -this.GLYPH_SIZE / 2 + this.arrangementRadius * Math.sin(angle);
-      const dy = -this.GLYPH_SIZE / 2 + this.arrangementRadius * Math.cos(angle);
+      const calcDx = (i, slotCount = this.slotCount, radius = this.arrangementRadius) => {
+        return -this.GLYPH_SIZE / 2 + radius * Math.sin(2 * Math.PI * i / slotCount)
+      }
+
+      const calcDy = (i, slotCount = this.slotCount, radius = this.arrangementRadius) => {
+        return -this.GLYPH_SIZE / 2 + radius * Math.cos(2 * Math.PI * i / slotCount);
+      }
+
+      let dx = calcDx(idx);
+      let dy = calcDy(idx);
+
+      switch(this.slotCount){
+        case 7:
+          if(idx > 0){
+            dx = calcDx(idx-1, 6, 7);
+            dy = calcDy(idx-1, 6, 7);
+          } else {
+            dx = -this.GLYPH_SIZE/2;
+            dy = -this.GLYPH_SIZE/2;
+          }
+          break;
+        case 8:
+          const minDx = calcDx(5);
+          const minDy = calcDy(5);
+          const maxDx = calcDx(1);
+          const maxDy = calcDy(1);
+          dx = dx < minDx? minDx : dx > maxDx? maxDx: dx;
+          dy = dy < minDy? minDy : dy > maxDy? maxDy: dy;
+          break;
+      }
       return {
         position: "absolute",
         left: `calc(50% + ${dx}rem)`,

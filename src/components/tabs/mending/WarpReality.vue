@@ -15,7 +15,7 @@ export default {
 
 <template>
     <div class="l-break-infinity-tab">
-        <h1>*insert condition here*</h1>
+        <h1>Have all Mending Upgrades Purchased, {{ formatInt(1e5) }} Multiversal Remains, and x total Ra Memory Levels to Warp Reality.</h1>
         <WarpRealityButton />
     </div>
 </template>

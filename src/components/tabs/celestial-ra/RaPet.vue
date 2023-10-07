@@ -1,4 +1,5 @@
 <script>
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 import RaPetLevelBar from "./RaPetLevelBar";
 import RaUpgradeIcon from "./RaUpgradeIcon";
 
@@ -35,6 +36,7 @@ export default {
       currentChunkMult: 0,
       nextMemoryUpgradeEstimate: "",
       nextMemoryChunkUpgradeEstimate: "",
+      mu19Bought: false,
     };
   },
   computed: {
@@ -79,6 +81,7 @@ export default {
       this.memoryChunks = pet.memoryChunks;
       this.memoryChunksPerSecond = pet.memoryChunksPerSecond;
       this.memoriesPerSecond = pet.memoryChunks * Ra.productionPerMemoryChunk * this.currentMemoryMult;
+      if(MendingUpgrade(15).isBought) this.memoriesPerSecond = Math.pow(this.memoriesPerSecond, 1.5);
       this.canGetMemoryChunks = pet.canGetMemoryChunks;
       this.memoryMultiplier = pet.memoryProductionMultiplier;
       this.memoryUpgradeCost = pet.memoryUpgradeCost;
@@ -90,12 +93,15 @@ export default {
 
       this.nextMemoryUpgradeEstimate = Ra.timeToGoalString(pet, this.memoryUpgradeCost - this.memories);
       this.nextMemoryChunkUpgradeEstimate = Ra.timeToGoalString(pet, this.chunkUpgradeCost - this.memories);
+
+      this.mu19Bought = MendingUpgrade(19).isBought;
     },
     nextUnlockLevel() {
+      const levelCap = MendingUpgrade(19).isBought?100:25;
       const missingUpgrades = this.pet.unlocks
         .map(u => u.level)
         .filter(goal => goal > this.level);
-      return missingUpgrades.length === 0 ? 25 : missingUpgrades.min();
+      return missingUpgrades.length === 0 ? levelCap : missingUpgrades.min();
     },
     upgradeClassObject(type) {
       const available = type === "memory"
@@ -138,7 +144,7 @@ export default {
     >
       <div class="c-ra-pet-title">
         <!-- The full name doesn't fit here, so we shorten it as a special case -->
-        {{ pet.id === "enslaved" ? "Nameless" : name }} Level {{ formatInt(level) }}/{{ formatInt(levelCap) }}
+        {{ pet.id === "enslaved" ? "Nameless" : pet.id === "laitela"? "Lai" : name }} Level {{ formatInt(level) }}/{{ formatInt(levelCap) }}
       </div>
       <div
         v-if="showScalingUpgrade"
@@ -277,7 +283,15 @@ export default {
       <div class="l-ra-pet-milestones">
         <!-- This choice of key forces a UI update every level up -->
         <RaUpgradeIcon
-          v-for="(unlock, i) in unlocks"
+          v-for="(unlock, i) in unlocks.slice(0,7)"
+          :key="25 * level + i"
+          :unlock="unlock"
+        />
+      </div>
+      <div v-if="mu19Bought" class="l-ra-pet-milestones">
+        <!-- This choice of key forces a UI update every level up -->
+        <RaUpgradeIcon
+          v-for="(unlock, i) in unlocks.slice(7)"
           :key="25 * level + i"
           :unlock="unlock"
         />

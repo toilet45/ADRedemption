@@ -287,7 +287,7 @@ class EPMultiplierState extends GameMechanicState {
   }
 
   get isAffordable() {
-    return !Pelle.isDoomed && Currency.eternityPoints.gte(this.cost) && player.epmultUpgrades < 5e8;
+    return !Pelle.isDoomed && !this.isCapped && Currency.eternityPoints.gte(this.cost);
   }
 
   get cost() {
@@ -296,6 +296,14 @@ class EPMultiplierState extends GameMechanicState {
 
   get boughtAmount() {
     return player.epmultUpgrades;
+  }
+
+  get purchaseCap() {
+    return 5e8;
+  }
+
+  get isCapped() {
+    return player.epmultUpgrades >= this.purchaseCap;
   }
 
   set boughtAmount(value) {
@@ -329,11 +337,18 @@ class EPMultiplierState extends GameMechanicState {
       if (!auto) RealityUpgrade(15).tryShowWarningModal();
       return false;
     }
-    const bulk = bulkBuyBinarySearch(Currency.eternityPoints.value, {
-      costFunction: this.costAfterCount,
-      cumulative: true,
-      firstCost: this.cost,
-    }, this.boughtAmount);
+    let bulk = null;
+    try{
+      bulk = bulkBuyBinarySearch(Currency.eternityPoints.value, {
+        costFunction: this.costAfterCount,
+        cumulative: true,
+        firstCost: this.cost,
+      }, this.boughtAmount);
+    }
+    catch{
+      this.boughtAmount = 5e8;
+      return true;
+    }
     if (!bulk) return false;
     Currency.eternityPoints.subtract(bulk.purchasePrice);
     this.boughtAmount += bulk.quantity;

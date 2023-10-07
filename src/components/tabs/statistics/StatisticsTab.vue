@@ -159,6 +159,7 @@ export default {
       mending.isUnlocked = isMendingUnlocked;
       const bestMend = records.bestMend;
       if (isMendingUnlocked) {
+        mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
         mending.best.setFrom(bestMend.time);
         mending.bestReal.setFrom(bestMend.realTime);
@@ -326,7 +327,7 @@ export default {
       <div :class="realityClassObject()">
         {{ isDoomed ? "Doomed Reality" : "Reality" }}
       </div>
-      <div>You have {{ quantifyInt("Reality", reality.count) }}.</div>
+      <div>You have {{reality.count >= 1e12 ? format(reality.count, 2) : formatInt(reality.count) }} {{ reality.count > 1 ? " Realities" : " Reality" }}.</div>
       <div>Your fastest game-time Reality was {{ reality.best.toStringShort() }}.</div>
       <div>Your fastest real-time Reality was {{ reality.bestReal.toStringShort() }}.</div>
       <div :class="{ 'c-stats-tab-doomed' : isDoomed }">
@@ -357,7 +358,7 @@ export default {
         You have mended the Mulitverse {{ quantifyInt("time", mending.count) }}.
       </div>
       <div v-if="mending.hasBest">
-        Your fastest Mend was {{ mending.best.toStringShort() }}.
+        Your fastest Mend was {{ mending.best.toStringShort() }} ({{ mending.bestReal.toStringShort() }} real time).
       </div>
       <div>
         You have spent {{ mending.this.toStringShort() }} in this Mend. ({{ mending.thisReal.toStringShort() }} real time)

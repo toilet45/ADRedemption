@@ -2,11 +2,11 @@ export const mendingMilestones = {
   one: {
     mends: 1,
     reward: "Start with Infinity broken, all pre-Reality autobuyers maxed (kept in Doomed Reality), and the START perk. Gain multipliers to various resources (hover for details).",
-    activeCondition: () => (true ? `${formatX(1e20,0)} IP, ${formatX(1000,0)} Replicanti Speed, ${formatX(100000,0)} EP, ${formatX(10000,0)} Eternities, ${formatX(100,0)} Dilated Time, ${formatX(5,0)} Perk Points, ${formatX(25,0)} Memory Gain, ${formatX(50, 0, )} Dark Energy Gain, ${formatX(5, 0)} Singulatity Gain, ${formatX(1.1, 0, 1)} Remnant Gain, ${formatX(10, 0)} Reality Shard Gain` : "this is a bug if this text appears"),
+    activeCondition: () => (true ? `${formatX(1e20,0)} IP, ${formatX(1000,0)} Replicanti Speed, ${formatX(100000,0)} EP, ${formatX(10000,0)} Eternities, ${formatX(100,0)} Dilated Time, ${formatX(5,0)} Perk Points, ${formatX(25,0)} Memory Gain, ${formatX(50, 0, )} Dark Energy Gain, ${formatX(5, 0)} Singularity Gain, ${formatX(1.1, 0, 1)} Remnant Gain, ${formatX(10, 0)} Reality Shard Gain` : "this is a bug if this text appears"),
   },
   two: {
     mends: 2,
-    reward: "The Pelle-exclusive dilation upgrades are available outside of Doomed Reality (and also unlock the autobuyers for them), but they are nerfed outside of it.",
+    reward: "The Pelle-exclusive dilation upgrades are available outside of Doomed Reality (and also unlock the autobuyers for them), but they are nerfed outside of it. Dilation Autobuyers buy max.",
   },
   three: {
     mends: 3,
@@ -14,7 +14,7 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "[TEMP] Unlock Autobuyers for Ra Memory Levels, Recollections, and Fragmentations.",
+    reward: "Start Every Mend with all 4 Celestial Memories at Level 10",
   },
   four: {
     mends: 5,
@@ -38,7 +38,7 @@ export const mendingMilestones = {
   },
   nine: {
     mends: 35,
-    reward: "[TBD]",
+    reward: "The uncharged (Break) Infinity upgrades are active alongside their charged counterparts",
   },
   eleven: {
     mends: 50,

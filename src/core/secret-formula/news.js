@@ -2575,8 +2575,12 @@ export const news = [
       `Don't forget to vote in the Ass Election 2023 -Mage`
   },
   {
-    id: "a392",
+    id: "a394",
     text: "Looking for more mods to play? Check out https://github.com/ArchercatNEO/AD-Mod-DB."
+  },
+  {
+    id: "a395",
+    text: "moist."
   },
   {
     id: "l1",
@@ -3263,6 +3267,30 @@ export const news = [
       average per-player credit earn rates on a daily basis, and we'll be making constant adjustments to ensure that
       players have challenges that are compelling, rewarding, and of course attainable via gameplay.`,
     get unlocked() { return PlayerProgress.realityUnlocked(); }
+  },
+  {
+    id: "l89",
+    text:
+      "It's pronounced LAY'tela, and you can't convince me otherwise. -Royal",
+    get unlocked() { return Laitela.isUnlocked || PlayerProgress.mendingUnlocked() }
+  },
+  {
+    id: "l90",
+    text:
+      "You already knew you would be trapped here, yet you still entered.",
+    get unlocked() {return Pelle.isDoomed && PlayerProgress.mendingUnlocked() }
+  },
+  {
+    id: "l91",
+    text:
+      "Do you remember...",
+    get unlocked() {return new Date().getMonth === 8 && new Date().getDate === 21}
+  },
+  {
+    id: "l92",
+    text:
+      "Did you remember...",
+    get unlocked() {return new Date().getMonth === 8 && new Date().getDate === 22}
   },
   {
     id: "r1",

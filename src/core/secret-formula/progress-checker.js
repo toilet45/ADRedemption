@@ -1,5 +1,3 @@
-import { PlayerProgress } from "../player-progress";
-
 export const progressStages = [
   /**
    * This is used in both the catchup modal and for cloud save comparisons. Due to the fact that it's used for
@@ -164,7 +162,7 @@ export const progressStages = [
   {
     id: PROGRESS_STAGE.MENDING,
     name: "Mending",
-    hasReached: save => PlayerProgress.mendingUnlocked(),
+    hasReached: () => PlayerProgress.mendingUnlocked(),
     suggestedResource: "Multiversal Remains"
   },
 ];

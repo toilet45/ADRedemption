@@ -9,7 +9,9 @@ export const EFFARIG_STAGES = {
   INFINITY: 1,
   ETERNITY: 2,
   REALITY: 3,
-  COMPLETED: 4
+  COMPLETED: 4,
+  MEND: 5,
+  MEND_COMPLETED: 6,
 };
 
 export const Effarig = {
@@ -34,7 +36,13 @@ export const Effarig = {
     if (!EffarigUnlock.reality.isUnlocked) {
       return EFFARIG_STAGES.REALITY;
     }
-    return EFFARIG_STAGES.COMPLETED;
+    if (!Ra.unlocks.effarigMendUnlock.isUnlocked){
+      return EFFARIG_STAGES.COMPLETED;
+    }
+    if (!EffarigUnlock.mend.isUnlocked){
+      return EFFARIG_STAGES.MEND;
+    }
+    return EFFARIG_STAGES.MEND_COMPLETED;
   },
   get currentStageName() {
     switch (this.currentStage) {
@@ -43,8 +51,10 @@ export const Effarig = {
       case EFFARIG_STAGES.ETERNITY:
         return "Eternity";
       case EFFARIG_STAGES.REALITY:
-      default:
+      case EFFARIG_STAGES.COMPLETED:
         return "Reality";
+      default:
+        return "Mend";
     }
   },
   get eternityCap() {
@@ -57,8 +67,10 @@ export const Effarig = {
       case EFFARIG_STAGES.ETERNITY:
         return 1500;
       case EFFARIG_STAGES.REALITY:
-      default:
         return 2000;
+      case EFFARIG_STAGES.MEND:
+      default:
+        return 10000;
     }
   },
   get glyphEffectAmount() {
@@ -72,8 +84,8 @@ export const Effarig = {
   },
   get shardsGained() {
     if (!TeresaUnlocks.effarig.canBeApplied) return 0;
-    return Math.floor(Math.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)) *
-      AlchemyResource.effarig.effectValue;
+    return Math.min((Math.floor(Math.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)) *
+      AlchemyResource.effarig.effectValue), 1e300);
   },
   get maxRarityBoost() {
     return 5 * Math.log10(Math.log10(Currency.relicShards.value + 10));

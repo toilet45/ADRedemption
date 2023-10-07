@@ -592,6 +592,9 @@ export function finishProcessReality(realityProps) {
     if (player.celestials.ra.disCharge) {
       disChargeAll();
     }
+    if(player.celestials.ra.breakDischarge){
+      disChargeAllBreak();
+    }
   }
   if (player.options.automatorEvents.clearOnReality) AutomatorData.clearEventLog();
   if (Player.automatorUnlocked && AutomatorBackend.state.forceRestart) {
@@ -751,6 +754,15 @@ export function finishProcessReality(realityProps) {
     player.break = true;
   }
   Glyphs.updateMaxGlyphCount();
+
+  if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+    let alchCap = 25000;// + (5 * player.celestials.ra.pets["effarig"].level);
+    player.celestials.ra.alchemy = Array.repeat(0, 21)
+    .map(() => ({
+      amount: alchCap,
+      reaction: false
+    }));
+  }
 }
 
 function restoreCelestialRuns(celestialRunState) {

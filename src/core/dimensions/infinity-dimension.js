@@ -24,7 +24,6 @@ export function infinityDimensionCommonMultiplier() {
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
     mult = mult.times(replicantiMult());
   }
-
   return mult;
 }
 
@@ -129,12 +128,18 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
-    let production = this.amount;
+    let production = this.totalAmount;
     if (EternityChallenge(11).isRunning) {
       return production;
     }
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
+    }
+    if (player.infinityPower.exponent > 9e15){
+      let x = player.infinityPower;
+      production = production.times(this.multiplier);
+      production = production.pow(1/(x.log10()**0.1));
+      return production;
     }
     return production.times(this.multiplier);
   }
@@ -187,7 +192,7 @@ class InfinityDimensionState extends DimensionState {
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
-    return this.amount.gt(0);
+    return this.totalAmount.gt(0);
   }
 
   get baseCost() {
@@ -216,7 +221,7 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
     return InfinityDimensions.capIncrease + (this.tier === 8
-      ? Number.MAX_VALUE
+      ? 1e10
       : InfinityDimensions.HARDCAP_PURCHASES);
   }
 
@@ -226,6 +231,22 @@ class InfinityDimensionState extends DimensionState {
 
   get hardcapIPAmount() {
     return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
+  }
+
+  get continuumValue() {
+    if(!this.isUnlocked) return 0;
+    //if(!Ra.continuumActive) return 0;
+    const logMoney = Currency.infinityPoints.value.log10();
+    const logMult = Math.log10(this.costMultiplier);
+    const logBase = this.baseCost.log10();
+    let contValue = (logMoney - logBase)/logMult;
+    contValue *= 1 + Laitela.matterExtraPurchaseFactor * .1;
+    if(this.tier < 8) contValue = Math.clampMax(contValue, this.purchaseCap);
+    return Math.clampMin(contValue, 0);
+  }
+
+  get totalAmount() {
+    return this.amount.max(this.continuumValue*10);
   }
 
   resetAmount() {
@@ -378,7 +399,8 @@ export const InfinityDimensions = {
       if (!NormalChallenge(10).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);
       }
-    } else {
+    } 
+    else { 
       InfinityDimension(1).produceCurrency(Currency.infinityPower, diff);
     }
 

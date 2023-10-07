@@ -57,7 +57,7 @@ export class DimBoost {
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
       // when giving initial boosts, so the player will still get those.
-      return 0;
+      return Ra.unlocks.raRealUncapDimboost.isUnlocked? Infinity: 0;
     }
     if (InfinityChallenge(1).isRunning) {
       // Usually, in Challenge 8, the only boosts that are useful are the first 5
@@ -73,7 +73,7 @@ export class DimBoost {
       // this case would trigger when we're in IC1.
       return 5;
     }
-    return Infinity;
+    return 1e9;
   }
 
   static get canBeBought() {
@@ -84,12 +84,13 @@ export class DimBoost {
   }
 
   static get lockText() {
+    let boostCap = 1e9;
     if (DimBoost.purchasedBoosts >= this.maxBoosts) {
       if (Ra.isRunning) return "Locked (Ra's Reality)";
       if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
       if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
     }
-    return null;
+    return player.dimensionBoosts >= this.maxBoosts ? "Capped at " + formatInt(boostCap) +" Dimension Boosts" : null;
   }
 
   static get requirement() {
@@ -157,7 +158,8 @@ export class DimBoost {
   }
 
   static get imaginaryBoosts() {
-    return Ra.isRunning ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1);
+    let x = BreakInfinityUpgrade.autobuyMaxDimboosts.chargedEffect.isEffectActive ? Ra.pets.teresa.level : 1;
+    return Ra.isRunning ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5);
   }
 
   static get totalBoosts() {
@@ -246,7 +248,7 @@ function maxBuyDimBoosts() {
   // so a = req2 - req1, b = req1 - a = 2 req1 - req2, num = (dims - b) / a
   const increase = req2.amount - req1.amount;
   const dim = AntimatterDimension(req1.tier);
-  let maxBoosts = Math.min(Number.MAX_VALUE,
+  let maxBoosts = Math.min(1e9,
     1 + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);

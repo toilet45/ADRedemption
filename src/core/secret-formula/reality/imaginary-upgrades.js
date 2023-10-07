@@ -4,7 +4,7 @@ const rebuyable = props => {
   props.cost = () => props.initialCost * Math.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]);
   const { effect } = props;
   if (props.isDecimal) props.effect = () => Decimal.pow(effect, player.reality.imaginaryRebuyables[props.id]);
-  else props.effect = () => effect * player.reality.imaginaryRebuyables[props.id];
+  else props.effect = () => effect * Math.min(player.reality.imaginaryRebuyables[props.id], 10);
   if (!props.formatEffect) props.formatEffect = value => `+${format(value, 2, 2)}`;
   props.formatCost = value => format(value, 2, 0);
   return props;

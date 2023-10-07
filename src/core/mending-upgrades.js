@@ -1,6 +1,7 @@
 import { Currency } from "./currency";
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
+import { Effect } from "./game-mechanics/effect";
 
 class MendingUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
@@ -51,7 +52,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return this.id != 19;
+    return true;
   }
 
   get isPossible() {
@@ -83,10 +84,11 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
           EternityChallenge(i).completions = 5;
           if (i === 12) break;
         }
+        break;
       }
       case 4:{
-        if (player.reality.imaginaryUpgReqs < 32768) player.reality.imaginaryUpgReqs += 32768;
-        if (player.reality.imaginaryUprgadeBits < 32768) player.reality.imaginaryUpgradeBits += 32768;
+        if (!ImaginaryUpgrade(15).isAvailableForPurchase ) ImaginaryUpgrade(15).isAvailableForPurchase ;
+        if (!ImaginaryUpgrade(15).isBought) ImaginaryUpgrade(15).isBought = true;
         if (player.celestials.laitela.difficultyTier < 8) player.celestials.laitela.difficultyTier = 8; //futureproffing, but idk how that would make sense
         break
       }
@@ -113,6 +115,10 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
           player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
         });
         V.updateTotalRunUnlocks();
+        break;
+      }
+      case 19:{
+        Ra.checkForUnlocks();
         break;
       }
       default:{
@@ -158,3 +164,13 @@ export const MendingUpgrades = {
     return (player.mending.upgradeBits >> 6) + 1 === 1 << (GameDatabase.mending.upgrades.length - 5);
   }
 };
+
+export const MendingUpgradeMultiplier = new Effect(()=>{
+  const upgradeBought = id => MendingUpgrade(id).isBought;
+  let effect = 1;
+
+  for(let i = 1; i < 20; i+=5){
+    effect = effect << (upgradeBought(i+1) && upgradeBought(i+2) && upgradeBought(i+3) && upgradeBought(i+4));
+  }
+  return effect;
+});

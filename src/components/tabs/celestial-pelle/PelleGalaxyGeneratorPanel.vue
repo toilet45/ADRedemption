@@ -2,12 +2,15 @@
 import wordShift from "@/core/word-shift";
 
 import PelleUpgrade from "./PelleUpgrade";
+import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
+import { Autobuyer } from "../../../core/globals";
 
 export default {
   name: "GalaxyGeneratorPanel",
   components: {
-    PelleUpgrade
-  },
+    PelleUpgrade,
+    PrimaryToggleButton
+},
   data() {
     return {
       isUnlocked: false,
@@ -21,6 +24,8 @@ export default {
       isCollapsed: false,
       barWidth: 0,
       capRiftName: "",
+      isAutoUnlocked: false,
+      isAutobuyerOn: false,
     };
   },
   computed: {
@@ -44,6 +49,11 @@ export default {
       return Math.pow(this.generatedGalaxies / this.cap, 0.45);
     }
   },
+  watch: {
+    isAutobuyerOn(newValue){
+      Autobuyer.galgenSac.isActive = newValue;
+    }
+  },
   methods: {
     update() {
       this.isUnlocked = Pelle.hasGalaxyGenerator;
@@ -58,6 +68,8 @@ export default {
       this.sacrificeActive = GalaxyGenerator.sacrificeActive;
       this.barWidth = (this.isCapped ? this.capRift.reducedTo : this.emphasisedStart);
       if (this.capRift) this.capRiftName = wordShift.wordCycle(this.capRift.name);
+      this.isAutoUnlocked = Autobuyer.galgenSac.isUnlocked;
+      this.isAutobuyerOn = Autobuyer.galgenSac.isActive;
     },
     increaseCap() {
       if (GalaxyGenerator.isCapped) GalaxyGenerator.startSacrifice();
@@ -95,44 +107,53 @@ export default {
           Galaxies.
           <span class="c-galaxies-amount">+{{ format(galaxiesPerSecond, 2, 1) }}/s</span>
         </div>
-        <div>
-          <button
-            class="c-increase-cap"
-            :class="{
-              'c-increase-cap-available': isCapped && capRift && !sacrificeActive,
-              'tutorial--glow': cap === Infinity
-            }"
-            @click="increaseCap"
-          >
-            <div
-              class="c-increase-cap-background"
-              :style="{ 'width': `${barWidth * 100}%` }"
-            />
-            <div
-              v-if="isCapped && capRift"
-              class="c-increase-cap-text"
+        <div class="l-spoon-btn-group">
+          <div>
+            <button
+              class="c-increase-cap"
+              :class="{
+                'c-increase-cap-available': isCapped && capRift && !sacrificeActive,
+                'tutorial--glow': cap === Infinity
+              }"
+              @click="increaseCap"
             >
-              {{ sacrificeText }}. <br><br>
-              <span
-                v-if="!sacrificeActive"
-                class="c-big-text"
+              <div
+                class="c-increase-cap-background"
+                :style="{ 'width': `${barWidth * 100}%` }"
+              />
+              <div
+                v-if="isCapped && capRift"
+                class="c-increase-cap-text"
               >
-                Sacrifice your {{ capRiftName }}
-              </span>
-              <span
+                {{ sacrificeText }}. <br><br>
+                <span
+                  v-if="!sacrificeActive"
+                  class="c-big-text"
+                >
+                  Sacrifice your {{ capRiftName }}
+                </span>
+                <span
+                  v-else
+                  class="c-big-text"
+                >
+                  Getting rid of all that {{ capRiftName }}...
+                </span>
+              </div>
+              <div
                 v-else
-                class="c-big-text"
+                class="c-increase-cap-text c-medium-text"
               >
-                Getting rid of all that {{ capRiftName }}...
-              </span>
-            </div>
-            <div
-              v-else
-              class="c-increase-cap-text c-medium-text"
-            >
-              {{ format(generatedGalaxies, 2) }} / {{ format(cap, 2) }} Galaxies generated
-            </div>
-          </button>
+              <div v-if="cap === Infinity">{{ format(generatedGalaxies, 2) }} Galaxies generated</div>
+              <div v-else>{{ format(generatedGalaxies, 2) }} / {{ format(cap, 2) }} Galaxies generated</div>
+              </div>
+            </button>
+          </div>
+          <PrimaryToggleButton
+            v-if="isAutoUnlocked"
+            v-model="isAutobuyerOn"
+            label="Auto"
+            style="margin-top: -.75rem; max-width: 70rem; width: 100%; align-self: center;"
+          />
         </div>
         <div class="l-galaxy-generator-upgrades-container">
           <PelleUpgrade
