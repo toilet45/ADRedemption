@@ -444,6 +444,11 @@ export class MendingMilestoneState{
     get isReached() {
       return Currency.mends.gte(this.config.mends);
     }
+
+    get effect() {
+      if (this.config.effect == undefined || !this.isReached || this.config.effect == null) return 1;
+      return this.config.effect
+    }
   }
 
 export const MendingMilestone = mapGameDataToObject(

@@ -242,7 +242,7 @@ window.player = {
         isActive: false,
       },
       laitela: {
-        upgrades: Array.range(0, 3).map(() => ({
+        upgrades: Array.range(0, 7).map(() => ({
           isActive: true,
         })),
         isActive: false,
@@ -354,7 +354,8 @@ window.player = {
       slowestBH: 1,
     },
     mending:{
-      isEnd: false
+      isEnd: false,
+      mmeleven: 8
     },
     permanent: {
       emojiGalaxies: 0,
@@ -468,7 +469,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 50,
+  version: 51,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -813,7 +814,7 @@ window.player = {
       maxDarkMatter: DC.D0,
       run: false,
       quoteBits: 0,
-      dimensions: Array.range(0, 4).map(() =>
+      dimensions: Array.range(0, 8).map(() =>
         ({
           amount: DC.D0,
           intervalUpgrades: 0,
@@ -1155,6 +1156,7 @@ export const Player = {
       case "mending":
         player.requirementChecks.mending = {
           noAM: true,
+          mmeleven: 8,
         }
       case "reality":
         player.requirementChecks.reality = {

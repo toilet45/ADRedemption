@@ -386,11 +386,11 @@ export const ra = {
     alchSetToCapAndCapIncrease: {
       id: 8,
       id2: 0,
-      reward: () => `Alchemy Resources are always set to current cap when you reality, and increase the hardcap by ${formatInt(100)} per level`,
-      effect: () => 100 * Ra.pets.effarig.level,
+      reward: () => `Alchemy passively occurs, and increase the hardcap by ${formatInt(10)} per level`,
+      effect: () => 10 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     passiveRelicShardGain: {
       id: 9,
@@ -403,11 +403,11 @@ export const ra = {
     harshInstabilityDelay: {
       id: 10,
       id2: 0,
-      reward: () => `Harsh glyph instability is delayed by ${formatInt(500)} for every ${formatInt(5)} levels past ${formatInt(50)}`,
+      reward: () => `Logarithmic glyph instability is delayed by ${formatInt(500)} for every ${formatInt(5)} levels past ${formatInt(50)}`,
       effect: () => 500*Math.floor((Ra.pets.effarig.level-50)/5),
       pet: "effarig",
       level: 50,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     relicShardBoost: {
       id: 11,
@@ -605,7 +605,7 @@ export const ra = {
     generateMemChunksOutOfRasReality: {
       id: 3,
       id2: 1,
-      reward: "You can generate Memory Chunks outside of Ra's reality at a reduced rate",
+      reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate",
       pet: "ra",
       level: 25,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -712,7 +712,7 @@ export const ra = {
     passiveAnnihilationGen: {
       id: 16,
       id2: 1,
-      reward: "Passively generate half of your Annihilation multiplier every second",
+      reward: `Passively generate half of your Annihilation multiplier every second`,
       pet: "laitela",
       level: 15,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -792,8 +792,8 @@ export const ra = {
     boostMVRGain: {
       id: 26,
       id2: 1,
-      reward: "Triple Multiversal remains gained when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
-      effect: () => Pelle.isDoomed?3:1,
+      reward: "Triple MvR gain when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
+      effect: () => Pelle.isDoomed ? 3 : 1,
       pet: "pelle",
       level: 2,
       displayIcon: '<i class="fa-solid fa-check-double"></i>'
@@ -870,13 +870,13 @@ export const ra = {
       level: 65,
       displayIcon: "?"
     },
-    placeholderP12: {
+    Hostility: {
       id: 4,
       id2: 2,
-      reward: "TBD",
+      reward: () => Ra.unlocks.Hostility.isUnlocked ? "Unlock Hostilities" : "Reach Pelle 75 to see reward",
       pet: "pelle",
       level: 75,
-      displayIcon: "?"
+      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-staff-snake"></i>`:"?"
     },
     placeholderP13: {
       id: 5,

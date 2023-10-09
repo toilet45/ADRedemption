@@ -32,6 +32,12 @@ export const mendingMilestones = {
     mends: 10,
     reward: "You can now Mend outside of Doomed Reality.",
   },
+  eleven: {
+    mends: 15,
+    reward: "Gain an MvR multiplier based on the lowest amount of glyphs equipped while reaching e9e15 antimatter this Mend.",
+    activeCondition: () => (`The less glyphs you have "equipped" (cursed does affect) the more MvR you recieve on Mend.` + /* Do not import mending milestone because it breaks for some reason, but this works fine */ (MendingMilestone.eleven.isReached ? ` Your current MvR multiplier from this milestone is ${player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven]}` : "")),
+    // We dont define the effect here because this codebase will shit itself if you do, so we instead define it at the MvR code
+  },
   eight: {
     mends: 20,
     reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
@@ -39,10 +45,6 @@ export const mendingMilestones = {
   nine: {
     mends: 35,
     reward: "The uncharged (Break) Infinity upgrades are active alongside their charged counterparts",
-  },
-  eleven: {
-    mends: 50,
-    reward: "[TBD]",
   },
   twelve: {
     mends: 75,

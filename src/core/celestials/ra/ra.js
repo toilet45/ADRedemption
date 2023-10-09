@@ -239,6 +239,7 @@ const pets = mapGameDataToObject(
 export const Ra = {
   displayName: "Ra",
   possessiveName: "Ra's",
+  alchauto: 0,
   unlocks,
   pets,
   remembrance: {
@@ -281,7 +282,7 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
-    if (MendingMilestone.one.isReached) boostList.push("1 Mend Milestone");
+    if (MendingMilestone.one.isReached) boostList.push("Mending Milestone 1");
     if (MendingUpgrade(15).isBought) boostList.push("Mending Upgrade 15");
 
     if (boostList.length === 1) return `${boostList[0]}`;
@@ -317,7 +318,7 @@ export const Ra = {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
   },
   get levelCap() {
-    return MendingUpgrade(19).isBought?100:25;
+    return MendingUpgrade(19).isBought ? 100 : 25;
   },
   get maxTotalPetLevel() {
     return this.levelCap * this.pets.all.length;
@@ -396,14 +397,17 @@ export const Ra = {
       reaction.combineReagents();
     }
     this.updateAlchemyFlow(realityRealTime);
-    if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
-      AlchemyResources.all.forEach((resource, id, resources) => {
-        resources[id].amount = Math.min(resource.cap, this.alchemyResourceCap);
-      });
+  },
+  applyAlchemyReactionsAuto() {
+    if (!Ra.unlocks.effarigUnlock.canBeApplied) return;
+    Ra.alchauto += 1
+    if (Ra.alchauto >= 15) {
+      Ra.alchauto -= 15
+      Ra.applyAlchemyReactions(1000)
     }
   },
   get alchemyResourceCap() {
-    return 25000;//Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
+    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;

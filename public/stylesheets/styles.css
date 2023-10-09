@@ -9346,6 +9346,15 @@ input.o-automator-block-input {
   background: var(--color-celestials);
 }
 
+.c-hide-modal-tab-button--mending {
+  color: var(--color-mending);
+  border-color: var(--color-mending);
+}
+
+.c-hide-modal-tab-button--mending:hover {
+  background: var(--color-mending);
+}
+
 /* Prevent any themes overriding font awesome */
 .fa,
 .far,

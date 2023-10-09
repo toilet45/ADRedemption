@@ -341,9 +341,14 @@ export function getGlyphLevelInputs() {
     if (level < begin)return level;
     return Math.pow(rate, Math.log10(level - begin)) + begin;
   };
+  const omegaInstabilitySoftcap = (level, begin, rate) => {
+    if (level < begin)return level;
+    return Math.pow(rate, Math.log10(Math.log10(level - begin))) + begin;
+  }
   scaledLevel = instabilitySoftcap(scaledLevel, staticFactors.instability, 500);
   scaledLevel = instabilitySoftcap(scaledLevel, staticFactors.hyperInstability, 400);
   scaledLevel = ultraInstabilitySoftcap(scaledLevel, staticFactors.ultraInstability, 5);
+  scaledLevel = omegaInstabilitySoftcap(scaledLevel, staticFactors.omegaInstability, 20);
   const scalePenalty = scaledLevel > 0 ? baseLevel / scaledLevel : 1;
   const incAfterInstability = staticFactors.realityUpgrades + staticFactors.achievements;
   baseLevel += incAfterInstability;
@@ -375,6 +380,7 @@ export function staticGlyphWeights() {
   const instability = Glyphs.instabilityThreshold;
   const hyperInstability = Glyphs.hyperInstabilityThreshold;
   const ultraInstability = Glyphs.ultraInstabilityThreshold;
+  const omegaInstability = Glyphs.omegaInstabilityThreshold;
   const hardcap = Glyphs.hardcap;
   const realityUpgrades = [Array.range(1, 5).every(x => RealityUpgrade(x).boughtAmount > 0)]
     .concat(Array.range(1, 4).map(x => Array.range(1, 5).every(y => RealityUpgrade(5 * x + y).isBought)))
@@ -386,6 +392,7 @@ export function staticGlyphWeights() {
     instability,
     hyperInstability,
     ultraInstability,
+    omegaInstability,
     hardcap,
     realityUpgrades,
     achievements

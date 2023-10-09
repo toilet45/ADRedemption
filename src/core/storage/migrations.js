@@ -553,7 +553,23 @@ export const migrations = {
       player.celestials.kohler = {
         run: false,
       }
+    },
+  51: player => {
+    player.requirementChecks.mend = {
+      mmeleven: 8
     }
+  },
+  51.001: player => {
+    player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
+    ({
+      amount: new Decimal(0),
+      intervalUpgrades: 0,
+      powerDMUpgrades: 0,
+      powerDEUpgrades: 0,
+      timeSinceLastUpdate: 0,
+      ascensionCount: 0
+    })))
+  }
   },
 
   normalizeTimespans(player) {

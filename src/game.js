@@ -12,6 +12,7 @@ import { supportedBrowsers } from "./supported-browsers";
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
 import { MendingMilestone } from "./core/mending";
+import { Player, Ra } from "./core/globals";
 
 if (GlobalErrorHandler.handled) {
   throw new Error("Initialization failed");
@@ -131,6 +132,7 @@ export function gainedMendingPoints(){
     DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
+  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isUnlocked ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
 
   return MvRGain;
 }
@@ -423,6 +425,9 @@ export function realTimeMechanics(realDiff) {
   // Ra memory generation bypasses stored real time, but memory chunk generation is disabled when storing real time.
   // This is in order to prevent players from using time inside of Ra's reality for amplification as well
   Ra.memoryTick(realDiff, !Enslaved.isStoringRealTime);
+  if (Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked) {
+    Ra.applyAlchemyReactionsAuto()
+  }
   if (AlchemyResource.momentum.isUnlocked) {
     player.celestials.ra.momentumTime += realDiff * Achievement(175).effectOrDefault(1);
   }
@@ -463,6 +468,9 @@ export function gameLoop(passDiff, options = {}) {
     return;
   }
 
+  if (Player.canMend && player.requirementChecks.reality.maxGlyphs < player.requirementChecks.mending.mmeleven) {
+    player.requirementChecks.mending.mmeleven = player.requirementChecks.reality.maxGlyphs
+  }
   let diff = passDiff;
   const thisUpdate = Date.now();
   const realDiff = diff === undefined

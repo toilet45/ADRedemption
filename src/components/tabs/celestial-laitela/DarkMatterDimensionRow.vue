@@ -145,7 +145,8 @@ export default {
       return cost.gt(Number.MAX_VALUE) ? Notations.current.infinite : format(cost, 2);
     },
     dimensionProduction(tier) {
-      if (tier === 4) return SingularityMilestone.dim4Generation.effectOrDefault(0);
+      if (tier === 8) return 0
+      if (tier === 4 && Ra.pets.laitela.level < 25) return SingularityMilestone.dim4Generation.effectOrDefault(0);
       const prodDim = DarkMatterDimension(tier + 1);
       return prodDim.amount.times(prodDim.powerDM).divide(prodDim.interval).times(1000);
     },

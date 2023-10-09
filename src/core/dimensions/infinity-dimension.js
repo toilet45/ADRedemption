@@ -135,11 +135,16 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
+    production = production.times(this.multiplier);
     if (player.infinityPower.exponent > 9e15){
-      let x = player.infinityPower;
-      production = production.times(this.multiplier);
+      let x = player.infinityPower;   
       production = production.pow(1/(x.log10()**0.1));
       return production;
+    }
+    if (production.exponent > 9e15){
+      let x = production.sub(Decimal.pow10(9e15));   
+      x = x.pow(1/(x.log10()**0.1));
+      return x.add(Decimal.pow10(9e15));
     }
     return production.times(this.multiplier);
   }

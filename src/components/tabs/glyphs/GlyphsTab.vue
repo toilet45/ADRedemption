@@ -161,9 +161,9 @@ export default {
           <br>
           This effect is even stronger above level {{ formatInt(hyperInstabilityThreshold) }}.
           <br>
-          Glyph levels are <i>harshly</i> unstable past level {{ formatInt(ultraInstabilityThreshold) }}.
+          Glyphs are <i>harshly</i> unstable past level {{ formatInt(ultraInstabilityThreshold) }}.
           <br>
-          Glyphs lavels are hardcapped at level {{ formatInt(1e5) }}
+          Glyphs become so unstable at level {{ formatInt(1e5) }} that it is near impossible to go higher.
         </div>
         <SingleGlyphCustomzationPanel />
         <ExpandingControlBox
