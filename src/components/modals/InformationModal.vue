@@ -29,9 +29,9 @@ export default {
     </div>
     <div class="l-socials">
       <InformationModalButton
-        name="GitHub repository"
+        name="Redemption GitHub repository"
         icon="fa-brands fa-github"
-        link="https://github.com/IvarK/AntimatterDimensionsSourceCode"
+        link="https://github.com/toilet45/ADRedemption"
       />
       <InformationModalButton
         name="r/AntimatterDimensions"
@@ -39,7 +39,12 @@ export default {
         link="https://www.reddit.com/r/AntimatterDimensions/"
       />
       <InformationModalButton
-        name="Antimatter Dimensions Discord Server"
+        name="Antimatter Dimensions Redemption: Discord Server"
+        icon="fa-brands fa-discord"
+        link="https://discord.gg/3RuXAz7rwe"
+      />
+      <InformationModalButton
+        name="Vanilla Antimatter Dimensions Discord Server"
         icon="fa-brands fa-discord"
         link="https://discord.gg/ST9NaXa"
       />

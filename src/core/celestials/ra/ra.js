@@ -223,7 +223,15 @@ class RaPetState extends GameMechanicState {
   }
 
   reset() {
-    this.data.level = 1;
+    let x = MendingMilestone.ten.isReached ? 10 : 1;
+    //this.data.level = 1;
+    Ra.pets.teresa.level = x;
+    Ra.pets.effarig.level = x;
+    Ra.pets.enslaved.level = x;
+    Ra.pets.v.level = x;
+    Ra.pets.ra.level = 1;
+    Ra.pets.laitela.level = 1;
+    Ra.pets.pelle.level = 1;
     this.data.memories = 0;
     this.data.memoryChunks = 0;
     this.data.memoryUpgrades = 0;

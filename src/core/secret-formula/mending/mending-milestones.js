@@ -14,7 +14,7 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "Start Every Mend with all 4 Celestial Memories at Level 10",
+    reward: "Start Every Mend with Teresa, Effarig, Nameless, and V's Memories at Level 10",
   },
   four: {
     mends: 5,
