@@ -137,6 +137,14 @@ window.player = {
       isUnlocked: false,
       isActive: false,
     },
+    nrru: {
+      isUnlocked: false,
+      isActive: false,
+    },
+    nriu: {
+      isUnlocked: false,
+      isActive: false,
+    },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,
@@ -234,7 +242,7 @@ window.player = {
         isActive: false,
       },
       laitela: {
-        upgrades: Array.range(0, 3).map(() => ({
+        upgrades: Array.range(0, 7).map(() => ({
           isActive: true,
         })),
         isActive: false,
@@ -346,7 +354,8 @@ window.player = {
       slowestBH: 1,
     },
     mending:{
-      isEnd: false
+      isEnd: false,
+      mmeleven: 8
     },
     permanent: {
       emojiGalaxies: 0,
@@ -460,7 +469,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 50,
+  version: 51,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -482,6 +491,15 @@ window.player = {
       11: 0,
       16: 0,
     },
+    corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
+    corruptedFragments: 0,
+    corruptionChallenge: {
+      corruptedMend: false,
+      records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordScore: 0,
+    },
+    spentCF: 0,
+    corruptNext: false,
   },
   replicanti: {
     unl: false,
@@ -805,7 +823,7 @@ window.player = {
       maxDarkMatter: DC.D0,
       run: false,
       quoteBits: 0,
-      dimensions: Array.range(0, 4).map(() =>
+      dimensions: Array.range(0, 8).map(() =>
         ({
           amount: DC.D0,
           intervalUpgrades: 0,
@@ -1147,6 +1165,7 @@ export const Player = {
       case "mending":
         player.requirementChecks.mending = {
           noAM: true,
+          mmeleven: 8,
         }
       case "reality":
         player.requirementChecks.reality = {

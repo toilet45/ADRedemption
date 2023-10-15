@@ -188,7 +188,7 @@ export const Achievements = {
     const basePower = Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount);
     let x = BreakInfinityUpgrade.achievementMult.chargedEffect.isEffectActive ? BreakInfinityUpgrade.achievementMult.chargedEffect.effectValue : 1;
     const exponent = getAdjustedGlyphEffect("effarigachievement") * Ra.unlocks.achievementPower.effectOrDefault(1) * x;
-    return Math.min(1e300, Math.pow(basePower, exponent));
+    return Decimal.pow(basePower, exponent);
   }),
 
   get power() {

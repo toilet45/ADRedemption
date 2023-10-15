@@ -67,7 +67,7 @@ export default {
       this.darkMatterGain = d1.amount.times(d1.powerDM).divide(d1.interval).times(1000);
     },
     maxAll() {
-      Laitela.maxAllDMDimensions(4);
+      Laitela.maxAllDMDimensions(8);
     },
     showLaitelaHowTo() {
       ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(tab => tab.name === "Lai'tela")[0];

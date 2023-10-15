@@ -553,7 +553,44 @@ export const migrations = {
       player.celestials.kohler = {
         run: false,
       }
+    },
+  51: player => {
+    player.requirementChecks.mend = {
+      mmeleven: 8
     }
+  },
+  51.001: player => {
+    player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
+    ({
+      amount: new Decimal(0),
+      intervalUpgrades: 0,
+      powerDMUpgrades: 0,
+      powerDEUpgrades: 0,
+      timeSinceLastUpdate: 0,
+      ascensionCount: 0
+    })))
+  },
+  51.002: player => {
+    player.mending.corruption = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //10 here incase we add more, only 5 are used
+  },
+  51.003: player => {
+    player.mending.corruptedFragments = 0
+  },
+  51.004: player => {
+    player.mending.corruptionChallenge = {
+      corruptedMend: false,
+      records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+  },
+  51.005: player => {
+    player.mending.corruptionChallenge.recordScore = 0
+  },
+  51.006: player => {
+    player.mending.corruptNext = false
+  },
+  51.007: player => {
+    player.mending.spentCF = 0
+  }
   },
 
   normalizeTimespans(player) {

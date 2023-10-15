@@ -5,7 +5,35 @@ export const MatterScale = {
 
   estimate(matter) {
     if (!matter) return ["There is no antimatter yet."];
-    if (matter.gt(DC.E100000)) {
+    if (matter.gt(Decimal.pow10(4.320432e17*3))) {
+      return [
+        `If you wrote ${formatInt(3)} numbers a second, from the start`,
+        `of the universe, till today, you would have to existed for`,
+        `${formatX(matter.log10() / (4.320432e17*3), 3, 3)} the current age of the universe.`
+      ];
+    }
+    if (matter.gt(DC.E1_5E12)) {
+      return [
+        `It would take ` + formatPercents((matter.log10() / (4.320432e17*3)).toString(), 4),
+        " of the current age of the Universe to write out your antimatter count",
+        `if you wrote ${formatInt(3)} numbers a second`
+      ];
+    }
+    if (matter.gt(new Decimal("1e7200000000"))) {
+      return [
+        `If you wrote ${formatInt(3)} numbers a second, it would take you`,
+        formatFloat(((matter.log10() / 2437102080)), 2) + ` average American lifespans`,
+        ` to write down your antimatter amount.`
+      ];
+    }
+    if (matter.gt(DC.E1E7)) {
+      return [
+        `It would take ` + formatPercents((matter.log10() / (2437102080*3)).toString(), 4),
+        " of the average American lifespan to write out your antimatter count",
+        `if you wrote ${formatInt(1)} number a second`
+      ];
+    }
+    if (matter.gt(DC.E10000)) {
       return [
         `If you wrote ${formatInt(3)} numbers a second, it would take you`,
         TimeSpan.fromSeconds(matter.log10() / 3).toString(),

@@ -135,11 +135,11 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(7).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
-    if (player.infinityPower.exponent > 9e15){
-      let x = player.infinityPower;
-      production = production.times(this.multiplier);
-      production = production.pow(1/(x.log10()**0.1));
-      return production;
+    production = production.times(this.multiplier);
+    if (this.tier == 1 & production.exponent > 9e15){
+      let x = production.sub(Decimal.pow10(9e15));   
+      x = x.pow(1/(x.log10()**0.1));
+      return x.add(Decimal.pow10(9e15));
     }
     return production.times(this.multiplier);
   }
@@ -181,7 +181,6 @@ class InfinityDimensionState extends DimensionState {
     if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {
       mult = mult.pow(0.5);
     }
-
     return mult;
   }
 
@@ -220,9 +219,8 @@ class InfinityDimensionState extends DimensionState {
     if (Enslaved.isRunning) {
       return 1;
     }
-    return InfinityDimensions.capIncrease + (this.tier === 8
-      ? 1e10
-      : InfinityDimensions.HARDCAP_PURCHASES);
+     // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
+     return this.tier == 8 ? 1e308 : InfinityDimensions.totalDimCap
   }
 
   get isCapped() {

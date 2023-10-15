@@ -766,7 +766,7 @@ export const Glyphs = {
     }
   },
   get levelCap() {
-    return 1000000;
+    return 1000000000000;
   },
   get instabilityThreshold() {
     return 1000 + getAdjustedGlyphEffect("effarigglyph") + ImaginaryUpgrade(7).effectOrDefault(0);
@@ -776,10 +776,13 @@ export const Glyphs = {
   },
   get ultraInstabilityThreshold(){
     let effarigMemDelay = Ra.unlocks.harshInstabilityDelay.isUnlocked ? (500 * (Math.max(1, Math.floor(Ra.pets.effarig.level / 5) - 10))) : 0;
-    return 45000 + (500 * MendingUpgrade(6).boughtAmount) + effarigMemDelay;
+    return 45000 + (500 * MendingUpgrade(6).boughtAmount) + Ra.unlocks.harshInstabilityDelay.effectOrDefault(0);
+  },
+  get omegaInstabilityThreshold(){
+    return 100000
   },
   get hardcap(){
-    return 100000;
+    return 100000000;
   },
   clearUndo() {
     player.reality.glyphs.undo = [];

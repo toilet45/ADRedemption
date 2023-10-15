@@ -129,7 +129,7 @@ export default {
       else this.toMaxTooltip = estimateText.startsWith("<") ? "Currently Increasing" : estimateText;
       this.isPastSCone = player.dilation.totalTachyonGalaxies >= this.scOneStart && !Pelle.isDoomed;
       this.scOneStart = 50000
-      this.scOnePower = 1.5 - (0.005 * player.mending.rebuyables[11]);
+      this.scOneMult = 1.5 - (0.005 * player.mending.rebuyables[11]);
       this.isPastSCtwo = player.dilation.totalTachyonGalaxies >= this.scTwoStart && !Pelle.isDoomed;
       this.scTwoStart = 150000;
       this.scTwoPower = 1.5;
@@ -183,7 +183,7 @@ export default {
       Rebuyable costs jump and scale much faster past 5,000 purchases.
     </span>
     <span v-if="isPastSCone" class="sc-one">
-      Every {{ formatInt(scOneStart) }} Tachyon Galaxies, TG threshold is {{ formatPow(scOnePower, 3, 3) }}.
+      Every {{ formatInt(scOneStart) }} Tachyon Galaxies, TG threshold is {{ formatX(scOneMult, 3, 3) }}.
     </span>
     <div class="l-dilation-upgrades-grid">
       <div

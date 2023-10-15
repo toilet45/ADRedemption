@@ -12,7 +12,7 @@ export default {
 <template>
   <span>
     <DarkMatterDimensionRow
-      v-for="tier in 4"
+      v-for="tier in 8"
       :key="tier"
       :tier="tier"
     />
