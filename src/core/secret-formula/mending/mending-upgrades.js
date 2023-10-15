@@ -131,7 +131,7 @@ export const mendingUpgrades = [
   },
   rebuyable({
     id: 16,
-    name: "Mending Upgrade 16",
+    name: "Per Aspera Ad Astra",
     initialCost: 1e9,
     costMult: 1e6,
     textTemplate: `Delay Obscure Galaxy Scaling by 5,000.`,

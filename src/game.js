@@ -13,6 +13,7 @@ import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
+import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
 
 if (GlobalErrorHandler.handled) {
   throw new Error("Initialization failed");
@@ -55,7 +56,7 @@ export function playerInfinityUpgradesOnReset() {
     return;
   }
 
-  if (RealityUpgrade(10).isBought || EternityMilestone.keepBreakUpgrades.isReached) {
+  if (RealityUpgrade(10).isBought || EternityMilestone.keepBreakUpgrades.isReached || MendingUpgrade(2).isBought) {
     player.infinityUpgrades = breakInfinityUpgrades;
     player.infinityRebuyables = [8, 7, 10];
   } else if (EternityMilestone.keepInfinityUpgrades.isReached) {
@@ -132,7 +133,7 @@ export function gainedMendingPoints(){
     DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
-  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isUnlocked ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
+  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
 
   return MvRGain;
 }
@@ -354,10 +355,10 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     }
   }
 
-  let factor = 1;
+  let factor = DC.D1;
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative) {
-      factor *= player.blackHoleNegative;
+      factor = factor.times(player.blackHoleNegative);
     } else if (!BlackHoles.arePaused) {
       for (const blackHole of BlackHoles.list) {
         if (!blackHole.isUnlocked) break;
@@ -365,43 +366,48 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
           ? blackHole.isActive
           : blackHole.id <= blackHolesActiveOverride;
         if (!isActive) break;
-        factor *= Math.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor);
-        factor *= VUnlocks.achievementBH.effectOrDefault(1);
+        factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
+        factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
       }
     }
   }
 
   if (effects.includes(GAME_SPEED_EFFECT.SINGULARITY_MILESTONE)) {
-    factor *= SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1);
+    factor = factor.times(SingularityMilestone.gamespeedFromSingularities.effectOrDefault(1));
   }
 
   if (effects.includes(GAME_SPEED_EFFECT.TIME_GLYPH)) {
-    factor *= getAdjustedGlyphEffect("timespeed");
-    factor = Math.pow(factor, getAdjustedGlyphEffect("effarigblackhole"));
+    factor = factor.times(getAdjustedGlyphEffect("timespeed"));
+    factor = factor.pow(getAdjustedGlyphEffect("effarigblackhole"));
   }
 
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;
-    factor = factor * (1 - storedTimeWeight) + storedTimeWeight;
+    factor = factor.times((1 - storedTimeWeight) + storedTimeWeight);
   }
 
   // These effects should always be active, but need to be disabled during offline black hole simulations because
   // otherwise it gets applied twice
   if (effects.includes(GAME_SPEED_EFFECT.NERFS)) {
     if (Effarig.isRunning) {
-      factor = Effarig.multiplier(factor).toNumber();
+      factor = Effarig.multiplier(factor);
     } else if (Laitela.isRunning) {
       const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes / 10, 1);
-      factor = Math.pow(factor, nerfModifier);
+      factor = Decimal.pow(factor, nerfModifier);
     }
   }
 
 
-  factor *= PelleUpgrade.timeSpeedMult.effectValue.toNumber();
+  factor.times(PelleUpgrade.timeSpeedMult.effectValue.toNumber());
 
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
-  factor = Math.clamp(factor, 1e-300, 1e300);
+
+  if (player.mending.corruptionChallenge.corruptedMend == true) {
+    factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
+    factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
+  }
+  factor = Decimal.clamp(factor, 1e-300, 1e300).toNumber();
 
   return factor;
 }
@@ -905,31 +911,35 @@ function updateTachyonGalaxies() {
   const tachyonGalaxyMult = Effects.max(1, DilationUpgrade.doubleGalaxies);
   const tachyonGalaxyThreshold = 1000;
   const thresholdMult = getTachyonGalaxyMult();
-  player.dilation.baseTachyonGalaxies = Math.max(player.dilation.baseTachyonGalaxies,
-    1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult)));
+  //player.dilation.baseTachyonGalaxies = Math.max(player.dilation.baseTachyonGalaxies,
+  //  1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult)));
+  try{
+    player.dilation.baseTachyonGalaxies = bulkBuyBinarySearch(Currency.dilatedTime.value, {
+      costFunction: x => new Decimal(5000).times(new Decimal(getTachyonGalaxyMult(undefined, (x + Math.min(500, Effects.max(0, DilationUpgrade.doubleGalaxies) * x)) * DilationUpgrade.galaxyMultiplier.effectValue)).pow(x)),
+      cumulative: true,
+    }, 0).quantity;
+  }
+  catch {
+    player.dilation.baseTachyonGalaxies = player.dilation.baseTachyonGalaxies;
+  }
   player.dilation.nextThreshold = DC.E3.times(new Decimal(thresholdMult)
     .pow(player.dilation.baseTachyonGalaxies));
-  player.dilation.totalTachyonGalaxies =
-    Math.min(player.dilation.baseTachyonGalaxies * tachyonGalaxyMult, tachyonGalaxyThreshold) +
-    Math.max(player.dilation.baseTachyonGalaxies * tachyonGalaxyMult - tachyonGalaxyThreshold, 0) / tachyonGalaxyMult;
-
-  player.dilation.totalTachyonGalaxies *= DilationUpgrade.galaxyMultiplier.effectValue;
+  player.dilation.totalTachyonGalaxies = (player.dilation.baseTachyonGalaxies + Math.min(500, Effects.max(0, DilationUpgrade.doubleGalaxies) * player.dilation.baseTachyonGalaxies)) * DilationUpgrade.galaxyMultiplier.effectValue;
 }
 
 export function getTTPerSecond() {
   // All TT multipliers (note that this is equal to 1 pre-Ra)
   let ttMult = Effects.product(
     Ra.unlocks.continuousTTBoost.effects.ttGen,
-    Ra.unlocks.achievementTTMult,
     Achievement(137),
     Achievement(156),
-  );
-  if (GlyphAlteration.isAdded("dilation")) ttMult *= getSecondaryGlyphEffect("dilationTTgen");
+  ).toDecimal().times(Ra.unlocks.achievementTTMult.config.canBeApplied ? Ra.unlocks.achievementTTMult.config.effectValue : 1);
+  if (GlyphAlteration.isAdded("dilation")) ttMult.times(getSecondaryGlyphEffect("dilationTTgen"));
 
   // Glyph TT generation
   const glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
     ? 0
-    : getAdjustedGlyphEffect("dilationTTgen") * ttMult;
+    : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
 
   // Dilation TT generation
   const dilationTT = DilationUpgrade.ttGenerator.isBought

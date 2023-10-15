@@ -102,7 +102,7 @@ export function buyDilationUpgrade(id, bulk = 1) {
   return true;
 }
 
-export function getTachyonGalaxyMult(thresholdUpgrade) {
+export function getTachyonGalaxyMult(thresholdUpgrade, amnt) {
   // This specifically needs to be an undefined check because sometimes thresholdUpgrade is zero
   const upgrade = thresholdUpgrade === undefined ? DilationUpgrade.galaxyThreshold.effectValue : thresholdUpgrade;
   let thresholdMult = 3.65 * upgrade + 0.35;
@@ -111,15 +111,16 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
   let power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
     ? DilationUpgrade.galaxyThresholdPelle.effectValue : 1;
   let tgSoftcapOne = 50000;
-  let tgSoftcapOneApplytimes = Math.floor(player.dilation.totalTachyonGalaxies / 50000);
+  let tgSoftcapOneApplytimes = Math.floor((amnt == undefined ? player.dilation.totalTachyonGalaxies : amnt) / 50000);
   //let tgSoftcapTwo = 150000;
-  if (player.dilation.totalTachyonGalaxies >= tgSoftcapOne && !Pelle.isDoomed){
+  if ((amnt == undefined ? player.dilation.totalTachyonGalaxies : amnt) >= tgSoftcapOne && !Pelle.isDoomed){
     power *= ((1.5 - (0.005 * player.mending.rebuyables[11])) * tgSoftcapOneApplytimes);
   }
   /*if (player.dilation.totalTachyonGalaxies >= tgSoftcapTwo && !Pelle.isDoomed){
     power *= 1.5;
   }*/
-  return Math.min(Math.max(1, ((1 + thresholdMult * glyphReduction) ** power)), 1e300);
+  let one = Math.max(1.1, (thresholdMult * glyphReduction)) ** power
+  return Math.min(Math.max(1, one), 1e300);
 }
 
 export function getDilationGainPerSecond() {

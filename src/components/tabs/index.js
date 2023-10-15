@@ -47,7 +47,7 @@ import MendingUpgrades from "./mending/MendingUpgrades";
 import MendingMilestones from "./mending/MendingMilestones";
 import WarpReality from "./mending/WarpReality";
 import KohlersRealm from "./mending/KohlersRealm";
-import Courrption from "./mending/Courrption";
+import CorruptionTab from "./corruption/CorruptionChallengeTab";
 
 
 const TabComponents = {
@@ -96,7 +96,7 @@ const TabComponents = {
   MendingUpgrades,
   MendingMilestones,
   WarpReality,
-  Courrption,
+  CorruptionTab,
   KohlersRealm
 };
 

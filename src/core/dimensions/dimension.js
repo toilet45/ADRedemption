@@ -1,3 +1,5 @@
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
+
 export class DimensionState {
   constructor(getData, tier) {
     this._tier = tier;
@@ -33,7 +35,7 @@ export class DimensionState {
   }
 
   productionForDiff(diff) {
-    return this.productionPerSecond.times(diff / 1000);
+    return this.productionPerSecond.times(diff / 1000).pow(player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.dimLimits[[player.mending.corruption[1]]] : 1);
   }
 
   produceCurrency(currency, diff) {

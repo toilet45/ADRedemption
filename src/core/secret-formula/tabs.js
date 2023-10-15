@@ -514,20 +514,20 @@ export const tabs = [
         id: 2,
         hidable: true,
       },
-      /*{
+      {
         key: "corruption",
-        name: "Dilation 2 [NYI]",
+        name: "Corruption",
         symbol: "?",
-        component: "Courrption",
-        id: 9999999999,
+        component: "CorruptionTab",
+        id: 3,
         hidable: true,
-      },*/
+      },
       {
         key: "kohlerrealm",
         name: "Kohler's Realm [NYI]",
         symbol: "<i class='fa-solid fa-staff-snake'></i>",
         component: "KohlersRealm",
-        id: 3,
+        id: 4,
         hidable: true,
       },
     ]

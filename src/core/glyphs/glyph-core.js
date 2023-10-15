@@ -766,7 +766,7 @@ export const Glyphs = {
     }
   },
   get levelCap() {
-    return 1000000;
+    return 1000000000000;
   },
   get instabilityThreshold() {
     return 1000 + getAdjustedGlyphEffect("effarigglyph") + ImaginaryUpgrade(7).effectOrDefault(0);

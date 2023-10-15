@@ -351,12 +351,12 @@ export function getGlyphLevelInputs() {
   scaledLevel = omegaInstabilitySoftcap(scaledLevel, staticFactors.omegaInstability, 20);
   const scalePenalty = scaledLevel > 0 ? baseLevel / scaledLevel : 1;
   const incAfterInstability = staticFactors.realityUpgrades + staticFactors.achievements;
+  scaledLevel = Math.min(1000000, scaledLevel);
   baseLevel += incAfterInstability;
   scaledLevel += incAfterInstability;
   if (Achievement(193).isUnlocked){
     scaledLevel *= 1.0808;
   }
-  scaledLevel = Math.min(100000, scaledLevel);
   return {
     ep: sources.ep,
     repl: sources.repl,

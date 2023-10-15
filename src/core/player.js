@@ -491,6 +491,15 @@ window.player = {
       11: 0,
       16: 0,
     },
+    corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
+    corruptedFragments: 0,
+    corruptionChallenge: {
+      corruptedMend: false,
+      records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordScore: 0,
+    },
+    spentCF: 0,
+    corruptNext: false,
   },
   replicanti: {
     unl: false,

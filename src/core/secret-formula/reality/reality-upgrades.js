@@ -107,7 +107,7 @@ export const realityUpgrades = [
     canLock: true,
     // We don't have lockEvent because the modal can never show up for this upgrade
     description: "Tachyon Particle gain is boosted based on Achievement multiplier",
-    effect: () => Math.sqrt(Achievements.power),
+    effect: () => Decimal.sqrt(Achievements.power),
     formatEffect: value => formatX(value, 2, 2)
   },
   {

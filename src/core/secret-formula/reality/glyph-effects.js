@@ -140,7 +140,7 @@ export const glyphEffects = {
     alterationType: ALTERATION_TYPE.BOOST,
     combine: effects => {
       const prod = effects.reduce(Number.prodReducer, 1);
-      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3-Math.pow(0.7+(0.4 - Math.pow(0.4 - prod, 1.7)), 0.333), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
+      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3 - Math.pow(0.4 - prod, 3), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
     },
     enabledInDoomed: true,
   },
