@@ -10,7 +10,7 @@ export const infinityChallenges = [
     reward: {
       description: () => `${formatX(1.3, 1, 1)} on all Infinity Dimensions for each Infinity Challenge completed`,
       effect: () => {
-        let x = BreakInfinityUpgrade.slowestChallengeMult.chargedEffect.isEffectActive ? Ra.pets.teresa.level * 1e11: 1;
+        let x = BreakInfinityUpgrade.slowestChallengeMult.chargedEffect.isEffectActive ? Ra.pets.teresa.level * 1e9 : 1;
         return Decimal.pow(Math.pow(1.3, InfinityChallenges.completed.length), x);
       },
       formatEffect: value => formatX(value, 3, 3)

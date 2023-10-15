@@ -2576,11 +2576,15 @@ export const news = [
   },
   {
     id: "a394",
-    text: "Looking for more mods to play? Check out https://github.com/ArchercatNEO/AD-Mod-DB."
+    text: "Looking for more mods to play? Check out https://github.com/ArchercatNEO/AD-Mod-DB (may not be up to date)."
   },
   {
     id: "a395",
     text: "moist."
+  },
+  {
+    id: "a396",
+    text: "POV: You've been stuck on an esclator of 2+ hours because power went out"
   },
   {
     id: "l1",

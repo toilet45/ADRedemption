@@ -87,7 +87,7 @@ export const breakInfinityUpgrades = {
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description: "Raise Achievement Multiplier based on Teresa and V Level",
-      effect: () => Math.max(1 + Math.pow(Ra.pets.teresa.level + Ra.pets.v.level, 0.65) / 7.5, 1),
+      effect: () => Math.max(1 + Math.pow(Ra.pets.teresa.level + Ra.pets.v.level, 0.25) / 7.5, 1),
       formatEffect: value => formatPow(value, 4, 4)
     }
   },
@@ -101,7 +101,7 @@ export const breakInfinityUpgrades = {
     cap: DC.D3E4,
     charged: {
       description: "Raise IC1 Reward based on Teresa Level",
-      effect: () => Ra.pets.teresa.level * 1e11,
+      effect: () => Ra.pets.teresa.level * 1e9,
       formatEffect: value => formatPow(value)
     }
   },
