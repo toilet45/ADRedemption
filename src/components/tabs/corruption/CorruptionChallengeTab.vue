@@ -19,7 +19,9 @@ export default {
       percentage: "",
       possibleFillPercentage: "",
       bestAM: new Decimal(0),
-      corruptionSet: [],
+      recordScore: 0,
+      corruptionSet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      corruptions: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       lastMachines: new Decimal(0),
       perkPoints: 0,
       hasReality: false,
@@ -28,7 +30,6 @@ export default {
       raisedPerkShop: false,
       isRunning: false,
       canUnlockNextPour: false,
-      corruptions: CorruptionData.corruptions.mapToObject(e => e, () => 0),
     };
   },
   computed: {
@@ -84,8 +85,8 @@ export default {
       this.percentage = `${(Teresa.fill * 100).toFixed(2)}%`;
       this.possibleFillPercentage = `${(Teresa.possibleFill * 100).toFixed(2)}%`;
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
-      this.corruptionSet = CorruptionData.corruptionChallenge.recordCorruptions;
-      this.corruptions = CorruptionData.corruptions;
+      this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
+      this.corruptions = [...CorruptionData.corruptions];
       this.perkPoints = Currency.perkPoints.value;
       this.isRunning = Teresa.isRunning;
     },
