@@ -14,22 +14,14 @@ export default {
   },
   data() {
     return {
-      pour: false,
       time: new Date().getTime(),
-      percentage: "",
-      possibleFillPercentage: "",
       bestAM: new Decimal(0),
       recordScore: 0,
       corruptionSet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       corruptions: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      lastMachines: new Decimal(0),
       perkPoints: 0,
       hasReality: false,
-      hasEPGen: false,
-      hasPerkShop: false,
-      raisedPerkShop: false,
       isRunning: false,
-      canUnlockNextPour: false,
     };
   },
   computed: {
@@ -52,20 +44,10 @@ export default {
     },
     runButtonClassObject() {
       return {
-        "c-teresa-run-button__icon": true,
-        "c-teresa-run-button__icon--running": this.isRunning,
-        "c-celestial-run-button--clickable": !this.isDoomed,
+        "c-corrupt-run-button__icon": true,
+        "c-corrupt-run-button__icon--running": this.isRunning,
+        "c-corrupt-run-button--clickable": !this.isDoomed,
         "o-pelle-disabled-pointer": this.isDoomed
-      };
-    },
-    pourButtonClassObject() {
-      return {
-        "o-teresa-shop-button": true,
-        "c-teresa-pour": true,
-        "o-teresa-shop-button--available": !this.isPouredAmountCapped,
-        "o-teresa-shop-button--capped": this.isPouredAmountCapped,
-        "c-teresa-pour--unlock-available": this.canUnlockNextPour,
-        "c-disabled-pour": this.isPouredAmountCapped
       };
     },
     runDescription() {
@@ -73,7 +55,7 @@ export default {
     },
     unlockInfoTooltipArrowStyle() {
       return {
-        borderRight: "0.5rem solid var(--color-teresa--base)"
+        borderRight: "0.5rem solid var(--color-pelle--base)"
       };
     },
     isDoomed: () => Pelle.isDoomed,
@@ -81,13 +63,10 @@ export default {
   methods: {
     update() {
       const now = new Date().getTime();
-      this.time = now;
-      this.percentage = `${(Teresa.fill * 100).toFixed(2)}%`;
-      this.possibleFillPercentage = `${(Teresa.possibleFill * 100).toFixed(2)}%`;
+      this.time = now;;
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
-      this.perkPoints = Currency.perkPoints.value;
       this.isRunning = Teresa.isRunning;
     },
     startRun() {
@@ -98,8 +77,8 @@ export default {
     },
     unlockInfoTooltipClass(unlockInfo) {
       return {
-        "c-teresa-unlock-description": true,
-        "c-teresa-unlock-description--unlocked": this.hasUnlock(unlockInfo)
+        "c-corrupt-unlock-description": true,
+        "c-corrupt-unlock-description--unlocked": this.hasUnlock(unlockInfo)
       };
     }
   }
@@ -107,12 +86,14 @@ export default {
 </script>
 
 <template>
-  <div class="l-teresa-celestial-tab">
+  <div class="l-corrupt-celestial-tab">
+    You have <span class="c-fragments-amount__accent">{{ format(0, 2) }}</span> Corrupted Fragments.
+    <br>
     <div class="l-mechanics-container">
       <div
-        class="l-teresa-mechanic-container"
+        class="l-corrupt-mechanic-container"
       >
-        <div class="c-teresa-unlock c-teresa-run-button">
+        <div class="c-corrupt-unlock c-corrupt-run-button">
           <span :class="{ 'o-pelle-disabled': isDoomed }">
               Corrupt Next Mend
           </span>
@@ -142,6 +123,8 @@ export default {
           :width="'100%'"
           @input="corruptionSetSet(0, $event)"
         />
+        Raise IP, EP, and RM gain by ^x.
+        <br>
         <br>
     Dimensional Limitations:
     <SliderComponent
@@ -150,6 +133,8 @@ export default {
           :width="'100%'"
           @input="corruptionSetSet(1, $event)"
         />
+        AD, ID, and TD multipliers ^x
+        <br>
         <br>
     Time Compression:
     <SliderComponent
@@ -158,6 +143,8 @@ export default {
           :width="'100%'"
           @input="corruptionSetSet(2, $event)"
         />
+        Gamespeed ^x and then *y
+        <br>
         <br>
     Galactic Weakness:
     <SliderComponent
@@ -166,6 +153,8 @@ export default {
           :width="'100%'"
           @input="corruptionSetSet(3, $event)"
         />
+        Galaxy Power ^x and then *y
+        <br>
         <br>
     Complex Glyphs:
     <SliderComponent
@@ -174,14 +163,15 @@ export default {
           :width="'100%'"
           @input="corruptionSetSet(4, $event)"
         />
+        Glyph Level ^x and then *x. Glyph Rarity ^y and then *y
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.c-disabled-pour {
-  opacity: 0.8;
-  pointer-events: none;
+.c-fragments-amount__accent {
+  font-size: 2rem;
+  color: var(--color-pelle--base);
 }
 </style>
