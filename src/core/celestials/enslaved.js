@@ -139,7 +139,7 @@ export const Enslaved = {
     return player.celestials.enslaved.unlocks.includes(info.id);
   },
   canBuy(info) {
-    return player.celestials.enslaved.stored >= info.price && info.secondaryRequirement() && !this.has(info);
+    return new Decimal(player.celestials.enslaved.stored).gte(info.price) && info.secondaryRequirement() && !this.has(info);
   },
   buyUnlock(info) {
     if (!this.canBuy(info)) return false;
@@ -186,7 +186,7 @@ export const Enslaved = {
   },
   get realityBoostRatio() {
     return Math.max(1, Math.floor(player.celestials.enslaved.storedReal /
-      Math.max(1000, Time.thisRealityRealTime.totalMilliseconds)));
+      Decimal.max(1000, Time.thisRealityRealTime.totalMilliseconds).toNumber()));
   },
   get canAmplify() {
     return this.realityBoostRatio > 1 && !Pelle.isDoomed && !isInCelestialReality();

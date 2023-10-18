@@ -29,7 +29,7 @@ export default {
     },
     baseText() {
       if (!this.hasSeenAlteredSpeed) return null;
-      return this.baseSpeed === 1
+      return this.baseSpeed.eq(1)
         ? "The game is running at normal speed."
         : `Game speed is altered: ${this.baseSpeedText}`;
     }
@@ -44,10 +44,10 @@ export default {
       this.isPulsing = (this.baseSpeed !== this.pulsedSpeed) && Enslaved.canRelease(true);
     },
     formatNumber(num) {
-      if (num >= 0.001 && num < 10000 && num !== 1) {
+      if (num.gte(0.001) && num.lt(10000) && num.neq(1)) {
         return format(num, 3, 3);
       }
-      if (num < 0.001) {
+      if (num.lt(0.001)) {
         return `${formatInt(1)} / ${format(1 / num, 2)}`;
       }
       return `${format(num, 2)}`;

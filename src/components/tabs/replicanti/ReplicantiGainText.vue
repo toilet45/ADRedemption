@@ -11,13 +11,11 @@ export default {
     update() {
       const updateRateMs = player.options.updateRate;
       const ticksPerSecond = 1000 / updateRateMs;
-      const logGainFactorPerTick = Decimal.divide(getGameSpeedupForDisplay() * updateRateMs *
-        (Math.log(player.replicanti.chance + 1)), getReplicantiInterval());
+      const logGainFactorPerTick = Decimal.divide(getGameSpeedupForDisplay().times(updateRateMs).times(Math.log(player.replicanti.chance + 1)), getReplicantiInterval());
       const log10GainFactorPerTick = logGainFactorPerTick.dividedBy(Math.LN10);
 
       // The uncapped factor is needed for galaxy speed calculations
-      const log10GainFactorPerTickUncapped = Decimal.divide(getGameSpeedupForDisplay() * updateRateMs *
-        (Math.log(player.replicanti.chance + 1)), getReplicantiInterval(false)).dividedBy(Math.LN10);
+      const log10GainFactorPerTickUncapped = Decimal.divide(getGameSpeedupForDisplay().times(updateRateMs).times(Math.log(player.replicanti.chance + 1)), getReplicantiInterval(false)).dividedBy(Math.LN10);
 
       const replicantiAmount = Replicanti.amount;
       const isAbove308 = Replicanti.isUncapped && replicantiAmount.log10() > LOG10_MAX_VALUE;

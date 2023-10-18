@@ -9,10 +9,9 @@ class AchievementTimer {
   }
 
   advance() {
-    const addedTime = this.realTime
-      ? Time.unscaledDeltaTime.totalSeconds
-      : Time.deltaTime;
-    this.time += addedTime;
+    this.realTime
+      ? this.time += Time.unscaledDeltaTime.totalSeconds.toNumber()
+      : new Decimal(this.time).add(Time.deltaTime)
   }
 
   check(condition, duration) {

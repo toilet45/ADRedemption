@@ -450,7 +450,7 @@ export const BlackHoles = {
     const realTickTime = this.binarySearch(
       0,
       totalRealTime,
-      x => this.calculateGameTimeFromRealTime(x, speedups) * numberOfTicks / totalGameTime,
+      x => this.calculateGameTimeFromRealTime(x, speedups.toNumber()) * numberOfTicks / totalGameTime,
       1,
       tolerance
     );
@@ -496,7 +496,7 @@ export const BlackHoles = {
     // Crucial thing: this works even if the black holes are paused, it's just that the speedups will be 1.
     for (const blackHole of this.list) {
       if (!blackHole.isUnlocked) break;
-      speedups.push(getGameSpeedupFactor(effectsToConsider, blackHole.id) / speedupWithoutBlackHole);
+      speedups.push(getGameSpeedupFactor(effectsToConsider, blackHole.id).div(speedupWithoutBlackHole));
     }
     return speedups;
   },
@@ -510,7 +510,7 @@ export const BlackHoles = {
     // This adds in time with black holes paused at the end of the list.
     effectivePeriods[0] += realTime - realerTime;
     return effectivePeriods
-      .map((period, i) => period * speedups[i])
+      .map((period, i) => Decimal.min(period.times(speedups[i]), 1e300))
       .sum();
   },
 

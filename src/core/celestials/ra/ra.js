@@ -419,7 +419,7 @@ export const Ra = {
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
-    return Math.clampMax(1 + 0.005 * hoursFromUnlock, AlchemyResource.momentum.effectValue);
+    return Decimal.clampMax(hoursFromUnlock.times(0.005).add(1), AlchemyResource.momentum.effectValue).toNumber();
   },
   get continuumActive() {
     return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;

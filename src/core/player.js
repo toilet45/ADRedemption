@@ -365,35 +365,35 @@ window.player = {
   },
   records: {
     gameCreatedTime: Date.now(),
-    totalTimePlayed: 0,
-    timePlayedAtBHUnlock: Number.MAX_VALUE,
+    totalTimePlayed: DC.D0,
+    timePlayedAtBHUnlock: Decimal.pow10(Number.MAX_VALUE),
     realTimePlayed: 0,
     realTimeDoomed: 0,
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, 1, "", 0, 0]),
     thisInfinity: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
-      lastBuyTime: 0,
+      lastBuyTime: DC.D0,
       maxAM: DC.D0,
       bestIPmin: DC.D0,
       bestIPminVal: DC.D0,
     },
     bestInfinity: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Decimal.pow10(Number.MAX_VALUE),
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
     },
     thisEternity: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -403,12 +403,12 @@ window.player = {
       bestInfinitiesPerMs: DC.D0,
     },
     bestEternity: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Decimal.pow10(Number.MAX_VALUE),
       bestEPminReality: DC.D0,
     },
     thisReality: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -420,8 +420,8 @@ window.player = {
       bestRSminVal: 0,
     },
     bestReality: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Decimal.pow10(Number.MAX_VALUE),
       glyphStrength: 0,
       RM: DC.D0,
       RMSet: [],
@@ -436,8 +436,8 @@ window.player = {
       laitelaSet: [],
     },
     thisMend: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: DC.D0,
+      realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
       maxEP: DC.D0,
@@ -446,8 +446,8 @@ window.player = {
       maxRem: 0,
     },
     bestMend: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Decimal.pow10(Number.MAX_VALUE),
     }
   },
   speedrun: {
@@ -710,7 +710,7 @@ window.player = {
     },
     enslaved: {
       isStoring: false,
-      stored: 0,
+      stored: DC.D0,
       isStoringReal: false,
       storedReal: 0,
       autoStoreReal: false,
@@ -815,7 +815,7 @@ window.player = {
       disCharge: false,
       breakCharged: new Set(),
       breakDischarge: false,
-      peakGamespeed: 1,
+      peakGamespeed: DC.D1,
       petWithRemembrance: ""
     },
     laitela: {

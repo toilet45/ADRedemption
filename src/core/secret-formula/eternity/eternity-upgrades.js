@@ -33,7 +33,7 @@ export const eternityUpgrades = {
     description: "Infinity Dimensions multiplier based on sum of Infinity Challenge times",
     // The cap limits this at a lower value, but we also need an explicit cap here because very old versions have
     // allowed EC12 to make all the challenge records sum to zero (causing a division by zero here)
-    effect: () => DC.D2.pow(30 / Math.clampMin(Time.infinityChallengeSum.totalSeconds, 0.1)),
+    effect: () => DC.D2.pow(30 / Decimal.clampMin(Time.infinityChallengeSum.totalSeconds, 0.1).toNumber()),
     cap: DC.D2P30D0_61,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -62,9 +62,9 @@ export const eternityUpgrades = {
     },
     effect: () => {
       if (Pelle.isDoomed){
-        return 1 + Time.thisReality.totalDays;
+        return Time.thisReality.totalDays.add(1);
       }
-      return PlayerProgress.mendingUnlocked() ? Math.max(Time.thisMend.totalDays, 1) : Math.max(Time.totalTimePlayed.totalDays, 1);
+      return PlayerProgress.mendingUnlocked() ? Decimal.max(Time.thisMend.totalDays, 1) : Decimal.max(Time.totalTimePlayed.totalDays, 1);
     },
     formatEffect: value => formatX(value, 2, 1)
   }

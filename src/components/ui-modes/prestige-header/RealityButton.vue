@@ -103,7 +103,7 @@ export default {
       this.ppGained = multiplier;
       if(MendingMilestone.one.isReached) this.ppGained *= 5;
       this.shardsGained = Effarig.shardsGained * multiplier;
-      this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
+      this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes.max(0.01).toNumber());
       this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;
       this.bestShardRateVal = player.records.thisReality.bestRSminVal * multiplier;
 

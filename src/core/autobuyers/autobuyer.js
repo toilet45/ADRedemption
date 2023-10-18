@@ -89,19 +89,31 @@ export class AutobuyerState {
  */
 export class IntervaledAutobuyerState extends AutobuyerState {
   get interval() {
+    if (this.data.interval instanceof Decimal) {
+      this.data.interval = this.data.interval.toNumber()
+    }
     return this.data.interval;
   }
 
   get canTick() {
+    if (this.timeSinceLastTick instanceof Decimal) {
+      this.timeSinceLastTick = this.timeSinceLastTick.toNumber()
+    }
     return super.canTick && this.timeSinceLastTick >= this.interval;
   }
 
   get timeSinceLastTick() {
+    if (this.data.lastTick instanceof Decimal) {
+      this.data.lastTick = this.data.lastTick.toNumber()
+    }
     return player.records.realTimePlayed - this.data.lastTick;
   }
 
   tick() {
     this.data.lastTick = player.records.realTimePlayed;
+    if (this.data.lastTick instanceof Decimal) {
+      this.data.lastTick = this.data.lastTick.toNumber()
+    }
   }
 
   /**
