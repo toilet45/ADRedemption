@@ -268,7 +268,7 @@ export const Ra = {
     data.disCharge = false;
     data.breakCharged = new Set();
     data.breakDischarge = false;
-    data.peakGamespeed = 1;
+    data.peakGamespeed = new Decimal(1);
     for (const pet of Ra.pets.all) pet.reset();
   },
   memoryTick(realDiff, generateChunks) {

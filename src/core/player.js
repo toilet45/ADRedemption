@@ -366,18 +366,18 @@ window.player = {
   records: {
     gameCreatedTime: Date.now(),
     totalTimePlayed: DC.D0,
-    timePlayedAtBHUnlock: Decimal.pow10(Number.MAX_VALUE),
+    timePlayedAtBHUnlock: DC.D0,
     realTimePlayed: 0,
     realTimeDoomed: 0,
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, DC.D1, ""]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, DC.D1, "", DC.D0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Decimal.pow10(Number.MAX_VALUE), DC.D1, 1, "", 0, 0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -388,7 +388,7 @@ window.player = {
     },
     bestInfinity: {
       time: Decimal.pow10(Number.MAX_VALUE),
-      realTime: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
     },
@@ -404,7 +404,7 @@ window.player = {
     },
     bestEternity: {
       time: Decimal.pow10(Number.MAX_VALUE),
-      realTime: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
     thisReality: {
@@ -421,7 +421,7 @@ window.player = {
     },
     bestReality: {
       time: Decimal.pow10(Number.MAX_VALUE),
-      realTime: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
       RMSet: [],
@@ -447,7 +447,7 @@ window.player = {
     },
     bestMend: {
       time: Decimal.pow10(Number.MAX_VALUE),
-      realTime: Decimal.pow10(Number.MAX_VALUE),
+      realTime: Number.MAX_VALUE,
     }
   },
   speedrun: {

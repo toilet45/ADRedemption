@@ -340,7 +340,7 @@ export const normalAchievements = [
     get reward() {
       return `All Antimatter Dimensions are stronger in the first ${formatInt(3)} minutes of Infinities.`;
     },
-    effect: () => Math.max(6 / (Time.thisInfinity.totalMinutes.add(3)), 1),
+    effect: () => Decimal.max(new Decimal(6).div(Time.thisInfinity.totalMinutes.add(3)), 1),
     effectCondition: () => Time.thisInfinity.totalMinutes.lt(3),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
@@ -950,7 +950,7 @@ export const normalAchievements = [
     id: 133,
     name: "I never liked this infinity stuff anyway",
     get description() {
-      return `Reach ${formatPostBr* eak(DC.E200000)} Infinity Points without
+      return `Reach ${formatPostBreak(DC.E200000)} Infinity Points without
       buying any Infinity Dimensions or the ${formatX(2)} Infinity Point multiplier.`;
     },
     checkRequirement: () =>

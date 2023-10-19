@@ -204,5 +204,5 @@ export const Achievements = {
 };
 
 EventHub.logic.on(GAME_EVENT.PERK_BOUGHT, () => {
-  player.reality.achTimer = Math.clampMax(player.reality.achTimer, Achievements.period);
+  player.reality.achTimer = Decimal.clampMax(player.reality.achTimer, Achievements.period).toNumber();
 });

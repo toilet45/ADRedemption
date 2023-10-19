@@ -205,7 +205,7 @@ export function resetChallengeStuff() {
 }
 
 export function ratePerMinute(amount, time) {
-  return Decimal.divide(amount, time.div(60 * 1000));
+  return Decimal.divide(amount, new Decimal(time).div(60 * 1000));
 }
 
 // eslint-disable-next-line max-params

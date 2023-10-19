@@ -115,10 +115,10 @@ export default {
           Achievement(131),
           TimeStudy(191)
         );
-        infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.time)).times(60000);
-        infinity.hasBest = bestInfinity.time < 999999999999;
-        infinity.best.setFrom(bestInfinity.time);
-        infinity.this.setFrom(records.thisInfinity.time);
+        infinity.bankRate = infinity.projectedBanked.div(Decimal.clampMin(33, records.thisEternity.time)).times(60000);
+        infinity.hasBest.copyFrom(bestInfinity.time.lt(Number.MAX_VALUE));
+        infinity.best.copyFrom(bestInfinity.time);
+        infinity.this.copyFrom(records.thisInfinity.time);
         infinity.bestRate.copyFrom(bestInfinity.bestIPminEternity);
       }
 
@@ -128,7 +128,7 @@ export default {
       eternity.isUnlocked = isEternityUnlocked;
       if (isEternityUnlocked) {
         eternity.count.copyFrom(Currency.eternities);
-        eternity.hasBest = bestEternity.time < 999999999999;
+        eternity.hasBest = bestEternity.time.lt(Number.MAX_VALUE);
         eternity.best.setFrom(bestEternity.time);
         eternity.this.setFrom(records.thisEternity.time);
         eternity.bestRate.copyFrom(bestEternity.bestEPminReality);
@@ -144,7 +144,7 @@ export default {
         reality.best.setFrom(bestReality.time);
         reality.bestReal.setFrom(bestReality.realTime);
         reality.this.setFrom(records.thisReality.time);
-        reality.totalTimePlayed.setFrom(records.totalTimePlayed);
+        reality.totalTimePlayed.copyFrom(records.totalTimePlayed);
         // Real time tracking is only a thing once reality is unlocked:
         infinity.thisReal.setFrom(records.thisInfinity.realTime);
         infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.realTime)).times(60000);

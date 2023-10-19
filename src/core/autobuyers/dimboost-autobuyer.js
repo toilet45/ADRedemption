@@ -78,7 +78,7 @@ export class DimBoostAutobuyerState extends UpgradeableAutobuyerState {
 
   get interval() {
     return this.isBuyMaxUnlocked
-      ? TimeSpan.fromSeconds(this.buyMaxInterval).totalMilliseconds
+      ? TimeSpan.fromSeconds(this.buyMaxInterval).totalMilliseconds.toNumber()
       : super.interval;
   }
 

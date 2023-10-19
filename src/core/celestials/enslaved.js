@@ -131,7 +131,7 @@ export const Enslaved = {
     this.isReleaseTick = true;
     // Effective gamespeed from stored time assumes a "default" 50 ms update rate for consistency
     const effectiveGamespeed = release / 50;
-    player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
+    player.celestials.ra.peakGamespeed = Decimal.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
     this.autoReleaseSpeed = release / player.options.updateRate / 5;
     player.celestials.enslaved.stored *= autoRelease ? 0.99 : 0;
   },
@@ -192,8 +192,8 @@ export const Enslaved = {
     return this.realityBoostRatio > 1 && !Pelle.isDoomed && !isInCelestialReality();
   },
   storedTimeInsideEnslaved(stored) {
-    if (stored <= 1e3) return stored;
-    return Math.pow(10, Math.pow(Math.log10(stored / 1e3), 0.55)) * 1e3;
+    if (stored.lt(1e3)) return stored;
+    return Decimal.pow(10, Decimal.pow(Decimal.log10(stored.div(1e3), 0.55))).times(1e3);
   },
   feelEternity() {
     if (this.feltEternity) {

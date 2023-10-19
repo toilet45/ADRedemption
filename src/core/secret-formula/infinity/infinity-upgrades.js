@@ -12,7 +12,7 @@ export const infinityUpgrades = {
     id: "timeMult",
     cost: 1,
     description: "Antimatter Dimensions gain a multiplier based on time played",
-    effect: () => Math.pow(Time.totalTimePlayed.totalMinutes / 2, 0.15),
+    effect: () => Decimal.pow(Time.totalTimePlayed.totalMinutes.div(2), 0.15),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description: "Antimatter Dimensions gain a power effect based on time played and Teresa level",
@@ -116,7 +116,7 @@ export const infinityUpgrades = {
     id: "timeMult2",
     cost: 3,
     description: "Antimatter Dimensions gain a multiplier based on time spent in current Infinity",
-    effect: () => Decimal.max(Math.pow(Time.thisInfinity.totalMinutes / 4, 0.25), 1),
+    effect: () => Decimal.max(Decimal.pow(Time.thisInfinity.totalMinutes.div(4), 0.25), 1),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description:
@@ -163,7 +163,7 @@ export const infinityUpgrades = {
     formatEffect: value => {
       if (Teresa.isRunning || V.isRunning) return "Disabled in this reality";
       if (Pelle.isDoomed) return "Disabled";
-      if (player.records.bestInfinity.time >= 999999999999) return "Too slow to generate";
+      if (player.records.bestInfinity.time.gt(Number.MAX_VALUE)) return "Too slow to generate";
       return `${format(value, 2)} every ${Time.bestInfinity.times(10).toStringShort()}`;
     },
     charged: {

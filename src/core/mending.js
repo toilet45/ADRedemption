@@ -92,7 +92,7 @@ export function mendingReset() {
     player.celestials.effarig.relicShards = 0;
     player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
-    player.celestials.enslaved.stored = 0;
+    player.celestials.enslaved.stored = DC.D0;
     player.celestials.enslaved.storedReal = 0;
     player.celestials.enslaved.isAutoReleasing = false;
     player.celestials.enslaved.unlocks = [];
@@ -180,7 +180,7 @@ export function mendingReset() {
     player.reality.glyphs.trash = 0;
     resetRealityRuns();
     player.records.thisReality = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -192,7 +192,7 @@ export function mendingReset() {
       bestRSminVal: 0,
     },
     player.records.bestReality = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -295,12 +295,12 @@ export function mendingReset() {
     Currency.timeShards.reset();
     Currency.timeTheorems.reset();
     player.records.bestEternity = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
     player.records.thisEternity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -337,7 +337,7 @@ export function mendingReset() {
     player.dilation.totalTachyonGalaxies = 0;
     Currency.dilatedTime.reset();
     player.records.thisEternity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -352,15 +352,15 @@ export function mendingReset() {
     //Infinity
     resetInfinityRuns();
     player.records.thisInfinity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
-      lastBuyTime: 0,
+      lastBuyTime: DC.D0,
       maxAM: DC.D0,
       bestIPmin: DC.D0,
       bestIPminVal: DC.D0,
     },
     player.records.bestInfinity = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
@@ -403,12 +403,12 @@ export function mendingReset() {
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;
     }
-    if (player.records.thisMend.time < player.records.bestMend.time){
+    if (player.records.thisMend.time.lt(player.records.bestMend.time)){
       player.records.bestMend.time = player.records.thisMend.time;
     }
     //Mending Timer
     player.records.thisMend = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
