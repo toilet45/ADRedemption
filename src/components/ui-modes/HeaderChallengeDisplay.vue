@@ -90,7 +90,7 @@ export default {
       return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
     },
     isCorrupted(){
-      return false; //insert code to check for corruption
+      return player.mending.corruptionChallenge.corruptedMend;
     },
     challengeDisplay() {
       if (this.inPelle && this.activeChallengeNames.length > 0) {

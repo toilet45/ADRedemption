@@ -589,7 +589,34 @@ export const migrations = {
     player.mending.corruptNext = false
   },
   51.007: player => {
-    player.mending.spentCF = 0
+    player.mending.spentCF = DC.D0;
+  },
+  52: player =>{
+    //apparently these can be real numbers, but I'm sticking to integers for now)
+    player.corruptedFragments = player.mending.corruptedFragments.toDecimal();
+    player.mending.warpRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    player.mending.corruptionRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    player.mending.warpUpgradeBits = 0;
+    player.mending.corruptionUpgradeBits = 0;
+    player.mending.warpUpgReqs = 0;
+    player.mending.corruptionUpgReqs = 0;
+    player.mending.reqLock = {
+      mending: 0,
+      warp: 0,
+      corruption: 0,
+    }
   }
   },
 

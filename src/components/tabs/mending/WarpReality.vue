@@ -3,12 +3,14 @@
 import PrimaryButton from "@/components/PrimaryButton";
 import WarpRealityButton from "./WarpRealityButton";
 import { warpReality } from "../../../game";
+import WarpUpgradeButton from "./WarpUpgradeButton.vue";
 
 export default {
   name: "WarpReality",
   components: {
     PrimaryButton,
     WarpRealityButton,
+    WarpUpgradeButton
   },
   data() {
     return {
@@ -20,6 +22,12 @@ export default {
     }
   },
   computed: {
+    upgrades: () => WarpUpgrades.all,
+    costScalingTooltip: () => `Cost Scaling is NYI`,
+    possibleTooltip: () => `Striped upgrades are Not Yet Implemented [NYI].`,
+    lockTooltip: () => `This will only function if you have not already failed the condition or
+      unlocked the upgrade.`,
+    grid: () => [],
     classObject() {
       return {
         "o-warp-btn": true,
@@ -46,6 +54,9 @@ export default {
     },
     clicked() {
       if (!this.warped && this.canWarp) Modal.warpReality.show();
+    },
+    id(row, column) {
+      return (row - 1) * 5 + column - 1;
     }
   }
 };
@@ -89,6 +100,29 @@ export default {
       {{ formatInt(this.RaToR) }} / {{ formatInt(450) }} Ra Memory Levels
       <br>
       {{ formatInt(this.totalUpg) }} / {{ formatInt(16) }} Mending Upgrades
+    </div>
+    <div v-if="canWarp">
+    <div class="c-mending-upgrade-infotext">
+      Stripped Upgrades (or ones that cost 1e300 MvR) are not yet implemented.
+      <br>
+      You can shift-click upgrades with <i class="fas fa-lock-open" /> to make the game prevent you
+      from doing anything this Mend which would cause you to fail their unlock condition.
+      <span :ach-tooltip="lockTooltip">
+        <i class="fas fa-question-circle" />
+      </span>
+      <br>
+    </div>
+    <div
+      v-for="row in 5"
+      :key="row"
+      class="l-mending-upgrade-grid__row"
+    >
+      <WarpUpgradeButton
+        v-for="column in 5"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+      />
+    </div>
     </div>
   </div>
 </template>
