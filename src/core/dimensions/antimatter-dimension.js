@@ -665,7 +665,7 @@ export const AntimatterDimensions = {
       nextTierOffset++;
     }
     for (let tier = maxTierProduced; tier >= 1; --tier) {
-      AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff / 10);
+      AntimatterDimension(tier + nextTierOffset).produceDimensions(AntimatterDimension(tier), diff.div(10));
     }
     if (AntimatterDimension(1).amount.gt(0)) {
       player.requirementChecks.eternity.noAD1 = false;

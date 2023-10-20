@@ -331,7 +331,7 @@ export const EternityChallenges = {
         (ImaginaryUpgrade(15).isLockingMechanics && shouldPreventEC7 &&
           !Array.range(1, 6).some(ec => !EternityChallenge(ec).isFullyCompleted));
       if (!player.reality.autoEC || Pelle.isDisabled("autoec") || hasUpgradeLock) {
-        player.reality.lastAutoEC = Math.clampMax(player.reality.lastAutoEC, this.interval);
+        player.reality.lastAutoEC = Decimal.clampMax(player.reality.lastAutoEC, this.interval).toNumber();
         return;
       }
       if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied) {
@@ -345,7 +345,7 @@ export const EternityChallenges = {
         }
         return;
       }
-      const interval = this.interval;
+      const interval = this.interval instanceof Decimal ? this.interval.toNumber() : this.interval;
       let next = this.nextChallenge;
       while (player.reality.lastAutoEC - interval > 0 && next !== undefined) {
         player.reality.lastAutoEC -= interval;

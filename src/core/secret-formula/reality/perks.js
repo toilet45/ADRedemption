@@ -318,7 +318,7 @@ export const perks = {
     get description() {
       return `Idle path multipliers start as if you have spent ${formatInt(15)} minutes in this Infinity/Eternity.`;
     },
-    effect: 15,
+    effect: 15*60,
     layoutPosList: [82253, 79401, 81001, 79802, 78994, 56239],
   },
   studyECRequirement: {

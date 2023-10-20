@@ -267,7 +267,7 @@ export function autoReality() {
 }
 
 function updateRealityRecords(realityProps) {
-  const thisRunRMmin = realityProps.gainedRM.dividedBy(Math.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes));
+  const thisRunRMmin = realityProps.gainedRM.dividedBy(Decimal.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes).toNumber());
   if (player.records.bestReality.RMmin.lt(thisRunRMmin)) {
     player.records.bestReality.RMmin = thisRunRMmin;
     player.records.bestReality.RMminSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
@@ -276,7 +276,7 @@ function updateRealityRecords(realityProps) {
     player.records.bestReality.glyphLevel = realityProps.gainedGlyphLevel.actualLevel;
     player.records.bestReality.glyphLevelSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
   }
-  player.records.bestReality.time = Math.min(player.records.thisReality.time, player.records.bestReality.time);
+  player.records.bestReality.time = Decimal.min(player.records.thisReality.time, player.records.bestReality.time);
   if (player.records.thisReality.realTime < player.records.bestReality.realTime) {
     player.records.bestReality.realTime = player.records.thisReality.realTime;
     player.records.bestReality.speedSet = Glyphs.copyForRecords(Glyphs.active.filter(g => g !== null));
@@ -619,10 +619,10 @@ export function finishProcessReality(realityProps) {
   Currency.infinities.reset();
   if (MendingUpgrade(2).isBought) Currency.infinities.bumpTo(DC.E12)
   Currency.infinitiesBanked.reset();
-  player.records.bestInfinity.time = 999999999999;
-  player.records.bestInfinity.realTime = 999999999999;
-  player.records.thisInfinity.time = 0;
-  player.records.thisInfinity.lastBuyTime = 0;
+  player.records.bestInfinity.time = Decimal.pow10(Number.MAX_VALUE);
+  player.records.bestInfinity.realTime = Number.MAX_VALUE;
+  player.records.thisInfinity.time = DC.D0;
+  player.records.thisInfinity.lastBuyTime = DC.D0;
   player.records.thisInfinity.realTime = 0;
   player.dimensionBoosts = 0;
   player.galaxies = 0;
@@ -643,10 +643,10 @@ export function finishProcessReality(realityProps) {
   // This has to be reset before Currency.eternities to make the bumpLimit logic work correctly
   EternityUpgrade.epMult.reset();
   if (!PelleUpgrade.eternitiesNoReset.canBeApplied) Currency.eternities.reset();
-  player.records.thisEternity.time = 0;
+  player.records.thisEternity.time = DC.D0;
   player.records.thisEternity.realTime = 0;
-  player.records.bestEternity.time = 999999999999;
-  player.records.bestEternity.realTime = 999999999999;
+  player.records.bestEternity.time = Decimal.pow10(Number.MAX_VALUE);
+  player.records.bestEternity.realTime = Number.MAX_VALUE;
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;
   if (!PelleUpgrade.keepEternityChallenges.canBeApplied && !MendingUpgrade(3).isBought) player.eternityChalls = {};
@@ -664,7 +664,7 @@ export function finishProcessReality(realityProps) {
   } else {
     Player.resetRequirements("reality");
   }
-  player.records.thisReality.time = 0;
+  player.records.thisReality.time = DC.D0;
   player.records.thisReality.realTime = 0;
   player.records.thisReality.maxReplicanti = DC.D0;
   if (!PelleUpgrade.timeStudiesNoReset.canBeApplied) Currency.timeTheorems.reset();
@@ -711,7 +711,7 @@ export function finishProcessReality(realityProps) {
   }
   AntimatterDimensions.reset();
   secondSoftReset(false);
-  player.celestials.ra.peakGamespeed = 1;
+  player.celestials.ra.peakGamespeed = DC.D1;
 
   InfinityDimensions.resetAmount();
   player.records.thisInfinity.bestIPmin = DC.D0;

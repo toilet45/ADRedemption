@@ -2845,19 +2845,19 @@ export const news = [
   {
     id: "l41",
     text: "I thought the update was 5 hours away... -new players after more than 5 hours of gameplay",
-    get unlocked() { return Time.totalTimePlayed.totalHours >= 5; }
+    get unlocked() { return Time.totalTimePlayed.totalHours.gte(5); }
   },
   {
     id: "l42",
     text:
       `Somebody told me to wait five hours for the update yesterday but it's today
       and it still hasn't come! What do I do?`,
-    get unlocked() { return Time.totalTimePlayed.totalHours >= 5; }
+    get unlocked() { return Time.totalTimePlayed.totalHours.gte(5); }
   },
   {
     id: "l43",
     text: "You do know that you won't reach Infinity in -1 seconds, right?",
-    get unlocked() { return player.records.bestInfinity.time === 0.1; }
+    get unlocked() { return player.records.bestInfinity.time.eq(0.1); }
   },
   {
     id: "l44",
@@ -2897,7 +2897,7 @@ export const news = [
   {
     id: "l51",
     text: "Are you serious?",
-    get unlocked() { return Time.worstChallenge.totalSeconds <= 1; }
+    get unlocked() { return Time.worstChallenge.totalSeconds.lte(1); }
   },
   {
     id: "l52",

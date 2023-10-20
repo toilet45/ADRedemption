@@ -210,7 +210,7 @@ export const ra = {
     enslavedXP: {
       id: 16,
       reward: "All Memory Chunks produce more Memories based on total time played",
-      effect: () => 1 + Math.log10(player.records.totalTimePlayed) / 200,
+      effect: () => 1 + Decimal.log10(player.records.totalTimePlayed) / 200,
       pet: "enslaved",
       level: 5,
       displayIcon: `<span class="fas fa-stopwatch"></span>`
@@ -234,7 +234,7 @@ export const ra = {
     peakGamespeedDT: {
       id: 19,
       reward: "Gain more Dilated Time based on peak game speed in each Reality",
-      effect: () => Math.max(Math.pow(Math.log10(player.celestials.ra.peakGamespeed) - 90, 3), 1),
+      effect: () => Math.max(Math.pow(Decimal.log10(player.celestials.ra.peakGamespeed) - 90, 3), 1),
       pet: "enslaved",
       level: 15,
       displayIcon: `<span class="fas fa-tachometer-alt"></span>`,

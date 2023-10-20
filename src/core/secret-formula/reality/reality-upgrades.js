@@ -320,7 +320,7 @@ export const realityUpgrades = [
     checkRequirement: () => Currency.timeShards.exponent >= 28000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Time Dimension multiplier based on days spent in this Reality",
-    effect: () => Decimal.pow10(Math.pow(1 + 2 * Math.log10(Time.thisReality.totalDays + 1), 1.6)),
+    effect: () => Decimal.pow10(Math.pow(1 + 2 * Decimal.log10(Time.thisReality.totalDays.add(1)), 1.6)),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -333,7 +333,7 @@ export const realityUpgrades = [
     checkRequirement: () => Time.thisReality.totalMinutes < 15,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Replicanti speed is boosted based on your fastest game-time Reality",
-    effect: () => 15 / Math.clamp(Time.bestReality.totalMinutes, 1 / 12, 15),
+    effect: () => 15 / Decimal.clamp(Time.bestReality.totalMinutes, 1 / 12, 15).toNumber(),
     cap: 180,
     formatEffect: value => formatX(value, 2, 2)
   },

@@ -131,7 +131,7 @@ export const Enslaved = {
     this.isReleaseTick = true;
     // Effective gamespeed from stored time assumes a "default" 50 ms update rate for consistency
     const effectiveGamespeed = release / 50;
-    player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
+    player.celestials.ra.peakGamespeed = Decimal.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
     this.autoReleaseSpeed = release / player.options.updateRate / 5;
     player.celestials.enslaved.stored *= autoRelease ? 0.99 : 0;
   },
@@ -139,7 +139,7 @@ export const Enslaved = {
     return player.celestials.enslaved.unlocks.includes(info.id);
   },
   canBuy(info) {
-    return player.celestials.enslaved.stored >= info.price && info.secondaryRequirement() && !this.has(info);
+    return new Decimal(player.celestials.enslaved.stored).gte(info.price) && info.secondaryRequirement() && !this.has(info);
   },
   buyUnlock(info) {
     if (!this.canBuy(info)) return false;
@@ -186,14 +186,14 @@ export const Enslaved = {
   },
   get realityBoostRatio() {
     return Math.max(1, Math.floor(player.celestials.enslaved.storedReal /
-      Math.max(1000, Time.thisRealityRealTime.totalMilliseconds)));
+      Decimal.max(1000, Time.thisRealityRealTime.totalMilliseconds).toNumber()));
   },
   get canAmplify() {
     return this.realityBoostRatio > 1 && !Pelle.isDoomed && !isInCelestialReality();
   },
   storedTimeInsideEnslaved(stored) {
-    if (stored <= 1e3) return stored;
-    return Math.pow(10, Math.pow(Math.log10(stored / 1e3), 0.55)) * 1e3;
+    if (stored.lt(1e3)) return stored;
+    return Decimal.pow(10, Decimal.pow(Decimal.log10(stored.div(1e3), 0.55))).times(1e3);
   },
   feelEternity() {
     if (this.feltEternity) {

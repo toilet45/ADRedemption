@@ -411,7 +411,7 @@ export const Glyphs = {
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
     const stillEquipped = player.reality.glyphs.active.length;
-    const fastReality = player.records.recentRealities[0][1] < 3000;
+    const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
     if (stillEquipped && !fastReality) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
       const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
@@ -458,7 +458,7 @@ export const Glyphs = {
     // for realities shorter than a few seconds in order to stop a UI-based softlock; however at this point the time
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
-    const fastReality = player.records.recentRealities[0][1] < 3000;
+    const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
     if (repeat < total && !fastReality) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
       const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
