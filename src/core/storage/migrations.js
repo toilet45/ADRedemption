@@ -499,15 +499,15 @@ export const migrations = {
     43: player =>{
       if(player.records.realTimeDoomed > 1e308) player.records.realTimeDoomed = 1e308;
       if(player.records.realTimePlayed > 1e308) player.records.realTimePlayed = 1e308;
-      if(player.records.totalTimePlayed > 1e308) player.records.totalTimePlayed = 1e308;
+      if(player.records.totalTimePlayed.gte(1e308)) player.records.totalTimePlayed = new Decimal(1e308);
       if(player.records.thisInfinity.realTime > 1e308) player.records.thisInfinity.realTime = 1e308;
-      if(player.records.thisInfinity.time > 1e308) player.records.thisInfinity.time = 1e308;
+      if(player.records.thisInfinity.time.gte(1e308)) player.records.thisInfinity.time = new Decimal(1e308);
       if(player.records.thisEternity.realTime > 1e308) player.records.thisEternity.realTime = 1e308;
-      if(player.records.thisEternity.time > 1e308) player.records.thisEternity.time = 1e308;
+      if(player.records.thisEternity.time.gte(1e308)) player.records.thisEternity.time = new Decimal(1e308);
       if(player.records.thisReality.realTime > 1e308) player.records.thisReality.realTime = 1e308;
-      if(player.records.thisReality.time > 1e308) player.records.thisReality.time = 1e308;
+      if(player.records.thisReality.time.gte(1e308)) player.records.thisReality.time = new Decimal(1e308);
       if(player.records.thisMend.realTime > 1e308) player.records.thisMend.realTime = 1e308;
-      if(player.records.thisMend.time > 1e308) player.records.thisMend.time = 1e308;
+      if(player.records.thisMend.time.gte(1e308)) player.records.thisMend.time = new Decimal(1e308);
     },
     45: player =>{
       player.auto.mending = {
@@ -617,7 +617,14 @@ export const migrations = {
       warp: 0,
       corruption: 0,
     }
-  }
+  },
+  53: player =>{
+    player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
+    player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
+    player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
+    player.records.thisReality.time = new Decimal(player.records.thisReality.time);
+    player.records.thisMend.time = new Decimal(player.records.thisMend.time);
+  },
   },
 
   normalizeTimespans(player) {

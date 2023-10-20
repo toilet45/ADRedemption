@@ -1653,7 +1653,12 @@ export const devMigrations = {
         mending: 0,
         warp: 0,
         corruption: 0,
-      }
+      };
+      player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
+      player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
+      player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
+      player.records.thisReality.time = new Decimal(player.records.thisReality.time);
+      player.records.thisMend.time = new Decimal(player.records.thisMend.time);
       }
     }
   ],
