@@ -5,8 +5,8 @@ export default {
   },
   data() {
     return {
-      baseSpeed: 0,
-      pulsedSpeed: 0,
+      baseSpeed: new Decimal(),
+      pulsedSpeed: new Decimal(),
       hasSeenAlteredSpeed: false,
       isStopped: false,
       isEC12: false,
@@ -36,8 +36,8 @@ export default {
   },
   methods: {
     update() {
-      this.baseSpeed = getGameSpeedupFactor();
-      this.pulsedSpeed = getGameSpeedupForDisplay();
+      this.baseSpeed.copyFrom(getGameSpeedupFactor());
+      this.pulsedSpeed.copyFrom(getGameSpeedupForDisplay());
       this.hasSeenAlteredSpeed = PlayerProgress.seenAlteredSpeed();
       this.isStopped = Enslaved.isStoringRealTime;
       this.isEC12 = EternityChallenge(12).isRunning;
@@ -48,7 +48,7 @@ export default {
         return format(num, 3, 3);
       }
       if (num.lt(0.001)) {
-        return `${formatInt(1)} / ${format(1 / num, 2)}`;
+        return `${formatInt(1)} / ${format(new Decimal(1).div(num), 2)}`;
       }
       return `${format(num, 2)}`;
     }

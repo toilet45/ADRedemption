@@ -496,7 +496,8 @@ export const migrations = {
     42: player => {
       player.options.showHintText.mendingUpgrades = true;
     },
-    43: player =>{
+    /*
+     43: player =>{
       if(player.records.realTimeDoomed > 1e308) player.records.realTimeDoomed = 1e308;
       if(player.records.realTimePlayed > 1e308) player.records.realTimePlayed = 1e308;
       if(player.records.totalTimePlayed > 1e308) player.records.totalTimePlayed = 1e308;
@@ -508,7 +509,7 @@ export const migrations = {
       if(player.records.thisReality.time > 1e308) player.records.thisReality.time = 1e308;
       if(player.records.thisMend.realTime > 1e308) player.records.thisMend.realTime = 1e308;
       if(player.records.thisMend.time > 1e308) player.records.thisMend.time = 1e308;
-    },
+    }, */
     45: player =>{
       player.auto.mending = {
         mode: 0,

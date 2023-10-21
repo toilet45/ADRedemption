@@ -390,7 +390,7 @@ export const InfinityDimensions = {
 
   tick(diff) {
     for (let tier = 8; tier > 1; tier--) {
-      InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), diff.div(10));
+      InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), new Decimal(diff).div(10));
     }
 
     if (EternityChallenge(7).isRunning) {

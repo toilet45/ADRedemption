@@ -126,14 +126,14 @@ export const Enslaved = {
         EnslavedProgress.storedTime.giveProgress();
       }
     }
-    if (autoRelease) release *= 0.01;
-    this.nextTickDiff = Math.clampMax(release, this.timeCap);
+    if (autoRelease) release = release.times(0.01);
+    this.nextTickDiff = Decimal.clampMax(release, this.timeCap);
     this.isReleaseTick = true;
     // Effective gamespeed from stored time assumes a "default" 50 ms update rate for consistency
-    const effectiveGamespeed = release / 50;
+    const effectiveGamespeed = release.div(50);
     player.celestials.ra.peakGamespeed = Decimal.max(player.celestials.ra.peakGamespeed, effectiveGamespeed);
-    this.autoReleaseSpeed = release / player.options.updateRate / 5;
-    player.celestials.enslaved.stored *= autoRelease ? 0.99 : 0;
+    this.autoReleaseSpeed = release.div(player.options.updateRate * 5);
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.times(autoRelease ? 0.99 : 0);
   },
   has(info) {
     return player.celestials.enslaved.unlocks.includes(info.id);
@@ -221,12 +221,12 @@ export const Enslaved = {
     return Math.clampMin(hintTime / TimeSpan.fromDays(1).totalMilliseconds, 0);
   },
   spendTimeForHint() {
-    if (player.celestials.enslaved.stored < this.nextHintCost) return false;
-    player.celestials.enslaved.stored -= this.nextHintCost;
+    if (player.celestials.enslaved.stored.lt(this.nextHintCost)) return false;
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.sub(this.nextHintCost);
     if (Enslaved.hintCostIncreases === 0) {
-      player.celestials.enslaved.zeroHintTime = Date.now() + TimeSpan.fromDays(1).totalMilliseconds;
+      player.celestials.enslaved.zeroHintTime = Date.now() + TimeSpan.fromDays(1).totalMilliseconds.toNumber();
     } else {
-      player.celestials.enslaved.zeroHintTime += TimeSpan.fromDays(1).totalMilliseconds;
+      player.celestials.enslaved.zeroHintTime += TimeSpan.fromDays(1).totalMilliseconds.toNunber();
     }
     return true;
   },

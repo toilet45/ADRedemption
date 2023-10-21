@@ -211,7 +211,7 @@ export const infinityUpgrades = {
       ? `Only while offline, gain ${formatPercents(0.5)} of your best IP/min without using Max All`
       : "This upgrade would give offline Infinity Point generation, but offline progress is currently disabled"),
     effect: () => (player.options.offlineProgress
-      ? player.records.thisEternity.bestIPMsWithoutMaxAll.times(TimeSpan.fromMinutes(1).totalMilliseconds / 2)
+      ? player.records.thisEternity.bestIPMsWithoutMaxAll.times(TimeSpan.fromMinutes(1).totalMilliseconds.div(2))
       : DC.D0),
     isDisabled: () => !player.options.offlineProgress,
     formatEffect: value => `${format(value, 2, 2)} IP/min`,

@@ -171,11 +171,12 @@ export function preProductionGenerateIP(diff) {
   if (InfinityUpgrade.ipGen.isBought) {
     const genPeriod = Time.bestInfinity.totalMilliseconds.times(10);
     let genCount;
+    diff = new Decimal(diff)
     if (diff.gt(new Decimal(1e300).times(genPeriod))) {
       genCount = Decimal.div(diff, genPeriod);
     } else {
       // Partial progress (fractions from 0 to 1) are stored in player.partInfinityPoint
-      player.partInfinityPoint += diff.div(genPeriod).toNumber();
+      player.partInfinityPoint += new Decimal(diff).div(genPeriod).toNumber();
       genCount = Math.floor(player.partInfinityPoint);
       player.partInfinityPoint -= genCount;
     }
@@ -184,5 +185,5 @@ export function preProductionGenerateIP(diff) {
     const gainedThisTick = new Decimal(genCount).times(gainedPerGen);
     Currency.infinityPoints.add(gainedThisTick);
   }
-  Currency.infinityPoints.add(BreakInfinityUpgrade.ipGen.effectOrDefault(DC.D0).times(diff.div(60000)));
+  Currency.infinityPoints.add(BreakInfinityUpgrade.ipGen.effectOrDefault(DC.D0).times(new Decimal(diff).div(60000)));
 }

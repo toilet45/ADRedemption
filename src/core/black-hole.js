@@ -438,7 +438,7 @@ export const BlackHoles = {
     // binarySearch from working in the numberOfTicks = 1 case.
     // I doubt that's possible but it seems worth handling just in case.
     if (numberOfTicks === 1) {
-      return [totalRealTime, totalGameTime / totalRealTime];
+      return [totalRealTime, totalGameTime.div(totalRealTime)];
     }
     // We want calculateGameTimeFromRealTime(realTickTime, speedups) * numberOfTicks / totalGameTime to be roughly 1
     // (that is, the tick taking realTickTime real time has roughly average length in terms of game time).
@@ -447,14 +447,14 @@ export const BlackHoles = {
     // and you want to find when 4000 seconds of game time have elapsed. With binary search it will take only
     // 20 steps or so to get reasonable accuracy, but with linear interpolation it will take about 100 steps.
     // These extra steps might always average out with cases where linear interpolation is quicker though.
-    const realTickTime = this.binarySearch(
+    const realTickTime = this.decimalBinarySearch(
       0,
       totalRealTime,
-      x => this.calculateGameTimeFromRealTime(x, speedups.toNumber()) * numberOfTicks / totalGameTime,
+      x => this.calculateGameTimeFromRealTime(x, speedups) .times(numberOfTicks).div(totalGameTime),
       1,
       tolerance
     );
-    const blackHoleSpeedup = this.calculateGameTimeFromRealTime(realTickTime, speedups) / realTickTime;
+    const blackHoleSpeedup = this.calculateGameTimeFromRealTime(realTickTime, speedups).div(realTickTime);
     return [realTickTime, blackHoleSpeedup];
   },
 
@@ -471,6 +471,23 @@ export const BlackHoles = {
       const error = evaluationFunction(middle) - target;
       if (Math.abs(error) < tolerance) break;
       if (error < 0) {
+        // eslint-disable-next-line no-param-reassign
+        start = middle;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        end = middle;
+      }
+    }
+    return middle;
+  },
+
+  decimalBinarySearch(start, end, evaluationFunction, target, tolerance) {
+    let middle;
+    for (let iter = 0; iter < 100; ++iter) {
+      middle = (start + end) / 2;
+      const error = evaluationFunction(middle).sub(target);
+      if (Decimal.abs(error).lt(tolerance)) break;
+      if (error.lt(0)) {
         // eslint-disable-next-line no-param-reassign
         start = middle;
       } else {
@@ -510,8 +527,8 @@ export const BlackHoles = {
     // This adds in time with black holes paused at the end of the list.
     effectivePeriods[0] += realTime - realerTime;
     return effectivePeriods
-      .map((period, i) => Decimal.min(period.times(speedups[i]), 1e300))
-      .sum();
+      .map((period, i) => Decimal.min(new Decimal(period).times(speedups[i]), 1e300))
+      .sumD();
   },
 
   /**

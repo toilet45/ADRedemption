@@ -281,7 +281,7 @@ function isOfflineEPGainEnabled() {
 
 export function getOfflineEPGain(ms) {
   if (!EternityMilestone.autoEP.isReached || !isOfflineEPGainEnabled()) return DC.D0;
-  return player.records.bestEternity.bestEPminReality.times(TimeSpan.fromMilliseconds(ms).totalMinutes / 4);
+  return player.records.bestEternity.bestEPminReality.times(TimeSpan.fromMilliseconds(ms).totalMinutes.div(4));
 }
 
 // Note: realities and ampFactor must be distinct because there are a few things farther up which only multiply
@@ -351,7 +351,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (effects.includes(GAME_SPEED_EFFECT.FIXED_SPEED)) {
     if (EternityChallenge(12).isRunning) {
-      return 1 / 1000;
+      return player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.timeCompression.mult[player.mending.corruption[2]] / 1000 : 1 / 1000;
     }
   }
 
@@ -420,7 +420,7 @@ export function getGameSpeedupForDisplay() {
     !BlackHoles.areNegative &&
     !Pelle.isDisabled("blackhole")
   ) {
-    return Math.max(Enslaved.autoReleaseSpeed, speedFactor);
+    return Decimal.max(Enslaved.autoReleaseSpeed, speedFactor);
   }
   return speedFactor;
 }
@@ -546,6 +546,7 @@ export function gameLoop(passDiff, options = {}) {
       speedFactor = options.blackHoleSpeedup;
     }
 
+    diff = new Decimal(diff)
     if (Enslaved.isStoringGameTime && !fixedSpeedActive) {
       // These variables are the actual game speed used and the game speed unaffected by time storage, respectively
       const reducedTimeFactor = getGameSpeedupFactor();
@@ -553,11 +554,12 @@ export function gameLoop(passDiff, options = {}) {
         GAME_SPEED_EFFECT.BLACK_HOLE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE]);
       const amplification = Ra.unlocks.improvedStoredTime.effects.gameTimeAmplification.effectOrDefault(1);
       const beforeStore = new Decimal(player.celestials.enslaved.stored);
-      player.celestials.enslaved.stored = Decimal.clampMax(new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor.sub(reducedTimeFactor)).times(amplification), Enslaved.timeCap));
+      let x = new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor).times(amplification))
+      let y = new Decimal(Enslaved.timeCap)
+      player.celestials.enslaved.stored = Decimal.min(x, y); // This code is split into 3 else it just has a panic attack for some reason
       Enslaved.currentBlackHoleStoreAmountPerMs = new Decimal(player.celestials.enslaved.stored.sub(beforeStore)).div(diff);
       speedFactor = reducedTimeFactor;
     }
-    diff = new Decimal(diff)
     diff = diff.times(speedFactor);
   } else if (fixedSpeedActive) {
     diff = diff.times(getGameSpeedupFactor());
@@ -591,7 +593,7 @@ export function gameLoop(passDiff, options = {}) {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff);
     }
     player.records.thisReality.time = player.records.thisReality.time.add(diff);
-    player.records.thisMend.time = player.records.thisMend.time.add(diff);
+    player.records.thisMend.time = new Decimal(player.records.thisMend.time).add(diff);
   }
 
   DeltaTimeState.update(realDiff, diff);
@@ -634,11 +636,11 @@ export function gameLoop(passDiff, options = {}) {
   replicantiLoop(diff);
 
   if (PlayerProgress.dilationUnlocked()) {
-    Currency.dilatedTime.add(getDilationGainPerSecond().times(diff.div(1000)));
+    Currency.dilatedTime.add(getDilationGainPerSecond().times(new Decimal(diff).div(1000)));
   }
 
   updateTachyonGalaxies();
-  Currency.timeTheorems.add(getTTPerSecond().times(diff.div(1000)));
+  Currency.timeTheorems.add(getTTPerSecond().times(new Decimal(diff).div(1000)));
   InfinityDimensions.tryAutoUnlock();
 
   BlackHoles.updatePhases(blackHoleDiff);

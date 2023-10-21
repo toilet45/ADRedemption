@@ -195,7 +195,7 @@ export function replicantiLoop(diff) {
 
   // Figure out how many ticks to calculate for and roll over any leftover time to the next tick. The rollover
   // calculation is skipped if there's more than 100 replicanti ticks per game tick to reduce round-off problems.
-  let tickCount = Decimal.divide(diff.add(player.replicanti.timer), interval);
+  let tickCount = Decimal.divide(new Decimal(diff).add(player.replicanti.timer), interval);
   if (tickCount.lt(100)) player.replicanti.timer = tickCount.minus(tickCount.floor()).times(interval).toNumber();
   else player.replicanti.timer = 0;
   tickCount = tickCount.floor();

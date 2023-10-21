@@ -79,6 +79,7 @@ export const tabs = [
     name: "Statistics",
     hideAt: 1.7,
     id: 2,
+    condition: () => false,
     hidable: true,
     subtabs: [
       {
@@ -537,7 +538,7 @@ export const tabs = [
     name: "Shop",
     ModernUIClass: "shop",
     hideAt: 1.5,
-    condition: () => true,
+    condition: () => false,
     id: 11,
     hidable: true,
     subtabs: [
