@@ -469,7 +469,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 51,
+  version: 53,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -480,16 +480,37 @@ window.player = {
   totalTickGained: 0,
   totalTickBought: 0,
   mends: DC.D0,
+  corruptedFragments: DC.D0,
   mending:{
     upgradeBits: 0,
+    warpUpgradeBits: 0,
+    corruptionUpgradeBits: 0,
+    corruptionUpgReqs: 0,
+    warpUpgReqs: 0,
     reqLock: {
       mending: 0,
+      warp: 0,
+      corruption: 0,
     },
     rebuyables: {
       1: 0,
       6: 0,
       11: 0,
       16: 0,
+    },
+    warpRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    corruptionRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
     },
     corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
     corruptedFragments: 0,
@@ -498,7 +519,7 @@ window.player = {
       records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       recordScore: 0,
     },
-    spentCF: 0,
+    spentCF: DC.D0,
     corruptNext: false,
   },
   replicanti: {

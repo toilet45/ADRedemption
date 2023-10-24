@@ -519,3 +519,20 @@ Currency.mends = new class extends DecimalCurrency {
     //super.reset();
   }
 }();
+
+Currency.corruptionFragments = new class extends DecimalCurrency {
+  get value() { 
+    return player.corruptionFragments; 
+  }
+  set value(value) {
+    player.corruptionFragments = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();

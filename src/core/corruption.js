@@ -20,11 +20,11 @@ export const CorruptionData = {
     },
 
     get totalCorruptedFragments() {
-        return player.mending.corruptedFragments;
+        return player.corruptedFragments;
     },
 
     get availableCorruptedFragments() {
-        return player.mending.corruptedFragments - player.mending.spentCF;
+        return player.corruptedFragments.minus(player.mending.spentCF);
     },
 
     get spentCorruptedFragments() {

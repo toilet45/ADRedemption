@@ -496,20 +496,9 @@ export const migrations = {
     42: player => {
       player.options.showHintText.mendingUpgrades = true;
     },
-    /*
      43: player =>{
-      if(player.records.realTimeDoomed > 1e308) player.records.realTimeDoomed = 1e308;
-      if(player.records.realTimePlayed > 1e308) player.records.realTimePlayed = 1e308;
-      if(player.records.totalTimePlayed > 1e308) player.records.totalTimePlayed = 1e308;
-      if(player.records.thisInfinity.realTime > 1e308) player.records.thisInfinity.realTime = 1e308;
-      if(player.records.thisInfinity.time > 1e308) player.records.thisInfinity.time = 1e308;
-      if(player.records.thisEternity.realTime > 1e308) player.records.thisEternity.realTime = 1e308;
-      if(player.records.thisEternity.time > 1e308) player.records.thisEternity.time = 1e308;
-      if(player.records.thisReality.realTime > 1e308) player.records.thisReality.realTime = 1e308;
-      if(player.records.thisReality.time > 1e308) player.records.thisReality.time = 1e308;
-      if(player.records.thisMend.realTime > 1e308) player.records.thisMend.realTime = 1e308;
-      if(player.records.thisMend.time > 1e308) player.records.thisMend.time = 1e308;
-    }, */
+      if(player.records.thisMend.time.gte(1e308)) player.records.thisMend.time = new Decimal(1e308);
+    },
     45: player =>{
       player.auto.mending = {
         mode: 0,
@@ -590,8 +579,42 @@ export const migrations = {
     player.mending.corruptNext = false
   },
   51.007: player => {
-    player.mending.spentCF = 0
-  }
+    player.mending.spentCF = DC.D0;
+  },
+  52: player =>{
+    //apparently these can be real numbers, but I'm sticking to integers for now)
+    player.corruptedFragments = player.mending.corruptedFragments.toDecimal();
+    player.mending.warpRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    player.mending.corruptionRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    player.mending.warpUpgradeBits = 0;
+    player.mending.corruptionUpgradeBits = 0;
+    player.mending.warpUpgReqs = 0;
+    player.mending.corruptionUpgReqs = 0;
+    player.mending.reqLock = {
+      mending: 0,
+      warp: 0,
+      corruption: 0,
+    }
+  },
+  53: player =>{
+    player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
+    player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
+    player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
+    player.records.thisReality.time = new Decimal(player.records.thisReality.time);
+    player.records.thisMend.time = new Decimal(player.records.thisMend.time);
+  },
   },
 
   normalizeTimespans(player) {
