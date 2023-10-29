@@ -360,7 +360,7 @@ export const Ra = {
   // It also includes the 1% IP time study, Teresa's 1% EP upgrade, and the charged RM generation upgrade. Note that
   // removing the hardcap of 10 may cause runaways.
   theoremBoostFactor() {
-    return Math.min(10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
+    return Math.min(1000, Math.max(0, Currency.timeTheorems.value.pLog10() - 850) / 500 + 10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
   },
   get isUnlocked() {
     return V.spaceTheorems >= 36;

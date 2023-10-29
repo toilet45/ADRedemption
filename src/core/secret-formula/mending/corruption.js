@@ -8,10 +8,13 @@ export function corruptionChallengeScoreCalculation() {
 
 export const corruptionPenalties = {
     prestigeLimits: [1, 0.85, 0.55, 0.35, 0.15, 0.06, 0.02, 0.01, 0.005, 0.001, 1/2e4, 1/3e5],
-    dimLimits: [1, 0.85, 0.55, 0.35, 0.15, 0.06, 0.02, 0.01, 0.005, 0.001, 1/2e4, 1/3e5],
+    dimLimits: {
+        preNerf: [1, 0.85, 0.55, 0.35, 0.15, 0.06, 0.02, 0.01, 0.005, 0.001, 1/2e4, 1/3e5],
+        postNerf: [1, 0.98, 0.915, 0.8, 0.6, 0.5, 0.3, 0.2, 0.15, 0.1, 0.06, 0.03]
+    },
     timeCompression: {
         power: [1, 0.95, 0.8, 0.65, 0.5, 0.35, 0.3, 0.05, 0.01, 0, 0, 0],
-        mult: [1, 0.5, 0.2, 0.1, 0.05, 0.03, 0.02, 0.01, 1/5e3, 1/1e4, 1/1e6, 1/1e10],
+        mult: [1, new Decimal(1).div(1e8), new Decimal(1).div(1e45), new Decimal(1).div(1e120), new Decimal(1).div(1e265), new Decimal(1).div("1e655"), new Decimal(1).div("1e1275"), new Decimal(1).div("1e2250"), new Decimal(1).div("1e5000"), new Decimal(1).div("1e15000"), new Decimal(1).div("1e65000"), new Decimal(1).div("1e450000")],
     },
     galWeak: {
         scaling: [1, 1.1, 1.3, 1.5, 2, 2.55, 4, 7, 12, 20, 50, 450],

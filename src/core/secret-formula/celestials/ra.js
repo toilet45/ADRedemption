@@ -390,7 +390,7 @@ export const ra = {
       effect: () => 10 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: '<span class="fas fa-vial"</span>'
     },
     passiveRelicShardGain: {
       id: 9,
@@ -546,10 +546,10 @@ export const ra = {
       level: 90,
       displayIcon: "?"
     },
-    placeholderV7: {
+    achMultBaseImprovementV: {
       id: 28,
       id2: 0,
-      reward: "TBD",
+      reward: "Improve Base Achievemnt Multiplier",
       pet: "v",
       level: 100,
       displayIcon: "?"
@@ -629,7 +629,7 @@ export const ra = {
     placeholderR9: {
       id: 6,
       id2: 1,
-      reward: "TBD",
+      reward: "Base Memory Chunk formula for all Celestials is slightly improved",
       pet: "ra",
       level: 50,
       displayIcon: "?"
@@ -741,18 +741,18 @@ export const ra = {
       level: 40,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderL10: {
+    dmdAuto1: {
       id: 20,
       id2: 1,
-      reward: "TBD",
+      reward: "Unlock permenant autobuyers for DMD 1-4",
       pet: "laitela",
       level: 50,
       displayIcon: "?"
     },
-    placeholderL11: {
+    dmdAuto2: {
       id: 21,
       id2: 1,
-      reward: "TBD",
+      reward: "Unlock permenant autobuyers for DMD 5-8",
       pet: "laitela",
       level: 65,
       displayIcon: "?"
@@ -801,7 +801,7 @@ export const ra = {
     pelleXP: {
       id: 27,
       id2: 1,
-      reward: "All Memory Chunks produce more Memories based on Remnants",
+      reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
       pet: "pelle",
       level: 5,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -876,15 +876,15 @@ export const ra = {
       reward: () => Ra.unlocks.Hostility.isUnlocked ? "Unlock Hostilities" : "Reach Pelle 75 to see reward",
       pet: "pelle",
       level: 75,
-      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-staff-snake"></i>`:"?"
+      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-biohazard"></i>`:"?"
     },
-    placeholderP13: {
+    DimLimitCorruptionImprovementPelle: {
       id: 5,
       id2: 2,
-      reward: "TBD",
+      reward: () => Ra.unlocks.Hostility.isUnlocked ? "Make Dimensional Limitations slightly Weaker" : "Reach Pelle 75 to see reward",
       pet: "pelle",
       level: 90,
-      displayIcon: "?"
+      displayIcon: `<i class="fa-solid fa-biohazard"></i>`
     },
     kohlersRealmUnlock: {
       id: 6,

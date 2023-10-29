@@ -416,7 +416,12 @@ export function mendingReset() {
       maxRM: DC.D0,
       maxiM: 0,
       maxRem: 0,
-    },
+    }
+    // Finally, lets set up corruptions
+    if (player.mending.corruptNext) {
+      player.mending.corruptNext = false
+      player.mending.corruptionChallenge.corruptedMend = true
+    }
     Player.resetRequirements("mending");
     //end reseting all the things
 

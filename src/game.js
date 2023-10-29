@@ -407,7 +407,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
-  factor = Decimal.clamp(factor, 1e-300, 1e300);
+  factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend ? 0 : 1e-300), 1e300);
 
   return factor;
 }
@@ -868,7 +868,7 @@ function laitelaBeatText(disabledDim) {
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    player.infinityPoints = gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige);   
+    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));   
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
