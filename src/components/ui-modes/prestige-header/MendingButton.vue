@@ -30,7 +30,7 @@ export default {
             this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
-            this.isCorrupted = false;
+            this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
         },
         mend() {
             mendingResetRequest();

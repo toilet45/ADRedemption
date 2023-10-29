@@ -6,6 +6,7 @@ import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import SliderComponent from "@/components/SliderComponent";
 import { playerInfinityUpgradesOnReset } from "../../../game";
+import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
 
 export default {
   name: "CorruptionTab",
@@ -13,6 +14,7 @@ export default {
     CelestialQuoteHistory,
     CustomizeableTooltip,
     SliderComponent,
+    CorruptionUpgradeButton
   },
   data() {
     return {
@@ -65,6 +67,19 @@ export default {
       };
     },
     isDoomed: () => Pelle.isDoomed,
+    upgrades: () => CorruptionUpgrades.all,
+    costScalingTooltip: () => `Prices start increasing faster above ${format(1e30)} RM and then even faster
+      above ${format(Decimal.NUMBER_MAX_VALUE, 1)} RM`,
+    possibleTooltip: () => `Striped upgrades are Not Yet Implemented [NYI].`,
+    lockTooltip: () => `This will only function if you have not already failed the condition or
+      unlocked the upgrade.`,
+    grid: () => [],
+    tooltip() {
+      return undefined
+    },
+    totalUpgFunc() {
+     return CorruptionUpgrades.all.countWhere(u => u.isBought);
+    },
   },
   methods: {
     update() {
@@ -96,7 +111,10 @@ export default {
         "c-corrupt-unlock-description": true,
         "c-corrupt-unlock-description--unlocked": this.hasUnlock(unlockInfo)
       };
-    }
+    },
+    id(row, column) {
+      return (row - 1) * 5 + column - 1;
+    }   
   }
 };
 </script>
@@ -193,6 +211,29 @@ export default {
         Glyph Level ^{{localPenalties.compGlyphs.level[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.level[this.corruptions[4]], 1, 2) }}. <br>
         Glyph Rarity ^{{localPenalties.compGlyphs.rarity[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.rarity[this.corruptions[4]], 1, 2) }}.
       </div>
+    </div>
+    <div class="c-mending-upgrade-infotext">
+      Mouseover <i class="fas fa-question-circle" /> icons for additional information.
+      <br>
+      The first row of upgrades can be purchased endlessly for increasing costs
+      <span :ach-tooltip="costScalingTooltip">
+        <i class="fas fa-question-circle" />
+      </span>
+      and the rest are single-purchase.
+      <br>
+      Striped Upgrades (or ones that cost 1e300 CF) are not yet implemented
+      <br>
+    </div>
+    <div
+      v-for="row in 5"
+      :key="row"
+      class="l-mending-upgrade-grid__row"
+    >
+      <CorruptionUpgradeButton
+        v-for="column in 5"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+      />
     </div>
   </div>
 </template>
