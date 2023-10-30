@@ -111,9 +111,9 @@ export function getTachyonGalaxyMult(thresholdUpgrade, amnt) {
   let power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
     ? DilationUpgrade.galaxyThresholdPelle.effectValue : 1;
   let tgSoftcapOne = 50000;
-  let tgSoftcapOneApplytimes = Math.floor((amnt == undefined ? player.dilation.totalTachyonGalaxies : amnt) / 50000);
+  let tgSoftcapOneApplytimes = Math.floor((amnt == undefined ? player.dilation.baseTachyonGalaxies : amnt) / 50000);
   //let tgSoftcapTwo = 150000;
-  if ((amnt == undefined ? player.dilation.totalTachyonGalaxies : amnt) >= tgSoftcapOne && !Pelle.isDoomed){
+  if ((amnt == undefined ? player.dilation.baseTachyonGalaxies : amnt) >= tgSoftcapOne && !Pelle.isDoomed){
     power *= ((1.5 - (0.005 * player.mending.rebuyables[11])) * tgSoftcapOneApplytimes);
   }
   /*if (player.dilation.totalTachyonGalaxies >= tgSoftcapTwo && !Pelle.isDoomed){

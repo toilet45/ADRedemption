@@ -918,6 +918,15 @@ function updateTachyonGalaxies() {
   const tachyonGalaxyMult = Effects.max(1, DilationUpgrade.doubleGalaxies);
   const tachyonGalaxyThreshold = 1000;
   const thresholdMult = getTachyonGalaxyMult();
+  /*
+  base = bulkBuyBinarySearch(Currency.dilatedTime.value,
+    {
+      costFunction: x => getTachyonGalaxyMult(undefined, x).pow(x),
+      firstCost: 1000,
+      cumulative: false,
+    },
+    0)
+  */
   player.dilation.baseTachyonGalaxies = Math.min(1e6, Math.max(player.dilation.baseTachyonGalaxies,
     1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult))));
   player.dilation.nextThreshold = DC.E3.times(new Decimal(thresholdMult)
