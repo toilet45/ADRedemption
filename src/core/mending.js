@@ -89,7 +89,7 @@ export function mendingReset() {
     if (MendingUpgrade(9).isBought){
       player.celestials.teresa.unlockBits += 1;
     }
-    player.celestials.effarig.relicShards = 0;
+    player.celestials.effarig.relicShards = new Decimal(0);
     player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = DC.D0;
@@ -188,8 +188,8 @@ export function mendingReset() {
       bestEternitiesPerMs: DC.D0,
       maxReplicanti: DC.D0,
       maxDT: DC.D0,
-      bestRSmin: 0,
-      bestRSminVal: 0,
+      bestRSmin: DC.D0,
+      bestRSminVal: DC.D0,
     },
     player.records.bestReality = {
       time: Decimal.pow10(Number.MAX_VALUE),

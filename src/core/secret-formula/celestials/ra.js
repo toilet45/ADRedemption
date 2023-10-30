@@ -17,7 +17,7 @@ export const ra = {
       chunkGain: "Relic Shards gained",
       memoryGain: "best Glyph level",
       requiredUnlock: () => Ra.unlocks.effarigUnlock,
-      rawMemoryChunksPerSecond: () => 4 * Math.pow(Effarig.shardsGained, 0.1),
+      rawMemoryChunksPerSecond: () => 4 * Decimal.pow(Effarig.shardsGained, 0.1).min(1e308).toNumber(),
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },
     enslaved: {
@@ -45,17 +45,17 @@ export const ra = {
       name: "Ra",
       color: "#9575cd",
       chunkGain: "Dimension Boosts",
-      memoryGain: "?",
+      memoryGain: "current iM",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(DimBoost.purchasedBoosts/7e4, 1.5),
       memoryProductionMultiplier: () => 1
     },
     laitela: {
       id: "laitela",
-      name: "Lai 'tela",
+      name: "Lai'tela",
       color: "white",
       chunkGain: "Continuum",
-      memoryGain: "?",
+      memoryGain: "singularity amount",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => (
         4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)
@@ -67,7 +67,7 @@ export const ra = {
       name: "Pelle",
       color: "crimson",
       chunkGain: "Remnants (Only increases in Doomed Reality)",
-      memoryGain: "?",
+      memoryGain: "best remnants without galaxy generator",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
       rawMemoryChunksPerSecond: () => player.celestials.pelle.remnants,
       memoryProductionMultiplier: () => 1
@@ -173,7 +173,7 @@ export const ra = {
     relicShardGlyphLevelBoost: {
       id: 12,
       reward: "Glyph level is increased based on Relic Shards gained",
-      effect: () => 100 * Math.pow(Math.log10(Math.max(Effarig.shardsGained, 1)), 2),
+      effect: () => 100 * Math.pow(Decimal.log10(Decimal.max(Effarig.shardsGained, 1)), 2),
       pet: "effarig",
       level: 15,
       displayIcon: `<span class="fas fa-fire"></span>`
@@ -412,7 +412,7 @@ export const ra = {
     relicShardBoost: {
       id: 11,
       id2: 0,
-      reward: "Relic shards boost dimsac, inf power, replicant speed, time shards, and dilated time gain",
+      reward: "Relic shards boost dimensional sacrifice, replicanti speed, infinity power conversion rate, tachyon particle to dilated time factor and time dimensions",
       pet: "effarig",
       level: 65,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -733,10 +733,10 @@ export const ra = {
       level: 30,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    continuumAffectsIDsAndTDs: {
+    increaseSingLimits: {
       id: 19,
       id2: 1,
-      reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
+      reward: () => `You can increase the max singularity cap by ${formatInt(2)} every ${formatInt(5)} levels`,
       pet: "laitela",
       level: 40,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -757,13 +757,13 @@ export const ra = {
       level: 65,
       displayIcon: "?"
     },
-    placeholderL12: {
+    continuumAffectsIDsAndTDs: {
       id: 22,
       id2: 1,
-      reward: "TBD",
+      reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 75,
-      displayIcon: "?"
+      displayIcon: `<i class="fa-solid fa-check"></i>`
     },
     placeholderL13: {
       id: 23,
@@ -862,10 +862,10 @@ export const ra = {
       level: 50,
       displayIcon: "?"
     },
-    placeholderP11: {
+    omegaScalingBuff: {
       id: 3,
       id2: 2,
-      reward: "TBD",
+      reward: "Make the scaling at glyph level 100,000 weaker.",
       pet: "pelle",
       level: 65,
       displayIcon: "?"

@@ -301,7 +301,7 @@ function giveRealityRewards(realityProps) {
     Currency.perkPoints.add(realityAndPPMultiplier);
   }
   if (TeresaUnlocks.effarig.canBeApplied) {
-    Currency.relicShards.add(realityProps.gainedShards * multiplier);
+    Currency.relicShards.add(realityProps.gainedShards.times(multiplier));
   }
 
   if (multiplier > 1 && Enslaved.boostReality) {
@@ -721,8 +721,8 @@ export function finishProcessReality(realityProps) {
   player.records.thisEternity.bestIPMsWithoutMaxAll = DC.D0;
   player.records.bestEternity.bestEPminReality = DC.D0;
   player.records.thisReality.bestEternitiesPerMs = DC.D0;
-  player.records.thisReality.bestRSmin = 0;
-  player.records.thisReality.bestRSminVal = 0;
+  player.records.thisReality.bestRSmin = DC.D0;
+  player.records.thisReality.bestRSminVal = DC.D0;
   resetTimeDimensions();
   resetTickspeed();
   AchievementTimers.marathon2.reset();

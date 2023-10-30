@@ -181,7 +181,7 @@ class Validator extends BaseVisitor {
 
   checkTimeStudyNumber(token) {
     const tsNumber = parseFloat(token.image);
-    if (!TimeStudy(tsNumber) || (TimeStudy(tsNumber).isTriad && (!Ra.canBuyTriad && PlayerProgress.mendingUnlocked()))) {
+    if (!TimeStudy(tsNumber) || (TimeStudy(tsNumber).isTriad && (!Ra.canBuyTriad && !PlayerProgress.mendingUnlocked()))) {
       this.addError(token, `Invalid Time Study identifier ${tsNumber}`,
         `Make sure you copied or typed in your time study IDs correctly`);
       return 0;

@@ -296,7 +296,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
   const shards = Effarig.shardsGained;
   player.records.recentRealities.pop();
   player.records.recentRealities.unshift([time, realTime, rm.times(ampFactor),
-    realities, reality, level, shards * ampFactor, projIM]);
+    realities, reality, level, shards.times(ampFactor), projIM]);
 }
 
 export function gainedInfinities() {
@@ -351,7 +351,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (effects.includes(GAME_SPEED_EFFECT.FIXED_SPEED)) {
     if (EternityChallenge(12).isRunning) {
-      return player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.timeCompression.mult[player.mending.corruption[2]] / 1000 : 1 / 1000;
+      return player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.timeCompression.mult[player.mending.corruption[2]].div(1000) : new Decimal(1 / 1000);
     }
   }
 
@@ -398,7 +398,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
 
-  factor.times(PelleUpgrade.timeSpeedMult.effectValue.toNumber());
+  factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
@@ -717,8 +717,8 @@ function updatePrestigeRates() {
     player.records.thisEternity.bestEPminVal = gainedEternityPoints();
   }
 
-  const currentRSmin = Math.min(Effarig.shardsGained / Decimal.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes).toNumber(), 1e300);
-  if (currentRSmin > player.records.thisReality.bestRSmin && isRealityAvailable()) {
+  const currentRSmin = Effarig.shardsGained.div(Decimal.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes));
+  if (currentRSmin.gte(player.records.thisReality.bestRSmin) && isRealityAvailable()) {
     player.records.thisReality.bestRSmin = currentRSmin;
     player.records.thisReality.bestRSminVal = Effarig.shardsGained;
   }

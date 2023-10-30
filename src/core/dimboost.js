@@ -100,7 +100,7 @@ export class DimBoost {
   static bulkRequirement(bulk) {
     const targetResets = DimBoost.purchasedBoosts + bulk;
     const tier = Math.min(targetResets + 3, this.maxDimensionsUnlockable);
-    let amount = 20 + Math.floor(DimBoost.purchasedBoosts / 1e9);
+    let amount = 20;
     const discount = Effects.sum(
       TimeStudy(211),
       TimeStudy(222)
@@ -112,6 +112,9 @@ export class DimBoost {
     }
     if (EternityChallenge(5).isRunning) {
       amount += Math.pow(targetResets - 1, 3) + targetResets - 1;
+    }
+    if (DimBoost.purchasedBoosts > 1e9) {
+      amount += Math.pow(targetResets - 1e9, 1 + targetResets/1e10) + targetResets - 1e9
     }
 
     amount -= Effects.sum(InfinityUpgrade.resetBoost);

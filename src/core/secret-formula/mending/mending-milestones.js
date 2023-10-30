@@ -40,7 +40,7 @@ export const mendingMilestones = {
   },
   eight: {
     mends: 20,
-    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
+    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai'tela and Pelle unlocks)",
   },
   nine: {
     mends: 35,
