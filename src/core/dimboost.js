@@ -1,5 +1,12 @@
 import { DC } from "./constants";
 
+export const DIMBOOST_TYPE = {
+  BOOST: 0,
+  SHIFT: 1,
+  WARP: 2,
+  SCALE: 3
+};
+
 class DimBoostRequirement {
   constructor(tier, amount) {
     this.tier = tier;
@@ -13,6 +20,17 @@ class DimBoostRequirement {
 }
 
 export class DimBoost {
+  static get scaleStart(){
+    return 5e13;
+  }
+  static get warpStart() {
+    return 2.5e11;
+  }
+
+  static get shiftStart() {
+    return 1e9;
+  }
+
   static get power() {
     if (NormalChallenge(8).isRunning) {
       return DC.D1;
@@ -57,7 +75,7 @@ export class DimBoost {
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
       // when giving initial boosts, so the player will still get those.
-      return Ra.unlocks.raRealUncapDimboost.isUnlocked? Infinity: 0;
+      return Ra.unlocks.raRealUncapDimboost.isUnlocked ? Infinity : 0;
     }
     if (InfinityChallenge(1).isRunning) {
       // Usually, in Challenge 8, the only boosts that are useful are the first 5
@@ -73,7 +91,24 @@ export class DimBoost {
       // this case would trigger when we're in IC1.
       return 5;
     }
-    return 1e9;
+    return 1e15;
+  }
+
+  static get type() {
+    return this.typeAt(player.dimensionBoosts);
+  }
+
+  static typeAt(dimboosts) {
+    if (dimboosts >= DimBoost.scaleStart) {
+      return DIMBOOST_TYPE.SCALE;
+    }
+    if (dimboosts >= DimBoost.warpStart) {
+      return DIMBOOST_TYPE.WARP;
+    }
+    if (dimboosts >= DimBoost.shiftStart) {
+      return DIMBOOST_TYPE.SHIFT;
+    }
+    return DIMBOOST_TYPE.BOOST;
   }
 
   static get canBeBought() {
@@ -84,7 +119,7 @@ export class DimBoost {
   }
 
   static get lockText() {
-    let boostCap = 1e9;
+    let boostCap = 1e12;
     if (DimBoost.purchasedBoosts >= this.maxBoosts) {
       if (Ra.isRunning) return "Locked (Ra's Reality)";
       if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
@@ -114,6 +149,18 @@ export class DimBoost {
       amount += Math.pow(targetResets - 1, 3) + targetResets - 1;
     }
 
+    if (DimBoost.purchasedBoosts > DimBoost.shiftStart) {
+      amount += Math.pow(targetResets - DimBoost.shiftStart, 1 + targetResets/(DimBoost.shiftStart * 10)) + targetResets - DimBoost.shiftStart
+    }
+
+    if (DimBoost.purchasedBoosts > DimBoost.warpStart) {
+      amount += Math.pow(targetResets - DimBoost.warpStart, 1 + targetResets/(DimBoost.warpStart/10)) + targetResets - DimBoost.warpStart
+    }
+
+    if (DimBoost.purchasedBoosts > DimBoost.scaleStart) {
+      amount += Math.pow(targetResets - DimBoost.scaleStart, 1 + targetResets/(DimBoost.scaleStart / 1e5)) + targetResets - DimBoost.scaleStart
+    }
+
     amount -= Effects.sum(InfinityUpgrade.resetBoost);
     if (InfinityChallenge(5).isCompleted) amount -= 1;
 
@@ -123,6 +170,7 @@ export class DimBoost {
 
     return new DimBoostRequirement(tier, amount);
   }
+
 
   static get unlockedByBoost() {
     if (DimBoost.lockText !== null) return DimBoost.lockText;
@@ -177,7 +225,7 @@ export class DimBoost {
 
 // eslint-disable-next-line max-params
 export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false, enteringAntimatterChallenge = false) {
-  if (Currency.antimatter.gt(Player.infinityLimit)) return;
+//  if (Currency.antimatter.gt(Player.infinityLimit)) return;
   const bulk = Math.min(tempBulk, DimBoost.maxBoosts - player.dimensionBoosts);
   EventHub.dispatch(GAME_EVENT.DIMBOOST_BEFORE, bulk);
   player.dimensionBoosts = Math.max(0, player.dimensionBoosts + bulk);
@@ -213,7 +261,7 @@ export function skipResetsIfPossible(enteringAntimatterChallenge) {
 }
 
 export function manualRequestDimensionBoost(bulk) {
-  if (Currency.antimatter.gt(Player.infinityLimit) || !DimBoost.requirement.isSatisfied) return;
+  if (!DimBoost.requirement.isSatisfied) return;
   if (!DimBoost.canBeBought) return;
   if (GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) return;
   if (player.options.confirmations.dimensionBoost) {
@@ -224,7 +272,7 @@ export function manualRequestDimensionBoost(bulk) {
 }
 
 export function requestDimensionBoost(bulk) {
-  if (Currency.antimatter.gt(Player.infinityLimit) || !DimBoost.requirement.isSatisfied) return;
+  if (!DimBoost.requirement.isSatisfied) return;
   if (!DimBoost.canBeBought) return;
   Tutorial.turnOffEffect(TUTORIAL_STATE.DIMBOOST);
   if (BreakInfinityUpgrade.autobuyMaxDimboosts.isBought && bulk) maxBuyDimBoosts();

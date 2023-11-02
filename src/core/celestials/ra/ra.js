@@ -300,10 +300,17 @@ export const Ra = {
   // This is the exp required ON "level" in order to reach "level + 1"
   requiredMemoriesForLevel(level) {
     if (level >= Ra.levelCap) return Infinity;
+    let perMemScaling = 1
+    if (level >= 30) perMemScaling += 0.1 //1.1
+    if (level >= 40) perMemScaling += 0.15 //1.25
+    if (level >= 50) perMemScaling += 0.2 //1.45
+    if (level >= 65) perMemScaling += 0.25 //1.7
+    if (level >= 75) perMemScaling += 0.3 //2
+    if (level >= 90) perMemScaling += 0.35 //2.35
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
-    const post40Scaling = Math.pow(3, Math.max(0, level-40));
-    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * post40Scaling * 1e6);
+    const post25Scaling = Math.pow(3, Math.max(0, level-25));
+    return Math.floor(Math.pow(Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6, perMemScaling));
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
@@ -360,7 +367,7 @@ export const Ra = {
   // It also includes the 1% IP time study, Teresa's 1% EP upgrade, and the charged RM generation upgrade. Note that
   // removing the hardcap of 10 may cause runaways.
   theoremBoostFactor() {
-    return Math.min(10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
+    return Math.min(1000, Math.max(0, Currency.timeTheorems.value.pLog10() - 850) / 500 + 10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
   },
   get isUnlocked() {
     return V.spaceTheorems >= 36;

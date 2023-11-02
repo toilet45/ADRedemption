@@ -16,7 +16,7 @@ export const gamespeed = {
 
       const avgSpeed = Enslaved.isAutoReleasing
         ? getGameSpeedupForDisplay()
-        : curr / currBH * avgBH;
+        : curr.div(currBH).times(avgBH);
       const avgString = ` (current) | ${formatX(avgSpeed, 2, 2)} (average)`;
       return `${formatX(curr, 2, 2)}${curr === avgSpeed ? "" : avgString}`;
     },

@@ -56,7 +56,7 @@ export default {
       if (!this.warped && this.canWarp) Modal.warpReality.show();
     },
     id(row, column) {
-      return (row - 1) * 5 + column - 1;
+      return (row - 1) * 3 + column - 1;
     }
   }
 };
@@ -101,7 +101,7 @@ export default {
       <br>
       {{ formatInt(this.totalUpg) }} / {{ formatInt(16) }} Mending Upgrades
     </div>
-    <div v-if="canWarp">
+    <div v-if="warped">
     <div class="c-mending-upgrade-infotext">
       Stripped Upgrades (or ones that cost 1e300 MvR) are not yet implemented.
       <br>
@@ -113,12 +113,12 @@ export default {
       <br>
     </div>
     <div
-      v-for="row in 5"
+      v-for="row in 3"
       :key="row"
       class="l-mending-upgrade-grid__row"
     >
       <WarpUpgradeButton
-        v-for="column in 5"
+        v-for="column in 4"
         :key="id(row, column)"
         :upgrade="upgrades[id(row, column)]"
       />

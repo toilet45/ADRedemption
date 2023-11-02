@@ -7,6 +7,7 @@ import { perks } from "./secret-formula/reality/perks";
 import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
+import { corruptionChallengeScoreCalculation } from "./secret-formula/mending/corruption";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -89,7 +90,7 @@ export function mendingReset() {
     if (MendingUpgrade(9).isBought){
       player.celestials.teresa.unlockBits += 1;
     }
-    player.celestials.effarig.relicShards = 0;
+    player.celestials.effarig.relicShards = new Decimal(0);
     player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = DC.D0;
@@ -188,8 +189,8 @@ export function mendingReset() {
       bestEternitiesPerMs: DC.D0,
       maxReplicanti: DC.D0,
       maxDT: DC.D0,
-      bestRSmin: 0,
-      bestRSminVal: 0,
+      bestRSmin: DC.D0,
+      bestRSminVal: DC.D0,
     },
     player.records.bestReality = {
       time: Decimal.pow10(Number.MAX_VALUE),
@@ -416,7 +417,16 @@ export function mendingReset() {
       maxRM: DC.D0,
       maxiM: 0,
       maxRem: 0,
-    },
+    }
+    // Finally, lets set up corruptions
+    if (player.mending.corruptNext) {
+      player.mending.corruptNext = false
+      player.mending.corruptionChallenge.corruptedMend = true
+    }
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      player.mending.corruptedFragments = Math.ceil(Math.min(player.mending.corruptedFragments, Math.log2(corruptionChallengeScoreCalculation() * [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))])))
+      player.mending.corruptionChallenge.corruptedMend = false
+    }
     Player.resetRequirements("mending");
     //end reseting all the things
 

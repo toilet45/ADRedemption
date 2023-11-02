@@ -19,7 +19,7 @@ export default {
       showAutoAdjustWeights: false,
       isAutoAdjustWeightsOn: false,
       factors: getGlyphLevelInputs(),
-      shardsGained: 0,
+      shardsGained: new Decimal(0),
       weights: Object.assign({}, player.celestials.effarig.glyphWeights),
       rows: 3,
     };
@@ -85,7 +85,7 @@ export default {
       return RealityUpgrade(18).isBought;
     },
     shardVisible() {
-      return Ra.unlocks.relicShardGlyphLevelBoost.canBeApplied && this.shardsGained !== 0;
+      return Ra.unlocks.relicShardGlyphLevelBoost.canBeApplied && this.shardsGained.neq(0);
     },
     singularityVisible() {
       return SingularityMilestone.glyphLevelFromSingularities.canBeApplied;

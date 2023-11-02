@@ -66,8 +66,8 @@ export default {
       },
       {
         pet: Ra.pets.laitela,
-        scalingUpgradeVisible: () => false,
-        scalingUpgradeText: () => ""
+        scalingUpgradeVisible: () => true,
+        scalingUpgradeText: () => `Dark Matter cap multiplied by ${formatX(new Decimal(1e10).pow(Ra.pets.laitela.level))}`
       },
       {
         pet: Ra.pets.pelle,

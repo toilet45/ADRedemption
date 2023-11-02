@@ -416,8 +416,8 @@ window.player = {
       bestEternitiesPerMs: DC.D0,
       maxReplicanti: DC.D0,
       maxDT: DC.D0,
-      bestRSmin: 0,
-      bestRSminVal: 0,
+      bestRSmin: DC.D0,
+      bestRSminVal: DC.D0,
     },
     bestReality: {
       time: Decimal.pow10(Number.MAX_VALUE),
@@ -519,7 +519,7 @@ window.player = {
       records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       recordScore: 0,
     },
-    spentCF: DC.D0,
+    spentCF: 0,
     corruptNext: false,
   },
   replicanti: {
@@ -527,7 +527,7 @@ window.player = {
     amount: DC.D0,
     chance: 0.01,
     chanceCost: DC.E150,
-    interval: 1000,
+    interval: DC.E3,
     intervalCost: DC.E140,
     boughtGalaxyCap: 0,
     galaxies: 0,
@@ -717,7 +717,7 @@ window.player = {
       lastRepeatedMachines: DC.D0
     },
     effarig: {
-      relicShards: 0,
+      relicShards: DC.D0,
       unlockBits: 0,
       run: false,
       quoteBits: 0,

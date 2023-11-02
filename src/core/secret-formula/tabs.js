@@ -518,7 +518,7 @@ export const tabs = [
       {
         key: "corruption",
         name: "Corruption",
-        symbol: "?",
+        symbol: `<i class="fa-solid fa-biohazard"></i>`,
         component: "CorruptionTab",
         id: 3,
         hidable: true,

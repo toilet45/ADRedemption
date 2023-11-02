@@ -160,6 +160,10 @@ export const GameStorage = {
       Modal.message.show("Could not load the save (format unrecognized or invalid).");
       return;
     }
+    if (false && (newPlayer.version - 51 == 0.007)) {
+      Modal.message.show("Development saves cannot be imported into the public game.");
+      return;
+    }
     this.oldBackupTimer = player.backupTimer;
     Modal.hideAll();
     Quote.clearAll();

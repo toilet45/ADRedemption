@@ -417,7 +417,7 @@ Currency.perkPoints = new class extends NumberCurrency {
   set value(value) { player.reality.perkPoints = value; }
 }();
 
-Currency.relicShards = new class extends NumberCurrency {
+Currency.relicShards = new class extends DecimalCurrency {
   get value() { return player.celestials.effarig.relicShards; }
   set value(value) { player.celestials.effarig.relicShards = value; }
 }();
@@ -433,7 +433,7 @@ Currency.imaginaryMachines = new class extends NumberCurrency {
 Currency.darkMatter = new class extends DecimalCurrency {
   get value() { return player.celestials.laitela.darkMatter; }
   set value(value) {
-    const capped = Decimal.min(value, Number.MAX_VALUE);
+    const capped = Decimal.min(value, new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1));
     player.celestials.laitela.darkMatter = capped;
     player.celestials.laitela.maxDarkMatter = player.celestials.laitela.maxDarkMatter.max(capped);
   }
@@ -520,19 +520,24 @@ Currency.mends = new class extends DecimalCurrency {
   }
 }();
 
-Currency.corruptionFragments = new class extends DecimalCurrency {
+Currency.corruptionFragments = new class extends NumberCurrency {
   get value() { 
-    return player.corruptionFragments; 
+    return player.mending.corruptionFragments; 
   }
   set value(value) {
-    player.corruptionFragments = new Decimal(value);
+    player.corruptionFragments = value;
   }
 
   get startingValue() {
-    return new Decimal(0);
+    return 0;
   }
 
   reset() {
     //super.reset();
+  }
+
+  respecCall() {
+    player.mending.corruptionFragments += player.mending.spentCF
+    player.mending.spentCF = 0
   }
 }();

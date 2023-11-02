@@ -360,6 +360,11 @@ For example, with ${formatInt(3)} Boosts, the 1st Dimension will gain ${formatX(
 the 3rd Dimension ${formatX(2)}, and all other Dimensions are unaffected.
 <br>
 <br>
+<b>Dimension Shift/Warp/Jump:</b>` + ` Beyond ${format(DimBoost.shiftStart)} dimension boosts, they will be converted into Dimensions Shifts and costs will begin to scale.
+ Continuing beyond ${format(DimBoost.warpStart)} will conver them to warp, which scale faster than shifts, and continuing beyond ${format(DimBoost.scaleStart)} will
+ cause them to convert to jumps, which scale even faster than warps and shifts.
+<br>
+<br>
 <b>Hotkey: D</b> will try to purchase a Dimension Boost.
 `,
       isUnlocked: () => true,
@@ -386,12 +391,13 @@ etc.
 <br>
 <b>Remote Galaxy scaling:` +  (!MendingUpgrade(17).isBought ? `</b> Above ${formatInt(Galaxy.remoteStart)} Antimatter Galaxies, the <i>total</i> cost
 increases by another ${formatPercents(0.002, 1)} per Galaxy, on top of Distant scaling.` : `</b> Since you have Mending Upgrade 17, Remote Galaxy scaling no longer occurs.`)
-+ `<br>
-<br>
++ `<br>` +
+(MendingUpgrade(17).isBought ? `<b>Obscure Galaxy Scaling:</b> Above ${formatInt(Galaxy.scailingThreeStart)} Antimatter Galaxies the cost between them will increase by a ` + `${6-(+WarpUpgrade(4).isBought)-(+WarpUpgrade(11).isBought)}` + `th degree polynomial <br>` : ``)
+ +`<br>
 <b>Hotkey: G</b> will try to purchase an Antimatter Galaxy.
 `,
       isUnlocked: () => true,
-      tags: ["8th", "reset", "galaxy", "earlygame"],
+      tags: ["8th", "reset", "galaxy", "earlygame", "distant", "remote", "obscure"],
       tab: "dimensions/antimatter"
     }, {
       name: "Dimensional Sacrifice",

@@ -67,7 +67,7 @@ export class LaitelaMemoryAutobuyerState extends RaPetAutobuyerState{
         return Ra.unlocks.rautobuyers.isUnlocked;
     }
 
-    static get autobuyerGroupName(){ return "Lai 'tela's Memory"; }
+    static get autobuyerGroupName(){ return "Lai'tela's Memory"; }
     static get isActive() { return player.auto.pets.laitela.isActive; }
     static set isActive(value) { player.auto.pets.laitela.isActive = value; }
 }

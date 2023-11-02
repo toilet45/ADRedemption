@@ -11,6 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
+import { WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -123,7 +124,9 @@ export function gainedInfinityPoints() {
   if (GlyphAlteration.isAdded("infinity")) {
     ip = ip.pow(getSecondaryGlyphEffect("infinityIP"));
   }
-
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
   return ip.floor();
 }
 
@@ -175,7 +178,9 @@ export function gainedEternityPoints() {
   if (GlyphAlteration.isAdded("time")) {
     ep = ep.pow(getSecondaryGlyphEffect("timeEP"));
   }
-
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
   return ep.floor();
 }
 
@@ -296,7 +301,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
   const shards = Effarig.shardsGained;
   player.records.recentRealities.pop();
   player.records.recentRealities.unshift([time, realTime, rm.times(ampFactor),
-    realities, reality, level, shards * ampFactor, projIM]);
+    realities, reality, level, shards.times(ampFactor), projIM]);
 }
 
 export function gainedInfinities() {
@@ -351,7 +356,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (effects.includes(GAME_SPEED_EFFECT.FIXED_SPEED)) {
     if (EternityChallenge(12).isRunning) {
-      return player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.timeCompression.mult[player.mending.corruption[2]] / 1000 : 1 / 1000;
+      return player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.timeCompression.mult[player.mending.corruption[2]].div(1000) : new Decimal(1 / 1000);
     }
   }
 
@@ -398,7 +403,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
 
-  factor.times(PelleUpgrade.timeSpeedMult.effectValue.toNumber());
+  factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
@@ -407,7 +412,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
-  factor = Decimal.clamp(factor, 1e-300, 1e300);
+  factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
+  factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
 
   return factor;
 }
@@ -717,8 +723,8 @@ function updatePrestigeRates() {
     player.records.thisEternity.bestEPminVal = gainedEternityPoints();
   }
 
-  const currentRSmin = Math.min(Effarig.shardsGained / Decimal.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes).toNumber(), 1e300);
-  if (currentRSmin > player.records.thisReality.bestRSmin && isRealityAvailable()) {
+  const currentRSmin = Effarig.shardsGained.div(Decimal.clampMin(0.0005, Time.thisRealityRealTime.totalMinutes));
+  if (currentRSmin.gte(player.records.thisReality.bestRSmin) && isRealityAvailable()) {
     player.records.thisReality.bestRSmin = currentRSmin;
     player.records.thisReality.bestRSminVal = Effarig.shardsGained;
   }
@@ -868,7 +874,7 @@ function laitelaBeatText(disabledDim) {
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    player.infinityPoints = gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige);   
+    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));   
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
@@ -918,6 +924,15 @@ function updateTachyonGalaxies() {
   const tachyonGalaxyMult = Effects.max(1, DilationUpgrade.doubleGalaxies);
   const tachyonGalaxyThreshold = 1000;
   const thresholdMult = getTachyonGalaxyMult();
+  /*
+  base = bulkBuyBinarySearch(Currency.dilatedTime.value,
+    {
+      costFunction: x => getTachyonGalaxyMult(undefined, x).pow(x),
+      firstCost: 1000,
+      cumulative: false,
+    },
+    0)
+  */
   player.dilation.baseTachyonGalaxies = Math.min(1e6, Math.max(player.dilation.baseTachyonGalaxies,
     1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult))));
   player.dilation.nextThreshold = DC.E3.times(new Decimal(thresholdMult)

@@ -1,10 +1,13 @@
 <script>
 import { DC } from "@/core/constants";
+import { corruptionPenalties } from "../../../core/secret-formula/mending/corruption";
 
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import SliderComponent from "@/components/SliderComponent";
+import { playerInfinityUpgradesOnReset } from "../../../game";
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
+import { WarpUpgrade } from "../../../core/warp-upgrades";
 
 export default {
   name: "CorruptionTab",
@@ -21,16 +24,21 @@ export default {
       recordScore: 0,
       corruptionSet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       corruptions: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      localPenalties: corruptionPenalties,
       perkPoints: 0,
       hasReality: false,
       isRunning: false,
+      dimLimNerf: false,
+      nextCorrupted: false,
+      timeCompMult: new Decimal(0),
+      corruptedFrags: 0,
     };
   },
   computed: {
     corruptionSliderProps() {
       return {
         min: 0,
-        max: 9,
+        max: 9+(WarpUpgrade(6).isBought + WarpUpgrade(12).isBought),
         width: "18rem",
         valueInDot: true,
         tooltip: "never",
@@ -48,8 +56,8 @@ export default {
       return {
         "c-corrupt-run-button__icon": true,
         "c-corrupt-run-button__icon--running": this.isRunning,
-        "c-corrupt-run-button--clickable": !this.isDoomed,
-        "o-pelle-disabled-pointer": this.isDoomed
+        "c-corrupt-run-button--clickable": true,
+        "o-pelle-disabled-pointer": false
       };
     },
     runDescription() {
@@ -82,13 +90,24 @@ export default {
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
-      this.isRunning = Teresa.isRunning;
+      this.isRunning = CorruptionData.isCorrupted;
+      this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
+      // This was being annoying so this is a cheap fix that works
+      this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
+      this.corruptedFrags = player.mending.corruptedFragments - player.mending.spentCF
     },
     startRun() {
-      this.nextCorrupted = !this.nextCorrupted
+      if (!this.isRunning) {
+        this.nextCorrupted = !this.nextCorrupted
+        player.mending.corruptNext = this.nextCorrupted
+      }
+      else {
+        player.mending.corruptionChallenge.corruptedMend = false
+      }
     },
     corruptionSetSet(id, value) {
       this.corruptions[id] = value;
+      player.mending.corruption[id] = value
     },
     unlockInfoTooltipClass(unlockInfo) {
       return {
@@ -105,15 +124,21 @@ export default {
 
 <template>
   <div class="l-corrupt-celestial-tab">
-    You have <span class="c-fragments-amount__accent">{{ format(0, 2) }}</span> Corrupted Fragments.
+    You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Corrupted Fragments.
     <br>
     <div class="l-mechanics-container">
       <div
         class="l-corrupt-mechanic-container"
       >
         <div class="c-corrupt-unlock c-corrupt-run-button">
-          <span :class="{ 'o-pelle-disabled': isDoomed }">
+          <span v-if="!isRunning && !nextCorrupted">
               Corrupt Next Mend
+          </span>
+          <span v-else-if="!isRunning">
+              Dont corrupt Next Mend
+          </span>
+          <span v-else>
+              Exit Corrupted Mend
           </span>
           <div
             :class="runButtonClassObject"
@@ -139,9 +164,10 @@ export default {
           v-bind="corruptionSliderProps"
           :value="corruptions[0]"
           :width="'100%'"
+          :disabled="isRunning"
           @input="corruptionSetSet(0, $event)"
         />
-        Raise IP, EP, and RM gain by ^x.
+        IP, EP, and RM gain by ^{{localPenalties.prestigeLimits[this.corruptions[0]]}}.
         <br>
         <br>
     Dimensional Limitations:
@@ -149,9 +175,10 @@ export default {
           v-bind="corruptionSliderProps"
           :value="corruptions[1]"
           :width="'100%'"
+          :disabled="isRunning"
           @input="corruptionSetSet(1, $event)"
         />
-        AD, ID, and TD multipliers ^x
+        AD, ID, and TD multipliers {{formatX(dimLimNerf ? localPenalties.dimLimits.postNerf[[this.corruptions[1]]] : localPenalties.dimLimits.preNerf[[this.corruptions[1]]], 2, 3)}}
         <br>
         <br>
     Time Compression:
@@ -159,9 +186,10 @@ export default {
           v-bind="corruptionSliderProps"
           :value="corruptions[2]"
           :width="'100%'"
+          :disabled="isRunning"
           @input="corruptionSetSet(2, $event)"
         />
-        Gamespeed ^x and then *y
+        Gamespeed ^{{localPenalties.timeCompression.power[this.corruptions[2]]}} and then /{{timeCompMult}}
         <br>
         <br>
     Galactic Weakness:
@@ -169,9 +197,10 @@ export default {
           v-bind="corruptionSliderProps"
           :value="corruptions[3]"
           :width="'100%'"
+          :disabled="isRunning"
           @input="corruptionSetSet(3, $event)"
         />
-        Galaxy Power ^x and then *y
+        Galaxy Scaling ^{{localPenalties.galWeak.scaling[this.corruptions[3]]}} and power {{formatX(localPenalties.galWeak.strength[this.corruptions[3]], 1, 2)}}
         <br>
         <br>
     Complex Glyphs:
@@ -179,9 +208,22 @@ export default {
           v-bind="corruptionSliderProps"
           :value="corruptions[4]"
           :width="'100%'"
+          :disabled="isRunning"
           @input="corruptionSetSet(4, $event)"
         />
-        Glyph Level ^x and then *x. Glyph Rarity ^y and then *y
+        Glyph Level ^{{localPenalties.compGlyphs.level[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.level[this.corruptions[4]], 1, 2) }}. <br>
+        Glyph Rarity ^{{localPenalties.compGlyphs.rarity[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.rarity[this.corruptions[4]], 1, 2) }}.
+        <br>
+        <br>
+    Tick Extension:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[5]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(5, $event)"
+        />
+        Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
       </div>
     </div>
     <div class="c-mending-upgrade-infotext">

@@ -35,7 +35,7 @@ export class DimensionState {
   }
 
   productionForDiff(diff) {
-    return this.productionPerSecond.times(new Decimal(diff).div(1000)).pow(player.mending.corruptionChallenge.corruptedMend ? corruptionPenalties.dimLimits[[player.mending.corruption[1]]] : 1);
+    return this.productionPerSecond.times(new Decimal(diff).div(1000)).pow(player.mending.corruptionChallenge.corruptedMend ? Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked ? corruptionPenalties.dimLimits.postNerf[[player.mending.corruption[1]]] : corruptionPenalties.dimLimits.preNerf[[player.mending.corruption[1]]] : 1);
   }
 
   produceCurrency(currency, diff) {

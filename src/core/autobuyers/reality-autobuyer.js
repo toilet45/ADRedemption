@@ -117,7 +117,7 @@ export class RealityAutobuyerState extends AutobuyerState {
         proc = player.records.thisReality.realTime / 1000 > this.time;
         break;
       case AUTO_REALITY_MODE.RELIC_SHARD:
-        proc = Effarig.shardsGained * ampFactor > this.shard;
+        proc = Effarig.shardsGained.times(ampFactor).gt(this.shard);
         break;
     }
     if (proc) autoReality();

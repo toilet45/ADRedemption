@@ -87,7 +87,6 @@ export default {
     <button
       :class="classObject"
       class="l-mending-upgrade-btn c-mending-upgrade-btn"
-      @click.shift.exact="toggleLock(upgrade)"
       @click.exact="upgrade.purchase()"
     >
       <HintText
@@ -98,7 +97,7 @@ export default {
       </HintText>
       <span :class="{ 'o-pelle-disabled': isUseless }">
         <DescriptionDisplay :config="config" />
-        <template v-if="($viewModel.shiftDown === isAvailableForPurchase) && !isRebuyable">
+        <template v-if="(false) && !isRebuyable">
           <br>
           <DescriptionDisplay
             :config="requirementConfig"
