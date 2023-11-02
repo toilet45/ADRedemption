@@ -520,19 +520,24 @@ Currency.mends = new class extends DecimalCurrency {
   }
 }();
 
-Currency.corruptionFragments = new class extends DecimalCurrency {
+Currency.corruptionFragments = new class extends NumberCurrency {
   get value() { 
-    return player.corruptionFragments; 
+    return player.mending.corruptionFragments; 
   }
   set value(value) {
-    player.corruptionFragments = new Decimal(value);
+    player.corruptionFragments = value;
   }
 
   get startingValue() {
-    return new Decimal(0);
+    return 0;
   }
 
   reset() {
     //super.reset();
+  }
+
+  respecCall() {
+    player.mending.corruptionFragments += player.mending.spentCF
+    player.mending.spentCF = 0
   }
 }();

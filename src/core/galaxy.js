@@ -67,12 +67,40 @@ export class Galaxy {
     }
 
     if (type === GALAXY_TYPE.THIRD) {
-      let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
-      let a = n ** 5;
-      let b = 5 * (n ** 4);
-      let c = 5 * (n ** 3);
-      let d = 5 * (n ** 2);
-      amount += (a + b + c - d - (6 * n)) / 60;
+      /* This seems like a shit ton of math, so let me break it down:
+      First, we find out what polynomial we want (whether we want quartic (4th degree), quintic (5th degree) or hextic (6th degree))
+      From there, we do the polynomial that is equal to doing (b += a; c += b; d += c... (where the last letter is the nth degree + 1 in the alphabet))
+      where all numbers start at 2. In the case of hextic, its x^6/360 + x^5/24 + 17x^4/72 + 5x^3/8 + 137x^2/180 + x/3
+      In the case of quintic, it is x^5/60 + x^4/12 + x^3/12 - x^2/12 - x/10
+      In the case of quartic, it is x^4/12 + x^3/2 + 11x^2/12 + x/2
+      */
+     let polynomialLvl = 6
+      if (WarpUpgrade(4).isBought) { polynomialLvl -= 1 }
+      if (WarpUpgrade(11).isBought) { polynomialLvl -= 1 }
+      if (polynomialLvl == 6) {
+        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let a = n ** 6;
+        let b = 15 * (n ** 5);
+        let c = 85 * (n ** 4);
+        let d = 225 * (n ** 3);
+        let e = 274 * (n ** 2)
+        amount += (a + b + c + d + e + (120 * n)) / 360;
+      }
+      if (polynomialLvl == 5) {
+        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let a = n ** 5;
+        let b = 5 * (n ** 4);
+        let c = 5 * (n ** 3);
+        let d = 5 * (n ** 2);
+        amount += (a + b + c - d - (6 * n)) / 60;
+      }
+      if (polynomialLvl == 4) {
+        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let a = n ** 4;
+        let b = 6 * (n ** 3);
+        let c = 11 * (n ** 2);
+        amount += (a + b + c + (6 * n)) / 12;
+      }
       //amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scailingThreeStart - 1)), 2);
     }
 

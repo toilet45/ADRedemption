@@ -119,7 +119,7 @@ class RebuyableWarpUpgradeState extends RebuyableMechanicState {
 
 WarpUpgradeState.index = mapGameData(
   GameDatabase.mending.warpUpgrades,
-  config => (config.id < 6
+  config => (config.id < 3
     ? new RebuyableWarpUpgradeState(config)
     : new WarpUpgradeState(config))
 );
@@ -136,6 +136,6 @@ export const WarpUpgrades = {
    */
   all: WarpUpgradeState.index.compact(),
   get allBought() {
-    return (player.mending.warpUpgradeBits >> 6) + 1 === 1 << (GameDatabase.mending.warpUpgrades.length - 5);
+    return (player.mending.warpUpgradeBits >> 3) + 1 === 1 << (GameDatabase.mending.warpUpgrades.length - 2);
   }
 };

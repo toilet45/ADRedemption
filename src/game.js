@@ -11,6 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
+import { WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -123,7 +124,9 @@ export function gainedInfinityPoints() {
   if (GlyphAlteration.isAdded("infinity")) {
     ip = ip.pow(getSecondaryGlyphEffect("infinityIP"));
   }
-
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
   return ip.floor();
 }
 
@@ -175,7 +178,9 @@ export function gainedEternityPoints() {
   if (GlyphAlteration.isAdded("time")) {
     ep = ep.pow(getSecondaryGlyphEffect("timeEP"));
   }
-
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
   return ep.floor();
 }
 
@@ -407,7 +412,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
-  factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend ? 0 : 1e-300), 1e300);
+  factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
+  factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
 
   return factor;
 }

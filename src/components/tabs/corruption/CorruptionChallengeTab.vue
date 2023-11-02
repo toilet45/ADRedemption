@@ -7,6 +7,7 @@ import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import SliderComponent from "@/components/SliderComponent";
 import { playerInfinityUpgradesOnReset } from "../../../game";
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
+import { WarpUpgrade } from "../../../core/warp-upgrades";
 
 export default {
   name: "CorruptionTab",
@@ -30,13 +31,14 @@ export default {
       dimLimNerf: false,
       nextCorrupted: false,
       timeCompMult: new Decimal(0),
+      corruptedFrags: 0,
     };
   },
   computed: {
     corruptionSliderProps() {
       return {
         min: 0,
-        max: 9,
+        max: 9+(WarpUpgrade(6).isBought + WarpUpgrade(12).isBought),
         width: "18rem",
         valueInDot: true,
         tooltip: "never",
@@ -92,6 +94,7 @@ export default {
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
       // This was being annoying so this is a cheap fix that works
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
+      this.corruptedFrags = player.mending.corruptedFragments - player.mending.spentCF
     },
     startRun() {
       if (!this.isRunning) {
@@ -121,7 +124,7 @@ export default {
 
 <template>
   <div class="l-corrupt-celestial-tab">
-    You have <span class="c-fragments-amount__accent">{{ format(0, 2) }}</span> Corrupted Fragments.
+    You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Corrupted Fragments.
     <br>
     <div class="l-mechanics-container">
       <div
@@ -210,6 +213,17 @@ export default {
         />
         Glyph Level ^{{localPenalties.compGlyphs.level[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.level[this.corruptions[4]], 1, 2) }}. <br>
         Glyph Rarity ^{{localPenalties.compGlyphs.rarity[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.rarity[this.corruptions[4]], 1, 2) }}.
+        <br>
+        <br>
+    Tick Extension:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[5]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(5, $event)"
+        />
+        Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
       </div>
     </div>
     <div class="c-mending-upgrade-infotext">

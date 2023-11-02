@@ -34,7 +34,7 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   }
 
   get currency() {
-    return Currency.realityMachines;
+    return Currency.corruptionFragments;
   }
 
   get bitIndex() {
@@ -79,8 +79,13 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
     }
   }
 
+  respecCorruptionUpgrades() {
+    Currency.corruptionFragments.respecCall()
+    player.mending.corruptionUpgradeBits = 0
+  }
+
   get isAvailableForPurchase() {
-    return (player.mending.corruptionUpgReqs & (1 << this.id)) !== 0;
+    return true;
   }
 
   get isPossible() {
@@ -98,6 +103,7 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   onPurchased() {
     EventHub.dispatch(GAME_EVENT.CORRUPTION_UPGRADE_BOUGHT);
     const id = this.id;
+    player.mending.spentCF += this.cost
     // insert code here
     GameCache.staticGlyphWeights.invalidate();
   }
@@ -119,7 +125,7 @@ class RebuyableCorruptionUpgradeState extends RebuyableMechanicState {
 
 CorruptionUpgradeState.index = mapGameData(
   GameDatabase.mending.corruptionUpgrades,
-  config => (config.id < 6
+  config => (config.id < 0
     ? new RebuyableCorruptionUpgradeState(config)
     : new CorruptionUpgradeState(config))
 );

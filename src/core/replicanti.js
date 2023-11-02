@@ -105,6 +105,7 @@ function fastReplicantiBelow308(log10GainFactor, isAutobuyerActive) {
 // the overCapOverride parameter, to tell us which case we are in.
 export function getReplicantiInterval(overCapOverride, intervalIn) {
   let interval = intervalIn || player.replicanti.interval;
+  interval = new Decimal(interval)
   const amount = Replicanti.amount;
   const overCap = overCapOverride === undefined ? amount.gt(replicantiCap()) : overCapOverride;
   if ((TimeStudy(133).isBought && !Achievement(138).isUnlocked) || overCap) {
@@ -147,6 +148,9 @@ export function totalReplicantiSpeedMult(overCap) {
   }
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
+  totalMult = totalMult.times(Ra.unlocks.continuousTTBoost.effects.replicanti.effectValue)
+
+
   const preCelestialEffects = Effects.product(
     TimeStudy(62),
     TimeStudy(213),
@@ -167,7 +171,7 @@ export function totalReplicantiSpeedMult(overCap) {
     totalMult = totalMult.times(
       Math.clampMin(Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"), 1));
   }
-  totalMult = totalMult.timesEffectsOf(AlchemyResource.replication, Ra.unlocks.continuousTTBoost.effects.replicanti);
+  totalMult = totalMult.timesEffectsOf(AlchemyResource.replication);
 
   return totalMult;
 }

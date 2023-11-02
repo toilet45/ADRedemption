@@ -15,12 +15,22 @@ export default {
       creditsClosed: false,
       requirementText: null,
       hasTutorial: false,
+      type: DIMBOOST_TYPE.BOOST,
     };
   },
   computed: {
     isDoomed: () => Pelle.isDoomed,
     dimName() {
       return AntimatterDimension(this.requirement.tier).shortDisplayName;
+    },
+    typeName() {
+      switch (this.type) {
+        case DIMBOOST_TYPE.BOOST: return "Dimension Boosts";
+        case DIMBOOST_TYPE.SHIFT: return "Dimension Shift";
+        case DIMBOOST_TYPE.WARP: return "Dimension Warp";
+        case DIMBOOST_TYPE.SCALE: return "Obscure Antimatter Galaxies"
+      }
+      return undefined;
     },
     boostCountText() {
       if (this.requirementText) return this.requirementText;
@@ -46,6 +56,7 @@ export default {
   methods: {
     update() {
       const requirement = DimBoost.requirement;
+      this.type = DimBoost.type
       this.requirement.tier = requirement.tier;
       this.requirement.amount = requirement.amount;
       this.isBuyable = requirement.isSatisfied && DimBoost.canBeBought;
@@ -67,7 +78,7 @@ export default {
 
 <template>
   <div class="reset-container dimboost">
-    <h4>Dimension Boost ({{ boostCountText }})</h4>
+    <h4>{{ typeName }} ({{ boostCountText }})</h4>
     <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter Dimensions</span>
     <button
       :class="classObject"

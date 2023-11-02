@@ -519,7 +519,7 @@ window.player = {
       records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       recordScore: 0,
     },
-    spentCF: DC.D0,
+    spentCF: 0,
     corruptNext: false,
   },
   replicanti: {

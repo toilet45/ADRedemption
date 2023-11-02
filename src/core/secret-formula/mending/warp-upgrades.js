@@ -19,21 +19,23 @@ const rebuyable = props => {
     return Math.pow(effect, player.mending.warpRebuyables[props.id]);
   };
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
-  props.formatEffect = value => formatX(value, 2, 0);
-  props.formatCost = value => format(value, 2, 0);
+  if (!props.noEffect) {
+    props.formatEffect = value => formatX(value, 2, 0);
+    props.formatCost = value => format(value, 2, 0);
+  }
   return props;
 };
 
 
 export const warpUpgrades = [
   rebuyable({
-    name: "Warp Upgrade 1",
+    name: "More Infinite Power",
     id: 1,
     initialCost: 1e300,
     costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    textTemplate: "Infinity power softcap reduction",
+    effect: 0.002,
+    noEffect: true
   }),
   rebuyable({
     name: "Warp Upgrade 2",
@@ -53,27 +55,21 @@ export const warpUpgrades = [
     effect: 1,
     effectType: "×"
   }),
-  rebuyable({
-    name: "Warp Upgrade 4",
+  {
+    name: "Visible Galaxies",
     id: 4,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
-  }),
-  rebuyable({
+    cost: 1e300,
+    requirement: "Wait 5 Hours [NYI]",
+    hasFailed: () => false,
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    canLock: false,
+    lockEvent: "gain a Replicanti Galaxy",
+    description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
+  },
+  {
     name: "Warp Upgrade 5",
     id: 5,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
-  }),
-  {
-    name: "Warp Upgrade 6",
-    id: 6,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",
     hasFailed: () => false,
@@ -82,6 +78,20 @@ export const warpUpgrades = [
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
     description: "[TBD]",
+    effect: () => 1,
+    formatEffect: value => formatX(value, 2, 2)
+  },
+  {
+    name: "Corruption+",
+    id: 6,
+    cost: 1e300,
+    requirement: "Mend with an average corruption level of 6 or higher",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
+    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    canLock: false,
+    lockEvent: "gain a Replicanti Galaxy",
+    description: () => `Corruption caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -128,7 +138,7 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Warp Upgrade 10",
+    name: "Visible Galaxies",
     id: 10,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",
@@ -137,12 +147,10 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 11",
+    name: "Noticeable Galaxies",
     id: 11,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",
@@ -151,24 +159,23 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 12",
+    name: "Corruption++",
     id: 12,
     cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
+    requirement: "Mend with an average corruption level of 8 or higher",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
+    description: () => `Corruption caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   },
+  /*
   {
     name: "Warp Upgrade 13",
     id: 13,
@@ -198,16 +205,16 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Warp Upgrade 15",
+    name: "Corruption+",
     id: 15,
     cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
+    requirement: "Mend with an average corruption level of 6 or higher",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
+    description: () => `Corruption caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -324,7 +331,7 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Warp Upgrade 24",
+    name: "Noticeable Galaxies",
     id: 24,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",
@@ -333,22 +340,20 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 25",
+    name: "Corruption++",
     id: 25,
     cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
+    requirement: "Mend with an average corruption level of 8 or higher",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
+    description: () => `Corruption caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
-  },
+  }, */
 ];
