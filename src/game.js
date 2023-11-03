@@ -130,16 +130,24 @@ export function gainedInfinityPoints() {
   return ip.floor();
 }
 
+export function mendingMilestoneElevenMultiplier(display = false){
+  if(!MendingMilestone.eleven.isReached && !display) return DC.D1;
+  const reqCheck = player.requirementChecks.mending.mmeleven;
+  let mult = reqCheck <= 0 ? (3 - reqCheck) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - reqCheck];
+  return new Decimal(mult);
+}
+
 export function gainedMendingPoints(){
   let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
     (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
     DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
-  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
+  MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
 
   return MvRGain;
 }
+
 export function warpReality(){
   Currency.mendingPoints.subtract(new Decimal(1e7));
   Quotes.kohler.postWarp.show();
