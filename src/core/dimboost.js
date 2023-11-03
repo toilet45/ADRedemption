@@ -207,7 +207,7 @@ export class DimBoost {
 
   static get imaginaryBoosts() {
     let x = BreakInfinityUpgrade.autobuyMaxDimboosts.chargedEffect.isEffectActive ? Ra.pets.teresa.level : 1;
-    return Ra.isRunning ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5);
+    return (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5);
   }
 
   static get totalBoosts() {

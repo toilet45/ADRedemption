@@ -1,8 +1,8 @@
 import { PlayerProgress } from "./player-progress";
 
 export const DeltaTimeState = {
-  deltaTime: new TimeSpan(0),
-  unscaledDeltaTime: new TimeSpan(0),
+  deltaTime: new TimeSpan(new Decimal(0)),
+  unscaledDeltaTime: new TimeSpan(new Decimal(0)),
   update(deltaTime, gameDeltaTime) {
     this.unscaledDeltaTime = TimeSpan.fromMilliseconds(deltaTime);
     this.deltaTime = TimeSpan.fromMilliseconds(gameDeltaTime);
@@ -82,11 +82,11 @@ export const Time = {
    */
   get timeSinceBlackHole() {
     return this.fromMilliseconds(() => {
-      let diff = player.records.totalTimePlayed - player.records.timePlayedAtBHUnlock;
+      let diff = player.records.totalTimePlayed.minus(player.records.timePlayedAtBHUnlock);
       if(PlayerProgress.mendingUnlocked()){
-        diff = player.records.thisMend.time - player.records.timePlayedAtBHUnlock;
+        diff = player.records.thisMend.time.minus(player.records.timePlayedAtBHUnlock);
       }
-      return Math.max(0, diff);
+      return Decimal.max(0, diff);
     });
   },
 

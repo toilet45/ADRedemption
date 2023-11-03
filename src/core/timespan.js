@@ -298,7 +298,7 @@ window.TimeSpan = class TimeSpan {
   }
 
   static get zero() {
-    return new TimeSpan(0);
+    return new TimeSpan(new Decimal(0));
   }
 
   static get maxValue() {

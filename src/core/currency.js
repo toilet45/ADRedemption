@@ -541,3 +541,20 @@ Currency.corruptionFragments = new class extends NumberCurrency {
     player.mending.spentCF = 0
   }
 }();
+
+Currency.raPoints = new class extends DecimalCurrency {
+  get value() { 
+    return player.celestials.ra.raPoints; 
+  }
+  set value(value) {
+    player.celestials.ra.raPoints = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();

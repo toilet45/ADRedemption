@@ -56,7 +56,6 @@ export default {
         bestReal: TimeSpan.zero,
         this: TimeSpan.zero,
         thisReal: TimeSpan.zero,
-        totalTimePlayed: TimeSpan.zero,
         bestRate: new Decimal(0),
       },
       matterScale: [],
@@ -94,8 +93,8 @@ export default {
     update() {
       const records = player.records;
       this.totalAntimatter.copyFrom(records.totalAntimatter);
-      this.realTimePlayed.setFrom(records.realTimePlayed);
-      this.fullTimePlayed = TimeSpan.fromMilliseconds(records.previousRunRealTime + records.realTimePlayed);
+      this.realTimePlayed.copyFrom(new TimeSpan(records.realTimePlayed));
+      this.fullTimePlayed = records.previousRunRealTime + records.realTimePlayed;
       this.uniqueNews = NewsHandler.uniqueTickersSeen;
       this.totalNews = player.news.totalSeen;
       this.secretAchievementCount = SecretAchievements.all.filter(a => a.isUnlocked).length;
@@ -116,9 +115,9 @@ export default {
           TimeStudy(191)
         );
         infinity.bankRate = infinity.projectedBanked.div(Decimal.clampMin(33, records.thisEternity.time)).times(60000);
-        infinity.hasBest.copyFrom(bestInfinity.time.lt(Number.MAX_VALUE));
-        infinity.best.copyFrom(bestInfinity.time);
-        infinity.this.copyFrom(records.thisInfinity.time);
+        infinity.hasBest = bestInfinity.time.lt(Number.MAX_VALUE);
+        infinity.best.copyFrom(new TimeSpan(bestInfinity.time));
+        infinity.this.copyFrom(new TimeSpan(records.thisInfinity.time));
         infinity.bestRate.copyFrom(bestInfinity.bestIPminEternity);
       }
 
@@ -129,8 +128,8 @@ export default {
       if (isEternityUnlocked) {
         eternity.count.copyFrom(Currency.eternities);
         eternity.hasBest = bestEternity.time.lt(Number.MAX_VALUE);
-        eternity.best.setFrom(bestEternity.time);
-        eternity.this.setFrom(records.thisEternity.time);
+        eternity.best.copyFrom(new TimeSpan(bestEternity.time));
+        eternity.this.copyFrom(new TimeSpan(records.thisEternity.time));
         eternity.bestRate.copyFrom(bestEternity.bestEPminReality);
       }
 
@@ -141,15 +140,15 @@ export default {
 
       if (isRealityUnlocked) {
         reality.count = Math.floor(Currency.realities.value);
-        reality.best.setFrom(bestReality.time);
-        reality.bestReal.setFrom(bestReality.realTime);
-        reality.this.setFrom(records.thisReality.time);
-        reality.totalTimePlayed.copyFrom(records.totalTimePlayed);
+        reality.best.copyFrom(new TimeSpan(bestReality.time));
+        reality.bestReal.copyFrom(new TimeSpan(bestReality.realTime));
+        reality.this.copyFrom(new TimeSpan(records.thisReality.time));
+        reality.totalTimePlayed.copyFrom(new TimeSpan(records.totalTimePlayed));
         // Real time tracking is only a thing once reality is unlocked:
-        infinity.thisReal.setFrom(records.thisInfinity.realTime);
+        infinity.thisReal.copyFrom(new TimeSpan(records.thisInfinity.realTime));
         infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.realTime)).times(60000);
-        eternity.thisReal.setFrom(records.thisEternity.realTime);
-        reality.thisReal.setFrom(records.thisReality.realTime);
+        eternity.thisReal.copyFrom(new TimeSpan(records.thisEternity.realTime));
+        reality.thisReal.copyFrom(new TimeSpan(records.thisReality.realTime));
         reality.bestRate.copyFrom(bestReality.RMmin);
         reality.bestRarity = Math.max(strengthToRarity(bestReality.glyphStrength), 0);
       }
@@ -161,17 +160,16 @@ export default {
       if (isMendingUnlocked) {
         mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
-        mending.best.setFrom(bestMend.time);
-        mending.bestReal.setFrom(bestMend.realTime);
-        mending.this.setFrom(records.thisMend.time);
-        mending.thisReal.setFrom(records.thisMend.realTime);
-        mending.totalTimePlayed.setFrom(records.totalTimePlayed);
+        mending.best.copyFrom(new TimeSpan(bestMend.time));
+        mending.bestReal.copyFrom(new TimeSpan(bestMend.realTime));
+        mending.this.copyFrom(new TimeSpan(records.thisMend.time));
+        mending.thisReal.copyFrom(new TimeSpan(records.thisMend.realTime));
       }
 
       this.updateMatterScale();
 
       this.isDoomed = Pelle.isDoomed;
-      this.realTimeDoomed.setFrom(player.records.realTimeDoomed);
+      this.realTimeDoomed = new TimeSpan(player.records.realTimeDoomed);
       this.paperclips = player.news.specialTickerData.paperclips;
     },
     formatDecimalAmount(value) {

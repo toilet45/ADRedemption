@@ -96,3 +96,4 @@ export * from "./mending-upgrades";
 export * from "./corruption";
 export * from "./corruption-upgrades";
 export * from "./warp-upgrades";
+export * from "./celestials/ra/ra-upgrades";

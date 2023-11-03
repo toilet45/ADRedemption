@@ -40,22 +40,6 @@ export const mendingMilestones = {
   },
   eight: {
     mends: 20,
-    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai'tela and Pelle unlocks)",
-  },
-  nine: {
-    mends: 35,
-    reward: "The uncharged (Break) Infinity upgrades are active alongside their charged counterparts",
-  },
-  twelve: {
-    mends: 75,
-    reward: "[TBD]",
-  },
-  thirteen: {
-    mends: 100,
-    reward: "[TBD]",
-  },
-  fourteen: {
-    mends: 200,
-    reward: "[TBD]",
-  },
+    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
+  }
 };

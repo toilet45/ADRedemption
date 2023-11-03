@@ -497,7 +497,7 @@ export const migrations = {
       player.options.showHintText.mendingUpgrades = true;
     },
      43: player =>{
-      if(player.records.thisMend.time.gte(1e308)) player.records.thisMend.time = new Decimal(1e308);
+      if(player.records.thisMend.time < 1e308) player.records.thisMend.time = new Decimal(1e308);
     },
     45: player =>{
       player.auto.mending = {
@@ -614,6 +614,17 @@ export const migrations = {
     player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
     player.records.thisReality.time = new Decimal(player.records.thisReality.time);
     player.records.thisMend.time = new Decimal(player.records.thisMend.time);
+  },
+  54: player =>{
+    player.celestials.ra.upgradeBits = 0,
+    player.celestials.ra.raPoints = DC.D0,
+    player.celestials.ra.rebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    }
   },
   },
 

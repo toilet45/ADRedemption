@@ -139,6 +139,7 @@ class RaPetState extends GameMechanicState {
   }
 
   get hasRemembrance() {
+    if (Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked) return true;
     return Ra.petWithRemembrance === this.name;
   }
 
@@ -251,8 +252,14 @@ export const Ra = {
   unlocks,
   pets,
   remembrance: {
-    multiplier: 5,
-    nerf: 0.5,
+    get multiplier(){
+      if(Ra.unlocks.remembranceBoost.isUnlocked) return 75; 
+      return 5;
+    },
+    get nerf(){
+      if(Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked) return 1; 
+      return 0.5;
+    },
     requiredLevels: 20,
     get isUnlocked() {
       return Ra.totalPetLevel >= this.requiredLevels;

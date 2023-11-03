@@ -41,7 +41,7 @@ export default {
       return undefined
     },
     totalUpgFunc() {
-     return MendingUpgrades.all.countWhere(u => u.isBought);
+     return WarpUpgrades.all.countWhere(u => u.isBought);
     },
   },
   methods: {

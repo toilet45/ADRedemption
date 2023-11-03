@@ -53,8 +53,10 @@ export const Effarig = {
       case EFFARIG_STAGES.REALITY:
       case EFFARIG_STAGES.COMPLETED:
         return "Reality";
-      default:
+      case EFFARIG_STAGES.MEND:
         return "Mend";
+      default:
+        return "";
     }
   },
   get eternityCap() {

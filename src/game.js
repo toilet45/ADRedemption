@@ -141,7 +141,7 @@ export function gainedMendingPoints(){
   return MvRGain;
 }
 export function warpReality(){
-  Currency.mendingPoints.subtract(new Decimal(1e5));
+  Currency.mendingPoints.subtract(new Decimal(1e7));
   Quotes.kohler.postWarp.show();
   player.reality.warped = true;
 }

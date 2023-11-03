@@ -43,7 +43,7 @@ export const GameDatabase = {
   speedrunMilestones,
   tabNotifications,
   tabs,
-  mending
+  mending,
 };
 
 window.GameDatabase = GameDatabase;

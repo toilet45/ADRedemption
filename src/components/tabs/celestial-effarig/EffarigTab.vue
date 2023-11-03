@@ -2,6 +2,7 @@
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import EffarigRunUnlockReward from "./EffarigRunUnlockReward";
 import EffarigUnlockButton from "./EffarigUnlockButton";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "EffarigTab",
@@ -24,7 +25,8 @@ export default {
       quote: "",
       isRunning: false,
       vIsFlipped: false,
-      relicShardRarityAlwaysMax: false
+      relicShardRarityAlwaysMax: false,
+      mendVisible: false,
     };
   },
   computed: {
@@ -34,12 +36,10 @@ export default {
       EffarigUnlock.setSaves
     ],
     runUnlock: () => EffarigUnlock.run,
-    runUnlocks: () => [
-      EffarigUnlock.infinity,
-      EffarigUnlock.eternity,
-      EffarigUnlock.reality,
-      EffarigUnlock.mend
-    ],
+    runUnlocks: () => {
+      if (Ra.unlocks.effarigMendUnlock.isUnlocked) return [EffarigUnlock.infinity, EffarigUnlock.eternity, EffarigUnlock.reality, EffarigUnlock.mend];
+      return [EffarigUnlock.infinity, EffarigUnlock.eternity, EffarigUnlock.reality];
+    },
     symbol: () => GLYPH_SYMBOLS.effarig,
     runButtonOuterClass() {
       return {
@@ -83,6 +83,7 @@ export default {
       this.isRunning = Effarig.isRunning;
       this.vIsFlipped = V.isFlipped;
       this.relicShardRarityAlwaysMax = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied;
+      this.mendVisible = Ra.unlocks.effarigMendUnlock.isUnlocked;
     },
     startRun() {
       if (this.isDoomed) return;

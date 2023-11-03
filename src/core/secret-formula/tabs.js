@@ -79,7 +79,7 @@ export const tabs = [
     name: "Statistics",
     hideAt: 1.7,
     id: 2,
-    condition: () => false,
+    //condition: () => false,
     hidable: true,
     subtabs: [
       {
@@ -509,7 +509,7 @@ export const tabs = [
       },
       {
         key: "warpreality",
-        name: "Warp Reality [NYI]",
+        name: "Warp Reality",
         symbol: "Ϟ",
         component: "WarpReality",
         id: 2,

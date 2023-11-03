@@ -37,7 +37,6 @@ export function mendingReset() {
     //lockAchievementsOnMend();
     Currency.mendingPoints.add(gainedMendingPoints());
     Currency.mends.add(1);
-    Tab.dimensions.antimatter.show();
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){
@@ -447,7 +446,6 @@ export function mendingReset() {
       AutomatorBackend.start(AutomatorBackend.state.topLevelScript);
     }
 }
-
 
 export class MendingMilestoneState{
     constructor(config) {

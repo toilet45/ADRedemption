@@ -47,7 +47,7 @@ export const ra = {
       chunkGain: "Dimension Boosts",
       memoryGain: "current iM",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () => 4 * Math.pow(DimBoost.purchasedBoosts/7e4, 1.5),
+      rawMemoryChunksPerSecond: () => 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, 1.5),
       memoryProductionMultiplier: () => 1
     },
     laitela: {
@@ -541,7 +541,7 @@ export const ra = {
     placeholderV6: {
       id: 27,
       id2: 0,
-      reward: "TBD",
+      reward: "Unlock a Myriad Study every 2 Memory Levels past 90",
       pet: "v",
       level: 90,
       displayIcon: "?"
@@ -589,18 +589,18 @@ export const ra = {
     placeholderR4: {
       id: 1,
       id2: 1,
-      reward: "TBD",
+      reward: "Add a secondary source for Memory Gain for each Celestial",
       pet: "ra",
       level: 10,
       displayIcon: "?"
     },
-    placeholderR5: {
+    remembranceBoost: {
       id: 2,
       id2: 1,
-      reward: "TBD",
+      reward: "Remembrance is ×15 as powerful",
       pet: "ra",
       level: 15,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     generateMemChunksOutOfRasReality: {
       id: 3,
@@ -610,13 +610,13 @@ export const ra = {
       level: 25,
       displayIcon: '<i class="fa-solid fa-check"></i>'
     },
-    placeholderR7: {
+    imaginaryBoostsRa: {
       id: 4,
       id2: 1,
-      reward: "TBD",
+      reward: "Free Dimension Boosts are effective in Ra's Reality",
       pet: "ra",
       level: 30,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     remembranceAlwaysActiveAndShopUnlock: {
       id: 5,
@@ -645,7 +645,7 @@ export const ra = {
     placeholderR11: {
       id: 8,
       id2: 1,
-      reward: "TBD",
+      reward: "Gain Free Dimension Boosts based on Ra Level",
       pet: "ra",
       level: 75,
       displayIcon: "?"
@@ -653,7 +653,7 @@ export const ra = {
     placeholderR12: {
       id: 9,
       id2: 1,
-      reward: "TBD",
+      reward: "Increase Recollection and Fragmentation bases based on Memories",
       pet: "ra",
       level: 90,
       displayIcon: "?"
@@ -661,7 +661,7 @@ export const ra = {
     placeholderR13: {
       id: 10,
       id2: 1,
-      reward: "TBD",
+      reward: "Gain a Multiversal Remain Multiplier based on total Memory Levels",
       pet: "ra",
       level: 100,
       displayIcon: "?"
@@ -768,7 +768,7 @@ export const ra = {
     placeholderL13: {
       id: 23,
       id2: 1,
-      reward: "TBD",
+      reward: "Increase the caps for some Singularity Milestones",
       pet: "laitela",
       level: 90,
       displayIcon: "?"
@@ -776,7 +776,7 @@ export const ra = {
     placeholderL14: {
       id: 24,
       id2: 1,
-      reward: "TBD",
+      reward: "Unlock Multiversal Dimensions [name TBD]",
       pet: "laitela",
       level: 100,
       displayIcon: "?"
@@ -809,7 +809,7 @@ export const ra = {
     placeholderP4: {
       id: 28,
       id2: 1,
-      reward: "TBD",
+      reward: "Re-enable Tachyon Particle Multiplier in Doomed Reality, but it's decreased to ×1.1",
       pet: "pelle",
       level: 8,
       displayIcon: "?"
@@ -817,7 +817,7 @@ export const ra = {
     placeholderP5: {
       id: 29,
       id2: 1,
-      reward: "TBD",
+      reward: "Doomed Reality can be exitied, but it causes a Mending Reset (with no benefits)",
       pet: "pelle",
       level: 10,
       displayIcon: "?"
@@ -825,7 +825,7 @@ export const ra = {
     placeholderP6: {
       id: 30,
       id2: 1,
-      reward: "TBD",
+      reward: "Doomed Reality no longer disables IP and EP multipliers, but they are decreased to ×1.2 and ×2 respectively",
       pet: "pelle",
       level: 15,
       displayIcon: "?"
@@ -833,7 +833,7 @@ export const ra = {
     placeholderP7: {
       id: 31,
       id2: 1,
-      reward: "TBD",
+      reward: "Disabled Glyph Effects are re-enabled in Doomed Reality, but are severely nerfed",
       pet: "pelle",
       level: 25,
       displayIcon: "?"
@@ -841,7 +841,7 @@ export const ra = {
     placeholderP8: {
       id: 0,
       id2: 2,
-      reward: "TBD",
+      reward: "Memory Gain for all Celestials is boosted in Doomed Reality",
       pet: "pelle",
       level: 30,
       displayIcon: "?"
@@ -849,7 +849,7 @@ export const ra = {
     placeholderP9: {
       id: 1,
       id2: 2,
-      reward: "TBD",
+      reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
       pet: "pelle",
       level: 40,
       displayIcon: "?"
@@ -857,7 +857,7 @@ export const ra = {
     placeholderP10: {
       id: 2,
       id2: 2,
-      reward: "TBD",
+      reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",
       pet: "pelle",
       level: 50,
       displayIcon: "?"

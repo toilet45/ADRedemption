@@ -837,7 +837,16 @@ window.player = {
       breakCharged: new Set(),
       breakDischarge: false,
       peakGamespeed: DC.D1,
-      petWithRemembrance: ""
+      petWithRemembrance: "",
+      upgradeBits: 0,
+      raPoints: DC.D0,
+      rebuyables: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
     },
     laitela: {
       darkMatter: DC.D0,
