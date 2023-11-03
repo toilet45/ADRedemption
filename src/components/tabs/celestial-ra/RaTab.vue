@@ -3,6 +3,7 @@ import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import RaPet from "./RaPet";
 import RaPetRemembranceButton from "./RaPetRemembranceButton";
 import RaUpgradeButton from "./RaUpgradeButton.vue";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "RaTab",
@@ -26,7 +27,8 @@ export default {
       petWithRemembrance: "",
       isRunning: false,
       memoryBoosts: "",
-      shopUnlocked: false
+      shopUnlocked: false,
+      remNerfed: false,
     };
   },
   computed: {
@@ -80,7 +82,7 @@ export default {
     ],
     petStyle() {
       return {
-        color: (this.petWithRemembrance === "")
+        color: (!this.remNerfed || this.petWithRemembrance === "")
           ? "white"
           : this.pets.find(pet => pet.pet.name === this.petWithRemembrance).pet.color,
       };
@@ -99,6 +101,13 @@ export default {
     memoryDescription() {
       return `Within Ra's Reality, Memory Chunks for Celestial Memories
         will be generated based on certain resource amounts.`;
+    },
+    remembranceDescription(){
+      let desc = `${this.remNerfed?"Whichever Celestial has Remembrance":"All Celestials"} will get ${ formatX(this.remembranceMult) } Memory Chunk gain.`
+      if(this.remNerfed) {
+        desc += ` The other Celestials will get ${ formatX(this.remembranceNerf, 1, 1) } Memory Chunk gain.`;
+      }
+      return desc;
     },
     isDoomed: () => Pelle.isDoomed,
     dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
@@ -141,6 +150,7 @@ export default {
       this.isRunning = Ra.isRunning;
       this.memoryBoosts = Ra.memoryBoostResources;
       this.shopUnlocked = Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked;
+      this.remNerfed = !Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -216,8 +226,7 @@ export default {
           Remembrance
         </h1>
         <span :style="petStyle">
-          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }} Memory Chunk gain. The other
-          Celestials will get {{ formatX(remembranceNerf, 1, 1) }} Memory Chunk gain.
+          {{ remembranceDescription }}
         </span>
         <div
           v-if="hasRemembrance"
