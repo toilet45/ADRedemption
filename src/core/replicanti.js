@@ -105,9 +105,9 @@ function fastReplicantiBelow308(log10GainFactor, isAutobuyerActive) {
 // the overCapOverride parameter, to tell us which case we are in.
 export function getReplicantiInterval(overCapOverride, intervalIn) {
   let interval = intervalIn || player.replicanti.interval;
+  interval = new Decimal(interval)
   const amount = Replicanti.amount;
   const overCap = overCapOverride === undefined ? amount.gt(replicantiCap()) : overCapOverride;
-  interval = new Decimal(interval);
   if ((TimeStudy(133).isBought && !Achievement(138).isUnlocked) || overCap) {
     interval = interval.times(10);
   }
@@ -148,6 +148,9 @@ export function totalReplicantiSpeedMult(overCap) {
   }
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
+  totalMult = totalMult.times(Ra.unlocks.continuousTTBoost.effects.replicanti.effectValue)
+
+
   const preCelestialEffects = Effects.product(
     TimeStudy(62),
     TimeStudy(213),
@@ -168,7 +171,7 @@ export function totalReplicantiSpeedMult(overCap) {
     totalMult = totalMult.times(
       Math.clampMin(Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"), 1));
   }
-  totalMult = totalMult.timesEffectsOf(AlchemyResource.replication, Ra.unlocks.continuousTTBoost.effects.replicanti);
+  totalMult = totalMult.timesEffectsOf(AlchemyResource.replication);
 
   return totalMult;
 }
@@ -195,7 +198,7 @@ export function replicantiLoop(diff) {
 
   // Figure out how many ticks to calculate for and roll over any leftover time to the next tick. The rollover
   // calculation is skipped if there's more than 100 replicanti ticks per game tick to reduce round-off problems.
-  let tickCount = Decimal.divide(diff + player.replicanti.timer, interval);
+  let tickCount = Decimal.divide(new Decimal(diff).add(player.replicanti.timer), interval);
   if (tickCount.lt(100)) player.replicanti.timer = tickCount.minus(tickCount.floor()).times(interval).toNumber();
   else player.replicanti.timer = 0;
   tickCount = tickCount.floor();
@@ -394,7 +397,7 @@ export const ReplicantiUpgrade = {
     set value(value) { player.replicanti.interval = value; }
 
     get nextValue() {
-      return Math.max(this.value * 0.9, this.cap);
+      return Decimal.max(this.value.times(0.9), this.cap);
     }
 
     get cost() {
@@ -411,7 +414,7 @@ export const ReplicantiUpgrade = {
     }
 
     get isCapped() {
-      return this.value <= this.cap;
+      return this.value.lte(this.cap);
     }
 
     get autobuyerMilestone() {
@@ -419,7 +422,7 @@ export const ReplicantiUpgrade = {
     }
 
     applyModifiers(value) {
-      return getReplicantiInterval(undefined, value);
+      return getReplicantiInterval(undefined, new Decimal(value));
     }
   }(),
   galaxies: new class ReplicantiGalaxiesUpgrade extends ReplicantiUpgradeState {
@@ -534,7 +537,7 @@ export const Replicanti = {
       timer: 0,
       chance: 0.01,
       chanceCost: DC.E150,
-      interval: 1000,
+      interval: DC.E3,
       intervalCost: DC.E140,
       boughtGalaxyCap: 0,
       galaxies: 0,

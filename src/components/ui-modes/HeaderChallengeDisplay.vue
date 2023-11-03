@@ -89,13 +89,19 @@ export default {
     isInFailableEC() {
       return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
     },
+    isCorrupted(){
+      return player.mending.corruptionChallenge.corruptedMend;
+    },
     challengeDisplay() {
       if (this.inPelle && this.activeChallengeNames.length > 0) {
         return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;
       }
       if (this.inPelle) return "a Doomed Reality. Good luck.";
+      if (this.isCorrupted){
+        return this.activeChallengeNames.length > 0 ? `${this.activeChallengeNames.join(" + ")} in a Corrupted Multiverse.` : "a Corrupted Multiverse (no active challenges)."
+      };
       if (this.activeChallengeNames.length === 0) {
-        return PlayerProgress.mendingUnlocked() ? "a Mended Multiverse (no active challenges)": "the Antimatter Universe (no active challenges)";
+        return PlayerProgress.mendingUnlocked() ? "a Mended Multiverse (no active challenges).": "the Antimatter Universe (no active challenges).";
       }
       return this.activeChallengeNames.join(" + ");
     },

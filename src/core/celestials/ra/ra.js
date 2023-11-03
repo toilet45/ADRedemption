@@ -139,6 +139,7 @@ class RaPetState extends GameMechanicState {
   }
 
   get hasRemembrance() {
+    if (Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked) return true;
     return Ra.petWithRemembrance === this.name;
   }
 
@@ -223,7 +224,15 @@ class RaPetState extends GameMechanicState {
   }
 
   reset() {
-    this.data.level = 1;
+    let x = MendingMilestone.ten.isReached ? 10 : 1;
+    //this.data.level = 1;
+    Ra.pets.teresa.level = x;
+    Ra.pets.effarig.level = x;
+    Ra.pets.enslaved.level = x;
+    Ra.pets.v.level = x;
+    Ra.pets.ra.level = 1;
+    Ra.pets.laitela.level = 1;
+    Ra.pets.pelle.level = 1;
     this.data.memories = 0;
     this.data.memoryChunks = 0;
     this.data.memoryUpgrades = 0;
@@ -239,11 +248,18 @@ const pets = mapGameDataToObject(
 export const Ra = {
   displayName: "Ra",
   possessiveName: "Ra's",
+  alchauto: 0,
   unlocks,
   pets,
   remembrance: {
-    multiplier: 5,
-    nerf: 0.5,
+    get multiplier(){
+      if(Ra.unlocks.remembranceBoost.isUnlocked) return 75; 
+      return 5;
+    },
+    get nerf(){
+      if(Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked) return 1; 
+      return 0.5;
+    },
     requiredLevels: 20,
     get isUnlocked() {
       return Ra.totalPetLevel >= this.requiredLevels;
@@ -259,7 +275,7 @@ export const Ra = {
     data.disCharge = false;
     data.breakCharged = new Set();
     data.breakDischarge = false;
-    data.peakGamespeed = 1;
+    data.peakGamespeed = new Decimal(1);
     for (const pet of Ra.pets.all) pet.reset();
   },
   memoryTick(realDiff, generateChunks) {
@@ -281,7 +297,7 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
-    if (MendingMilestone.one.isReached) boostList.push("1 Mend Milestone");
+    if (MendingMilestone.one.isReached) boostList.push("Mending Milestone 1");
     if (MendingUpgrade(15).isBought) boostList.push("Mending Upgrade 15");
 
     if (boostList.length === 1) return `${boostList[0]}`;
@@ -291,10 +307,17 @@ export const Ra = {
   // This is the exp required ON "level" in order to reach "level + 1"
   requiredMemoriesForLevel(level) {
     if (level >= Ra.levelCap) return Infinity;
+    let perMemScaling = 1
+    if (level >= 30) perMemScaling += 0.1 //1.1
+    if (level >= 40) perMemScaling += 0.15 //1.25
+    if (level >= 50) perMemScaling += 0.2 //1.45
+    if (level >= 65) perMemScaling += 0.25 //1.7
+    if (level >= 75) perMemScaling += 0.3 //2
+    if (level >= 90) perMemScaling += 0.35 //2.35
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
-    const post40Scaling = Math.pow(3, Math.max(0, level-40));
-    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * post40Scaling * 1e6);
+    const post25Scaling = Math.pow(3, Math.max(0, level-25));
+    return Math.floor(Math.pow(Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6, perMemScaling));
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
@@ -317,7 +340,7 @@ export const Ra = {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
   },
   get levelCap() {
-    return MendingUpgrade(19).isBought?100:25;
+    return MendingUpgrade(19).isBought ? 100 : 25;
   },
   get maxTotalPetLevel() {
     return this.levelCap * this.pets.all.length;
@@ -351,7 +374,7 @@ export const Ra = {
   // It also includes the 1% IP time study, Teresa's 1% EP upgrade, and the charged RM generation upgrade. Note that
   // removing the hardcap of 10 may cause runaways.
   theoremBoostFactor() {
-    return Math.min(10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
+    return Math.min(1000, Math.max(0, Currency.timeTheorems.value.pLog10() - 850) / 500 + 10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);
   },
   get isUnlocked() {
     return V.spaceTheorems >= 36;
@@ -397,12 +420,20 @@ export const Ra = {
     }
     this.updateAlchemyFlow(realityRealTime);
   },
+  applyAlchemyReactionsAuto() {
+    if (!Ra.unlocks.effarigUnlock.canBeApplied) return;
+    Ra.alchauto += 1
+    if (Ra.alchauto >= 15) {
+      Ra.alchauto -= 15
+      Ra.applyAlchemyReactions(1000)
+    }
+  },
   get alchemyResourceCap() {
-    return 25000;//Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
+    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;
-    return Math.clampMax(1 + 0.005 * hoursFromUnlock, AlchemyResource.momentum.effectValue);
+    return Decimal.clampMax(hoursFromUnlock.times(0.005).add(1), AlchemyResource.momentum.effectValue).toNumber();
   },
   get continuumActive() {
     return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;

@@ -142,10 +142,11 @@ export default {
     // however; it looks better in-game if we just format it as Infinity instead, as the resource used for these costs
     // is itself hardcapped at e308 and we specifically want to format here (and nowhere else) as Infinity.
     formatDMCost(cost) {
-      return cost.gt(Number.MAX_VALUE) ? Notations.current.infinite : format(cost, 2);
+      return cost.gt(new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1)) ? Notations.current.infinite : format(cost, 2);
     },
     dimensionProduction(tier) {
-      if (tier === 4) return SingularityMilestone.dim4Generation.effectOrDefault(0);
+      if (tier === 8) return 0
+      if (tier === 4 && Ra.pets.laitela.level < 25) return SingularityMilestone.dim4Generation.effectOrDefault(0);
       const prodDim = DarkMatterDimension(tier + 1);
       return prodDim.amount.times(prodDim.powerDM).divide(prodDim.interval).times(1000);
     },

@@ -79,6 +79,7 @@ export const tabs = [
     name: "Statistics",
     hideAt: 1.7,
     id: 2,
+    //condition: () => false,
     hidable: true,
     subtabs: [
       {
@@ -508,26 +509,26 @@ export const tabs = [
       },
       {
         key: "warpreality",
-        name: "Warp Reality [NYI]",
+        name: "Warp Reality",
         symbol: "Ϟ",
         component: "WarpReality",
         id: 2,
         hidable: true,
       },
-      /*{
+      {
         key: "corruption",
-        name: "Dilation 2 [NYI]",
-        symbol: "?",
-        component: "Courrption",
-        id: 9999999999,
+        name: "Corruption",
+        symbol: `<i class="fa-solid fa-biohazard"></i>`,
+        component: "CorruptionTab",
+        id: 3,
         hidable: true,
-      },*/
+      },
       {
         key: "kohlerrealm",
         name: "Kohler's Realm [NYI]",
         symbol: "<i class='fa-solid fa-staff-snake'></i>",
         component: "KohlersRealm",
-        id: 3,
+        id: 4,
         hidable: true,
       },
     ]
@@ -537,7 +538,7 @@ export const tabs = [
     name: "Shop",
     ModernUIClass: "shop",
     hideAt: 1.5,
-    condition: () => true,
+    condition: () => false,
     id: 11,
     hidable: true,
     subtabs: [

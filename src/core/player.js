@@ -137,6 +137,14 @@ window.player = {
       isUnlocked: false,
       isActive: false,
     },
+    nrru: {
+      isUnlocked: false,
+      isActive: false,
+    },
+    nriu: {
+      isUnlocked: false,
+      isActive: false,
+    },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({
         isUnlocked: false,
@@ -234,7 +242,7 @@ window.player = {
         isActive: false,
       },
       laitela: {
-        upgrades: Array.range(0, 3).map(() => ({
+        upgrades: Array.range(0, 7).map(() => ({
           isActive: true,
         })),
         isActive: false,
@@ -346,7 +354,8 @@ window.player = {
       slowestBH: 1,
     },
     mending:{
-      isEnd: false
+      isEnd: false,
+      mmeleven: 8
     },
     permanent: {
       emojiGalaxies: 0,
@@ -356,35 +365,35 @@ window.player = {
   },
   records: {
     gameCreatedTime: Date.now(),
-    totalTimePlayed: 0,
-    timePlayedAtBHUnlock: Number.MAX_VALUE,
+    totalTimePlayed: DC.D0,
+    timePlayedAtBHUnlock: DC.D0,
     realTimePlayed: 0,
     realTimeDoomed: 0,
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [Number.MAX_VALUE, Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
-      lastBuyTime: 0,
+      lastBuyTime: DC.D0,
       maxAM: DC.D0,
       bestIPmin: DC.D0,
       bestIPminVal: DC.D0,
     },
     bestInfinity: {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
     },
     thisEternity: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -394,12 +403,12 @@ window.player = {
       bestInfinitiesPerMs: DC.D0,
     },
     bestEternity: {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
     thisReality: {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -407,11 +416,11 @@ window.player = {
       bestEternitiesPerMs: DC.D0,
       maxReplicanti: DC.D0,
       maxDT: DC.D0,
-      bestRSmin: 0,
-      bestRSminVal: 0,
+      bestRSmin: DC.D0,
+      bestRSminVal: DC.D0,
     },
     bestReality: {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -427,8 +436,8 @@ window.player = {
       laitelaSet: [],
     },
     thisMend: {
-      time: Number.MAX_VALUE,
-      realTime: Number.MAX_VALUE,
+      time: DC.D0,
+      realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
       maxEP: DC.D0,
@@ -437,7 +446,7 @@ window.player = {
       maxRem: 0,
     },
     bestMend: {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
     }
   },
@@ -460,7 +469,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 50,
+  version: 54,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -471,10 +480,17 @@ window.player = {
   totalTickGained: 0,
   totalTickBought: 0,
   mends: DC.D0,
+  corruptedFragments: DC.D0,
   mending:{
     upgradeBits: 0,
+    warpUpgradeBits: 0,
+    corruptionUpgradeBits: 0,
+    corruptionUpgReqs: 0,
+    warpUpgReqs: 0,
     reqLock: {
       mending: 0,
+      warp: 0,
+      corruption: 0,
     },
     rebuyables: {
       1: 0,
@@ -482,13 +498,36 @@ window.player = {
       11: 0,
       16: 0,
     },
+    warpRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    corruptionRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
+    corruptedFragments: 0,
+    corruptionChallenge: {
+      corruptedMend: false,
+      records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordScore: 0,
+    },
+    spentCF: 0,
+    corruptNext: false,
   },
   replicanti: {
     unl: false,
     amount: DC.D0,
     chance: 0.01,
     chanceCost: DC.E150,
-    interval: 1000,
+    interval: DC.E3,
     intervalCost: DC.E140,
     boughtGalaxyCap: 0,
     galaxies: 0,
@@ -678,7 +717,7 @@ window.player = {
       lastRepeatedMachines: DC.D0
     },
     effarig: {
-      relicShards: 0,
+      relicShards: DC.D0,
       unlockBits: 0,
       run: false,
       quoteBits: 0,
@@ -692,7 +731,7 @@ window.player = {
     },
     enslaved: {
       isStoring: false,
-      stored: 0,
+      stored: DC.D0,
       isStoringReal: false,
       storedReal: 0,
       autoStoreReal: false,
@@ -797,15 +836,24 @@ window.player = {
       disCharge: false,
       breakCharged: new Set(),
       breakDischarge: false,
-      peakGamespeed: 1,
-      petWithRemembrance: ""
+      peakGamespeed: DC.D1,
+      petWithRemembrance: "",
+      upgradeBits: 0,
+      raPoints: DC.D0,
+      rebuyables: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
     },
     laitela: {
       darkMatter: DC.D0,
       maxDarkMatter: DC.D0,
       run: false,
       quoteBits: 0,
-      dimensions: Array.range(0, 4).map(() =>
+      dimensions: Array.range(0, 8).map(() =>
         ({
           amount: DC.D0,
           intervalUpgrades: 0,
@@ -1147,6 +1195,7 @@ export const Player = {
       case "mending":
         player.requirementChecks.mending = {
           noAM: true,
+          mmeleven: 8,
         }
       case "reality":
         player.requirementChecks.reality = {

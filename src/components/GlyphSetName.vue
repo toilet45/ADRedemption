@@ -86,6 +86,7 @@ export default {
     isDoomed: () => Pelle.isDoomed,
     setName() {
       this.sortGlyphList();
+      if (this.sortedGlyphs.filter(t => t.perc !== 0).length == 8) return "True Royal Flush"
       if (this.sortedGlyphs.length === 0) return "Void";
       if (this.sortedGlyphs.length === 1) return this.singletonName;
 

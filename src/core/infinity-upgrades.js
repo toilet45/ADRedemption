@@ -85,7 +85,6 @@ export function totalIPMult() {
     return DC.D1;
   }
   let ipMult = DC.D1
-    .times(ShopPurchase.IPPurchases.currentMult)
     .timesEffectsOf(
       TimeStudy(41),
       TimeStudy(51),

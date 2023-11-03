@@ -378,7 +378,7 @@ export const TimeDimensions = {
 
   tick(diff) {
     for (let tier = 8; tier > 1; tier--) {
-      TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), diff / 10);
+      TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), new Decimal(diff).div(10));
     }
 
     if (EternityChallenge(7).isRunning) {
@@ -388,7 +388,7 @@ export const TimeDimensions = {
     }
 
     EternityChallenge(7).reward.applyEffect(production => {
-      InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(diff / 1000));
+      InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(new Decimal(diff).div(1000)));
     });
   }
 };

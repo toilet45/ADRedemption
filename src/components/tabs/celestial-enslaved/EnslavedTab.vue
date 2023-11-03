@@ -20,7 +20,7 @@ export default {
     hasAutoRelease: false,
     isRunning: false,
     completed: false,
-    storedBlackHole: 0,
+    storedBlackHole: new Decimal(0),
     storedReal: 0,
     storedRealEffiency: 0,
     storedRealCap: 0,
@@ -119,7 +119,7 @@ export default {
   methods: {
     update() {
       this.isStoringBlackHole = Enslaved.isStoringGameTime;
-      this.storedBlackHole = player.celestials.enslaved.stored;
+      this.storedBlackHole.copyFrom(new Decimal(player.celestials.enslaved.stored));
       this.isStoringReal = Enslaved.isStoringRealTime;
       this.autoStoreReal = player.celestials.enslaved.autoStoreReal;
       this.offlineEnabled = player.options.offlineProgress;
@@ -141,7 +141,7 @@ export default {
       this.canChangeStoreRealTime = Enslaved.canModifyRealTimeStorage;
       this.canDischarge = Enslaved.canRelease(false);
       this.canAutoRelease = Enslaved.canRelease(true);
-      this.hasNoCharge = player.celestials.enslaved.stored === 0;
+      this.hasNoCharge = this.storedBlackHole.eq(0);
       this.hasReachedCurrentCap = this.storedReal === this.storedRealCap;
     },
     toggleStoreBlackHole() {

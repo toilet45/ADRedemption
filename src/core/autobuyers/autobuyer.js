@@ -89,19 +89,34 @@ export class AutobuyerState {
  */
 export class IntervaledAutobuyerState extends AutobuyerState {
   get interval() {
+    if (this.data.interval instanceof Decimal) {
+      this.data.interval = this.data.interval.toNumber()
+    }
     return this.data.interval;
   }
 
   get canTick() {
+    if (this.timeSinceLastTick instanceof Decimal) {
+      throw new Error("mfw timeSinceLastTick is decimal?")
+    }
+    if (this.interval instanceof Decimal) {
+      throw new Error("mfw interval is decimal?")
+    }
     return super.canTick && this.timeSinceLastTick >= this.interval;
   }
 
   get timeSinceLastTick() {
+    if (this.data.lastTick instanceof Decimal) {
+      throw new Error("mfw lastTick is decimal?")
+    }
     return player.records.realTimePlayed - this.data.lastTick;
   }
 
   tick() {
     this.data.lastTick = player.records.realTimePlayed;
+    if (this.data.lastTick instanceof Decimal) {
+      throw new Error("mfw realTimePlayed is decimal?")
+    }
   }
 
   /**

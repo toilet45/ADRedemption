@@ -2,13 +2,15 @@
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import RaPet from "./RaPet";
 import RaPetRemembranceButton from "./RaPetRemembranceButton";
+import RaUpgradeButton from "./RaUpgradeButton.vue";
 
 export default {
   name: "RaTab",
   components: {
     RaPet,
     RaPetRemembranceButton,
-    CelestialQuoteHistory
+    CelestialQuoteHistory,
+    RaUpgradeButton,
   },
   data() {
     return {
@@ -24,6 +26,7 @@ export default {
       petWithRemembrance: "",
       isRunning: false,
       memoryBoosts: "",
+      shopUnlocked: false
     };
   },
   computed: {
@@ -66,8 +69,8 @@ export default {
       },
       {
         pet: Ra.pets.laitela,
-        scalingUpgradeVisible: () => false,
-        scalingUpgradeText: () => ""
+        scalingUpgradeVisible: () => true,
+        scalingUpgradeText: () => `Dark Matter cap multiplied by ${formatX(new Decimal(1e10).pow(Ra.pets.laitela.level))}`
       },
       {
         pet: Ra.pets.pelle,
@@ -99,8 +102,32 @@ export default {
     },
     isDoomed: () => Pelle.isDoomed,
     dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
+    upgrades: () => RaUpgrades.all,
+    costScalingTooltip: () => `Cost Scaling is NYI`,
+    possibleTooltip: () => `Striped upgrades are Not Yet Implemented [NYI].`,
+    lockTooltip: () => `This will only function if you have not already failed the condition or
+      unlocked the upgrade.`,
+    grid: () => [],
+    classObject() {
+      return {
+        "o-warp-btn": true,
+        "o-warp-btn--color-2": true,
+        "o-warp-btn--available": this.canWarp,
+        "o-warp-btn--unavailable": !this.canWarp,
+        "o-warp-btn--unclickable": this.warped,
+      };
+    },
+    tooltip() {
+      return undefined
+    },
+    totalUpgFunc() {
+     return WarpUpgrades.all.countWhere(u => u.isBought);
+    },
   },
   methods: {
+    id(row, column) {
+      return (row - 1) * 5 + column - 1;
+    },
     update() {
       this.memoriesPerChunk = Ra.productionPerMemoryChunk;
       this.isRaCapped = MendingUpgrade(19).isBought?RaPetRemembranceButton.totalPetLevel === 700 : Ra.totalPetLevel === 100;
@@ -113,6 +140,7 @@ export default {
       this.petWithRemembrance = Ra.petWithRemembrance;
       this.isRunning = Ra.isRunning;
       this.memoryBoosts = Ra.memoryBoostResources;
+      this.shopUnlocked = Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -209,6 +237,29 @@ export default {
           (you need {{ formatInt(remembranceReq - totalLevels) }} more)
         </div>
       </div>
+    </div>
+    <div v-if="shopUnlocked">
+    <div class="c-mending-upgrade-infotext">
+      Stripped Upgrades (or ones that cost 1e300 RaP) are not yet implemented.
+      <br>
+      You can shift-click upgrades with <i class="fas fa-lock-open" /> to make the game prevent you
+      from doing anything this Reality which would cause you to fail their unlock condition.
+      <span :ach-tooltip="lockTooltip">
+        <i class="fas fa-question-circle" />
+      </span>
+      <br>
+    </div>
+    <div
+      v-for="row in 5"
+      :key="row"
+      class="l-mending-upgrade-grid__row"
+    >
+      <RaUpgradeButton
+        v-for="column in 5"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+      />
+    </div>
     </div>
   </div>
 </template>

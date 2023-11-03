@@ -7,7 +7,7 @@ import { DimensionState } from "../../dimensions/dimension";
 
 const INTERVAL_COST_MULT = 5;
 const POWER_DM_COST_MULT = 10;
-const POWER_DE_COST_MULTS = [1.65, 1.6, 1.55, 1.5];
+const POWER_DE_COST_MULTS = [1.65, 1.6, 1.55, 1.5, 1.45, 1.4, 1.35, 1.3];
 
 const INTERVAL_START_COST = 10;
 const POWER_DM_START_COST = 10;
@@ -31,12 +31,15 @@ export class DarkMatterDimensionState extends DimensionState {
 
   get unlockUpgrade() {
     // The 15th Imaginary Upgrade unlocked Laitela and the 1st DMD
-    return ImaginaryUpgrade(this.tier + 14);
+      return ImaginaryUpgrade(this.tier + 14);
   }
 
   get isUnlocked() {
+    if (this.tier < 5) {
     return this.unlockUpgrade.isBought;
   }
+  return ((Ra.pets.laitela.level / 25) >= (this.tier - 4))
+}
 
   get ascensions() {
     return this.data.ascensionCount;
@@ -108,9 +111,8 @@ export class DarkMatterDimensionState extends DimensionState {
   }
 
   get adjustedStartingCost() {
-    const tiers = [null, 0, 2, 5, 13];
-    return 10 * Math.pow(COST_MULT_PER_TIER, tiers[this.tier]) *
-      SingularityMilestone.darkDimensionCostReduction.effectOrDefault(1);
+    const tiers = [null, 0, 2, 5, 13, 34, 89, 233, 610];
+    return new Decimal(10).times(Decimal.pow(COST_MULT_PER_TIER, tiers[this.tier]).times(SingularityMilestone.darkDimensionCostReduction.effectOrDefault(1)));
   }
 
   get rawIntervalCost() {
@@ -221,7 +223,7 @@ export class DarkMatterDimensionState extends DimensionState {
     while (this.buyInterval());
   }
 
-  static get dimensionCount() { return 4; }
+  static get dimensionCount() { return 8; }
 
   reset() {
     this.data.amount = DC.D1;
@@ -248,7 +250,7 @@ export const DarkMatterDimensions = {
 
   tick(realDiff) {
     if (!Laitela.isUnlocked) return;
-    for (let tier = 4; tier >= 1; tier--) {
+    for (let tier = 8; tier >= 1; tier--) {
       const dim = DarkMatterDimension(tier);
       if (!dim.isUnlocked) continue;
       dim.timeSinceLastUpdate += realDiff;

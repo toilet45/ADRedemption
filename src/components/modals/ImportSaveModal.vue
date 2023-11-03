@@ -54,6 +54,9 @@ export default {
     inputIsValidSave() {
       return this.player !== undefined;
     },
+    inputIsDev() {
+      return this.player.version == 51.007 && false
+    },
     inputIsSecret() {
       return isSecretImport(this.input) || Theme.isSecretTheme(this.input);
     },
@@ -162,35 +165,40 @@ export default {
         ???
       </div>
       <template v-else-if="inputIsValidSave">
-        <div v-if="fileName">
-          File name: {{ fileName }}
-        </div>
-        <div>Antimatter: {{ formatPostBreak(antimatter, 2, 1) }}</div>
-        <div v-if="progress.isInfinityUnlocked">
-          Infinities: {{ formatPostBreak(infinities, 2) }}
-        </div>
-        <div v-if="progress.isEternityUnlocked">
-          Eternities: {{ formatPostBreak(player.eternities, 2) }}
-        </div>
-        <div v-if="progress.isRealityUnlocked">
-          Realities: {{ formatPostBreak(player.realities, 2) }}
-        </div>
-        <div v-if="progress.hasFullCompletion">
-          Full game completions: {{ formatInt(player.records.fullGameCompletions) }}
-        </div>
-        <div class="c-modal-import__warning">
-          (Your current save file will be overwritten!)
-        </div>
-        <br>
-        <div>
-          {{ lastOpened }}
-          <div
-            class="o-primary-btn"
-            @click="changeOfflineSetting"
-          >
-            Offline Progress: {{ offlineType }}
+        <template v-if="!inputIsDev">
+          <div v-if="fileName">
+            File name: {{ fileName }}
           </div>
-          <span v-html="offlineDetails" />
+          <div>Antimatter: {{ formatPostBreak(antimatter, 2, 1) }}</div>
+          <div v-if="progress.isInfinityUnlocked">
+            Infinities: {{ formatPostBreak(infinities, 2) }}
+          </div>
+          <div v-if="progress.isEternityUnlocked">
+            Eternities: {{ formatPostBreak(player.eternities, 2) }}
+          </div>
+          <div v-if="progress.isRealityUnlocked">
+            Realities: {{ formatPostBreak(player.realities, 2) }}
+          </div>
+          <div v-if="progress.hasFullCompletion">
+            Full game completions: {{ formatInt(player.records.fullGameCompletions) }}
+         </div>
+          <div class="c-modal-import__warning">
+            (Your current save file will be overwritten!)
+          </div>
+          <br>
+          <div>
+            {{ lastOpened }}
+            <div
+              class="o-primary-btn"
+              @click="changeOfflineSetting"
+            >
+              Offline Progress: {{ offlineType }}
+            </div>
+            <span v-html="offlineDetails" />
+          </div>
+        </template>
+        <div v-else>
+          You cannot import development saves into the public game.
         </div>
       </template>
       <div v-else-if="hasInput">

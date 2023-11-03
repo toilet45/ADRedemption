@@ -16,7 +16,7 @@ export const gamespeed = {
 
       const avgSpeed = Enslaved.isAutoReleasing
         ? getGameSpeedupForDisplay()
-        : curr / currBH * avgBH;
+        : curr.div(currBH).times(avgBH);
       const avgString = ` (current) | ${formatX(avgSpeed, 2, 2)} (average)`;
       return `${formatX(curr, 2, 2)}${curr === avgSpeed ? "" : avgString}`;
     },
@@ -47,8 +47,8 @@ export const gamespeed = {
   },
   achievementMult: {
     name: "30 V-Achievement Milestone - Achievement Multiplier",
-    multValue: () => Math.pow(VUnlocks.achievementBH.effectOrDefault(1),
-      BlackHoles.list.countWhere(bh => bh.isUnlocked)),
+    multValue: () => Math.min(1e300, Math.pow(VUnlocks.achievementBH.effectOrDefault(1),
+      BlackHoles.list.countWhere(bh => bh.isUnlocked))),
     isActive: () => !BlackHoles.arePaused && VUnlocks.achievementBH.canBeApplied && !EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.ACHIEVEMENT,
   },

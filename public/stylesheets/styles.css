@@ -105,7 +105,7 @@ html {
   --color-laitela--base: white;
   --color-laitela--accent: black;
 
-  --color-pelle--base: crimson;
+  --color-pelle--base: #dc143c;
   --color-pelle--secondary: #00bcd4;
 
   /*Custom Stuff Starts Here*/
@@ -949,6 +949,103 @@ button:focus {
   background-color: var(--color-bad);
 }
 
+.syn-reality-button {
+  width: 100%;
+  height: 100%;
+  font-family: Typewriter;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: var(--color-background);
+  border-style: solid;
+  border-width: var(--var-border-width, 0rem);
+  border-radius: var(--var-border-radius, 0rem);
+  transition-duration: 0.2s;
+}
+
+.syn-reality-button--unlocked {
+  color: var(--color-reality-dark);
+  border-color: var(--color-reality-dark);
+  cursor: pointer;
+}
+
+.syn-reality-button--locked {
+  color: #181818;
+  background-color: var(--color-glyph-sac-text-input--focused);
+  border-color: var(--color-bad);
+}
+
+.t-s6 .syn-reality-button--locked,
+.t-s10 .syn-reality-button--locked {
+  color: grey;
+}
+
+.syn-reality-button--unlocked:hover,
+.syn-reality-button--unlocked.force-hover {
+  color: black;
+  background: var(--color-reality);
+}
+
+.syn-reality-button--locked:hover {
+  color: #1d1d1d;
+  background-color: var(--color-bad);
+}
+
+.syn-infinity-button--unlocked {
+  color: var(--color-infinity);
+  border-color: var(--color-infinity);
+  cursor: pointer;
+}
+
+.syn-infinity-button--locked {
+  color: #181818;
+  background-color: var(--color-glyph-sac-text-input--focused);
+  border-color: var(--color-bad);
+}
+
+.t-s6 .syn-infinity-button--locked,
+.t-s10 .syn-infinity-button--locked {
+  color: grey;
+}
+
+.syn-infinity-button--unlocked:hover,
+.syn-infinity-button--unlocked.force-hover {
+  color: black;
+  background: var(--color-infinity);
+}
+
+.syn-infinity-button--locked:hover {
+  color: #1d1d1d;
+  background-color: var(--color-bad);
+}
+
+.syn-eternity-button--unlocked {
+  color: var(--color-eternity);
+  border-color: var(--color-eternity);
+  cursor: pointer;
+}
+
+.syn-eternity-button--locked {
+  color: #181818;
+  background-color: var(--color-glyph-sac-text-input--focused);
+  border-color: var(--color-bad);
+}
+
+.t-s6 .syn-eternity-button--locked,
+.t-s10 .syn-eternity-button--locked {
+  color: grey;
+}
+
+.syn-eternity-button--unlocked:hover,
+.syn-eternity-button--unlocked.force-hover {
+  color: black;
+  background: var(--color-eternity);
+}
+
+.syn-eternity-button--locked:hover {
+  color: #1d1d1d;
+  background-color: var(--color-bad);
+}
+
 .l-reset-reality-button {
   display: block;
   width: 100%;
@@ -1006,6 +1103,12 @@ button:focus {
 
 .l-reality-amplify-button--clickable {
   cursor: pointer;
+}
+
+.syn-button-size {
+  width: 3rem;
+  height: 3rem;
+  margin-left:2px;
 }
 
 [draggable] {
@@ -6052,6 +6155,10 @@ kbd {
   cursor: pointer;
 }
 
+.c-corrupt-run-button--clickable {
+  cursor: pointer;
+}
+
 @keyframes a-teresa-run-button__icon--glow {
   0% { text-shadow: 0.1rem 0.1rem 0.3rem; }
   50% { text-shadow: 0.1rem 0.1rem 0.8rem; }
@@ -9243,6 +9350,15 @@ input.o-automator-block-input {
   background: var(--color-celestials);
 }
 
+.c-hide-modal-tab-button--mending {
+  color: var(--color-mending);
+  border-color: var(--color-mending);
+}
+
+.c-hide-modal-tab-button--mending:hover {
+  background: var(--color-mending);
+}
+
 /* Prevent any themes overriding font awesome */
 .fa,
 .far,
@@ -9987,3 +10103,136 @@ input.o-automator-block-input {
 .o-warp-btn--unclickable {
   cursor: auto;
 }
+
+.flex {
+  display: flex;
+}
+
+/* #region Corruption tab */
+.l-corrupt-celestial-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l-mechanics-container {
+  display: flex;
+  justify-content: center;
+}
+
+.l-corrupt-mechanic-container {
+  min-width: 40rem;
+}
+
+.c-corrupt-unlock-description--hover-area {
+  display: flex;
+  width: 100%;
+  height: 3rem;
+  position: absolute;
+  align-items: center;
+}
+
+.c-corrupt-unlock-description {
+  width: 14rem;
+  font-size: 1rem;
+  color: var(--color-teresa--base);
+  background-color: var(--color-teresa--accent);
+  border: 0.1rem solid var(--color-teresa--base);
+}
+
+.c-corrupt-unlock-description--unlocked {
+  color: var(--color-pelle--accent);
+  background-color: var(--color-pelle--base);
+}
+
+.c-corrupt-unlock {
+  width: 20rem;
+  font-weight: bold;
+  color: var(--color-pelle--accent);
+  background-color: var(--color-pelle--base);
+  border: none;
+  border-radius: var(--var-border-radius, 0.5rem);
+  margin: 0 10rem 1rem;
+  padding: 1rem;
+  transition-duration: 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.c-corrupt-run-button {
+  font-weight: bold;
+  color: var(--color-pelle--base);
+  background-color: var(--color-pelle--accent);
+  border: var(--var-border-width, 0.2rem) solid var(--color-pelle--base);
+}
+
+.c-corrupt-run-button__icon {
+  width: 12rem;
+  height: 12rem;
+  align-items: center;
+  font-size: 7rem;
+  font-weight: bold;
+  color: var(--color-pelle--base);
+  text-shadow: 0.1rem 0.1rem 0.5rem;
+  background-color: var(--color-pelle--accent);
+  border: var(--var-border-width, 0.4rem) solid var(--color-pelle--base);
+  border-radius: 50%;
+  margin: 1.5rem auto;
+  transition-duration: 0.2s;
+  animation: a-corrupt-run-button__icon--glow 3s infinite;
+}
+
+.c-corrupt-run-button__icon:hover {
+  color: var(--color-pelle--accent);
+  background-color: var(--color-pelle--base);
+}
+
+.c-corrupt-run-button__icon--running {
+  color: var(--color-corrupt--accent);
+  background-color: var(--color-corrupt--base);
+  border-color: var(--color-corrupt--accent);
+  animation: a-corrupt-run-button__icon--super-glow 1.2s infinite, a-corrupt-run-button__icon--spin 5s infinite;
+}
+
+@keyframes a-corrupt-run-button__icon--glow {
+  0% { text-shadow: 0.1rem 0.1rem 0.3rem; }
+  50% { text-shadow: 0.1rem 0.1rem 0.8rem; }
+  100% { text-shadow: 0.1rem 0.1rem 0.3rem; }
+}
+
+@keyframes a-corrupt-run-button__icon--super-glow {
+  0% {
+    text-shadow: 0.1rem 0.1rem 0.3rem;
+    box-shadow: 0 0 0.3rem var(--color-pelle--base);
+  }
+
+  50% {
+    text-shadow: 0.1rem 0.1rem 0.9rem;
+    box-shadow: 0 0 1rem var(--color-pelle--base);
+  }
+
+  100% {
+    text-shadow: 0.1rem 0.1rem 0.3rem;
+    box-shadow: 0 0 0.3rem var(--color-pelle--base);
+  }
+}
+
+@keyframes a-corrupt-run-button__icon--spin {
+  0% { transform: rotate(61deg); }
+  10% { transform: rotate(322deg); }
+  20% { transform: rotate(235deg); }
+  30% { transform: rotate(222deg); }
+  40% { transform: rotate(105deg); }
+  50% { transform: rotate(33deg); }
+  60% { transform: rotate(103deg); }
+  70% { transform: rotate(158deg); }
+  80% { transform: rotate(41deg); }
+  90% { transform: rotate(73deg); }
+  100% { transform: rotate(61deg); }
+}
+
+.s-base--metro .c-corrupt-unlock {
+  border-width: 0.1rem;
+}
+
+/* #endregion Corrupt tab */

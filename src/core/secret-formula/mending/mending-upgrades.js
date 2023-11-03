@@ -34,7 +34,7 @@ export const mendingUpgrades = [
     name: "Mending Upgrade 1",
     initialCost: 10,
     costMult: 9,
-    textTemplate: "Multiply Multiversal Remain gain by 3.",
+    textTemplate: "Multiply Multiversal Remain gain by {value}.",
     effect: 3,
     effectType: "×"
   }),
@@ -68,7 +68,7 @@ export const mendingUpgrades = [
     name: "Mending Upgrade 6",
     initialCost: 2000,
     costMult: 50,
-    textTemplate: "Delay post-Lv. 45,000 Glyph scaling by 500",
+    textTemplate: "Delay post-Lv. 45,000 Glyph scaling by {value}",
     effect: 500,
     effectType: "+"
   }),
@@ -101,7 +101,7 @@ export const mendingUpgrades = [
     name: "Mending Upgrade 11",
     initialCost: 1e6,
     costMult: 1e4,
-    textTemplate: "Weaken the post 50,000 TG scailing by 0.005",
+    textTemplate: "Weaken the post 50,000 TG scailing by {value}",
     effect: 0.005,
     effectType: "-"
   }),
@@ -131,10 +131,10 @@ export const mendingUpgrades = [
   },
   rebuyable({
     id: 16,
-    name: "Mending Upgrade 16",
+    name: "Per Aspera Ad Astra",
     initialCost: 1e9,
     costMult: 1e6,
-    textTemplate: `Delay Obscure Galaxy Scaling by 5,000.`,
+    textTemplate: `Delay Obscure Galaxy Scaling by {value}.`,
     effect: 5000,
     effectType: "+"
   }),

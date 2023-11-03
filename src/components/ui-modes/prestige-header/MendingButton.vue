@@ -12,7 +12,8 @@ export default {
             canMend: false,
             firstMend: true,
             END: DC.END,
-            needDoom: true
+            needDoom: true,
+            isCorrupted: false,
         };
     },
     computed: {
@@ -29,6 +30,7 @@ export default {
             this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
+            this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
         },
         mend() {
             mendingResetRequest();
@@ -52,6 +54,9 @@ export default {
     </template>
     <template v-else-if="!canMend">
       Reach <span>{{ formatNE(END, 2, 2) }}</span> antimatter to Mend the Multiverse
+    </template>
+    <template v-else-if="isCorrupted">
+      Uncorrupt the Multiverse for x Corrupted Fragments
     </template>
     <template v-else>
       Mend the Multiverse for

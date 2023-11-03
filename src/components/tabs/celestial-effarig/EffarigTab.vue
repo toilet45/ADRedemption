@@ -2,6 +2,7 @@
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import EffarigRunUnlockReward from "./EffarigRunUnlockReward";
 import EffarigUnlockButton from "./EffarigUnlockButton";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "EffarigTab",
@@ -12,19 +13,20 @@ export default {
   },
   data() {
     return {
-      relicShards: 0,
+      relicShards: new Decimal(0),
       shardRarityBoost: 0,
       shardPower: 0,
-      shardsGained: 0,
-      currentShardsRate: 0,
+      shardsGained: new Decimal(0),
+      currentShardsRate: new Decimal(0),
       amplification: 0,
-      amplifiedShards: 0,
-      amplifiedShardsRate: 0,
+      amplifiedShards: new Decimal(0),
+      amplifiedShardsRate: new Decimal(0),
       runUnlocked: false,
       quote: "",
       isRunning: false,
       vIsFlipped: false,
-      relicShardRarityAlwaysMax: false
+      relicShardRarityAlwaysMax: false,
+      mendVisible: false,
     };
   },
   computed: {
@@ -34,12 +36,10 @@ export default {
       EffarigUnlock.setSaves
     ],
     runUnlock: () => EffarigUnlock.run,
-    runUnlocks: () => [
-      EffarigUnlock.infinity,
-      EffarigUnlock.eternity,
-      EffarigUnlock.reality,
-      EffarigUnlock.mend
-    ],
+    runUnlocks: () => {
+      if (Ra.unlocks.effarigMendUnlock.isUnlocked) return [EffarigUnlock.infinity, EffarigUnlock.eternity, EffarigUnlock.reality, EffarigUnlock.mend];
+      return [EffarigUnlock.infinity, EffarigUnlock.eternity, EffarigUnlock.reality];
+    },
     symbol: () => GLYPH_SYMBOLS.effarig,
     runButtonOuterClass() {
       return {
@@ -70,19 +70,20 @@ export default {
   },
   methods: {
     update() {
-      this.relicShards = Currency.relicShards.value;
+      this.relicShards.copyFrom(Currency.relicShards.value);
       this.shardRarityBoost = Effarig.maxRarityBoost / 100;
       this.shardPower = Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.effectOrDefault(1);
-      this.shardsGained = Effarig.shardsGained;
-      this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
+      this.shardsGained.copyFrom(Effarig.shardsGained);
+      this.currentShardsRate = (this.shardsGained.div(Time.thisRealityRealTime.totalMinutes));
       this.amplification = simulatedRealityCount(false);
-      this.amplifiedShards = this.shardsGained * (1 + this.amplification);
-      this.amplifiedShardsRate = (this.amplifiedShards / Time.thisRealityRealTime.totalMinutes);
+      this.amplifiedShards = this.shardsGained.times(1 + this.amplification);
+      this.amplifiedShardsRate = (this.amplifiedShards.div(Time.thisRealityRealTime.totalMinutes));
       this.quote = Effarig.quote;
       this.runUnlocked = EffarigUnlock.run.isUnlocked;
       this.isRunning = Effarig.isRunning;
       this.vIsFlipped = V.isFlipped;
       this.relicShardRarityAlwaysMax = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied;
+      this.mendVisible = Ra.unlocks.effarigMendUnlock.isUnlocked;
     },
     startRun() {
       if (this.isDoomed) return;

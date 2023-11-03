@@ -248,7 +248,7 @@ export const singularityMilestones = {
     repeat: 0,
     limit: 1,
     description: "Game speed boosts Dark Matter and Dark Energy production",
-    effect: () => Math.clampMin(Math.log10(getGameSpeedupFactor() / 1e120) / 40, 1),
+    effect: () => Math.clampMin(Decimal.log10(getGameSpeedupFactor().div(1e120)) / 40, 1),
     effectFormat: x => formatX(x, 2, 2),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_LAITELA,
   },

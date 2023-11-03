@@ -179,6 +179,14 @@ Array.prototype.sum = function() {
 };
 
 /**
+ * @returns {Decimal}
+ */
+Array.prototype.sumD = function() {
+  if (this.length === 0) return new Decimal(0);
+  return this.reduce(Decimal.sumReducer);
+};
+
+/**
  * @returns {number}
  */
 Array.prototype.max = function() {

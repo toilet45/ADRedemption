@@ -26,6 +26,9 @@ export const MachineHandler = {
     // Increase base RM gain if <10 RM
     if (rmGain.gte(1) && rmGain.lt(10)) rmGain = new Decimal(27 / 4000 * log10FinalEP - 26);
     rmGain = rmGain.times(this.realityMachineMultiplier);
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      rmGain = rmGain.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    }
     return rmGain.floor();
   },
 

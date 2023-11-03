@@ -223,8 +223,22 @@ export const Tabs = (function() {
       Tab.options,
       Tab.shop
     ],
+    Synergism: [
+      Tab.dimensions,
+      Tab.automation,
+      Tab.achievements,
+      Tab.infinity,
+      Tab.challenges,
+      Tab.eternity,
+      Tab.reality,
+      Tab.celestials,
+      Tab.mending,
+      Tab.options,
+      Tab.statistics,
+      Tab.shop
+    ],
     get currentUIFormat() {
-      return ui.view.UIType == 'Modern' ? this.Modern : this.Classic;
+      return ui.view.UIType == 'Modern' ? this.Modern : ui.view.UIType == "Classic" ? this.Classic : this.Synergism;
     },
   };
 }());

@@ -14,6 +14,7 @@ import { pelleStrikes } from "./strikes";
 import { teresa } from "./teresa";
 import { quotes } from "./quotes";
 import { v } from "./v";
+import { raUpgrades } from "./ra-upgrades";
 
 export const celestials = {
   effarig: {
@@ -37,6 +38,7 @@ export const celestials = {
   },
   perkShop,
   ra,
+  raUpgrades,
   singularityMilestones,
   teresa,
   quotes,

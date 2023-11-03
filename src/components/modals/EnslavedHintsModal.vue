@@ -10,7 +10,7 @@ export default {
   },
   data() {
     return {
-      currentStored: 0,
+      currentStored: new Decimal(0),
       nextHintCost: 0,
       canGetHint: false,
       shownEntries: [],
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     update() {
-      this.currentStored = player.celestials.enslaved.stored;
+      this.currentStored.copyFrom(player.celestials.enslaved.stored);
       this.nextHintCost = Enslaved.nextHintCost;
       this.canGetHint = this.currentStored >= this.nextHintCost;
       this.shownEntries = [];

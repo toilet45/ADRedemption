@@ -340,8 +340,8 @@ export const normalAchievements = [
     get reward() {
       return `All Antimatter Dimensions are stronger in the first ${formatInt(3)} minutes of Infinities.`;
     },
-    effect: () => Math.max(6 / (Time.thisInfinity.totalMinutes + 3), 1),
-    effectCondition: () => Time.thisInfinity.totalMinutes < 3,
+    effect: () => Decimal.max(new Decimal(6).div(Time.thisInfinity.totalMinutes.add(3)), 1),
+    effectCondition: () => Time.thisInfinity.totalMinutes.lt(3),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
@@ -505,10 +505,10 @@ export const normalAchievements = [
     id: 76,
     name: "One for each dimension",
     get description() { return `Play for ${formatInt(8)} days.`; },
-    checkRequirement: () => Time.totalTimePlayed.totalDays >= 8,
+    checkRequirement: () => Time.totalTimePlayed.totalDays.gt(8),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     reward: "Extremely small multiplier to Antimatter Dimensions based on time played.",
-    effect: () => Math.max(Math.pow(Time.totalTimePlayed.totalDays / 2, 0.05), 1),
+    effect: () => Decimal.max(Decimal.pow(Time.totalTimePlayed.totalDays.div(2), 0.05), 1),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
@@ -592,7 +592,7 @@ export const normalAchievements = [
       give ${formatX(250)} more Infinities.`;
     },
     effect: 250,
-    effectCondition: () => Time.thisInfinity.totalSeconds > 5
+    effectCondition: () => Time.thisInfinity.totalSeconds.gt(5)
   },
   {
     id: 88,
@@ -621,8 +621,8 @@ export const normalAchievements = [
       return `All Antimatter Dimensions are significantly stronger in the
       first ${formatInt(5)} seconds of Infinities.`;
     },
-    effect: () => Math.max((5 - Time.thisInfinity.totalSeconds) * 60, 1),
-    effectCondition: () => Time.thisInfinity.totalSeconds < 5,
+    effect: () => Math.max((DC.D5.sub(Time.thisInfinity.totalSeconds)).times(60).max(0).toNumber(), 1),
+    effectCondition: () => Time.thisInfinity.totalSeconds.lt(5),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
@@ -637,8 +637,8 @@ export const normalAchievements = [
       return `All Antimatter Dimensions are significantly stronger in the
       first ${formatInt(60)} seconds of Infinities.`;
     },
-    effect: () => Math.max((1 - Time.thisInfinity.totalMinutes) * 100, 1),
-    effectCondition: () => Time.thisInfinity.totalMinutes < 1,
+    effect: () => Math.max((DC.D1.sub(Time.thisInfinity.totalMinutes)).times(100).max(0).toNumber(), 1),
+    effectCondition: () => Time.thisInfinity.totalMinutes.lt(1),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
@@ -888,8 +888,8 @@ export const normalAchievements = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     reward: "Infinity Point multiplier based on time spent this Infinity.",
     effect() {
-      const thisInfinity = Time.thisInfinity.totalSeconds * 10 + 1;
-      return DC.D2.pow(Math.log(thisInfinity) * Math.min(Math.pow(thisInfinity, 0.11), 500));
+      const thisInfinity = Time.thisInfinity.totalSeconds.times(10).add(1);
+      return DC.D2.pow((Decimal.min(Decimal.pow(thisInfinity, 0.11), 500)).times(Decimal.log(thisInfinity)));
     },
     cap: () => Effarig.eternityCap,
     formatEffect: value => `${formatX(value, 2, 2)}`
@@ -1136,7 +1136,7 @@ export const normalAchievements = [
     id: 155,
     name: "Achievement #15983",
     get description() { return `Play for ${formatFloat(13.7, 1)} billion years.`; },
-    checkRequirement: () => Time.totalTimePlayed.totalYears > 13.7e9,
+    checkRequirement: () => Time.totalTimePlayed.totalYears.gt(13.7e9),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward() { return `Black Hole durations are ${formatPercents(0.1)} longer.`; },
     effect: 1.1

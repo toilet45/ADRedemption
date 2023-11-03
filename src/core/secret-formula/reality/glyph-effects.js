@@ -140,7 +140,7 @@ export const glyphEffects = {
     alterationType: ALTERATION_TYPE.BOOST,
     combine: effects => {
       const prod = effects.reduce(Number.prodReducer, 1);
-      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3-Math.pow(0.7+(0.4 - Math.pow(0.4 - prod, 1.7)), 0.333), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
+      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3 - Math.pow(0.4 - prod, 3), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
     },
     enabledInDoomed: true,
   },
@@ -390,7 +390,10 @@ export const glyphEffects = {
     effect: (level, strength) => 1.015 + Math.pow(level, 0.2) * Math.pow(strength, 0.4) / 75,
     formatEffect: x => format(x, 3, 3),
     formatSingleEffect: x => format(x - 1, 3, 3),
-    combine: GlyphCombiner.addExponents,
+    combine: effects =>{
+      let a = effects.reduce(Number.sumReducer, 1 - effects.length);
+      return a > 0.6 ? (a-1)/6 + 1 : a
+    },
     conversion: x => 2 / (x + 1),
     formatSecondaryEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getAdditionColor("power"),

@@ -18,7 +18,7 @@ export default {
       pauseText: "",
       canCharge: false,
       isCharging: false,
-      storedTime: 0,
+      storedTime: new Decimal(0),
       canAutoRelease: false,
       isAutoReleasing: false,
     };
@@ -50,7 +50,7 @@ export default {
       this.pauseText = this.pauseButtonText();
       this.canCharge = Enslaved.isUnlocked;
       this.isCharging = Enslaved.isStoringGameTime;
-      this.storedTime = player.celestials.enslaved.stored;
+      this.storedTime.copyFrom(player.celestials.enslaved.stored);
       this.canAutoRelease = Ra.unlocks.autoPulseTime.canBeApplied;
       this.isAutoReleasing = player.celestials.enslaved.isAutoReleasing;
     },

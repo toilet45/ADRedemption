@@ -411,7 +411,7 @@ export const Glyphs = {
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
     const stillEquipped = player.reality.glyphs.active.length;
-    const fastReality = player.records.recentRealities[0][1] < 3000;
+    const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
     if (stillEquipped && !fastReality) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
       const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
@@ -458,7 +458,7 @@ export const Glyphs = {
     // for realities shorter than a few seconds in order to stop a UI-based softlock; however at this point the time
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
-    const fastReality = player.records.recentRealities[0][1] < 3000;
+    const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
     if (repeat < total && !fastReality) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
       const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
@@ -766,7 +766,7 @@ export const Glyphs = {
     }
   },
   get levelCap() {
-    return 1000000;
+    return 1000000000000;
   },
   get instabilityThreshold() {
     return 1000 + getAdjustedGlyphEffect("effarigglyph") + ImaginaryUpgrade(7).effectOrDefault(0);
@@ -776,10 +776,13 @@ export const Glyphs = {
   },
   get ultraInstabilityThreshold(){
     let effarigMemDelay = Ra.unlocks.harshInstabilityDelay.isUnlocked ? (500 * (Math.max(1, Math.floor(Ra.pets.effarig.level / 5) - 10))) : 0;
-    return 45000 + (500 * MendingUpgrade(6).boughtAmount) + effarigMemDelay;
+    return 45000 + (500 * MendingUpgrade(6).boughtAmount) + Ra.unlocks.harshInstabilityDelay.effectOrDefault(0);
+  },
+  get omegaInstabilityThreshold(){
+    return 100000
   },
   get hardcap(){
-    return 100000;
+    return 100000000;
   },
   clearUndo() {
     player.reality.glyphs.undo = [];

@@ -7,6 +7,7 @@ import { perks } from "./secret-formula/reality/perks";
 import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
+import { corruptionChallengeScoreCalculation } from "./secret-formula/mending/corruption";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -31,11 +32,11 @@ function askMendingConfirmation() {
 }
 
 export function mendingReset() {
+    Tab.dimensions.antimatter.show() // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
     Currency.mendingPoints.add(gainedMendingPoints());
     Currency.mends.add(1);
-    Tab.dimensions.antimatter.show();
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){
@@ -88,10 +89,10 @@ export function mendingReset() {
     if (MendingUpgrade(9).isBought){
       player.celestials.teresa.unlockBits += 1;
     }
-    player.celestials.effarig.relicShards = 0;
+    player.celestials.effarig.relicShards = new Decimal(0);
     player.celestials.effarig.unlockBits = 7;
     player.celestials.effarig.run = false;
-    player.celestials.enslaved.stored = 0;
+    player.celestials.enslaved.stored = DC.D0;
     player.celestials.enslaved.storedReal = 0;
     player.celestials.enslaved.isAutoReleasing = false;
     player.celestials.enslaved.unlocks = [];
@@ -179,7 +180,7 @@ export function mendingReset() {
     player.reality.glyphs.trash = 0;
     resetRealityRuns();
     player.records.thisReality = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -187,11 +188,11 @@ export function mendingReset() {
       bestEternitiesPerMs: DC.D0,
       maxReplicanti: DC.D0,
       maxDT: DC.D0,
-      bestRSmin: 0,
-      bestRSminVal: 0,
+      bestRSmin: DC.D0,
+      bestRSminVal: DC.D0,
     },
     player.records.bestReality = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -235,7 +236,9 @@ export function mendingReset() {
       player.reality.imaginaryUpgReqs += 1048576; //give Vacuum
       player.reality.imaginaryUpgradeBits += 1048576;
     }
-
+    player.reality.upgReqs += 262144
+    player.reality.upgradeBits += 262144
+    // This gives Measure of Forever and fixes any bugs related to it
     player.reality.realityMachines = DC.D0;
     player.reality.reqLock.reality = 0;
     player.reality.reqLock.imaginary = 0;
@@ -292,12 +295,12 @@ export function mendingReset() {
     Currency.timeShards.reset();
     Currency.timeTheorems.reset();
     player.records.bestEternity = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
     player.records.thisEternity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -334,7 +337,7 @@ export function mendingReset() {
     player.dilation.totalTachyonGalaxies = 0;
     Currency.dilatedTime.reset();
     player.records.thisEternity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -349,15 +352,15 @@ export function mendingReset() {
     //Infinity
     resetInfinityRuns();
     player.records.thisInfinity = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
-      lastBuyTime: 0,
+      lastBuyTime: DC.D0,
       maxAM: DC.D0,
       bestIPmin: DC.D0,
       bestIPminVal: DC.D0,
     },
     player.records.bestInfinity = {
-      time: Number.MAX_VALUE,
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
@@ -400,12 +403,12 @@ export function mendingReset() {
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;
     }
-    if (player.records.thisMend.time < player.records.bestMend.time){
+    if (player.records.thisMend.time.lt(player.records.bestMend.time)){
       player.records.bestMend.time = player.records.thisMend.time;
     }
     //Mending Timer
     player.records.thisMend = {
-      time: 0,
+      time: DC.D0,
       realTime: 0,
       maxAM: DC.D0,
       maxIP: DC.D0,
@@ -413,7 +416,16 @@ export function mendingReset() {
       maxRM: DC.D0,
       maxiM: 0,
       maxRem: 0,
-    },
+    }
+    // Finally, lets set up corruptions
+    if (player.mending.corruptNext) {
+      player.mending.corruptNext = false
+      player.mending.corruptionChallenge.corruptedMend = true
+    }
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      player.mending.corruptedFragments = Math.ceil(Math.min(player.mending.corruptedFragments, Math.log2(corruptionChallengeScoreCalculation() * [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))])))
+      player.mending.corruptionChallenge.corruptedMend = false
+    }
     Player.resetRequirements("mending");
     //end reseting all the things
 
@@ -435,7 +447,6 @@ export function mendingReset() {
     }
 }
 
-
 export class MendingMilestoneState{
     constructor(config) {
       this.config = config;
@@ -443,6 +454,11 @@ export class MendingMilestoneState{
   
     get isReached() {
       return Currency.mends.gte(this.config.mends);
+    }
+
+    get effect() {
+      if (this.config.effect == undefined || !this.isReached || this.config.effect == null) return 1;
+      return this.config.effect
     }
   }
 

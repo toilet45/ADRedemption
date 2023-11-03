@@ -87,7 +87,7 @@ export const breakInfinityUpgrades = {
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description: "Raise Achievement Multiplier based on Teresa and V Level",
-      effect: () => Math.max(1 + Math.pow(Ra.pets.teresa.level + Ra.pets.v.level, 0.65) / 7.5, 1),
+      effect: () => Math.max(1 + Math.pow(Ra.pets.teresa.level + Ra.pets.v.level, 0.25) / 7.5, 1),
       formatEffect: value => formatPow(value, 4, 4)
     }
   },
@@ -95,13 +95,13 @@ export const breakInfinityUpgrades = {
     id: "challengeMult",
     cost: 1e7,
     description: "Antimatter Dimensions gain a multiplier based on slowest challenge run",
-    effect: () => Decimal.clampMin(50 / Time.worstChallenge.totalMinutes, 1),
+    effect: () => Decimal.clampMin(Time.worstChallenge.totalMinutes.times(0.02), 1),
     formatEffect: value => formatX(value, 2, 2),
     hasCap: true,
     cap: DC.D3E4,
     charged: {
       description: "Raise IC1 Reward based on Teresa Level",
-      effect: () => Ra.pets.teresa.level * 1e11,
+      effect: () => Ra.pets.teresa.level * 1e9,
       formatEffect: value => formatPow(value)
     }
   },
@@ -119,7 +119,7 @@ export const breakInfinityUpgrades = {
         Ra.unlocks.continuousTTBoost.effects.infinity
       );
       infinities = infinities.times(getAdjustedGlyphEffect("infinityinfmult"));
-      const timeStr = Time.bestInfinity.totalMilliseconds <= 50
+      const timeStr = Time.bestInfinity.totalMilliseconds.lte(50)
         ? `${TimeSpan.fromMilliseconds(100).toStringShort()} (capped)`
         : `${Time.bestInfinity.times(2).toStringShort()}`;
       return `${quantify("Infinity", infinities)} every ${timeStr}`;

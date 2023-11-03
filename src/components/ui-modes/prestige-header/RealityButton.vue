@@ -15,10 +15,10 @@ export default {
       glyphLevel: 0,
       nextGlyphPercent: 0,
       nextMachineEP: 0,
-      shardsGained: 0,
-      currentShardsRate: 0,
-      bestShardRate: 0,
-      bestShardRateVal: 0,
+      shardsGained: new Decimal(0),
+      currentShardsRate: new Decimal(0),
+      bestShardRate: new Decimal(0),
+      bestShardRateVal: new Decimal(0),
       ppGained: 0,
       celestialRunText: ["", "", "", "", ""]
     };
@@ -77,7 +77,7 @@ export default {
       this.canReality = isRealityAvailable();
       this.showSpecialEffect = this.hasSpecialReward();
       if (!this.canReality) {
-        this.shardsGained = 0;
+        this.shardsGained = new Decimal(0);
         return;
       }
       function EPforRM(rm) {
@@ -102,10 +102,10 @@ export default {
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
       this.ppGained = multiplier;
       if(MendingMilestone.one.isReached) this.ppGained *= 5;
-      this.shardsGained = Effarig.shardsGained * multiplier;
-      this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
-      this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;
-      this.bestShardRateVal = player.records.thisReality.bestRSminVal * multiplier;
+      this.shardsGained = Effarig.shardsGained.times(multiplier);
+      this.currentShardsRate = (this.shardsGained.div(Time.thisRealityRealTime.totalMinutes.max(0.01)));
+      this.bestShardRate = player.records.thisReality.bestRSmin.times(multiplier);
+      this.bestShardRateVal = player.records.thisReality.bestRSminVal.times(multiplier);
 
       const teresaReward = this.formatScalingMultiplierText(
         "Glyph Sacrifice",
@@ -169,7 +169,7 @@ export default {
         >
           <div>Other resources gained:</div>
           <div>{{ quantifyInt("Perk Point", ppGained) }}</div>
-          <div v-if="shardsGained !== 0">
+          <div v-if="shardsGained.neq(0)">
             {{ shardsGainedText }} ({{ format(currentShardsRate, 2) }}/min)
             <br>
             Peak: {{ format(bestShardRate, 2) }}/min at {{ format(bestShardRateVal, 2) }} RS

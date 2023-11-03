@@ -25,7 +25,7 @@ export default {
       level: 0,
       simRealities: 0,
       realityMachines: new Decimal(),
-      shardsGained: 0,
+      shardsGained: new Decimal(),
       effarigUnlocked: false,
       willAutoPurge: false,
     };
@@ -95,7 +95,7 @@ export default {
       this.hasSpace = GameCache.glyphInventorySpace.value > this.simRealities;
       const simRMGained = MachineHandler.gainedRealityMachines.times(this.simRealities);
       this.realityMachines.copyFrom(simRMGained.clampMax(MachineHandler.distanceToRMCap));
-      this.shardsGained = Effarig.shardsGained * (simulatedRealityCount(false) + 1);
+      this.shardsGained = Effarig.shardsGained.times(simulatedRealityCount(false) + 1);
       this.willAutoPurge = player.reality.autoAutoClean;
       if (this.firstReality) return;
       for (let i = 0; i < this.glyphs.length; ++i) {

@@ -5,8 +5,8 @@ export default {
   },
   data() {
     return {
-      baseSpeed: 0,
-      pulsedSpeed: 0,
+      baseSpeed: new Decimal(),
+      pulsedSpeed: new Decimal(),
       hasSeenAlteredSpeed: false,
       isStopped: false,
       isEC12: false,
@@ -29,26 +29,26 @@ export default {
     },
     baseText() {
       if (!this.hasSeenAlteredSpeed) return null;
-      return this.baseSpeed === 1
+      return this.baseSpeed.eq(1)
         ? "The game is running at normal speed."
         : `Game speed is altered: ${this.baseSpeedText}`;
     }
   },
   methods: {
     update() {
-      this.baseSpeed = getGameSpeedupFactor();
-      this.pulsedSpeed = getGameSpeedupForDisplay();
+      this.baseSpeed.copyFrom(getGameSpeedupFactor());
+      this.pulsedSpeed.copyFrom(getGameSpeedupForDisplay());
       this.hasSeenAlteredSpeed = PlayerProgress.seenAlteredSpeed();
       this.isStopped = Enslaved.isStoringRealTime;
       this.isEC12 = EternityChallenge(12).isRunning;
-      this.isPulsing = (this.baseSpeed !== this.pulsedSpeed) && Enslaved.canRelease(true);
+      this.isPulsing = (this.baseSpeed.neq(this.pulsedSpeed)) && Enslaved.canRelease(true);
     },
     formatNumber(num) {
-      if (num >= 0.001 && num < 10000 && num !== 1) {
+      if (num.gte(0.001) && num.lt(10000) && num.neq(1)) {
         return format(num, 3, 3);
       }
-      if (num < 0.001) {
-        return `${formatInt(1)} / ${format(1 / num, 2)}`;
+      if (num.lt(0.001)) {
+        return `${formatInt(1)} / ${format(new Decimal(1).div(num), 2)}`;
       }
       return `${format(num, 2)}`;
     }
