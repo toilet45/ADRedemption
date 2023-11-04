@@ -112,6 +112,7 @@ window.GAME_EVENT = {
   MENDING_UPGRADE_BOUGHT: "MENDING_UPGRADE_BOUGHT",
   WARP_UPGRADE_BOUGHT: "WARP_UPGRADE_BOUGHT",
   CORRUPTION_UPGRADE_BOUGHT: "CORRUPTION_UPGRADE_BOUGHT",
+  RA_UPGRADE_BOUGHT: "RA_UPGRADE_BOUGHT",
 
   // Used by events to signify that they are triggered by a particular
   // event, not handled by the event hub
