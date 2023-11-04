@@ -31,8 +31,7 @@ export default {
     classObject() {
       return {
         "c-ra-upgrade--bought": this.isBought && !this.isUseless,
-        "c-ra-upgrade--unavailable": !this.isBought && !this.canBeBought && this.isAvailableForPurchase,
-        "c-ra-upgrade-btn--locked": !this.isAvailableForPurchase,
+        "c-ra-upgrade--unavailable": !this.isAvailableForPurchase,
       };
     },
     color() {
@@ -43,7 +42,7 @@ export default {
       return this.config.currencyLabel;
     },
     isUseless() {
-      return !this.config.implemented;
+      return false;
     },
   },
   methods: {
@@ -52,7 +51,9 @@ export default {
       this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
       this.canBeBought = upgrade.canBeBought;
       this.isRebuyable = upgrade.isRebuyable;
-      this.isBought = !upgrade.isRebuyable && upgrade.isBought;
+      this.isBought = upgrade.isRebuyable
+                      ? upgrade.isCapped
+                      : upgrade.isBought;
     }
   }
 };
@@ -106,9 +107,19 @@ export default {
   padding: 2rem;
   cursor: pointer;
 }
-
 .c-ra-upgrade:hover {
   box-shadow: inset 0 0 2rem 0.1rem var(--cel-color);
   transition-duration: 0.3s;
+}
+.c-ra-upgrade--unavailable {
+  color: black;
+  background: #5f5f5f;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.c-ra-upgrade--bought {
+  color: black;
+  background: var(--cel-color);
+  cursor: default;
 }
 </style>

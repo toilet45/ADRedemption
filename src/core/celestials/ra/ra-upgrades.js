@@ -7,7 +7,7 @@ class RaUpgradeState extends SetPurchasableMechanicState {
   }
 
   get currency() {
-    return config.currency();
+    return this.config.currency();
   }
 
   get isAvailableForPurchase() {
@@ -20,8 +20,16 @@ class RaUpgradeState extends SetPurchasableMechanicState {
 }
 
 class RebuyableRaUpgradeState extends RebuyableMechanicState {
+  get pet() {
+    return this.config.celestial;
+  }
+
+  get isCapped() {
+    return Ra.pets[this.pet].isCapped;
+  }
+
   get currency() {
-    return Currency.raPoints;
+    return this.config.currency();
   }
 
   get boughtAmount() {
@@ -30,6 +38,10 @@ class RebuyableRaUpgradeState extends RebuyableMechanicState {
 
   set boughtAmount(value) {
     player.celestials.ra.rebuyables[this.id] = value;
+  }
+
+  get isAvailableForPurchase() {
+    return config.implemented && player.celestials.ra.pets.ra.level >= 40;
   }
 }
 
