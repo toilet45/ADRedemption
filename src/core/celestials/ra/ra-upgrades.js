@@ -11,7 +11,7 @@ class RaUpgradeState extends SetPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return config.implemented && player.celestials.ra.pets.ra.level >= 40;
+    return this.config.implemented && player.celestials.ra.pets.ra.level >= 40;
   }
 
   onPurchased() {
@@ -41,7 +41,7 @@ class RebuyableRaUpgradeState extends RebuyableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return config.implemented && player.celestials.ra.pets.ra.level >= 40;
+    return this.config.implemented && player.celestials.ra.pets.ra.level >= 40;
   }
 }
 
