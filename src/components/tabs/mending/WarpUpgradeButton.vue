@@ -115,7 +115,7 @@ export default {
             v-if="!isBought"
             :config="config"
             br
-            name="Corrupted Fragment"
+            name="Multiversal Remain"
           />
         </template>
       </span>

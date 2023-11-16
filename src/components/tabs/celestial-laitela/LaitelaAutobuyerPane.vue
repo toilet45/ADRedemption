@@ -1,5 +1,6 @@
 <script>
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 
 export default {
   name: "LaitelaAutobuyerPane",
@@ -24,11 +25,21 @@ export default {
   },
   computed: {
     autobuyStr() {
+      if(MendingUpgrade(19).isBought){
+        return this.maxAutobuy === 8
+        ? "ON (all DMD)"
+        : `ON (max. DMD ${this.maxAutobuy})`;
+      }
       return this.maxAutobuy === 4
         ? "ON (all DMD)"
         : `ON (max. DMD ${this.maxAutobuy})`;
     },
     autoAscendStr() {
+      if(MendingUpgrade(19).isBought){
+        return this.maxAutoAscend === 8
+        ? "ON (all DMD)"
+        : `ON (max. DMD ${this.maxAutoAscend})`;
+      }
       return this.maxAutoAscend === 4
         ? "ON (all DMD)"
         : `ON (max. DMD ${this.maxAutoAscend})`;

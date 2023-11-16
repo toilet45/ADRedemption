@@ -626,6 +626,23 @@ export const migrations = {
       5: 0,
     }
   },
+  55: player =>{
+    player.records.bestMend.time = new Decimal(player.records.bestMend.time);
+    player.expoBlackHole = Array.range(0, 1).map(id => ({
+      id,
+      intervalUpgrades: 0,
+      powerUpgrades: 0,
+      durationUpgrades: 0,
+      phase: 0,
+      active: false,
+      unlocked: false,
+      activations: 0,
+    })),
+    player.expoBlackHolePause = false;
+    player.expoBlackHoleAutoPauseMode = 0;
+    player.expoBlackHolePauseTime = 0;
+    player.expoBlackHoleNegative = 1;
+  },
   },
 
   normalizeTimespans(player) {

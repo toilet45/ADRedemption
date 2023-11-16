@@ -775,7 +775,7 @@ export const Glyphs = {
     return 3000 + this.instabilityThreshold;
   },
   get ultraInstabilityThreshold(){
-    let effarigMemDelay = Ra.unlocks.harshInstabilityDelay.isUnlocked ? (500 * (Math.max(1, Math.floor(Ra.pets.effarig.level / 5) - 10))) : 0;
+    //let effarigMemDelay = Ra.unlocks.harshInstabilityDelay.isUnlocked ? (500 * (Math.max(1, Math.floor(Ra.pets.effarig.level / 5) - 10))) : 0;
     return 45000 + (500 * MendingUpgrade(6).boughtAmount) + Ra.unlocks.harshInstabilityDelay.effectOrDefault(0);
   },
   get omegaInstabilityThreshold(){

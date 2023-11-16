@@ -114,10 +114,11 @@ export default {
           Achievement(131),
           TimeStudy(191)
         );
+        //let x = bestInfinity.time;
         infinity.bankRate = infinity.projectedBanked.div(Decimal.clampMin(33, records.thisEternity.time)).times(60000);
-        infinity.hasBest = bestInfinity.time.lt(Number.MAX_VALUE);
-        infinity.best.copyFrom(new TimeSpan(bestInfinity.time));
-        infinity.this.copyFrom(new TimeSpan(records.thisInfinity.time));
+        infinity.hasBest = true;//bestInfinity.time.lt(Number.MAX_VALUE);
+        infinity.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestInfinity.time));
+        infinity.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisInfinity.time));
         infinity.bestRate.copyFrom(bestInfinity.bestIPminEternity);
       }
 
@@ -127,9 +128,9 @@ export default {
       eternity.isUnlocked = isEternityUnlocked;
       if (isEternityUnlocked) {
         eternity.count.copyFrom(Currency.eternities);
-        eternity.hasBest = bestEternity.time.lt(Number.MAX_VALUE);
-        eternity.best.copyFrom(new TimeSpan(bestEternity.time));
-        eternity.this.copyFrom(new TimeSpan(records.thisEternity.time));
+        eternity.hasBest = true;//bestEternity.time.lt(Number.MAX_VALUE);
+        eternity.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestEternity.time));
+        eternity.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisEternity.time));
         eternity.bestRate.copyFrom(bestEternity.bestEPminReality);
       }
 
@@ -140,10 +141,10 @@ export default {
 
       if (isRealityUnlocked) {
         reality.count = Math.floor(Currency.realities.value);
-        reality.best.copyFrom(new TimeSpan(bestReality.time));
+        reality.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestReality.time));
         reality.bestReal.copyFrom(new TimeSpan(bestReality.realTime));
-        reality.this.copyFrom(new TimeSpan(records.thisReality.time));
-        reality.totalTimePlayed.copyFrom(new TimeSpan(records.totalTimePlayed));
+        reality.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisReality.time));
+        reality.totalTimePlayed = TimeSpan.zero//.copyFrom(records.totalTimePlayed);
         // Real time tracking is only a thing once reality is unlocked:
         infinity.thisReal.copyFrom(new TimeSpan(records.thisInfinity.realTime));
         infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.realTime)).times(60000);

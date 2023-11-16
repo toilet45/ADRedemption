@@ -11,6 +11,8 @@ export default {
       isStopped: false,
       isEC12: false,
       isPulsing: false,
+      hasBH3: false,
+      BH3Power: 1,
     };
   },
   computed: {
@@ -31,7 +33,7 @@ export default {
       if (!this.hasSeenAlteredSpeed) return null;
       return this.baseSpeed.eq(1)
         ? "The game is running at normal speed."
-        : `Game speed is altered: ${this.baseSpeedText}`;
+        : this.hasBH3 ? `Game speed is altered: ${this.baseSpeedText}, ${formatPow(this.BH3Power, 3, 3)}` : `Game speed is altered: ${this.baseSpeedText}`;
     }
   },
   methods: {
@@ -42,6 +44,8 @@ export default {
       this.isStopped = Enslaved.isStoringRealTime;
       this.isEC12 = EternityChallenge(12).isRunning;
       this.isPulsing = (this.baseSpeed.neq(this.pulsedSpeed)) && Enslaved.canRelease(true);
+      this.hasBH3 = ExpoBlackHole(1).isUnlocked;
+      this.BH3Power = ExpoBlackHole(1).power;
     },
     formatNumber(num) {
       if (num.gte(0.001) && num.lt(10000) && num.neq(1)) {

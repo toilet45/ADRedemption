@@ -4,6 +4,7 @@ import BlackHoleChargingSliders from "./BlackHoleChargingSliders";
 import BlackHoleStateRow from "./BlackHoleStateRow";
 import BlackHoleUnlockButton from "./BlackHoleUnlockButton";
 import BlackHoleUpgradeRow from "./BlackHoleUpgradeRow";
+import ExpoBlackHoleUpgradeRow from "./ExpoBlackHoleUpgradeRow.vue";
 
 export default {
   name: "BlackHoleTab",
@@ -11,7 +12,8 @@ export default {
     BlackHoleUpgradeRow,
     BlackHoleStateRow,
     BlackHoleChargingSliders,
-    BlackHoleUnlockButton
+    BlackHoleUnlockButton,
+    ExpoBlackHoleUpgradeRow
   },
   data() {
     return {
@@ -23,12 +25,14 @@ export default {
       detailedBH2: "",
       isPermanent: false,
       hasBH2: false,
+      hasBH3:false,
       blackHoleUptime: [],
       stateChange: "",
     };
   },
   computed: {
     blackHoles: () => BlackHoles.list,
+    expoBlackHoles: () => ExpoBlackHoles.list,
     pauseModeString() {
       switch (this.pauseMode) {
         case BLACK_HOLE_PAUSE_MODE.NO_PAUSE:
@@ -62,6 +66,7 @@ export default {
       this.isPermanent = BlackHoles.arePermanent;
       this.pauseMode = player.blackHoleAutoPauseMode;
       this.hasBH2 = BlackHole(2).isUnlocked;
+      this.hasBH3 = true;//ExpoBlackHole(1).isUnlocked;
       this.blackHoleUptime = [BlackHole(1).duration / BlackHole(1).cycleLength,
         BlackHole(2).duration / BlackHole(2).cycleLength];
       this.detailedBH2 = this.bh2Status();
@@ -108,6 +113,7 @@ export default {
     },
     togglePause() {
       BlackHoles.togglePause();
+      ExpoBlackHoles.togglePause;
       if (BlackHoles.arePaused) {
         player.celestials.enslaved.isAutoReleasing = false;
       }
@@ -219,6 +225,16 @@ export default {
           v-for="(blackHole, i) in blackHoles"
           :key="'upgrades' + i"
           :black-hole="blackHole"
+        />
+      </div>
+      <div v-if="hasBH3">
+        Black Hole 3 is only active when Game Speed is greater than 1.
+      </div>
+      <div :class="gridStyle()">
+        <ExpoBlackHoleUpgradeRow
+          v-for="(expoBlackHole, j) in expoBlackHoles"
+          :key="'upgrades' + j"
+          :expo-black-hole="expoBlackHole"
         />
       </div>
     </template>
