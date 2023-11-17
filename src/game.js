@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { WarpUpgrade } from "./core/globals";
+import { Currency, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -344,7 +344,8 @@ export const GAME_SPEED_EFFECT = {
   BLACK_HOLE: 3,
   TIME_STORAGE: 4,
   SINGULARITY_MILESTONE: 5,
-  NERFS: 6
+  NERFS: 6,
+  EXPO_BLACK_HOLE: 7
 };
 
 /**
@@ -352,12 +353,14 @@ export const GAME_SPEED_EFFECT = {
   *   the game speed.  If left undefined, all effects will be applied.
   * @param {number?} blackHolesActiveOverride A numerical value which forces all black holes up to its specified index
   *   to be active for the purposes of game speed calculation. This is only used during offline black hole stuff.
+  * @param {number?} expoBlackHolesActiveOverride A numerical value which forces all black holes up to its specified index
+  *   to be active for the purposes of game speed calculation. This is only used during offline black hole stuff.
   */
 export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride) {
   let effects;
   if (effectsToConsider === undefined) {
     effects = [GAME_SPEED_EFFECT.FIXED_SPEED, GAME_SPEED_EFFECT.TIME_GLYPH, GAME_SPEED_EFFECT.BLACK_HOLE,
-      GAME_SPEED_EFFECT.TIME_STORAGE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS];
+      GAME_SPEED_EFFECT.TIME_STORAGE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS, GAME_SPEED_EFFECT.EXPO_BLACK_HOLE];
   } else {
     effects = effectsToConsider;
   }
@@ -381,6 +384,16 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         if (!isActive) break;
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
+        if(effects.includes(GAME_SPEED_EFFECT.EXPO_BLACK_HOLE && factor.gte(1))){
+          for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
+            if (!i.isUnlocked) break;
+            const isExpoActive = blackHolesActiveOverride === undefined
+            ? i.isActive
+            : i.id <= expoBlackHolesActiveOverride;
+          if (!isExpoActive) break;
+            factor = Decimal.pow(factor, i.power);
+          }
+        }
       }
     }
   }
@@ -439,6 +452,15 @@ export function getGameSpeedupForDisplay() {
   return speedFactor;
 }
 
+export function getBaseGameSpeedup(){
+  let x = getGameSpeedupFactor();
+
+  for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
+    if (!i.isUnlocked) break;
+    x = Decimal.pow(x, 1 / i.power);
+  }
+  return x;
+}
 // Separated out for organization; however this is also used in more than one spot in gameLoop() as well. Returns
 // true if the rest of the game loop should be skipped
 export function realTimeMechanics(realDiff) {
@@ -587,10 +609,8 @@ export function gameLoop(passDiff, options = {}) {
     player.celestials.teresa.bestRunAM.copyFrom(player.records.totalAntimatter.sqrt().max(currentBest));
   }
 
-  if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
-    AlchemyResources.all.forEach((resource, id, resources) => {
-      resources[id].amount = Math.min(resource.cap, Ra.alchemyResourceCap);
-    });
+  if(Ra.unlocks.unlock3rdBH.isUnlocked){
+    ExpoBlackHoles.unlock();
   }
 
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
@@ -608,7 +628,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisInfinity.time = player.records.thisInfinity.time.add(diff);
     if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff.times(Currency.eternities.value.clampMax(1e66).add(1)));
-    } 
+    }
     else {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff);
     }
@@ -887,8 +907,21 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
+  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
+    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain / 2; //I think this is 50% every tick, need to figure how often this function ticks
+  }
+  if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+    player.celestials.ra.alchemy = Array.repeat(0, 21) //This just sets all alch resources to the cap, probably will be changed to be passive
+    .map(() => ({
+      amount: Ra.alchemyResourceCap,
+      reaction: false
+    }));
+  }
+  if (Ra.unlocks.passiveRelicShardGain.isUnlocked){
+    Currency.relicShards.add(Effarig.shardsGained);
+  }
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));   
+    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));

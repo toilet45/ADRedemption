@@ -67,7 +67,7 @@ export const effarigUnlocks = {
     id: 7,
     label: "Mend",
     get description() {
-      return ` TBD`
+      return ` Effarig is no longer reset on Mend. Other effects are TBD.`
     }
   }
 };

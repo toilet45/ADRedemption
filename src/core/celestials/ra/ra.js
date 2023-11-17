@@ -73,6 +73,10 @@ class RaPetState extends GameMechanicState {
     return this.config.memoryGain;
   }
 
+  get secondaryMemoryChunkGain(){
+    return this.config.secondaryMemoryChunkGain;
+  }
+
   get color() {
     return this.config.color;
   }

@@ -41,7 +41,7 @@ export default {
         </div>
         <div class="modal-progress-bar__margin">
           <div>
-            {{ progress.progressName }}: {{ formatInt(0 /*progress.current*/) }}/{{ formatInt(0 /*progress.max*/) }}
+            {{ progress.progressName }}: {{ formatInt(progress.current) }}/{{ formatInt(progress.max) }}
           </div>
           <div>
             Remaining: {{ remainingTime }}
@@ -51,7 +51,8 @@ export default {
               <div
                 class="modal-progress-bar__fg"
                 :style="foregroundStyle"
-              />
+              >
+              </div>
             </div>
           </div>
         </div>

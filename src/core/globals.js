@@ -82,6 +82,7 @@ export * from "./imaginary-upgrades";
 export * from "./perks";
 export * from "./dilation";
 export * from "./black-hole";
+export * from "./expo-black-hole";
 export * from "./machines";
 export * from "./devtools";
 export * from "./news-ticker";

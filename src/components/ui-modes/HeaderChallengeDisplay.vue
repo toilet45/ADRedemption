@@ -1,4 +1,5 @@
 <script>
+import { Pelle, mendingReset } from "../../core/globals";
 import FailableEcText from "./FailableEcText";
 import PrimaryButton from "@/components/PrimaryButton";
 
@@ -144,7 +145,7 @@ export default {
         };
       } else {
         names = { chall: this.activeChallengeNames[0], normal: "Reality" };
-        clickFn = () => beginProcessReality(getRealityProps(true));
+        clickFn = () => Pelle.isDoomed ? mendingReset() : beginProcessReality(getRealityProps(true));
       }
 
       if (player.options.confirmations.exitChallenge) {

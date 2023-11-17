@@ -147,7 +147,7 @@ export function startManualReality(sacrifice, glyphID) {
 export function processManualReality(sacrifice, glyphID) {
   if (!isRealityAvailable()) return;
 
-  if (player.realities === 0) {
+  if (player.realities === 0 && !PlayerProgress.mendingUnlocked()) {
     // If this is our first Reality, lock in the initial seed and then give the companion and starting glyphs
     player.reality.seed = player.reality.initialSeed;
     Glyphs.addToInventory(GlyphGenerator.startingGlyph(gainedGlyphLevel()));

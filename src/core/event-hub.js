@@ -113,6 +113,7 @@ window.GAME_EVENT = {
   WARP_UPGRADE_BOUGHT: "WARP_UPGRADE_BOUGHT",
   CORRUPTION_UPGRADE_BOUGHT: "CORRUPTION_UPGRADE_BOUGHT",
   RA_UPGRADE_BOUGHT: "RA_UPGRADE_BOUGHT",
+  EXPO_BLACK_HOLE_UNLOCKED: "EXPO_BLACK_HOLE_UNLOCKED",
 
   // Used by events to signify that they are triggered by a particular
   // event, not handled by the event hub

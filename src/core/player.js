@@ -705,6 +705,20 @@ window.player = {
   blackHoleAutoPauseMode: 0,
   blackHolePauseTime: 0,
   blackHoleNegative: 1,
+  expoBlackHole: Array.range(0, 1).map(id => ({
+    id,
+    intervalUpgrades: 0,
+    powerUpgrades: 0,
+    durationUpgrades: 0,
+    phase: 0,
+    active: false,
+    unlocked: false,
+    activations: 0,
+  })),
+  expoBlackHolePause: false,
+  expoBlackHoleAutoPauseMode: 0,
+  expoBlackHolePauseTime: 0,
+  expoBlackHoleNegative: 1,
   celestials: {
     teresa: {
       pouredAmount: 0,
