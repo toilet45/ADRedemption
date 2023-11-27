@@ -161,10 +161,10 @@ export default {
       if (isMendingUnlocked) {
         mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
-        mending.best.copyFrom(new TimeSpan(bestMend.time));
-        mending.bestReal.copyFrom(new TimeSpan(bestMend.realTime));
-        mending.this.copyFrom(new TimeSpan(records.thisMend.time));
-        mending.thisReal.copyFrom(new TimeSpan(records.thisMend.realTime));
+        //mending.best.copyFrom(new TimeSpan(bestMend.time));
+        //mending.bestReal.copyFrom(new TimeSpan(bestMend.realTime));
+        //mending.this.copyFrom(new TimeSpan(records.thisMend.time));
+        //mending.thisReal.copyFrom(new TimeSpan(records.thisMend.realTime));
       }
 
       this.updateMatterScale();

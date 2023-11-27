@@ -11,7 +11,6 @@ class ExpoBlackHoleUpgradeState {
       initialCost,
       costMult,
       0.2,
-      DC.E310,
       1e5,
       10));
     this.id = config.id;
@@ -24,7 +23,7 @@ class ExpoBlackHoleUpgradeState {
   }
 
   get cost() {
-    return this._lazyCost.value;
+    return this._lazyCost.value.toNumber();
   }
 
   get isAffordable() {
@@ -212,7 +211,7 @@ class ExpoBlackHoleState {
   }
 
   get isActive() {
-    return this.isCharged && (this.id === 1 || BlackHole(this.id - 1).isActive) && !Pelle.isDisabled("blackhole");
+    return this.isCharged && (this.id === 1 || BlackHole(this.id - 1).isActive) && !Pelle.isDisabled("blackhole") && !BlackHoles.areNegative;
   }
 
   // Proportion of active time, scaled 0 to 1

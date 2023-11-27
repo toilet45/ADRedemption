@@ -469,7 +469,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 54,
+  version: 56,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -861,6 +861,11 @@ window.player = {
         weakenRaScaling: 0,
         weakenLaitelaScaling: 0,
         weakenPelleScaling: 0,
+      },
+      permanentMemories: {
+        ra2: false,
+        lai50: false,
+        lai65: false,
       },
     },
     laitela: {

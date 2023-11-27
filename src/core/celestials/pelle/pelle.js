@@ -205,6 +205,7 @@ export const Pelle = {
   },
 
   get uselessInfinityUpgrades() {
+    if (Ra.unlocks.placeholderP6.isUnlocked) return ["passiveGen", "infinitiedGeneration"];
     return ["passiveGen", "ipMult", "infinitiedGeneration"];
   },
 
