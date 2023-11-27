@@ -170,6 +170,7 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   }
 
   get canBeBought() {
+    if(Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked && this.id == "ipMult" && Currency.infinityPoints.gte(this.cost)) return true;
     return !Pelle.isDoomed && !this.isCapped && Currency.infinityPoints.gte(this.cost) && this.isRequirementSatisfied;
   }
 

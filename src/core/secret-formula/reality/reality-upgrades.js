@@ -70,7 +70,9 @@ export const realityUpgrades = [
     name: "Cosmically Duplicate",
     id: 6,
     cost: 15,
-    requirement: "Complete your first manual Eternity without using Replicanti Galaxies",
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : "Complete your first manual Eternity without using Replicanti Galaxies";
+    },
     // Note that while noRG resets on eternity, the reality-level check will be false after the first eternity.
     // The noRG variable is eternity-level as it's also used for an achievement check
     hasFailed: () => !(player.requirementChecks.eternity.noRG && player.requirementChecks.reality.noEternities),
@@ -86,7 +88,9 @@ export const realityUpgrades = [
     name: "Innumerably Construct",
     id: 7,
     cost: 15,
-    requirement: "Complete your first Infinity with at most 1 Antimatter Galaxy",
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" :"Complete your first Infinity with at most 1 Antimatter Galaxy";
+    },
     hasFailed: () => !(player.galaxies <= 1 && player.requirementChecks.reality.noInfinities),
     checkRequirement: () => player.galaxies <= 1 && player.requirementChecks.reality.noInfinities,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
@@ -100,7 +104,9 @@ export const realityUpgrades = [
     name: "Paradoxically Attain",
     id: 8,
     cost: 15,
-    requirement: "Manually Eternity without any automatic Achievements",
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : "Manually Eternity without any automatic Achievements";
+    },
     hasFailed: () => player.reality.gainedAutoAchievements,
     checkRequirement: () => !player.reality.gainedAutoAchievements,
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
@@ -114,8 +120,8 @@ export const realityUpgrades = [
     name: "Linguistically Expand",
     id: 9,
     cost: 15,
-    requirement: () => `Eternity for ${format("1e4000")} Eternity Points using
-      only a single Glyph which must be level ${formatInt(3)}+.`,
+    requirement: () =>{ return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Eternity for ${format("1e4000")} Eternity Points using
+      only a single Glyph which must be level ${formatInt(3)}+.`;},
     hasFailed: () => {
       const invalidEquippedGlyphs = Glyphs.activeWithoutCompanion.length > 1 ||
         (Glyphs.activeWithoutCompanion.length === 1 && Glyphs.activeWithoutCompanion[0].level < 3);
@@ -134,7 +140,9 @@ export const realityUpgrades = [
     name: "Existentially Prolong",
     id: 10,
     cost: 15,
-    requirement: () => `Complete your first manual Eternity with at least ${formatPostBreak(DC.E400)} Infinity Points`,
+    requirement: () =>{
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Complete your first manual Eternity with at least ${formatPostBreak(DC.E400)} Infinity Points`;
+    },
     hasFailed: () => !player.requirementChecks.reality.noEternities,
     checkRequirement: () => Currency.infinityPoints.exponent >= 400 &&
       player.requirementChecks.reality.noEternities,
@@ -151,7 +159,9 @@ export const realityUpgrades = [
     name: "The Boundless Flow",
     id: 11,
     cost: 50,
-    requirement: () => `${format(Currency.infinitiesBanked.value, 2)}/${format(DC.E12)} Banked Infinities`,
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `${format(Currency.infinitiesBanked.value, 2)}/${format(DC.E12)} Banked Infinities`;
+    },
     checkRequirement: () => Currency.infinitiesBanked.exponent >= 12,
     checkEvent: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.REALITY_FIRST_UNLOCKED],
     description: "Every second, gain 10% of the Infinities you would normally gain by Infinitying",
@@ -164,7 +174,9 @@ export const realityUpgrades = [
     name: "The Knowing Existence",
     id: 12,
     cost: 50,
-    requirement: () => `Eternity for ${format(DC.E70)} Eternity Points without completing Eternity Challenge 1`,
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Eternity for ${format(DC.E70)} Eternity Points without completing Eternity Challenge 1`;
+    },
     hasFailed: () => (EternityChallenge(1).completions !== 0 && !MendingUpgrade(3).isBought),
     checkRequirement: () => (Currency.eternityPoints.exponent >= 70 && EternityChallenge(1).completions === 0) || (Currency.eternityPoints.exponent >= 70 && MendingUpgrade(3).isBought),
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
@@ -180,7 +192,9 @@ export const realityUpgrades = [
     name: "The Telemechanical Process",
     id: 13,
     cost: 50,
-    requirement: () => `Eternity for ${format(DC.E4000)} Eternity Points without Time Dim. 5-8`,
+    requirement: () => { 
+      return MendingMilestone.one.isReached ? "None (1 Mend Milestone)" : `Eternity for ${format(DC.E4000)} Eternity Points without Time Dim. 5-8`;
+    },
     hasFailed: () => !Array.range(5, 4).every(i => TimeDimension(i).amount.equals(0)),
     checkRequirement: () => Currency.eternityPoints.exponent >= 4000 &&
       Array.range(5, 4).every(i => TimeDimension(i).amount.equals(0)),
@@ -195,7 +209,9 @@ export const realityUpgrades = [
     name: "The Eternal Flow",
     id: 14,
     cost: 50,
-    requirement: () => `${format(Currency.eternities.value, 2)}/${format(1e7)} Eternities`,
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" :`${format(Currency.eternities.value, 2)}/${format(1e7)} Eternities`;
+    },
     checkRequirement: () => Currency.eternities.gte(1e7),
     checkEvent: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.REALITY_FIRST_UNLOCKED],
     description: "Gain Eternities per second equal to your Reality count",
@@ -208,8 +224,8 @@ export const realityUpgrades = [
     name: "The Paradoxical Forever",
     id: 15,
     cost: 50,
-    requirement: () => `Have ${format(DC.E10)} Eternity Points without purchasing
-      the ${formatX(5)} Eternity Point upgrade`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Have ${format(DC.E10)} Eternity Points without purchasing
+      the ${formatX(5)} Eternity Point upgrade`;},
     hasFailed: () => player.epmultUpgrades !== 0,
     checkRequirement: () => Currency.eternityPoints.exponent >= 10 && player.epmultUpgrades === 0,
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
@@ -223,8 +239,10 @@ export const realityUpgrades = [
     name: "Disparity of Rarity",
     id: 16,
     cost: 1500,
-    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped of uncommon or better rarity
-      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.strength >= 1.5))} equipped)`,
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Reality with at least ${formatInt(4)} Glyphs equipped of uncommon or better rarity
+      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.strength >= 1.5))} equipped)`;
+    },
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.strength >= 1.5);
       const equipped = Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5);
@@ -241,9 +259,11 @@ export const realityUpgrades = [
     name: "Duplicity of Potency",
     id: 17,
     cost: 1500,
-    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped, each having at least ${formatInt(2)} effects
+    requirement: () => {
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Reality with at least ${formatInt(4)} Glyphs equipped, each having at least ${formatInt(2)} effects
       (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && countValuesFromBitmask(g.effects) >= 2))}
-      equipped)`,
+      equipped)`
+    },
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && countValuesFromBitmask(g.effects) >= 2);
       const equipped = Glyphs.activeWithoutCompanion.countWhere(g => countValuesFromBitmask(g.effects) >= 2);
@@ -260,8 +280,8 @@ export const realityUpgrades = [
     name: "Measure of Forever",
     id: 18,
     cost: 1500,
-    requirement: () => `Reality with at least ${formatInt(4)} Glyphs equipped, each at level ${formatInt(10)} or higher
-      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.level >= 10))} equipped)`,
+    requirement: () => { return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Reality with at least ${formatInt(4)} Glyphs equipped, each at level ${formatInt(10)} or higher
+      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.level >= 10))} equipped)`;},
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.level >= 10);
       const equipped = Glyphs.activeWithoutCompanion.countWhere(g => g.level >= 10);
@@ -278,8 +298,8 @@ export const realityUpgrades = [
     name: "Scour to Empower",
     id: 19,
     cost: 1500,
-    requirement: () => `Have a total of ${formatInt(30)} or more Glyphs at once
-      (You have ${formatInt(Glyphs.allGlyphs.countWhere(g => g.type !== "companion"))})`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Have a total of ${formatInt(30)} or more Glyphs at once
+      (You have ${formatInt(Glyphs.allGlyphs.countWhere(g => g.type !== "companion"))})`},
     hasFailed: () => Glyphs.allGlyphs.countWhere(g => g.type !== "companion") < 30,
     checkRequirement: () => Glyphs.allGlyphs.countWhere(g => g.type !== "companion") >= 30,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
@@ -290,8 +310,8 @@ export const realityUpgrades = [
     name: "Parity of Singularity",
     id: 20,
     cost: 1500,
-    requirement: () => `${formatInt(100)} days total play time after unlocking the Black Hole
-      (Currently: ${Time.timeSinceBlackHole.toStringShort(false)})`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" :`${formatInt(100)} days total play time after unlocking the Black Hole
+      (Currently: ${Time.timeSinceBlackHole.toStringShort(false)})`},
     hasFailed: () => !BlackHole(1).isUnlocked && Currency.realityMachines.lt(100),
     checkRequirement: () => Time.timeSinceBlackHole.totalDays.gte(100) && BlackHole(1).isUnlocked,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
@@ -304,8 +324,10 @@ export const realityUpgrades = [
     name: "Cosmic Conglomerate",
     id: 21,
     cost: 100000,
-    requirement: () => `${formatInt(Replicanti.galaxies.total + player.galaxies +
-      player.dilation.totalTachyonGalaxies)}/${formatInt(2800)} total Galaxies from all types`,
+    requirement: () =>{
+      return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `${formatInt(Replicanti.galaxies.total + player.galaxies +
+      player.dilation.totalTachyonGalaxies)}/${formatInt(2800)} total Galaxies from all types`;
+    },
     checkRequirement: () =>
       Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies >= 2800,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
@@ -316,7 +338,7 @@ export const realityUpgrades = [
     name: "Temporal Transcendence",
     id: 22,
     cost: 100000,
-    requirement: () => `${format(Currency.timeShards.value, 1)}/${format(DC.E28000)} Time Shards`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" :`${format(Currency.timeShards.value, 1)}/${format(DC.E28000)} Time Shards`;},
     checkRequirement: () => Currency.timeShards.exponent >= 28000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Time Dimension multiplier based on days spent in this Reality",
@@ -327,8 +349,8 @@ export const realityUpgrades = [
     name: "Replicative Rapidity",
     id: 23,
     cost: 100000,
-    requirement: () => `Reality in under ${formatInt(15)} minutes of game time
-      (Fastest: ${Time.bestReality.toStringShort()})`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Reality in under ${formatInt(15)} minutes of game time
+      (Fastest: ${Time.bestReality.toStringShort()})`;},
     hasFailed: () => Time.thisReality.totalMinutes.gte(15),
     checkRequirement: () => Time.thisReality.totalMinutes.lt(15),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
@@ -341,7 +363,7 @@ export const realityUpgrades = [
     name: "Synthetic Symbolism",
     id: 24,
     cost: 100000,
-    requirement: () => `Reality for ${formatInt(5000)} Reality Machines without equipped Glyphs`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" : `Reality for ${formatInt(5000)} Reality Machines without equipped Glyphs`;},
     hasFailed: () => Glyphs.activeWithoutCompanion.length > 0,
     checkRequirement: () => MachineHandler.gainedRealityMachines.gte(5000) &&
       Glyphs.activeWithoutCompanion.length === 0,
@@ -355,7 +377,7 @@ export const realityUpgrades = [
     name: "Effortless Existence",
     id: 25,
     cost: 100000,
-    requirement: () => `Reach ${format(DC.E11111)} EP (Best: ${format(player.records.bestReality.bestEP, 2)} EP)`,
+    requirement: () => {return MendingMilestone.four.isReached ? "None (5 Mend Milestone)" :`Reach ${format(DC.E11111)} EP (Best: ${format(player.records.bestReality.bestEP, 2)} EP)`;},
     checkRequirement: () => player.records.bestReality.bestEP.exponent >= 11111,
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     description: "Unlock the Reality autobuyer and Automator command",

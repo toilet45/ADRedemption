@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { Currency, WarpUpgrade } from "./core/globals";
+import { Currency, ExpoBlackHole, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -365,8 +365,9 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   let factor = DC.D1;
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
-    if (BlackHoles.areNegative) {
-      factor = factor.times(player.blackHoleNegative);
+    if (BlackHoles.areNegative && !player.mending.corruptionChallenge.corruptedMend) {
+      return factor.times(player.blackHoleNegative); //this should prevent < e-300 gamespeed outside of corruption (feel free to revert this)
+      //factor = factor.times(player.blackHoleNegative);
     } else if (!BlackHoles.arePaused) {
       for (const blackHole of BlackHoles.list) {
         if (!blackHole.isUnlocked) break;
@@ -376,16 +377,12 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         if (!isActive) break;
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
-        if(effects.includes(GAME_SPEED_EFFECT.EXPO_BLACK_HOLE && factor.gte(1))){
+        /*if(ExpoBlackHole(1).isUnlocked && factor.gte(1)){
           for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
             if (!i.isUnlocked) break;
-            const isExpoActive = blackHolesActiveOverride === undefined
-            ? i.isActive
-            : i.id <= expoBlackHolesActiveOverride;
-          if (!isExpoActive) break;
             factor = Decimal.pow(factor, i.power);
           }
-        }
+        }*/
       }
     }
   }
@@ -398,6 +395,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.times(getAdjustedGlyphEffect("timespeed"));
     factor = factor.pow(getAdjustedGlyphEffect("effarigblackhole"));
   }
+
+  if (ExpoBlackHole(1).isActive && !BlackHoles.areNegative) factor = Decimal.pow(factor, ExpoBlackHole(1).power);
 
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;

@@ -283,10 +283,11 @@ class EPMultiplierState extends GameMechanicState {
   constructor() {
     super({});
     this.cachedCost = new Lazy(() => this.costAfterCount(player.epmultUpgrades));
-    this.cachedEffectValue = new Lazy(() => DC.D5.pow(player.epmultUpgrades));
+    this.cachedEffectValue = (player.celestials.pelle.doomed && Ra.unlocks.placeholderP6.isUnlocked) ? new Lazy(() => Decimal.pow(1.5, player.epmultUpgrades)) : new Lazy(() => DC.D5.pow(player.epmultUpgrades));
   }
 
   get isAffordable() {
+    if (Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked && Currency.eternityPoints.gte(this.cost)) return true;
     return !Pelle.isDoomed && !this.isCapped && Currency.eternityPoints.gte(this.cost);
   }
 

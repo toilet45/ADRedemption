@@ -220,7 +220,7 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
-     return this.tier == 8 ? 1e308 : InfinityDimensions.totalDimCap
+     return this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap
   }
 
   get isCapped() {

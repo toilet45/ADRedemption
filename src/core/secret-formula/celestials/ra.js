@@ -110,9 +110,12 @@ export const ra = {
       color: "crimson",
       chunkGain: "Remnants (Only increases in Doomed Reality)",
       memoryGain: "best remnants without galaxy generator",
-      secondaryMemoryChunkGain: "[TBD]",
+      secondaryMemoryChunkGain: "Reality Shards",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () => player.celestials.pelle.remnants,
+      rawMemoryChunksPerSecond: () =>{ 
+        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
+        return x * player.celestials.pelle.remnants 
+      },
       memoryProductionMultiplier: () => 1
     }
   },
@@ -491,7 +494,7 @@ export const ra = {
       reward: "Game Speed cap is removed",
       pet: "enslaved",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     uncap8TdPurchaseMult: {
       id: 16,
@@ -507,12 +510,12 @@ export const ra = {
       reward: "Unlock the 3rd Black Hole which costs Imaginary Machines and boosts Game Speed exponentially instead of multiplicatively",
       pet: "enslaved",
       level: 50,
-      displayIcon: '-'
+      displayIcon: '*'
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
       id2: 0,
-      reward: "Increase double Tachyon Galaxy upgrade cap based on Dilated Time",
+      reward: "Increase Pelle Tachyon Galaxy multiplier upgrade base based on Dilated Time",
       pet: "enslaved",
       level: 65,
       displayIcon: '<i class="fa-solid fa-check"></i>'
@@ -608,7 +611,7 @@ export const ra = {
     rautobuyers: {
       id: 30,
       id2: 0,
-      reward: "Memory Levels, Recollections and Fragmentations are bought automatically",
+      reward: "Memory Levels, Recollections and Fragmentations are bought automatically (kept on Mend).",
       pet: "ra",
       level: 2,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
@@ -855,7 +858,7 @@ export const ra = {
       reward: "Re-enable Tachyon Particle Multiplier in Doomed Reality, but it's decreased to ×1.1",
       pet: "pelle",
       level: 8,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderP5: {
       id: 29,
@@ -868,10 +871,10 @@ export const ra = {
     placeholderP6: {
       id: 30,
       id2: 1,
-      reward: "Doomed Reality no longer disables IP and EP multipliers, but they are decreased to ×1.2 and ×2 respectively",
+      reward: "Doomed Reality no longer disables IP and EP multipliers, but they are decreased to ×1.1 and ×1.5 respectively",
       pet: "pelle",
       level: 15,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderP7: {
       id: 31,

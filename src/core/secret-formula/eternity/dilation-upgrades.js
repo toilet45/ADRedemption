@@ -84,16 +84,16 @@ export const dilationUpgrades = {
     increment: 20,
     incrementSC: 4000,
     description: () => {
-      if (Pelle.isDoomed) return `Multiply the amount of Tachyon Particles gained by ${formatInt(1)}`;
+      if (Pelle.isDoomed) return Ra.unlocks.placeholderP4.isUnlocked ? `Multiply the amount of Tachyon Particles gained by ${format(1.1, 1, 1)}` : `Multiply the amount of Tachyon Particles gained by ${formatInt(1)}`;
       if (Enslaved.isRunning) return `Multiply the amount of Tachyon Particles gained
       by ${Math.pow(3, Enslaved.tachyonNerf).toFixed(2)}`;
       return "Triple the amount of Tachyon Particles gained";
     },
     effect: bought => {
-      if (Pelle.isDoomed) return DC.D1.pow(bought);
+      if (Pelle.isDoomed) return Ra.unlocks.placeholderP4.isUnlocked ? Decimal.pow(1.1, bought) : DC.D1.pow(bought);
       return DC.D3.pow(bought);
     },
-    formatEffect: value => formatX(value, 2),
+    formatEffect: value => formatX(value, 2, 2),
     formatCost: value => format(value, 2),
     purchaseCap: Number.MAX_VALUE, //cap at x1e2000
     pellePurchaseCap: Number.MAX_VALUE,
@@ -186,16 +186,21 @@ export const dilationUpgrades = {
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
     effect: bought => {
-      if (Pelle.isDoomed) return bought + 1;
-      return (bought * 0.1) + 1;
+      let x = Ra.unlocks.twinTachyonGalaxyCapIncrease.isUnlocked ? Math.floor((Decimal.log10(Currency.dilatedTime.value)) / 25000) : 0;
+      if (Pelle.isDoomed) return (bought * (1 + x)) + 1;
+      return (bought * (1 + x) * 0.1) + 1;
     },
     formatEffect: value => {
-      if (Pelle.isDoomed) return `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`;
-      else if (player.dilation.rebuyables[12] >= 10) return `${formatX(value, 2)}`;
-      return `${formatX(value, 2, 1)} ➜ ${formatX(value + 0.1, 2, 1)}`;
+      let x = Ra.unlocks.twinTachyonGalaxyCapIncrease.isUnlocked ? Math.floor((Decimal.log10(Currency.dilatedTime.value)) / 25000) : 0;
+      if (Pelle.isDoomed) return `${formatX((value * (1 + x)), 2)} ➜ ${formatX((value * (1 + x)) + 1, 2, 2)}`;
+      else if (player.dilation.rebuyables[12] >= 10) return `${formatX(value, 2, 2)}`;
+      return `${formatX((value * (1 + x)), 2, 1, 2)} ➜ ${formatX((value * (1 + x)) + 0.1, 2, 2)}`;
     },
     formatCost: value => format(value, 2),
-    purchaseCap: 10,
+    purchaseCap: 10,/*() =>{
+      //let x = Ra.unlocks.twinTachyonGalaxyCapIncrease.isUnlocked ? Math.floor((Decimal.log10(Currency.dilatedTime.value)) / 100) : 0;
+      return 10;// + x;
+    },*/
     pellePurchaseCap: Number.MAX_VALUE,
   }),
   tickspeedPower: rebuyable({

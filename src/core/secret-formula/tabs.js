@@ -522,14 +522,16 @@ export const tabs = [
         component: "CorruptionTab",
         id: 3,
         hidable: true,
+        condition: () => Ra.unlocks.Hostility.isUnlocked,
       },
       {
         key: "kohlerrealm",
-        name: "Kohler's Realm [NYI]",
+        name: "Kohler's Realm",
         symbol: "<i class='fa-solid fa-staff-snake'></i>",
         component: "KohlersRealm",
         id: 4,
         hidable: true,
+        condition: () => Ra.unlocks.kohlersRealmUnlock.isUnlocked,
       },
     ]
   },
@@ -538,7 +540,7 @@ export const tabs = [
     name: "Shop",
     ModernUIClass: "shop",
     hideAt: 1.5,
-    condition: () => false,
+    condition: () => true,
     id: 11,
     hidable: true,
     subtabs: [

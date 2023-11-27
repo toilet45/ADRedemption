@@ -643,6 +643,13 @@ export const migrations = {
     player.expoBlackHolePauseTime = 0;
     player.expoBlackHoleNegative = 1;
   },
+  56: player =>{
+    player.celestials.ra.permanentMemories = {
+      ra2: false,
+      lai50: false,
+      lai65: false,
+    };
+  }
   },
 
   normalizeTimespans(player) {

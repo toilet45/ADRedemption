@@ -15,7 +15,8 @@ export default {
       isAffordable: false,
       multiplier: new Decimal(),
       cost: new Decimal(),
-      isCapped: false
+      isCapped: false,
+      isActiveInDoom: false
     };
   },
   computed: {
@@ -60,6 +61,7 @@ export default {
       this.cost.copyFrom(upgrade.cost);
       this.isAffordable = upgrade.isAffordable;
       this.isCapped = this.upgrade.isCapped;
+      this.isActiveInDoom = Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked;
     },
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();
@@ -75,7 +77,12 @@ export default {
       :class="classObject"
       @click="purchaseUpgrade"
     >
-      <div :class="{ 'o-pelle-disabled': isDoomed }">
+      <div v-if="isActiveInDoom">
+        Multiply Eternity Points from all sources by {{ formatX(1.5, 1, 1) }}
+        <br>
+        {{ effectLabel }} {{ formatX(multiplier, 2, 1) }}
+      </div>
+      <div :class="{ 'o-pelle-disabled': isDoomed }" v-else>
         Multiply Eternity Points from all sources by {{ formatX(5) }}
         <br>
         {{ effectLabel }} {{ formatX(multiplier, 2, 0) }}

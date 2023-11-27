@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       baseSpeed: new Decimal(),
+      baseSpeedPreExpo: new Decimal(),
       pulsedSpeed: new Decimal(),
       hasSeenAlteredSpeed: false,
       isStopped: false,
@@ -21,24 +22,29 @@ export default {
         return "Stopped (storing real time)";
       }
       const speed = this.formatNumber(this.baseSpeed);
+      const speedPreExpo = this.formatNumber(Decimal.pow(this.baseSpeed, 1 / this.BH3Power));
       if (this.isEC12) {
         return `${speed} (fixed)`;
       }
+      if (this.BH3Power > 1 && this.baseSpeed.gte(1)) return `${speedPreExpo}`;
       return `${speed}`;
     },
     pulseSpeedText() {
       return `${this.formatNumber(this.pulsedSpeed)}`;
     },
     baseText() {
+      let x = Decimal.pow(this.baseSpeedPreExpo, this.BH3Power);
       if (!this.hasSeenAlteredSpeed) return null;
+      if (this.isStopped) return `Game speed is altered: ${this.baseSpeedText}`
       return this.baseSpeed.eq(1)
         ? "The game is running at normal speed."
-        : this.hasBH3 ? `Game speed is altered: ${this.baseSpeedText}, ${formatPow(this.BH3Power, 3, 3)}` : `Game speed is altered: ${this.baseSpeedText}`;
+        : this.hasBH3 && this.baseSpeed.gte(1) ? `Game speed is altered: (${this.baseSpeedText})${formatPow(this.BH3Power, 3, 3)}. (${format(x, 2, 2)} total)`: `Game speed is altered: ${this.baseSpeedText}`;
     }
   },
   methods: {
     update() {
       this.baseSpeed.copyFrom(getGameSpeedupFactor());
+      this.baseSpeedPreExpo = Decimal.pow(this.baseSpeed, 1 / this.BH3Power);
       this.pulsedSpeed.copyFrom(getGameSpeedupForDisplay());
       this.hasSeenAlteredSpeed = PlayerProgress.seenAlteredSpeed();
       this.isStopped = Enslaved.isStoringRealTime;

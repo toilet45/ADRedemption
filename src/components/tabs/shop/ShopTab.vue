@@ -18,7 +18,7 @@ export default {
     Loading,
     PrimaryButton,
   },
-  data() {
+  /*data() {
     return {
       availableSTD: 0,
       spentSTD: 0,
@@ -31,7 +31,7 @@ export default {
       respecTimeStr: "",
     };
   },
-  computed: {
+  /*computed: {
     STEAM() {
       return STEAM;
     },
@@ -90,7 +90,7 @@ export default {
         "o-primary-btn--disabled": !this.loggedIn || !this.canRespec
       };
     }
-  },
+  },*/
 };
 </script>
 
