@@ -34,7 +34,8 @@ export function getTickSpeedMultiplier() {
     Achievement(178),
     InfinityChallenge(5).reward,
     PelleUpgrade.galaxyPower,
-    PelleRifts.decay.milestones[1]
+    PelleRifts.decay.milestones[1],
+    Ra.unlocks.gamespeedGalaxyBoost
   );
   if (galaxies < 3) {
     // Magic numbers are to retain balancing from before while displaying
@@ -209,6 +210,9 @@ export const FreeTickspeed = {
     let softcap = FreeTickspeed.BASE_SOFTCAP;
     if (Enslaved.has(ENSLAVED_UNLOCKS.FREE_TICKSPEED_SOFTCAP)) {
       softcap += 100000;
+    }
+    if (Ra.unlocks.freeTickspeedSoftcapDelay.isUnlocked){
+      softcap += (10000 * Tesseracts.effectiveCount);
     }
     return softcap;
   },

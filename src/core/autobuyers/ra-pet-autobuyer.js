@@ -30,6 +30,10 @@ export class RaPetAutobuyerState extends AutobuyerState{
         return 3;
     }
 
+    get isUnlocked() {
+        return player.celestials.ra.permanentMemories.ra2 || Ra.pets.ra.level >= 2;
+    }
+
 
 
     tick(){

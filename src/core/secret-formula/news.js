@@ -2593,11 +2593,15 @@ export const news = [
       let x = player.records.totalTimePlayed.div(8.64e7);
       return `Post a <span style='color: #FBC21B; text-shadow: 0px 1px 0px black, 1px 0px 0px black, 1px 1px 0px black,
       0px -1px 0px black, -1px 0px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black'>
-      \uE010</span> for every day Hexa delays the update. (Hexa has recived ${format(x, 2)} 
+      \uE010</span> for every day Hexa delays the update. (Hexa has recived ${format(x, 2, 2)} 
       <span style='color: #FBC21B; text-shadow: 0px 1px 0px black, 1px 0px 0px black, 1px 1px 0px black,
       0px -1px 0px black, -1px 0px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black'>
       \uE010</span>s)`;
     }
+  },
+  {
+    id: "a398",
+    text: "They say if you want an update, and ping Hexa three times in a row you'll..."
   },
   {
     id: "l1",

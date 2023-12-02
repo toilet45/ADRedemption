@@ -4,7 +4,7 @@ export class TeresaMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'teresa'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Teresa's Memory"; }
@@ -16,7 +16,7 @@ export class EffarigMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'effarig'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Effarig's Memory"; }
@@ -28,7 +28,7 @@ export class EnslavedMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'enslaved'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Nameless's Memory"; }
@@ -40,7 +40,7 @@ export class VMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'v'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "V's Memory"; }
@@ -52,7 +52,7 @@ export class RaMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'ra'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Ra's Memory"; }
@@ -64,7 +64,7 @@ export class LaitelaMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'laitela'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Lai'tela's Memory"; }
@@ -76,7 +76,7 @@ export class PelleMemoryAutobuyerState extends RaPetAutobuyerState{
     get _petName(){ return 'pelle'; }
 
     get isUnlocked(){
-        return Ra.unlocks.rautobuyers.isUnlocked;
+        return Ra.unlocks.rautobuyers.isUnlocked || player.celestials.ra.permanentMemories.ra2;
     }
 
     static get autobuyerGroupName(){ return "Pelle's Memory"; }

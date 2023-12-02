@@ -114,7 +114,7 @@ class RaPetState extends GameMechanicState {
   }
 
   set memories(value) {
-    this.data.memories = value > 1e300 ? 1e300 : value;
+    this.data.memories = Math.min(value, 1e300);
   }
 
   get memoryChunks() {
@@ -122,7 +122,7 @@ class RaPetState extends GameMechanicState {
   }
 
   set memoryChunks(value) {
-    this.data.memoryChunks = value;
+    this.data.memoryChunks = Math.min(1e300, value);
   }
 
   get requiredMemories() {
@@ -135,11 +135,13 @@ class RaPetState extends GameMechanicState {
       Math.max(Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality), 1);
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
+    if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
+    if (!Ra.isRunning && Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) res /= 100;
     return res;
   }
 
   get canGetMemoryChunks() {
-    return this.isUnlocked && (Ra.isRunning || (this.id === "pelle" && Pelle.isDoomed));
+    return this.isUnlocked && (Ra.isRunning || (this.id === "pelle" && Pelle.isDoomed) || Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) && this.level < Ra.levelCap;
   }
 
   get hasRemembrance() {

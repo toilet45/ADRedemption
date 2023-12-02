@@ -37,6 +37,10 @@ class EternityChallengeRewardState extends GameMechanicState {
   get isEffectActive() {
     return this._challenge.completions > 0;
   }
+
+  get isVEffectActive(){
+    return this._challenge.completions > 0 && Ra.unlocks.imporvedECRewards.isUnlocked;   
+  }
 }
 
 export class EternityChallengeState extends GameMechanicState {
@@ -44,6 +48,7 @@ export class EternityChallengeState extends GameMechanicState {
     super(config);
     this._fullId = `eterc${this.id}`;
     this._reward = new EternityChallengeRewardState(config.reward, this);
+    this._vReward = new EternityChallengeRewardState(config.vReward, this);
   }
 
   get fullId() {
@@ -225,6 +230,10 @@ export class EternityChallengeState extends GameMechanicState {
    */
   get reward() {
     return this._reward;
+  }
+
+  get vReward() {
+    return this._vReward;
   }
 
   get isWithinRestriction() {

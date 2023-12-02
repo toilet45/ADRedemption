@@ -36,7 +36,7 @@ window.TimeSpan = class TimeSpan {
    * @returns {TimeSpan}
    */
   static fromSeconds(value) {
-    return new TimeSpan(new Decimal(value).times(1e4));
+    return new TimeSpan(new Decimal(value).times(1e3));
   }
 
   /**

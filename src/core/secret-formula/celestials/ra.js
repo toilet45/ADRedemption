@@ -9,7 +9,7 @@ export const ra = {
       secondaryMemoryChunkGain: "Perk Points",
       requiredUnlock: () => undefined,
       rawMemoryChunksPerSecond: () => {
-        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.perkPoints.value), 1) : 1;
+        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.log10(Math.max(1, Currency.perkPoints.value)) : 1;
         return 4 * Math.pow(Currency.eternityPoints.value.pLog10() / 1e4, 3) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
@@ -86,7 +86,7 @@ export const ra = {
           x += Ra.pets.pelle.memories
         }
         x /= 7;
-        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, 1.5) * Math.max(Math.log10(x), 1);
+        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, 1.5) * Math.max(Math.log10(Math.min(0, x)), 1);
       },
       memoryProductionMultiplier: () => 1
     },
@@ -340,7 +340,7 @@ export const ra = {
       effects: {
         ttGen: () => Math.pow(10, 5 * Ra.theoremBoostFactor()),
         eternity: () => Math.pow(10, 2 * Ra.theoremBoostFactor()),
-        infinity: () => Math.pow(10, 15 * Ra.theoremBoostFactor()),
+        infinity: () => Decimal.pow(10, 15 * Ra.theoremBoostFactor()),
         replicanti: () => Decimal.pow(10, 20 * Ra.theoremBoostFactor()),
         dilatedTime: () => Math.pow(10, 3 * Ra.theoremBoostFactor()),
         memories: () => 1 + Ra.theoremBoostFactor() / 50,
@@ -411,7 +411,8 @@ export const ra = {
       reward: "Reality Machines boost Infinity Point and Eternity Point gain",
       pet: "teresa",
       level: 75,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*',
+      effect: () => Decimal.log10(Currency.realityMachines) / 100
     },
     realitiesBoostInfinityAndEternityProduction: {
       id: 5,
@@ -444,7 +445,7 @@ export const ra = {
       reward: "You gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     harshInstabilityDelay: {
       id: 10,
@@ -466,10 +467,10 @@ export const ra = {
     effarigGlyphIncreaseImCap: {
       id: 12,
       id2: 0,
-      reward: "Effarig Glyphs' first effect increases Imaginary Machine cap",
+      reward: "Effarig Glyphs' first effect also increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     maxGlyphRarityIncrease: {
       id: 13,
@@ -518,7 +519,7 @@ export const ra = {
       reward: "Increase Pelle Tachyon Galaxy multiplier upgrade base based on Dilated Time",
       pet: "enslaved",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     gamespeedGalaxyBoost: {
       id: 19,
@@ -526,7 +527,8 @@ export const ra = {
       reward: "Game Speed increases Galaxy strength",
       pet: "enslaved",
       level: 75,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*',
+      effect: () => Math.max(1 ,1 + (Decimal.log10(getGameSpeedupFactor()) / 1000)) //this shouldn't be 100% until e1000 gamespeed
     },
     freeTickspeedSoftcapDelay: {
       id: 20,
@@ -534,7 +536,7 @@ export const ra = {
       reward: "Tesseracts increase free tickspeed upgrade softcap",
       pet: "enslaved",
       level: 90,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     improvedIpowConversion: {
       id: 21,
@@ -611,7 +613,7 @@ export const ra = {
     rautobuyers: {
       id: 30,
       id2: 0,
-      reward: "Memory Levels, Recollections and Fragmentations are bought automatically (kept on Mend).",
+      reward: "Unlock Autobuyers for Memory Levels, Recollections and Fragmentations (kept on Mend).",
       pet: "ra",
       level: 2,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
@@ -622,7 +624,7 @@ export const ra = {
       reward: "All Memory Chunks produce more Memories based on Imaginary Machines",
       pet: "ra",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     upgradesDontSpendMems: {
       id: 0,
@@ -654,7 +656,7 @@ export const ra = {
       reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate",
       pet: "ra",
       level: 25,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     imaginaryBoostsRa: {
       id: 4,

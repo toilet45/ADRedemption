@@ -46,7 +46,8 @@ export const MachineHandler = {
   },
 
   get currentIMCap() {
-    return player.reality.iMCap * ImaginaryUpgrade(13).effectOrDefault(1);
+    let x = Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? Math.pow(getAdjustedGlyphEffect("effarigrm"), 0.5) : 1;
+    return player.reality.iMCap * ImaginaryUpgrade(13).effectOrDefault(1) * x;
   },
 
   // This is iM cap based on in-game values at that instant, may be lower than the actual cap
