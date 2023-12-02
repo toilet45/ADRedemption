@@ -82,7 +82,7 @@ export const normalTimeStudies = [
       let x = Math.max(1 + (Currency.infinitiesTotal.value.pLog10() / 10000) * Math.pow(Ra.pets.teresa.level, 0.2) / 150, 1);
       return BreakInfinityUpgrade.infinitiedMult.chargedEffect.isEffectActive ? `Powers up multipliers that are based on your Infinities (Bonuses ^(${formatInt(4)}^${format(x, 3, 3)}))` : `Powers up multipliers that are based on your Infinities (Bonuses ${formatPow(4)})`
     },
-    effect: () => 4 ** BreakInfinityUpgrade.infinitiedMult.chargedEffect.effectValue
+    effect: () => Math.min(4 ** BreakInfinityUpgrade.infinitiedMult.chargedEffect.effectValue, 1e300)
   },
   {
     id: 32,

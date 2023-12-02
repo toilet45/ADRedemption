@@ -14,7 +14,12 @@ export const eternityChallenges = [
       description: "Time Dimension multiplier based on time spent this Eternity",
       effect: completions =>
         Decimal.pow(Decimal.max(player.records.thisEternity.time.div(10), 0.9), 0.3 + (completions * 0.05)),
-      formatEffect: value => formatX(value, 2, 1)
+      formatEffect: value => formatX(value, 2, 1),
+    },
+    vReward:{
+      description: `⌬ Time Dimension power based on real time spent this Mend ⌬`,
+      effect: completions => 1 + (Math.log10(player.records.thisMend.realTime + 1) / 10),
+      formatEffect: value => formatPow(value, 2, 1),
     },
     // These will get notation-formatted and scrambled between for the final goal
     scrambleText: ["1e2600", "1e201600"],
@@ -29,7 +34,12 @@ export const eternityChallenges = [
       description: "1st Infinity Dimension multiplier based on Infinity Power",
       effect: completions => Currency.infinityPower.value.pow(1.5 / (700 - completions * 100)).clampMin(1),
       cap: DC.E100,
-      formatEffect: value => formatX(value, 2, 1)
+      formatEffect: value => formatX(value, 2, 1),
+    },
+    vReward:{
+      description: `⌬ Infinity Dimension power based on Infinity Power ⌬`,
+      effect: completions => 1 + (Math.log10(Decimal.log10(Currency.infinityPower.value.add(1))) / 50),
+      formatEffect: value => formatPow(value, 2, 1)
     }
   },
   {
@@ -41,7 +51,12 @@ export const eternityChallenges = [
     reward: {
       description: () => `Increase the multiplier for buying ${formatInt(10)} Antimatter Dimensions`,
       effect: completions => completions * 0.72,
-      formatEffect: value => `+${format(value, 2, 2)}`
+      formatEffect: value => `+${format(value, 2, 2)}`,
+    },
+    vReward:{
+      description: `⌬ All per-purchase multipliers raised based on completions ⌬`,
+      formatEffect: value => `${formatPow(value, 3, 3)}`,
+      effect: completions => 1 + (0.005 * completions),
     }
   },
   {
@@ -60,7 +75,12 @@ export const eternityChallenges = [
       description: "Infinity Dimension multiplier based on unspent IP",
       effect: completions => Currency.infinityPoints.value.pow(0.003 + completions * 0.002),
       cap: DC.E200,
-      formatEffect: value => formatX(value, 2, 1)
+      formatEffect: value => formatX(value, 2, 1),
+    },
+    vReward:{
+      description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
+      effect: completions => 1 + (Decimal.log10(Currency.mendingPoints.value) / 1000),
+      formatEffect: value => formatPow(value, 3, 3),
     }
   },
   {
@@ -73,7 +93,12 @@ export const eternityChallenges = [
     reward: {
       description: "Distant Galaxy cost scaling starts later",
       effect: completions => completions * 5,
-      formatEffect: value => `${formatInt(value)} AG later`
+      formatEffect: value => `${formatInt(value)} AG later`,
+    },
+    vReward:{
+      description: `⌬ Obscure Galaxy scaling starts later based on completions ⌬`,
+      effect: completions => 5000 * completions,
+      formatEffect: value => `${formatInt(value)} AG later`,
     }
   },
   {
@@ -96,6 +121,11 @@ export const eternityChallenges = [
         return `-${format(value, 2, 1)} (${formatX(total, 2, 1)} total)`;
       }
     },
+    vReward:{
+      description: `⌬ Continuum multiplier based on completions ⌬`,
+      effect: completions => 1 + (0.1 * completions),
+      formatEffect: value => `${formatX(value, 2, 2)}`
+    },
     scrambleText: ["cannot gain Antimatter Galaxies normally", "c㏰'퐚 gai鸭 Anti꟢at랜erﻪﶓa⁍axie㮾 䂇orma㦂l"],
   },
   {
@@ -110,7 +140,12 @@ export const eternityChallenges = [
     reward: {
       description: "1st Time Dimension produces 8th Infinity Dimensions",
       effect: completions => TimeDimension(1).productionPerSecond.pow(completions * 0.2).minus(1).clampMin(0),
-      formatEffect: value => `${format(value, 2, 1)} per second`
+      formatEffect: value => `${format(value, 2, 1)} per second`,
+    },
+    vReward:{
+      description: "⌬ 1st Dark Matter Dimension produces 8th Time dimension at a heavily reduced rate ⌬",
+      formatEffect: value => `${format(value, 2, 2)} per second`,
+      effect: 0.02
     }
   },
   {
@@ -127,6 +162,14 @@ export const eternityChallenges = [
         return Math.max(0, Math.pow(infinityPower, 0.03 * completions) - 1);
       },
       formatEffect: value => formatPercents(value, 2)
+    },
+    vReward: {
+      description: "⌬ Time Shards strengthen all Galaxy types ⌬",
+      effect: completions => {
+        const timeShards = Math.log10(Currency.timeShards.value.pLog10() + 1);
+        return Math.max(0, Math.pow(timeShards, 0.03 * completions) - 1);
+      },
+      formatEffect: value => formatPercents(value, 2)
     }
   },
   {
@@ -141,6 +184,11 @@ export const eternityChallenges = [
       effect: completions => Currency.timeShards.value.pow(completions * 0.1).clampMin(1),
       cap: DC.E400,
       formatEffect: value => formatX(value, 2, 1)
+    },
+    vReward:{
+      description: "⌬ Infinity Dimension multiplier based on Tickspeed ⌬",
+      effect: completions => Decimal.pow(10, Tickspeed.totalUpgrades),
+      formatEffect: value => formatX(value, 3, 3)
     }
   },
   {
@@ -168,6 +216,11 @@ export const eternityChallenges = [
           ? `${formatX(value.pow(1 / TimeStudy(31).effectValue), 2, 1)} (After TS31: ${mult})`
           : mult;
       }
+    },
+    vReward:{
+      description: "⌬ Time Dimension power based on Infinities ⌬",
+      effect: completions => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 50000),
+      formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
   {
@@ -186,6 +239,11 @@ export const eternityChallenges = [
         const total = Math.round(Player.tickSpeedMultDecrease + Effects.sum(EternityChallenge(11).reward)) - value;
         return `-${format(value, 2, 2)} (${formatX(total, 2, 2)} total)`;
       }
+    },
+    vReward:{
+      description: "⌬ Reduce free Tickspeed scaling ⌬",
+      effect: completions => 1 - (0.0005 * completions),
+      formatEffect: value => `-${format(value, 3, 3)}`
     }
   },
   {
@@ -206,6 +264,11 @@ export const eternityChallenges = [
       description: "Infinity Dimension cost multipliers are reduced",
       effect: completions => 1 - completions * 0.008,
       formatEffect: value => `x${formatPow(value, 3, 3)}`
+    },
+    vReward:{
+      description: "⌬ Increase Infinity Dimension caps based on completions ⌬",
+      effect: completions => Math.pow(1, 1/(1-(0.08 * completions))),
+      formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   }
 ];

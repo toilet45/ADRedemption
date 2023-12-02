@@ -186,7 +186,7 @@ export const dilationUpgrades = {
     pelleOnly: true,
     description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
     effect: bought => {
-      let x = Ra.unlocks.twinTachyonGalaxyCapIncrease.isUnlocked ? Math.floor((Decimal.log10(Currency.dilatedTime.value)) / 25000) : 0;
+      let x = Ra.unlocks.twinTachyonGalaxyCapIncrease.isUnlocked ? (Math.min((Decimal.log10((Currency.dilatedTime.value.clampMin(1)))) / 25000, 2)) : 0;
       if (Pelle.isDoomed) return (bought * (1 + x)) + 1;
       return (bought * (1 + x) * 0.1) + 1;
     },

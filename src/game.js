@@ -110,6 +110,9 @@ export function gainedInfinityPoints() {
   if(MendingMilestone.one.isReached){
     ip = ip.times(1e20);
   }
+  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
+    ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value) / 100);
+  }
   if (Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY) {
     ip = ip.min(DC.E200);
   }
@@ -175,6 +178,9 @@ export function gainedEternityPoints() {
     gainedInfinityPoints()).log10() / (308 - PelleRifts.recursion.effectValue.toNumber()) - 0.7).times(totalEPMult());
   if (MendingMilestone.one.isReached){
     ep = ep.times(1e5);
+  }
+  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
+    ep = Decimal.pow(ep, Decimal.log10(Currency.realityMachines.value) / 100);
   }
   if (Teresa.isRunning) {
     ep = ep.pow(0.55);
@@ -610,6 +616,10 @@ export function gameLoop(passDiff, options = {}) {
 
   if(Ra.unlocks.unlock3rdBH.isUnlocked){
     ExpoBlackHoles.unlock();
+  }
+
+  if(Ra.unlocks.rautobuyers.isUnlocked){
+    player.celestials.ra.permanentMemories.ra2 = true;
   }
 
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
@@ -1133,7 +1143,7 @@ export function simulateTime(seconds, real, fast) {
           GameIntervals.stop();
           ui.$viewModel.modal.progressBar = {
             label: "Offline Progress Simulation",
-            info: () => `The game is being run at a lower accuracy in order to quickly calculate the resources you
+            info: `The game is being run at a lower accuracy in order to quickly calculate the resources you
               gained while you were away. See the How To Play entry on "Offline Progress" for technical details. If
               you are impatient and want to get back to the game sooner, you can click the "Speed up" button to
               simulate the rest of the time with half as many ticks (down to a minimum of ${formatInt(500)} ticks
