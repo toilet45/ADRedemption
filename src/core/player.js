@@ -661,6 +661,7 @@ window.player = {
     autoCollapse: false,
     autoAutoClean: false,
     applyFilterToPurge: false,
+    autoEquip: 0,
     moveGlyphsOnProtection: false,
     perkPoints: 0,
     unlockedEC: 0,

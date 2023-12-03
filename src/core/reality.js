@@ -1,5 +1,6 @@
 import { DC } from "./constants";
 import { Currency } from "./currency";
+import { Glyphs } from "./globals";
 import { MendingUpgrade, MendingUpgrades } from "./mending-upgrades";
 import { PlayerProgress } from "./player-progress";
 
@@ -388,6 +389,7 @@ export function beginProcessReality(realityProps) {
         GlyphSelection.select(Math.floor(Math.random() * GlyphSelection.choiceCount), false);
       }
     }
+    Glyphs.processAutoEquipAfterReality();
     Glyphs.processSortingAfterReality();
     return;
   }
