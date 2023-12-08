@@ -113,7 +113,7 @@ export default {
       if (this.tier > 4) this.ttCost = TimeStudy.timeDimension(this.tier).cost;
       this.currTT.copyFrom(Currency.timeTheorems.value);
       this.ttGen.copyFrom(getTTPerSecond().times(getGameSpeedupFactor()));
-      this.isContinuumActive = false;//Ra.continuumActive;
+      this.isContinuumActive = Ra.continuumActive;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buyTimeDimension() {

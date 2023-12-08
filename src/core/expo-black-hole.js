@@ -84,9 +84,9 @@ class ExpoBlackHoleState {
       id: this.id,
       getAmount: () => this._data.powerUpgrades,
       setAmount: amount => this._data.powerUpgrades = amount,
-      calculateValue: amount => Math.pow(1.05, amount),
+      calculateValue: amount => Math.pow(1.05, amount), //add softcap at (^1.3)
       initialCost: 1e15 * expoBlackHoleCostMultipliers[id],
-      costMult: 1000,
+      costMult: 1e6, //cost scaling at 1e50 iM?
       hasAutobuyer: true
     });
     // Duration: starts at 10, x1.5 per upgrade, cost goes x4, starts at 10

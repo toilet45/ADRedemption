@@ -114,7 +114,7 @@ export default {
       this.isAutobuyerOn = autobuyer.isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;
-      this.isContinuumActive = false;//Ra.continuumActive;
+      this.isContinuumActive = Ra.continuumActive;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buySingleInfinityDimension() {

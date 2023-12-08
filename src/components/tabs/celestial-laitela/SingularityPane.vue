@@ -20,6 +20,7 @@ export default {
       hasAutoSingularity: false,
       nextLowerStep: 0,
       willCondenseOnDecrease: false,
+      extendedCap: 0,
     };
   },
   computed: {
@@ -41,7 +42,7 @@ export default {
           ? `(Auto-condensing in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`
           : "(Will immediately auto-condense)";
       }
-      return `(Enough Dark Energy in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`;
+      return singularityTime < 1e-4 ? `(Enough Dark Energy in < ${(formatInt(1))} µs)`: `(Enough Dark Energy in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`;
     },
     baseSingularityTime() {
       return TimeSpan.fromSeconds(this.baseTimeToSingularity).toStringShort();
@@ -67,7 +68,7 @@ export default {
         : null;
     },
     increaseTooltip() {
-      return this.singularityCapIncreases >= 50
+      return this.singularityCapIncreases >= 50 + (Ra.unlocks.increaseSingLimits.isUnlocked ? 5 * Math.floor((Ra.pets.laitela.level - 40) / 5) + 1 : 0)
         ? "You cannot increase the cap any further!"
         : null;
     }
@@ -92,6 +93,7 @@ export default {
       this.hasAutoSingularity = Number.isFinite(this.autoSingularityFactor);
       this.nextLowerStep = this.singularityCap * this.autoSingularityFactor / 10;
       this.willCondenseOnDecrease = this.isAutoEnabled && this.darkEnergy > this.nextLowerStep;
+      this.extendedCap = Ra.unlocks.increaseSingLimits.isUnlocked ? 5 * Math.floor((Ra.pets.laitela.level - 40) / 5) + 1 : 0;
     },
     doSingularity() {
       Singularity.perform();
@@ -153,7 +155,7 @@ export default {
         </button>
         <button
           class="c-laitela-singularity__cap-control"
-          :class="{ 'c-laitela-singularity__cap-control--available' : singularityCapIncreases < 50 }"
+          :class="{ 'c-laitela-singularity__cap-control--available' : singularityCapIncreases < 50 + extendedCap }"
           :ach-tooltip="increaseTooltip"
           @click="increaseCap"
         >

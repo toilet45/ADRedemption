@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { Ra } from "./globals";
 
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
@@ -13,10 +14,20 @@ export function effectiveBaseGalaxies() {
     ReplicantiUpgrade.galaxies.value);
   // Effects.sum is intentional here - if EC8 is not completed,
   // this value should not be contributed to total replicanti galaxies
-  replicantiGalaxies += nonActivePathReplicantiGalaxies * Effects.sum(EternityChallenge(8).reward);
+  if(EternityChallenge(8).completions >= 1){
+    if(!Ra.unlocks.improvedECRewards.isUnlocked) replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).reward.effectValue;
+    else replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).vReward.effectValue;
+  }
   let freeGalaxies = player.dilation.totalTachyonGalaxies;
   freeGalaxies *= 1 + Math.max(0, Replicanti.amount.log10() / 1e6) * AlchemyResource.alternation.effectValue;
-  return Math.max(player.galaxies + GalaxyGenerator.galaxies + replicantiGalaxies + freeGalaxies, 0);
+  let x = player.galaxies;
+  let y = GalaxyGenerator.galaxies;
+  if(Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(8).completions >=1){
+    freeGalaxies *= 1 + EternityChallenge(8).vReward.effectValue;
+    x *= 1 + EternityChallenge(8).vReward.effectValue;
+    y *= 1 + EternityChallenge(8).vReward.effectValue;
+  }
+  return Math.max(x + y + replicantiGalaxies + freeGalaxies, 0);
 }
 
 export function getTickSpeedMultiplier() {
@@ -218,6 +229,8 @@ export const FreeTickspeed = {
   },
 
   fromShards(shards) {
+    let y = this.GROWTH_EXP;
+    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(11).completions >= 1) y = y ** EternityChallenge(11).vReward.effectValue; 
     const tickmult = (1 + (Effects.min(1.33, TimeStudy(171)) - 1) *
       Math.max(getAdjustedGlyphEffect("cursedtickspeed"), 1));
     const logTickmult = Math.log(tickmult);
@@ -235,21 +248,21 @@ export const FreeTickspeed = {
     // In the following we're implicitly applying the function (ln(x) - priceToCap) / logTickmult to all costs,
     // so, for example, if the cost is 1 that means it's actually exp(priceToCap) * tickmult.
     const desiredCost = (logShards - priceToCap) / logTickmult;
-    const costFormulaCoefficient = FreeTickspeed.GROWTH_RATE / FreeTickspeed.GROWTH_EXP / logTickmult;
+    const costFormulaCoefficient = FreeTickspeed.GROWTH_RATE / y / logTickmult;
     // In the following we're implicitly subtracting softcap from bought,
     // so, for example, if bought is 1 that means it's actually softcap + 1.
     // The first term (the big one) is the asymptotically more important term (since FreeTickspeed.GROWTH_EXP > 1),
     // but is small initially. The second term allows us to continue the pre-cap free tickspeed upgrade scaling
     // of tickmult per upgrade.
     const boughtToCost = bought => costFormulaCoefficient * Math.pow(
-      Math.max(bought, 0), FreeTickspeed.GROWTH_EXP) + bought;
-    const derivativeOfBoughtToCost = x => FreeTickspeed.GROWTH_EXP * costFormulaCoefficient * Math.pow(
-      Math.max(x, 0), FreeTickspeed.GROWTH_EXP - 1) + 1;
+      Math.max(bought, 0), y) + bought;
+    const derivativeOfBoughtToCost = x => x * costFormulaCoefficient * Math.pow(
+      Math.max(x, 0), y - 1) + 1;
     const newtonsMethod = bought => bought - (boughtToCost(bought) - desiredCost) / derivativeOfBoughtToCost(bought);
     let oldApproximation;
     let approximation = Math.min(
       desiredCost,
-      Math.pow(desiredCost / costFormulaCoefficient, 1 / FreeTickspeed.GROWTH_EXP)
+      Math.pow(desiredCost / costFormulaCoefficient, 1 / y)
     );
     let counter = 0;
     // The bought formula is concave upwards. We start with an over-estimate; when using newton's method,

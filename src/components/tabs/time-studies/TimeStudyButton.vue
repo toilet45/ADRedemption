@@ -82,6 +82,10 @@ export default {
           return "o-time-study-dilation";
         case TIME_STUDY_TYPE.TRIAD:
           return "o-time-study-triad";
+        case TIME_STUDY_TYPE.MYRIAD:
+          return "o-time-study-myriad";
+        case TIME_STUDY_TYPE.KOHLER_EXCLUSIVE:
+          return "o-time-study-kohler";
       }
       return "";
     },

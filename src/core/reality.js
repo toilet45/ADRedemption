@@ -694,6 +694,7 @@ export function finishProcessReality(realityProps) {
   player.records.thisInfinity.maxAM = DC.D0;
   player.records.thisEternity.maxAM = DC.D0;
   player.records.thisReality.maxDT = DC.D0;
+  player.records.thisReality.remWithoutGG = 0;
   player.dilation.lastEP = DC.DM1;
   Currency.antimatter.reset();
   Enslaved.autoReleaseTick = 0;

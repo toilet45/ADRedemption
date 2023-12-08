@@ -584,3 +584,43 @@
   transition: opacity 1s;
   transition-delay: 1s;
 }
+
+.o-time-study-myriad--available {
+  color: #FF8000;
+  background: black;
+  border-color: black;
+  animation: a-time-study 1.5s infinite;
+}
+
+.o-time-study-myriad--available:hover {
+  color: black;
+  background: #FF8000;
+}
+
+.o-time-study-myriad--unavailable {
+  background-color: #a8a494;
+}
+
+.o-time-study-myriad--unavailable {
+  background-color: #c4b2a7;
+}
+
+.o-time-study-kohler--available {
+  color: rgb(255, 0, 98);
+  background: black;
+  border-color: black;
+  animation: a-time-study 1.5s infinite;
+}
+
+.o-time-study-kohler--available:hover {
+  color: black;
+  background: rgb(255, 0, 98);
+}
+
+.o-time-study-kohler--unavailable {
+  background-color: #a8a494;
+}
+
+.o-time-study-kohler--unavailable {
+  background-color: #c4a7a7;
+}

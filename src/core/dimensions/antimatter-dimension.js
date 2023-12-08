@@ -638,9 +638,10 @@ export const AntimatterDimensions = {
 
     let mult = DC.D2.plusEffectsOf(
       Achievement(141).effects.buyTenMult,
-      EternityChallenge(3).reward
     );
-
+    if(!Ra.unlocks.improvedECRewards.isUnlocked){
+      mult = mult.plusEffectsOf(EternityChallenge(3).reward);
+    }
     mult = mult.timesEffectsOf(
       InfinityUpgrade.buy10Mult,
       Achievement(58)
@@ -649,6 +650,9 @@ export const AntimatterDimensions = {
     mult = mult.pow(getAdjustedGlyphEffect("effarigforgotten")).powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
     mult = mult.pow(ImaginaryUpgrade(14).effectOrDefault(1));
 
+    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(3).completions >= 1){
+      mult = mult.pow(EternityChallenge(3).vReward.effectValue);
+    }
     return mult;
   },
 

@@ -26,6 +26,10 @@ export class DarkMatterDimensionState extends DimensionState {
     super(() => player.celestials.laitela.dimensions, tier);
   }
 
+  productionForDiff(diff) {
+    return this.productionPerSecond * diff / 1000;
+  }
+
   // Does not include DM, only DE per second
   get productionPerSecond() { return this.powerDE * 1000 / this.interval; }
 
@@ -269,6 +273,9 @@ export const DarkMatterDimensions = {
     if (SingularityMilestone.dim4Generation.canBeApplied && Laitela.annihilationUnlocked) {
       DarkMatterDimension(4).amount = DarkMatterDimension(4).amount
         .plus(SingularityMilestone.dim4Generation.effectValue * realDiff / 1000);
+    }
+    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) {
+      DarkMatterDimension(1).produceDimensions(TimeDimension(8), realDiff / 50);
     }
   },
 

@@ -182,7 +182,7 @@ export const TD = {
       }
       return Decimal.pow(allMult, dim ? 1 : MultiplierTabHelper.activeDimCount("TD"));
     },
-    isActive: () => EternityChallenge(1).completions > 0,
+    isActive: () => EternityChallenge(1).completions > 0,// && !Ra.unlocks.improvedECRewards.isUnlocked,
     icon: MultiplierTabIcons.CHALLENGE("eternity")
   },
   tickspeed: {
@@ -250,6 +250,18 @@ export const TD = {
       dim ? 1 : MultiplierTabHelper.activeDimCount("TD")),
     isActive: () => ShopPurchaseData.totalSTD > 0,
     icon: MultiplierTabIcons.IAP,
+  },
+  effarig65:{
+    name: "Effarig Level 65",
+    powValue: () => 1 + ((Currency.relicShards.value.clampMin(1)).log10() / 1337),
+    isActive: () => Ra.unlocks.relicShardBoost.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_RA,
+  },
+  v50:{
+    name: "V Level 50",
+    powValue: () => Math.pow(VUnlocks.adPow.effectValue, 0.5),
+    isActive: () => Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_V
   },
 
   nerfV: {

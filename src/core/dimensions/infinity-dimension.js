@@ -11,8 +11,6 @@ export function infinityDimensionCommonMultiplier() {
       TimeStudy(162),
       InfinityChallenge(1).reward,
       InfinityChallenge(6).reward,
-      EternityChallenge(4).reward,
-      EternityChallenge(9).reward,
       EternityUpgrade.idMultEP,
       EternityUpgrade.idMultEternities,
       EternityUpgrade.idMultICRecords,
@@ -20,9 +18,22 @@ export function infinityDimensionCommonMultiplier() {
       ImaginaryUpgrade(8),
       PelleRifts.recursion.milestones[1]
     );
-
+  
+  if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(4).completions >= 1) {
+    mult = mult.timesEffectsOf(EternityChallenge(4).reward);
+  }
+  if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1) {
+    mult = mult.timesEffectsOf(EternityChallenge(9).reward);
+  }
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1) {
+    mult = mult.timesEffectsOf(EternityChallenge(9).vReward);
+  }
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
     mult = mult.times(replicantiMult());
+  }
+
+  if(Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked) {
+    mult = mult.pow(VUnlocks.adPow.effectOrDefault(1), 0.5);
   }
   return mult;
 }
@@ -114,7 +125,7 @@ class InfinityDimensionState extends DimensionState {
     if (tier === 8) {
       // We need a extra 10x here (since ID8 production is per-second and
       // other ID production is per-10-seconds).
-      EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
+      if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
       if (EternityChallenge(7).isRunning) EternityChallenge(7).applyEffect(v => toGain = v.times(10));
     } else {
       toGain = InfinityDimension(tier + 1).productionPerSecond;
@@ -151,8 +162,12 @@ class InfinityDimensionState extends DimensionState {
       .timesEffectsOf(
         tier === 1 ? Achievement(94) : null,
         tier === 4 ? TimeStudy(72) : null,
-        tier === 1 ? EternityChallenge(2).reward : null
       );
+    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(2).completions >= 1){
+      mult = mult.timesEffectsOf(
+        tier === 1 ? EternityChallenge(2).reward : null,
+      );
+    }
     mult = mult.times(Decimal.pow(this.powerMultiplier, Math.floor(this.baseAmount / 10)));
 
 
@@ -167,6 +182,13 @@ class InfinityDimensionState extends DimensionState {
     mult = mult.powEffectOf(AlchemyResource.infinity);
     mult = mult.pow(Ra.momentumValue);
     mult = mult.powEffectOf(PelleRifts.paradox);
+    if(Ra.unlocks.improvedECRewards.isUnlocked){
+      if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
+      if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
+    }
+    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(4).completions >= 1) {
+      mult = mult.timesEffectsOf(EternityChallenge(4).reward);
+    }
 
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
       mult = dilatedValueOf(mult);
@@ -200,7 +222,7 @@ class InfinityDimensionState extends DimensionState {
 
   get costMultiplier() {
     let costMult = this._costMultiplier;
-    EternityChallenge(12).reward.applyEffect(v => costMult = Math.pow(costMult, v));
+    if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) costMult = Math.pow(costMult, EternityChallenge(12).reward.effectValue);
     return costMult;
   }
 
@@ -220,7 +242,8 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
-     return this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap
+     const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1
+     return this.tier == 8 ? 1e10 ** x : InfinityDimensions.totalDimCap ** x;
   }
 
   get isCapped() {
@@ -232,8 +255,9 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get continuumValue() {
+    if(Pelle.isDoomed) return 0;
     if(!this.isUnlocked) return 0;
-    //if(!Ra.continuumActive) return 0;
+    if(!Ra.continuumActive) return 0;
     const logMoney = Currency.infinityPoints.value.log10();
     const logMult = Math.log10(this.costMultiplier);
     const logBase = this.baseCost.log10();
@@ -429,7 +453,10 @@ export const InfinityDimensions = {
   },
 
   get powerConversionRate() {
+    const x = Ra.unlocks.relicShardBoost.isUnlocked ? 1+(Math.max(1, Currency.relicShards.value.log10()) / 1000) : 0;
+    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Tesseracts.effectiveCount) : 0; //hpefully won't inflate if we softcap or put scaling in
+    const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
     const multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
-    return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0)) * multiplier;
+    return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z) * multiplier;
   }
 };

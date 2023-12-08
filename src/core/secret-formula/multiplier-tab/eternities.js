@@ -45,4 +45,10 @@ export const eternities = {
     isActive: () => PlayerProgress.mendingUnlocked(),
     icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
+  teresa90: {
+    name: "Teresa Level 90",
+    powValue: () => Math.pow((Math.log10(Currency.realities.value)/20), 1.111),
+    isActive: () => Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_RA,
+  }
 };

@@ -250,7 +250,8 @@ export const Singularity = {
   },
 
   increaseCap() {
-    if (player.celestials.laitela.singularityCapIncreases >= 50) return;
+    let x = 50 + (Ra.unlocks.increaseSingLimits.isUnlocked ? 5 * Math.floor((Ra.pets.laitela.level - 40) / 5) + 1 : 0);
+    if (player.celestials.laitela.singularityCapIncreases >= x) return;
     player.celestials.laitela.singularityCapIncreases++;
   },
 

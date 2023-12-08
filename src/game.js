@@ -140,6 +140,7 @@ export function gainedMendingPoints(){
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
   MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
+  if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
 }
@@ -328,6 +329,9 @@ export function gainedInfinities() {
   );
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
+  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
+    infGain = infGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
+  }
   return infGain;
 }
 
@@ -610,8 +614,22 @@ export function gameLoop(passDiff, options = {}) {
     ExpoBlackHoles.unlock();
   }
 
-  if(Ra.unlocks.rautobuyers.isUnlocked){
+  if(Ra.unlocks.rautobuyers.isUnlocked && !player.celestials.ra.permanentMemories.ra2){
     player.celestials.ra.permanentMemories.ra2 = true;
+  }
+
+  if(Ra.unlocks.dmdAuto1.isUnlocked && !player.celestials.ra.permanentMemories.lai50){
+    player.celestials.ra.permanentMemories.lai50 = true;
+  }
+
+  if(Ra.unlocks.dmdAuto2.isUnlocked && !player.celestials.ra.permanentMemories.lai65){
+    player.celestials.ra.permanentMemories.lai65 = true;
+  }
+  if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
+    if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
+    if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){
+      player.records.bestReality.remWithoutGG = player.records.thisReality.remWithoutGG;
+    }
   }
 
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time

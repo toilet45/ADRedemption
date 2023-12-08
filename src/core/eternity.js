@@ -243,6 +243,9 @@ export function gainedEternities() {
   if (MendingMilestone.one.isReached){
     eternityGain = eternityGain.times(10000);
   }
+  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
+    eternityGain = eternityGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
+  }
   return Pelle.isDisabled("eternityMults")
     ? eternityGain
     : eternityGain.times(getAdjustedGlyphEffect("timeetermult"))

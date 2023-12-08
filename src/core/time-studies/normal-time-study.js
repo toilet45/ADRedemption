@@ -17,7 +17,35 @@ NormalTimeStudies.paths = NormalTimeStudies.pathList.mapToObject(e => e.path, e 
 
 export class NormalTimeStudyState extends TimeStudyState {
   constructor(config) {
-    const type = config.id > 300 ? TIME_STUDY_TYPE.TRIAD : TIME_STUDY_TYPE.NORMAL;
+    let x = -1; //ugly code incoming, but it works
+    switch (true){
+      case (config.id > 500):
+        x = TIME_STUDY_TYPE.KOHLER_EXCLUSIVE;
+        break;
+      case (config.id > 400):
+        x = TIME_STUDY_TYPE.MYRIAD;
+        break;
+      case (config.id > 300):
+        x = TIME_STUDY_TYPE.TRIAD;
+        break;
+      default:
+        x = TIME_STUDY_TYPE.NORMAL;
+        break;
+    }
+
+    const type = x;// config.id > 300 ? TIME_STUDY_TYPE.TRIAD : TIME_STUDY_TYPE.NORMAL;
+    /*const type = () =>{
+      switch(true){
+        case (config.id > 500):
+          return TIME_STUDY_TYPE.KOHLER_EXCLUSIVE;
+        case (config.id > 400):
+          return TIME_STUDY_TYPE.MYRIAD;
+        case (config.id > 300):
+          return TIME_STUDY_TYPE.TRIAD;
+        default:
+          return TIME_STUDY_TYPE.NORMAL;
+      }
+    }*/
     super(config, type);
     const path = NormalTimeStudies.pathList.find(p => p.studies.includes(this.id));
     this._path = path?.path ?? TIME_STUDY_PATH.NONE;
@@ -28,7 +56,7 @@ export class NormalTimeStudyState extends TimeStudyState {
   }
 
   get isTriad() {
-    return this.id > 300;
+    return this.id > 300 && this.id < 400;
   }
 
   get isBought() {

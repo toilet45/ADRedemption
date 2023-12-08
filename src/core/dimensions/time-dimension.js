@@ -120,7 +120,6 @@ export function timeDimensionCommonMultiplier() {
       TimeStudy(151),
       TimeStudy(221),
       TimeStudy(301),
-      EternityChallenge(1).reward,
       EternityChallenge(10).reward,
       EternityUpgrade.tdMultAchs,
       EternityUpgrade.tdMultTheorems,
@@ -131,12 +130,25 @@ export function timeDimensionCommonMultiplier() {
       PelleRifts.chaos
     );
 
+  if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1){
+    mult = mult.timesEffectsOf(EternityChallenge(1).reward);
+  }
+  if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1){
+    mult = mult.timesEffectsOf(EternityChallenge(10).reward);
+  }
   if (EternityChallenge(9).isRunning) {
     mult = mult.times(
       Decimal.pow(
         Math.clampMin(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate / 7).log2(), 1),
         4)
         .clampMin(1));
+  }
+
+  if (Ra.unlocks.relicShardBoost.isUnlocked) mult = mult.pow(1 + ((Currency.relicShards.value.clampMin(1)).log10() / 1337));
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
+  if (Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked){
+    mult = mult.pow(VUnlocks.adPow.effectOrDefault(1), 0.5);
   }
   return mult;
 }
@@ -219,7 +231,7 @@ class TimeDimensionState extends DimensionState {
       );
 
     const dim = TimeDimension(tier);
-    const value = dim.bought;//Ra.continuumActive?dim.continuumValue:dim.bought;
+    const value = Ra.continuumActive ? dim.continuumValue:dim.bought;
     let x = Ra.unlocks.uncap8TdPurchaseMult.isUnlocked ? false : tier === 8;
     const bought = x ? Math.clampMax(value, 1e8) : value;
     mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
@@ -319,8 +331,9 @@ class TimeDimensionState extends DimensionState {
   }
 
   get continuumValue() {
+    if(Pelle.isDoomed) return 0;
     if(!this.isUnlocked) return 0;
-    //if(!Ra.continuumActive) return 0;
+    if(!Ra.continuumActive) return 0;
     const firstThreshold = [null, 647, 323, 214, 160, 0, 0, 0, 0][this.tier];
     const secondThreshold = [null, 1991, 1150, 808, 623, 0, 0, 0, 0][this.tier];
     const e6kThreshold = this.e6000ScalingAmount;
@@ -387,9 +400,10 @@ export const TimeDimensions = {
       TimeDimension(1).produceCurrency(Currency.timeShards, diff);
     }
 
-    EternityChallenge(7).reward.applyEffect(production => {
+    if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1){ EternityChallenge(7).reward.applyEffect(production => {
       InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(new Decimal(diff).div(1000)));
     });
+  }
   }
 };
 

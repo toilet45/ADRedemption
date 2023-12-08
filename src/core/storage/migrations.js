@@ -649,6 +649,10 @@ export const migrations = {
       lai50: false,
       lai65: false,
     };
+  },
+  57: player =>{
+    player.records.thisReality.remWithoutGG = 0;
+    player.records.bestReality.remWithoutGG = 0;
   }
   },
 

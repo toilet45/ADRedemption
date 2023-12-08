@@ -85,4 +85,10 @@ export const replicanti = {
     isActive: () => ShopPurchaseData.totalSTD > 0 && ShopPurchase.replicantiPurchases.currentMult > 1,
     icon: MultiplierTabIcons.IAP,
   },
+  relicShardBoost: {
+    name: "Effarig Level 65",
+    multValue: () => Currency.relicShards.value.pow(0.6667).clampMin(1),
+    isActive: () => Ra.unlocks.relicShardBoost.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_RA,
+  }
 };

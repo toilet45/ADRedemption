@@ -420,7 +420,7 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     postWarpRealityMachineBoost: {
       id: 6,
@@ -462,7 +462,7 @@ export const ra = {
       reward: "Relic shards boost dimensional sacrifice, replicanti speed, infinity power conversion rate, tachyon particle to dilated time factor and time dimensions",
       pet: "effarig",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     effarigGlyphIncreaseImCap: {
       id: 12,
@@ -479,7 +479,7 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     effarigMendUnlock: {
       id: 14,
@@ -544,7 +544,7 @@ export const ra = {
       reward: "Improve Infinity Power conversion (based on effective Tesseract count)",
       pet: "enslaved",
       level: 100,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     improvedECRewards: {
       id: 22,
@@ -552,7 +552,7 @@ export const ra = {
       reward: "Improve some Eternity Challenge rewards",
       pet: "v",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     placeholderV2: {
       id: 23,
@@ -568,7 +568,7 @@ export const ra = {
       reward: "The 5 V-Achievement milestone affects Infinity and Time Dimensions with reduced effect",
       pet: "v",
       level: 50,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     repIncreasesAchMult: {
       id: 25,
@@ -696,7 +696,7 @@ export const ra = {
       reward: "Gain Free Dimension Boosts based on Ra Level",
       pet: "ra",
       level: 75,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderR12: {
       id: 9,
@@ -712,7 +712,7 @@ export const ra = {
       reward: "Gain a Multiversal Remain Multiplier based on total Memory Levels",
       pet: "ra",
       level: 100,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     increaseDarkMatterCap: {
       id: 11,
@@ -721,7 +721,7 @@ export const ra = {
       effect: () => (Ra.pets.laitela.level),
       pet: "laitela",
       level: 1,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     annihilationDarkEnergyBoost: {
       id: 12,
@@ -735,10 +735,10 @@ export const ra = {
       id: 13,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on Singularities",
-      effect: () => 1,
+      effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "laitela",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     totalAntimatterDarkMatterBoost: {
       id: 14,
@@ -755,7 +755,7 @@ export const ra = {
       effect: () => .25 * Math.floor(Ra.pets.laitela.level/10),
       pet: "laitela",
       level: 10,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     passiveAnnihilationGen: {
       id: 16,
@@ -771,7 +771,7 @@ export const ra = {
       reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels`,
       pet: "laitela",
       level: 25,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     continuumBoost: {
       id: 18,
@@ -787,7 +787,7 @@ export const ra = {
       reward: () => `You can increase the max singularity cap by ${formatInt(2)} every ${formatInt(5)} levels`,
       pet: "laitela",
       level: 40,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     dmdAuto1: {
       id: 20,
@@ -795,15 +795,15 @@ export const ra = {
       reward: "Unlock permanent autobuyers for DMD 1-4 (kept on Mend)",
       pet: "laitela",
       level: 50,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     dmdAuto2: {
       id: 21,
       id2: 1,
-      reward: "Unlock permanent autobuyers for DMD 1-4 (kept on Mend)",
+      reward: "Unlock permanent autobuyers for DMD 5-8 (kept on Mend)",
       pet: "laitela",
       level: 65,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     continuumAffectsIDsAndTDs: {
       id: 22,
@@ -811,12 +811,12 @@ export const ra = {
       reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 75,
-      displayIcon: `<i class="fa-solid fa-check"></i>`
+      displayIcon: `*`
     },
     placeholderL13: {
       id: 23,
       id2: 1,
-      reward: "Increase the caps for some Singularity Milestones",
+      reward: "Unlock more Singularity Milestones",
       pet: "laitela",
       level: 90,
       displayIcon: "?"
@@ -840,7 +840,7 @@ export const ra = {
     boostMVRGain: {
       id: 26,
       id2: 1,
-      reward: "Triple MvR gain when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
+      reward: "Triple Multiversal Remain gain when Mending in a Doomed Reality, you can now fill up to 5 rifts at once",
       effect: () => Pelle.isDoomed ? 3 : 1,
       pet: "pelle",
       level: 2,
@@ -873,7 +873,7 @@ export const ra = {
     placeholderP6: {
       id: 30,
       id2: 1,
-      reward: "Doomed Reality no longer disables IP and EP multipliers, but they are decreased to ×1.1 and ×1.5 respectively",
+      reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.1 and ×1.5 respectively",
       pet: "pelle",
       level: 15,
       displayIcon: "*"
@@ -900,7 +900,7 @@ export const ra = {
       reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
       pet: "pelle",
       level: 40,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderP10: {
       id: 2,

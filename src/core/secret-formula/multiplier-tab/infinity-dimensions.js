@@ -277,6 +277,13 @@ export const ID = {
     icon: MultiplierTabIcons.IPOW_CONVERSION,
   },
 
+  v50:{
+    name: "V Level 50",
+    powValue: () => Math.pow(VUnlocks.adPow.effectValue, 0.5),
+    isActive: () => Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_V
+  },
+
   nerfV: {
     name: "V's Reality",
     powValue: () => 0.5,
