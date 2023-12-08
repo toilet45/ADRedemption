@@ -10,7 +10,7 @@ export class DarkMatterDimensionAscensionAutobuyerState extends IntervaledAutobu
   }
 
   get isUnlocked() {
-    return SingularityMilestone.ascensionAutobuyers.canBeApplied;
+    return SingularityMilestone.ascensionAutobuyers.canBeApplied || player.celestials.ra.permanentMemories.lai50;
   }
 
   get interval() {
@@ -23,7 +23,11 @@ export class DarkMatterDimensionAscensionAutobuyerState extends IntervaledAutobu
 
   tick() {
     super.tick();
-    for (let i = 1; i <= SingularityMilestone.ascensionAutobuyers.effectValue; i++) {
+    let x = SingularityMilestone.darkDimensionAutobuyers.effectValue;
+    if (player.celestials.ra.permanentMemories.lai50){
+      x = player.celestials.ra.permanentMemories.lai65 ? 8 : 4;
+    }
+    for (let i = 1; i <= x; i++) {
       DarkMatterDimension(i).ascend();
     }
   }

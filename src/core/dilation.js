@@ -150,6 +150,7 @@ export function getDilationGainPerSecond() {
   dtRate = dtRate.times(ShopPurchase.dilatedTimePurchases.currentMult);
   dtRate = dtRate.times(
     Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1));
+  if(Ra.unlocks.relicShardBoost.isUnlocked) dtRate = dtRate.pow(1 + Math.max(0, (Currency.relicShards.value.log10() / 1337)));
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
   return dtRate;

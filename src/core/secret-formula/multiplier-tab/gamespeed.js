@@ -47,7 +47,7 @@ export const gamespeed = {
   },
   achievementMult: {
     name: "30 V-Achievement Milestone - Achievement Multiplier",
-    multValue: () => Math.min(1e300, Math.pow(VUnlocks.achievementBH.effectOrDefault(1),
+    multValue: () => Decimal.min(1e300, Decimal.pow(VUnlocks.achievementBH.effectOrDefault(1),
       BlackHoles.list.countWhere(bh => bh.isUnlocked))),
     isActive: () => !BlackHoles.arePaused && VUnlocks.achievementBH.canBeApplied && !EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.ACHIEVEMENT,
@@ -55,7 +55,7 @@ export const gamespeed = {
   pulsing: {
     name: "Auto-Discharging Stored Time",
     multValue: () => (Enslaved.isAutoReleasing
-      ? Math.max(Enslaved.autoReleaseSpeed / getGameSpeedupFactor(), 1)
+      ? Decimal.max(Enslaved.autoReleaseSpeed.div(getGameSpeedupFactor()), 1)
       : getGameSpeedupFactor()),
     isActive: () => Enslaved.canRelease() && Enslaved.isAutoReleasing && !EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.BH_PULSE,
@@ -75,7 +75,7 @@ export const gamespeed = {
 
   ec12: {
     name: "Eternity Challenge 12",
-    multValue: () => 0.001 / getGameSpeedupForDisplay(),
+    multValue: () => 0.001.div(getGameSpeedupForDisplay()),
     isActive: () => EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.CHALLENGE("eternity"),
   },
@@ -94,8 +94,14 @@ export const gamespeed = {
   },
   nerfLaitela: {
     name: "Lai'tela's Reality",
-    powValue: () => Math.clampMax(Time.thisRealityRealTime.totalMinutes / 10, 1),
+    powValue: () => Decimal.clampMax(Time.thisRealityRealTime.totalMinutes.div(10), 1),
     isActive: () => Laitela.isRunning,
     icon: MultiplierTabIcons.GENERIC_LAITELA,
+  },
+  expoBlackHoles: {
+    name: "Black Hole 3",
+    powValue: () => ExpoBlackHole(1).power,
+    isActive: () => ExpoBlackHole(1).isUnlocked,
+    icon: MultiplierTabIcons.BLACK_HOLE,
   }
 };

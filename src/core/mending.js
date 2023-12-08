@@ -190,6 +190,7 @@ export function mendingReset() {
       maxDT: DC.D0,
       bestRSmin: DC.D0,
       bestRSminVal: DC.D0,
+      remWithoutGG: 0
     },
     player.records.bestReality = {
       time: Decimal.pow10(Number.MAX_VALUE),
@@ -206,6 +207,7 @@ export function mendingReset() {
       speedSet: [],
       iMCapSet: [],
       laitelaSet: [],
+      remWithoutGG: remWithoutGG
     },
     player.options.confirmations.glyphSelection = true;
     player.reality.unlockedEC = 0;
@@ -280,6 +282,7 @@ export function mendingReset() {
       player.reality.imaginaryUpgReqs += 32768;
       player.reality.imaginaryUpgradeBits += 32768;
     }
+    player.expoBlackHole[0].powerUpgrades = 0;
     //Eternity
     resetEternityRuns();
     player.respec = false;

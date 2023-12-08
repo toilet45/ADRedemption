@@ -1,4 +1,5 @@
 <script>
+import { EternityChallenge } from "../../../core/eternity-challenge";
 import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import InfinityDimensionRow from "./ClassicInfinityDimensionRow";
 import PrimaryButton from "@/components/PrimaryButton";
@@ -36,6 +37,7 @@ export default {
       isAutoTessOn: false,
       atCap: false,
       end: new Decimal("1e9000000000000000"),
+      capExpo: 1,
     };
   },
   computed: {
@@ -80,6 +82,7 @@ export default {
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       this.atCap = player.infinityPower.exponent >= 9e15;
       this.end = new Decimal("1e9000000000000000");
+      this.capExpo = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1;
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -161,14 +164,14 @@ export default {
       All Infinity Dimensions are limited to a single purchase.
     </div>
     <div v-else>
-      All Infinity Dimensions except for the 8th are limited to a maximum of {{ format(totalDimCap, 2) }}
+      All Infinity Dimensions except for the 8th are limited to a maximum of {{ format(totalDimCap ** capExpo, 2) }}
       purchases each.
       <br>
-      The 8th Infinity Dimension is limited to {{ format(1e10, 2) }} purchases.
+      The 8th Infinity Dimension is limited to {{ format(1e10 ** this.capExpo, 2) }} purchases.
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>
-    <span v-if="atCap" class="sc-one">Due to the instability of a Warped Reality, your Infinity Power gain is softcapped after {{ format(end) }}</span>
+    <span v-if="atCap" class="sc-one">Due to instability, your Infinity Power gain is softcapped after {{ format(end) }}</span>
     <br>
     <b
       v-if="isEC8Running"

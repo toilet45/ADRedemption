@@ -18,7 +18,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Time Dimension power based on real time spent this Mend ⌬`,
-      effect: completions => 1 + (Math.log10(player.records.thisMend.realTime + 1) / 10),
+      effect: () => Math.min(1.5, 1 + (Math.log10(player.records.thisMend.realTime + 1) / 10)),
       formatEffect: value => formatPow(value, 2, 1),
     },
     // These will get notation-formatted and scrambled between for the final goal
@@ -38,7 +38,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Infinity Dimension power based on Infinity Power ⌬`,
-      effect: completions => 1 + (Math.log10(Decimal.log10(Currency.infinityPower.value.add(1))) / 50),
+      effect: () => 1 + (Math.log10(Math.max(Currency.infinityPower.value.clampMin(1).log10(), 1)) / 50),
       formatEffect: value => formatPow(value, 2, 1)
     }
   },
@@ -79,7 +79,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
-      effect: completions => 1 + (Decimal.log10(Currency.mendingPoints.value) / 1000),
+      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value) / 1000),
       formatEffect: value => formatPow(value, 3, 3),
     }
   },
@@ -144,8 +144,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ 1st Dark Matter Dimension produces 8th Time dimension at a heavily reduced rate ⌬",
+      effect: () => DarkMatterDimension(1).productionPerSecond ** 0.02,
       formatEffect: value => `${format(value, 2, 2)} per second`,
-      effect: 0.02
     }
   },
   {
@@ -187,7 +187,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Infinity Dimension multiplier based on Tickspeed ⌬",
-      effect: completions => Decimal.pow(10, Tickspeed.totalUpgrades),
+      effect: () => Decimal.pow(10, Tickspeed.totalUpgrades),
       formatEffect: value => formatX(value, 3, 3)
     }
   },
@@ -219,7 +219,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Time Dimension power based on Infinities ⌬",
-      effect: completions => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 50000),
+      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 50000),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -241,9 +241,9 @@ export const eternityChallenges = [
       }
     },
     vReward:{
-      description: "⌬ Reduce free Tickspeed scaling ⌬",
+      description: "⌬ Reduce free Tickspeed upgrade scaling based on completions ⌬",
       effect: completions => 1 - (0.0005 * completions),
-      formatEffect: value => `-${format(value, 3, 3)}`
+      formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
   {
@@ -267,7 +267,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Increase Infinity Dimension caps based on completions ⌬",
-      effect: completions => Math.pow(1, 1/(1-(0.08 * completions))),
+      effect: completions => Math.max(1, 1/(1-(0.08 * completions))),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   }

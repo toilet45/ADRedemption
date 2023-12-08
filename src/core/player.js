@@ -418,6 +418,7 @@ window.player = {
       maxDT: DC.D0,
       bestRSmin: DC.D0,
       bestRSminVal: DC.D0,
+      remWithoutGG: 0
     },
     bestReality: {
       time: Decimal.pow10(Number.MAX_VALUE),
@@ -434,6 +435,7 @@ window.player = {
       speedSet: [],
       iMCapSet: [],
       laitelaSet: [],
+      remWithoutGG: 0
     },
     thisMend: {
       time: DC.D0,
@@ -469,7 +471,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 56,
+  version: 57,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,

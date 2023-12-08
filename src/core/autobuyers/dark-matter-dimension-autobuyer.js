@@ -10,7 +10,7 @@ export class DarkMatterDimensionAutobuyerState extends IntervaledAutobuyerState 
   }
 
   get isUnlocked() {
-    return SingularityMilestone.darkDimensionAutobuyers.canBeApplied;
+    return SingularityMilestone.darkDimensionAutobuyers.canBeApplied || player.celestials.ra.permanentMemories.lai50;
   }
 
   get interval() {
@@ -23,6 +23,10 @@ export class DarkMatterDimensionAutobuyerState extends IntervaledAutobuyerState 
 
   tick() {
     super.tick();
-    Laitela.maxAllDMDimensions(SingularityMilestone.darkDimensionAutobuyers.effectValue);
+    let x = SingularityMilestone.darkDimensionAutobuyers.effectValue;
+    if (player.celestials.ra.permanentMemories.lai50){
+      x = player.celestials.ra.permanentMemories.lai65 ? 8 : 4;
+    }
+    Laitela.maxAllDMDimensions(x);
   }
 }

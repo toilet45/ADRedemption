@@ -690,5 +690,66 @@ export const normalTimeStudies = [
     description: "Dimensional Sacrifice multiplier is squared",
     effect: 2,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 4
-  }
+  },
+  // Myriad Studies start here
+  {
+    id: 401,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 90
+  },
+  {
+    id: 402,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 92
+  },
+  {
+    id: 403,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 94
+  },
+  {
+    id: 404,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 96
+  },
+  {
+    id: 405,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 98
+  },
+  {
+    id: 406,
+    cost: 0,
+    STCost: 1e300,
+    requirement: [() => Ra.unlocks.placeholderV6.isUnlocked],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    description: "[TBD]",
+    effect: 1,
+    unlocked: () => Ra.pets.v.level >= 100
+  },
 ];

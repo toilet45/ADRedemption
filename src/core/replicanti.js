@@ -146,6 +146,9 @@ export function totalReplicantiSpeedMult(overCap) {
   if(MendingMilestone.one.isReached){
     totalMult = totalMult.times(1000);
   }
+  if(Ra.unlocks.relicShardBoost.isUnlocked){
+    totalMult = totalMult.times(Currency.relicShards.value.pow(0.6667).clampMin(1));
+  }
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
   totalMult = totalMult.times(Ra.unlocks.continuousTTBoost.effects.replicanti.effectValue)

@@ -65,8 +65,9 @@ export class Sacrifice {
     const preIC2 = 1 + Effects.sum(Achievement(32), Achievement(57));
     const postIC2 = 1 + Effects.sum(Achievement(88), TimeStudy(228));
     const triad = TimeStudy(304).effectOrDefault(1);
+    const effarig65 = Ra.unlocks.relicShardBoost.isUnlocked ? 1 + (Decimal.log10(Currency.relicShards.value) / 1000) : 1 ;
 
-    return base * preIC2 * postIC2 * triad;
+    return base * preIC2 * postIC2 * triad * effarig65;
   }
 
   static get nextBoost() {

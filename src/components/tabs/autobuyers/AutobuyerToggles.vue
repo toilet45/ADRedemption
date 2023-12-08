@@ -1,6 +1,7 @@
 <script>
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "AutobuyerToggles",
@@ -31,7 +32,7 @@ export default {
   },
   methods: {
     update() {
-      this.isDoomed = Pelle.isDoomed;
+      this.isDoomed = Pelle.isDoomed && !Ra.unlocks.placeholderP9.isunlocked;
       this.autobuyersOn = player.auto.autobuyersOn;
       this.showContinuum = Laitela.isUnlocked;
       this.disableContinuum = player.auto.disableContinuum;

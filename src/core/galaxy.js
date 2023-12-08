@@ -19,7 +19,8 @@ class GalaxyRequirement {
 
 export class Galaxy {
   static get scailingThreeStart(){
-    return 750000 + (5000 * MendingUpgrade(16).boughtAmount);
+    let x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(5).completions >= 1) ? EternityChallenge(5).vReward.effectValue : 0;
+    return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + x;
   }
   static get remoteStart() {
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
@@ -144,12 +145,13 @@ export class Galaxy {
   }
 
   static get costScalingStart() {
-    return 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
+    let x = 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
       TimeStudy(223),
       TimeStudy(224),
-      EternityChallenge(5).reward,
       GlyphSacrifice.power
     );
+    if(!Ra.unlocks.improvedECRewards.isunlocked && EternityChallenge(5).completions >= 1) x += EternityChallenge(5).reward.effectValue;
+    return x;
   }
 
   static get type() {
