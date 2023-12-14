@@ -14,6 +14,8 @@ export default {
             END: DC.END,
             needDoom: true,
             isCorrupted: false,
+            noMendBonus: false,
+            MvRRate: new Decimal(0),
         };
     },
     computed: {
@@ -27,10 +29,12 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
+            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || this.noMendBonus;
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
             this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
+            this.noMendBonus = Pelle.isDoomed && !player.isGameEnd;
+            this.MvRRate = this.gainedMvR.div(Time.thisMendRealTime.totalMinutes);
         },
         mend() {
             mendingResetRequest();
@@ -49,6 +53,9 @@ export default {
     <template v-if="firstMend">
       There is another way... You need to Mend the Multiverse.
     </template>
+    <template v-else-if="noMendBonus">
+      Exit Doomed Reality, but get no Mend Rewards.
+    </template>
     <template v-else-if="needDoom">
       Reach <span>{{ formatNE(END, 2, 2) }}</span> antimatter in a Doomed Reality to Mend the Multiverse
     </template>
@@ -56,12 +63,12 @@ export default {
       Reach <span>{{ formatNE(END, 2, 2) }}</span> antimatter to Mend the Multiverse
     </template>
     <template v-else-if="isCorrupted">
-      Uncorrupt the Multiverse for x Corrupted Fragments
+      Make the Multiverse Friendly for x Hostile Fragments
     </template>
     <template v-else>
       Mend the Multiverse for
       <span>{{ formatNE(gainedMvR, 2) }}</span>
-      Multiversal {{ pluralize("Remain", gainedMvR) }}
+      Multiversal {{ pluralize("Remain", gainedMvR) }}. ({{format(MvRRate, 2, 2)}} MvR/min)
     </template>
     </button>
   </div>

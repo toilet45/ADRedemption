@@ -99,7 +99,7 @@ export default {
       }
       if (this.inPelle) return "a Doomed Reality. Good luck.";
       if (this.isCorrupted){
-        return this.activeChallengeNames.length > 0 ? `${this.activeChallengeNames.join(" + ")} in a Corrupted Multiverse.` : "a Corrupted Multiverse (no active challenges)."
+        return this.activeChallengeNames.length > 0 ? `${this.activeChallengeNames.join(" + ")} in a Hostile Multiverse.` : "a Hostile Multiverse (no active challenges)."
       };
       if (this.activeChallengeNames.length === 0) {
         return PlayerProgress.mendingUnlocked() ? "a Mended Multiverse (no active challenges).": "the Antimatter Universe (no active challenges).";

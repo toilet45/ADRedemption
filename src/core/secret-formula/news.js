@@ -2604,6 +2604,16 @@ export const news = [
     text: "They say if you want an update, and ping Hexa three times in a row you'll..."
   },
   {
+    id: "a399",
+    text:
+      `It is the year 2422. The update still isn't out. Royal and his team are totally not procrastinating...we swear`
+  },
+  {
+    id: "a400",
+    text:
+      `fatty jumpscare`
+  },
+  {
     id: "l1",
     text: "You just made your 1,000,000,000,000,000th antimatter. This one tastes like chicken.",
     get unlocked() { return Currency.antimatter.exponent === 15; }

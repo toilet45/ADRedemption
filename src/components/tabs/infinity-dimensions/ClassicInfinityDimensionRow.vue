@@ -2,6 +2,7 @@
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Pelle } from "../../../core/globals";
 
 export default {
   name: "ClassicInfinityDimensionRow",
@@ -114,7 +115,7 @@ export default {
       this.isAutobuyerOn = autobuyer.isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;
-      this.isContinuumActive = Ra.continuumActive;
+      this.isContinuumActive = Ra.continuumActive && !Pelle.isDoomed;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buySingleInfinityDimension() {

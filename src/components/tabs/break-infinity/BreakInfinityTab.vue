@@ -101,8 +101,10 @@ export default {
       <br>
       Hold shift to show Charged Infinity Upgrades. You can freely respec your choices on Reality.
     </div>
+    <div v-if="chargeUnlocked">
     <div v-if="isUseless">
       You cannot Charge Break Infinity Upgrades while Doomed.
+    </div>
     </div>
     <div v-if="!isUnlocked">
       Reduce the interval of Automatic Big Crunch Autobuyer to

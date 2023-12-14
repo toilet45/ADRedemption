@@ -653,6 +653,9 @@ export const migrations = {
   57: player =>{
     player.records.thisReality.remWithoutGG = 0;
     player.records.bestReality.remWithoutGG = 0;
+  },
+  58: player => {
+    player.galBoostPoints = new Decimal(0);
   }
   },
 

@@ -70,7 +70,7 @@ export default {
     },
     isDoomed: () => Pelle.isDoomed,
     upgrades: () => CorruptionUpgrades.all,
-    costScalingTooltip: () => `Prices start increasing faster above ${format(1e30)} RM and then even faster
+    costScalingTooltip: () => `Prices start increasing faster above ${format(1e30)} HF and then even faster
       above ${format(Decimal.NUMBER_MAX_VALUE, 1)} RM`,
     possibleTooltip: () => `Striped upgrades are Not Yet Implemented [NYI].`,
     lockTooltip: () => `This will only function if you have not already failed the condition or
@@ -124,7 +124,7 @@ export default {
 
 <template>
   <div class="l-corrupt-celestial-tab">
-    You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Corrupted Fragments.
+    You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Hostile Fragments.
     <br>
     <div class="l-mechanics-container">
       <div
@@ -132,13 +132,13 @@ export default {
       >
         <div class="c-corrupt-unlock c-corrupt-run-button">
           <span v-if="!isRunning && !nextCorrupted">
-              Corrupt Next Mend
+              Make Next Mend Hostile
           </span>
           <span v-else-if="!isRunning">
-              Dont corrupt Next Mend
+              Make Next Mend Friendly
           </span>
           <span v-else>
-              Exit Corrupted Mend
+              Exit Hostile Mend
           </span>
           <div
             :class="runButtonClassObject"
@@ -155,7 +155,7 @@ export default {
             </span>
             <span v-else>
               You have not mended in a
-              corrupted multiverse yet.
+              hostile multiverse yet.
             </span>
           </div>
         </div>
@@ -235,7 +235,7 @@ export default {
       </span>
       and the rest are single-purchase.
       <br>
-      Striped Upgrades (or ones that cost 1e300 CF) are not yet implemented
+      Striped Upgrades (or ones that cost 1e300 HF) are not yet implemented
       <br>
     </div>
     <div

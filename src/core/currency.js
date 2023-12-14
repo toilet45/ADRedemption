@@ -558,3 +558,20 @@ Currency.raPoints = new class extends DecimalCurrency {
     //super.reset();
   }
 }();
+
+Currency.galBoostPoints = new class extends DecimalCurrency {
+  get value() { 
+    return player.galBoostPoints; 
+  }
+  set value(value) {
+    player.galBoostPoints = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();

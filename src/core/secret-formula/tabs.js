@@ -39,6 +39,15 @@ export const tabs = [
         id: 2,
         hidable: true,
       },
+      {
+        key: "multiversal",
+        name: "Multiversal Dimensions",
+        symbol: "?",
+        component: "MultiversalDimensionsTab",
+        id: 3,
+        condition: () => Ra.unlocks.placeholderL14.isUnlocked,
+        hidable: true,
+      },
     ]
   },
   {
@@ -517,7 +526,7 @@ export const tabs = [
       },
       {
         key: "corruption",
-        name: "Corruption",
+        name: "Hostilities",
         symbol: `<i class="fa-solid fa-biohazard"></i>`,
         component: "CorruptionTab",
         id: 3,

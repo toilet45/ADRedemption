@@ -779,7 +779,7 @@ export const Glyphs = {
     return 45000 + (500 * MendingUpgrade(6).boughtAmount) + Ra.unlocks.harshInstabilityDelay.effectOrDefault(0);
   },
   get omegaInstabilityThreshold(){
-    return 100000
+    return 100000;
   },
   get hardcap(){
     return 100000000;

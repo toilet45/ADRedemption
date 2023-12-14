@@ -2,6 +2,7 @@
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Pelle } from "../../../core/globals";
 
 export default {
   name: "ClassicTimeDimensionRow",
@@ -113,7 +114,7 @@ export default {
       if (this.tier > 4) this.ttCost = TimeStudy.timeDimension(this.tier).cost;
       this.currTT.copyFrom(Currency.timeTheorems.value);
       this.ttGen.copyFrom(getTTPerSecond().times(getGameSpeedupFactor()));
-      this.isContinuumActive = Ra.continuumActive;
+      this.isContinuumActive = Ra.continuumActive && !Pelle.isDoomed;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
     },
     buyTimeDimension() {

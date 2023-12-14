@@ -223,12 +223,12 @@ export const infinityUpgrades = {
     costCap: DC.E6E6,
     costIncreaseThreshold: DC.E3E6,
     description: () =>{
-      return (Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked) ? `Multiply Infinity Points from all sources by ${formatX(1.1, 1, 1)}` : `Multiply Infinity Points from all sources by ${formatX(2)}`;
+      return (Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked) ? `Multiply Infinity Points from all sources by ${formatX(1.01, 2, 2)}` : `Multiply Infinity Points from all sources by ${formatX(2)}`;
     },
     // Normally the multiplier caps at e993k or so with 3300000 purchases, but if the cost is capped then we just give
     // an extra e7k to make the multiplier look nice
     effect: () => {
-      if(Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked) return (player.IPMultPurchases >= 3300000 ? new Decimal("1e140000") : Decimal.pow(new Decimal(1.1), player.IPMultPurchases));
+      if(Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked) return (player.IPMultPurchases >= 3300000 ? new Decimal("1e14265") : Decimal.pow(new Decimal(1.01), player.IPMultPurchases));
       return (player.IPMultPurchases >= 3300000 ? DC.E1E6 : DC.D2.pow(player.IPMultPurchases));
     },
     cap: () => Effarig.eternityCap ?? DC.E1E6,

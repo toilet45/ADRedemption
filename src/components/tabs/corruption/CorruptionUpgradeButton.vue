@@ -114,7 +114,7 @@ export default {
             v-if="!isBought"
             :config="config"
             br
-            name="Corrupted Fragment"
+            name="Hostile Fragment"
           />
         </template>
       </span>

@@ -1031,6 +1031,12 @@ export function getTTPerSecond() {
     finalTT = finalTT.pow(SingularityMilestone.theoremPowerFromSingularities.effectOrDefault(1));
   }
 
+  //V Level 75
+  if (Ra.unlocks.totalSTBoostTTGen.isUnlocked){
+    finalTT = finalTT.pow((1 + (Math.max(Math.log10(V.spaceTheorems + 1), 0) / 10)));
+  }
+
+
   return finalTT;
 }
 

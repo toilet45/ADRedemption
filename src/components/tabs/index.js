@@ -48,6 +48,7 @@ import MendingMilestones from "./mending/MendingMilestones";
 import WarpReality from "./mending/WarpReality";
 import KohlersRealm from "./mending/KohlersRealm";
 import CorruptionTab from "./corruption/CorruptionChallengeTab";
+import MultiversalDimensionsTab from "./multiversal-dimensions/MultiversalDimensionsTab";
 
 
 const TabComponents = {
@@ -97,7 +98,8 @@ const TabComponents = {
   MendingMilestones,
   WarpReality,
   CorruptionTab,
-  KohlersRealm
+  KohlersRealm,
+  MultiversalDimensionsTab
 };
 
 export default TabComponents;

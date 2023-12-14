@@ -329,7 +329,7 @@ export const Pelle = {
   },
 
   get glyphStrength() {
-    return 1;
+    return 1 + (Ra.unlocks.placeholderP10.isUnlocked ? (Ra.pets.pelle.level - 50) * 0.05 : 0); //3.5 is 100%
   },
 
   antimatterDimensionMult(x) {

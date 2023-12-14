@@ -576,7 +576,7 @@ export const ra = {
       reward: "Replicanti increases achievement multiplier",
       pet: "v",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     totalSTBoostTTGen: {
       id: 26,
@@ -584,7 +584,7 @@ export const ra = {
       reward: "Total Space Theorems boost Time Theorem generation",
       pet: "v",
       level: 75,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     placeholderV6: {
       id: 27,
@@ -600,7 +600,7 @@ export const ra = {
       reward: "Improve Base Achievemnt Multiplier",
       pet: "v",
       level: 100,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     raRealUncapDimboost: {
       id: 29,
@@ -852,7 +852,7 @@ export const ra = {
       reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
       pet: "pelle",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     placeholderP4: {
       id: 28,
@@ -868,12 +868,12 @@ export const ra = {
       reward: "Doomed Reality can be exitied, but it causes a Mending Reset (with no benefits)",
       pet: "pelle",
       level: 10,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderP6: {
       id: 30,
       id2: 1,
-      reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.1 and ×1.5 respectively",
+      reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.01 and ×1.5 respectively",
       pet: "pelle",
       level: 15,
       displayIcon: "*"
@@ -892,7 +892,7 @@ export const ra = {
       reward: "Memory Gain for all Celestials is boosted in Doomed Reality",
       pet: "pelle",
       level: 30,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     placeholderP9: {
       id: 1,
@@ -908,7 +908,7 @@ export const ra = {
       reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",
       pet: "pelle",
       level: 50,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     omegaScalingBuff: {
       id: 3,
@@ -916,7 +916,7 @@ export const ra = {
       reward: "Make the scaling at glyph level 100,000 weaker.",
       pet: "pelle",
       level: 65,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     Hostility: {
       id: 4,
@@ -932,7 +932,7 @@ export const ra = {
       reward: () => Ra.unlocks.Hostility.isUnlocked ? "Make Dimensional Limitations slightly Weaker" : "Reach Pelle 75 to see reward",
       pet: "pelle",
       level: 90,
-      displayIcon: `<i class="fa-solid fa-biohazard"></i>`
+      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-biohazard"></i>`:"?"
     },
     kohlersRealmUnlock: {
       id: 6,

@@ -471,7 +471,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 57,
+  version: 58,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -483,6 +483,7 @@ window.player = {
   totalTickBought: 0,
   mends: DC.D0,
   corruptedFragments: DC.D0,
+  galBoostPoints: DC.D0,
   mending:{
     upgradeBits: 0,
     warpUpgradeBits: 0,
@@ -1170,7 +1171,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return player.isGameEnd || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
+    return player.isGameEnd || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || (Pelle.isDoomed && !player.isGameEnd);
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;

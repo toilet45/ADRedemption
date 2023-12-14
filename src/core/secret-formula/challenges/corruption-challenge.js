@@ -13,13 +13,13 @@ export const corruptionChallenge = {
     */
     bonusMult: () => [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))],
     incBonusText: () => {
-        return "In order to increase your bonus multiplier, you should " + player.mending.corruption.countWhere(u => u > 0) > player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2 ? "increase the number of corruptions active." : "increase the average level of your corruptions."
+        return "In order to increase your bonus multiplier, you should " + player.mending.corruption.countWhere(u => u > 0) > player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2 ? "increase the number of Hostilities active." : "increase the average level of your Hostilities."
     },
     desc: () => {
-        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any corruptions, you cannot enter this challenge" : "Reach e9e15 antimatter and mend outside of doom while in a more difficult reality, in order to gain corrupted fragments."
+        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend outside of Doom while in a more difficult Reality, in order to gain Hostile Fragments."
     },
     reward: () => {
-        return player.mending.corruptedFragments > (this.bonusMult * corruptionChallengeScoreCalculation) ? `If you completed this challenge, you would not gain any corrupted fragments, because ${this.active > 0 ? "you have no enabled corruptions." : "you have more corrupted fragments then you would gain."}` : `If you completed this challenge, you would gain ${quanifyInt("Corrupted Fragment", Math.floor((this.bonusMult * corruptionChallengeScoreCalculation) - player.mending.corruptedFragments))}.`
+        return player.mending.corruptedFragments > (this.bonusMult * corruptionChallengeScoreCalculation) ? `If you completed this challenge, you would not gain any Hostile Fragments, because ${this.active > 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}` : `If you completed this challenge, you would gain ${quanifyInt("Hostile Fragment", Math.floor((this.bonusMult * corruptionChallengeScoreCalculation) - player.mending.corruptedFragments))}.`
     },
     unlocked: () => { return Ra.pets.pelle.level >= 75}
 }
