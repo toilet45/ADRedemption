@@ -147,7 +147,7 @@ export function totalReplicantiSpeedMult(overCap) {
     totalMult = totalMult.times(1000);
   }
   if(Ra.unlocks.relicShardBoost.isUnlocked){
-    totalMult = totalMult.times(Currency.relicShards.value.pow(0.6667).clampMin(1));
+    totalMult = totalMult.times(Currency.relicShards.value.pow(0.06667).clampMin(1));
   }
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 

@@ -112,7 +112,7 @@ export const changelog = [
     <br>
     <ul>
     <li>Fixed EC6 and 11's reward displaying incorrectly when MU8 is purchased</li>
-    <li>Fixed MU8 scailing not applying correctly</li>
+    <li>Fixed MU8 scaling not applying correctly</li>
     <li>Fixed having 5 glyph slots in Pelle when MU4 is purchased</li>
     </ul>
     <b>Known Issues:</b>

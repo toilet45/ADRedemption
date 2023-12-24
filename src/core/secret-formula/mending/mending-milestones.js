@@ -35,7 +35,7 @@ export const mendingMilestones = {
   eleven: {
     mends: 15,
     reward: "Gain an MvR multiplier based on the lowest amount of glyphs ever equipped while reaching e9e15 antimatter this Mend.",
-    activeCondition: () => (`Based on the lowest, highest amount of glyphs equipped during any point of a reality in which you reach e9e15 antimatter, cursed glyphs do affect this number.` + /* Do not import mending milestone because it breaks for some reason, but this works fine */ (MendingMilestone.eleven.isReached ? ` Your current MvR multiplier from this milestone is ${player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven]}` : "")),
+    activeCondition: () => (`Based on the lowest, highest amount of glyphs equipped during any point of a reality in which you reach e9e15 antimatter, cursed glyphs do affect this number.` + /* Do not import mending milestone because it breaks for some reason, but this works fine */ (MendingMilestone.eleven.isReached ? ` Your current MvR multiplier from this milestone is (${format(1 + (player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven])/3, 2, 2)})` : "")),
     // We dont define the effect here because this codebase will shit itself if you do, so we instead define it at the MvR code. ^^^ This makes no sense but whatever its hard to explain and easier just to see in practise.
   },
   eight: {

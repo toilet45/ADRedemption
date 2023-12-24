@@ -392,7 +392,7 @@ etc.
 <b>Remote Galaxy scaling:` +  (!MendingUpgrade(17).isBought ? `</b> Above ${formatInt(Galaxy.remoteStart)} Antimatter Galaxies, the <i>total</i> cost
 increases by another ${formatPercents(0.002, 1)} per Galaxy, on top of Distant scaling.` : `</b> Since you have Mending Upgrade 17, Remote Galaxy scaling no longer occurs.`)
 + `<br>` +
-(MendingUpgrade(17).isBought ? `<b>Obscure Galaxy Scaling:</b> Above ${formatInt(Galaxy.scailingThreeStart)} Antimatter Galaxies the cost between them will increase by a ` + `${6-(+WarpUpgrade(4).isBought)-(+WarpUpgrade(11).isBought)}` + `th degree polynomial <br>` : ``)
+(MendingUpgrade(17).isBought ? `<b>Obscure Galaxy Scaling:</b> Above ${formatInt(Galaxy.scalingThreeStart)} Antimatter Galaxies the cost between them will increase by a ` + `${6-(+WarpUpgrade(4).isBought)-(+WarpUpgrade(11).isBought)}` + `th degree polynomial <br>` : ``)
  +`<br>
 <b>Hotkey: G</b> will try to purchase an Antimatter Galaxy.
 `,

@@ -1,5 +1,6 @@
 import { DC } from "../../constants";
 import { MultiplierTabIcons } from "./icons";
+import { corruptionPenalties } from "../mending/corruption";
 
 // See index.js for documentation
 export const EP = {
@@ -104,5 +105,11 @@ export const EP = {
     powValue: () => 0.5,
     isActive: () => V.isRunning,
     icon: MultiplierTabIcons.GENERIC_V,
+  },
+  nerfCorruptions: {
+    name: "Prestige Limits Hostility",
+    powValue: () => corruptionPenalties.prestigeLimits[player.mending.corruption[0]],
+    isActive: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[0] > 0),
+    icon: MultiplierTabIcons.CORRUPTION,
   },
 };

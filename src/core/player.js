@@ -38,12 +38,12 @@ window.player = {
   challenge: {
     normal: {
       current: 0,
-      bestTimes: Array.repeat(Number.MAX_VALUE, 11),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11),
       completedBits: 0,
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(Number.MAX_VALUE, 8),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
       completedBits: 0,
     },
     eternity: {

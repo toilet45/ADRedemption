@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { Currency, ExpoBlackHole, WarpUpgrade } from "./core/globals";
+import { CorruptionData, Currency, ExpoBlackHole, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -130,6 +130,11 @@ export function gainedInfinityPoints() {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
+  if (ip.gte(Decimal.pow10(9e15))) {
+    ip = ip.sub(Decimal.pow10(9e15))
+    ip = ip.pow(1/(ip.log10()**0.1))
+    ip = ip.add(Decimal.pow10(9e15))
+  }
   return ip.floor();
 }
 
@@ -139,7 +144,7 @@ export function gainedMendingPoints(){
     DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
-  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven] : 1))
+  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? 1 + (player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven])/3 : 1))
   if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
@@ -527,6 +532,7 @@ export function gameLoop(passDiff, options = {}) {
   // result in a ~1 second tick rate for browsers.
   // Note that we have to explicitly call all the real-time mechanics with the existing value of realDiff, because
   // simply letting it run through simulateTime seems to result in it using zero
+  CorruptionData.update() //We call this here since it resets every refresh, but we cant have it directly point to player because else multiplier tab complains
   if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4) {
     GameIntervals.gameLoop.stop();
     simulateTime(realDiff / 1000, true);
@@ -1009,10 +1015,9 @@ function updateTachyonGalaxies() {
 export function getTTPerSecond() {
   // All TT multipliers (note that this is equal to 1 pre-Ra)
   let ttMult = Effects.product(
-    Ra.unlocks.continuousTTBoost.effects.ttGen,
     Achievement(137),
     Achievement(156),
-  ).toDecimal().times(Ra.unlocks.achievementTTMult.config.canBeApplied ? Ra.unlocks.achievementTTMult.config.effectValue : 1);
+  ).toDecimal().times(Ra.unlocks.achievementTTMult.config.canBeApplied ? Ra.unlocks.achievementTTMult.config.effectValue : 1).times(Ra.unlocks.continuousTTBoost.config.canBeApplied ? Ra.unlocks.continuousTTBoost.effects.ttGen : 1);
   if (GlyphAlteration.isAdded("dilation")) ttMult.times(getSecondaryGlyphEffect("dilationTTgen"));
 
   // Glyph TT generation

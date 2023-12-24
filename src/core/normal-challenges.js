@@ -120,7 +120,7 @@ class NormalChallengeState extends GameMechanicState {
 
   updateChallengeTime() {
     const bestTimes = player.challenge.normal.bestTimes;
-    if (bestTimes[this.id - 2] <= player.records.thisInfinity.time) {
+    if (new Decimal(bestTimes[this.id - 2]).lte(player.records.thisInfinity.time)) {
       return;
     }
     player.challenge.normal.bestTimes[this.id - 2] = player.records.thisInfinity.time;

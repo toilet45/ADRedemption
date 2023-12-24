@@ -1,33 +1,37 @@
 export const CorruptionData = {
-    get corruptions() {
-       return player.mending.corruption;
-    },
+    corruptions: [0,0,0,0,0,0,0,0,0,0],
     corruptionChallenge: {
-        get recordCorruptions() {
-            return player.mending.corruptionChallenge.records;
-        },
-        get recordScore() {
-            return player.mending.corruptionChallenge.recordScore;
-        }
+        recordCorruptions: [0,0,0,0,0,0,0,0,0,0],
+        recordScore: 0,
+        bGLwC: 0,
     },
-
-    get isCorrupted() {
-        return player.mending.corruptionChallenge.corruptedMend;
+    isCorrupted: false,
+    nextCorrupted: false,
+    totalCorruptedFragments: 0,
+    availableCorruptedFragments: 0,
+    spentCorruptedFragments: 0,
+    update() {
+        this.corruptions = player.mending.corruption
+        this.corruptionChallenge.recordCorruptions = player.mending.corruptionChallenge.records
+        this.corruptionChallenge.recordScore = player.mending.corruptionChallenge.recordScore
+        this.isCorrupted = player.mending.corruptionChallenge.corruptedMend
+        this.nextCorrupted = player.mending.corruptionChallenge.corruptNext
+        this.totalCorruptedFragments = player.mending.corruptedFragments
+        this.availableCorruptedFragments = player.mending.corruptedFragments - player.mending.spentCF
+        this.spentCorruptedFragments = player.mending.spentCF
     },
-
-    get nextCorrupted() {
-        return player.mending.corruptNext;
+    calcBaseScore() {
+    let corruptionScores = [1, 1.2, 1.45, 1.7, 2, 2.5, 3, 3.5, 4, 5, 7, 11]
+    let finalScore = corruptionScores[player.mending.corruption[0]]
+    for (let i = 1; i < 9; i++) {
+        finalScore *= corruptionScores[player.mending.corruption[i]]
+    }
+    return finalScore
     },
-
-    get totalCorruptedFragments() {
-        return player.corruptedFragments;
-    },
-
-    get availableCorruptedFragments() {
-        return player.corruptedFragments.minus(player.mending.spentCF);
-    },
-
-    get spentCorruptedFragments() {
-        return player.mending.spentCF;
+    calcScore() {
+    let scoreCalc = this.calcBaseScore()
+    scoreCalc *= [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))]
+    scoreCalc = Math.pow(scoreCalc, CorruptionUpgrade(20).effectOrDefault(1))
+    return scoreCalc
     }
 }

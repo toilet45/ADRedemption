@@ -88,7 +88,7 @@ class InfinityChallengeState extends GameMechanicState {
 
   updateChallengeTime() {
     const bestTimes = player.challenge.infinity.bestTimes;
-    if (bestTimes[this.id - 1] <= player.records.thisInfinity.time) {
+    if (new Decimal(bestTimes[this.id - 1]).lte(player.records.thisInfinity.time)) {
       return;
     }
     player.challenge.infinity.bestTimes[this.id - 1] = player.records.thisInfinity.time;

@@ -25,7 +25,7 @@ export default {
     storedRealEffiency: 0,
     storedRealCap: 0,
     autoRelease: false,
-    autoReleaseSpeed: 0,
+    autoReleaseSpeed: new Decimal(0),
     unlocks: [],
     buyableUnlocks: [],
     quote: "",
@@ -133,7 +133,7 @@ export default {
       this.buyableUnlocks = Object.values(ENSLAVED_UNLOCKS).map(x => Enslaved.canBuy(x));
       this.quote = Enslaved.quote;
       this.autoRelease = player.celestials.enslaved.isAutoReleasing;
-      this.autoReleaseSpeed = Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed : 0;
+      this.autoReleaseSpeed = Enslaved.isAutoReleasing ? Enslaved.autoReleaseSpeed : new Decimal(0);
       this.currentSpeedUp = Enslaved.currentBlackHoleStoreAmountPerMs;
       this.hintsUnlocked = EnslavedProgress.hintsUnlocked.hasProgress;
       this.canModifyGameTimeStorage = Enslaved.canModifyGameTimeStorage;

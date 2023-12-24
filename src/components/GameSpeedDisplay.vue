@@ -38,7 +38,7 @@ export default {
       if (this.isStopped) return `Game speed is altered: ${this.baseSpeedText}`
       return this.baseSpeed.eq(1)
         ? "The game is running at normal speed."
-        : this.hasBH3 && this.baseSpeed.gte(1) ? `Game speed is altered: (${this.baseSpeedText})${formatPow(this.BH3Power, 3, 3)}. (${format(x, 2, 2)} total)`: `Game speed is altered: ${this.baseSpeedText}`;
+        : this.hasBH3 && this.baseSpeed.gte(1) && false ? `Game speed is altered: (${this.baseSpeedText})${formatPow(this.BH3Power, 3, 3)}. (${format(x, 2, 2)} total)`: `Game speed is altered: ${this.baseSpeedText}`;
     }
   },
   methods: {

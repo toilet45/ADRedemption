@@ -409,14 +409,14 @@ export const normalAchievements = [
     id: 65,
     name: "Not-so-challenging",
     get description() { return `Get the sum of all of your Normal Challenge times under ${formatInt(3)} minutes.`; },
-    checkRequirement: () => Time.challengeSum.totalMinutes < 3,
+    checkRequirement: () => Time.challengeSum.totalMinutes.lt(3),
     checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.REALITY_RESET_AFTER],
     get reward() {
       return `All Antimatter Dimensions are stronger in the first ${formatInt(3)} minutes of Infinities,
       but only in Challenges.`;
     },
-    effect: () => (Player.isInAnyChallenge ? Math.max(4 / (Time.thisInfinity.totalMinutes + 1), 1) : 1),
-    effectCondition: () => Player.isInAnyChallenge && Time.thisInfinity.totalMinutes < 3,
+    effect: () => (Player.isInAnyChallenge ? Decimal.max(new Decimal(4).div(Time.thisInfinity.totalMinutes.add(1)), 1).toNumber() : 1),
+    effectCondition: () => Player.isInAnyChallenge && Time.thisInfinity.totalMinutes.lt(3),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {

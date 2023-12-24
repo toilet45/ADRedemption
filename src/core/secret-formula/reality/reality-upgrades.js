@@ -217,7 +217,7 @@ export const realityUpgrades = [
     description: "Gain Eternities per second equal to your Reality count",
     automatorPoints: 5,
     shortDescription: () => `Continuous Eternity generation`,
-    effect: () => Currency.realities.value * Ra.unlocks.continuousTTBoost.effects.eternity.effectOrDefault(1),
+    effect: () => new Decimal(Currency.realities.value).times(Ra.unlocks.continuousTTBoost.effects.eternity.effectOrDefault(1)).min(1e308).toNumber(),
     formatEffect: value => `${format(value)} per second`
   },
   {

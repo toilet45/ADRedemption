@@ -113,12 +113,12 @@ export default {
       <br>
     </div>
     <div
-      v-for="row in 3"
+      v-for="row in 4"
       :key="row"
       class="l-mending-upgrade-grid__row"
     >
       <WarpUpgradeButton
-        v-for="column in 4"
+        v-for="column in 3"
         :key="id(row, column)"
         :upgrade="upgrades[id(row, column)]"
       />

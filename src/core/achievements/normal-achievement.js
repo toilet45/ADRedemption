@@ -187,7 +187,7 @@ export const Achievements = {
       .countWhere(row => row.every(ach => ach.isUnlocked));
     const basePower = (Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount)) ** (Ra.unlocks.achMultBaseImprovementV.isUnlocked ? 2 : 1);
     let x = BreakInfinityUpgrade.achievementMult.chargedEffect.isEffectActive ? BreakInfinityUpgrade.achievementMult.chargedEffect.effectValue : 1;
-    let y = Ra.unlocks.repIncreasesAchMult.isUnlocked ? ((1 + Decimal.log10(Currency.replicanti.value)) / 1e7) : 1;
+    let y = Ra.unlocks.repIncreasesAchMult.isUnlocked ? ((1 + Math.log10(Decimal.log10(Currency.replicanti.value))) / 25) : 1;
     let exponent = (getAdjustedGlyphEffect("effarigachievement").toDecimal()).times(Ra.unlocks.achievementPower.effectOrDefault(1)).times(x).times(Math.max(y, 1));
     return Decimal.pow(basePower, exponent);
   }),

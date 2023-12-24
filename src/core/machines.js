@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export const MachineHandler = {
   get baseRMCap() { return DC.E1000; },

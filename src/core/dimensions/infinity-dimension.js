@@ -19,13 +19,13 @@ export function infinityDimensionCommonMultiplier() {
       PelleRifts.recursion.milestones[1]
     );
   
-  if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(4).completions >= 1) {
+  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(4).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(4).reward);
   }
-  if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1) {
+  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(9).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(9).reward);
   }
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1) {
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
     mult = mult.timesEffectsOf(EternityChallenge(9).vReward);
   }
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
@@ -182,7 +182,7 @@ class InfinityDimensionState extends DimensionState {
     mult = mult.powEffectOf(AlchemyResource.infinity);
     mult = mult.pow(Ra.momentumValue);
     mult = mult.powEffectOf(PelleRifts.paradox);
-    if(Ra.unlocks.improvedECRewards.isUnlocked){
+    if(Ra.unlocks.improvedECRewards.isUnlocked && !Pelle.isDoomed){
       if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
       if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
     }
@@ -242,8 +242,8 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
-     const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1
-     return this.tier == 8 ? 1e10 ** x : InfinityDimensions.totalDimCap ** x;
+     const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
+     return this.tier == 8 ? Number.MAX_VALUE : InfinityDimensions.totalDimCap ** x;
   }
 
   get isCapped() {

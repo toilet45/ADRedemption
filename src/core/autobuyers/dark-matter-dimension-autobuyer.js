@@ -25,7 +25,7 @@ export class DarkMatterDimensionAutobuyerState extends IntervaledAutobuyerState 
     super.tick();
     let x = SingularityMilestone.darkDimensionAutobuyers.effectValue;
     if (player.celestials.ra.permanentMemories.lai50){
-      x = player.celestials.ra.permanentMemories.lai65 ? 8 : 4;
+      x = 8;
     }
     Laitela.maxAllDMDimensions(x);
   }
