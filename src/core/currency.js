@@ -522,10 +522,11 @@ Currency.mends = new class extends DecimalCurrency {
 
 Currency.corruptionFragments = new class extends NumberCurrency {
   get value() { 
-    return player.mending.corruptionFragments; 
+    return player.mending.corruptedFragments - player.mending.spentCF; 
   }
   set value(value) {
-    player.corruptionFragments = value;
+    this.respecCall()
+    player.mending.corruptedFragments = value;
   }
 
   get startingValue() {
@@ -537,7 +538,7 @@ Currency.corruptionFragments = new class extends NumberCurrency {
   }
 
   respecCall() {
-    player.mending.corruptionFragments += player.mending.spentCF
+    player.mending.corruptedFragments += player.mending.spentCF
     player.mending.spentCF = 0
   }
 }();

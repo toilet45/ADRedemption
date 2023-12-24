@@ -145,8 +145,8 @@ export function timeDimensionCommonMultiplier() {
   }
 
   if (Ra.unlocks.relicShardBoost.isUnlocked) mult = mult.pow(1 + ((Currency.relicShards.value.clampMin(1)).log10() / 1337));
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
   if (Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked){
     mult = mult.pow(VUnlocks.adPow.effectOrDefault(1), 0.5);
   }

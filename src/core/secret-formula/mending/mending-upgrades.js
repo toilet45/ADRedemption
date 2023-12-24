@@ -18,7 +18,7 @@ const rebuyable = props => {
     }
     return Math.pow(effect, player.mending.rebuyables[props.id]);
   }
-  props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
+  props.description = () => props.id == 11 ? props.textTemplate.replace("{value}", formatFloat(effect, 3)): props.textTemplate.replace("{value}", formatInt(effect));
   props.formatEffect = value => {
     if (props.id === 6 || props.id === 16) return effectType + `${formatInt(value)}`
     if (props.id === 11) return effectType + `${formatFloat(value, 3)}`
@@ -101,7 +101,7 @@ export const mendingUpgrades = [
     name: "Mending Upgrade 11",
     initialCost: 1e6,
     costMult: 1e4,
-    textTemplate: "Weaken the post 50,000 TG scailing by {value}",
+    textTemplate: "Weaken the post 50,000 TG scaling by {value}",
     effect: 0.005,
     effectType: "-"
   }),

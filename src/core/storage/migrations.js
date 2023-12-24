@@ -1,5 +1,6 @@
 import { deepmergeAll } from "@/utility/deepmerge";
 import { DC } from "../constants";
+import { CorruptionData } from "../corruption";
 
 // WARNING: Don't use state accessors and functions from global scope here, that's not safe in long-term
 export const migrations = {
@@ -579,9 +580,9 @@ export const migrations = {
     player.mending.corruptNext = false
   },
   51.007: player => {
-    player.mending.spentCF = DC.D0;
+    player.mending.spentCF = 0;
   },
-  52: player =>{
+  51.008: player =>{
     //apparently these can be real numbers, but I'm sticking to integers for now)
     player.corruptedFragments = player.mending.corruptedFragments.toDecimal();
     player.mending.warpRebuyables = {
@@ -608,14 +609,14 @@ export const migrations = {
       corruption: 0,
     }
   },
-  53: player =>{
+  51.009: player =>{
     player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
     player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
     player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
     player.records.thisReality.time = new Decimal(player.records.thisReality.time);
     player.records.thisMend.time = new Decimal(player.records.thisMend.time);
   },
-  54: player =>{
+  51.010: player =>{
     player.celestials.ra.upgradeBits = 0,
     player.celestials.ra.raPoints = DC.D0,
     player.celestials.ra.rebuyables = {
@@ -626,7 +627,7 @@ export const migrations = {
       5: 0,
     }
   },
-  55: player =>{
+  51.011: player =>{
     player.records.bestMend.time = new Decimal(player.records.bestMend.time);
     player.expoBlackHole = Array.range(0, 1).map(id => ({
       id,
@@ -643,21 +644,21 @@ export const migrations = {
     player.expoBlackHolePauseTime = 0;
     player.expoBlackHoleNegative = 1;
   },
-  56: player =>{
+  51.012: player =>{
     player.celestials.ra.permanentMemories = {
       ra2: false,
       lai50: false,
       lai65: false,
     };
   },
-  57: player =>{
+  51.013: player =>{
     player.records.thisReality.remWithoutGG = 0;
     player.records.bestReality.remWithoutGG = 0;
   },
-  58: player => {
+  51.014: player => {
     player.galBoostPoints = new Decimal(0);
-  }
   },
+},
 
   normalizeTimespans(player) {
     player.realTimePlayed *= 100;

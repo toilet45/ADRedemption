@@ -1,3 +1,4 @@
+import { CorruptionData } from "../../corruption"
 import { corruptionChallengeScoreCalculation } from "../mending/corruption"
 
 export const corruptionChallenge = {
@@ -19,7 +20,7 @@ export const corruptionChallenge = {
         return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend outside of Doom while in a more difficult Reality, in order to gain Hostile Fragments."
     },
     reward: () => {
-        return player.mending.corruptedFragments > (this.bonusMult * corruptionChallengeScoreCalculation) ? `If you completed this challenge, you would not gain any Hostile Fragments, because ${this.active > 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}` : `If you completed this challenge, you would gain ${quanifyInt("Hostile Fragment", Math.floor((this.bonusMult * corruptionChallengeScoreCalculation) - player.mending.corruptedFragments))}.`
+        return player.mending.corruptedFragments > (Math.log2(CorruptionData.calcScore())) ? `If you completed this challenge, you would not gain any Hostile Fragments, because ${this.active > 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}` : `If you completed this challenge, you would gain ${quanifyInt("Hostile Fragment", Math.floor(Math.log2(CorruptionData.calcScore()) - player.mending.corruptedFragments))}.`
     },
     unlocked: () => { return Ra.pets.pelle.level >= 75}
 }

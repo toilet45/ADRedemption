@@ -138,7 +138,7 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Visible Galaxies",
+    name: "Visible ononononon",
     id: 10,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",

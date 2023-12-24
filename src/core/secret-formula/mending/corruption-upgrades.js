@@ -25,7 +25,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Game speed is multiplied based on highest score (Applies after corruptions)",
-    effect: () => Decimal.pow10(Decimal.log(1 + player.mending.corruptionChallenge.recordScore, 1.08)),
+    effect: () => Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
     formatEffect: value => formatX(value, 2)
   },
   {
@@ -39,7 +39,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments.",
-    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments - player.mending.spentCF)/3),
+    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments - player.mending.spentCF)/3), // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
     formatEffect: value => `^` + format(value, 2, 2)
   },
   {
@@ -220,7 +220,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Prestige Limits is now doubled, capped at ${formatInt(1)}`,
+    description: () => `Prestige Limits power is now doubled, capped at ${formatInt(1)}`,
   },
   {
     name: "Dimension Superscaling",
@@ -273,7 +273,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on glyph levels and Complex Glyphs level",
-    effect: () => 1 + player.mending.corruptionChallenge.corruptedMend & player.mending.corruption[4] >= 4 ? 1 + Math.log(Math.log(player.mending.corruption[4] * player.records.bestReality.glyphLevelSet))/2 : 1,
+    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[4] >= 4) ? 1 + Math.log(Math.log(player.mending.corruption[4] * Math.max(1,player.records.bestReality.glyphLevel)))/2 : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
   {

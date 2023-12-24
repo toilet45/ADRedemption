@@ -18,7 +18,7 @@ class GalaxyRequirement {
 }
 
 export class Galaxy {
-  static get scailingThreeStart(){
+  static get scalingThreeStart(){
     let x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(5).completions >= 1) ? EternityChallenge(5).vReward.effectValue : 0;
     return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + x;
   }
@@ -79,7 +79,7 @@ export class Galaxy {
       if (WarpUpgrade(4).isBought) { polynomialLvl -= 1 }
       if (WarpUpgrade(11).isBought) { polynomialLvl -= 1 }
       if (polynomialLvl == 6) {
-        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let n = Math.max(galaxies - Galaxy.scalingThreeStart, 0);
         let a = n ** 6;
         let b = 15 * (n ** 5);
         let c = 85 * (n ** 4);
@@ -88,7 +88,7 @@ export class Galaxy {
         amount += (a + b + c + d + e + (120 * n)) / 360;
       }
       if (polynomialLvl == 5) {
-        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let n = Math.max(galaxies - Galaxy.scalingThreeStart, 0);
         let a = n ** 5;
         let b = 5 * (n ** 4);
         let c = 5 * (n ** 3);
@@ -96,13 +96,13 @@ export class Galaxy {
         amount += (a + b + c - d - (6 * n)) / 60;
       }
       if (polynomialLvl == 4) {
-        let n = Math.max(galaxies - Galaxy.scailingThreeStart, 0);
+        let n = Math.max(galaxies - Galaxy.scalingThreeStart, 0);
         let a = n ** 4;
         let b = 6 * (n ** 3);
         let c = 11 * (n ** 2);
         amount += (a + b + c + (6 * n)) / 12;
       }
-      //amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scailingThreeStart - 1)), 2);
+      //amount *= Math.pow(Math.pow(1.002, galaxies - (Galaxy.scalingThreeStart - 1)), 2);
     }
 
     amount -= Effects.sum(InfinityUpgrade.resetBoost);
@@ -159,7 +159,7 @@ export class Galaxy {
   }
 
   static typeAt(galaxies) {
-    if (galaxies >= Galaxy.scailingThreeStart) {
+    if (galaxies >= Galaxy.scalingThreeStart) {
       return GALAXY_TYPE.THIRD;
     }
     if (galaxies >= Galaxy.remoteStart) {

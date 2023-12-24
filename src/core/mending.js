@@ -8,6 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { corruptionChallengeScoreCalculation } from "./secret-formula/mending/corruption";
+import { CorruptionData } from "./corruption";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -423,14 +424,22 @@ export function mendingReset() {
       maxRem: 0,
     }
     // Finally, lets set up corruptions
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      scoreCalc = CorruptionData.scoreCalc()
+    // console.log(corruptionChallengeScoreCalculation())
+    if (player.mending.corruptionChallenge.recordScore < scoreCalc) {
+      player.mending.corruptionChallenge.records = player.mending.corruption
+      player.mending.corruptionChallenge.recordScore = scoreCalc
+    }
+     player.mending.corruptedFragments = Math.ceil(Math.max(player.mending.corruptedFragments, Math.log2(scoreCalc)))
+     player.mending.corruptionChallenge.corruptedMend = false
+   }
+   // Its crucial we do this afterw, else the player will corrupt and instantly complete a corruption
     if (player.mending.corruptNext) {
       player.mending.corruptNext = false
       player.mending.corruptionChallenge.corruptedMend = true
     }
-    if (player.mending.corruptionChallenge.corruptedMend) {
-      player.mending.corruptedFragments = Math.ceil(Math.min(player.mending.corruptedFragments, Math.log2(corruptionChallengeScoreCalculation() * [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))])))
-      player.mending.corruptionChallenge.corruptedMend = false
-    }
+    CorruptionData.update()
     Player.resetRequirements("mending");
     //end reseting all the things
 

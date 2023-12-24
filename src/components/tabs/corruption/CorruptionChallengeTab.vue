@@ -224,6 +224,17 @@ export default {
           @input="corruptionSetSet(5, $event)"
         />
         Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
+        <br>
+        <br>
+    Atomic Dilution:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[6]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(6, $event)"
+        />
+        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
       </div>
     </div>
     <div class="c-mending-upgrade-infotext">

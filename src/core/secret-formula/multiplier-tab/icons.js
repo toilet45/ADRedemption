@@ -82,6 +82,8 @@ export const MultiplierTabIcons = {
         return { symbol: `<b>Ϟ</b>${icon}`, color: "var(--color-reality)" };
       case "imaginary":
         return { symbol: `<i class="far fa-lightbulb" />${icon}`, color: "var(--color-ra--base)" };
+      case "corruption":
+        return {symbol: `<i class="fa-solid fa-biohazard">${icon}`, color: `var(--color-mending)`}
       default:
         throw new Error("Unrecognized upgrade type in multiplier tab icons");
     }
@@ -220,5 +222,13 @@ export const MultiplierTabIcons = {
   IAP: {
     symbol: `<i class="fas fa-coins" />`,
     color: "var(--color-accent)",
+  },
+  CORRUPTION: {
+    symbol: `<i class="fa-solid fa-biohazard"></i>`,
+    color: `var(--color-mending)`,
+  },
+  CORRUPTION_BONUS: {
+    symbol: `<b>++</b>`,
+    color: `var(--color-mending)`,
   },
 };

@@ -338,11 +338,11 @@ export const ra = {
       id: 25,
       reward: "Time Theorems boost all forms of continuous non-dimension production",
       effects: {
-        ttGen: () => Math.pow(10, 5 * Ra.theoremBoostFactor()),
-        eternity: () => Math.pow(10, 2 * Ra.theoremBoostFactor()),
+        ttGen: () => Decimal.pow(10, 5 * Ra.theoremBoostFactor()),
+        eternity: () => Decimal.pow(10, 2 * Ra.theoremBoostFactor()),
         infinity: () => Decimal.pow(10, 15 * Ra.theoremBoostFactor()),
         replicanti: () => Decimal.pow(10, 20 * Ra.theoremBoostFactor()),
-        dilatedTime: () => Math.pow(10, 3 * Ra.theoremBoostFactor()),
+        dilatedTime: () => Decimal.pow(10, 3 * Ra.theoremBoostFactor()),
         memories: () => 1 + Ra.theoremBoostFactor() / 50,
         memoryChunks: () => 1 + Ra.theoremBoostFactor() / 50,
         autoPrestige: () => 1 + 2.4 * Ra.theoremBoostFactor()
@@ -792,18 +792,18 @@ export const ra = {
     dmdAuto1: {
       id: 20,
       id2: 1,
-      reward: "Unlock permanent autobuyers for DMD 1-4 (kept on Mend)",
+      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for all Dark Matter Dimensions",
       pet: "laitela",
       level: 50,
-      displayIcon: "*"
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
     dmdAuto2: {
       id: 21,
       id2: 1,
-      reward: "Unlock permanent autobuyers for DMD 5-8 (kept on Mend)",
+      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.", //First part isnt actually completely done yet, the manual annihilation bonus is tho
       pet: "laitela",
       level: 65,
-      displayIcon: "*"
+      displayIcon: `<span class="fas fa-sync-alt"</span>` 
     },
     continuumAffectsIDsAndTDs: {
       id: 22,
@@ -813,10 +813,10 @@ export const ra = {
       level: 75,
       displayIcon: `*`
     },
-    placeholderL13: {
+    dmdScaling: {
       id: 23,
       id2: 1,
-      reward: "Unlock more Singularity Milestones",
+      reward: "Slightly weaken post infinity DMD scaling, Entropic Condensing is far stronger.",
       pet: "laitela",
       level: 90,
       displayIcon: "?"

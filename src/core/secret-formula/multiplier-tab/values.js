@@ -13,6 +13,7 @@ import { replicanti } from "./replicanti";
 import { TP } from "./tachyon-particles";
 import { tickspeed, tickspeedUpgrades } from "./tickspeed";
 import { TD } from "./time-dimensions";
+import { hostScore } from "./score";
 
 export const multiplierTabValues = {
   general,
@@ -30,5 +31,6 @@ export const multiplierTabValues = {
   infinities,
   eternities,
   gamespeed,
-  replicanti
+  replicanti,
+  hostScore
 };

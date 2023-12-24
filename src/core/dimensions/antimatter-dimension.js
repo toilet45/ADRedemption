@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
 // Multiplier applied to all Antimatter Dimensions, regardless of tier. This is cached using a Lazy
@@ -601,6 +601,9 @@ class AntimatterDimensionState extends DimensionState {
         const log10 = production.log10();
         production = Decimal.pow10(Math.pow(log10, getAdjustedGlyphEffect("effarigantimatter")));
       }
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        production = Decimal.pow10(Math.pow(production.log10(),corruptionPenalties.atomDilution[player.mending.corruption[6]]))
+      }
     }
     production = production.min(this.cappedProductionInNormalChallenges);
     return production;
@@ -647,10 +650,11 @@ export const AntimatterDimensions = {
       Achievement(58)
     ).times(getAdjustedGlyphEffect("powerbuy10"));
 
-    mult = mult.pow(getAdjustedGlyphEffect("effarigforgotten")).powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
+    mult = mult.pow(Math.max(1, getAdjustedGlyphEffect("effarigforgotten")))
+    mult = mult.powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
     mult = mult.pow(ImaginaryUpgrade(14).effectOrDefault(1));
 
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(3).completions >= 1){
+    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(3).completions >= 1 && !Pelle.isDoomed){
       mult = mult.pow(EternityChallenge(3).vReward.effectValue);
     }
     return mult;
