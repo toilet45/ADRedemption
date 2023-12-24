@@ -60,7 +60,7 @@ export const ra = {
       memoryGain: "total Memory levels",
       secondaryMemoryChunkGain: "Achievement Multiplier for Dimensions",
       requiredUnlock: () => Ra.unlocks.vUnlock,
-      rawMemoryChunksPerSecond: () =>{ 
+      rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
         return 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
@@ -98,7 +98,7 @@ export const ra = {
       memoryGain: "singularity amount",
       secondaryMemoryChunkGain: "Dark Matter",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () =>{ 
+      rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
         return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)) * x;
       },
@@ -112,9 +112,9 @@ export const ra = {
       memoryGain: "best remnants without galaxy generator",
       secondaryMemoryChunkGain: "Reality Shards",
       requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
-      rawMemoryChunksPerSecond: () =>{ 
+      rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
-        return x * player.celestials.pelle.remnants 
+        return x * player.celestials.pelle.remnants
       },
       memoryProductionMultiplier: () => 1
     }

@@ -2,7 +2,6 @@
 import CostDisplay from "@/components/CostDisplay";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
-import { MendingUpgrade } from "../../../core/mending-upgrades";
 import PrimaryToggleButton from "../../PrimaryToggleButton.vue";
 import { Autobuyer } from "../../../core/globals";
 
