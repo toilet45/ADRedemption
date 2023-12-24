@@ -27,6 +27,22 @@ export function strengthToRarity(x) {
   return (x - 1) * 100 / 2.5;
 }
 
+//Separated the compare functions from sorting to reuse them in autoEquipBetterGlyphs
+//It's probably very unnecessary since by the time you unlock it probably only level will matter anyway but hey, someone might want it
+const compare = {
+  level: (a, b) => b.level - a.level,
+  power: (a, b) => b.level * b.strength - a.level * a.strength,
+  score: (a, b) => AutoGlyphProcessor.filterValue(b) - AutoGlyphProcessor.filterValue(a),
+  effect: (a, b) => {
+    function reverseBitstring(eff) {
+      return parseInt(((1 << 30) + (eff >>> 0)).toString(2).split("").reverse().join(""), 2);
+    }
+    // The bitwise reversal is so that the effects with the LOWER id are valued higher in the sorting.
+    // This primarily meant for effarig glyph effect sorting, which makes it prioritize timespeed pow highest.
+    return reverseBitstring(b.effects) - reverseBitstring(a.effects);
+  },
+}
+
 export const Glyphs = {
   inventory: [],
   active: [],
@@ -337,7 +353,7 @@ export const Glyphs = {
       EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
       EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
       this.validate();
-    } 
+    }
     else {
       // Royal's psudocode for the Glyph drag replace starts here
       /* check if the Glyph we're dragging in is not an Effarig/Reality
@@ -376,7 +392,7 @@ export const Glyphs = {
     }
   }
       // We can only replace effarig/reality glyph
-/*      if (sameSpecialTypeIndex >= 0 && sameSpecialTypeIndex !== targetSlot) { 
+/*      if (sameSpecialTypeIndex >= 0 && sameSpecialTypeIndex !== targetSlot) {
         Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
@@ -623,21 +639,41 @@ export const Glyphs = {
     if (player.reality.autoCollapse) this.collapseEmptySlots();
   },
   sortByLevel() {
-    this.sort((a, b) => b.level - a.level);
+    this.sort(compare.level);
   },
   sortByPower() {
-    this.sort((a, b) => b.level * b.strength - a.level * a.strength);
+    this.sort(compare.power);
   },
   sortByScore() {
-    this.sort((a, b) => AutoGlyphProcessor.filterValue(b) - AutoGlyphProcessor.filterValue(a));
+    this.sort(compare.score);
   },
   sortByEffect() {
-    function reverseBitstring(eff) {
-      return parseInt(((1 << 30) + (eff >>> 0)).toString(2).split("").reverse().join(""), 2);
-    }
-    // The bitwise reversal is so that the effects with the LOWER id are valued higher in the sorting.
-    // This primarily meant for effarig glyph effect sorting, which makes it prioritize timespeed pow highest.
-    this.sort((a, b) => reverseBitstring(b.effects) - reverseBitstring(a.effects));
+    this.sort(compare.effect);
+  },
+  autoEquipBetterGlyphs(compareFunction) {
+    if(typeof compareFunction != "function") return;
+    Glyphs.active.forEach(equipped => {
+      if(equipped === null) return;
+      let sameTypeGlyphs = Glyphs.inventoryList.filter(g => g.type === equipped.type);
+      if(sameTypeGlyphs.length === 0) return;
+      if(sameTypeGlyphs.length > 1) {
+        sameTypeGlyphs.sort(compareFunction);
+      }
+      let candidate = sameTypeGlyphs[0];
+      if(compareFunction(equipped, candidate) > 0) Glyphs.swapIntoActive(candidate, equipped.idx);
+    });
+  },
+  autoEquipByLevel() {
+    this.autoEquipBetterGlyphs(compare.level);
+  },
+  autoEquipByPower() {
+    this.autoEquipBetterGlyphs(compare.power);
+  },
+  autoEquipByScore() {
+    this.autoEquipBetterGlyphs(compare.score);
+  },
+  autoEquipByEffect() {
+    this.autoEquipBetterGlyphs(compare.effect);
   },
   // If there are enough glyphs that are better than the specified glyph, in every way, then
   // the glyph is objectively a useless piece of garbage.
@@ -763,6 +799,26 @@ export const Glyphs = {
         break;
       default:
         throw new Error("Unrecognized auto-sort mode");
+    }
+  },
+  processAutoEquipAfterReality() {
+    switch (player.reality.autoEquip) {
+      case AUTO_SORT_MODE.NONE:
+        break;
+      case AUTO_SORT_MODE.LEVEL:
+        this.autoEquipByLevel();
+        break;
+      case AUTO_SORT_MODE.POWER:
+        this.autoEquipByPower();
+        break;
+      case AUTO_SORT_MODE.EFFECT:
+        this.autoEquipByEffect();
+        break;
+      case AUTO_SORT_MODE.SCORE:
+        this.autoEquipByScore();
+        break;
+      default:
+        throw new Error("Unrecognized auto-equip mode");
     }
   },
   get levelCap() {
@@ -953,7 +1009,7 @@ export function calculateGlyph(glyph) {
       // this was merged, so it's not a big deal.
       glyph.rawLevel = glyph.level < 1000 ? glyph.level : (Math.pow(0.004 * glyph.level - 3, 2) - 1) * 125 + 1000;
     }
-//Ra.unlocks.brokenLimit.isUnlocked 
+//Ra.unlocks.brokenLimit.isUnlocked
     // Used to randomly generate strength in this case; I don't think we actually care.
     if (glyph.strength === 1) glyph.strength = 1.5;
     glyph.strength = Math.min(rarityToStrength(1000), glyph.strength);

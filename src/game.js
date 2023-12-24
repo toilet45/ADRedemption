@@ -138,17 +138,25 @@ export function gainedInfinityPoints() {
   return ip.floor();
 }
 
+export function mendingMilestoneElevenMultiplier(display = false){
+  if(!MendingMilestone.eleven.isReached && !display) return DC.D1;
+  const reqCheck = player.requirementChecks.mending.mmeleven;
+  let mult = reqCheck <= 0 ? (3 - reqCheck) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - reqCheck];
+  return new Decimal(mult);
+}
+
 export function gainedMendingPoints(){
   let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
     (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
     DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
-  MvRGain = MvRGain.times(new Decimal(MendingMilestone.eleven.isReached ? 1 + (player.requirementChecks.mending.mmeleven <= 0 ? (3 + -player.requirementChecks.mending.mmeleven) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - player.requirementChecks.mending.mmeleven])/3 : 1))
+  MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
   if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
 }
+
 export function warpReality(){
   Currency.mendingPoints.subtract(new Decimal(1e7));
   Quotes.kohler.postWarp.show();
@@ -460,7 +468,7 @@ export function getGameSpeedupForDisplay() {
 
 export function getBaseGameSpeedup(){
   let x = getGameSpeedupFactor();
-  
+
   for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
     if (!i.isUnlocked) break;
     x = Decimal.pow(x, 1 / i.power);
@@ -653,7 +661,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisInfinity.time = player.records.thisInfinity.time.add(diff);
     if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff.times(Currency.eternities.value.clampMax(1e66).add(1)));
-    } 
+    }
     else {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff);
     }
@@ -946,7 +954,7 @@ function applyAutoprestige(diff) {
     Currency.relicShards.add(Effarig.shardsGained);
   }
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));   
+    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));

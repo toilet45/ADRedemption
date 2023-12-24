@@ -9727,6 +9727,7 @@ input.o-automator-block-input {
   color: var(--color-mending);
   background-color: var(--color-prestige--accent);
   border-color: var(--color-mending);
+  cursor: pointer;
 }
 
 .o-mending-button:hover {

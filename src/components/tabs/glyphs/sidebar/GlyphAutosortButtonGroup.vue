@@ -16,6 +16,8 @@ export default {
       showAutoAutoClean: false,
       autoAutoClean: false,
       applyFilterToPurge: false,
+      showAutoEquip: false,
+      autoEquip: 0,
     };
   },
   computed: {
@@ -45,6 +47,9 @@ export default {
     applyFilterToPurge(newValue) {
       player.reality.applyFilterToPurge = newValue;
     },
+    autoEquip(newValue) {
+      player.reality.autoEquip = newValue;
+    },
   },
   methods: {
     update() {
@@ -54,6 +59,8 @@ export default {
       this.showAutoAutoClean = VUnlocks.autoAutoClean.canBeApplied;
       this.autoAutoClean = player.reality.autoAutoClean;
       this.applyFilterToPurge = player.reality.applyFilterToPurge;
+      this.showAutoEquip = true;
+      this.autoEquip = player.reality.autoEquip;
     },
   }
 };
@@ -94,6 +101,13 @@ export default {
       label="Never Auto-purge Glyphs accepted by filter:"
       tooltip-class="c-glyph-inventory-option__tooltip"
       :tooltip-content="keepTooltip"
+    />
+    <ButtonCycle
+      v-if="showAutoEquip"
+      v-model="autoEquip"
+      class="c-glyph-inventory-option"
+      text="Auto-equip Mode:"
+      :labels="sortModes"
     />
   </div>
 </template>

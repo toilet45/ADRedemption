@@ -2,7 +2,8 @@
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import RaPet from "./RaPet";
 import RaPetRemembranceButton from "./RaPetRemembranceButton";
-import RaUpgradeButton from "./RaUpgradeButton.vue";
+import RaUpgradePanel from "./RaUpgradePanel.vue";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "RaTab",
@@ -10,7 +11,7 @@ export default {
     RaPet,
     RaPetRemembranceButton,
     CelestialQuoteHistory,
-    RaUpgradeButton,
+    RaUpgradePanel
   },
   data() {
     return {
@@ -26,7 +27,8 @@ export default {
       petWithRemembrance: "",
       isRunning: false,
       memoryBoosts: "",
-      shopUnlocked: false
+      shopUnlocked: false,
+      remNerfed: false,
     };
   },
   computed: {
@@ -80,7 +82,7 @@ export default {
     ],
     petStyle() {
       return {
-        color: (this.petWithRemembrance === "")
+        color: (!this.remNerfed || this.petWithRemembrance === "")
           ? "white"
           : this.pets.find(pet => pet.pet.name === this.petWithRemembrance).pet.color,
       };
@@ -99,6 +101,13 @@ export default {
     memoryDescription() {
       return `Within Ra's Reality, Memory Chunks for Celestial Memories
         will be generated based on certain resource amounts.`;
+    },
+    remembranceDescription(){
+      let desc = `${this.remNerfed?"Whichever Celestial has Remembrance":"All Celestials"} will get ${ formatX(this.remembranceMult) } Memory Chunk gain.`
+      if(this.remNerfed) {
+        desc += ` The other Celestials will get ${ formatX(this.remembranceNerf, 1, 1) } Memory Chunk gain.`;
+      }
+      return desc;
     },
     isDoomed: () => Pelle.isDoomed,
     dimboostUncapped: () => Ra.unlocks.raRealUncapDimboost.isUnlocked,
@@ -141,6 +150,7 @@ export default {
       this.isRunning = Ra.isRunning;
       this.memoryBoosts = Ra.memoryBoostResources;
       this.shopUnlocked = Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked;
+      this.remNerfed = !Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -183,7 +193,7 @@ export default {
         :pet-config="pet"
       />
     </div>
-    <div class="l-ra-non-pets">
+    <div class="l-ra-non-pets" style="flex-wrap: wrap;">
       <button class="c-ra-run-button">
         <h2 :class="{ 'o-pelle-disabled': isDoomed }">
           <span v-if="isRunning">You are in </span>
@@ -216,8 +226,7 @@ export default {
           Remembrance
         </h1>
         <span :style="petStyle">
-          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }} Memory Chunk gain. The other
-          Celestials will get {{ formatX(remembranceNerf, 1, 1) }} Memory Chunk gain.
+          {{ remembranceDescription }}
         </span>
         <div
           v-if="hasRemembrance"
@@ -237,29 +246,7 @@ export default {
           (you need {{ formatInt(remembranceReq - totalLevels) }} more)
         </div>
       </div>
-    </div>
-    <div v-if="shopUnlocked">
-    <div class="c-mending-upgrade-infotext">
-      Stripped Upgrades (or ones that cost 1e300 RaP) are not yet implemented.
-      <br>
-      You can shift-click upgrades with <i class="fas fa-lock-open" /> to make the game prevent you
-      from doing anything this Reality which would cause you to fail their unlock condition.
-      <span :ach-tooltip="lockTooltip">
-        <i class="fas fa-question-circle" />
-      </span>
-      <br>
-    </div>
-    <div
-      v-for="row in 5"
-      :key="row"
-      class="l-mending-upgrade-grid__row"
-    >
-      <RaUpgradeButton
-        v-for="column in 5"
-        :key="id(row, column)"
-        :upgrade="upgrades[id(row, column)]"
-      />
-    </div>
+      <RaUpgradePanel />
     </div>
   </div>
 </template>
