@@ -81,7 +81,7 @@ export const Laitela = {
   },
   annihilate(force) {
     if (!force && !this.canAnnihilate) return false;
-    this.celestial.darkMatterMult += (this.darkMatterMultGain * player.celestials.ra.permanentMemories.lai65 ? 500 : 1);
+    this.celestial.darkMatterMult += this.darkMatterMultGain * (player.celestials.ra.permanentMemories.lai65 ? 500 : 1);
     DarkMatterDimensions.reset();
     Laitela.quotes.annihilation.show();
     Achievement(176).unlock();

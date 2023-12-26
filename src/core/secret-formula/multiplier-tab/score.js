@@ -13,14 +13,14 @@ total: {
   corruptions: {
     name: "Corruptions",
     displayOverride: () => `${formatInt(CorruptionData.calcBaseScore(), 2, 2)} base score`,
-    multValue: () => corruptionChallengeScoreCalculation(),
+    multValue: () => CorruptionData.calcBaseScore(),
     isActive: () => CorruptionData.isCorrupted,
     icon: MultiplierTabIcons.CORRUPTION,
   },
   extra: {
     name: "Bonus",
     multValue: () => [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(CorruptionData.corruptions.countWhere(u => u > 0), CorruptionData.corruptions.reduce((partialSum, a) => partialSum + a, 0) + 2))],
-    displayOverride: () => format([0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(CorruptionData.corruptions.countWhere(u => u > 0), CorruptionData.corruptions.reduce((partialSum, a) => partialSum + a, 0) + 2))], 2, 2),
+    displayOverride: () => formatX([0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(CorruptionData.corruptions.countWhere(u => u > 0), CorruptionData.corruptions.reduce((partialSum, a) => partialSum + a, 0) + 2))], 2, 2),
     isActive: () => CorruptionData.isCorrupted,
     icon: MultiplierTabIcons.CORRUPTION_BONUS,
   },

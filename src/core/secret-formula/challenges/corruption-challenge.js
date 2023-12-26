@@ -12,15 +12,16 @@ export const corruptionChallenge = {
     3 would be the fourth row (pentachoron numbers: 1, 5, 15, 35, 70 - we take 35 (4th num))
     So on and so forth. List of them can be found https://oeis.org/wiki/Simplicial_polytopic_numbers
     */
-    bonusMult: () => [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))],
+    bonusMult: () => [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0)/player.mending.corruption.countWhere(u => u > 0) - 1))],
     incBonusText: () => {
-        return "In order to increase your bonus multiplier, you should " + player.mending.corruption.countWhere(u => u > 0) > player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2 ? "increase the number of Hostilities active." : "increase the average level of your Hostilities."
+        return "In order to increase your bonus multiplier, you should " + (player.mending.corruption.countWhere(u => u > 0) < player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0)/player.mending.corruption.countWhere(u => u > 0) - 1 ? "increase the number of Hostilities active." : "increase the average level of your Hostilities."
+        )
     },
     desc: () => {
-        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend outside of Doom while in a more difficult Reality, in order to gain Hostile Fragments."
+        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend outside of Doom while in a more difficult Reality, in order to gain Hostile Fragments. All upgrades will be reset if you complete a reality with more Hostile Fragments then you are carrying."
     },
     reward: () => {
-        return player.mending.corruptedFragments > (Math.log2(CorruptionData.calcScore())) ? `If you completed this challenge, you would not gain any Hostile Fragments, because ${this.active > 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}` : `If you completed this challenge, you would gain ${quanifyInt("Hostile Fragment", Math.floor(Math.log2(CorruptionData.calcScore()) - player.mending.corruptedFragments))}.`
+        return CorruptionData.corruptedFragments > (Math.log2(CorruptionData.calcScore())) ? (`If you completed this challenge, you would not gain any Hostile Fragments, because ${player.mending.corruption.countWhere(u => u > 0) == 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}`) : `If you completed this challenge, you would gain ${quantifyInt("Hostile Fragment", (Math.ceil(Math.log2(CorruptionData.calcScore())) - player.mending.corruptedFragments))}.`
     },
     unlocked: () => { return Ra.pets.pelle.level >= 75}
 }

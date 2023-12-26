@@ -132,7 +132,7 @@ export function gainedInfinityPoints() {
   }
   if (ip.gte(Decimal.pow10(9e15))) {
     ip = ip.sub(Decimal.pow10(9e15))
-    ip = ip.pow(1/(ip.log10()**0.1))
+    ip = ip.pow(1/(ip.log10()**0.88))
     ip = ip.add(Decimal.pow10(9e15))
   }
   return ip.floor();
@@ -200,6 +200,12 @@ export function gainedEternityPoints() {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
+
+  if (ep.gte(Decimal.pow10(1e18))) {
+    ep = ep.sub(Decimal.pow10(1e18))
+    ep = ep.pow(1/(ep.log10()**0.8))
+    ep = ep.add(Decimal.pow10(1e18))
   }
   return ep.floor();
 }
@@ -305,7 +311,7 @@ function isOfflineEPGainEnabled() {
 }
 
 export function getOfflineEPGain(ms) {
-  if (!EternityMilestone.autoEP.isReached || !isOfflineEPGainEnabled()) return DC.D0;
+  if (!EternityMilestone.autoEP.isReached || !isOfflineEPGainEnabled() || CorruptionData.isCorrupted) return DC.D0;
   return player.records.bestEternity.bestEPminReality.times(TimeSpan.fromMilliseconds(ms).totalMinutes.div(4));
 }
 
@@ -489,6 +495,10 @@ export function realTimeMechanics(realDiff) {
   }
 
   DarkMatterDimensions.tick(realDiff);
+
+  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
+    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain * realDiff / 500; //Think its now 50%/s? (Also this is real time why was it in gametime mechanics?)
+  }
 
   // When storing real time, skip everything else having to do with production once stats are updated
   if (Enslaved.isStoringRealTime) {
@@ -940,9 +950,6 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
-    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain / 2; //I think this is 50% every tick, need to figure how often this function ticks
-  }
   if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
     player.celestials.ra.alchemy = Array.repeat(0, 21) //This just sets all alch resources to the cap, probably will be changed to be passive
     .map(() => ({
@@ -954,14 +961,14 @@ function applyAutoprestige(diff) {
     Currency.relicShards.add(Effarig.shardsGained);
   }
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+    Currency.infinityPoints.add(gainedInfinityPoints().times(CorruptionData.isCorrupted ? 0.01 : Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
   }
 
   if (TeresaUnlocks.epGen.canBeApplied || (MendingUpgrade(5).isBought && !Pelle.isDoomed)) {
-    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01).times(getGameSpeedupFactor().times(diff).div(1000)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01).times(CorruptionData.isCorrupted ? diff / (1000) : getGameSpeedupFactor().times(diff).div(1000)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
 
   if (InfinityUpgrade.ipGen.isCharged || MendingUpgrade(5).isBought) {

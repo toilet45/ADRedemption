@@ -39,7 +39,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments.",
-    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments - player.mending.spentCF)/3), // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
+    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3), // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
     formatEffect: value => `^` + format(value, 2, 2)
   },
   {

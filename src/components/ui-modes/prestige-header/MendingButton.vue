@@ -1,6 +1,6 @@
 <script>
 import { DC } from '../../../core/constants';
-import { GameEnd, MendingMilestone } from '../../../core/globals';
+import { CorruptionData, GameEnd, MendingMilestone } from '../../../core/globals';
 import { PlayerProgress } from '../../../core/player-progress';
 import MendingPointsHeader from '../../MendingPointsHeader.vue';
 
@@ -16,6 +16,7 @@ export default {
             isCorrupted: false,
             noMendBonus: false,
             MvRRate: new Decimal(0),
+            frags: 0
         };
     },
     computed: {
@@ -35,6 +36,7 @@ export default {
             this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
             this.noMendBonus = Pelle.isDoomed && !player.isGameEnd;
             this.MvRRate = this.gainedMvR.div(Time.thisMendRealTime.totalMinutes);
+            this.frags = CorruptionData.isCorrupted ? Math.ceil(Math.log2(CorruptionData.calcScore())) : 0
         },
         mend() {
             mendingResetRequest();
@@ -63,7 +65,7 @@ export default {
       Reach <span>{{ formatNE(END, 2, 2) }}</span> antimatter to Mend the Multiverse
     </template>
     <template v-else-if="isCorrupted">
-      Make the Multiverse Friendly for x Hostile Fragments
+      Make the Multiverse Friendly for {{ formatNE(frags, 0, 0) }} Hostile Fragments
     </template>
     <template v-else>
       Mend the Multiverse for

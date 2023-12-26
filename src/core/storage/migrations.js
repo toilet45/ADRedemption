@@ -658,6 +658,17 @@ export const migrations = {
   51.014: player => {
     player.galBoostPoints = new Decimal(0);
   },
+  51.015: player => {
+    for (let i = 0; i < 11 /* 11 here because c1 doesnt count */ ; i++) {
+      player.challenge.normal.bestTimes[i] =  new Decimal(player.challenge.normal.bestTimes[i])
+    }
+    for (let i = 0; i < 8; i++) {
+      player.challenge.infinity.bestTimes[i] =  new Decimal(player.challenge.infinity.bestTimes[i])
+    }
+  },
+  51.016: player => {
+    delete player.mending.spentCF
+  }
 },
 
   normalizeTimespans(player) {

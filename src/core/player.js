@@ -1136,7 +1136,8 @@ window.player = {
   mendingPoints: DC.D0,
   mends: DC.D0,
   mendingUpgrades: new Set(),
-  mvrmultUpgrades: 0
+  mvrmultUpgrades: 0,
+  devSave: true
 };
 
 export const Player = {
