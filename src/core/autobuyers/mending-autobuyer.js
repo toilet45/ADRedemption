@@ -91,13 +91,13 @@ export class MendingAutobuyerState extends UpgradeableAutobuyerState {
   }*/
 
   get timeToNextTick() {
-    return Math.clampMin(this.time - Time.thisMendRealTime.totalSeconds, 0);
+    return Math.clampMin(this.time - Time.thisMendRealTime.totalSeconds.toNumber(), 0);
   }
 
   get willMend() {
     switch (this.mode) {
       case AUTO_MEND_MODE.TIME:
-        return Time.thisMendRealTime.totalSeconds > this.time;
+        return Time.thisMendRealTime.totalSeconds.gt(this.time);
       case AUTO_MEND_MODE.AMOUNT:
       default:
         return gainedMendingPoints().gte(this.amount);
