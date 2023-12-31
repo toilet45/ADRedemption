@@ -5,6 +5,14 @@ export const MatterScale = {
 
   estimate(matter) {
     if (!matter) return ["There is no antimatter yet."];
+    const distScaling = this.distanceScale(matter.log10())
+    if (matter.gt(Decimal.pow10(4.320432e21*3))) {
+      return [
+        `If every number in your antimatter count was a hydrogen atom,`,
+        `you would have a line of atoms stretching from Earth to`,
+        `${distScaling.name} ${format(matter.log10() / (distScaling.amount * 1e12 / 53), 2, 2)} ${distScaling != 1 ? "times" : "time"}`
+      ];
+    }
     if (matter.gt(Decimal.pow10(4.320432e17*3))) {
       return [
         `If you wrote ${formatInt(3)} numbers a second, from the start`,
@@ -30,7 +38,7 @@ export const MatterScale = {
       return [
         `It would take ` + formatPercents((matter.log10() / (2437102080*3)).toString(), 4),
         " of the average American lifespan to write out your antimatter count",
-        `if you wrote ${formatInt(1)} number a second`
+        `if you wrote ${formatInt(3)} numbers a second`
       ];
     }
     if (matter.gt(DC.E10000)) {
@@ -80,6 +88,37 @@ export const MatterScale = {
     }
     return macro[high - 1];
   },
+
+  distanceScale(matter) {
+    const dist = this.distances
+    let mtr = (matter/1e12) * 53
+    const last = dist.last()
+    if (mtr > last.amount) return last;
+    let low = 0;
+    let high = dist.length;
+    while (low !== high) {
+      const mid = Math.floor((low + high) / 2);
+      if (dist[mid].amount < mtr) {
+        low = mid + 1;
+      } else {
+        high = mid;
+      }
+    }
+    return dist[high - 1];
+  },
+
+  distances: [
+    { amount: 1.35e11, name: "Saturn when it's closest to Earth" },
+    { amount: 4.437e12, name: "Pluto when it's closest to Earth" },
+    { amount: 7.376e12, name: "Pluto when it's furthest to Earth" },
+    { amount: 9.461e15, name: "something a light-year away" },
+    { amount: 4.011e16, name: "Proxima Centauri" },
+    { amount: 1.902e17, name: "Gliese 581" },
+    { amount: 2.46e20, name: "the center of the Milky Way" },
+    { amount: 2.365e22, name: "the Andromeda Galaxy" },
+    { amount: 2.271e24, name: "3C 273 (optically brightest quasar)" },
+    { amount: 4.324e26, name: "the edge of the Observable Universe" },
+  ],
 
   microObjects: [
     { amount: new Decimal("1e-54"), name: "attometers cubed" },

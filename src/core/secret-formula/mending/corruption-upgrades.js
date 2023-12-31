@@ -24,8 +24,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Game speed is multiplied based on highest score (Applies after corruptions)",
-    effect: () => Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
+    description: "Game speed is multiplied based on highest score (Applies after hostilities, but weaker in Hostile multiverse)",
+    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
     formatEffect: value => formatX(value, 2)
   },
   {
@@ -38,7 +38,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments.",
+    description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments. ",
     effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3), // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
     formatEffect: value => `^` + format(value, 2, 2)
   },

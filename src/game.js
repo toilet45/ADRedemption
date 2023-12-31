@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, Currency, ExpoBlackHole, WarpUpgrade } from "./core/globals";
+import { CorruptionData, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -91,7 +91,7 @@ export function breakInfinity() {
   GameUI.update();
 }
 
-export function gainedInfinityPoints() {
+export function gainedInfinityPoints(nosoftcap = false) {
   const div = Effects.min(
     308,
     Achievement(103),
@@ -111,7 +111,7 @@ export function gainedInfinityPoints() {
     ip = ip.times(1e20);
   }
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
-    ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value) / 100);
+    ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value.max(1)) / 100);
   }
   if (Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY) {
     ip = ip.min(DC.E200);
@@ -130,10 +130,10 @@ export function gainedInfinityPoints() {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
-  if (ip.gte(Decimal.pow10(9e15))) {
-    ip = ip.sub(Decimal.pow10(9e15))
-    ip = ip.pow(1/(ip.log10()**0.88))
-    ip = ip.add(Decimal.pow10(9e15))
+  if (ip.gte(Decimal.pow10(9e15)) && !nosoftcap) {
+    ip = ip.div(Decimal.pow10(9e15))
+    ip = ip.pow(0.0298374651)
+    ip = ip.times(Decimal.pow10(9e15))
   }
   return ip.floor();
 }
@@ -203,9 +203,9 @@ export function gainedEternityPoints() {
   }
 
   if (ep.gte(Decimal.pow10(1e18))) {
-    ep = ep.sub(Decimal.pow10(1e18))
-    ep = ep.pow(1/(ep.log10()**0.8))
-    ep = ep.add(Decimal.pow10(1e18))
+    ep = ep.div(Decimal.pow10(1e18))
+    ep = ep.pow(0.162738495)
+    ep = ep.times(Decimal.pow10(1e18))
   }
   return ep.floor();
 }
@@ -446,15 +446,19 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
-  // 1e-300 is now possible with max inverted BH, going below it would be possible with
-  // an effarig glyph.
-
   if (player.mending.corruptionChallenge.corruptedMend == true) {
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
   factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
+  // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
+  
+  if (factor.gte(1e300)) {
+    factor = factor.div(1e300)
+    factor = factor.pow(0.4321)
+    factor = factor.times(1e300)
+  } // Prevent gamespeed from going fucking ballistic
 
   return factor;
 }
@@ -495,6 +499,7 @@ export function realTimeMechanics(realDiff) {
   }
 
   DarkMatterDimensions.tick(realDiff);
+  MultiversalDimensions.tick(realDiff);
 
   if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
     player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain * realDiff / 500; //Think its now 50%/s? (Also this is real time why was it in gametime mechanics?)
@@ -616,7 +621,7 @@ export function gameLoop(passDiff, options = {}) {
       const amplification = Ra.unlocks.improvedStoredTime.effects.gameTimeAmplification.effectOrDefault(1);
       const beforeStore = new Decimal(player.celestials.enslaved.stored);
       let x = new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor).times(amplification))
-      let y = new Decimal(Enslaved.timeCap)
+      let y = new Decimal(Enslaved.timeCap())
       player.celestials.enslaved.stored = Decimal.min(x, y); // This code is split into 3 else it just has a panic attack for some reason
       Enslaved.currentBlackHoleStoreAmountPerMs = new Decimal(player.celestials.enslaved.stored.sub(beforeStore)).div(diff);
       speedFactor = reducedTimeFactor;
@@ -704,7 +709,7 @@ export function gameLoop(passDiff, options = {}) {
   EternityChallenge(12).tryFail();
   Achievements._power.invalidate();
 
-  TimeDimensions.tick(diff);
+  TimeDimensions.tick(realDiff);
   InfinityDimensions.tick(diff);
   AntimatterDimensions.tick(diff);
 

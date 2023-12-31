@@ -147,12 +147,12 @@ class InfinityDimensionState extends DimensionState {
       production = production.times(Tickspeed.perSecond);
     }
     production = production.times(this.multiplier);
-    if (this.tier == 1 & production.exponent > 9e15){
-      let x = production.sub(Decimal.pow10(9e15));   
-      x = x.pow(1/(x.log10()**0.1));
-      return x.add(Decimal.pow10(9e15));
+    if (this.tier == 1 & production.log10() > 9e15){
+      production = production.div(Decimal.pow10(9e15));   
+      production = production.pow(0.0123456789);
+      production = production.times(Decimal.pow10(9e15));
     }
-    return production.times(this.multiplier);
+    return production;
   }
 
   get multiplier() {

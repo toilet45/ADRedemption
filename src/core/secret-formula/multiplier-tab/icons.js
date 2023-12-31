@@ -231,4 +231,40 @@ export const MultiplierTabIcons = {
     symbol: `<b>++</b>`,
     color: `var(--color-mending)`,
   },
+  SOFTCAP(type) {
+    switch (type) {
+      case "infinity":
+        return {
+          symbol: `<i class="fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-infinity)`
+          }  
+      case "eternity":
+        return {
+          symbol: `<i class="fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-eternity)`
+          }  
+      case "dilation":
+        return {
+          symbol: `<i class="fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-dilation)`
+          }  
+      case "reality":
+        return {
+          symbol: `<i class="fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-reality)`
+          }  
+      case "imaginary":
+        return {
+          symbol: `<i class="fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-ra--base)`
+          }  
+      case "corruption":
+        return {
+          symbol: `<i class"fa-solid fa-down-left-and-up-right-to-center" />`,
+          color: `var(--color-mending)`
+          }  
+      default:
+        throw new Error("Unrecognized upgrade type in multiplier tab icons");
+     };
+  }
 };

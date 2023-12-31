@@ -27,6 +27,11 @@ window.player = {
       cost: [DC.D1, DC.D5, DC.E2, DC.E3, DC.E2350, DC.E2650, DC.E3000, DC.E3350][tier],
       amount: DC.D0,
       bought: 0
+    })),
+    multiversal: Array.range(0, 8).map(tier => ({
+      cost: [new Decimal(1e25), new Decimal(1e55), new Decimal(1e105), new Decimal(1e215), new Decimal("1e333"), new Decimal("1e456"), new Decimal("1e678"), new Decimal("9.99e999")][tier],
+      amount: DC.D0,
+      bought: 0
     }))
   },
   buyUntil10: true,
@@ -125,25 +130,29 @@ window.player = {
       lastTick: 0,
       isBought: false
     },
+    singCap: {
+      multiplier: 1000,
+      isActive: true
+    },
     sacrifice: {
       multiplier: DC.D2,
       isActive: true
     },
     tesseract: {
       isUnlocked: false,
-      isActive: false,
+      isActive: true,
     },
     musicglyph: {
       isUnlocked: false,
-      isActive: false,
+      isActive: true,
     },
     nrru: {
       isUnlocked: false,
-      isActive: false,
+      isActive: true,
     },
     nriu: {
       isUnlocked: false,
-      isActive: false,
+      isActive: true,
     },
     antimatterDims: {
       all: Array.range(0, 8).map(tier => ({

@@ -17,16 +17,20 @@ export default {
   },
   computed: {
     timeSum() {
-      return this.times.sum();
+      let v = new Decimal(0)
+      for (let i = 0; i < this.times.length; i++) {
+        v = v.add(this.times[i])
+      }
+      return v;
     },
     completedAllChallenges() {
-      return this.timeSum < Number.MAX_VALUE;
+      return this.timeSum.lt(Number.MAX_VALUE);
     }
   },
   methods: {
     timeDisplayShort,
     completionString(time) {
-      return time < Number.MAX_VALUE
+      return time.lt(Number.MAX_VALUE)
         ? `record time: ${timeDisplayShort(time)}`
         : "has not yet been completed";
     }

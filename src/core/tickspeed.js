@@ -27,7 +27,8 @@ export function effectiveBaseGalaxies() {
     x *= 1 + EternityChallenge(8).vReward.effectValue;
     y *= 1 + EternityChallenge(8).vReward.effectValue;
   }
-  return Math.max(x + y + replicantiGalaxies + freeGalaxies, 0);
+  let v = player.galBoostPoints.eq(0) ? 1 : (player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber()
+  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v);
 }
 
 export function getTickSpeedMultiplier() {

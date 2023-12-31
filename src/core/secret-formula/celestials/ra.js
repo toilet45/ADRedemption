@@ -73,7 +73,7 @@ export const ra = {
       chunkGain: "Dimension Boosts",
       memoryGain: "current iM",
       secondaryMemoryChunkGain: "Total Celestial Memories",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
+      requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = 0;
         if(Ra.unlocks.placeholderR4.isUnlocked){
@@ -88,16 +88,16 @@ export const ra = {
         x /= 7;
         return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, 1.5) * Math.max(Math.log10(Math.min(0, x)), 1);
       },
-      memoryProductionMultiplier: () => 1
+      memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
     },
     laitela: {
       id: "laitela",
       name: "Lai'tela",
       color: "white",
       chunkGain: "Continuum",
-      memoryGain: "singularity amount",
+      memoryGain: "Singularity amount",
       secondaryMemoryChunkGain: "Dark Matter",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
+      requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
         return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)) * x;
@@ -109,9 +109,9 @@ export const ra = {
       name: "Pelle",
       color: "crimson",
       chunkGain: "Remnants (Only increases in Doomed Reality)",
-      memoryGain: "best remnants without galaxy generator",
+      memoryGain: "best Remnants without Galaxy Generator",
       secondaryMemoryChunkGain: "Reality Shards",
-      requiredUnlock: () => MendingUpgrade(19).isBought? undefined : false,
+      requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
         return x * player.celestials.pelle.remnants
@@ -624,7 +624,8 @@ export const ra = {
       reward: "All Memory Chunks produce more Memories based on Imaginary Machines",
       pet: "ra",
       level: 5,
-      displayIcon: '*'
+      displayIcon: '*',
+      effect: () => Math.max(1, Math.pow(Math.log(Math.max(1,Currency.imaginaryMachines.value)), 0.5))
     },
     upgradesDontSpendMems: {
       id: 0,
@@ -800,7 +801,7 @@ export const ra = {
     dmdAuto2: {
       id: 21,
       id2: 1,
-      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.", //First part isnt actually completely done yet, the manual annihilation bonus is tho
+      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.",
       pet: "laitela",
       level: 65,
       displayIcon: `<span class="fas fa-sync-alt"</span>` 
@@ -819,7 +820,7 @@ export const ra = {
       reward: "Slightly weaken post infinity DMD scaling, Entropic Condensing is far stronger.",
       pet: "laitela",
       level: 90,
-      displayIcon: "?"
+      displayIcon: "??"
     },
     placeholderL14: {
       id: 24,
@@ -827,7 +828,7 @@ export const ra = {
       reward: "Unlock Multiversal Dimensions [name TBD]",
       pet: "laitela",
       level: 100,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     pelleAutobuyers: {
       id: 25,

@@ -103,5 +103,29 @@ export const gamespeed = {
     powValue: () => ExpoBlackHole(1).power,
     isActive: () => ExpoBlackHole(1).isUnlocked,
     icon: MultiplierTabIcons.BLACK_HOLE,
+  },
+  CorruptionUpg: {
+    name: "Corruption Upgrade - Spacetime Distortion",
+    multValue: () => Decimal.pow10(Math.pow(1 + CorruptionData.corruptionChallenge.recordScore, 1/1.48)),
+    isActive: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
+    icon: MultiplierTabIcons.UPGRADE("corruption")
+  },
+  nerfCorruptions: {
+    name: "Time Compression Hostility - Power Value",
+    powValue: () => corruptionPenalties.timeCompression.power[player.mending.corruption[1]],
+    isActive: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] > 0),
+    icon: MultiplierTabIcons.CORRUPTION,
+  },
+  nerfCorruptions2: {
+    name: "Time Compression Hostility - Mult Value",
+    multValue: () => corruptionPenalties.timeCompression.mult[player.mending.corruption[1]],
+    isActive: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] > 0),
+    icon: MultiplierTabIcons.CORRUPTION,
+  },
+  nerfSoftcap: {
+    name: "Game Speed Softcap",
+    powValue: () => (getGameSpeedupFactor().log10() / getGameSpeedupFactor().div(1e300).pow(1 / 0.4321).times(1e300).log10()),
+    isActive: () => getGameSpeedupFactor().gte(1e300),
+    icon: MultiplierTabIcons.SOFTCAP("reality")
   }
 };

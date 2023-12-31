@@ -106,6 +106,12 @@ export const IP = {
     isActive: () => PlayerProgress.mendingUnlocked(),
     icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
+  ra: {
+    name: "Ra Memories",
+    powValue: () => (Decimal.log10(Currency.realityMachines.value.max(1)) / 100),
+    isActive: () => Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked,
+    icon: MultiplierTabIcons.GENERIC_RA
+  },
   iap: {
     name: "Shop Tab Purchases",
     multValue: () => ShopPurchase.IPPurchases.currentMult,
@@ -124,5 +130,17 @@ export const IP = {
     powValue: () => 0.5,
     isActive: () => V.isRunning,
     icon: MultiplierTabIcons.GENERIC_V,
+  },
+  nerfCorruptions: {
+    name: "Prestige Limits Hostility",
+    powValue: () => corruptionPenalties.prestigeLimits[player.mending.corruption[0]],
+    isActive: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[0] > 0),
+    icon: MultiplierTabIcons.CORRUPTION,
+  },
+  nerfSoftcap: {
+    name: "Infinity Point Softcap",
+    powValue: () => (gainedInfinityPoints().log10() / gainedInfinityPoints(true).log10()),
+    isActive: () => (gainedInfinityPoints(true).gte(DC.END)),
+    icon: MultiplierTabIcons.SOFTCAP("infinity")
   },
 };

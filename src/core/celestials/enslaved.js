@@ -36,7 +36,7 @@ export const Enslaved = {
   isReleaseTick: false,
   autoReleaseTick: 0,
   autoReleaseSpeed: new Decimal(0),
-  timeCap: 1e300,
+  timeCap: () => (player.celestials.ra.pets.enslaved.level >= 30 ? Decimal.pow10(1e300) : new Decimal(1e300)),
   glyphLevelMin: 5000,
   currentBlackHoleStoreAmountPerMs: 0,
   tachyonNerf: 0.3,
@@ -127,7 +127,7 @@ export const Enslaved = {
       }
     }
     if (autoRelease) release = release.times(0.01);
-    this.nextTickDiff = Decimal.clampMax(release, this.timeCap);
+    this.nextTickDiff = Decimal.clampMax(release, this.timeCap());
     this.isReleaseTick = true;
     // Effective gamespeed from stored time assumes a "default" 50 ms update rate for consistency
     const effectiveGamespeed = release.div(50);

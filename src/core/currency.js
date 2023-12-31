@@ -525,7 +525,6 @@ Currency.corruptionFragments = new class extends NumberCurrency {
     return player.mending.corruptedFragments; 
   }
   set value(value) {
-    this.respecCall()
     player.mending.corruptedFragments = value;
   }
 

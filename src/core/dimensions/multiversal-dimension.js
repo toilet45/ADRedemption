@@ -2,276 +2,193 @@ import { DC } from "../constants";
 
 import { DimensionState } from "./dimension";
 
-// Multiplier applied to all Antimatter Dimensions, regardless of tier. This is cached using a Lazy
-// and invalidated every update.
+export function buySingleMultiversalDimension(tier, auto = false) {
+  const dim = MultiversalDimension(tier);
+  if (Currency.mendingPoints.lt(dim.cost)) return false;
+
+  Currency.mendingPoints.subtract(dim.cost);
+  dim.amount = dim.amount.plus(1);
+  dim.bought += 1;
+  dim.cost = dim.nextCost(dim.bought);
+  return true;
+}
+
+export function resetMultiversalDimensions() {
+  for (const dim of MultiversalDimensions.all) dim.amount = new Decimal(dim.bought);
+  updateMultiversalDimensionCosts();
+}
+
+export function fullResetMultiversalDimensions() {
+  for (const dim of MultiversalDimensions.all) {
+    dim.cost = new Decimal(dim.baseCost);
+    dim.amount = DC.D0;
+    dim.bought = 0;
+  }
+}
+
+export function buyMaxMultiversalDimension(tier, portionToSpend = 1, isMaxAll = false) {
+  const canSpend = Currency.mendingPoints.value.times(portionToSpend);
+  const dim = MultiversalDimension(tier);
+  if (canSpend.lt(dim.cost)) return false;
+  let bulk = null;
+  try{
+    bulk = bulkBuyBinarySearch(canSpend, {
+      costFunction: bought => dim.nextCost(bought),
+      cumulative: true,
+      firstCost: dim.cost,
+    }, dim.bought);
+  }
+  catch {
+    dim.bought = 1e15;
+    return true;
+  }
+  if (!bulk) return false;
+  Currency.mendingPoints.subtract(bulk.purchasePrice);
+  dim.amount = dim.amount.plus(bulk.quantity);
+  dim.bought += bulk.quantity;
+  dim.cost = dim.nextCost(dim.bought);
+  return true;
+}
+
+export function maxAllMultiversalDimensions() {
+  // Try to buy single from the highest affordable new dimensions
+  for (let i = 8; i > 0 && MultiversalDimension(i).bought === 0; i--) {
+    buySingleMultiversalDimension(i, true);
+  }
+
+  // Buy everything costing less than 1% of initial MvR
+  for (let i = 8; i > 0; i--) {
+    buyMaxMultiversalDimension(i, 0.01, true);
+  }
+
+  // Loop buying the cheapest dimension possible; explicit infinite loops make me nervous
+  const unlockedDimensions = MultiversalDimensions.all;
+  for (let stop = 0; stop < 1000; stop++) {
+    const cheapestDim = unlockedDimensions.reduce((a, b) => (b.cost.gte(a.cost) ? a : b));
+    if (!buySingleMultiversalDimension(cheapestDim.tier, true)) break;
+  }
+}
+
 export function multiversalDimensionCommonMultiplier() {
-  let multiplier = DC.D1;
-  return multiplier;
+  let mult = new Decimal(1)
+  return mult;
 }
 
-function getDimensionFinalMultiplierUncached(tier) {
-  if (tier < 1 || tier > 8) throw new Error(`Invalid Multiversal Dimension tier ${tier}`);
-
-  let multiplier = DC.D1;
-
-  multiplier = applyMDMultipliers(multiplier, tier);
-  multiplier = applyMDPowers(multiplier, tier);
-
-  return multiplier;
-}
-
-function applyMDMultipliers(mult) {
-  let multiplier = mult.toDecimal();
-  return multiplier;
-}
-
-function applyMDPowers(mult) {
-  let multiplier = mult.toDecimal();
-  return multiplier;
-}
-
-function buyOneDimension(tier) {
-  const dimension = MultiversalDimension(tier);
-  const cost = dimension.cost;
-  dimension.currencyAmount = dimension.currencyAmount.minus(cost);
-
-  if (dimension.boughtBefore10 === 9) {
-    dimension.challengeCostBump();
+export function updateMultiversalDimensionCosts() {
+  for (let i = 1; i <= 8; i++) {
+    const dim = MultiversalDimension(i);
+    dim.cost = dim.nextCost(dim.bought);
   }
-
-  dimension.amount = dimension.amount.plus(1);
-  dimension.bought++;
-  return true;
-}
-
-function buyManyDimension(tier) {
-  const dimension = MultiversalDimension(tier);
-  const cost = dimension.costUntil10;
-  dimension.currencyAmount = dimension.currencyAmount.minus(cost);
-  dimension.challengeCostBump();
-  dimension.amount = dimension.amount.plus(dimension.remainingUntil10);
-  dimension.bought += dimension.remainingUntil10;
-  return true;
-}
-
-function buyAsManyAsYouCanBuy(tier) {
-  const dimension = MultiversalDimension(tier);
-  const howMany = dimension.howManyCanBuy;
-  const cost = dimension.cost.times(howMany);
-  dimension.currencyAmount = dimension.currencyAmount.minus(cost);
-  dimension.challengeCostBump();
-  dimension.amount = dimension.amount.plus(howMany);
-  dimension.bought += howMany;
-  return true;
-}
-
-// This function doesn't do cost checking as challenges generally modify costs, it just buys and updates dimensions
-function buyUntilTen(tier) {
-  const dimension = MultiversalDimension(tier);
-  dimension.challengeCostBump();
-  dimension.amount = Decimal.round(dimension.amount.plus(dimension.remainingUntil10));
-  dimension.bought += dimension.remainingUntil10;
-}
-
-function maxAll() {
-  for (let tier = 1; tier < 9; tier++) {
-    buyMaxDimension(tier);
-  }
-}
-
-function buyMaxDimension(tier, bulk = Infinity) {
-  const dimension = MultiversalDimension(tier);
-  if (!dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return;
-  const cost = dimension.costUntil10;
-  let bulkLeft = bulk;
-  const goal = Player.infinityGoal;
-
-  // Buy any remaining until 10 before attempting to bulk-buy
-  if (dimension.currencyAmount.gte(cost)) {
-    dimension.currencyAmount = dimension.currencyAmount.minus(cost);
-    buyUntilTen(tier);
-    bulkLeft--;
-  }
-
-  if (bulkLeft <= 0) return;
-
-  // This is the bulk-buy math, explicitly ignored if abnormal cost increases are active
-  const maxBought = dimension.costScale.getMaxBought(
-    Math.floor(dimension.bought / 10) + dimension.costBumps, dimension.currencyAmount, 10
-  );
-  if (maxBought === null) {
-    return;
-  }
-  let buying = maxBought.quantity;
-  if (buying > bulkLeft) buying = bulkLeft;
-  dimension.amount = dimension.amount.plus(10 * buying).round();
-  dimension.bought += 10 * buying;
-  dimension.currencyAmount = dimension.currencyAmount.minus(Decimal.pow10(maxBought.logPrice));
 }
 
 class MultiversalDimensionState extends DimensionState {
   constructor(tier) {
-    super(() => player.dimensions.antimatter, tier);
-    const BASE_COSTS = [null, 1e6, 1e8, 1e10, 1e12, 1e300, 1e300, 1e300, 1e300];
+    super(() => player.dimensions.multiversal, tier);
+    const BASE_COSTS = [null, new Decimal(1e25), new Decimal(1e55), new Decimal(1e105), new Decimal(1e215), new Decimal("1e333"), new Decimal("1e456"), new Decimal("1e678"), new Decimal("9.99e999")];
     this._baseCost = BASE_COSTS[tier];
-    const BASE_COST_MULTIPLIERS = [null, 1e4, 1e6, 1e8, 1e10, 1e300, 1e300, 1e300, 1e300];
-    this._baseCostMultiplier = BASE_COST_MULTIPLIERS[tier];
+    const COST_MULTS = [null, 10, 50, 250, 1250, 6250, 3125, 156250, 781250];
+    this._costMultiplier = COST_MULTS[tier];
+    const E6000_SCALING_AMOUNTS = [null, 5e3, 5e3, 5e3, 5e3, 5e3, 5e3, 5e3, 5e3];
+    this._e6000ScalingAmount = E6000_SCALING_AMOUNTS[tier];
+    const COST_THRESHOLDS = [new Decimal("1e2000"), new Decimal("1e8000"), new Decimal("1e22000")];
+    this._costIncreaseThresholds = COST_THRESHOLDS;
   }
 
-  /**
-   * @returns {ExponentialCostScaling}
-   */
-  get costScale() {
-    return new ExponentialCostScaling({
-      baseCost: this._baseCost,
-      baseIncrease: this._baseCostMultiplier,
-      costScale: Player.dimensionMultDecrease,
-      scalingCostThreshold: Number.MAX_VALUE
-    });
-  }
-
-  /**
-   * @returns {Decimal}
-   */
+  /** @returns {Decimal} */
   get cost() {
-    return this.costScale.calculateCost(Math.floor(this.bought / 10) + this.costBumps);
+    return this.data.cost;
   }
 
-  /** @returns {number} */
-  get costBumps() { return this.data.costBumps; }
-  /** @param {number} value */
-  set costBumps(value) { this.data.costBumps = value; }
+  /** @param {Decimal} value */
+  set cost(value) { this.data.cost = value; }
 
-  /**
-   * @returns {number}
-   */
-  get boughtBefore10() {
-    return this.bought % 10;
-  }
+  nextCost(bought) {
+    if (this._tier > 4 && bought < this.e6000ScalingAmount) {
+      const cost = Decimal.pow(this.costMultiplier, bought).times(this.baseCost);
+      return cost;
+    }
 
-  /**
-   * @returns {number}
-   */
-  get remainingUntil10() {
-    return 10 - this.boughtBefore10;
-  }
+    const costMultIncreases = [5, 25, 125];
+    for (let i = 0; i < this._costIncreaseThresholds.length; i++) {
+      const cost = Decimal.pow(this.costMultiplier * costMultIncreases[i], bought).times(this.baseCost);
+      if (cost.lt(this._costIncreaseThresholds[i])) return cost;
+    }
 
-  /**
-   * @returns {Decimal}
-   */
-  get costUntil10() {
-    return this.cost.times(this.remainingUntil10);
-  }
+    let base = this.costMultiplier;
+    if (this._tier <= 4) base *= 125;
+    const exponent = this.e6000ScalingAmount + (bought - this.e6000ScalingAmount) * MultiversalDimensions.scalingPast1e6000;
+    const cost = Decimal.pow(base, exponent).times(this.baseCost);
 
-  get howManyCanBuy() {
-    const ratio = this.currencyAmount.dividedBy(this.cost);
-    return Decimal.floor(Decimal.max(Decimal.min(ratio, 10 - this.boughtBefore10), 0)).toNumber();
-  }
-
-  /**
-   * @returns {Decimal}
-   */
-  get rateOfChange() {
-    const tier = this.tier;
-    if (tier === 8) return DC.D0;
-    let toGain = AntimatterDimension(tier + 1).productionPerSecond;
-    return toGain.times(10).dividedBy(this.amount.max(1)).times(getGameSpeedupForDisplay());
-  }
-
-  /**
-   * @returns {boolean}
-   */
-  get isProducing() {
-    return this.totalAmount.gt(0);
-  }
-
-  /**
-   * @returns {Decimal}
-   */
-  get currencyAmount() {
-    return Currency.mendingPoints.value;
-  }
-
-  /**
-   * @param {Decimal} value
-   */
-  set currencyAmount(value) {
-    Currency.mendingPoints.value = value;
-  }
-
-  /**
-   * @returns {number}
-   */
-  get continuumValue() {
-    return 0;
-  }
-
-  /**
-   * @returns {number}
-   */
-  get continuumAmount() {
-    return Math.floor(10 * this.continuumValue);
-  }
-
-  /**
-   * Continuum doesn't continually update dimension amount because that would require making the code
-   * significantly messier to handle it properly. Instead an effective amount is calculated here, which
-   * is only used for production and checking for boost/galaxy. Doesn't affect achievements.
-   * Taking the max is kind of a hack but it seems to work in all cases. Obviously it works if
-   * continuum isn't unlocked. If the dimension is being produced and the continuum is unlocked,
-   * the dimension will be being produced in large numbers (since the save is endgame), so the amount
-   * will be larger than the continuum and so the continuum is insignificant, which is fine.
-   * If the dimension isn't being produced, the continuum will be at least the amount, so
-   * the continuum will be used and that's fine. Note that when continuum is first unlocked,
-   * both 8d amount and 8d continuum will be nonzero until the next infinity, so taking the sum
-   * doesn't work.
-   * @param {Decimal} value
-   */
-  get totalAmount() {
-    return this.amount.max(this.continuumAmount);
-  }
-
-  /**
-    * @returns {boolean}
-    */
-  get isAffordable() {
-    return this.cost.lte(this.currencyAmount);
-  }
-
-  /**
-   * @returns {boolean}
-   */
-  get isAffordableUntil10() {
-    return this.costUntil10.lte(this.currencyAmount);
+    return cost;
   }
 
   get isAvailableForPurchase() {
     return this.isAffordable;
   }
 
-  reset() {
-    this.amount = DC.D0;
-    this.bought = 0;
-    this.costBumps = 0;
-  }
-
-  resetAmount() {
-    this.amount = DC.D0;
+  get isAffordable() {
+    return Currency.mendingPoints.gte(this.cost);
   }
 
   get multiplier() {
-    return DC.D1;//GameCache.antimatterDimensionFinalMultipliers[this.tier].value;
-  }
+    const tier = this._tier;
+    let mult = GameCache.multiversalDimensionCommonMultiplier.value
 
-  get cappedProductionInNormalChallenges() {
-    return DC.WARP_LIMIT;
+    const dim = MultiversalDimension(tier);
+    const bought =  dim.bought;
+    mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
+
+    return mult;
   }
 
   get productionPerSecond() {
-    let amount = this.totalAmount;
-    let production = amount.times(this.multiplier).times(Tickspeed.perSecond);
+    let production = this.totalAmount.times(this.multiplier);
     return production;
   }
+
+  get rateOfChange() {
+    const tier = this._tier;
+    if (tier === 8) {
+      return DC.D0;
+    }
+    const toGain = MultiversalDimension(tier + 1).productionPerSecond;
+    const current = Decimal.max(this.totalAmount, 1);
+    return toGain.times(10).dividedBy(current); // .times(getGameSpeedupForDisplay());
+  }
+
+  get isProducing() {
+    const tier = this.tier;
+    return this.totalAmount.gt(0);
+  }
+
+  get baseCost() {
+    return this._baseCost;
+  }
+
+  get costMultiplier() {
+    return this._costMultiplier;
+  }
+
+  get powerMultiplier() {
+    return DC.D4;
+  }
+
+  get e6000ScalingAmount() {
+    return this._e6000ScalingAmount;
+  }
+
+  get costIncreaseThresholds() {
+    return this._costIncreaseThresholds;
+  }
+
+  get isCapped() {
+    return this.bought >= this.purchaseCap;
+  }
+
+  get totalAmount(){
+    return this.amount;
+  }
+
 }
 
 /**
@@ -287,31 +204,13 @@ export const MultiversalDimensions = {
    */
   all: MultiversalDimension.index.compact(),
 
-  reset() {
-    for (const dimension of MultiversalDimensions.all) {
-      dimension.reset();
-    }
-    GameCache.dimensionMultDecrease.invalidate();
-  },
-
-  resetAmountUpToTier(maxTier) {
-    for (const dimension of MultiversalDimensions.all.slice(0, maxTier)) {
-      dimension.resetAmount();
-    }
-  },
-
-  get buyTenMultiplier() {
-    let mult = DC.D2;
-    return mult;
+  get scalingPast1e6000() {
+    return 5;
   },
 
   tick(diff) {
-    // Stop producing antimatter at Big Crunch goal because all the game elements
-    // are hidden when pre-break Big Crunch button is on screen.
-    let maxTierProduced = 7;
-    let nextTierOffset = 1;
-    for (let tier = maxTierProduced; tier >= 1; --tier) {
-      MultiversalDimension(tier + nextTierOffset).produceDimensions(MultiversalDimension(tier), new Decimal(diff).div(10));
+    for (let tier = 8; tier > 1; tier--) {
+      MultiversalDimension(tier).produceDimensions(MultiversalDimension(tier - 1), new Decimal(diff).div(10));
     }
     MultiversalDimension(1).produceCurrency(Currency.galBoostPoints, diff);
   }
