@@ -10,15 +10,24 @@ export default {
     return {
       infinityChallengesUnlocked: false,
       normalChallenges: [],
-      infinityChallenges: []
+      infinityChallenges: [],
+      bypass: new Decimal(0),
     };
   },
   methods: {
     update() {
       this.infinityChallengesUnlocked = PlayerProgress.infinityChallengeCompleted() ||
         PlayerProgress.eternityUnlocked();
-      this.normalChallenges = player.challenge.normal.bestTimes.slice(0);
-      this.infinityChallenges = player.challenge.infinity.bestTimes.slice(0);
+      this.normalChallenges = []
+      for (let i = 0; i < 11; i++) {
+        this.bypass.copyFrom(player.challenge.normal.bestTimes[i])
+        this.normalChallenges.push(this.bypass)
+      }
+      this.infinityChallenges = []
+      for (let i = 0; i < 8; i++) {
+        this.bypass.copyFrom(player.challenge.infinity.bestTimes[i])
+        this.infinityChallenges.push(this.bypass)
+      }
     }
   }
 };

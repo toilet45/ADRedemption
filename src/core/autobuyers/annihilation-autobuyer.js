@@ -10,7 +10,7 @@ export class AnnihilationAutobuyerState extends AutobuyerState {
   }
 
   get isUnlocked() {
-    return SingularityMilestone.annihilationAutobuyer.canBeApplied;
+    return SingularityMilestone.annihilationAutobuyer.canBeApplied || player.celestials.ra.permanentMemories.lai65;
   }
 
   get multiplier() {

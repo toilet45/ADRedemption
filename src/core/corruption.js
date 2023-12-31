@@ -7,18 +7,14 @@ export const CorruptionData = {
     },
     isCorrupted: false,
     nextCorrupted: false,
-    totalCorruptedFragments: 0,
-    availableCorruptedFragments: 0,
-    spentCorruptedFragments: 0,
+    corruptedFragments: 0,
     update() {
         this.corruptions = player.mending.corruption
         this.corruptionChallenge.recordCorruptions = player.mending.corruptionChallenge.records
         this.corruptionChallenge.recordScore = player.mending.corruptionChallenge.recordScore
         this.isCorrupted = player.mending.corruptionChallenge.corruptedMend
         this.nextCorrupted = player.mending.corruptionChallenge.corruptNext
-        this.totalCorruptedFragments = player.mending.corruptedFragments
-        this.availableCorruptedFragments = player.mending.corruptedFragments - player.mending.spentCF
-        this.spentCorruptedFragments = player.mending.spentCF
+        this.corruptedFragments = player.mending.corruptedFragments
     },
     calcBaseScore() {
     let corruptionScores = [1, 1.2, 1.45, 1.7, 2, 2.5, 3, 3.5, 4, 5, 7, 11]
@@ -30,7 +26,7 @@ export const CorruptionData = {
     },
     calcScore() {
     let scoreCalc = this.calcBaseScore()
-    scoreCalc *= [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.min(player.mending.corruption.countWhere(u => u > 0), player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) + 2))]
+    scoreCalc *= [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.max(1, Math.min(player.mending.corruption.countWhere(u => u > 0), (player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0)/player.mending.corruption.countWhere(u => u > 0) - 1))))]
     scoreCalc = Math.pow(scoreCalc, CorruptionUpgrade(20).effectOrDefault(1))
     return scoreCalc
     }

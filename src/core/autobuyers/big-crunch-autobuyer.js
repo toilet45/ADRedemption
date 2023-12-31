@@ -78,7 +78,7 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
     return (considerMilestoneReached || EternityMilestone.autoInfinities.isReached) &&
       !EternityChallenge(4).isRunning && !EternityChallenge(12).isRunning && !Player.isInAntimatterChallenge &&
       player.auto.autobuyersOn && this.data.isActive &&
-      !Autobuyer.eternity.isActive && this.mode === AUTO_CRUNCH_MODE.TIME && this.time < 60 &&
+      !Autobuyer.eternity.isActive && this.mode === AUTO_CRUNCH_MODE.TIME && this.time.lt(60) &&
       !Autobuyer.eternity.autoEternitiesAvailable();
   }
 
@@ -106,7 +106,7 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get timeToNextTick() {
-    return Math.clampMin(this.time - Time.thisInfinityRealTime.totalSeconds, 0);
+    return Math.clampMin(this.time - Time.thisInfinityRealTime.totalSeconds.toNumber(), 0);
   }
 
   get willInfinity() {
@@ -116,7 +116,7 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
       case AUTO_CRUNCH_MODE.AMOUNT:
         return gainedInfinityPoints().gte(this.amount);
       case AUTO_CRUNCH_MODE.TIME:
-        return Time.thisInfinityRealTime.totalSeconds > this.time;
+        return Time.thisInfinityRealTime.totalSeconds.gt(this.time);
       case AUTO_CRUNCH_MODE.X_HIGHEST:
       default:
         return gainedInfinityPoints().gte(this.highestPrevPrestige.times(this.xHighest));

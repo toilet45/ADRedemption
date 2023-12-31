@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, Currency, ExpoBlackHole, WarpUpgrade } from "./core/globals";
+import { CorruptionData, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -91,7 +91,7 @@ export function breakInfinity() {
   GameUI.update();
 }
 
-export function gainedInfinityPoints() {
+export function gainedInfinityPoints(nosoftcap = false) {
   const div = Effects.min(
     308,
     Achievement(103),
@@ -111,7 +111,7 @@ export function gainedInfinityPoints() {
     ip = ip.times(1e20);
   }
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
-    ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value) / 100);
+    ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value.max(1)) / 100);
   }
   if (Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY) {
     ip = ip.min(DC.E200);
@@ -130,10 +130,10 @@ export function gainedInfinityPoints() {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
-  if (ip.gte(Decimal.pow10(9e15))) {
-    ip = ip.sub(Decimal.pow10(9e15))
-    ip = ip.pow(1/(ip.log10()**0.1))
-    ip = ip.add(Decimal.pow10(9e15))
+  if (ip.gte(Decimal.pow10(9e15)) && !nosoftcap) {
+    ip = ip.div(Decimal.pow10(9e15))
+    ip = ip.pow(0.0298374651)
+    ip = ip.times(Decimal.pow10(9e15))
   }
   return ip.floor();
 }
@@ -200,6 +200,12 @@ export function gainedEternityPoints() {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+  }
+
+  if (ep.gte(Decimal.pow10(1e18))) {
+    ep = ep.div(Decimal.pow10(1e18))
+    ep = ep.pow(0.162738495)
+    ep = ep.times(Decimal.pow10(1e18))
   }
   return ep.floor();
 }
@@ -305,7 +311,7 @@ function isOfflineEPGainEnabled() {
 }
 
 export function getOfflineEPGain(ms) {
-  if (!EternityMilestone.autoEP.isReached || !isOfflineEPGainEnabled()) return DC.D0;
+  if (!EternityMilestone.autoEP.isReached || !isOfflineEPGainEnabled() || CorruptionData.isCorrupted) return DC.D0;
   return player.records.bestEternity.bestEPminReality.times(TimeSpan.fromMilliseconds(ms).totalMinutes.div(4));
 }
 
@@ -440,15 +446,19 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
-  // 1e-300 is now possible with max inverted BH, going below it would be possible with
-  // an effarig glyph.
-
   if (player.mending.corruptionChallenge.corruptedMend == true) {
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
   factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
+  // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
+  
+  if (factor.gte(1e300)) {
+    factor = factor.div(1e300)
+    factor = factor.pow(0.4321)
+    factor = factor.times(1e300)
+  } // Prevent gamespeed from going fucking ballistic
 
   return factor;
 }
@@ -489,6 +499,11 @@ export function realTimeMechanics(realDiff) {
   }
 
   DarkMatterDimensions.tick(realDiff);
+  MultiversalDimensions.tick(realDiff);
+
+  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
+    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain * realDiff / 500; //Think its now 50%/s? (Also this is real time why was it in gametime mechanics?)
+  }
 
   // When storing real time, skip everything else having to do with production once stats are updated
   if (Enslaved.isStoringRealTime) {
@@ -606,7 +621,7 @@ export function gameLoop(passDiff, options = {}) {
       const amplification = Ra.unlocks.improvedStoredTime.effects.gameTimeAmplification.effectOrDefault(1);
       const beforeStore = new Decimal(player.celestials.enslaved.stored);
       let x = new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor).times(amplification))
-      let y = new Decimal(Enslaved.timeCap)
+      let y = new Decimal(Enslaved.timeCap())
       player.celestials.enslaved.stored = Decimal.min(x, y); // This code is split into 3 else it just has a panic attack for some reason
       Enslaved.currentBlackHoleStoreAmountPerMs = new Decimal(player.celestials.enslaved.stored.sub(beforeStore)).div(diff);
       speedFactor = reducedTimeFactor;
@@ -694,7 +709,7 @@ export function gameLoop(passDiff, options = {}) {
   EternityChallenge(12).tryFail();
   Achievements._power.invalidate();
 
-  TimeDimensions.tick(diff);
+  TimeDimensions.tick(realDiff);
   InfinityDimensions.tick(diff);
   AntimatterDimensions.tick(diff);
 
@@ -740,7 +755,7 @@ export function gameLoop(passDiff, options = {}) {
 
   if (Enslaved.canTickHintTimer) {
     player.celestials.enslaved.hintUnlockProgress += Enslaved.isRunning ? realDiff : (realDiff * 0.4);
-    if (player.celestials.enslaved.hintUnlockProgress >= TimeSpan.fromHours(5).totalMilliseconds) {
+    if (player.celestials.enslaved.hintUnlockProgress >= TimeSpan.fromHours(5).totalMilliseconds.toNumber()) {
       EnslavedProgress.hintsUnlocked.giveProgress();
       Enslaved.quotes.hintUnlock.show();
     }
@@ -869,10 +884,10 @@ function laitelaRealityTick(realDiff) {
       difficultyTier: laitelaInfo.difficultyTier,
       realityReward: Laitela.realityReward
     };
-    laitelaInfo.thisCompletion = Time.thisRealityRealTime.totalSeconds;
+    laitelaInfo.thisCompletion = Time.thisRealityRealTime.totalSeconds.toNumber();
     laitelaInfo.fastestCompletion = Math.min(laitelaInfo.thisCompletion, laitelaInfo.fastestCompletion);
     clearCelestialRuns();
-    if (Time.thisRealityRealTime.totalSeconds < 30) {
+    if (Time.thisRealityRealTime.totalSeconds.lt(30)) {
       laitelaInfo.difficultyTier++;
       laitelaInfo.fastestCompletion = 300;
       completionText += laitelaBeatText(Laitela.maxAllowedDimension + 1);
@@ -940,9 +955,6 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
-    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain / 2; //I think this is 50% every tick, need to figure how often this function ticks
-  }
   if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
     player.celestials.ra.alchemy = Array.repeat(0, 21) //This just sets all alch resources to the cap, probably will be changed to be passive
     .map(() => ({
@@ -954,14 +966,14 @@ function applyAutoprestige(diff) {
     Currency.relicShards.add(Effarig.shardsGained);
   }
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
-    Currency.infinityPoints.add(gainedInfinityPoints().times(Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+    Currency.infinityPoints.add(gainedInfinityPoints().times(CorruptionData.isCorrupted ? 0.01 : Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
   else{
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
   }
 
   if (TeresaUnlocks.epGen.canBeApplied || (MendingUpgrade(5).isBought && !Pelle.isDoomed)) {
-    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01).times(getGameSpeedupFactor().times(diff).div(1000)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
+    Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01).times(CorruptionData.isCorrupted ? diff / (1000) : getGameSpeedupFactor().times(diff).div(1000)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
   }
 
   if (InfinityUpgrade.ipGen.isCharged || MendingUpgrade(5).isBought) {

@@ -7,7 +7,6 @@ import { perks } from "./secret-formula/reality/perks";
 import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
-import { corruptionChallengeScoreCalculation } from "./secret-formula/mending/corruption";
 import { CorruptionData } from "./corruption";
 
 function lockAchievementsOnMend() {
@@ -424,17 +423,18 @@ export function mendingReset() {
       maxRem: 0,
     }
     // Finally, lets set up corruptions
-    if (player.mending.corruptionChallenge.corruptedMend) {
-      scoreCalc = CorruptionData.scoreCalc()
+    if (CorruptionData.isCorrupted) {
+      let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
-    if (player.mending.corruptionChallenge.recordScore < scoreCalc) {
-      player.mending.corruptionChallenge.records = player.mending.corruption
-      player.mending.corruptionChallenge.recordScore = scoreCalc
-    }
-     player.mending.corruptedFragments = Math.ceil(Math.max(player.mending.corruptedFragments, Math.log2(scoreCalc)))
+      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
+        player.mending.corruptionChallenge.records = player.mending.corruption
+        player.mending.corruptionChallenge.recordScore = scoreCalc
+      }
+     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.corruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
+     player.mending.corruptionUpgradeBits = 0 // Basically a respec call
      player.mending.corruptionChallenge.corruptedMend = false
    }
-   // Its crucial we do this afterw, else the player will corrupt and instantly complete a corruption
+   // Its crucial we do this after, else the player will corrupt and instantly complete a corruption
     if (player.mending.corruptNext) {
       player.mending.corruptNext = false
       player.mending.corruptionChallenge.corruptedMend = true

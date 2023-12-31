@@ -62,6 +62,7 @@ export default {
       lastMatterTime: 0,
       paperclips: 0,
       fullTimePlayed: 0,
+      bypass: new Decimal(0)
     };
   },
   computed: {
@@ -114,11 +115,14 @@ export default {
           Achievement(131),
           TimeStudy(191)
         );
-        //let x = bestInfinity.time;
+        // This code looks ugly as fuck, but vue is a fucking asshole and if we dont do this we will probably trigger reactivity
+        // If you have a better way of throwing values into functions without causing reactivity, please rewrite this.
         infinity.bankRate = infinity.projectedBanked.div(Decimal.clampMin(33, records.thisEternity.time)).times(60000);
-        infinity.hasBest = true;//bestInfinity.time.lt(Number.MAX_VALUE);
-        infinity.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestInfinity.time));
-        infinity.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisInfinity.time));
+        this.bypass.copyFrom(bestInfinity.time)
+        infinity.hasBest = this.bypass.lt(Number.MAX_VALUE);
+        this.infinity.best = new TimeSpan(this.bypass);
+        this.bypass.copyFrom(records.thisInfinity.time)
+        this.infinity.this = new TimeSpan(this.bypass);
         infinity.bestRate.copyFrom(bestInfinity.bestIPminEternity);
       }
 
@@ -128,9 +132,11 @@ export default {
       eternity.isUnlocked = isEternityUnlocked;
       if (isEternityUnlocked) {
         eternity.count.copyFrom(Currency.eternities);
-        eternity.hasBest = true;//bestEternity.time.lt(Number.MAX_VALUE);
-        eternity.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestEternity.time));
-        eternity.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisEternity.time));
+        this.bypass.copyFrom(bestEternity.time)
+        eternity.hasBest = this.bypass.lt(Number.MAX_VALUE);
+        this.eternity.best = new TimeSpan(this.bypass);
+        this.bypass.copyFrom(records.thisEternity.time)
+        this.eternity.this = new TimeSpan(this.bypass);
         eternity.bestRate.copyFrom(bestEternity.bestEPminReality);
       }
 
@@ -141,15 +147,18 @@ export default {
 
       if (isRealityUnlocked) {
         reality.count = Math.floor(Currency.realities.value);
-        reality.best = TimeSpan.zero;//.copyFrom(new TimeSpan(bestReality.time));
-        reality.bestReal.copyFrom(new TimeSpan(bestReality.realTime));
-        reality.this = TimeSpan.zero;//.copyFrom(new TimeSpan(records.thisReality.time));
-        reality.totalTimePlayed = TimeSpan.zero//.copyFrom(records.totalTimePlayed);
+        this.bypass.copyFrom(bestReality.time)
+        this.reality.best = new TimeSpan(this.bypass);
+        this.reality.bestReal.copyFrom(new TimeSpan(bestReality.realTime));
+        this.bypass.copyFrom(records.thisReality.time)
+        this.reality.this = new TimeSpan(this.bypass);
+        this.bypass.copyFrom(records.totalTimePlayed)
+        reality.totalTimePlayed = new TimeSpan(this.bypass);
         // Real time tracking is only a thing once reality is unlocked:
-        infinity.thisReal.copyFrom(new TimeSpan(records.thisInfinity.realTime));
+        this.infinity.thisReal = new TimeSpan(records.thisInfinity.realTime);
         infinity.bankRate = infinity.projectedBanked.div(Math.clampMin(33, records.thisEternity.realTime)).times(60000);
-        eternity.thisReal.copyFrom(new TimeSpan(records.thisEternity.realTime));
-        reality.thisReal.copyFrom(new TimeSpan(records.thisReality.realTime));
+        this.eternity.thisReal = new TimeSpan(records.thisEternity.realTime);
+        reality.thisReal = new TimeSpan(records.thisReality.realTime);
         reality.bestRate.copyFrom(bestReality.RMmin);
         reality.bestRarity = Math.max(strengthToRarity(bestReality.glyphStrength), 0);
       }
@@ -161,10 +170,14 @@ export default {
       if (isMendingUnlocked) {
         mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
-        //mending.best.copyFrom(new TimeSpan(bestMend.time));
-        //mending.bestReal.copyFrom(new TimeSpan(bestMend.realTime));
-        //mending.this.copyFrom(new TimeSpan(records.thisMend.time));
-        //mending.thisReal.copyFrom(new TimeSpan(records.thisMend.realTime));
+        this.bypass.copyFrom(player.records.bestMend.time);
+        this.mending.best = new TimeSpan(this.bypass)
+        // this.bypass.copyFrom(new TimeSpan(bestMend.realTime));
+        this.mending.bestReal = new TimeSpan(records.bestMend.realTime)
+        this.bypass.copyFrom(records.thisMend.time);
+        this.mending.this = new TimeSpan(this.bypass);
+        // this.bypass.copyFrom(new TimeSpan(records.thisMend.realTime));
+        this.mending.thisReal = new TimeSpan(records.thisMend.realTime)
       }
 
       this.updateMatterScale();

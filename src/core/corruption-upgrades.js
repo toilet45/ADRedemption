@@ -103,7 +103,6 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   onPurchased() {
     EventHub.dispatch(GAME_EVENT.CORRUPTION_UPGRADE_BOUGHT);
     const id = this.id;
-    player.mending.spentCF += this.cost
     // insert code here
     GameCache.staticGlyphWeights.invalidate();
   }

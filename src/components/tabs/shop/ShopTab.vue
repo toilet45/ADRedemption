@@ -97,7 +97,7 @@ export default {
 <template>
   <div class="tab shop">
     <div class="c-shop-disclaimer">
-      Back In the Pre-Reality web days, we didn't have a shop, so you're going to play the game like we did back then. But seriously, I don't think it's even legal for me to make money off this.
+      There is no shop. Stop looking for it. It doesn't exist, and never has. Seriously though, there isnt a use for a shop, im sure you will manage without one, right?
     </div>
   </div>
 </template>

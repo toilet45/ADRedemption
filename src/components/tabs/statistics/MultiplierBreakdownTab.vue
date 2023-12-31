@@ -105,6 +105,8 @@ export default {
           in order to reduce possible adverse effects due to photosensitivity. This may cause some visual weirdness
           after prestige events.
         </b>
+        <br>
+        Some entries may have very inaccurate percentages, and may show incorrect values if set to multiplication.
       </div>
     </div>
   </div>

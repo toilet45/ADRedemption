@@ -3,9 +3,11 @@ import pako from "pako/dist/pako.esm.mjs";
 /* eslint-enable import/extensions */
 
 export const GameSaveSerializer = {
+  SaveType: "devsave",
+
   serialize(save) {
     const json = JSON.stringify(save, this.jsonConverter);
-    return this.encodeText(json, "savefile");
+    return this.encodeText(json, this.SaveType);
   },
   // eslint-disable-next-line no-unused-vars
   jsonConverter(key, value) {
@@ -24,7 +26,12 @@ export const GameSaveSerializer = {
       // eslint-disable-next-line no-unused-vars
       return JSON.parse(json, (k, v) => ((v === Infinity) ? "Infinity" : v));
     } catch (e) {
-      return undefined;
+        try {
+          const json = this.decodeText(data, "devsave");
+          return this.SaveType == "devsave" ? JSON.parse(json, (k, v) => ((v === Infinity) ? "Infinity" : v)) : "devsave";
+        } catch (e) {
+          return undefined;
+      }
     }
   },
   // Define these now so we don't keep creating new ones, which vaguely seems bad.
@@ -41,6 +48,7 @@ export const GameSaveSerializer = {
   // also require changing some other code slightly, particularly decode).
   startingString: {
     savefile: "AntimatterDimensionsSavefileFormat",
+    "devsave": "ADRedemptionTestingSavefileFormat",
     "automator script": "AntimatterDimensionsAutomatorScriptFormat",
     "automator data": "AntimatterDimensionsAutomatorDataFormat",
     "glyph filter": "AntimatterDimensionsGlyphFilterFormat",
@@ -48,6 +56,7 @@ export const GameSaveSerializer = {
   // The ending strings aren't as verbose so that we can save a little space.
   endingString: {
     savefile: "EndOfSavefile",
+    "devsave": "EndOfADRdevSavefile",
     "automator script": "EndOfAutomatorScript",
     "automator data": "EndOfAutomatorData",
     "glyph filter": "EndOfGlyphFilter",

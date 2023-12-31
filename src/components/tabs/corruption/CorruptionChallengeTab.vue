@@ -39,7 +39,7 @@ export default {
       return {
         min: 0,
         max: 9+(WarpUpgrade(6).isBought + WarpUpgrade(12).isBought),
-        width: "18rem",
+        width: "27rem",
         valueInDot: true,
         tooltip: "never",
         "dot-width": "2.2rem",
@@ -62,6 +62,12 @@ export default {
     },
     runDescription() {
       return GameDatabase.challenges.corruption.desc()
+    },
+    bonusInfo() {
+      return GameDatabase.challenges.corruption.incBonusText()
+    },
+    rewardInfo() {
+      return GameDatabase.challenges.corruption.reward()
     },
     unlockInfoTooltipArrowStyle() {
       return {
@@ -94,7 +100,7 @@ export default {
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
       // This was being annoying so this is a cheap fix that works
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
-      this.corruptedFrags = player.mending.corruptedFragments - player.mending.spentCF
+      this.corruptedFrags = player.mending.corruptedFragments
     },
     startRun() {
       if (!this.isRunning) {
@@ -124,7 +130,9 @@ export default {
 
 <template>
   <div class="l-corrupt-celestial-tab">
+    <div text-left> 
     You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Hostile Fragments.
+    </div>
     <br>
     <div class="l-mechanics-container">
       <div
@@ -148,6 +156,10 @@ export default {
           </div>
           {{ runDescription }}
           <br><br>
+          {{  bonusInfo }}
+          <br><br>
+          {{  rewardInfo }}
+          <br><br>
           <div>
             <span v-if="recordScore > 0">
               Your record score is {{ format(recordScore, 2) }},
@@ -159,6 +171,8 @@ export default {
             </span>
           </div>
         </div>
+      </div>
+    <div>
     Prestige Limits:
     <SliderComponent
           v-bind="corruptionSliderProps"
@@ -178,7 +192,7 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(1, $event)"
         />
-        AD, ID, and TD multipliers {{formatX(dimLimNerf ? localPenalties.dimLimits.postNerf[[this.corruptions[1]]] : localPenalties.dimLimits.preNerf[[this.corruptions[1]]], 2, 3)}}
+        AD, ID, and TD multipliers ^{{format(dimLimNerf ? localPenalties.dimLimits.postNerf[[this.corruptions[1]]] : localPenalties.dimLimits.preNerf[[this.corruptions[1]]], 2, 3)}}
         <br>
         <br>
     Time Compression:
@@ -235,19 +249,40 @@ export default {
           @input="corruptionSetSet(6, $event)"
         />
         Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
+        <br>
+        <br>
+    temp 1:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[6]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(6, $event)"
+        />
+        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
+        <br>
+        <br>
+    temp 2:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[6]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(6, $event)"
+        />
+        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
+        <br>
+        <br>
+    temp 3:
+    <SliderComponent
+          v-bind="corruptionSliderProps"
+          :value="corruptions[6]"
+          :width="'100%'"
+          :disabled="isRunning"
+          @input="corruptionSetSet(6, $event)"
+        />
+        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
       </div>
-    </div>
-    <div class="c-mending-upgrade-infotext">
-      Mouseover <i class="fas fa-question-circle" /> icons for additional information.
-      <br>
-      The first row of upgrades can be purchased endlessly for increasing costs
-      <span :ach-tooltip="costScalingTooltip">
-        <i class="fas fa-question-circle" />
-      </span>
-      and the rest are single-purchase.
-      <br>
-      Striped Upgrades (or ones that cost 1e300 HF) are not yet implemented
-      <br>
     </div>
     <div
       v-for="row in 5"

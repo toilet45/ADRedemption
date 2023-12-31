@@ -1,6 +1,7 @@
 <script>
 import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
 import PrimaryButton from "@/components/PrimaryButton";
+import { GameSaveSerializer } from "../../core/storage/serializer";
 
 const OFFLINE_PROGRESS_TYPE = {
   IMPORTED: 0,
@@ -55,7 +56,7 @@ export default {
       return this.player !== undefined;
     },
     inputIsDev() {
-      return this.player.version == 51.007 && false
+      return (51 < this.player.version < 51.1 || this.player() == "devsave" || this.player().devSave) && GameSaveSerializer.SaveType != "devsave"
     },
     inputIsSecret() {
       return isSecretImport(this.input) || Theme.isSecretTheme(this.input);

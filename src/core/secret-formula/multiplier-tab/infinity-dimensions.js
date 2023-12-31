@@ -278,7 +278,7 @@ export const ID = {
   },
 
   v50:{
-    name: "V Level 50",
+    name: "Ra Upgrade - The 5 V-achievement milestone affects ID and TD at a reduced rate",
     powValue: () => Math.pow(VUnlocks.adPow.effectValue, 0.5),
     isActive: () => Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked,
     icon: MultiplierTabIcons.GENERIC_V
@@ -301,5 +301,11 @@ export const ID = {
     powValue: 0.5,
     isActive: () => PelleStrikes.powerGalaxies.hasStrike,
     icon: MultiplierTabIcons.PELLE,
+  },
+  nerfSoftcap: {
+    name: "Infinity Power Softcap",
+    powValue: () => 0.1,
+    isActive: () => (Currency.infinityPower.value.log10() > 9e15),
+    icon: MultiplierTabIcons.SOFTCAP("infinity")
   }
 };

@@ -82,18 +82,16 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption+",
+    name: "Hostility+",
     id: 6,
     cost: 1e300,
-    requirement: "Mend with an average corruption level of 6 or higher",
-    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
-    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 6,
+    requirement: "Mend with a total hostility level of atleast 60",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 60,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 60,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: () => `Hostility caps +${formatInt(1)}`,
   },
   {
     name: "Warp Upgrade 7",
@@ -138,16 +136,16 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Visible ononononon",
+    name: "Boost Readjustment",
     id: 10,
     cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
+    requirement: () => `Reach ${format(5e9)} dimension boosts without having enabled continuum this Reality.`,
     hasFailed: () => false,
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
+    description: () => `Dimension boost scaling occurs ${formatX(20)} later`,
   },
   {
     name: "Noticeable Galaxies",
@@ -162,18 +160,16 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Corruption++",
+    name: "Hostility++",
     id: 12,
     cost: 1e300,
-    requirement: "Mend with an average corruption level of 8 or higher",
-    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
-    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 8,
+    requirement: "Mend with a total hostility level of atleast 80",
+    hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 80,
+    checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 80,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: () => `Hostility caps +${formatInt(1)}`,
   },
   /*
   {

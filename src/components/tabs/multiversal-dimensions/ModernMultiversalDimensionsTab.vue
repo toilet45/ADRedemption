@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     update() {
-      this.totalUpgrades = player.totalTickGained;
+      this.totalUpgrades = 0;
       this.percentSoftcap = 50;
       this.boostPoints.copyFrom(Currency.galBoostPoints);
       this.shardsPerSecond.copyFrom(MultiversalDimension(1).productionPerSecond);
@@ -38,6 +38,24 @@ export default {
     },
     toggleAllAutobuyers() {
       toggleAllMultiversalDims();
+    },
+    txt1() {
+      if (this.boostPoints.lte(1e50)) {
+        return `making all Galaxies `
+      }
+      return `providing an `
+    },
+    txt2() {
+      if (this.boostPoints.lte(1e50)) {
+        return `${format(this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8)), 2, 2)}%`
+      }
+      return `${formatX((this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8))).div(100).add(1), 2, 2)}`
+    },
+    txt3() {
+      if (this.boostPoints.lte(1e50)) {
+        return ` stronger`
+      }
+      return ` multiplier to all galaxies`
     }
   }
 };
@@ -63,7 +81,7 @@ export default {
     <div>
       <p>
         You have gained
-        <span class="c-time-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Time Shards.
+        <span class="c-time-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards, {{ txt1() }}<span class="c-time-dim-description__accent">{{ txt2() }}</span>{{ txt3() }}.
       </p>
     </div>
     <div>You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
