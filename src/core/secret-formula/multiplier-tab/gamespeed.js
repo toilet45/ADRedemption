@@ -75,7 +75,7 @@ export const gamespeed = {
 
   ec12: {
     name: "Eternity Challenge 12",
-    multValue: () => 0.001.div(getGameSpeedupForDisplay()),
+    multValue: () => new Decimal(0.001).div(getGameSpeedupForDisplay()),
     isActive: () => EternityChallenge(12).isRunning,
     icon: MultiplierTabIcons.CHALLENGE("eternity"),
   },

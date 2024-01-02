@@ -161,7 +161,7 @@ export default {
       return timeDisplayShort(ms);
     },
     timeUntilBuy(price) {
-      return Math.max((price - this.storedBlackHole) / this.currentSpeedUp, 0);
+      return Decimal.max((new Decimal(price).sub(this.storedBlackHole)).div(this.currentSpeedUp), 0).toNumber();
     },
     buyUnlock(info) {
       Enslaved.buyUnlock(info);
@@ -336,7 +336,7 @@ export default {
             <div v-if="!hasUnlock(unlock)">
               Costs: {{ timeDisplayShort(unlock.price) }}
             </div>
-            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price).gt(0)">
+            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price) > 0">
               Time to obtain: {{ timeDisplayShort(timeUntilBuy(unlock.price)) }}
             </span>
           </button>

@@ -901,7 +901,7 @@ function laitelaRealityTick(realDiff) {
       completionText += `<br><br>Dark Matter Multiplier: ${formatX(oldInfo.realityReward, 2, 2)}
       ➜ ${formatX(Laitela.realityReward, 2, 2)}`;
       if (oldInfo.fastestCompletion === 3600 || oldInfo.fastestCompletion === 300 && oldInfo.difficultyTier > 0) {
-        if (Time.thisRealityRealTime.totalSeconds < 30) {
+        if (Time.thisRealityRealTime.totalSeconds.lt(30)) {
           // First attempt - destabilising
           completionText += `<br>Best Completion Time: None ➜ Destabilized
           <br>Highest Active Dimension: ${formatInt(8 - oldInfo.difficultyTier)} ➜
@@ -912,7 +912,7 @@ function laitelaRealityTick(realDiff) {
             ${TimeSpan.fromSeconds(laitelaInfo.fastestCompletion).toStringShort()}
             <br>Highest Active Dimension: ${formatInt(8 - laitelaInfo.difficultyTier)}`;
         }
-      } else if (Time.thisRealityRealTime.totalSeconds < 30) {
+      } else if (Time.thisRealityRealTime.totalSeconds.lt(30) ) {
         // Second+ attempt - destabilising
         completionText += `<br>Best Completion Time: ${TimeSpan.fromSeconds(oldInfo.fastestCompletion).toStringShort()}
           ➜ Destabilized
