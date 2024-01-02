@@ -35,7 +35,7 @@ export const mendingMilestones = {
   eleven: {
     mends: 15,
     reward: "Gain an MvR multiplier based on lowest glyph count during the entire reality where you reach e9e15 antimatter this Mend.",
-    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${mendingMilestoneElevenMultiplier(true)}, effected by Cursed Glyphs.`),
+    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${mendingMilestoneElevenMultiplier(true)}, affected by Cursed Glyphs.`),
     // We dont define the effect here because this codebase will shit itself if you do, so we instead define it at the MvR code.
   },
   eight: {

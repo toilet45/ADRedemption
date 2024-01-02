@@ -125,7 +125,7 @@ export const infinityChallenges = [
     goal: DC.E27000,
     isQuickResettable: true,
     effect: () => DC.D0_8446303389034288.pow(
-      Math.max(0, player.records.thisInfinity.time.sub(player.records.thisInfinity.lastBuyTime).min(1e250))),
+      Math.max(0, player.records.thisInfinity.time.sub(player.records.thisInfinity.lastBuyTime).min(1e250).toNumber())),
     reward: {
       description:
         "You get a multiplier to AD 2-7 based on 1st and 8th AD multipliers.",

@@ -429,7 +429,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;
-    factor = factor.times((1 - storedTimeWeight) + storedTimeWeight);
+    factor = factor.times((1 - storedTimeWeight)).add(1);
   }
 
   // These effects should always be active, but need to be disabled during offline black hole simulations because

@@ -336,7 +336,7 @@ export default {
             <div v-if="!hasUnlock(unlock)">
               Costs: {{ timeDisplayShort(unlock.price) }}
             </div>
-            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price) > 0">
+            <span v-if="isStoringBlackHole && !hasUnlock(unlock) && timeUntilBuy(unlock.price).gt(0)">
               Time to obtain: {{ timeDisplayShort(timeUntilBuy(unlock.price)) }}
             </span>
           </button>

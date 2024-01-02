@@ -66,7 +66,7 @@ export default {
       this.isPermanent = BlackHoles.arePermanent;
       this.pauseMode = player.blackHoleAutoPauseMode;
       this.hasBH2 = BlackHole(2).isUnlocked;
-      this.hasBH3 = true;//ExpoBlackHole(1).isUnlocked;
+      this.hasBH3 = ExpoBlackHole(1).isUnlocked;
       this.blackHoleUptime = [BlackHole(1).duration / BlackHole(1).cycleLength,
         BlackHole(2).duration / BlackHole(2).cycleLength];
       this.detailedBH2 = this.bh2Status();
