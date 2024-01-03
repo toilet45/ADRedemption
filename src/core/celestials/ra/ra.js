@@ -320,12 +320,12 @@ export const Ra = {
   requiredMemoriesForLevel(level) {
     if (level >= Ra.levelCap) return Infinity;
     let perMemScaling = 1
-    if (level >= 30) perMemScaling += 0.1 //1.1
-    if (level >= 40) perMemScaling += 0.15 //1.25
-    if (level >= 50) perMemScaling += 0.2 //1.45
-    if (level >= 65) perMemScaling += 0.25 //1.7
+    if (level >= 30) perMemScaling += 0.4 //1.4
+    if (level >= 40) perMemScaling += 0.1 //1.5
+    if (level >= 50) perMemScaling += 0.1 //1.6
+    if (level >= 65) perMemScaling += 0.1 //1.7
     if (level >= 75) perMemScaling += 0.3 //2
-    if (level >= 90) perMemScaling += 0.35 //2.35
+    if (level >= 90) perMemScaling += 0.25 //2.25
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));

@@ -48,8 +48,8 @@ export default {
     update() {
       this.totalUpg = MendingUpgrades.all.countWhere(u => u.isBought);
       this.MVRoR = Decimal.min(player.mendingPoints,1e7).toNumber()
-      this.RaToR = Math.min(450, Ra.totalPetLevel)
-      this.canWarp = ((this.MVRoR == 1e7) && (this.RaToR == 450) && (this.totalUpg == 16))
+      this.RaToR = Math.min(320, Ra.totalPetLevel)
+      this.canWarp = ((this.MVRoR == 1e7) && (this.RaToR == 320) && (this.totalUpg == 16))
       this.warped = player.reality.warped
     },
     clicked() {
@@ -92,12 +92,12 @@ export default {
       class="warp-unlock-requirements"
     >
       You must have all Mending Upgrades Purchased, 
-      {{ formatInt(1e7) }} Multiversal Remains, and 450 total Ra Memory Levels to Warp Reality.
+      {{ formatInt(1e7) }} Multiversal Remains, and 320 total Ra Memory Levels to Warp Reality.
       <br>
       <br>
       {{ format(this.MVRoR) }} / {{ format(1e7) }} Multiversal Remains
       <br>
-      {{ formatInt(this.RaToR) }} / {{ formatInt(450) }} Ra Memory Levels
+      {{ formatInt(this.RaToR) }} / {{ formatInt(320) }} Ra Memory Levels
       <br>
       {{ formatInt(this.totalUpg) }} / {{ formatInt(16) }} Mending Upgrades
     </div>
