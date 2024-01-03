@@ -25,7 +25,7 @@ export default {
     SecretTimeStudy,
     TimeStudyConnection,
     HiddenTimeStudyConnection,
-    //MyriadTimeStudy,
+    MyriadTimeStudy,
     //KohlerTimeStudy
   },
   data() {

@@ -10,7 +10,7 @@ export const ra = {
       requiredUnlock: () => undefined,
       rawMemoryChunksPerSecond: () => {
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.log10(Math.max(1, Currency.perkPoints.value)) : 1;
-        return 4 * Math.pow(Currency.eternityPoints.value.pLog10() / 1e4, 3) * x;
+        return 4 * Math.pow((Ra.unlocks.placeholderR9.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
     },
@@ -34,7 +34,7 @@ export const ra = {
           x += player.reality.glyphs.sac.reality;
         }
         x /= 7;
-        return 4 * Decimal.pow(Effarig.shardsGained, 0.1).min(1e308).toNumber() * Math.max(1, Math.log10(x));
+        return (Ra.unlocks.placeholderR9.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.placeholderP9.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Math.log10(x));
       },
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },
@@ -48,7 +48,7 @@ export const ra = {
       requiredUnlock: () => Ra.unlocks.enslavedUnlock,
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ?  1 + (player.celestials.enslaved.storedReal / 3.6e6) : 1;
-        return 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
+        return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
     },
@@ -62,7 +62,7 @@ export const ra = {
       requiredUnlock: () => Ra.unlocks.vUnlock,
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
-        return 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
+        return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
     },
@@ -86,7 +86,7 @@ export const ra = {
           x += Ra.pets.pelle.memories
         }
         x /= 7;
-        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, 1.5) * Math.max(Math.log10(Math.min(0, x)), 1);
+        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.placeholderR9.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
       },
       memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
     },
@@ -100,7 +100,7 @@ export const ra = {
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
-        return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, 1.5)) * x;
+        return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.placeholderP9.isUnlocked ? 1.667 : 1.5))) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },
@@ -114,7 +114,8 @@ export const ra = {
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
-        return x * player.celestials.pelle.remnants
+        let y = Ra.unlocks.placeholderR9.isUnlocked ? 1.05 : 1;
+        return (x * player.celestials.pelle.remnants) ** y;
       },
       memoryProductionMultiplier: () => 1
     }
@@ -592,6 +593,7 @@ export const ra = {
       reward: "Unlock a Myriad Study every 2 Memory Levels past 90",
       pet: "v",
       level: 90,
+      effect: () => Math.floor((Ra.pets.v.level - 90) / 2) + 1,
       displayIcon: "?"
     },
     achMultBaseImprovementV: {
@@ -681,7 +683,7 @@ export const ra = {
       reward: "Base Memory Chunk formula for all Celestials is slightly improved",
       pet: "ra",
       level: 50,
-      displayIcon: "?"
+      displayIcon: "*"
     },
     raNoReset: {
       id: 7,
@@ -730,7 +732,7 @@ export const ra = {
       reward: "Annihilation increases dark energy production with reduced effect",
       pet: "laitela",
       level: 2,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: '*'
     },
     laitelaXP: {
       id: 13,

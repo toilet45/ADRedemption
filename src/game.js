@@ -438,7 +438,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     if (Effarig.isRunning) {
       factor = Effarig.multiplier(factor);
     } else if (Laitela.isRunning) {
-      const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes / 10, 1);
+      const nerfModifier = (Time.thisRealityRealTime.totalMinutes.div(10)).clampMax(1); //somehow we missed this (Number operations on a Decimal), thanks to sxy62146214 for pointing this out
       factor = Decimal.pow(factor, nerfModifier);
     }
   }
@@ -628,8 +628,8 @@ export function gameLoop(passDiff, options = {}) {
     }
     diff = diff.times(speedFactor);
   } else if (fixedSpeedActive) {
-    diff = diff.times(getGameSpeedupFactor());
-    Enslaved.currentBlackHoleStoreAmountPerMs = 0;
+    diff = new Decimal(diff).times(getGameSpeedupFactor());
+    Enslaved.currentBlackHoleStoreAmountPerMs = new Decimal(0);
   }
   player.celestials.ra.peakGamespeed = Decimal.max(player.celestials.ra.peakGamespeed, getGameSpeedupFactor());
   Enslaved.isReleaseTick = false;

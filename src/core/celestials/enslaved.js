@@ -38,7 +38,7 @@ export const Enslaved = {
   autoReleaseSpeed: new Decimal(0),
   timeCap: () => (player.celestials.ra.pets.enslaved.level >= 30 ? Decimal.pow10(1e300) : new Decimal(1e300)),
   glyphLevelMin: 5000,
-  currentBlackHoleStoreAmountPerMs: 0,
+  currentBlackHoleStoreAmountPerMs: new Decimal(0),
   tachyonNerf: 0.3,
   toggleStoreBlackHole() {
     if (!this.canModifyGameTimeStorage) return;
@@ -144,7 +144,7 @@ export const Enslaved = {
   buyUnlock(info) {
     if (!this.canBuy(info)) return false;
     if (info.id === ENSLAVED_UNLOCKS.RUN.id) this.quotes.unlockRun.show();
-    player.celestials.enslaved.stored -= info.price;
+    player.celestials.enslaved.stored = player.celestials.enslaved.stored.sub(info.price);
     player.celestials.enslaved.unlocks.push(info.id);
     return true;
   },

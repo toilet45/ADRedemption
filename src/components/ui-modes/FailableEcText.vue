@@ -34,8 +34,8 @@ export default {
         return `${formatInt(this.currentResource)} / ${formatInt(this.maximumResource)} Infinities used`;
       }
       // We're always either in EC4 or EC12 when displaying this text.
-      return `${TimeSpan.fromSeconds(this.currentResource.toNumber()).toString()} /
-        ${TimeSpan.fromSeconds(this.maximumResource.toNumber()).toString()} time spent`;
+      return `${TimeSpan.fromSeconds(this.currentResource)} /
+        ${TimeSpan.fromSeconds(this.maximumResource)} time spent`;
     }
   },
   methods: {
