@@ -160,26 +160,26 @@ export const Achievements = {
   autoAchieveUpdate(diff) {
     if (!PlayerProgress.realityUnlocked()) return;
     if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics) {
-      player.reality.achTimer = Math.clampMax(player.reality.achTimer + diff, this.period);
+      player.reality.achTimer = Decimal.clampMax(player.reality.achTimer.add(diff), this.period);
       return;
     }
     if (Achievements.preReality.every(a => a.isUnlocked)) return;
 
-    player.reality.achTimer += diff;
-    if (player.reality.achTimer < this.period) return;
+    player.reality.achTimer = player.reality.achTimer.add(diff);
+    if (player.reality.achTimerlt(this.period)) return;
     for (const achievement of Achievements.preReality.filter(a => !a.isUnlocked)) {
       achievement.unlock(true);
-      player.reality.achTimer -= this.period;
-      if (player.reality.achTimer < this.period) break;
+      player.reality.achTimer = player.reality.achTimer.sub(this.period);
+      if (player.reality.achTimer.lt(this.period)) break;
     }
     player.reality.gainedAutoAchievements = true;
   },
 
   get timeToNextAutoAchieve() {
-    if (!PlayerProgress.realityUnlocked()) return 0;
-    if (GameCache.achievementPeriod.value === 0) return 0;
-    if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return 0;
-    return this.period - player.reality.achTimer;
+    if (!PlayerProgress.realityUnlocked()) return new Decimal(0);
+    if (GameCache.achievementPeriod.value === new Decimal(0)) return new Decimal(0);
+    if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return new Decimal(0);
+    return this.period.sub(player.reality.achTimer);
   },
 
   _power: new Lazy(() => {
@@ -205,5 +205,5 @@ export const Achievements = {
 };
 
 EventHub.logic.on(GAME_EVENT.PERK_BOUGHT, () => {
-  player.reality.achTimer = Decimal.clampMax(player.reality.achTimer, Achievements.period).toNumber();
+  player.reality.achTimer = Decimal.clampMax(player.reality.achTimer, Achievements.period);
 });

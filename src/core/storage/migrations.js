@@ -668,6 +668,9 @@ export const migrations = {
   },
   51.016: player => {
     delete player.mending.spentCF
+  },
+  51.017: player =>{
+    player.reality.achTimer = new Decimal(player.reality.achTimer);
   }
 },
 

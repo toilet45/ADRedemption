@@ -25,7 +25,7 @@ export default {
       detailedBH2: "",
       isPermanent: false,
       hasBH2: false,
-      hasBH3:false,
+      hasBH3: false,
       blackHoleUptime: [],
       stateChange: "",
     };

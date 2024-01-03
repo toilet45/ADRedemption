@@ -52,23 +52,19 @@ export function mendingReset() {
     }
     player.reality.glyphs.protectedRows = x;
     player.reality.glyphs.filter.trash = 0;
-    player.reality.glyphs.filter.select = 0;
+    player.reality.glyphs.filter.select = 1;
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
     //Start reseting all the things
-    player.records.totalAntimatter = DC.E1,
-    //Challenge Times
     player.challenge= {
       normal: {
         current: 0,
-        bestTimes: Array.repeat(Number.MAX_VALUE, 11),
         completedBits: 0,
       },
       infinity: {
         current: 0,
-        bestTimes: Array.repeat(Number.MAX_VALUE, 8),
         completedBits: 0,
       },
       eternity: {
@@ -76,7 +72,12 @@ export function mendingReset() {
         unlocked: 0,
         requirementBits: 0,
       }
-    },
+    }
+    if (!Achievement(194).isUnlocked) {
+      player.records.totalAntimatter = DC.E1,
+      player.challenge.normal.bestTimes = Array.repeat(Number.MAX_VALUE, 11);
+      player.challenge.infinity.bestTimes = Array.repeat(Number.MAX_VALUE, 11);
+    }
     //Celestials
     player.celestials.teresa.pouredAmount = 0;
     player.celestials.teresa.unlockBits = 0;

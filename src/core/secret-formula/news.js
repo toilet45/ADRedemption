@@ -2590,10 +2590,10 @@ export const news = [
     // the <span style> is the Blob from the blob font
     id: "a397",
     get text(){
-      let x = player.records.totalTimePlayed.div(8.64e7);
+      let x = (player.records.totalTimePlayed.div(8.64e7).mul(2));
       return `Post a <span style='color: #FBC21B; text-shadow: 0px 1px 0px black, 1px 0px 0px black, 1px 1px 0px black,
       0px -1px 0px black, -1px 0px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black'>
-      \uE010</span> for every day Hexa delays the update. (Hexa has recived ${format(x, 2, 2)} 
+      \uE010</span> for every day Hexa (and Royal) delay the update. (Hexa and Royal have recived a combined ${format(x, 2, 2)} 
       <span style='color: #FBC21B; text-shadow: 0px 1px 0px black, 1px 0px 0px black, 1px 1px 0px black,
       0px -1px 0px black, -1px 0px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black'>
       \uE010</span>s)`;

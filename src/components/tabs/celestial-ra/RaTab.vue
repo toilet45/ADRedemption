@@ -246,7 +246,9 @@ export default {
           (you need {{ formatInt(remembranceReq - totalLevels) }} more)
         </div>
       </div>
+      <div v-if="this.shopUnlocked">
       <RaUpgradePanel />
+      </div>
     </div>
   </div>
 </template>

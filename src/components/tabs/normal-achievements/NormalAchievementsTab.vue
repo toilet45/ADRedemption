@@ -13,10 +13,10 @@ export default {
   },
   data() {
     return {
-      achievementPower: 0,
+      achievementPower: new Decimal(0),
       achTPEffect: 0,
-      achCountdown: 0,
-      totalCountdown: 0,
+      achCountdown: new Decimal(0),
+      totalCountdown: new Decimal(0),
       missingAchievements: 0,
       showAutoAchieve: false,
       isAutoAchieveActive: false,
@@ -169,7 +169,7 @@ export default {
       v-if="showAutoAchieve"
       class="c-achievements-tab__header"
     >
-      <div v-if="achCountdown > 0">
+      <div v-if="achCountdown.gt(0)">
         Automatically gain the next missing Achievement in
         {{ timeDisplayNoDecimals(achCountdown) }}<span v-if="!isAutoAchieveActive"> once Auto is turned on</span>.
         (left-to-right, top-to-bottom)
@@ -178,7 +178,7 @@ export default {
         Automatically gain the next missing Achievement as soon as you enable Auto Achievements.
         (left-to-right, top-to-bottom)
       </div>
-      <div v-if="totalCountdown > 0">
+      <div v-if="totalCountdown.gt(0)">
         You will regain all remaining achievements after {{ timeDisplayNoDecimals(totalCountdown) }} if Auto
         Achievement <span v-if="isAutoAchieveActive">stays enabled</span><span v-else>is turned on</span>.
       </div>
