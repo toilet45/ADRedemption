@@ -429,7 +429,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (Enslaved.isStoringGameTime && effects.includes(GAME_SPEED_EFFECT.TIME_STORAGE)) {
     const storedTimeWeight = Ra.unlocks.autoPulseTime.canBeApplied ? 0.99 : 1;
-    factor = factor.times((1 - storedTimeWeight) + storedTimeWeight);
+    factor = factor.times((1 - storedTimeWeight)).add(1);
   }
 
   // These effects should always be active, but need to be disabled during offline black hole simulations because
@@ -438,7 +438,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     if (Effarig.isRunning) {
       factor = Effarig.multiplier(factor);
     } else if (Laitela.isRunning) {
-      const nerfModifier = (Time.thisRealityRealTime.totalMinutes.div(10)).clampMax(1); //somehow we missed this (Number operations on a Decimal), thanks to sxy62146214 for pointing this out
+      const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes.toNumber() / 10, 1);
       factor = Decimal.pow(factor, nerfModifier);
     }
   }
@@ -901,7 +901,7 @@ function laitelaRealityTick(realDiff) {
       completionText += `<br><br>Dark Matter Multiplier: ${formatX(oldInfo.realityReward, 2, 2)}
       ➜ ${formatX(Laitela.realityReward, 2, 2)}`;
       if (oldInfo.fastestCompletion === 3600 || oldInfo.fastestCompletion === 300 && oldInfo.difficultyTier > 0) {
-        if (Time.thisRealityRealTime.totalSeconds < 30) {
+        if (Time.thisRealityRealTime.totalSeconds.lt(30)) {
           // First attempt - destabilising
           completionText += `<br>Best Completion Time: None ➜ Destabilized
           <br>Highest Active Dimension: ${formatInt(8 - oldInfo.difficultyTier)} ➜
@@ -912,7 +912,7 @@ function laitelaRealityTick(realDiff) {
             ${TimeSpan.fromSeconds(laitelaInfo.fastestCompletion).toStringShort()}
             <br>Highest Active Dimension: ${formatInt(8 - laitelaInfo.difficultyTier)}`;
         }
-      } else if (Time.thisRealityRealTime.totalSeconds < 30) {
+      } else if (Time.thisRealityRealTime.totalSeconds.lt(30) ) {
         // Second+ attempt - destabilising
         completionText += `<br>Best Completion Time: ${TimeSpan.fromSeconds(oldInfo.fastestCompletion).toStringShort()}
           ➜ Destabilized

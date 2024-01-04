@@ -22,6 +22,7 @@
     "js-sha512": "^0.8.0",
     "mousetrap": "^1.6.5",
     "pako": "^2.0.4",
+    "save-dev": "^0.0.1-security",
     "svg-pan-zoom": "^3.6.1",
     "tween.js": "^16.6.0",
     "uuid": "^8.0.0",

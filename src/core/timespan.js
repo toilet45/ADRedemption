@@ -210,13 +210,13 @@ window.TimeSpan = class TimeSpan {
   toStringNoDecimals() {
     const parts = [];
     function addCheckedComponent(value, name) {
-      if (value === 0) {
+      if (value.eq(0)) {
         return;
       }
       addComponent(value, name);
     }
     function addComponent(value, name) {
-      parts.push(value === 1 ? `${formatInt(value)} ${name}` : `${formatInt(value)} ${name}s`);
+      parts.push(value.eq(1) ? `${formatInt(value)} ${name}` : `${formatInt(value)} ${name}s`);
     }
     addCheckedComponent(this.years, "year");
     addCheckedComponent(this.days, "day");
@@ -224,7 +224,7 @@ window.TimeSpan = class TimeSpan {
     addCheckedComponent(this.minutes, "minute");
     addCheckedComponent(this.seconds, "second");
     // Join with commas and 'and' in the end.
-    if (parts.length === 0) return `${formatInt(0)} seconds`;
+    if (parts.length.eq(0)) return `${formatInt(0)} seconds`;
     return [parts.slice(0, -1).join(", "), parts.slice(-1)[0]].join(parts.length < 2 ? "" : " and ");
   }
 

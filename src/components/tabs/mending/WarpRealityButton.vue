@@ -29,7 +29,7 @@ export default {
   methods: {
     update() {
       this.isWarped = player.reality.warped;
-      this.isUnlocked = player.mendingPoints.gte(1e5) && Ra.totalPetLevel > 450 &&  player.mending.upgradeBits == 2029500
+      this.isUnlocked = player.mendingPoints.gte(1e7) && Ra.totalPetLevel > 320 &&  player.mending.upgradeBits == 2029500
     },
     clicked() {
       if (!this.isWarped && this.isUnlocked) Modal.warpReality.show();
