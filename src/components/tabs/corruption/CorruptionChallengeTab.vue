@@ -107,7 +107,6 @@ export default {
       if (!this.isRunning) {
         this.nextCorrupted = !this.nextCorrupted
         player.mending.corruptNext = this.nextCorrupted
-        mendingReset();
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false

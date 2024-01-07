@@ -671,29 +671,9 @@ export const migrations = {
   },
   51.017: player => [
     player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    migrations.fixInfinityIssues(player),
     player.reality.achTimer = new Decimal(player.reality.achTimer)
   ]
 },
-
-  fixInfinityIssues(player) {
-    if (player.antimatter == Infinity) player.antimatter = new Decimal(0)
-    if (player.celestials.teresa.bestRunAM == Infinity) player.celestials.teresa.bestRunAM = new Decimal(0)
-    if (player.dilation.lastEP == Infinity) player.dilation.lastEP = new Decimal(0)
-    for (let i = 0; i < 8; i++) {
-      if (player.dimensions.normal[i].amount = Infinity) player.dimensions.normal[i].amount = new Decimal(0)
-      if (player.dimensions.infinity[i].cost = Infinity) player.dimensions.infinity[i].cost = new Decimal(0)
-      if (player.dimensions.infinity[i].amount = Infinity) player.dimensions.infinity[i].amount = new Decimal(0)
-      if (player.dimensions.time[i].amount = Infinity) player.dimensions.time[i].amount = new Decimal(0)
-    }
-    if (player.eternityPoints == Infinity) player.eternityPoints = new Decimal(0)
-    if (player.infinityPower == Infinity) player.infinityPower = new Decimal(0)
-    if (player.infinityPoints == Infinity) player.infinityPoints = new Decimal(0)
-    if (player.replicanti.amount == Infinity) player.replicanti.amount = new Decimal(0)
-    if (player.replicanti.galCost == Infinity) player.replicanti.galCost = new Decimal(0)
-    if (player.sacrificed == Infinity) player.sacrificed = new Decimal(0)
-    if (player.timeShards == Infinity) player.timeShards = new Decimal(0)
-  },
 
   normalizeTimespans(player) {
     player.realTimePlayed *= 100;

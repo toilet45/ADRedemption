@@ -14,7 +14,7 @@ function lockAchievementsOnMend() {
   for (const achievement of Achievements.preMend) {
     achievement.lock();
   }
-  player.reality.achTimer = 0;
+  player.reality.achTimer = DC.D0;
 }
 
 export function mendingResetRequest() {
