@@ -781,6 +781,10 @@ body.t-s12 {
   background-color: var(--color-eternity--bg);
 }
 
+.l-dimension-row-multiversal-dim:nth-child(even) {
+  background-color: #04517efa;
+}
+
 .c-infinity-dim-description__accent {
   color: var(--color-infinity);
 }

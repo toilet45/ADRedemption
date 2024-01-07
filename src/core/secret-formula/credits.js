@@ -17,7 +17,8 @@ export const credits = {
     14: "Redemption Developer",
     15: "[Redemption] Development Assistant",
     16: "[Redemption] Balancing Assistant",
-    17: "[Redemption] Artist"
+    17: "[Redemption] Artist",
+    18: "[Redemption] Testers"
   },
 
   // Each person must have a name and at least one role (the index of the desired role in roles). They can also have a
@@ -450,11 +451,11 @@ export const credits = {
     },
     {
       name: "incremental_gamer",
-      roles: [14, 15]
+      roles: [14, 15, 18]
     },
     {
       name: "Merlyn",
-      roles: 15
+      roles: [15, 18]
     },
     {
       name: "Plasmawario",
@@ -491,6 +492,34 @@ export const credits = {
     {
       name: "sxy62146214",
       roles: 15
+    },
+    {
+      name: "aswefljkd",
+      roles: 18
+    },
+    {
+      name: "beni",
+      roles: 18
+    },
+    {
+      name: "Legendis",
+      roles: 18
+    },
+    {
+      name: "Melfistic",
+      roles: 18
+    },
+    {
+      name: "donaldino",
+      roles: 18
+    },
+    {
+      name: "Rumbles",
+      roles: 18
+    },
+    {
+      name: "uiinpui",
+      roles: 18
     }
   ]
 };

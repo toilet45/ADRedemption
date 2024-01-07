@@ -75,7 +75,7 @@ export default {
       if (this.enslavedRunning) return `Nameless prevents the purchase of more than ${format(10)} Infinity Dimensions`;
       if (this.isContinuumActive) return "Continuum produces all your Infinity Dimensions";
       if (this.isCapped) return `Cap reached at ${format(this.capIP)} IP`;
-      return `Purchased ${quantifyInt("time", this.purchases)}`;
+      return this.purchases >= 1e12 ? `Purchased ${format(this.purchases, 2, 2)} times` : `Purchased ${quantifyInt("time", this.purchases)}`;
     },
     showRow() {
       return this.eternityReached || this.isUnlocked || this.canUnlock || this.amount.gt(0) ||

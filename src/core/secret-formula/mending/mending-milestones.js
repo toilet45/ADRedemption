@@ -14,7 +14,7 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "Start Every Mend with Teresa, Effarig, Nameless, and V's Memories at Level 10",
+    reward: "Teresa's container is no longer reset on Mend and Teresa, Effarig, Nameless, and V's Memories at Level 10",
   },
   four: {
     mends: 5,
@@ -34,12 +34,12 @@ export const mendingMilestones = {
   },
   eleven: {
     mends: 15,
-    reward: "Gain an MvR multiplier based on lowest glyph count during the entire reality where you reach e9e15 antimatter this Mend.",
-    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${mendingMilestoneElevenMultiplier(true)}, affected by Cursed Glyphs.`),
+    reward: "Gain a Multiversal Remain multiplier based on lowest Glyph count during the entire Reality when you reach END antimatter this Mend.",
+    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${formatX(mendingMilestoneElevenMultiplier(true),2 ,2)}, affected by Cursed Glyphs.`),
     // We dont define the effect here because this codebase will shit itself if you do, so we instead define it at the MvR code.
   },
   eight: {
     mends: 20,
-    reward: "Automatically buy non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
+    reward: "Unlock an autobuyer for non-rebuyable Reality and Imaginary Upgrades once you can afford them (includes Lai and Pelle unlocks)",
   }
 };

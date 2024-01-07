@@ -97,7 +97,7 @@ export default {
 <template>
   <div class="tab shop">
     <div class="c-shop-disclaimer">
-      There is no shop. Stop looking for it. It doesn't exist, and never has. Seriously though, there isnt a use for a shop, im sure you will manage without one, right?
+      There is no shop. Stop looking for it. It doesn't exist, and never has. Seriously though, there isnt a use for a shop, I'm sure you will manage without one...right?
     </div>
   </div>
 </template>
