@@ -671,7 +671,8 @@ export const migrations = {
   },
   51.017: player => [
     player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    migrations.fixInfinityIssues(player)
+    migrations.fixInfinityIssues(player),
+    player.reality.achTimer = new Decimal(player.reality.achTimer)
   ]
 },
 

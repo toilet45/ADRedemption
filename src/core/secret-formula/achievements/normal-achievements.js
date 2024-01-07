@@ -1412,6 +1412,7 @@ export const normalAchievements = [
     description: "Warp Reality",
     checkRequirement: () => player.reality.warped,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    reward: "Challenge Times and total Antimatter are no longer reset",
     effect: 1,
   },
   {
