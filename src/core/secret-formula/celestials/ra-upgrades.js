@@ -35,7 +35,7 @@ export const raUpgrades = {
     celestial: "teresa",
     description: () => `Weaken Teresa's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
-    currency: () => Currency.antimatter,//temporary, have to decide what we're gonna use (Fn its MvR for all, defined above)
+    currency: () => Currency.antimatter,//temporary, have to decide what we're gonna use (Fn its MvR for all, defined above and in ra-upgrades.js (the other one))
     currencyLabel: "NYI",
   }),
   weakenEffarigScaling: rebuyable({
