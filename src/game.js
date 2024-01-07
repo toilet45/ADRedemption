@@ -454,13 +454,23 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
   // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
   
-  if (factor.gte(1e300)) {
-    factor = factor.div(1e300)
-    factor = factor.pow(0.4321)
-    factor = factor.times(1e300)
+  if (factor.gte(getGameSpeedupSoftcaps())) {
+    let x = 0.4321;
+    factor = factor.div(getGameSpeedupSoftcaps());
+    factor = factor.pow(x); //generalized in case of future upgrades
+    factor = factor.times(getGameSpeedupSoftcaps());
   } // Prevent gamespeed from going fucking ballistic
 
   return factor;
+}
+
+export function getGameSpeedupSoftcaps(capNumber = 1){ //attempt to have all future GS softcaps in 1 function, capNumber is the softcap number (1 is the first, etc)
+  switch(capNumber){
+    case 1:
+    default:
+      return new Decimal(1e300);
+  }
+
 }
 
 export function getGameSpeedupForDisplay() {

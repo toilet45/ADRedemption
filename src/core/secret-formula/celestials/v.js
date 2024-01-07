@@ -222,7 +222,7 @@ export const v = {
       format: x =>{
         if (MendingUpgrade(3).isBought) return "Instant (Mending Upgrade 3)";
         else if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied) return "Instant (Ra upgrade)";
-        return `${TimeSpan.fromMinutes(60 * 20 / x).toStringShort()} for full completion`;
+        return `${TimeSpan.fromMinutes(60 * 20 / x.toNumber()).toStringShort()} for full completion`;
       },
       requirement: () => V.spaceTheorems >= 10
     },

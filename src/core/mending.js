@@ -51,8 +51,10 @@ export function mendingReset() {
       if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;
-    player.reality.glyphs.filter.trash = 0;
-    player.reality.glyphs.filter.select = 1;
+    if(Effarig.currentStage < 6){
+      player.reality.glyphs.filter.trash = 0;
+      player.reality.glyphs.filter.select = 1;
+    }
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -75,12 +77,14 @@ export function mendingReset() {
     }
     if (!Achievement(194).isUnlocked) {
       player.records.totalAntimatter = DC.E1,
-      player.challenge.normal.bestTimes = Array.repeat(Number.MAX_VALUE, 11);
-      player.challenge.infinity.bestTimes = Array.repeat(Number.MAX_VALUE, 11);
+      player.challenge.normal.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11);
+      player.challenge.infinity.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8);
     }
     //Celestials
-    player.celestials.teresa.pouredAmount = 0;
-    player.celestials.teresa.unlockBits = 0;
+    if(!MendingMilestone.ten.isReached){
+      player.celestials.teresa.pouredAmount = 0;
+      player.celestials.teresa.unlockBits = 0;
+    }
     player.celestials.teresa.run = false;
     player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
@@ -89,11 +93,13 @@ export function mendingReset() {
       player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
     }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
-    if (MendingUpgrade(9).isBought){
+    if (MendingUpgrade(9).isBought && !MendingMilestone.ten.isReached){
       player.celestials.teresa.unlockBits += 1;
     }
-    player.celestials.effarig.relicShards = new Decimal(0);
-    player.celestials.effarig.unlockBits = 7;
+    if(Effarig.currentStage < 6){
+      player.celestials.effarig.relicShards = new Decimal(0);
+      player.celestials.effarig.unlockBits = 7;
+    }
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = DC.D0;
     player.celestials.enslaved.storedReal = 0;
@@ -212,7 +218,7 @@ export function mendingReset() {
       laitelaSet: [],
       remWithoutGG: player.records.bestReality.remWithoutGG
     },
-    player.options.confirmations.glyphSelection = true;
+    //player.options.confirmations.glyphSelection = true;
     player.reality.unlockedEC = 0;
     Perks.find(0).isBought = true; //give START to fix a bug for hardcoded first Reality Glyph reward
     Perks.find(0).onPurchased();

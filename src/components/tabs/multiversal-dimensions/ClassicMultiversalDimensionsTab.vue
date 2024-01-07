@@ -29,7 +29,7 @@ export default {
       this.percentSoftcap = 50;
       this.boostPoints.copyFrom(Currency.galBoostPoints);
       this.upgradeThreshold.copyFrom(FreeTickspeed.fromShards(Currency.timeShards.value).nextShards);
-      this.shardsPerSecond.copyFrom(MultiversalDimension(1).productionPerRealSecond);
+      this.shardsPerSecond = MultiversalDimension(1).productionPerRealSecond.div(getGameSpeedupForDisplay());
       this.incomeType = "Galactic Shards";
       this.areAutobuyersUnlocked = false;//Autobuyer.timeDimension(1).isUnlocked;
       this.shortenTSU = FreeTickspeed.amount >= 1e11;
@@ -40,6 +40,27 @@ export default {
     },
     toggleAllAutobuyers() {
       toggleAllMultiversalDims();
+    },
+    txt1() {
+      if (this.boostPoints.lte(1e50)) {
+        return `making all Galaxies `
+      }
+      return `providing an `
+    },
+    txt2() {
+      if (this.boostPoints.eq(0)){
+        return `${format(0, 2, 2)}%`
+      }
+      else if (this.boostPoints.lte(1e50)) {
+        return `${format(this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8)), 2, 2)}%`
+      }
+      return `${formatX((this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8))).div(100).add(1), 2, 2)}`
+    },
+    txt3() {
+      if (this.boostPoints.lte(1e50)) {
+        return ` stronger`
+      }
+      return ` multiplier to all galaxies`
     }
   }
 };
@@ -65,14 +86,14 @@ export default {
     <div>
       <p>
         You have gained
-        <span class="c-time-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards.
+        <span class="c-multiversal-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards, {{ txt1() }}<span class="c-multiversal-dim-description__accent">{{ txt2() }}</span>{{ txt3() }}.
       </p>
     </div>
     <div>
       The effectiveness of Galactic Shards decreases above {{ format(50) }}%.
     </div>
     <div>
-      You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second.
+      You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second, unaffected by game speed.
     </div>
     <div class="l-dimensions-container">
       <ClassicMultiversalDimensionRow

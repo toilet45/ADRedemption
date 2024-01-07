@@ -2,7 +2,7 @@
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
-import { Pelle } from "../../../core/globals";
+import { Pelle, Enslaved } from "../../../core/globals";
 
 export default {
   name: "ModernTimeDimensionRow",
@@ -63,8 +63,8 @@ export default {
     tooltipContents() {
       if (this.showTTCost) return `${this.formattedEPCost}<br>${this.timeEstimate}`;
       if (this.isContinuumActive) return "Continuum produces all your Time Dimensions";
-      if (this.isCapped) return `Nameless prevents the purchase of more than ${format(1)} Time Dimension`;
-      return `Purchased ${quantifyInt("time", this.bought)}`;
+      if (this.isCapped) return Enslaved.isRunning ? `Nameless prevents the purchase of more than ${format(1)} Time Dimension` : `Capped at ${format(5e14, 2, 2)} purchases`;
+      return this.bought >= 1e12 ? `Purchased ${format(this.bought, 2, 2)} times` : `Purchased ${quantifyInt("time", this.bought)}`;
     },
     showRow() {
       return this.realityUnlocked || this.isUnlocked || this.requirementReached;

@@ -2926,6 +2926,36 @@ br {
 
 /* #endregion c-time-dim-description__accent */
 
+/* #region c-time-dim-description__accent */
+
+.c-multiversal-dim-description__accent {
+  font-size: 3.5rem;
+  color: black;
+}
+
+.t-metro .c-multiversal-dim-description__accent,
+.t-s8 .c-multiversal-dim-description__accent {
+  text-shadow: 0 0 0.1rem rgba(0, 0, 0, 50%), -0.1rem 0.1rem 0.1rem black;
+}
+
+.t-dark .c-multiversal-dim-description__accent,
+.t-amoled .c-multiversal-dim-description__accent,
+.t-amoled-metro .c-multiversal-dim-description__accent,
+.t-s6 .c-multiversal-dim-description__accent,
+.t-s10 .c-multiversal-dim-description__accent,
+.t-s11 .c-multiversal-dim-description__accent {
+  color: #17c3ee;
+  text-shadow: 0 0 0.7rem #17c3ee;
+}
+
+.t-metro .c-multiversal-dim-description__accent,
+.t-dark-metro .c-multiversal-dim-description__accent,
+.t-s8 .c-multiversal-dim-description__accent {
+  color: #2a7ecca2;
+}
+
+/* #endregion c-time-dim-description__accent */
+
 /* #endregion Time Dimensions */
 
 /* #region Options */

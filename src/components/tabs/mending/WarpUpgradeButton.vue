@@ -38,8 +38,8 @@ export default {
     },
     classObject() {
       return {
-        "c-mending-upgrade-btn--useless": this.isUseless,
-        "c-mending-upgrade-btn--bought": this.isBought && !this.isUseless,
+        "c-mending-upgrade-btn--useless": false,//this.isUseless,
+        "c-mending-upgrade-btn--bought": this.isBought,// && !this.isUseless,
         "c-mending-upgrade-btn--unavailable": !this.isBought && !this.canBeBought && this.isAvailableForPurchase,
         "c-mending-upgrade-btn--possible": !this.isAvailableForPurchase && this.isPossible,
         "c-mending-upgrade-btn--locked": !this.isAvailableForPurchase && !this.isPossible,

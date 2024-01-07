@@ -1,4 +1,6 @@
 <script>
+import { getGameSpeedupFactor } from '../game';
+
 export default {
   name: "GameSpeedDisplay",
   props: {
@@ -14,6 +16,9 @@ export default {
       isPulsing: false,
       hasBH3: false,
       BH3Power: 1,
+      pastGSSoftcap: false,
+      scOne: new Decimal(),
+      scOneEffect: 1
     };
   },
   computed: {
@@ -52,6 +57,9 @@ export default {
       this.isPulsing = (this.baseSpeed.neq(this.pulsedSpeed)) && Enslaved.canRelease(true);
       this.hasBH3 = ExpoBlackHole(1).isUnlocked;
       this.BH3Power = ExpoBlackHole(1).power;
+      this.pastGSSoftcap = getGameSpeedupFactor().gte(this.scOneStart);
+      this.scOneStart = getGameSpeedupSoftcaps();
+      this.scOneEffect = 0.4321;
     },
     formatNumber(num) {
       if (num.gte(0.001) && num.lt(10000) && num.neq(1)) {
@@ -72,6 +80,10 @@ export default {
       {{ baseText }}
     </span>
     <span v-if="isPulsing">(<i class="fas fa-expand-arrows-alt u-fa-padding" /> {{ pulseSpeedText }})</span>
+    <span v-if="pastGSSoftcap" class="c-gssoftcapone">
+      <br>
+      Due to instability, Game Speed past {{ format(scOneStart) }} is raised {{formatPow(scOneEffect, 3, 3) }} after all other Game Speed effects
+  </span>
   </span>
 </template>
 
@@ -79,5 +91,10 @@ export default {
 .c-gamespeed {
   font-weight: bold;
   color: var(--color-text);
+}
+
+.c-gssoftcapone {
+  font-weight: bold;
+  color: #FF0000;
 }
 </style>

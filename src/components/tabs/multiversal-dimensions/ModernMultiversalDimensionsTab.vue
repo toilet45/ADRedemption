@@ -27,7 +27,7 @@ export default {
       this.totalUpgrades = 0;
       this.percentSoftcap = 50;
       this.boostPoints.copyFrom(Currency.galBoostPoints);
-      this.shardsPerSecond.copyFrom(MultiversalDimension(1).productionPerSecond);
+      this.shardsPerSecond = MultiversalDimension(1).productionPerRealSecond.div(getGameSpeedupForDisplay());
       this.incomeType = "Galactic Shards";
       this.areAutobuyersUnlocked = false;//Autobuyer.timeDimension(1).isUnlocked;
       this.shortenTSU = false//FreeTickspeed.amount >= 1e11;
@@ -46,7 +46,10 @@ export default {
       return `providing an `
     },
     txt2() {
-      if (this.boostPoints.lte(1e50)) {
+      if (this.boostPoints.eq(0)){
+        return `${format(0, 2, 2)}%`
+      }
+      else if (this.boostPoints.lte(1e50)) {
         return `${format(this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8)), 2, 2)}%`
       }
       return `${formatX((this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8))).div(100).add(1), 2, 2)}`
@@ -81,10 +84,10 @@ export default {
     <div>
       <p>
         You have gained
-        <span class="c-time-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards, {{ txt1() }}<span class="c-time-dim-description__accent">{{ txt2() }}</span>{{ txt3() }}.
+        <span class="c-multiversal-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards, {{ txt1() }}<span class="c-multiversal-dim-description__accent">{{ txt2() }}</span>{{ txt3() }}.
       </p>
     </div>
-    <div>You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
+    <div>You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second, unaffected by game speed.</div>
     <div class="l-dimensions-container">
       <NewMultiversalDimensionRow
         v-for="tier in 8"

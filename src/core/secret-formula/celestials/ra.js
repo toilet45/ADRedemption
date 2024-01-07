@@ -493,7 +493,7 @@ export const ra = {
     uncapGamespeed: {
       id: 15,
       id2: 0,
-      reward: "Game Speed cap is removed",
+      reward: "Reomve the 1e300 Gamespeed Cap",
       pet: "enslaved",
       level: 30,
       displayIcon: '*'

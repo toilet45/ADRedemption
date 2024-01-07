@@ -72,7 +72,7 @@ export default {
       const tier = this.tier;
       const dimension = MultiversalDimension(tier);
       this.isCapped = false;
-      this.isUnlocked = dimension.isUnlocked;
+      this.isUnlocked = true;//dimension.isUnlocked;
       this.multiplier.copyFrom(dimension.multiplier);
       this.amount.copyFrom(dimension.totalAmount);
       this.bought = dimension.bought;

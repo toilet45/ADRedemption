@@ -8,6 +8,7 @@ import SliderComponent from "@/components/SliderComponent";
 import { playerInfinityUpgradesOnReset } from "../../../game";
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
 import { WarpUpgrade } from "../../../core/warp-upgrades";
+import { mendingReset } from "../../../core/globals";
 
 export default {
   name: "CorruptionTab",
@@ -106,6 +107,7 @@ export default {
       if (!this.isRunning) {
         this.nextCorrupted = !this.nextCorrupted
         player.mending.corruptNext = this.nextCorrupted
+        mendingReset();
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false
