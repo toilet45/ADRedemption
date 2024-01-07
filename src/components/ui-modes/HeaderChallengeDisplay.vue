@@ -90,9 +90,6 @@ export default {
     isInFailableEC() {
       return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
     },
-    isCorrupted(){
-      return player.mending.corruptionChallenge.corruptedMend;
-    },
     challengeDisplay() {
       if (this.inPelle && this.activeChallengeNames.length > 0) {
         return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;
@@ -118,6 +115,7 @@ export default {
       this.exitText = this.exitDisplay();
       this.resetCelestial = player.options.retryCelestial;
       this.inPelle = Pelle.isDoomed;
+      this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
     },
     // Process exit requests from the inside out; Challenges first, then dilation, then Celestial Reality. If the
     // relevant option is toggled, we pass a bunch of information over to a modal - otherwise we immediately exit
