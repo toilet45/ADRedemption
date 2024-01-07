@@ -866,7 +866,7 @@ window.player = {
       peakGamespeed: DC.D1,
       petWithRemembrance: "",
       upgrades: new Set(),
-      rebuyables: {
+      /* rebuyables: {
         weakenTeresaScaling: 0,
         weakenEffarigScaling: 0,
         weakenEnslavedScaling: 0,
@@ -874,7 +874,15 @@ window.player = {
         weakenRaScaling: 0,
         weakenLaitelaScaling: 0,
         weakenPelleScaling: 0,
-      },
+        incTeresaXPGain: 0,
+        incEffarigXPGain: 0,
+        incEnslavedXPGain: 0,
+        incVXPGain: 0,
+        incRaXPGain: 0,
+        incLaitelaXPGain: 0,
+        incPelleXPGain: 0,
+      }, */
+      rebuyables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       permanentMemories: {
         ra2: false,
         lai50: false,

@@ -2,6 +2,31 @@
 import pako from "pako/dist/pako.esm.mjs";
 /* eslint-enable import/extensions */
 
+// Why the fuck is this here?
+// Well, we cannot adjust EXP_LIMIT outside of break_eternity.js
+// However, we need to adjust it since EXP_LIMIT is 9e15, not 1.79e308
+// The only way to do this is override the toString function with our own
+
+Decimal.prototype.toString = function () {
+  if (isNaN(this.m) || isNaN(this.e)) {
+    return "NaN";
+  }
+
+  if (this.e >= Infinity) {
+    return this.m > 0 ? "Infinity" : "-Infinity";
+  }
+
+  if (this.e <= -Infinity || this.m === 0) {
+    return "0";
+  }
+
+  if (this.e < 21 && this.e > -7) {
+    return this.toNumber().toString();
+  }
+
+  return this.m + "e" + (this.e >= 0 ? "+" : "") + this.e;
+};
+
 export const GameSaveSerializer = {
   SaveType: "devsave",
 
