@@ -71,6 +71,7 @@ export const IP = {
       TimeStudy(141),
       TimeStudy(142),
       TimeStudy(143),
+      TimeStudy(305),
     ),
     isActive: () => player.break && !Pelle.isDoomed,
     icon: MultiplierTabIcons.TIME_STUDY,

@@ -167,7 +167,7 @@ export default {
       All Infinity Dimensions except for the 8th are limited to a maximum of {{ format(totalDimCap ** capExpo, 2) }}
       purchases each.
       <br>
-      The 8th Infinity Dimension is limited to {{ format(1e10 ** this.capExpo, 2) }} purchases.
+      The 8th Infinity Dimension is limited to {{ format(1e10 ** this.capExpo, 2) }} purchases and cannot larger than 1e25 amount.
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>

@@ -107,7 +107,7 @@ export class TimeStudyTree {
       ["light", [221, 223, 225, 227, 231, 233]],
       ["dark", [222, 224, 226, 228, 232, 234]],
       ...(Ra.unlocks.unlockHardV.canBeApplied
-        ? [["triad", [301, 302, 303, 304].slice(0, Ra.unlocks.unlockHardV.effectOrDefault(0))]]
+        ? [["triad", [301, 302, 303, 304, 305, 306].slice(0, Ra.unlocks.unlockHardV.effectOrDefault(0))]]
         : [])
     ]);
   }

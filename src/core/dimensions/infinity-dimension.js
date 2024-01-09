@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { Currency } from "../currency";
 
 import { DimensionState } from "./dimension";
 
@@ -162,6 +163,7 @@ class InfinityDimensionState extends DimensionState {
       .timesEffectsOf(
         tier === 1 ? Achievement(94) : null,
         tier === 4 ? TimeStudy(72) : null,
+        TimeStudy(312),
       );
     if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(2).completions >= 1){
       mult = mult.timesEffectsOf(
@@ -243,7 +245,9 @@ class InfinityDimensionState extends DimensionState {
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
      const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
-     return this.tier == 8 ? Number.MAX_VALUE : InfinityDimensions.totalDimCap ** x;
+     let y = this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap ** x
+     if (player.timestudy.studies.includes(310)) y = (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
+     return y;
   }
 
   get isCapped() {
@@ -263,11 +267,12 @@ class InfinityDimensionState extends DimensionState {
     const logBase = this.baseCost.log10();
     let contValue = (logMoney - logBase)/logMult;
     contValue *= 1 + Laitela.matterExtraPurchaseFactor * .1;
-    if(this.tier < 8) contValue = Math.clampMax(contValue, this.purchaseCap);
+    /*if(this.tier < 8)*/ contValue = Math.clampMax(contValue, this.purchaseCap);
     return Math.clampMin(contValue, 0);
   }
 
   get totalAmount() {
+    if (this.tier==8) return Decimal.min(this.amount.max(this.continuumValue*10),1e25);
     return this.amount.max(this.continuumValue*10);
   }
 
@@ -315,7 +320,7 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(8).isRunning) {
       player.eterc8ids -= 1;
     }
-
+    
     return true;
   }
 
@@ -340,7 +345,6 @@ class InfinityDimensionState extends DimensionState {
       this.costMultiplier,
       purchasesUntilHardcap
     );
-
     if (costScaling.purchases <= 0) return false;
 
     Currency.infinityPoints.purchase(costScaling.totalCost);
@@ -352,6 +356,7 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(8).isRunning) {
       player.eterc8ids -= costScaling.purchases;
     }
+    
     return true;
   }
 }
@@ -399,7 +404,9 @@ export const InfinityDimensions = {
   },
 
   get totalDimCap() {
-    return this.HARDCAP_PURCHASES + this.capIncrease;
+    let tDc =this.HARDCAP_PURCHASES + this.capIncrease;
+    if (player.timestudy.studies.includes(310)) tDc = tDc * (Math.max(Math.log10(Currency.replicanti.value.exponent),1))
+    return tDc;
   },
 
   canBuy() {
@@ -416,7 +423,6 @@ export const InfinityDimensions = {
     for (let tier = 8; tier > 1; tier--) {
       InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), new Decimal(diff).div(10));
     }
-
     if (EternityChallenge(7).isRunning) {
       if (!NormalChallenge(10).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);

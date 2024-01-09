@@ -1,6 +1,10 @@
 import { BitUpgradeState, GameMechanicState } from "../../game-mechanics";
 import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
+import { normalTimeStudies } from "../../secret-formula/eternity/time-studies/normal-time-studies";
+
+const ts306 = normalTimeStudies.find(obj => obj.id === 306);
+
 
 class RaUnlockState extends BitUpgradeState {
   get bits() { return player.celestials.ra.unlockBits; }
@@ -297,10 +301,11 @@ export const Ra = {
   get productionPerMemoryChunk() {
     let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168));
     for (const pet of Ra.pets.all) {
-      if (pet.isUnlocked) res *= pet.memoryProductionMultiplier;
+      if (pet.isUnlocked) res = new Decimal(res).times(pet.memoryProductionMultiplier);
     }
-    if (MendingMilestone.one.isReached) res = res * 25;
-    return res;
+    if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
+    if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
+    return res.toNumber();
   },
   get memoryBoostResources() {
     const boostList = [];

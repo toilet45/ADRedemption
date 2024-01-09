@@ -295,6 +295,25 @@ export const Tesseracts = {
   // Note that costs go a bit past e9e15 because while AM is capped at e9e15, most other resources (including IP)
   // aren't and can go a tiny bit past it.
   // The formula is a hardcoded 2, 4, 6 followed by successive multiplication by 2x, 4x, 6x, and so on.
+
+  // Hello This needs to be scaled. Well ofc the original scale is not enough for scalling so after 15 I decide to do something bigger.---sxy
+  //11771943321600 is the 15th
+  //BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
+  //COST_SCALER: [0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18],
+
+  //This is my former design of scaled Tesseract, but since the reason of inflation happened on 8th ID, I would temporarily disable this.---sxy
+  //BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360, 22295347200, 490497638400, 11771943321600],
+  //COST_SCALER: [0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24],
+  //costs(index) {
+  //  while (index >= this.BASE_COSTS.length) {
+  //    let TesseractScaler = this.COST_SCALER[this.COST_SCALER.length-1] + Decimal.pow(index-13,index-13).toNumber() * Math.pow(index-14,index-14);
+  //    let nextTesseractCost = this.BASE_COSTS[this.BASE_COSTS.length-1] * TesseractScaler;
+  //    this.BASE_COSTS.push(nextTesseractCost)
+  //    this.COST_SCALER.push(TesseractScaler)
+  //  }
+  //  return Decimal.pow10(1e7 * this.BASE_COSTS[Math.floor(index)]);
+  //},
+
   BASE_COSTS: [2, 4, 6, 12, 48, 288, 2304, 23040, 276480, 3870720, 61931520, 1114767360],
   COST_SCALER: [0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18],
   costs(index) {
