@@ -774,7 +774,7 @@ export const normalTimeStudies = [
     requiresST: [141],
     description: "Multiplier to MvR, which decays over this Mend (real time)",
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 11,
-    effect: () => (Decimal.log10(DC.E45.divide(thisInfinityMult(Time.thisMendRealTime.totalSeconds)).clampMin(1))),
+    effect: () => (Decimal.log10(DC.E45.divide(thisInfinityMult(Time.thisMendRealTime.totalSeconds))).toDecimal().clampMin(1)),
     formatEffect: value => formatX(value, 2, 1)
   },
   {
