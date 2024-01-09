@@ -64,10 +64,12 @@ export function mendingReset() {
       normal: {
         current: 0,
         completedBits: 0,
+        bestTimes: player.challenge.normal.bestTimes,
       },
       infinity: {
         current: 0,
         completedBits: 0,
+        bestTimes: player.challenge.infinity.bestTimes,
       },
       eternity: {
         current: 0,
