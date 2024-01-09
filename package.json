@@ -20,6 +20,7 @@
     "firebase": "^9.6.6",
     "gamma": "^1.0.0",
     "js-sha512": "^0.8.0",
+    "memfs": "^4.6.0",
     "mousetrap": "^1.6.5",
     "pako": "^2.0.4",
     "save-dev": "^0.0.1-security",

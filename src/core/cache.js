@@ -113,7 +113,7 @@ export const GameCache = {
 
   totalIPMult: new Lazy(() => totalIPMult()),
 
-  challengeTimeSum: new Lazy(() => player.challenge.normal.bestTimes.sum()),
+  challengeTimeSum: new Lazy(() => player.challenge.normal.bestTimes.sumD()),
 
   infinityChallengeTimeSum: new Lazy(() => {let v = new Decimal(0); for (let i = 0; i < 8; i++) {(v.add(player.challenge.infinity.bestTimes))}; return v}),
   multiversalDimensionCommonMultiplier: new Lazy(() => multiversalDimensionCommonMultiplier()),
