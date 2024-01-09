@@ -302,7 +302,7 @@ window.TimeSpan = class TimeSpan {
   }
 
   static get maxValue() {
-    return new TimeSpan(Decimal.pow10(Number.MAX_VALUE));
+    return new TimeSpan(new Decimal("9.999999999999998e999999999999999900000"));
   }
 
   static get minValue() {
