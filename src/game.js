@@ -675,6 +675,7 @@ export function gameLoop(passDiff, options = {}) {
   if(Ra.unlocks.dmdAuto2.isUnlocked && !player.celestials.ra.permanentMemories.lai65){
     player.celestials.ra.permanentMemories.lai65 = true;
   }
+
   if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
     if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
     if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){

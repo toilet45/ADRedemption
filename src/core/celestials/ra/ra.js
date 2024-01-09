@@ -47,6 +47,13 @@ class RaUnlockState extends BitUpgradeState {
   }
 
   get canBeUnlocked() {
+    //alright here you are
+    if(this.pet.id == 'laitela'){
+      if(this.id == 20 && player.celestials.ra.permanentMemories.lai50) return true;
+      if(this.id == 21 && player.celestials.ra.permanentMemories.lai65) return true;
+    };
+    if(this.pet.id == 'ra' && this.id == 30 && player.celestials.ra.permanentMemories.ra2) return true;
+    //ends
     return this.pet.level >= this.level && !this.isUnlocked;
   }
 
