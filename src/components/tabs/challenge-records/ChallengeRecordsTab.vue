@@ -11,7 +11,7 @@ export default {
       infinityChallengesUnlocked: false,
       normalChallenges: [],
       infinityChallenges: [],
-      bypass: new Decimal(0),
+      bypass: new Decimal(0)
     };
   },
   methods: {
@@ -20,13 +20,15 @@ export default {
         PlayerProgress.eternityUnlocked();
       this.normalChallenges = []
       for (let i = 0; i < 11; i++) {
-        this.bypass.copyFrom(player.challenge.normal.bestTimes[i])
-        this.normalChallenges.push(this.bypass)
+        this.bypass = new Decimal(0);
+        this.bypass.copyFrom(player.challenge.normal.bestTimes[i]);
+        this.normalChallenges.push(this.bypass);
       }
       this.infinityChallenges = []
       for (let i = 0; i < 8; i++) {
-        this.bypass.copyFrom(player.challenge.infinity.bestTimes[i])
-        this.infinityChallenges.push(this.bypass)
+        this.bypass = new Decimal(0);
+        this.bypass.copyFrom(player.challenge.infinity.bestTimes[i]);
+        this.infinityChallenges.push(this.bypass);
       }
     }
   }
