@@ -43,12 +43,12 @@ window.player = {
   challenge: {
     normal: {
       current: 0,
-      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11),
+      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 11),
       completedBits: 0,
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
+      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 8),
       completedBits: 0,
     },
     eternity: {
@@ -382,11 +382,11 @@ window.player = {
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -396,7 +396,7 @@ window.player = {
       bestIPminVal: DC.D0,
     },
     bestInfinity: {
-      time: Decimal.pow10(Number.MAX_VALUE),
+      time: new Decimal("9.999999999999998e999999999999999900000"),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
@@ -412,7 +412,7 @@ window.player = {
       bestInfinitiesPerMs: DC.D0,
     },
     bestEternity: {
-      time: Decimal.pow10(Number.MAX_VALUE),
+      time: new Decimal("9.999999999999998e999999999999999900000"),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
@@ -430,7 +430,7 @@ window.player = {
       remWithoutGG: 0
     },
     bestReality: {
-      time: Decimal.pow10(Number.MAX_VALUE),
+      time: new Decimal("9.999999999999998e999999999999999900000"),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -457,7 +457,7 @@ window.player = {
       maxRem: 0,
     },
     bestMend: {
-      time: Decimal.pow10(Number.MAX_VALUE),
+      time: new Decimal("9.999999999999998e999999999999999900000"),
       realTime: Number.MAX_VALUE,
     }
   },
@@ -866,7 +866,7 @@ window.player = {
       peakGamespeed: DC.D1,
       petWithRemembrance: "",
       upgrades: new Set(),
-      rebuyables: {
+      /* rebuyables: {
         weakenTeresaScaling: 0,
         weakenEffarigScaling: 0,
         weakenEnslavedScaling: 0,
@@ -874,7 +874,15 @@ window.player = {
         weakenRaScaling: 0,
         weakenLaitelaScaling: 0,
         weakenPelleScaling: 0,
-      },
+        incTeresaXPGain: 0,
+        incEffarigXPGain: 0,
+        incEnslavedXPGain: 0,
+        incVXPGain: 0,
+        incRaXPGain: 0,
+        incLaitelaXPGain: 0,
+        incPelleXPGain: 0,
+      }, */
+      rebuyables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       permanentMemories: {
         ra2: false,
         lai50: false,
@@ -883,12 +891,12 @@ window.player = {
     },
     laitela: {
       darkMatter: DC.D0,
-      maxDarkMatter: DC.D0,
+      maxDarkMatter: DC.D1,
       run: false,
       quoteBits: 0,
       dimensions: Array.range(0, 8).map(() =>
         ({
-          amount: DC.D0,
+          amount: DC.D1,
           intervalUpgrades: 0,
           powerDMUpgrades: 0,
           powerDEUpgrades: 0,

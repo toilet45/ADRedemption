@@ -1,4 +1,5 @@
 import { DC } from "../../../constants";
+import { Currency } from "../../../currency";
 
 const thisInfinityMult = thisInfinity => {
   // All "this inf time" or "best inf time" mults are * 10
@@ -576,6 +577,7 @@ export const normalTimeStudies = [
     requiresST: [225],
     description: "You gain extra Replicanti Galaxies based on their max",
     effect: () => Math.floor(player.replicanti.boughtGalaxyCap / 15),
+    cap: 1000000,
     formatEffect: value => `+${formatInt(value)} RG`
   },
   {
@@ -691,6 +693,153 @@ export const normalTimeStudies = [
     effect: 2,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 4
   },
+  //sxy's new Triad studies
+  {
+    id: 305,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5, 21],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [21],
+    description: "Infinity points gain is boosted by unused MvR",
+    effect: () => Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1),
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5,
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 306,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6, 41],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [41],
+    description: "All Galaxies give an extra 1e-6 multiplier to all Memory gain.",
+    effect: () => new Decimal(1.000001).pow(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies),
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6,
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 311,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7, 101],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [101],
+    description: "Total Space theorms gives Antimatter Dimensions multiplier.",
+    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7,
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 312,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 8, 102],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [102],
+    description: "Total Space theorms gives Infinity Dimensions multiplier.",
+    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 8,
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 313,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 9, 103],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [103],
+    description: "Total Space theorms gives Time Dimensions multiplier.",
+    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 9,
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 307,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 10, 111],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [111],
+    description: `Make Eternity points formula better log(x)/y ➜ log(x)/(y-30)`,
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 10,
+    effect: 30
+  },
+  {
+    id: 321,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 11, 141],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [141],
+    description: "Multiplier to MvR, which decays over this Mend (real time)",
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 11,
+    effect: () => (Decimal.log10(DC.E45.divide(thisInfinityMult(Time.thisMendRealTime.totalSeconds))).toDecimal().clampMin(1)),
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 322,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 12, 142],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [142],
+    description: `You gain ×35 more MvR this Mend`,
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 12,
+    effect: new Decimal(35)
+  },
+  {
+    id: 323,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 13, 143],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [143],
+    description: "Multiplier to MvR, which increases over this Mend (real time)",
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 13,
+    effect: () => {
+      const totalSeconds = Time.thisMendRealTime.totalSeconds;
+      return Decimal.log10(thisInfinityMult(totalSeconds).clampMin(1));
+    },
+    formatEffect: value => formatX(value, 2, 1)
+  },
+  {
+    id: 308,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 14, 151],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [151],
+    description: `×1e4 multiplier on all Dark Matter Dimensions (Both DM and DE)`,
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 14,
+    effect: 1e4
+  },
+  {
+    id: 309,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 15, 171],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [171],
+    description: `Time Shard requirement for the next Tickspeed upgrade goes up more slower
+    ×1.25 ➜ ×1.20`,
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 15,
+    effect: TS309_MULTIPLIER
+    //↑Fun fact is that Glyph's Time Shard power effect once is related to the number itself
+    //however it looks like the effect changed later so making this multiplier a general constant is not necessary now.
+  },
+  {
+    id: 310,
+    cost: 0,
+    STCost: 12,
+    requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 16, 192],
+    reqType: TS_REQUIREMENT_TYPE.ALL,
+    requiresST: [192],
+    description: `Replicanti increase the hardcap of purchase time of ID/TD`,
+    unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 16,
+    effect: 20
+  },
+
   // Myriad Studies start here
   {
     id: 401,

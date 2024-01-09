@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { Effects } from "./game-mechanics/effects";
 import { Ra } from "./globals";
 
 export function effectiveBaseGalaxies() {
@@ -232,7 +233,7 @@ export const FreeTickspeed = {
   fromShards(shards) {
     let y = this.GROWTH_EXP;
     if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(11).completions >= 1) y = y ** EternityChallenge(11).vReward.effectValue; 
-    const tickmult = (1 + (Effects.min(1.33, TimeStudy(171)) - 1) *
+    const tickmult = (1 + (Effects.min(Effects.min(1.33, TimeStudy(171)),TimeStudy(309)) - 1) *
       Math.max(getAdjustedGlyphEffect("cursedtickspeed"), 1));
     const logTickmult = Math.log(tickmult);
     const logShards = shards.ln();

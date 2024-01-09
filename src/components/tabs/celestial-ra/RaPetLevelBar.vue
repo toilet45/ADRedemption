@@ -79,7 +79,7 @@ export default {
         case "Enslaved":
           return true;
         case "V":
-          return Math.min(Math.floor(this.level / 6), 4) !== Math.min(Math.floor((this.level + 1) / 6), 4);
+          return Math.min(Math.floor(this.level / 6), 16) !== Math.min(Math.floor((this.level + 1) / 6), 16);
         case "laitela":
           return true;
         default:

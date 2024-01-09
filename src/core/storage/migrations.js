@@ -669,9 +669,10 @@ export const migrations = {
   51.016: player => {
     delete player.mending.spentCF
   },
-  51.017: player =>{
-    player.reality.achTimer = new Decimal(player.reality.achTimer);
-  }
+  51.017: player => [
+    player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player.reality.achTimer = new Decimal(player.reality.achTimer)
+  ]
 },
 
   normalizeTimespans(player) {

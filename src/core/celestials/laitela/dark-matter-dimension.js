@@ -1,5 +1,6 @@
 import { DC } from "../../constants";
 import { DimensionState } from "../../dimensions/dimension";
+import { TimeStudy } from "../../time-studies/normal-time-study";
 
 /**
  * Constants for easily adjusting values
@@ -87,7 +88,10 @@ export class DarkMatterDimensionState extends DimensionState {
       .times(Laitela.darkMatterMult)
       .times(this.commonDarkMult)
       .times(Math.pow(this.powerDMPerAscension, this.ascensions))
-      .timesEffectsOf(SingularityMilestone.darkMatterMult, SingularityMilestone.multFromInfinitied)
+      .timesEffectsOf(
+        SingularityMilestone.darkMatterMult,
+        SingularityMilestone.multFromInfinitied,
+        TimeStudy(308))
       .dividedBy(Math.pow(1e4, Math.pow(this.tier - 1, 0.5)));
   }
 
@@ -104,7 +108,8 @@ export class DarkMatterDimensionState extends DimensionState {
       .timesEffectsOf(
         SingularityMilestone.darkEnergyMult,
         SingularityMilestone.realityDEMultiplier,
-        SingularityMilestone.multFromInfinitied
+        SingularityMilestone.multFromInfinitied,
+        TimeStudy(308),
       ).toNumber() * destabilizeBoost * MMBoostDE * lai2;
   }
 

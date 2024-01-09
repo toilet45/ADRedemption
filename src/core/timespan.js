@@ -224,7 +224,7 @@ window.TimeSpan = class TimeSpan {
     addCheckedComponent(this.minutes, "minute");
     addCheckedComponent(this.seconds, "second");
     // Join with commas and 'and' in the end.
-    if (parts.length.eq(0)) return `${formatInt(0)} seconds`;
+    if (parts.length == 0) return `${formatInt(0)} seconds`;
     return [parts.slice(0, -1).join(", "), parts.slice(-1)[0]].join(parts.length < 2 ? "" : " and ");
   }
 
@@ -302,7 +302,7 @@ window.TimeSpan = class TimeSpan {
   }
 
   static get maxValue() {
-    return new TimeSpan(Decimal.pow10(Number.MAX_VALUE));
+    return new TimeSpan(new Decimal("9.999999999999998e999999999999999900000"));
   }
 
   static get minValue() {

@@ -15,6 +15,7 @@ import { CorruptionData, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpg
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
+import { TimeStudy } from "./core/time-studies/normal-time-study";
 
 if (GlobalErrorHandler.handled) {
   throw new Error("Initialization failed");
@@ -150,7 +151,15 @@ export function gainedMendingPoints(){
     (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
     DC.D1;
 
-  MvRGain = MvRGain.timesEffectsOf(MendingUpgrade(1), Achievement(192), MendingUpgradeMultiplier, Ra.unlocks.boostMVRGain);
+  MvRGain = MvRGain.timesEffectsOf(
+    MendingUpgrade(1),
+    Achievement(192),
+    TimeStudy(321),
+    TimeStudy(322),
+    TimeStudy(323),
+    MendingUpgradeMultiplier,
+    Ra.unlocks.boostMVRGain
+    );
   MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
   if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
@@ -180,8 +189,10 @@ function totalEPMult() {
 }
 
 export function gainedEternityPoints() {
+  let devisor = 308 - PelleRifts.recursion.effectValue.toNumber();
+  if(player.timestudy.studies.includes(307)) devisor = devisor - 30;
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
-    gainedInfinityPoints()).log10() / (308 - PelleRifts.recursion.effectValue.toNumber()) - 0.7).times(totalEPMult());
+    gainedInfinityPoints()).log10() / devisor - 0.7).times(totalEPMult());
   if (MendingMilestone.one.isReached){
     ep = ep.times(1e5);
   }
@@ -664,6 +675,7 @@ export function gameLoop(passDiff, options = {}) {
   if(Ra.unlocks.dmdAuto2.isUnlocked && !player.celestials.ra.permanentMemories.lai65){
     player.celestials.ra.permanentMemories.lai65 = true;
   }
+
   if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
     if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
     if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){

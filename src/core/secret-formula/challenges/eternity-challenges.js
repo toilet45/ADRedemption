@@ -79,7 +79,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
-      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value) / 1000),
+      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 1000),
       formatEffect: value => formatPow(value, 3, 3),
     }
   },

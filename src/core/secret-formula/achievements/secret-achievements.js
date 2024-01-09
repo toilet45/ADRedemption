@@ -111,8 +111,8 @@ export const secretAchievements = [
       return `Get a fastest infinity or eternity time of less than or equal to ${format(0.001, 3, 3)} seconds.`;
     },
     checkRequirement: () =>
-      Time.bestInfinity.totalMilliseconds <= 1 ||
-      Time.bestEternity.totalMilliseconds <= 1,
+      Time.bestInfinity.totalMilliseconds.lte(1) ||
+      Time.bestEternity.totalMilliseconds.lte(1),
     checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.ETERNITY_RESET_AFTER]
   },
   {

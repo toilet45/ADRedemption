@@ -13,7 +13,7 @@ export default {
       this.shouldDisplay = !player.break && Player.canCrunch;
       if (!this.shouldDisplay) return;
       this.isModern = player.options.UIType == 'Modern';
-      this.smallCrunch = Time.bestInfinityRealTime.totalMinutes <= 1;
+      this.smallCrunch = Time.bestInfinityRealTime.totalMinutes.lte(1);
     },
     handleClick() {
       if (PlayerProgress.infinityUnlocked()) bigCrunchResetRequest();

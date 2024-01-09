@@ -21,7 +21,7 @@ export const ra = {
       chunkGain: "Relic Shards gained",
       memoryGain: "best Glyph level",
       secondaryMemoryChunkGain: "Glyph Sacrifice totals",
-      requiredUnlock: () => Ra.unlocks.effarigUnlock,
+      requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.effarigUnlock),
       rawMemoryChunksPerSecond: () =>{
         let x = 0;
         if(Ra.unlocks.placeholderR4.isUnlocked){
@@ -45,7 +45,7 @@ export const ra = {
       chunkGain: "Time Shards",
       memoryGain: "total time played",
       secondaryMemoryChunkGain: "Stored Real Time",
-      requiredUnlock: () => Ra.unlocks.enslavedUnlock,
+      requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.enslavedUnlock),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ?  1 + (player.celestials.enslaved.storedReal / 3.6e6) : 1;
         return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
@@ -59,7 +59,7 @@ export const ra = {
       chunkGain: "Infinity Power",
       memoryGain: "total Memory levels",
       secondaryMemoryChunkGain: "Achievement Multiplier for Dimensions",
-      requiredUnlock: () => Ra.unlocks.vUnlock,
+      requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.vUnlock),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
         return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;

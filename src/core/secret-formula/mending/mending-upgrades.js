@@ -121,7 +121,7 @@ export const mendingUpgrades = [
     id: 14,
     name: "Satus Superbia",
     cost: 8,
-    description: () => "Gain 3 Space Theorems per V-Achievement and start every Mend with all V-Achievements at tier 3 (includes Hard)",
+    description: () => "Gain 3x Space Theorems gaining multiplier per V-Achievement and start every Mend with all V-Achievements at tier 3 (includes Hard)",
   },
   {
     id: 15,

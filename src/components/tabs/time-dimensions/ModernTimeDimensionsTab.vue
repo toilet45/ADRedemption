@@ -20,6 +20,7 @@ export default {
       areAutobuyersUnlocked: false,
       showLockedDimCostNote: true,
       shortenTSU: false,
+      trueCap: 5e14
     };
   },
   computed: {
@@ -37,6 +38,7 @@ export default {
       this.incomeType = EternityChallenge(7).isRunning ? "Eighth Infinity Dimensions" : "Time Shards";
       this.areAutobuyersUnlocked = Autobuyer.timeDimension(1).isUnlocked;
       this.shortenTSU = FreeTickspeed.amount >= 1e11;
+      this.trueCap =player.timestudy.studies.includes(310) ? 5e14 * (Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent)),1)) : 5e14
     },
     maxAll() {
       tryUnlockTimeDimensions();
@@ -116,7 +118,7 @@ export default {
       </div>
       Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
       <br>
-      Time Dimensions can only be purchased up to {{ format(5e14) }} times.
+      Time Dimensions can only be purchased up to {{ format(trueCap,2,2) }} times.
     </div>
   </div>
 </template>

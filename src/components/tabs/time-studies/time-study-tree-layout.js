@@ -55,14 +55,24 @@ export class TimeStudyTreeLayout {
      * @type {TimeStudyRow[]}
      */
     /* eslint-disable no-multi-spaces, space-in-parens, func-call-spacing */
+    
     this.rows = [
       normalRow(                       null,   TS(11),   null                         ),
-      normalRow(                           TS(21), TS(22)                             ),
-      normalRow(                   null, TS(31), TS(32), TS(33)                       )
+      normalRow(                           TS(21), TS(22)                             )
     ];
 
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(                 TS(305), TS(31), TS(32), TS(33)                 )
+      );
+    } else {
+      this.rows.push(
+        normalRow(                   null, TS(31), TS(32), TS(33)                       )
+      );
+    }
+
     if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_62 || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_62_181 ||
-      type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES) {
+      type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES) {
       this.rows.push(
         normalRow(                     null, TS(41), TS(42), EC(5)                      ),
         normalRow(                               TS(51)                                 )
@@ -74,24 +84,66 @@ export class TimeStudyTreeLayout {
       );
     }
 
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(                       TS(306),   TS(61),  TS(62)                        )
+      );
+    } else {
+      this.rows.push(
+        normalRow(                       null,   TS(61),  TS(62)                        )
+      );
+    }
+
     this.rows.push(
-      normalRow(                       null,   TS(61),  TS(62)                        ),
+      
       normalRow(                      TS(71),  TS(72),  TS(73)                        ),
       normalRow(                      TS(81),  TS(82),  TS(83)                        ),
       normalRow(                      TS(91),  TS(92),  TS(93)                        ),
       normalRow(                      TS(101), TS(102), TS(103)                       ),
-      normalRow(                       EC(7),  TS(111),  null                         ),
+    );
+
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(                    TS(311), TS(312), TS(313)                       )
+      );
+    }
+
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(                       EC(7),  TS(111),  TS(307)                         ),
+      );
+    } else {
+      this.rows.push(
+        normalRow(                       EC(7),  TS(111),  null                         )
+      );
+    }
+
+    this.rows.push(
+      
       normalRow(                      TS(121), TS(122), TS(123)                       ),
       normalRow(               EC(6), TS(131), TS(132), TS(133), EC(8)                ),
-      normalRow(                      TS(141), TS(142), TS(143)                       ),
-      normalRow(               null,   EC(9), TS(151),   null,   EC(4)                ),
+      normalRow(                      TS(141), TS(142), TS(143)                       )
+    );
+
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(             null,  TS(321), TS(322), TS(323), EC(4)                ),
+        normalRow(             null,   EC(9), TS(151),  TS(308),   null                )
+      );
+    } else {
+      this.rows.push(
+      normalRow(               null,   EC(9), TS(151),   null,   EC(4)                )
+      )
+    }
+
+    this.rows.push(
       normalRow(                          TS(161), TS(162)                            )
     );
 
     if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_181 || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_62_181 ||
-      type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES) {
+      type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES) {
       this.rows.push(
-        normalRow(                         null, TS(171),  EC(2)                        ),
+        normalRow(                      TS(309), TS(171),  EC(2)                        ),
         normalRow(                        EC(1), TS(181),  EC(3)                        )
       );
     } else {
@@ -104,13 +156,25 @@ export class TimeStudyTreeLayout {
 
     this.rows.push(
       normalRow(                               EC(10)                                 ),
-      normalRow(             TS(191),          TS(192),          TS(193)              ),
-      normalRow(                               TS(201)                                ),
+      normalRow(             TS(191),          TS(192),          TS(193)              )
+    );
+
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
+      this.rows.push(
+        normalRow(             TS(201), TS(310)                ),
+      );
+    } else {
+      this.rows.push(
+        normalRow(                               TS(201)                                ),
+      )
+    }
+
+    this.rows.push(
       normalRow(    TS(211),          TS(212),          TS(213),          TS(214)     ),
       wideRow  (TS(221), TS(222), TS(223), TS(224), TS(225), TS(226), TS(227), TS(228))
     );
 
-    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES && !Pelle.isDoomed) {
+    if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES && !Pelle.isDoomed) {
       this.rows.push(
         normalRow(                 TS(301), TS(302), TS(303), TS(304)                 )
       );
@@ -217,9 +281,11 @@ export const STUDY_TREE_LAYOUT_TYPE = {
   ALTERNATIVE_181: 2,
   ALTERNATIVE_62_181: 3,
   ALTERNATIVE_TRIAD_STUDIES: 4,
+  ALTERNATIVE_SXY_MORE_TRIAD_STUDIES: 5,
   get current() {
     const alt62 = Perk.bypassEC5Lock.isBought;
     const alt181 = Perk.bypassEC1Lock.isBought && Perk.bypassEC2Lock.isBought && Perk.bypassEC3Lock.isBought;
+    if (Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5) return this.ALTERNATIVE_SXY_MORE_TRIAD_STUDIES;
     if (Ra.canBuyTriad) return this.ALTERNATIVE_TRIAD_STUDIES;
     if (alt62 && alt181) return this.ALTERNATIVE_62_181;
     if (alt62) return this.ALTERNATIVE_62;

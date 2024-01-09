@@ -27,7 +27,7 @@ import RaUpgradeVue from './RaUpgrade.vue';
     <div class="line"/>
     <div class="c-ra-upgrade-container">
       <RaUpgradeVue
-      v-for="upgrade in singles"
+      v-for="upgrade in rebuyables"
       :key="upgrade.config.id"
       :upgrade="upgrade"
       :isRebuyable="true"
