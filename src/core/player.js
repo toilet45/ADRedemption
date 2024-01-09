@@ -891,12 +891,12 @@ window.player = {
     },
     laitela: {
       darkMatter: DC.D0,
-      maxDarkMatter: DC.D0,
+      maxDarkMatter: DC.D1,
       run: false,
       quoteBits: 0,
       dimensions: Array.range(0, 8).map(() =>
         ({
-          amount: DC.D0,
+          amount: DC.D1,
           intervalUpgrades: 0,
           powerDMUpgrades: 0,
           powerDEUpgrades: 0,
