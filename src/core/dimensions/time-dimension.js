@@ -227,7 +227,8 @@ class TimeDimensionState extends DimensionState {
       .timesEffectsOf(
         tier === 1 ? TimeStudy(11) : null,
         tier === 3 ? TimeStudy(73) : null,
-        tier === 4 ? TimeStudy(227) : null
+        tier === 4 ? TimeStudy(227) : null,
+        TimeStudy(313),
       );
 
     const dim = TimeDimension(tier);
@@ -323,7 +324,9 @@ class TimeDimensionState extends DimensionState {
   }
 
   get purchaseCap() {
-    return 5e14;
+    let pC=5e14;
+    if (player.timestudy.studies.includes(310)) pC = pC * (Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent)),1))
+    return pC;
   }
 
   get isCapped() {

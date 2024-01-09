@@ -270,6 +270,7 @@ export const AD = {
         TimeStudy(101),
         TimeStudy(161),
         TimeStudy(193),
+        TimeStudy(311),
       );
 
       const dimMults = Array.repeat(DC.D1, 9);

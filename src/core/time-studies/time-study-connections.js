@@ -1,4 +1,5 @@
 import { TimeStudy } from "./normal-time-study";
+import { Ra } from "../globals";
 
 export class TimeStudyConnection {
   constructor(from, to, override) {
@@ -148,6 +149,19 @@ TimeStudy.allConnections = (function() {
 
     [EC(11), TimeStudy.dilation],
     [EC(12), TimeStudy.dilation],
+
+    [TS(21), TS(305), () => Ra.unlocks.unlockHardV >= 5],
+    [TS(41), TS(306), () => Ra.unlocks.unlockHardV >= 6],
+    [TS(101), TS(311), () => Ra.unlocks.unlockHardV >= 7],
+    [TS(102), TS(312), () => Ra.unlocks.unlockHardV >= 8],
+    [TS(103), TS(313), () => Ra.unlocks.unlockHardV >= 9],
+    [TS(111), TS(307), () => Ra.unlocks.unlockHardV >= 10],
+    [TS(141), TS(321), () => Ra.unlocks.unlockHardV >= 11],
+    [TS(142), TS(322), () => Ra.unlocks.unlockHardV >= 12],
+    [TS(143), TS(323), () => Ra.unlocks.unlockHardV >= 13],
+    [TS(151), TS(308), () => Ra.unlocks.unlockHardV >= 14],
+    [TS(171), TS(309), () => Ra.unlocks.unlockHardV >= 15],
+    [TS(192), TS(310), () => Ra.unlocks.unlockHardV >= 16],
 
     [TimeStudy.dilation, TimeStudy.timeDimension(5)],
     [TimeStudy.timeDimension(5), TimeStudy.timeDimension(6)],

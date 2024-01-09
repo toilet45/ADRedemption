@@ -119,6 +119,7 @@ export const TD = {
         TimeStudy(151),
         TimeStudy(221),
         TimeStudy(301),
+        TimeStudy(313),
       );
 
       const dimMults = Array.repeat(DC.D1, 9);

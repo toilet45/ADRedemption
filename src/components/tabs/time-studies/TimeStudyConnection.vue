@@ -82,6 +82,13 @@ export class TimeStudyConnectionSetup {
   setPosition(studies, width, height) {
     const from = studies.find(study => study.study === this.from);
     const to = studies.find(study => study.study === this.to);
+    if(from === undefined || to === undefined) {
+      this.x1 = 0;
+      this.y1 = 0;
+      this.x2 = 0;
+      this.y2 = 0;
+      return;}
+
     this.x1 = (from.left + from.width / 2) / width;
     this.y1 = (from.top + from.height / 2) / height;
     this.x2 = (to.left + to.width / 2) / width;

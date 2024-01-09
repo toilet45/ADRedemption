@@ -100,7 +100,7 @@ export const ID = {
   infinityGlyphSacrifice: {
     name: "Infinity Glyph sacrifice",
     multValue: () => (InfinityDimension(8).isProducing
-      ? Decimal.pow(GlyphSacrifice.infinity.effectValue, Math.floor(InfinityDimension(8).baseAmount / 10))
+      ? Decimal.pow(GlyphSacrifice.infinity.effectValue, Math.floor(Math.min(InfinityDimension(8).baseAmount , 1e25) / 10))
       : DC.D1),
     isActive: () => GlyphSacrifice.infinity.effectValue > 1,
     icon: MultiplierTabIcons.SACRIFICE("infinity"),
@@ -137,7 +137,8 @@ export const ID = {
       const allMult = DC.D1.timesEffectsOf(
         TimeStudy(82),
         TimeStudy(92),
-        TimeStudy(162)
+        TimeStudy(162),
+        TimeStudy(312),
       );
       if (dim) return dim === 4 ? allMult.times(TimeStudy(72).effectOrDefault(1)) : allMult;
       const maxActiveDim = MultiplierTabHelper.activeDimCount("ID");

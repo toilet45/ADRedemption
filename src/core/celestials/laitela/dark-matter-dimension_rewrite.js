@@ -1,5 +1,6 @@
 import { DC } from "../../constants";
 import { DimensionState } from "../../dimensions/dimension";
+import { TimeStudy } from "../../time-studies/normal-time-study";
 
 // THIS IS THE ONE THAT NEEDS TO REPLACE dark-matter-dimension.js NOT THE OTHER WAY ROUND
 // THIS IS THE ONE THAT NEEDS TO REPLACE dark-matter-dimension.js NOT THE OTHER WAY ROUND
@@ -40,7 +41,7 @@ export class DarkMatterDimensionState extends DimensionState {
     return this.productionPerSecond * diff / 1000;
   }
 
-  get productionPerSecond() { return this.powerDE * 1000 / this.interval; }
+  get productionPerSecond() { return this.deGain * 1000 / this.interval; }
 
 get unlockUpgrade() {
   return ImaginaryUpgrade(14 + this.tier)
@@ -91,7 +92,10 @@ get dmGain() {
     .times(Laitela.darkMatterMult)
     .times(this.commonDarkMult)
     .times(Math.pow(this.powerDMPerAscension, this.ascensions))
-    .timesEffectsOf(SingularityMilestone.darkMatterMult, SingularityMilestone.multFromInfinitied)
+    .timesEffectsOf(
+      SingularityMilestone.darkMatterMult,
+      SingularityMilestone.multFromInfinitied,
+      TimeStudy(308))
     .dividedBy(Math.pow(1e4, Math.pow(this.tier - 1, 0.5)));
 }
 
@@ -107,7 +111,8 @@ get deGain() {
     .timesEffectsOf(
       SingularityMilestone.darkEnergyMult,
       SingularityMilestone.realityDEMultiplier,
-      SingularityMilestone.multFromInfinitied
+      SingularityMilestone.multFromInfinitied,
+      TimeStudy(308)
     ).toNumber() * destabilizeBoost * MMBoostDE;
 }
 
@@ -264,13 +269,15 @@ export const DarkMatterDimensions = {
       dim.timeSinceLastUpdate += realDiff;
       if (dim.interval < dim.timeSinceLastUpdate) {
         const ticks = Math.floor(dim.timeSinceLastUpdate / dim.interval);
-        const productionDM = dim.amount.times(ticks).times(dim.powerDM);
+        const productionDM = dim.amount.times(ticks).times(dim.dmGain).timesEffectsOf(
+          TimeStudy(308),
+        );
         if (tier === 1) {
           Currency.darkMatter.add(productionDM);
         } else {
           DarkMatterDimension(tier - 1).amount = DarkMatterDimension(tier - 1).amount.plus(productionDM);
         }
-        Currency.darkEnergy.add(ticks * dim.powerDE);
+        Currency.darkEnergy.add(ticks * dim.deGain);
         dim.timeSinceLastUpdate -= dim.interval * ticks;
       }
     }

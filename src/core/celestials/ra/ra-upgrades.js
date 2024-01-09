@@ -29,7 +29,7 @@ class RebuyableRaUpgradeState extends RebuyableMechanicState {
   }
 
   get currency() {
-    return Currency.mendingPoints();
+    return Currency.mendingPoints;
   }
 
   get boughtAmount() {
