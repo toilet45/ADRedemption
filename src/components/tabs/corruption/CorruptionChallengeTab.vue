@@ -110,6 +110,8 @@ export default {
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false
+        this.isRunning = false
+        this.nextCorrupted = false
       }
     },
     corruptionSetSet(id, value) {
@@ -144,7 +146,7 @@ export default {
               Make Next Mend Hostile
           </span>
           <span v-else-if="!isRunning">
-              Make Next Mend Friendly
+              Next Mend will be Hostile, Mend to apply Hostilities
           </span>
           <span v-else>
               Exit Hostile Mend
