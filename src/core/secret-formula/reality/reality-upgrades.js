@@ -7,7 +7,7 @@ const rebuyable = props => {
     props.initialCost,
     props.costMult,
     props.costMult / 10,
-    DC.E333,
+    DC.E309,
     1e3,
     props.initialCost * props.costMult
   );
