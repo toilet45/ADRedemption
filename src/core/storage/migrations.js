@@ -683,10 +683,10 @@ export const migrations = {
     player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality);
   },
   51.019: player => {
-    player.celestials.v.runUnlocks = player.celestials.v.runUnlocks.concat(Array.range(0, 9).map(() => (0)));
-    player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 9).map(() => (0)));
-    player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 9).map(() =>([])));
-    player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 9).map(() =>(0)));
+    player.celestials.v.runUnlocks = player.celestials.v.runUnlocks.concat(Array.range(0, 18).map(() => (0)));
+    player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 18).map(() => (0)));
+    player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 18).map(() =>([])));
+    player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 18).map(() =>(0)));
   },
 },
 
