@@ -3,7 +3,7 @@ export const glyphSacrifice = {
   "power": {
     id: "power",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.power.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
@@ -22,7 +22,7 @@ export const glyphSacrifice = {
   "infinity": {
     id: "infinity",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.infinity.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       return new Decimal(1 + Decimal.log10(Decimal.pow(capped, 0.2).div(100).add(1)));
@@ -33,7 +33,7 @@ export const glyphSacrifice = {
   "time": {
     id: "time",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D1;
+      if (Pelle.isDisabled("glyphsac")) return 1;
       const sac = player.reality.glyphs.sac.time.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       return Decimal.pow(Decimal.pow(capped, 0.2).div(100).add(1), 2);
@@ -44,7 +44,7 @@ export const glyphSacrifice = {
   "replication": {
     id: "replication",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.replication.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
@@ -63,7 +63,7 @@ export const glyphSacrifice = {
   "dilation": {
     id: "dilation",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D1;
+      if (Pelle.isDisabled("glyphsac")) return 1;
       const sac = player.reality.glyphs.sac.dilation.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       const exponent = 0.32 * Math.pow(Decimal.log10(capped.add(1)) /
@@ -76,7 +76,7 @@ export const glyphSacrifice = {
   "effarig": {
     id: "effarig",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.effarig.add(added ?? 0);
       // This doesn't use the GlyphSacrificeHandler cap because it hits its cap (+100%) earlier
       const capped = Decimal.clampMax(sac, DC.E70);
