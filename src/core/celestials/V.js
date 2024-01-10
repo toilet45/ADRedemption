@@ -85,6 +85,7 @@ class VRunUnlockState extends GameMechanicState {
     forceCap < 20) {
       forceCap++
       if (!V.isFlipped && this.config.isHard) break;
+      if (!V.isSuperFlipped && this.config.isSuperHard) break;
       this.completions++;
       GameUI.notify.success(`You have unlocked V-Achievement
         '${this.config.name}' tier ${formatInt(this.completions)}`);
@@ -195,7 +196,8 @@ export const V = {
     let mult = MendingUpgrade(14).isBought ? 3 : 1
     for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
       sum += player.celestials.v.runUnlocks[i] * mult
-      if (!(i < 6)) sum += player.celestials.v.runUnlocks[i] * mult
+      if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult
+      if (i>=12) sum += player.celestials.v.runUnlocks[i] * 3 * mult
     }
     this.spaceTheorems = sum;
   },
@@ -204,11 +206,11 @@ export const V = {
       unlockBits: 0,
       run: false,
       quotes: [],
-      runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
+      goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
       STSpent: 0,
-      runGlyphs: [[], [], [], [], [], [], [], [], []],
-      runRecords: [-10, 0, 0, 0, 0, 0, -10, 0, 0],
+      runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
+      runRecords: [-10, 0, 0, 0, 0, 0, -10, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
     this.spaceTheorems = 0;
   },
@@ -224,8 +226,12 @@ export const V = {
   get isFlipped() {
     return Ra.unlocks.unlockHardV.isUnlocked;
   },
+  get isSuperFlipped() {
+    return Ra.unlocks.placeholderV2.isUnlocked;
+  },
   get isFullyCompleted() {
     let x =  MendingUpgrade(14).isBought? 198 : 66;
+    //if(Ra.unlocks.placeholderV2.isUnlocked) x = bigger stuff
     return this.spaceTheorems >= x;
   },
   nextNormalReductionCost() {

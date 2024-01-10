@@ -118,7 +118,7 @@ export function mendingReset() {
     }
     V.reset();
     if(MendingUpgrade(14).isBought){
-      player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3];
+      player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
