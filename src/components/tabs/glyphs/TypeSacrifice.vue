@@ -1,4 +1,5 @@
 <script>
+import { DC } from "../../../core/constants"
 export default {
   name: "TypeSacrifice",
   props: {
@@ -13,10 +14,11 @@ export default {
   },
   data() {
     return {
-      amount: 0,
-      effectValue: 0,
+      amount: DC.D0,
+      effectValue: DC.D0,
       isColored: true,
       willSacrifice: false,
+      bypass: DC.D0,
     };
   },
   computed: {
@@ -66,7 +68,7 @@ export default {
       return format(this.currentSacrifice.sacrificeValue, 2, 2);
     },
     formatTotalAmount() {
-      return format(this.amount + this.currentSacrifice.sacrificeValue, 2, 2);
+      return format(this.amount.add(this.currentSacrifice.sacrificeValue), 2, 2);
     },
   },
   created() {
@@ -76,7 +78,9 @@ export default {
   },
   methods: {
     update() {
-      this.amount = player.reality.glyphs.sac[this.type];
+      this.bypass = new Decimal(0)
+      this.bypass.copyFrom(player.reality.glyphs.sac[this.type])
+      this.amount = this.bypass;
       this.effectValue = GlyphSacrifice[this.type].effectValue;
       this.isColored = player.options.glyphTextColors;
       this.willSacrifice = AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.SACRIFICE ||
@@ -89,7 +93,7 @@ export default {
 
 <template>
   <div
-    v-if="amount > 0"
+    v-if="amount.gte(0)"
     :style="style"
   >
     <div>

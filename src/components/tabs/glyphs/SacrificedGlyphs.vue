@@ -14,7 +14,7 @@ export default {
       hasDragover: false,
       hasAlteration: false,
       hideAlteration: false,
-      maxSacrifice: 0,
+      maxSacrifice: DC.D0,
       teresaMult: 0,
       lastMachinesTeresa: new Decimal(0),
     };

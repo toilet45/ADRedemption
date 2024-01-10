@@ -406,27 +406,27 @@ export function beginProcessReality(realityProps) {
     // way that some types get significantly more or less sacrifice value than the others
     sampleStats: generatedTypes.map(t => ({
       type: t,
-      count: 0,
-      totalSacrifice: 0,
+      count: DC.D0,
+      totalSacrifice: DC.D0,
       // This is (variance * sample count), which is used to get standard deviation later on and makes the math nicer
-      varProdSacrifice: 0,
+      varProdSacrifice: DC.D0,
     })),
     totalStats: {
-      count: 0,
-      totalSacrifice: 0,
-      varProdSacrifice: 0,
+      count: DC.D0,
+      totalSacrifice: DC.D0,
+      varProdSacrifice: DC.D0,
     },
   };
 
   // Incrementally calculate mean and variance in a way that doesn't require storing a list of entries
   // See https://datagenetics.com/blog/november22017/index.html for derivation
   const addToStats = (stats, value) => {
-    const oldMean = stats.totalSacrifice / stats.count;
-    stats.totalSacrifice += value;
-    stats.count++;
-    const newMean = stats.totalSacrifice / stats.count;
+    const oldMean = stats.totalSacrifice.div(stats.count);
+    stats.totalSacrifice = stat.totalSacrifice.add(value);
+    stats.count = stats.count.add(1);
+    const newMean = stats.totalSacrifice.div(stats.count);
     // Mathematically this is zero on the first iteration, but oldMean is NaN due to division by zero
-    if (stats.count !== 1) stats.varProdSacrifice += (value - oldMean) * (value - newMean);
+    if (stats.count.neq(1)) stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean)) * (value.sub(newMean));
   };
 
   // Helper function for pulling a random sacrifice value from the sample we gathered
@@ -537,10 +537,10 @@ export function beginProcessReality(realityProps) {
             // Incrementing sacrifice totals without regard to glyph type and reassigning the final values in the same
             // ascending order as the starting order makes the code simpler to work with, so we do that
             const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
-            const sacArray = generatable.map(x => player.reality.glyphs.sac[x]).sort((a, b) => a - b);
+            const sacArray = generatable.map(x => player.reality.glyphs.sac[x]).sort((a, b) => a.sub(b).gte(0));
             const typeMap = [];
             for (const type of generatable) typeMap.push({ type, value: player.reality.glyphs.sac[type] });
-            const sortedSacTotals = Object.values(typeMap).sort((a, b) => a.value - b.value);
+            const sortedSacTotals = Object.values(typeMap).sort((a, b) => a.value.sub(b.value).gte(0));
 
             // Attempt to fill up all the lowest sacrifice totals up to the next highest, stopping early if there isn't
             // enough left to use for filling. The filling process causes the array to progress something like
@@ -567,7 +567,7 @@ export function beginProcessReality(realityProps) {
             // Give sacrifice values proportionally according to what we found in the sampling stats
             for (const stats of glyphSample.sampleStats) {
               const toGenerate = glyphSample.toGenerate * stats.count / glyphsToSample;
-              player.reality.glyphs.sac[stats.type] += sampleFromStats(stats, toGenerate);
+              player.reality.glyphs.sac[stats.type].add(sampleFromStats(stats, toGenerate));
             }
           }
         }

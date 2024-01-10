@@ -594,13 +594,13 @@ window.player = {
       active: [],
       inventory: [],
       sac: {
-        power: 0,
-        infinity: 0,
-        time: 0,
-        replication: 0,
-        dilation: 0,
-        effarig: 0,
-        reality: 0
+        power: DC.D0,
+        infinity: DC.D0,
+        time: DC.D0,
+        replication: DC.D0,
+        dilation: DC.D0,
+        effarig: DC.D0,
+        reality: DC.D0
       },
       undo: [],
       sets: new Array(7).fill({
@@ -701,7 +701,7 @@ window.player = {
       forceUnlock: false,
       currentInfoPane: AutomatorPanels.INTRO_PAGE,
     },
-    achTimer: new Decimal(0),
+    achTimer: DC.D0,
     hasCheckedFilter: false,
   },
   blackHole: Array.range(0, 2).map(id => ({
