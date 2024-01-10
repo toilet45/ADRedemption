@@ -4,6 +4,7 @@ import GlyphSetPreview from "@/components/GlyphSetPreview";
 import PrimaryButton from "@/components/PrimaryButton";
 import { V_REDUCTION_MODE } from "@/core/secret-formula";
 import VUnlockRequirement from "./VUnlockRequirement";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "VTab",
@@ -40,16 +41,28 @@ export default {
     // If V is flipped, change the layout of the grid
     hexGrid() {
       return this.isFlipped && this.wantsFlipped
-        ? [
+        ? Ra.unlocks.placeholderV2.isUnlocked
+          ? [
+            VRunUnlocks.all[6],
+            VRunUnlocks.all[9],
+            {},
+            VRunUnlocks.all[10],
+            { isRunButton: true },
+            VRunUnlocks.all[7],
+            VRunUnlocks.all[8],
+            VRunUnlocks.all[11],
+            {}
+          ]
+        : [
           VRunUnlocks.all[6],
-          {},
-          {},
-          {},
-          { isRunButton: true },
-          VRunUnlocks.all[7],
-          VRunUnlocks.all[8],
-          {},
-          {}
+            {},
+            {},
+            {},
+            { isRunButton: true },
+            VRunUnlocks.all[7],
+            VRunUnlocks.all[8],
+            {},
+            {}
         ]
         : [
           VRunUnlocks.all[0],
