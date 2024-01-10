@@ -79,6 +79,8 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = Effarig.multiplier(multiplier);
   } else if (V.isRunning) {
     multiplier = multiplier.pow(0.5);
+  } else if (V.isSuperRunning) {
+    multiplier = multiplier.log2().toDecimal();
   }
 
   // This power effect goes intentionally after all the nerf effects and shouldn't be moved before them
@@ -577,7 +579,7 @@ class AntimatterDimensionState extends DimensionState {
       InfinityChallenge.isRunning ||
       Enslaved.isRunning;
     const postWarp = player.reality.warped;
-    let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
+    let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || V.isSuperRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
     if (inCel || !postWarp) return postBreak ? Decimal.MAX_VALUE : DC.E315;
     return postBreak ? DC.WARP_LIMIT : DC.E315;
   }

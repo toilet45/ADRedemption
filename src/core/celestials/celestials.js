@@ -117,6 +117,24 @@ GameDatabase.celestials.descriptions = [
     }
   },
   {
+    name: "YOU SHOULDN'T LOOK THIS",
+    effects() {
+      const Effect = `This number 6 is dealt as a Error thrower when you enter Pelle through normal model.
+      Do not use number 6.`;
+      return Effect;
+    }
+  },
+  {
+    name: "SuperV",
+    effects() {
+      const vEffect = `All Dimension multipliers, Eternity Point gain, Infinity Point gain, and Dilated Time gain\
+      per second are are logarithmized to the base 2. 
+      The Replicanti interval is five to the power of its origin.
+      The Exponential Glyph Alchemy effect is disabled.`;
+      return vEffect;
+    }
+  },
+  {
     name: "Kohler",
     effects(){
       return "TBD";

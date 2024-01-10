@@ -191,6 +191,10 @@ export const V = {
     player.celestials.v.run = true;
     this.quotes.realityEnter.show();
   },
+  initializeSuperRun() {
+    clearCelestialRuns();
+    player.celestials.v.superrun = true;
+  },
   updateTotalRunUnlocks() {
     let sum = 0
     let mult = MendingUpgrade(14).isBought ? 3 : 1
@@ -219,6 +223,9 @@ export const V = {
   },
   get isRunning() {
     return player.celestials.v.run;
+  },
+  get isSuperRunning() {
+    return player.celestials.v.superrun;
   },
   get beingInitialized() {
     return player.celestials.v.beingInitialized;

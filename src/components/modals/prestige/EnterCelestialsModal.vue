@@ -64,6 +64,7 @@ export default {
           ? "You have not completed Lai'tela at this tier."
           : `Your fastest completion on this tier is ${this.laitelaTime}.`;
         case 6: return "";
+        case 7: return "";
         default: throw new Error(`Attempted to start an Unknown Celestial in Celestial Modal Confirmation.`);
       }
     },
@@ -90,6 +91,7 @@ export default {
         case 4: return Ra.initializeRun();
         case 5: return Laitela.initializeRun();
         case 6: throw new Error(`Attempted to start Pelle through EnterCelestialsModal instead of ArmageddonModal`);
+        case 7: return V.initializeSuperRun();
         default: throw new Error(`Attempted to start an Unknown Celestial in Celestial Modal Confirmation.`);
       }
     },

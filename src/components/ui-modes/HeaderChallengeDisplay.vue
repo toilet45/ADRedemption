@@ -17,6 +17,7 @@ export default {
       exitText: "",
       resetCelestial: false,
       inPelle: false,
+      inSuperV: false,
     };
   },
   computed: {
@@ -95,6 +96,10 @@ export default {
         return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;
       }
       if (this.inPelle) return "a Doomed Reality. Good luck.";
+      if (this.inSuperV && this.activeChallengeNames.length > 0) {
+        return `V's Superhard Reality + ${this.activeChallengeNames}`;
+      }
+      if (this.inSuperV) return "V's Superhard Reality.";
       if (this.isCorrupted){
         return this.activeChallengeNames.length > 0 ? `${this.activeChallengeNames.join(" + ")} in a Hostile Multiverse.` : "a Hostile Multiverse (no active challenges)."
       };
@@ -111,10 +116,11 @@ export default {
       // Dilation in Pelle can't be left once entered, but we still want to allow leaving more nested challenges
       this.showExit = this.inPelle && player.dilation.active
         ? this.activeChallengeNames.length > 1
-        : this.activeChallengeNames.length !== 0;
+        : this.inSuperV ? true : this.activeChallengeNames.length !== 0;
       this.exitText = this.exitDisplay();
       this.resetCelestial = player.options.retryCelestial;
       this.inPelle = Pelle.isDoomed;
+      this.inSuperV = V.isSuperRunning;
       this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
     },
     // Process exit requests from the inside out; Challenges first, then dilation, then Celestial Reality. If the

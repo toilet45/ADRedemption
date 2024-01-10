@@ -72,6 +72,12 @@ export const discordRichPresence = {
       // V displays achievements normally and its value is standardized outside of its era
     },
     {
+      name: () => `${V.possessiveName} Superhard Reality`,
+      activityToken: () => V.isSuperRunning,
+      resource: () => null,
+      // V displays achievements normally and its value is standardized outside of its era
+    },
+    {
       name: () => `${Ra.possessiveName} Reality`,
       activityToken: () => Ra.isRunning,
       resource: () => null,

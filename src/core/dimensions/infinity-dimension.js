@@ -200,6 +200,8 @@ class InfinityDimensionState extends DimensionState {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {
       mult = mult.pow(0.5);
+    } else if (V.isSuperRunning) {
+      mult = mult.log2().toDecimal();
     }
 
     if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {

@@ -129,6 +129,13 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
     // and handling it would make the replicanti code a lot more complicated.
     interval = interval.pow(2);
   }
+
+  if (V.isSuperRunning) {
+    // This is a boost if interval < 1, but that only happens in EC12
+    // and handling it would make the replicanti code a lot more complicated.
+    // copypaste--sxy
+    interval = interval.pow(5);
+  }
   return interval;
 }
 
@@ -217,6 +224,9 @@ export function replicantiLoop(diff) {
     let postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
     if (V.isRunning) {
       postScale *= 2;
+    }
+    if (V.isSuperRunning) {
+      postScale *= 5;
     }
 
     // Note that remainingGain is in log10 terms.
