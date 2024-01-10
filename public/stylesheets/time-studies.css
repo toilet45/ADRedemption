@@ -605,6 +605,12 @@
   background-color: #c4b2a7;
 }
 
+.o-time-study-myriad--bought {
+  color: black;
+  background-color: #FF8000;
+  border-color: black;
+}
+
 .o-time-study-kohler--available {
   color: rgb(255, 0, 98);
   background: black;

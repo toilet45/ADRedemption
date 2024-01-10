@@ -24,14 +24,14 @@ export default {
       return v;
     },
     completedAllChallenges() {
-      return this.timeSum.lt(Number.MAX_VALUE);
+      return this.timeSum.lt(Decimal.MAX_VALUE);
     }
   },
   methods: {
     timeDisplayShort,
     completionString(time) {
-      return time.lt(Number.MAX_VALUE)
-        ? `record time: ${timeDisplayShort(time)}`
+      return time.lt(Decimal.MAX_VALUE)
+        ? (time.lt(new Decimal(0.001))? `record time: < ${formatInt(1)} µs`: `record time: ${timeDisplayShort(time)}`)
         : "has not yet been completed";
     }
   }

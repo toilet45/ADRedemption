@@ -5,6 +5,7 @@ import PrimaryButton from "@/components/PrimaryButton";
 import { V_REDUCTION_MODE } from "@/core/secret-formula";
 import VUnlockRequirement from "./VUnlockRequirement";
 import { Ra } from "../../../core/globals";
+import { MendingUpgrade } from "../../../core/mending-upgrades";
 
 export default {
   name: "VTab",
@@ -24,9 +25,12 @@ export default {
       runRecords: [],
       runGlyphs: [],
       isFlipped: false,
+      isSupperFlipped: false,
       wantsFlipped: true,
+      wantsSuperFlipped: false,
       isRunning: false,
       hasAlchemy: false,
+      MU15bought: false,
     };
   },
   computed: {
@@ -40,7 +44,55 @@ export default {
     },
     // If V is flipped, change the layout of the grid
     hexGrid() {
-      return this.isFlipped && this.wantsFlipped
+      //Super Hard V
+      if(this.isSuperFlipped && this.wantsSuperFlipped) return[
+            VRunUnlocks.all[12],
+            VRunUnlocks.all[13],
+            {},
+            VRunUnlocks.all[14],
+            { isRunButton: true },
+            VRunUnlocks.all[15],
+            VRunUnlocks.all[16],
+            VRunUnlocks.all[17],
+            {}
+          ];
+      //Hard V (last three) unlocked
+      if(this.isSuperFlipped && this.wantsFlipped) return[
+            VRunUnlocks.all[6],
+            VRunUnlocks.all[9],
+            {},
+            VRunUnlocks.all[10],
+            { isRunButton: true },
+            VRunUnlocks.all[7],
+            VRunUnlocks.all[8],
+            VRunUnlocks.all[11],
+            {}
+          ];
+      //Hard V (first three) unlocked
+      if(this.isFlipped && this.wantsFlipped) return [
+          VRunUnlocks.all[6],
+            {},
+            {},
+            {},
+            { isRunButton: true },
+            VRunUnlocks.all[7],
+            VRunUnlocks.all[8],
+            {},
+            {}
+        ];
+      //default
+      return [
+          VRunUnlocks.all[0],
+          VRunUnlocks.all[1],
+          {},
+          VRunUnlocks.all[5],
+          { isRunButton: true },
+          VRunUnlocks.all[2],
+          VRunUnlocks.all[4],
+          VRunUnlocks.all[3],
+          {}
+        ];
+      /*return this.isFlipped && this.wantsFlipped
         ? Ra.unlocks.placeholderV2.isUnlocked
           ? [
             VRunUnlocks.all[6],
@@ -74,7 +126,7 @@ export default {
           VRunUnlocks.all[4],
           VRunUnlocks.all[3],
           {}
-        ];
+        ];*/
     },
     vUnlock: () => VUnlocks.vAchievementUnlock,
     runMilestones() {
@@ -115,9 +167,12 @@ export default {
       this.runRecords = Array.from(player.celestials.v.runRecords);
       this.runGlyphs = player.celestials.v.runGlyphs.map(gList => Glyphs.copyForRecords(gList));
       this.isFlipped = V.isFlipped;
+      this.isSuperFlipped = V.isSuperFlipped;
       this.wantsFlipped = player.celestials.v.wantsFlipped;
+      this.wantsSuperFlipped = player.celestials.v.wantsSuperFlipped;
       this.isRunning = V.isRunning;
       this.hasAlchemy = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
+      this.MU14bought = MendingUpgrade(14).isBought;
     },
     unlockCelestial() {
       if (V.canUnlockCelestial) V.unlockCelestial();
@@ -164,6 +219,17 @@ export default {
     },
     toggleFlipped() {
       player.celestials.v.wantsFlipped = !this.wantsFlipped;
+      if(player.celestials.v.wantsSuperFlipped){
+        player.celestials.v.wantsSuperFlipped = false;
+        this.wantsSuperFlipped = false;
+      }
+    },
+    toggleSuperFlipped() {
+      player.celestials.v.wantsSuperFlipped = !this.wantsSuperFlipped;
+      if(player.celestials.v.wantsFlipped) {
+        player.celestials.v.wantsFlipped = false
+        this.wantsFlipped = false
+      };
     },
     createCursedGlyph() {
       Glyphs.giveCursedGlyph();
@@ -196,7 +262,7 @@ export default {
     </div>
     <div v-else>
       <div
-        v-if="isFlipped"
+        v-if="isFlipped && !isSuperFlipped"
         class="c-v-info-text"
       >
         <PrimaryButton
@@ -225,6 +291,49 @@ export default {
         <br>
         Goal reduction is significantly more expensive for Hard V-Achievements.
       </div>
+
+      <div
+        v-if="isSuperFlipped"
+        class="c-v-info-text"
+      >
+        <PrimaryButton
+        class="o-primary-btn--subtab-option"
+        @click="toggleFlipped"
+        >
+        <span v-if="wantsFlipped">Hide</span>
+        <span v-else>Show</span>
+        Hard V
+        </PrimaryButton>
+        <PrimaryButton
+          class="o-primary-btn--subtab-option"
+          @click="toggleSuperFlipped"
+        >
+          <span v-if="wantsSuperFlipped">Hide</span>
+          <span v-else>Show</span>
+          Superhard V
+        </PrimaryButton>
+        <PrimaryButton
+          class="o-primary-btn--subtab-option l-cursed-glyph-creation"
+          @click="createCursedGlyph"
+        >
+          Create a Cursed Glyph
+        </PrimaryButton>
+        <br>
+        Cursed Glyphs can be created here or in the Effarig tab.
+        <br>
+        Cursed Glyphs count as {{ formatInt(-3) }} Glyphs for the purposes of all requirements related to Glyph count.
+        <br>
+        <span v-if="!isDoomed">The Black Hole can now be used to slow down time if they are both permanent.</span>
+        <br><br>
+        Each Hard V-Achievement counts as two V-Achievements and will award {{ formatInt(2) }} Space Theorems
+        instead of {{ formatInt(1) }}.
+        <br>
+        Each Superhard V-Achievement counts as five V-Achievements and will award {{ formatInt(5) }} Space Theorems
+        instead of {{ formatInt(1) }}.
+        <br>
+        Goal reduction is significantly more expensive for Hard V-Achievements and Superhard V-Achievements.
+      </div>
+
       <div
         v-if="showReduction"
         class="c-v-info-text"
@@ -318,6 +427,7 @@ export default {
           You gain {{ formatInt(1) }} Space Theorem for each completion,
           allowing you to purchase Time Studies which are normally locked.
           <br>
+          <p v-if="MU14bought">V-Achievement now have ×3 multiplier due to MU14.</p>
           Space Theorems can also be used as a Currency in the Automator.
         </span>
       </div>
