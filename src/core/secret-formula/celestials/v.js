@@ -195,7 +195,7 @@ export const v = {
       id: 9,
       name: "New Hard V 1",
       description: value => `Gain ${format(Decimal.pow10(value))} Eternity Points without any Time Studies.`,
-      values: [Decimal.log10('5e1000000000000'), Decimal.log10('7e1000000000000'), Decimal.log10('9e1000000000000'), Decimal.log10('11e1000000000000'), Decimal.log10('13e1000000000000')],
+      values: [Decimal.log10('1e5000000000000'), Decimal.log10('1e6500000000000'), Decimal.log10('1e8000000000000'), Decimal.log10('1e9000000000000'), Decimal.log10('1e10000000000000')],
       condition: () => V.isRunning && player.requirementChecks.reality.maxStudies<=0,
       currentValue: () => Currency.eternityPoints.value.log10(),
       formatRecord: x => format(Decimal.pow10(x), 2),
