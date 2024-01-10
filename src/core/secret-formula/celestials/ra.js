@@ -23,18 +23,12 @@ export const ra = {
       secondaryMemoryChunkGain: "Glyph Sacrifice totals",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.effarigUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = 0;
+        let x = new Decimal(0);
         if(Ra.unlocks.placeholderR4.isUnlocked){
-          x += player.reality.glyphs.sac.power;
-          x += player.reality.glyphs.sac.infinity;
-          x += player.reality.glyphs.sac.time;
-          x += player.reality.glyphs.sac.replication;
-          x += player.reality.glyphs.sac.dilation;
-          x += player.reality.glyphs.sac.effarig;
-          x += player.reality.glyphs.sac.reality;
+          Object.values(player.reality.glyphs.sac).every(value => x = x.add(value))
         }
-        x /= 7;
-        return (Ra.unlocks.placeholderR9.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.placeholderP9.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Math.log10(x));
+        x = x.div(7);
+        return (Ra.unlocks.placeholderR9.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.placeholderP9.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
       },
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },

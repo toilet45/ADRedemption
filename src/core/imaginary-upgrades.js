@@ -120,7 +120,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
     }
     if (this.id === 22) {
       for (const key of Object.keys(player.reality.glyphs.sac)) {
-        if (player.reality.glyphs.sac[key] < 1e100) player.reality.glyphs.sac[key] = ImaginaryUpgrade(22).effectValue;
+        if (player.reality.glyphs.sac[key].leq(1e100)) player.reality.glyphs.sac[key] = ImaginaryUpgrade(22).effectValue;
       }
     }
     if (this.id === 25) {

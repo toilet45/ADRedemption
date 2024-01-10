@@ -1,4 +1,5 @@
 import { migrations } from "./migrations";
+import { DC } from "../constants";
 
 function arrayToBits(array) {
   let bits = 0;
@@ -91,12 +92,12 @@ export const devMigrations = {
     },
     player => {
       player.reality.glyphs.sac = {
-        power: 0,
-        infinity: 0,
-        time: 0,
-        replication: 0,
-        dilation: 0,
-        effarig: 0,
+        power: DC.D0,
+        infinity: DC.D0,
+        time: DC.D0,
+        replication: DC.D0,
+        dilation: DC.D0,
+        effarig: DC.D0,
       };
     },
     player => {

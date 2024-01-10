@@ -29,7 +29,7 @@ export default {
       default: 0,
     },
     sacrificeReward: {
-      type: Number,
+      type: Decimal,
       required: false,
       default: 0,
     },

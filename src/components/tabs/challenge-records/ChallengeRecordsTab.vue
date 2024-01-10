@@ -1,4 +1,5 @@
 <script>
+import { DC } from "../../../core/constants";
 import ChallengeRecordsList from "./ChallengeRecordsList";
 
 export default {
@@ -11,7 +12,7 @@ export default {
       infinityChallengesUnlocked: false,
       normalChallenges: [],
       infinityChallenges: [],
-      bypass: new Decimal(0)
+      bypass: DC.D0,
     };
   },
   methods: {

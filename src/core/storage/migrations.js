@@ -553,7 +553,7 @@ export const migrations = {
   51.001: player => {
     player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
     ({
-      amount: new Decimal(0),
+      amount: new Decimal(1),
       intervalUpgrades: 0,
       powerDMUpgrades: 0,
       powerDEUpgrades: 0,
@@ -669,10 +669,19 @@ export const migrations = {
   51.016: player => {
     delete player.mending.spentCF
   },
-  51.017: player => [
+  51.017: player => {
     player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     player.reality.achTimer = new Decimal(player.reality.achTimer)
-  ]
+  },
+  51.018: player => {
+    player.reality.glyphs.sac.power = new Decimal(player.reality.glyphs.sac.power)
+    player.reality.glyphs.sac.infinity = new Decimal(player.reality.glyphs.sac.infinity)
+    player.reality.glyphs.sac.time = new Decimal(player.reality.glyphs.sac.time)
+    player.reality.glyphs.sac.replication = new Decimal(player.reality.glyphs.sac.replication)
+    player.reality.glyphs.sac.dilation = new Decimal(player.reality.glyphs.sac.dilation)
+    player.reality.glyphs.sac.effarig = new Decimal(player.reality.glyphs.sac.effarig)
+    player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality)
+  },
 },
 
   normalizeTimespans(player) {

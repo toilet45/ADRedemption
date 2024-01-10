@@ -258,13 +258,13 @@ export function mendingReset() {
     player.reality.imaginaryMachines = 0;
     player.reality.maxRM = DC.D0;
     player.reality.iMCap = 0;
-    player.reality.glyphs.sac.power = 0;
-    player.reality.glyphs.sac.infinity = 0;
-    player.reality.glyphs.sac.replication = 0;
-    player.reality.glyphs.sac.time = 0;
-    player.reality.glyphs.sac.dilation = 0;
-    player.reality.glyphs.sac.effarig = 0;
-    player.reality.glyphs.sac.reality = 0;
+    player.reality.glyphs.sac.power = DC.D0;
+    player.reality.glyphs.sac.infinity = DC.D0;
+    player.reality.glyphs.sac.replication = DC.D0;
+    player.reality.glyphs.sac.time = DC.D0;
+    player.reality.glyphs.sac.dilation = DC.D0;
+    player.reality.glyphs.sac.effarig = DC.D0;
+    player.reality.glyphs.sac.reality = DC.D0;
     player.reality.glyphs.undo = [];
     player.reality.perkPoints = 0;
     for (let i = 1; i <= 5; i++){
