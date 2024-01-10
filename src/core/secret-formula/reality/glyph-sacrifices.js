@@ -3,21 +3,21 @@ export const glyphSacrifice = {
   "power": {
     id: "power",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.power.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
-      return Decimal.floor(Decimal.pow(base, 1.2).mul(750));
+      return Decimal.floor(Decimal.pow(base, 1.2).mul(750)).toNumber();
     },
     description: amount => {
-      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects;
-      const nextDistantGalaxy = Decimal.pow(10, Decimal.pow(amount.add(1).div(750), 1 / 1.2).mul(Decimal.log10(sacCap))).sub(1);
-      const nextGalaxyText = amount.lt(750)
+      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects.toNumber();
+      const nextDistantGalaxy = Math.pow(10, Math.pow((amount + 1) / 750, 1 / 1.2) * Math.log10(sacCap)) - 1;
+      const nextGalaxyText = amount < 750
         ? ` (next at ${format(nextDistantGalaxy, 2, 2)})`
         : "";
       return `Distant Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;
     },
-    cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
+    cap: () => GlyphSacrificeHandler.maxSacrificeForEffects.toNumber()
   },
   "infinity": {
     id: "infinity",
@@ -44,21 +44,21 @@ export const glyphSacrifice = {
   "replication": {
     id: "replication",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.replication.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
-      return Decimal.floor(Decimal.pow(base, 1.2).mul(1500));
+      return Decimal.floor(Decimal.pow(base, 1.2).mul(1500)).toNumber();
     },
     description: amount => {
-      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects;
-      const nextDistantGalaxy = Decimal.pow(10, Decimal.pow((amount.add(1)).div(1500), 1 / 1.2).mul(Decimal.log10(sacCap))).sub(1);
-      const nextGalaxyText = amount.lt(1500)
+      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects.toNumber();
+      const nextDistantGalaxy = Math.pow(10, Math.pow((amount + 1) / 1500, 1 / 1.2) * Math.log10(sacCap)) - 1;
+      const nextGalaxyText = amount < 1500
         ? ` (next at ${format(nextDistantGalaxy, 2, 2)})`
         : "";
       return `Replicanti Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;
     },
-    cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
+    cap: () => GlyphSacrificeHandler.maxSacrificeForEffects.toNumber()
   },
   "dilation": {
     id: "dilation",

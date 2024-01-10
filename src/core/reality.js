@@ -768,6 +768,8 @@ function restoreCelestialRuns(celestialRunState) {
   if (player.celestials.enslaved.run) Enslaved.initializeRun();
   player.celestials.v.run = celestialRunState.v;
   if (player.celestials.v.run) V.initializeRun();
+  player.celestials.v.superrun = celestialRunState.superv;
+  if (player.celestials.v.superrun) V.initializeSuperRun();
   player.celestials.ra.run = celestialRunState.ra;
   if (player.celestials.ra.run) Ra.initializeRun();
   player.celestials.laitela.run = celestialRunState.laitela;
@@ -816,6 +818,7 @@ export function clearCelestialRuns() {
     effarig: player.celestials.effarig.run,
     enslaved: player.celestials.enslaved.run,
     v: player.celestials.v.run,
+    superv: player.celestials.v.superrun,
     ra: player.celestials.ra.run,
     laitela: player.celestials.laitela.run,
   };
@@ -833,12 +836,14 @@ export function clearCelestialRuns() {
     AutomatorData.recalculateErrors();
   }
   player.celestials.v.run = false;
+  player.celestials.v.superrun = false;
   player.celestials.ra.run = false;
   player.celestials.laitela.run = false;
   return saved;
 }
 
 export function isInCelestialReality() {
+  if(player.celestials.v.superrun) return true;
   return Object.values(player.celestials).some(x => x.run);
 }
 

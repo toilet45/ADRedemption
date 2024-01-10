@@ -779,6 +779,7 @@ window.player = {
     v: {
       unlockBits: 0,
       run: false,
+      superrun: false,
       beingInitialized: false,
       quoteBits: 0,
       runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -787,8 +788,7 @@ window.player = {
       runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       // The -10 is for glyph count, as glyph count for V is stored internally as a negative number
       runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      wantsFlipped: true,
-      wantsSuperFlipped: false,
+      flip: V_FLIP.NORMAL,
     },
     ra: {
       pets: {
@@ -1217,6 +1217,8 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
+    if (V.isSuperRunning && !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if (V.isSuperRunning && player.reality.warped) return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
     let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
     if (inCel || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;

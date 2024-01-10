@@ -553,7 +553,7 @@ export const migrations = {
   51.001: player => {
     player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
     ({
-      amount: new Decimal(1),
+      amount: DC.D1,
       intervalUpgrades: 0,
       powerDMUpgrades: 0,
       powerDEUpgrades: 0,
@@ -674,14 +674,32 @@ export const migrations = {
     player.reality.achTimer = new Decimal(player.reality.achTimer)
   },
   51.018: player => {
-    player.reality.glyphs.sac.power = new Decimal(player.reality.glyphs.sac.power)
-    player.reality.glyphs.sac.infinity = new Decimal(player.reality.glyphs.sac.infinity)
-    player.reality.glyphs.sac.time = new Decimal(player.reality.glyphs.sac.time)
-    player.reality.glyphs.sac.replication = new Decimal(player.reality.glyphs.sac.replication)
-    player.reality.glyphs.sac.dilation = new Decimal(player.reality.glyphs.sac.dilation)
-    player.reality.glyphs.sac.effarig = new Decimal(player.reality.glyphs.sac.effarig)
-    player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality)
+    player.reality.glyphs.sac.power = new Decimal(player.reality.glyphs.sac.power);
+    player.reality.glyphs.sac.infinity = new Decimal(player.reality.glyphs.sac.infinity);
+    player.reality.glyphs.sac.time = new Decimal(player.reality.glyphs.sac.time);
+    player.reality.glyphs.sac.replication = new Decimal(player.reality.glyphs.sac.replication);
+    player.reality.glyphs.sac.dilation = new Decimal(player.reality.glyphs.sac.dilation);
+    player.reality.glyphs.sac.effarig = new Decimal(player.reality.glyphs.sac.effarig);
+    player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality);
   },
+  51.019: player => {
+    player.celestials.v.runUnlocks = player.celestials.v.runUnlocks.concat(Array.range(0, 18).map(() => (0)));
+    player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 18).map(() => (0)));
+    player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 18).map(() =>([])));
+    player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 18).map(() =>(0)));
+    player.celestials.v.wantsSuperFlipped = false;
+  },
+  51.020: player => {
+    if (player.celestials.v.wantsSuperFlipped) {
+      player.celestials.v.flip = V_FLIP.SUPER;
+    } else if (player.celestials.v.wantsFlipped) {
+      player.celestials.v.flip = V_FLIP.HARD;
+    } else {
+      player.celestials.v.flip = V_FLIP.NORMAL;
+    }
+    delete player.celestials.v.wantsSuperFlipped;
+    delete player.celestials.v.wantsFlipped;
+  }
 },
 
   normalizeTimespans(player) {

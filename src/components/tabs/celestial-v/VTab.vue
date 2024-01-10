@@ -25,12 +25,11 @@ export default {
       runRecords: [],
       runGlyphs: [],
       isFlipped: false,
-      isSupperFlipped: false,
-      wantsFlipped: true,
-      wantsSuperFlipped: false,
+      isSuperFlipped: false,
       isRunning: false,
       hasAlchemy: false,
       MU15bought: false,
+      flip: "normal",
     };
   },
   computed: {
@@ -45,19 +44,19 @@ export default {
     // If V is flipped, change the layout of the grid
     hexGrid() {
       //Super Hard V
-      if(this.isSuperFlipped && this.wantsSuperFlipped) return[
+      if(this.isSuperFlipped && this.flip == V_FLIP.SUPER) return[
             VRunUnlocks.all[12],
             VRunUnlocks.all[13],
             {},
             VRunUnlocks.all[14],
-            { isRunButton: true },
+            { isSuperRunButton: true },
             VRunUnlocks.all[15],
             VRunUnlocks.all[16],
             VRunUnlocks.all[17],
             {}
           ];
       //Hard V (last three) unlocked
-      if(this.isSuperFlipped && this.wantsFlipped) return[
+      if(this.isSuperFlipped && this.flip == V_FLIP.HARD) return[
             VRunUnlocks.all[6],
             VRunUnlocks.all[9],
             {},
@@ -69,7 +68,7 @@ export default {
             {}
           ];
       //Hard V (first three) unlocked
-      if(this.isFlipped && this.wantsFlipped) return [
+      if(this.isFlipped && this.flip == V_FLIP.HARD) return [
           VRunUnlocks.all[6],
             {},
             {},
@@ -147,13 +146,17 @@ export default {
       return {
         "l-v-hexagon": true,
         "c-v-run-button": true,
-        "c-v-run-button--running": this.isRunning,
+        "c-v-run-button--running": this.isRunning||this.isSuperRunning,
+        //"c-v-run-button--superrunning": this.isSuperRunning,
         "c-celestial-run-button--clickable": !this.isDoomed,
         "o-pelle-disabled-pointer": this.isDoomed
       };
     },
     runDescription() {
       return GameDatabase.celestials.descriptions[3].effects().replace(/^\w/u, c => c.toUpperCase());
+    },
+    runSuperDescription() {
+      return GameDatabase.celestials.descriptions[7].effects().replace(/^\w/u, c => c.toUpperCase());
     },
     isDoomed: () => Pelle.isDoomed,
   },
@@ -168,9 +171,9 @@ export default {
       this.runGlyphs = player.celestials.v.runGlyphs.map(gList => Glyphs.copyForRecords(gList));
       this.isFlipped = V.isFlipped;
       this.isSuperFlipped = V.isSuperFlipped;
-      this.wantsFlipped = player.celestials.v.wantsFlipped;
-      this.wantsSuperFlipped = player.celestials.v.wantsSuperFlipped;
+      this.flip = player.celestials.v.flip;
       this.isRunning = V.isRunning;
+      this.isSuperRunning = V.isSuperRunning;
       this.hasAlchemy = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
       this.MU14bought = MendingUpgrade(14).isBought;
     },
@@ -180,6 +183,10 @@ export default {
     startRun() {
       if (this.isDoomed) return;
       Modal.celestials.show({ name: "V's", number: 3 });
+    },
+    startSuperRun() {
+      if (this.isDoomed) return;
+      Modal.celestials.show({ name: "V's Superhard", number: 7 });
     },
     has(info) {
       return info.isUnlocked;
@@ -217,19 +224,8 @@ export default {
       const b = 255 - 20 * completions;
       return `rgb(${r},${g},${b})`;
     },
-    toggleFlipped() {
-      player.celestials.v.wantsFlipped = !this.wantsFlipped;
-      if(player.celestials.v.wantsSuperFlipped){
-        player.celestials.v.wantsSuperFlipped = false;
-        this.wantsSuperFlipped = false;
-      }
-    },
-    toggleSuperFlipped() {
-      player.celestials.v.wantsSuperFlipped = !this.wantsSuperFlipped;
-      if(player.celestials.v.wantsFlipped) {
-        player.celestials.v.wantsFlipped = false
-        this.wantsFlipped = false
-      };
+    setFlip(flip){
+      player.celestials.v.flip = flip;
     },
     createCursedGlyph() {
       Glyphs.giveCursedGlyph();
@@ -267,11 +263,17 @@ export default {
       >
         <PrimaryButton
           class="o-primary-btn--subtab-option"
-          @click="toggleFlipped"
+          @click="setFlip(V_FLIP.NORMAL)"
+          v-if="flip === V_FLIP.HARD"
         >
-          <span v-if="wantsFlipped">Hide</span>
-          <span v-else>Show</span>
-          Hard V
+          Hide Hard V
+        </PrimaryButton>
+        <PrimaryButton
+          class="o-primary-btn--subtab-option"
+          @click="setFlip(V_FLIP.HARD)"
+          v-else
+        >
+          Show Hard V
         </PrimaryButton>
         <PrimaryButton
           class="o-primary-btn--subtab-option l-cursed-glyph-creation"
@@ -298,19 +300,24 @@ export default {
       >
         <PrimaryButton
         class="o-primary-btn--subtab-option"
-        @click="toggleFlipped"
+        :class="[flip == V_FLIP.NORMAL ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.NORMAL)"
         >
-        <span v-if="wantsFlipped">Hide</span>
-        <span v-else>Show</span>
-        Hard V
+          Show Normal V
         </PrimaryButton>
         <PrimaryButton
-          class="o-primary-btn--subtab-option"
-          @click="toggleSuperFlipped"
+        class="o-primary-btn--subtab-option"
+        :class="[flip == V_FLIP.HARD ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.HARD)"
         >
-          <span v-if="wantsSuperFlipped">Hide</span>
-          <span v-else>Show</span>
-          Superhard V
+          Show Hard V
+        </PrimaryButton>
+        <PrimaryButton
+        class="o-primary-btn--subtab-option"
+        :class="[flip == V_FLIP.SUPER ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.SUPER)"
+        >
+          Show Superhard V
         </PrimaryButton>
         <PrimaryButton
           class="o-primary-btn--subtab-option l-cursed-glyph-creation"
@@ -344,7 +351,7 @@ export default {
         <li
           v-for="(hex, hexId) in hexGrid"
           :key="hexId + '-v-hex'"
-          :style="[hex.isRunButton ? {zIndex: 1} : {zIndex: 0}]"
+          :style="[hex.isRunButton||hex.isSuperRunButton ? {zIndex: 1} : {zIndex: 0}]"
         >
           <div
             v-if="hex.config"
@@ -412,6 +419,29 @@ export default {
             <div class="c-v-run-button__line c-v-run-button__line--2" />
             <div class="c-v-run-button__line c-v-run-button__line--3" />
           </div>
+
+          <div
+            v-else-if="hex.isSuperRunButton"
+            :class="runButtonClassObject"
+            @click="startSuperRun()"
+          >
+            <b
+              class="o-v-start-text"
+              :class="{ 'o-pelle-disabled': isDoomed }"
+            >
+              <span v-if="isSuperRunning">You are in </span>
+              <span v-else>Start </span>
+              V's Superhard Reality.
+            </b>
+            <br>
+            <div :style="{ 'font-size': hasAlchemy ? '1.2rem' : '' }">
+              {{ runSuperDescription }}
+            </div>
+            <div class="c-v-run-button__line c-v-run-button__line--1" />
+            <div class="c-v-run-button__line c-v-run-button__line--2" />
+            <div class="c-v-run-button__line c-v-run-button__line--3" />
+          </div>
+
           <div v-else>
             <div class="l-v-hexagon l-placeholder-invisible" />
           </div>
@@ -475,4 +505,9 @@ export default {
 .l-cursed-glyph-creation {
   background: var(--color-effarig--base);
 }
+
+.l-selected-tab {
+  color: var(--color-v--base)
+}
+
 </style>

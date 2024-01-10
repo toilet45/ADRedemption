@@ -114,7 +114,7 @@ export class NormalTimeStudyState extends TimeStudyState {
     player.timestudy.studies.push(this.id);
     player.requirementChecks.reality.maxStudies = Math.clampMin(player.requirementChecks.reality.maxStudies,
       player.timestudy.studies.length);
-    if (this.id > 300) player.requirementChecks.reality.noTriads = false;
+    if (this.id > 300 && this.id < 400) player.requirementChecks.reality.noTriads = false;
     Currency.timeTheorems.subtract(this.cost);
     GameCache.timeStudies.invalidate();
     TimeStudyTree.commitToGameState([TimeStudy(this.id)]);
