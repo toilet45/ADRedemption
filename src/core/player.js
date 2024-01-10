@@ -788,8 +788,7 @@ window.player = {
       runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       // The -10 is for glyph count, as glyph count for V is stored internally as a negative number
       runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      wantsFlipped: true,
-      wantsSuperFlipped: false,
+      flip: V_FLIP.NORMAL,
     },
     ra: {
       pets: {

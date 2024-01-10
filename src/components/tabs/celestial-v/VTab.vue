@@ -26,11 +26,10 @@ export default {
       runGlyphs: [],
       isFlipped: false,
       isSuperFlipped: false,
-      wantsFlipped: true,
-      wantsSuperFlipped: false,
       isRunning: false,
       hasAlchemy: false,
       MU15bought: false,
+      flip: "normal",
     };
   },
   computed: {
@@ -45,7 +44,7 @@ export default {
     // If V is flipped, change the layout of the grid
     hexGrid() {
       //Super Hard V
-      if(this.isSuperFlipped && this.wantsSuperFlipped) return[
+      if(this.isSuperFlipped && this.flip == V_FLIP.SUPER) return[
             VRunUnlocks.all[12],
             VRunUnlocks.all[13],
             {},
@@ -57,7 +56,7 @@ export default {
             {}
           ];
       //Hard V (last three) unlocked
-      if(this.isSuperFlipped && this.wantsFlipped) return[
+      if(this.isSuperFlipped && this.flip == V_FLIP.HARD) return[
             VRunUnlocks.all[6],
             VRunUnlocks.all[9],
             {},
@@ -69,7 +68,7 @@ export default {
             {}
           ];
       //Hard V (first three) unlocked
-      if(this.isFlipped && this.wantsFlipped) return [
+      if(this.isFlipped && this.flip == V_FLIP.HARD) return [
           VRunUnlocks.all[6],
             {},
             {},
@@ -172,8 +171,7 @@ export default {
       this.runGlyphs = player.celestials.v.runGlyphs.map(gList => Glyphs.copyForRecords(gList));
       this.isFlipped = V.isFlipped;
       this.isSuperFlipped = V.isSuperFlipped;
-      this.wantsFlipped = player.celestials.v.wantsFlipped;
-      this.wantsSuperFlipped = player.celestials.v.wantsSuperFlipped;
+      this.flip = player.celestials.v.flip;
       this.isRunning = V.isRunning;
       this.isSuperRunning = V.isSuperRunning;
       this.hasAlchemy = Ra.unlocks.unlockGlyphAlchemy.canBeApplied;
@@ -226,19 +224,8 @@ export default {
       const b = 255 - 20 * completions;
       return `rgb(${r},${g},${b})`;
     },
-    toggleFlipped() {
-      player.celestials.v.wantsFlipped = !this.wantsFlipped;
-      if(player.celestials.v.wantsSuperFlipped){
-        player.celestials.v.wantsSuperFlipped = false;
-        this.wantsSuperFlipped = false;
-      }
-    },
-    toggleSuperFlipped() {
-      player.celestials.v.wantsSuperFlipped = !this.wantsSuperFlipped;
-      if(player.celestials.v.wantsFlipped) {
-        player.celestials.v.wantsFlipped = false
-        this.wantsFlipped = false
-      };
+    setFlip(flip){
+      player.celestials.v.flip = flip;
     },
     createCursedGlyph() {
       Glyphs.giveCursedGlyph();
@@ -276,11 +263,17 @@ export default {
       >
         <PrimaryButton
           class="o-primary-btn--subtab-option"
-          @click="toggleFlipped"
+          @click="setFlip(V_FLIP.NORMAL)"
+          v-if="flip === V_FLIP.HARD"
         >
-          <span v-if="wantsFlipped">Hide</span>
-          <span v-else>Show</span>
-          Hard V
+          Hide Hard V
+        </PrimaryButton>
+        <PrimaryButton
+          class="o-primary-btn--subtab-option"
+          @click="setFlip(V_FLIP.HARD)"
+          v-else
+        >
+          Show Hard V
         </PrimaryButton>
         <PrimaryButton
           class="o-primary-btn--subtab-option l-cursed-glyph-creation"
@@ -307,19 +300,24 @@ export default {
       >
         <PrimaryButton
         class="o-primary-btn--subtab-option"
-        @click="toggleFlipped"
+        :class="[flip == V_FLIP.NORMAL ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.NORMAL)"
         >
-        <span v-if="wantsFlipped">Hide</span>
-        <span v-else>Show</span>
-        Hard V
+          Show Normal V
         </PrimaryButton>
         <PrimaryButton
-          class="o-primary-btn--subtab-option"
-          @click="toggleSuperFlipped"
+        class="o-primary-btn--subtab-option"
+        :class="[flip == V_FLIP.HARD ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.HARD)"
         >
-          <span v-if="wantsSuperFlipped">Hide</span>
-          <span v-else>Show</span>
-          Superhard V
+          Show Hard V
+        </PrimaryButton>
+        <PrimaryButton
+        class="o-primary-btn--subtab-option"
+        :class="[flip == V_FLIP.SUPER ? 'l-selected-tab' : '']"
+        @click="setFlip(V_FLIP.SUPER)"
+        >
+          Show Superhard V
         </PrimaryButton>
         <PrimaryButton
           class="o-primary-btn--subtab-option l-cursed-glyph-creation"
@@ -507,4 +505,9 @@ export default {
 .l-cursed-glyph-creation {
   background: var(--color-effarig--base);
 }
+
+.l-selected-tab {
+  color: var(--color-v--base)
+}
+
 </style>

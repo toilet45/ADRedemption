@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 window.PRESTIGE_EVENT = {
   DIMENSION_BOOST: 0,
   ANTIMATTER_GALAXY: 1,
@@ -551,3 +553,11 @@ window.SPEEDRUN_SEED_STATE = {
   RANDOM: 2,
   PLAYER: 3,
 };
+
+window.V_FLIP = {
+  NORMAL: 0,
+  HARD: 1,
+  SUPER: 2,
+};
+
+Vue.prototype.V_FLIP = window.V_FLIP;

@@ -687,7 +687,19 @@ export const migrations = {
     player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 18).map(() => (0)));
     player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 18).map(() =>([])));
     player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 18).map(() =>(0)));
+    player.celestials.v.wantsSuperFlipped = false;
   },
+  51.020: player => {
+    if (player.celestials.v.wantsSuperFlipped) {
+      player.celestials.v.flip = V_FLIP.SUPER;
+    } else if (player.celestials.v.wantsFlipped) {
+      player.celestials.v.flip = V_FLIP.HARD;
+    } else {
+      player.celestials.v.flip = V_FLIP.NORMAL;
+    }
+    delete player.celestials.v.wantsSuperFlipped;
+    delete player.celestials.v.wantsFlipped;
+  }
 },
 
   normalizeTimespans(player) {
