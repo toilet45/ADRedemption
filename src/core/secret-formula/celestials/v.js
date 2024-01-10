@@ -222,7 +222,7 @@ export const v = {
     },
     {
       id: 11,
-      name: "Prove of Pure",
+      name: "Proof of Purity",
       description: value => `Gain ${format(Decimal.pow10(value))} Infinity Points with at least 6 Cursed Glyph equipped and without any Triad Studies.`,
       values: [3e14, 6e14, 9e14, 1.2e15, 1.5e15],
       condition: () => V.isRunning && Glyphs.activeWithoutCompanion.filter(item => item.type==='cursed').length>=6 && player.requirementChecks.reality.noTriads,
