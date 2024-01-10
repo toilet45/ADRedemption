@@ -128,7 +128,7 @@ GameDatabase.celestials.descriptions = [
     name: "SuperV",
     effects() {
       const vEffect = `All Dimension multipliers, Eternity Point gain, Infinity Point gain, and Dilated Time gain\
-      per second are are logarithmized to the base 2. 
+      per second are logarithmized to the base 2. 
       The Replicanti interval is five to the power of its origin.
       The Exponential Glyph Alchemy effect is disabled.`;
       return vEffect;
