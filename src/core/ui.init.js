@@ -1,3 +1,5 @@
+import { DC } from "./constants"
+
 export const state = {
   view: {
     modal: {
@@ -20,13 +22,13 @@ export const state = {
         draggingGlyphInfo: {
           id: 0,
           type: "",
-          sacrificeValue: 0,
+          sacrificeValue: DC.D0,
         },
         mouseoverGlyphInfo: {
           id: 0,
           type: "",
-          sacrificeValue: 0,
-          refineValue: 0,
+          sacrificeValue: DC.D0,
+          refineValue: DC.D0,
           inInventory: false,
         },
         automator: {

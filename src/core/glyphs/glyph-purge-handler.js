@@ -1,7 +1,8 @@
+import { DC } from "../constants";
 // This actually deals with both sacrifice and refining, but I wasn't 100% sure what to call it
 export const GlyphSacrificeHandler = {
   // Anything scaling on sacrifice caps at this value, even though the actual sacrifice values can go higher
-  maxSacrificeForEffects: 1e100,
+  maxSacrificeForEffects: DC.E100,
   // This is used for glyph UI-related things in a few places, but is handled here as a getter which is only called
   // sparingly - that is, whenever the cache is invalidated after a glyph is sacrificed. Thus it only gets recalculated
   // when glyphs are actually sacrificed, rather than every render cycle.
@@ -10,7 +11,7 @@ export const GlyphSacrificeHandler = {
     // should check for -Infinity, but the clampMin works in practice because the minimum possible sacrifice
     // value is greater than 1 for even the weakest possible glyph
     return BASIC_GLYPH_TYPES.reduce(
-      (tot, type) => tot + Math.log10(Math.clampMin(player.reality.glyphs.sac[type], 1)), 0);
+      (tot, type) => tot + Decimal.log10(player.reality.glyphs.sac[type].clampMin(1)), 0);
   },
   get canSacrifice() {
     return RealityUpgrade(19).isBought;
@@ -26,9 +27,9 @@ export const GlyphSacrificeHandler = {
       case "cursed":
         Glyphs.removeFromInventory(glyph);
         return true;
-        case "amalgam":
-          Glyphs.removeFromInventory(glyph);
-          return true;
+      case "amalgam":
+        Glyphs.removeFromInventory(glyph);
+        return true;
     }
     return false;
   },
@@ -44,13 +45,13 @@ export const GlyphSacrificeHandler = {
     else Modal.glyphDelete.show({ idx: glyph.idx });
   },
   glyphSacrificeGain(glyph) {
-    if (!this.canSacrifice || Pelle.isDoomed) return 0;
-    if (glyph.type === "reality") return 0.01 * glyph.level * Achievement(171).effectOrDefault(1);
-    const pre10kFactor = Math.pow(Math.clampMax(glyph.level, 10000) + 10, 2.5);
-    const post10kFactor = 1 + Math.clampMin(glyph.level - 10000, 0) / 100;
+    if (!this.canSacrifice || Pelle.isDoomed) return DC.D0;
+    if (glyph.type === "reality") return new Decimal(0.01 * glyph.level * Achievement(171).effectOrDefault(1));
+    const pre10kFactor = Decimal.pow(Decimal.clampMax(glyph.level, 10000).add(10), 2.5);
+    const post10kFactor = Decimal.clampMin(glyph.level - 10000, 0).div(100).add(1);
     const power = Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.effectOrDefault(1);
-    return Math.pow(pre10kFactor * post10kFactor * glyph.strength *
-      Teresa.runRewardMultiplier * Achievement(171).effectOrDefault(1), power);
+    return Decimal.pow(pre10kFactor.mul(post10kFactor).mul(glyph.strength)
+      .mul(Teresa.runRewardMultiplier).mul(Achievement(171).effectOrDefault(1)), power);
   },
   sacrificeGlyph(glyph, force = false) {
     if (Pelle.isDoomed) return;
@@ -62,10 +63,10 @@ export const GlyphSacrificeHandler = {
       Modal.glyphSacrifice.show({ idx: glyph.idx, gain: toGain });
       return;
     }
-    if (player.reality.glyphs.sac[glyph.type] >= 1e300){
-      player.reality.glyphs.sac[glyph.type] = 1e300;
+    if (player.reality.glyphs.sac[glyph.type].gte(DC.E300)){
+      player.reality.glyphs.sac[glyph.type] = DC.E300;
     }
-    player.reality.glyphs.sac[glyph.type] = Math.min(player.reality.glyphs.sac[glyph.type] + toGain, 1e300);
+    player.reality.glyphs.sac[glyph.type] = player.reality.glyphs.sac[glyph.type].add(toGain).clampMax(DC.E300);
     GameCache.logTotalGlyphSacrifice.invalidate();
     Glyphs.removeFromInventory(glyph);
     EventHub.dispatch(GAME_EVENT.GLYPH_SACRIFICED, glyph);

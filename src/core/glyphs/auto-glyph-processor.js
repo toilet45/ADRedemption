@@ -45,7 +45,7 @@ export const AutoGlyphProcessor = {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         // Picked glyphs are never kept in this mode. Sacrifice cap needs to be checked since effarig caps
         // at a lower value than the others and we don't want to uselessly pick that to sacrifice all the time
-        return player.reality.glyphs.sac[glyph.type] >= GlyphSacrifice[glyph.type].cap
+        return player.reality.glyphs.sac[glyph.type].gte(GlyphSacrifice[glyph.type].cap)
           ? -Infinity
           : -player.reality.glyphs.sac[glyph.type];
       case AUTO_GLYPH_SCORE.EFFECT_COUNT:

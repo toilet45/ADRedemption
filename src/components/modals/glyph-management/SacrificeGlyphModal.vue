@@ -1,5 +1,6 @@
 <script>
 import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
+import { DC } from "../../../core/constants"
 
 export default {
   name: "SacrificeGlyphModal",
@@ -14,8 +15,8 @@ export default {
   },
   data() {
     return {
-      currentGlyphSacrifice: 0,
-      gain: 0,
+      currentGlyphSacrifice: DC.D0,
+      gain: DC.D0,
       confirmedSacrifice: false
     };
   },
@@ -26,7 +27,7 @@ export default {
     message() {
       return `Do you really want to sacrifice this Glyph? Your total power of sacrificed ${this.glyph.type}
       Glyphs will increase from ${format(this.currentGlyphSacrifice, 2, 2)} to
-      ${format(this.currentGlyphSacrifice + this.gain, 2, 2)}.`;
+      ${format(this.currentGlyphSacrifice.add(this.gain), 2, 2)}.`;
     }
   },
   methods: {

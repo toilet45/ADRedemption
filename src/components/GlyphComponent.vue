@@ -1,5 +1,6 @@
 <script>
 import { GlyphInfo } from "../../src/components/modals/options/SelectGlyphInfoDropdown";
+import { DC } from "../core/constants"
 
 import GlyphTooltip from "@/components/GlyphTooltip";
 
@@ -281,7 +282,7 @@ export default {
       suppressTooltip: false,
       isTouched: false,
       tooltipEnabled: false,
-      sacrificeReward: 0,
+      sacrificeReward: DC.D0,
       uncappedRefineReward: 0,
       refineReward: 0,
       displayLevel: 0,
