@@ -51,7 +51,7 @@ export const glyphSacrifice = {
       return Decimal.floor(Decimal.pow(base, 1.2).mul(1500)).toNumber();
     },
     description: amount => {
-      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects;
+      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects.toNumber();
       const nextDistantGalaxy = Math.pow(10, Math.pow((amount + 1) / 1500, 1 / 1.2) * Math.log10(sacCap)) - 1;
       const nextGalaxyText = amount < 1500
         ? ` (next at ${format(nextDistantGalaxy, 2, 2)})`
