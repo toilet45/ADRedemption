@@ -203,7 +203,8 @@ export const v = {
       maxShardReduction: () => 0,
       perReductionStep: 5,
       mode: V_REDUCTION_MODE.SUBTRACTION,
-      isHard: true
+      isSuperHard: true
+      //Reminder: ST gain is based on id, not isSuperHard. However isSuperHard is deciding whether it could be complete or not.
     },
     {
       id: 10,
@@ -217,7 +218,7 @@ export const v = {
       maxShardReduction: () => 0,
       perReductionStep: 5,
       mode: V_REDUCTION_MODE.SUBTRACTION,
-      isHard: true
+      isSuperHard: true
     },
     {
       id: 11,
@@ -231,7 +232,7 @@ export const v = {
       maxShardReduction: () => 0,
       perReductionStep: 5,
       mode: V_REDUCTION_MODE.SUBTRACTION,
-      isHard: true
+      isSuperHard: true
     },
     {
       id: 12,
