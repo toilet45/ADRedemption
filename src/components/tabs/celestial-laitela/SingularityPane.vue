@@ -42,7 +42,7 @@ export default {
           ? `(Auto-condensing in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`
           : "(Will immediately auto-condense)";
       }
-      return singularityTime < 1e-4 ? `(Enough Dark Energy in < ${(formatInt(1))} µs)`: `(Enough Dark Energy in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`;
+      return singularityTime < 1e-3 ? `(Enough Dark Energy in < ${(formatInt(1))} µs)`: `(Enough Dark Energy in ${TimeSpan.fromSeconds(singularityTime).toStringShort()})`;
     },
     baseSingularityTime() {
       return TimeSpan.fromSeconds(this.baseTimeToSingularity).toStringShort();
