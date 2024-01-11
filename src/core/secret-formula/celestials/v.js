@@ -238,7 +238,7 @@ export const v = {
       id: 12,
       name: "Painful Roads",
       description: value => `Get ${format(Decimal.pow10(value))} Infinity Points without Triad study 305 and 307.`,
-      values: [900, 1050, 1100, 1250],
+      values: [750, 950, 1150, 1350],
       condition: () => V.isSuperRunning && player.requirementChecks.reality.noTriad305 && player.requirementChecks.reality.noTriad307,
       currentValue: () => Currency.infinityPoints.value.log10(),
       formatRecord: x => format(Decimal.pow10(x), 2),
