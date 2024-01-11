@@ -44,6 +44,11 @@ class VRunUnlockState extends GameMechanicState {
       const modifiedStepCount = (Math.pow(1.15, stepCount) - 1) / 0.15;
       return modifiedStepCount * V.nextHardReductionCost(player.celestials.v.goalReductionSteps[this.id]);
     }
+    if (this.config.isSuperHard) {
+      // The numbers come from inside of nextHardReductionCost, this is an effective bulk-buy factor
+      const modifiedStepCount = (Math.pow(1.5, stepCount) - 1) / 0.5;
+      return modifiedStepCount * V.nextSuperHardReductionCost(player.celestials.v.goalReductionSteps[this.id]);
+    }
     return stepCount * V.nextNormalReductionCost();
   }
 
@@ -252,6 +257,9 @@ export const V = {
   },
   nextHardReductionCost(currReductionSteps) {
     return 1000 * Math.pow(1.15, currReductionSteps);
+  },
+  nextSuperHardReductionCost(currReductionSteps) {
+    return 1e24 * Math.pow(1.5, currReductionSteps);
   },
   quotes: Quotes.v,
   symbol: "⌬"
