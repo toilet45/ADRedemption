@@ -353,6 +353,8 @@ window.player = {
     reality: {
       noAM: true,
       noTriads: true,
+      noTriad305: true,
+      noTriad307: true,
       noPurchasedTT: true,
       noInfinities: true,
       noEternities: true,
@@ -1247,6 +1249,8 @@ export const Player = {
         player.requirementChecks.reality = {
           noAM: true,
           noTriads: true,
+          noTriad305: true,
+          noTriad307: true,
           noPurchasedTT: true,
           // Note that these two checks below are only used in row 2, which is in principle always before the "flow"
           // upgrades in row 3 which passively generate infinities/eternities. These upgrades won't cause a lockout
