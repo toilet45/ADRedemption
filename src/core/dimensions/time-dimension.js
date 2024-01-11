@@ -254,7 +254,7 @@ class TimeDimensionState extends DimensionState {
     } else if (V.isRunning) {
       mult = mult.pow(0.5);
     } else if (V.isSuperRunning) {
-      mult = mult.log2().toDecimal();
+      mult = mult.pow(0.000001);
     }
 
     return mult;

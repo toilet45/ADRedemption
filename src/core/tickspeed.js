@@ -156,9 +156,10 @@ export const Tickspeed = {
   },
 
   get current() {
-    const tickspeed = Effarig.isRunning
+    let tickspeed = Effarig.isRunning
       ? Effarig.tickspeed
       : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
+    if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 

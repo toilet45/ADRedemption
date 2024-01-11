@@ -81,7 +81,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   } else if (V.isRunning) {
     multiplier = multiplier.pow(0.5);
   } else if (V.isSuperRunning) {
-    multiplier = multiplier.log2().toDecimal();
+    multiplier = multiplier.pow(0.000001);
   }
 
   // This power effect goes intentionally after all the nerf effects and shouldn't be moved before them
