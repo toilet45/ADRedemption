@@ -572,8 +572,8 @@ export function gameLoop(passDiff, options = {}) {
   let diff = passDiff;
   const thisUpdate = Date.now();
   const realDiff = diff === undefined
-    ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
-    : diff;
+    ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7) * (player.testSpeed ?? 1)
+    : diff * (player.testSpeed ?? 1);
   if (!GameStorage.ignoreBackupTimer) player.backupTimer += realDiff;
 
   // For single ticks longer than a minute from the GameInterval loop, we assume that the device has gone to sleep or
@@ -583,7 +583,7 @@ export function gameLoop(passDiff, options = {}) {
   // Note that we have to explicitly call all the real-time mechanics with the existing value of realDiff, because
   // simply letting it run through simulateTime seems to result in it using zero
   CorruptionData.update() //We call this here since it resets every refresh, but we cant have it directly point to player because else multiplier tab complains
-  if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4) {
+  if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4 * (player.testSpeed ?? 1)) {
     GameIntervals.gameLoop.stop();
     simulateTime(realDiff / 1000, true);
     realTimeMechanics(realDiff);
