@@ -47,7 +47,7 @@ export const AutoGlyphProcessor = {
         // at a lower value than the others and we don't want to uselessly pick that to sacrifice all the time
         return player.reality.glyphs.sac[glyph.type].gte(GlyphSacrifice[glyph.type].cap)
           ? -Infinity
-          : player.reality.glyphs.sac[glyph.type].neg();
+          : player.reality.glyphs.sac[glyph.type].neg().toNumber();
       case AUTO_GLYPH_SCORE.EFFECT_COUNT:
         // Effect count, plus a very small rarity term to break ties in favor of rarer glyphs
         return strengthToRarity(glyph.strength) / 1000 + getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
