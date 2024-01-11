@@ -5,7 +5,7 @@ export const Effects = {
    */
   sum(...effectSources) {
     let result = 0;
-    applyEffectsOf(effectSources, v => result += v);
+    applyEffectsOf(effectSources, v => {if (v instanceof Decimal) result+= v.toNumber();else result+= v});
     return result;
   },
   /**
@@ -14,7 +14,8 @@ export const Effects = {
    */
   product(...effectSources) {
     let result = 1;
-    applyEffectsOf(effectSources, v => result *= v);
+   // applyEffectsOf(effectSources, v => result *= v);
+   applyEffectsOf(effectSources, v => {if (v instanceof Decimal) result*= v.toNumber();else result*= v});
     return result;
   },
   /**
