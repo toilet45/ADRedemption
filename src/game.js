@@ -123,7 +123,7 @@ export function gainedInfinityPoints(nosoftcap = false) {
   } else if (V.isRunning) {
     ip = ip.pow(0.5);
   } else if (V.isSuperRunning) {
-    ip = new Decimal(ip).log2().toDecimal();
+    ip = ip.log2().toDecimal();
   } else if (Laitela.isRunning) {
     ip = dilatedValueOf(ip);
   }
@@ -206,7 +206,7 @@ export function gainedEternityPoints() {
   } else if (V.isRunning) {
     ep = ep.pow(0.5);
   } else if (V.isSuperRunning) {
-    ep = new Decimal(ep).log2().toDecimal();
+    ep = ep.log2().toDecimal();
   } else if (Laitela.isRunning) {
     ep = dilatedValueOf(ep);
   }

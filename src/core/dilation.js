@@ -153,7 +153,7 @@ export function getDilationGainPerSecond() {
   if(Ra.unlocks.relicShardBoost.isUnlocked) dtRate = dtRate.pow(1 + Math.max(0, (Currency.relicShards.value.log10() / 1337)));
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
-  if (V.isSuperRunning) dtRate = Decimal.log(dtRate,2).toDecimal();
+  if (V.isSuperRunning) dtRate = dtRate.log2().toDecimal();
   return dtRate;
 }
 

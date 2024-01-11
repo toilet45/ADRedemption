@@ -1,6 +1,6 @@
 import { DC } from "./constants";
 import { Effects } from "./game-mechanics/effects";
-import { Ra } from "./globals";
+import { Ra, V } from "./globals";
 
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
@@ -158,7 +158,7 @@ export const Tickspeed = {
   get current() {
     const tickspeed = Effarig.isRunning
       ? Effarig.tickspeed
-      : this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
+      : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 

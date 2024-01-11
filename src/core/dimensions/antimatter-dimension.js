@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 

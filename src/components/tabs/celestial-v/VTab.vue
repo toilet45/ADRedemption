@@ -27,6 +27,7 @@ export default {
       isFlipped: false,
       isSuperFlipped: false,
       isRunning: false,
+      isSuperRunning: false,
       hasAlchemy: false,
       MU15bought: false,
       flip: "normal",
@@ -146,8 +147,16 @@ export default {
       return {
         "l-v-hexagon": true,
         "c-v-run-button": true,
-        "c-v-run-button--running": this.isRunning||this.isSuperRunning,
-        //"c-v-run-button--superrunning": this.isSuperRunning,
+        "c-v-run-button--running": this.isRunning,
+        "c-celestial-run-button--clickable": !this.isDoomed,
+        "o-pelle-disabled-pointer": this.isDoomed
+      };
+    },
+    superRunButtonClassObject() {
+      return {
+        "l-v-hexagon": true,
+        "c-v-super-run-button": true,
+        "c-v-super-run-button--running": this.isSuperRunning,
         "c-celestial-run-button--clickable": !this.isDoomed,
         "o-pelle-disabled-pointer": this.isDoomed
       };
@@ -422,7 +431,7 @@ export default {
 
           <div
             v-else-if="hex.isSuperRunButton"
-            :class="runButtonClassObject"
+            :class="superRunButtonClassObject"
             @click="startSuperRun()"
           >
             <b
