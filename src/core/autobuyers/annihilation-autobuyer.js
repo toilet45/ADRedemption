@@ -37,6 +37,10 @@ export class AnnihilationAutobuyerState extends AutobuyerState {
     return "multiplier";
   }
 
+  get description() {
+    return "Multiplier";
+  }
+
   tick() {
     if (Laitela.darkMatterMultGain >= this.multiplier) {
       Laitela.annihilate();

@@ -38,6 +38,10 @@ export class SacrificeAutobuyerState extends AutobuyerState {
     return "multiplier";
   }
 
+  get description() {
+    return "Multiplier";
+  }
+
   tick() {
     if (Sacrifice.nextBoost.lt(Decimal.max(this.multiplier, 1.01))) return;
     sacrificeReset();

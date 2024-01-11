@@ -699,7 +699,10 @@ export const migrations = {
     }
     delete player.celestials.v.wantsSuperFlipped;
     delete player.celestials.v.wantsFlipped;
-  }
+  },
+  51.021: player => {
+    player.auto.singCap.multiplier = 0;
+  },
 },
 
   normalizeTimespans(player) {

@@ -1,4 +1,3 @@
-import { PlayerProgress } from "../player-progress";
 import { AutobuyerState } from "./autobuyer";
 
 export class SingularityCapIncreaseAutobuyerState extends AutobuyerState {
@@ -35,6 +34,10 @@ export class SingularityCapIncreaseAutobuyerState extends AutobuyerState {
   }
 
   get inputEntry() {
+    return "multiplier";
+  }
+
+  get description() {
     return "Maximum singularity time (ms)";
   }
 
