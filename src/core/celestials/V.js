@@ -174,6 +174,12 @@ export const V = {
       if (this.spaceTheorems >= 36) SpeedrunMilestones(22).tryComplete();
     }
 
+    if (this.isSuperRunning) {
+      for (const unlock of VRunUnlocks.all) {
+        unlock.tryComplete();
+      }
+    }
+
     if (VUnlocks.raUnlock.canBeApplied && !Ra.unlocks.autoTP.canBeApplied) {
       Ra.checkForUnlocks();
     }
