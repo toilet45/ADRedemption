@@ -346,6 +346,11 @@ export const Ra = {
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
+    //This function did its job well, the 0ms issue is due to Number precision lost.
+    //If the issue did need to fix, All ra should be decimalised.
+    //Which is dangerous and I suggest pushing the work later
+    //sxy
+
     // Quadratic formula for growth (uses constant growth for a = 0)
     const x = MendingUpgrade(15).isBought? 1.5:1;
     const a = Enslaved.isStoringRealTime
