@@ -89,7 +89,7 @@ export default {
       this.atCap = player.infinityPower.exponent >= 9e15;
       this.end = new Decimal("1e9000000000000000");
       this.capExpo = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1;
-      this.trueID8cap = player.timestudy.studies.includes(310) ? 1e10 ** this.capExpo * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : 1e10 ** this.capExpo
+      this.trueID8cap = player.timestudy.studies.includes(310) ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : 1e10
     },
     maxAll() {
       InfinityDimensions.buyMax();
