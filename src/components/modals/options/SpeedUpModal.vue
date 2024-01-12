@@ -71,6 +71,8 @@ export default {
     <div>
       <div>
         Set game speed for testing purposes.
+        A report will be displayed after settings the testing speed back to 1 informing how
+        long was the speed up effecitvely.
       </div>
       <div
           class="c-modal-hard-reset-danger"
