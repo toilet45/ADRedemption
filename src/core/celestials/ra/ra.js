@@ -342,7 +342,9 @@ export const Ra = {
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
-    return Math.floor(Math.pow(Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6, perMemScaling));
+    let primeAnswer=Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
+    //if(level>=26) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    return Math.floor(Math.pow(primeAnswer, perMemScaling));
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
