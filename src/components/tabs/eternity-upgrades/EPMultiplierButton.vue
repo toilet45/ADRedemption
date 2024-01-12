@@ -27,7 +27,7 @@ export default {
       return Autobuyer.epMult;
     },
     classObject() {
-      if (this.isDoomed) {
+      if (this.isDoomed && !this.isActiveInDoom) {
         return {
           "o-eternity-upgrade": true,
           "o-eternity-upgrade--useless": !this.isAffordable,
