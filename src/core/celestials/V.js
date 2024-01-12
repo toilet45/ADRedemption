@@ -210,9 +210,9 @@ export const V = {
     let sum = 0
     let mult = MendingUpgrade(14).isBought ? 3 : 1
     for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
-      sum += player.celestials.v.runUnlocks[i] * mult
-      if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult
-      if (i>=12) sum += player.celestials.v.runUnlocks[i] * 3 * mult
+      sum += player.celestials.v.runUnlocks[i] * mult;
+      if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult;
+      if (i>=12) sum += player.celestials.v.runUnlocks[i] * 4 * mult;
     }
     this.spaceTheorems = sum;
   },
@@ -249,7 +249,7 @@ export const V = {
   },
   get isFullyCompleted() {
     let x =  MendingUpgrade(14).isBought? 198 : 66;
-    //if(Ra.unlocks.placeholderV2.isUnlocked) x = bigger stuff
+    if(Ra.unlocks.placeholderV2.isUnlocked) x = MendingUpgrade(14).isBought? 648 : 216;
     return this.spaceTheorems >= x;
   },
   nextNormalReductionCost() {
