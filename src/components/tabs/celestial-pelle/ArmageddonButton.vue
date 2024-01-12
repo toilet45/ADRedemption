@@ -14,15 +14,13 @@ export default {
       realityShardGain: new Decimal(0),
       nextRealityShardGain: new Decimal(0),
       canArmageddon: false,
-      mendupg5: false
+      mendupg5: false,
+      remnantsTotal: "",
     };
   },
   computed: {
     remnants() {
       return format(this.remnantsGain, 2, this.remnantsGain > 1 ? 0 : 2);
-    },
-    remnantsTotal() {
-      return format(player.celestials.pelle.remnants, 3);
     },
     buttonClassObject() {
       return {
@@ -30,9 +28,9 @@ export default {
         "l-armageddon-button": !this.isHeader,
         "l-reality-button": this.isHeader,
         "l-armageddon-button--header": this.isHeader,
-        "c-armageddon-button--unavailable": !this.canArmageddon
+        "c-armageddon-button--unavailable": !this.canArmageddon,
       };
-    }
+    },
   },
   methods: {
     update() {
@@ -40,7 +38,8 @@ export default {
       this.realityShardGain.copyFrom(Pelle.realityShardGainPerSecond);
       this.nextRealityShardGain.copyFrom(Pelle.nextRealityShardGain);
       this.canArmageddon = (Pelle.canArmageddon && !MendingUpgrades.all[4].isBought);
-      this.mendupg5 = MendingUpgrades.all[4].isBought
+      this.mendupg5 = MendingUpgrades.all[4].isBought;
+      this.remnantsTotal = format(player.celestials.pelle.remnants, 2);
     },
     manualArmageddon() {
       if (!this.canArmageddon) return;
