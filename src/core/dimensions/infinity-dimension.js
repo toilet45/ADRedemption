@@ -248,7 +248,7 @@ class InfinityDimensionState extends DimensionState {
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
      const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
      let y = this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap ** x
-     if (player.timestudy.studies.includes(310)) y = (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
+     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
      return y;
   }
 
