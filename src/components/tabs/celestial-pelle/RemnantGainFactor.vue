@@ -24,13 +24,14 @@ export default {
       dilationMult: [1, 1, 1],
       remnants: 0,
       remnantsGain: 0,
-      MendingUnlocked: false
+      MendingUnlocked: false,
+      autoRemnantGain: false,
     };
   },
   computed: {
     opacity() {
       return Number(!this.hide);
-    }
+    },
   },
   methods: {
     update() {
@@ -40,7 +41,8 @@ export default {
       this.dilationMult = PelleStrikes.dilation.hasStrike ? [500, 10, 5] : [1, 1, 1];
       this.remnants = Pelle.cel.remnants;
       this.remnantsGain = Pelle.remnantsGain;
-      this.MendingUnlocked = PlayerProgress.mendingUnlocked()
+      this.MendingUnlocked = PlayerProgress.mendingUnlocked();
+      this.autoRemnantGain = MendingUpgrades.all[4].isBought;
     }
   }
 };
@@ -80,7 +82,7 @@ export default {
               <div class="l-remnant-factors-item">
                 Static power
               </div>
-              <div class="l-remnant-factors-item">
+              <div class="l-remnant-factors-item" v-if="!autoRemnantGain">
                 Existing Remnants
               </div>
               <div class="l-remnant-factors-item">
@@ -106,7 +108,7 @@ export default {
               <div class="l-remnant-factors-item">
                 ^
               </div>
-              <div class="l-remnant-factors-item">
+              <div class="l-remnant-factors-item" v-if="!autoRemnantGain">
                 -
               </div>
             </div>
@@ -131,11 +133,14 @@ export default {
               <div class="l-remnant-factors-item">
                 {{ format(7.5, 2, 2) }}
               </div>
-              <div class="l-remnant-factors-item">
+              <div class="l-remnant-factors-item" v-if="!autoRemnantGain">
                 {{ format(remnants, 2, 0) }}
               </div>
-              <div class="l-remnant-factors-item">
+              <div class="l-remnant-factors-item" v-if="!autoRemnantGain">
                 {{ format(remnantsGain, 2, remnantsGain >= 1 ? 0 : 2) }}
+              </div>
+              <div class="l-remnant-factors-item" v-else>
+                {{ format(remnants, 2, 0) }}
               </div>
             </div>
           </div>
