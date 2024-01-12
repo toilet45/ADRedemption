@@ -93,7 +93,7 @@ export default {
           {}
         ];
       /*return this.isFlipped && this.wantsFlipped
-        ? Ra.unlocks.placeholderV2.isUnlocked
+        ? Ra.unlocks.unlockSHardV.isUnlocked
           ? [
             VRunUnlocks.all[6],
             VRunUnlocks.all[9],

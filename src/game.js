@@ -164,7 +164,7 @@ export function gainedMendingPoints(){
     Ra.unlocks.boostMVRGain
     );
   MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
-  if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
+  if (Ra.unlocks.mendingPointsGainMult.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
 }

@@ -151,7 +151,7 @@ class RaPetState extends GameMechanicState {
     if (Ra.unlocks.pelleXP.isUnlocked){
       res *= (Math.log10(player.records.bestReality.remWithoutGG + 1) / 1.6667) + 1;
     }
-    if(Pelle.isDoomed && Ra.unlocks.placeholderP8.isUnlocked){
+    if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
       res *= 5;
     }
     if (!Ra.isRunning && Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) res /= 100;

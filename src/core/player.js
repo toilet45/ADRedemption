@@ -5,6 +5,7 @@ import { AUTOMATOR_MODE, AUTOMATOR_TYPE } from "./automator/automator-backend";
 import { DC } from "./constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
+import { Ra } from "./globals";
 
 // This is actually reassigned when importing saves
 // eslint-disable-next-line prefer-const
@@ -1194,7 +1195,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return player.isGameEnd || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || (Pelle.isDoomed && !player.isGameEnd);
+    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;

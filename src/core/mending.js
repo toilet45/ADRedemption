@@ -35,7 +35,7 @@ export function mendingReset() {
     Tab.dimensions.antimatter.show() // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed ||(player.isGameEnd && GameEnd.endState >= 14.5)){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(!Pelle.isDoomed || player.isGameEnd){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }

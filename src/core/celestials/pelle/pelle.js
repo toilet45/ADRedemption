@@ -28,7 +28,7 @@ const disabledMechanicUnlocks = {
   glyphs: () => !PelleRifts.vacuum.milestones[0].canBeApplied,
   V: () => ({}),
   singularity: () => ({}),
-  continuum: () => !Ra.unlocks.placeholderP9.isUnlocked,
+  continuum: () => !Ra.unlocks.unlockPelleContinuum.isUnlocked,
   alchemy: () => ({}),
   achievementMult: () => ({}),
   blackhole: () => ({}),
@@ -205,8 +205,9 @@ export const Pelle = {
   },
 
   get uselessInfinityUpgrades() {
-    if (Ra.unlocks.placeholderP6.isUnlocked) return ["passiveGen", "infinitiedGeneration"];
-    return ["passiveGen", "ipMult", "infinitiedGeneration"];
+    let result = ["passiveGen", "infinitiedGeneration"];
+    if (!Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked) result.push("ipMult");
+    return result;
   },
 
   get uselessTimeStudies() {
@@ -329,7 +330,7 @@ export const Pelle = {
   },
 
   get glyphStrength() {
-    return 1 + (Ra.unlocks.placeholderP10.isUnlocked ? (Ra.pets.pelle.level - 50) * 0.05 : 0); //3.5 is 100%
+    return 1 + (Ra.unlocks.pelleRarityBoost.isUnlocked ? (Ra.pets.pelle.level - 50) * 0.05 : 0); //3.5 is 100%
   },
 
   antimatterDimensionMult(x) {

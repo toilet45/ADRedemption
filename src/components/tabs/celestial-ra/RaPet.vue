@@ -106,7 +106,7 @@ export default {
       this.nextMemoryChunkUpgradeEstimate = Ra.timeToGoalString(pet, this.chunkUpgradeCost - this.memories);
 
       this.mu19Bought = MendingUpgrade(19).isBought;
-      this.secondSource = Ra.unlocks.placeholderR4.isUnlocked;
+      this.secondSource = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked;
     },
     nextUnlockLevel() {
       const levelCap = MendingUpgrade(19).isBought?100:25;

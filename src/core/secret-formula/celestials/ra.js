@@ -9,8 +9,8 @@ export const ra = {
       secondaryMemoryChunkGain: "Perk Points",
       requiredUnlock: () => undefined,
       rawMemoryChunksPerSecond: () => {
-        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.log10(Math.max(1, Currency.perkPoints.value)) : 1;
-        return 4 * Math.pow((Ra.unlocks.placeholderR9.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.log10(Math.max(1, Currency.perkPoints.value)) : 1;
+        return 4 * Math.pow((Ra.unlocks.improvedChunkGains.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
     },
@@ -24,11 +24,11 @@ export const ra = {
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.effarigUnlock),
       rawMemoryChunksPerSecond: () =>{
         let x = new Decimal(0);
-        if(Ra.unlocks.placeholderR4.isUnlocked){
+        if(Ra.unlocks.secondaryMemoryChunkGain.isUnlocked){
           Object.values(player.reality.glyphs.sac).every(value => x = x.add(value))
         }
         x = x.div(7);
-        return (Ra.unlocks.placeholderR9.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.placeholderP9.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
+        return (Ra.unlocks.improvedChunkGains.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.unlockPelleContinuum.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
       },
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },
@@ -41,8 +41,8 @@ export const ra = {
       secondaryMemoryChunkGain: "Stored Real Time",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.enslavedUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.placeholderR4.isUnlocked ?  1 + (player.celestials.enslaved.storedReal / 3.6e6) : 1;
-        return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (player.celestials.enslaved.storedReal / 3.6e6) : 1;
+        return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
     },
@@ -55,8 +55,8 @@ export const ra = {
       secondaryMemoryChunkGain: "Achievement Multiplier for Dimensions",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.vUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
-        return Ra.unlocks.placeholderR9.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
+        return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
     },
@@ -70,7 +70,7 @@ export const ra = {
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = 0;
-        if(Ra.unlocks.placeholderR4.isUnlocked){
+        if(Ra.unlocks.secondaryMemoryChunkGain.isUnlocked){
           x += Ra.pets.teresa.memories;
           x += Ra.pets.effarig.memories;
           x += Ra.pets.enslaved.memories;
@@ -80,7 +80,7 @@ export const ra = {
           x += Ra.pets.pelle.memories
         }
         x /= 7;
-        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.placeholderR9.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
+        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
       },
       memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
     },
@@ -93,8 +93,8 @@ export const ra = {
       secondaryMemoryChunkGain: "Dark Matter",
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
-        return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.placeholderP9.isUnlocked ? 1.667 : 1.5))) * x;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
+        return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },
@@ -107,8 +107,8 @@ export const ra = {
       secondaryMemoryChunkGain: "Reality Shards",
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.placeholderR4.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
-        let y = Ra.unlocks.placeholderR9.isUnlocked ? 1.05 : 1;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Math.log10(Currency.realityShards.value.toNumber()), 1) : 1;
+        let y = Ra.unlocks.improvedChunkGains.isUnlocked ? 1.05 : 1;
         return (x * player.celestials.pelle.remnants) ** y;
       },
       memoryProductionMultiplier: () => 1
@@ -549,7 +549,7 @@ export const ra = {
       level: 30,
       displayIcon: '*'
     },
-    placeholderV2: {
+    unlockSHardV: {
       id: 23,
       id2: 0,
       reward: "Unlock More V-Achievements and V-Milestones",
@@ -581,7 +581,7 @@ export const ra = {
       level: 75,
       displayIcon: '*'
     },
-    placeholderV6: {
+    unlockMyriads: {
       id: 27,
       id2: 0,
       reward: "Unlock a Myriad Study every 2 Memory Levels past 90",
@@ -631,7 +631,7 @@ export const ra = {
       level: 8,
       displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
-    placeholderR4: {
+    secondaryMemoryChunkGain: {
       id: 1,
       id2: 1,
       reward: "Add a secondary source for Memory Chunk Gain for each Celestial",
@@ -671,7 +671,7 @@ export const ra = {
       level: 40,
       displayIcon: '*'
     },
-    placeholderR9: {
+    improvedChunkGains: {
       id: 6,
       id2: 1,
       reward: "Base Memory Chunk formula for all Celestials is slightly improved",
@@ -687,7 +687,7 @@ export const ra = {
       level: 65,
       displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
-    placeholderR11: {
+    freeDimBoosts: {
       id: 8,
       id2: 1,
       reward: "Gain Free Dimension Boosts based on Ra Level",
@@ -695,7 +695,7 @@ export const ra = {
       level: 75,
       displayIcon: "*"
     },
-    placeholderR12: {
+    improvedPetUpgrades: {
       id: 9,
       id2: 1,
       reward: "Increase Recollection and Fragmentation bases based on Memories",
@@ -703,7 +703,7 @@ export const ra = {
       level: 90,
       displayIcon: "?"
     },
-    placeholderR13: {
+    mendingPointsGainMult: {
       id: 10,
       id2: 1,
       reward: "Gain a Multiversal Remain Multiplier based on total Memory Levels",
@@ -818,7 +818,7 @@ export const ra = {
       level: 90,
       displayIcon: "??"
     },
-    placeholderL14: {
+    unlockMultiversalDimensions: {
       id: 24,
       id2: 1,
       reward: "Unlock Multiversal Dimensions [name TBD]",
@@ -851,7 +851,7 @@ export const ra = {
       level: 5,
       displayIcon: '*'
     },
-    placeholderP4: {
+    unlockPelleTPMult: {
       id: 28,
       id2: 1,
       reward: "Re-enable Tachyon Particle Multiplier in Doomed Reality, but it's decreased to ×1.1",
@@ -859,7 +859,7 @@ export const ra = {
       level: 8,
       displayIcon: "*"
     },
-    placeholderP5: {
+    exitDoom: {
       id: 29,
       id2: 1,
       reward: "Doomed Reality can be exitied, but it causes a Mending Reset (with no benefits)",
@@ -867,7 +867,7 @@ export const ra = {
       level: 10,
       displayIcon: "*"
     },
-    placeholderP6: {
+    unlockPelleIPAndEPMult: {
       id: 30,
       id2: 1,
       reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.01 and ×1.5 respectively",
@@ -875,7 +875,7 @@ export const ra = {
       level: 15,
       displayIcon: "*"
     },
-    placeholderP7: {
+    unlockPelleGlyphEffects: {
       id: 31,
       id2: 1,
       reward: "Disabled Glyph Effects are re-enabled in Doomed Reality, but are severely nerfed",
@@ -883,7 +883,7 @@ export const ra = {
       level: 25,
       displayIcon: "?"
     },
-    placeholderP8: {
+    boostMemoryGain: {
       id: 0,
       id2: 2,
       reward: "Memory Gain for all Celestials is boosted in Doomed Reality",
@@ -891,7 +891,7 @@ export const ra = {
       level: 30,
       displayIcon: "*"
     },
-    placeholderP9: {
+    unlockPelleContinuum: {
       id: 1,
       id2: 2,
       reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
@@ -899,7 +899,7 @@ export const ra = {
       level: 40,
       displayIcon: "*"
     },
-    placeholderP10: {
+    pelleRarityBoost: {
       id: 2,
       id2: 2,
       reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",

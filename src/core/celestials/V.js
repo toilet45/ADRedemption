@@ -245,11 +245,11 @@ export const V = {
     return Ra.unlocks.unlockHardV.isUnlocked;
   },
   get isSuperFlipped() {
-    return Ra.unlocks.placeholderV2.isUnlocked;
+    return Ra.unlocks.unlockSHardV.isUnlocked;
   },
   get isFullyCompleted() {
     let x =  MendingUpgrade(14).isBought? 198 : 66;
-    if(Ra.unlocks.placeholderV2.isUnlocked) x = MendingUpgrade(14).isBought? 648 : 216;
+    if(Ra.unlocks.unlockSHardV.isUnlocked) x = MendingUpgrade(14).isBought? 648 : 216;
     return this.spaceTheorems >= x;
   },
   nextNormalReductionCost() {
