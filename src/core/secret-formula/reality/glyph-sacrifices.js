@@ -22,7 +22,7 @@ export const glyphSacrifice = {
   "infinity": {
     id: "infinity",
     effect: added => {
-      if (Pelle.isDisabled("glyphsac")) return DC.D0;
+      if (Pelle.isDisabled("glyphsac")) return DC.D1;
       const sac = player.reality.glyphs.sac.infinity.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       return new Decimal(1 + Decimal.log10(Decimal.pow(capped, 0.2).div(100).add(1)));
