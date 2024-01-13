@@ -28,7 +28,13 @@ export const ra = {
           Object.values(player.reality.glyphs.sac).every(value => x = x.add(value))
         }
         x = x.div(7);
-        return (Ra.unlocks.improvedChunkGains.isUnlocked ? 100 : 4) * Decimal.pow(Effarig.shardsGained, (Ra.unlocks.unlockPelleContinuum.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
+        let primeShardsGained=Effarig.shardsGained;
+        let softcapedShardGained=0;
+        if(primeShardsGained.gt(1e100)){
+          softcapedShardGained = Decimal.pow(primeShardsGained.div(1e100),0.3);
+          primeShardsGained = new Decimal(1e100);
+        }
+        return (Ra.unlocks.improvedChunkGains.isUnlocked ? 100 : 4) * Decimal.pow((primeShardsGained.times(softcapedShardGained)), (Ra.unlocks.unlockPelleContinuum.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
       },
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },
@@ -38,10 +44,10 @@ export const ra = {
       color: "#f1aa7f",
       chunkGain: "Time Shards",
       memoryGain: "total time played",
-      secondaryMemoryChunkGain: "Stored Real Time",
+      secondaryMemoryChunkGain: "Based game speed",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.enslavedUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (player.celestials.enslaved.storedReal / 3.6e6) : 1;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(getGameSpeedupFactor())/100) : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
@@ -80,9 +86,11 @@ export const ra = {
           x += Ra.pets.pelle.memories
         }
         x /= 7;
-        return 4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
+        let primeAnswer=4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
+        return Math.pow(primeAnswer,0.0001);
       },
       memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
+      
     },
     laitela: {
       id: "laitela",
@@ -94,7 +102,8 @@ export const ra = {
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
-        return (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
+        let primeAnswer = (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
+        return Math.pow(primeAnswer,0.0001);
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },

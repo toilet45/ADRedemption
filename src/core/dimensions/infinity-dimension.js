@@ -274,7 +274,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get totalAmount() {
-    if (this.tier==8) return Decimal.min(this.amount.max(this.continuumValue*10),1e25);
+    //if (this.tier==8) return Decimal.min(this.amount.max(this.continuumValue*10),1e25);
     return this.amount.max(this.continuumValue*10);
   }
 
