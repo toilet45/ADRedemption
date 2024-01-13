@@ -102,7 +102,7 @@ export const ra = {
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 308, 1) : 1;
-        let primeAnswer = (2 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/5e11, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
+        let primeAnswer = (2 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/(Ra.unlocks.unlockDMD.isUnlocked ? 1e2 : 5e11), (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
         return primeAnswer;
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
@@ -774,7 +774,7 @@ export const ra = {
     unlockDMD: {
       id: 17,
       id2: 1,
-      reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels`,
+      reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels. Improve Lai'tela's memory chunk formula.`,
       pet: "laitela",
       level: 25,
       displayIcon: '*'

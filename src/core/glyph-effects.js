@@ -114,7 +114,7 @@ class GlyphEffectConfig {
     return typeof shortDesc === "function" ? shortDesc() : shortDesc;
   }
 
-  get isDisabledByDoomed() {
+  get isDisabledByDoomed() { //this looks vue only
     return Pelle.isDoomed && !this._enabledInDoomed;
   }
 
