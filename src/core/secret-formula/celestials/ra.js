@@ -87,7 +87,7 @@ export const ra = {
         }
         x /= 7;
         let primeAnswer=4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
-        return Math.pow(primeAnswer,0.0001);
+        return Math.pow(primeAnswer,0.000001);
       },
       memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
       
@@ -103,7 +103,7 @@ export const ra = {
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
         let primeAnswer = (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
-        return Math.pow(primeAnswer,0.0001);
+        return Math.pow(primeAnswer,0.000001);
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },

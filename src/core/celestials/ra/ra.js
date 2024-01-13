@@ -336,7 +336,7 @@ export const Ra = {
     let fixCostMulti = 1
     if (level >= 25) {fixCostMulti = 1e44}
     if (level >= 30) {perMemScaling = 1.35;fixCostMulti = 1e48}
-    if (level >= 40) {perMemScaling = 1.39;fixCostMulti = 1e61} 
+    if (level >= 40) {perMemScaling = 1.375;} 
     if (level >= 50) {perMemScaling = 1.5} 
     if (level >= 65) {perMemScaling = 1.6} 
     if (level >= 75) {perMemScaling = 1.75} 
