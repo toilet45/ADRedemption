@@ -703,6 +703,12 @@ export const migrations = {
   51.021: player => {
     player.auto.singCap.multiplier = 0;
   },
+  51.022: player => {
+    player.isHoldingLClick = false;
+    player.celestials.laitela.holdStart = 0;
+    player.celestials.laitela.heldTier = 0;
+    player.celestials.laitela.heldType = "";
+  }
 },
 
   normalizeTimespans(player) {
