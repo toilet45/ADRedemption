@@ -120,7 +120,7 @@ export const ra = {
         let y = Ra.unlocks.improvedChunkGains.isUnlocked ? 1.05 : 1;
         return (x * player.celestials.pelle.remnants) ** y;
       },
-      memoryProductionMultiplier: () => 1
+      memoryProductionMultiplier: () => Ra.unlocks.pelleXP.effectOrDefault(1)
     }
   },
   unlocks: {
@@ -856,7 +856,7 @@ export const ra = {
       id: 27,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
-      //effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
+      effect: () => Math.max(Math.log10(player.records.thisReality.remWithoutGG)/2, 1),
       pet: "pelle",
       level: 5,
       displayIcon: '*'
@@ -891,7 +891,7 @@ export const ra = {
       reward: "Disabled Glyph Effects are re-enabled in Doomed Reality, but are severely nerfed",
       pet: "pelle",
       level: 25,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-clone"></span>`
     },
     boostMemoryGain: {
       id: 0,
