@@ -177,7 +177,7 @@ export function warpReality(){
 
 function totalEPMult() {
   return Pelle.isDisabled("EPMults")
-    ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])
+    ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2]).times(getAdjustedGlyphEffect("timeEP")) : Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])
     : getAdjustedGlyphEffect("cursedEP")
       .times(ShopPurchase.EPPurchases.currentMult)
       .timesEffectsOf(
