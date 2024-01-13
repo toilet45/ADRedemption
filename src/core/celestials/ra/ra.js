@@ -138,7 +138,7 @@ class RaPetState extends GameMechanicState {
   }
 
   get requiredMemories() {
-    return Ra.requiredMemoriesForLevel(this.level) / this.shopWeakenScalingEffect;
+    return Ra.requiredMemoriesForLevel(this, this.level);
   }
 
   get memoryChunksPerSecond() {
@@ -192,11 +192,11 @@ class RaPetState extends GameMechanicState {
   }
 
   get memoryUpgradeCapped() {
-    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1) / this.shopWeakenScalingEffect;
+    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(this, Ra.levelCap - 1);
   }
 
   get chunkUpgradeCapped() {
-    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1) / this.shopWeakenScalingEffect;
+    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(this, Ra.levelCap - 1);
   }
 
   purchaseMemoryUpgrade() {
@@ -338,7 +338,7 @@ export const Ra = {
     return `${boostList.slice(0, -1).join(", ")}, and ${boostList[boostList.length - 1]}`;
   },
   // This is the exp required ON "level" in order to reach "level + 1"
-  requiredMemoriesForLevel(level) {
+  requiredMemoriesForLevel(pet, level) {
     if (level >= Ra.levelCap) return Infinity;
     let perMemScaling = 1
     let fixCostMulti = 1
@@ -352,8 +352,9 @@ export const Ra = {
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
-    let primeAnswer=Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
+    let primeAnswer = Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
     if (level>=60) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    primeAnswer = primeAnswer / pet.shopWeakenScalingEffect;
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)

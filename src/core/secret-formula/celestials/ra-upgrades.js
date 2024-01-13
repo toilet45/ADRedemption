@@ -59,7 +59,7 @@ export const raUpgrades = {
   weakenTeresaScaling: weakenScalingRebuyable({
     id: "weakenTeresaScaling",
     celestial: "teresa",
-    description: () => `Weaken Teresa's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Teresa's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,//temporary, have to decide what we're gonna use (Fn its MvR for all, defined above and in ra-upgrades.js (the other one))
     currencyLabel: "NYI",
@@ -67,7 +67,7 @@ export const raUpgrades = {
   weakenEffarigScaling: weakenScalingRebuyable({
     id: "weakenEffarigScaling",
     celestial: "effarig",
-    description: () => `Weaken Effarig's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Effarig's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
@@ -75,7 +75,7 @@ export const raUpgrades = {
   weakenEnslavedScaling: weakenScalingRebuyable({
     id: "weakenEnslavedScaling",
     celestial: "enslaved",
-    description: () => `Weaken Nameless' level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Nameless' level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
@@ -83,7 +83,7 @@ export const raUpgrades = {
   weakenVScaling: weakenScalingRebuyable({
     id: "weakenVScaling",
     celestial: "v",
-    description: () => `Weaken V's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken V's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
@@ -91,7 +91,7 @@ export const raUpgrades = {
   weakenRaScaling: weakenScalingRebuyable({
     id: "weakenRaScaling",
     celestial: "ra",
-    description: () => `Weaken Ra's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Ra's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
@@ -99,7 +99,7 @@ export const raUpgrades = {
   weakenLaitelaScaling: weakenScalingRebuyable({
     id: "weakenLaitelaScaling",
     celestial: "laitela",
-    description: () => `Weaken Lai'tela's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Lai'tela's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
@@ -107,7 +107,7 @@ export const raUpgrades = {
   weakenPelleScaling: weakenScalingRebuyable({
     id: "weakenPelleScaling",
     celestial: "pelle",
-    description: () => `Weaken Pelle's level cost by ${formatX(10)}`/* (before exponents)*/,
+    description: () => `Weaken Pelle's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.antimatter,
     currencyLabel: "NYI",
