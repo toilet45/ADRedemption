@@ -29,7 +29,7 @@ export const ra = {
         }
         x = x.div(7);
         let primeShardsGained=Effarig.shardsGained;
-        let softcapedShardGained=0;
+        let softcapedShardGained=1;
         if(primeShardsGained.gt(1e100)){
           softcapedShardGained = Decimal.pow(primeShardsGained.div(1e100),0.3);
           primeShardsGained = new Decimal(1e100);
@@ -387,7 +387,7 @@ export const ra = {
       id2: 0,
       reward: () => `Unlock Charged Break Infinity Upgrades. You get one more maximum
         Charged Break Infinity Upgrade every ${formatInt(6)} levels past ${formatInt(40)}`,
-      effect: () => Math.min(9, Math.floor((Ra.pets.teresa.level-40) / 6)),
+      effect: () => Math.min(9, Math.floor((Ra.pets.teresa.level-40) / 6 + 1)),
       pet: "teresa",
       level: 40,
       displayIcon: "∝",
@@ -561,10 +561,10 @@ export const ra = {
     unlockSHardV: {
       id: 23,
       id2: 0,
-      reward: "Unlock More V-Achievements and V-Milestones",
+      reward: "Unlock More V-Achievements and V's Superhard reality.",
       pet: "v",
       level: 40,
-      displayIcon: "?"
+      displayIcon: `<span class="fas fa-trophy"></span>`
     },
     vAchMilestone2AffectsIDsAndTDs: {
       id: 24,
