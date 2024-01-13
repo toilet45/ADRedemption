@@ -367,14 +367,14 @@ export const Ra = {
     // Quadratic formula for growth (uses constant growth for a = 0)
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffectEffect;
+      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect;
     const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect;
     const c = -expToGain;
     const estimate = a === 0
-      ? MendingUpgrade(15).isBought 
+      ? (MendingUpgrade(15).isBought 
       ? -c / Math.pow(b, 1.5)
-      : -c / b
-      : MendingUpgrade(15).isBought
+      : -c / b)
+      : (MendingUpgrade(15).isBought
       // derivation for the formula in latex(paste this into any latex editor and compile it) - asw
       // \int_0^t (at + b)^{1.5} dt + c = 0 \\
       // \left[\frac{2(at + b)^{2.5}}{5a}\right]_0^t + c = 0 \\
@@ -387,7 +387,7 @@ export const Ra = {
       // at = (b^{2.5} - \frac{5ac}{2})^{0.4} - b \\
       // t = \frac{(b^{2.5} - \frac{5ac}{2})^{0.4} - b}{a}
       ? (Math.pow(Math.pow(b, 2.5) - 5 * a * c / 2, 0.4) - b) / a
-      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a);
+      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a));
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }
