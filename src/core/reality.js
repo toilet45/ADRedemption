@@ -621,7 +621,7 @@ export function finishProcessReality(realityProps) {
   Currency.infinities.reset();
   if (MendingUpgrade(2).isBought) Currency.infinities.bumpTo(DC.E12)
   Currency.infinitiesBanked.reset();
-  player.records.bestInfinity.time = new Decimal("9.999999999999998e999999999999999900000");
+  player.records.bestInfinity.time = Decimal.pow10(Number.MAX_VALUE);
   player.records.bestInfinity.realTime = Number.MAX_VALUE;
   player.records.thisInfinity.time = DC.D0;
   player.records.thisInfinity.lastBuyTime = DC.D0;
@@ -647,7 +647,7 @@ export function finishProcessReality(realityProps) {
   if (!PelleUpgrade.eternitiesNoReset.canBeApplied) Currency.eternities.reset();
   player.records.thisEternity.time = DC.D0;
   player.records.thisEternity.realTime = 0;
-  player.records.bestEternity.time = new Decimal("9.999999999999998e999999999999999900000");
+  player.records.bestEternity.time = Decimal.pow10(Number.MAX_VALUE);
   player.records.bestEternity.realTime = Number.MAX_VALUE;
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;

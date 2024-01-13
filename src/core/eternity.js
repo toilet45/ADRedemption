@@ -191,7 +191,7 @@ export function initializeChallengeCompletions(isReality) {
 export function initializeResourcesAfterEternity() {
   player.sacrificed = DC.D0;
   Currency.infinities.reset();
-  player.records.bestInfinity.time = new Decimal("9.999999999999998e999999999999999900000");
+  player.records.bestInfinity.time = Decimal.pow10(Number.MAX_VALUE);
   player.records.bestInfinity.realTime = Number.MAX_VALUE;
   player.records.thisInfinity.time = DC.D0;
   player.records.thisInfinity.lastBuyTime = DC.D0;

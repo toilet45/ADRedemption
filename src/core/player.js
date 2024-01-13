@@ -44,12 +44,12 @@ window.player = {
   challenge: {
     normal: {
       current: 0,
-      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 11),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11),
       completedBits: 0,
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 8),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
       completedBits: 0,
     },
     eternity: {
@@ -385,11 +385,11 @@ window.player = {
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -399,7 +399,7 @@ window.player = {
       bestIPminVal: DC.D0,
     },
     bestInfinity: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
@@ -415,7 +415,7 @@ window.player = {
       bestInfinitiesPerMs: DC.D0,
     },
     bestEternity: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
@@ -433,7 +433,7 @@ window.player = {
       remWithoutGG: 0
     },
     bestReality: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -460,7 +460,7 @@ window.player = {
       maxRem: 0,
     },
     bestMend: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
     }
   },

@@ -79,8 +79,8 @@ export function mendingReset() {
     }
     if (!Achievement(194).isUnlocked) {
       player.records.totalAntimatter = DC.E1,
-      player.challenge.normal.bestTimes = Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 11);
-      player.challenge.infinity.bestTimes = Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 8);
+      player.challenge.normal.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11);
+      player.challenge.infinity.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8);
     }
     //Celestials
     if(!MendingMilestone.ten.isReached){
@@ -204,7 +204,7 @@ export function mendingReset() {
       remWithoutGG: 0
     },
     player.records.bestReality = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -309,7 +309,7 @@ export function mendingReset() {
     Currency.timeShards.reset();
     Currency.timeTheorems.reset();
     player.records.bestEternity = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
@@ -374,7 +374,7 @@ export function mendingReset() {
       bestIPminVal: DC.D0,
     },
     player.records.bestInfinity = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
