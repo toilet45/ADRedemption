@@ -247,7 +247,7 @@ export function gainedEternities() {
     eternityGain = eternityGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
   }
   return Pelle.isDisabled("eternityMults")
-    ? eternityGain
+    ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? eternityGain.times(getAdjustedGlyphEffect("timeetermult")) : eternityGain
     : eternityGain.times(getAdjustedGlyphEffect("timeetermult"))
       .timesEffectsOf(RealityUpgrade(3), Achievement(113))
       .pow(AlchemyResource.eternity.effectValue);
