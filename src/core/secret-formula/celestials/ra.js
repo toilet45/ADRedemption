@@ -9,7 +9,7 @@ export const ra = {
       secondaryMemoryChunkGain: "Perk Points",
       requiredUnlock: () => undefined,
       rawMemoryChunksPerSecond: () => {
-        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.log10(Math.max(1, Currency.perkPoints.value)) : 1;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Math.log10(Math.max(1, Currency.perkPoints.value))/2,1) : 1;
         return 4 * Math.pow((Ra.unlocks.improvedChunkGains.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
@@ -85,9 +85,9 @@ export const ra = {
           x += Ra.pets.laitela.memories
           x += Ra.pets.pelle.memories
         }
-        x /= 7;
-        let primeAnswer=4 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/7e4, (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
-        return Math.pow(primeAnswer,0.000001);
+        x /= 7e9;
+        let primeAnswer=2 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/(Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked ? 1e2 : 1.4e11), (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
+        return primeAnswer;
       },
       memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
       
@@ -101,9 +101,9 @@ export const ra = {
       secondaryMemoryChunkGain: "Dark Matter",
       requiredUnlock: () => (MendingUpgrade(19).isBought ? undefined : false),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 10, 1) : 1;
-        let primeAnswer = (4 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/1e6, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
-        return Math.pow(primeAnswer,0.000001);
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Decimal.log10(Currency.darkMatter.value) / 308, 1) : 1;
+        let primeAnswer = (2 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/5e11, (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
+        return primeAnswer;
       },
       memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
     },
@@ -507,7 +507,7 @@ export const ra = {
       reward: "Uncap 8th Time Dimension purchase multiplier",
       pet: "enslaved",
       level: 40,
-      displayIcon: '*'
+      displayIcon: 'Δ'
     },
     unlock3rdBH: {
       id: 17,
@@ -659,7 +659,7 @@ export const ra = {
     generateMemChunksOutOfRasReality: {
       id: 3,
       id2: 1,
-      reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate",
+      reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate. Improve Ra's memory chunk formula.",
       pet: "ra",
       level: 25,
       displayIcon: '*'
@@ -856,6 +856,7 @@ export const ra = {
       id: 27,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
+      //effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "pelle",
       level: 5,
       displayIcon: '*'

@@ -6,13 +6,13 @@ export const glyphSacrifice = {
       if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.power.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const base = Decimal.log10(capped.add(1)) / Decimal.log10(1e100);
       return Decimal.floor(Decimal.pow(base, 1.2).mul(750)).toNumber();
     },
     description: amount => {
-      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects.toNumber();
+      const sacCap = 1e100;
       const nextDistantGalaxy = Math.pow(10, Math.pow((amount + 1) / 750, 1 / 1.2) * Math.log10(sacCap)) - 1;
-      const nextGalaxyText = amount < 750
+      const nextGalaxyText = amount < (Ra.unlocks.uncapGlyphSacEffects.isUnlocked ? 10000000 : 750)
         ? ` (next at ${format(nextDistantGalaxy, 2, 2)})`
         : "";
       return `Distant Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;
@@ -47,13 +47,13 @@ export const glyphSacrifice = {
       if (Pelle.isDisabled("glyphsac")) return 0;
       const sac = player.reality.glyphs.sac.replication.add(added ?? 0);
       const capped = Decimal.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
-      const base = Decimal.log10(capped.add(1)) / Decimal.log10(GlyphSacrificeHandler.maxSacrificeForEffects);
+      const base = Decimal.log10(capped.add(1)) / Decimal.log10(1e100);
       return Decimal.floor(Decimal.pow(base, 1.2).mul(1500)).toNumber();
     },
     description: amount => {
-      const sacCap = GlyphSacrificeHandler.maxSacrificeForEffects.toNumber();
+      const sacCap = 1e100;
       const nextDistantGalaxy = Math.pow(10, Math.pow((amount + 1) / 1500, 1 / 1.2) * Math.log10(sacCap)) - 1;
-      const nextGalaxyText = amount < 1500
+      const nextGalaxyText = amount < (Ra.unlocks.uncapGlyphSacEffects.isUnlocked ? 10000000 : 1500)
         ? ` (next at ${format(nextDistantGalaxy, 2, 2)})`
         : "";
       return `Replicanti Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;

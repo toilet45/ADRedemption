@@ -336,8 +336,8 @@ export const Ra = {
     let fixCostMulti = 1
     if (level >= 25) {fixCostMulti = 1e44}
     if (level >= 30) {perMemScaling = 1.35;fixCostMulti = 1e48}
-    if (level >= 40) {perMemScaling = 1.375;} 
-    if (level >= 50) {perMemScaling = 1.5} 
+    if (level >= 40) {perMemScaling = 1.35} 
+    if (level >= 50) {perMemScaling = 1.5;fixCostMulti = 1e50} 
     if (level >= 65) {perMemScaling = 1.6} 
     if (level >= 75) {perMemScaling = 1.75} 
     if (level >= 90) {perMemScaling = 2} 
@@ -345,7 +345,7 @@ export const Ra = {
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
     let primeAnswer=Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
-    if(level>=50) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    if(level>=60) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
