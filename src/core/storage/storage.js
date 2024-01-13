@@ -549,6 +549,12 @@ export const GameStorage = {
     for (const resource of AlchemyResources.all) {
       resource.before = resource.amount;
     }
+    
+    document.addEventListener("mouseup", (event) => {
+      if(event.button == 0){
+        player.celestials.laitela.isHoldingLClick = false;
+      }
+    })
   }
 };
 

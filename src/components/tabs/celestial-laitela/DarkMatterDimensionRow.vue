@@ -1,4 +1,6 @@
 <script>
+import { playerInfinityUpgradesOnReset } from '../../../game';
+
 export default {
   name: "DarkMatterDimensionRow",
   props: {
@@ -153,7 +155,13 @@ export default {
     hoverState(state) {
       if (!this.isIntervalCapped) return;
       this.hoverOverAscension = state;
-    }
+    },
+    hold(type){
+      player.celestials.laitela.isHoldingLClick = true;
+      player.celestials.laitela.holdStart = Date.now();
+      player.celestials.laitela.heldTier = this.tier;
+      player.celestials.laitela.heldType = type;
+    },
   }
 };
 </script>
@@ -176,6 +184,7 @@ export default {
         @click="handleIntervalClick"
         @mouseover="hoverState(true)"
         @mouseleave="hoverState(false)"
+        @mousedown.left="hold('interval')"
       >
         <span
           v-if="isIntervalCapped"
@@ -188,12 +197,14 @@ export default {
       <button
         :class="darkMatterClassObject"
         @click="buyPowerDM"
+        @mousedown.left="hold('DM')"
       >
         <span v-html="darkMatterText" />
       </button>
       <button
         :class="darkEnergyClassObject"
         @click="buyPowerDE"
+        @mousedown.left="hold('DE')"
       >
         <span v-html="darkEnergyText" />
       </button>

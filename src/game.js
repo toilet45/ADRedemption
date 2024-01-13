@@ -682,6 +682,29 @@ export function gameLoop(passDiff, options = {}) {
     player.celestials.ra.permanentMemories.lai65 = true;
   }
 
+  if(!document.hasFocus()){
+    player.celestials.laitela.isHoldingLClick = false;
+  }
+
+  if(player.celestials.laitela.isHoldingLClick && Date.now() - player.celestials.laitela.holdStart >= 200){
+    const dim = DarkMatterDimension(player.celestials.laitela.heldTier);
+    switch(player.celestials.laitela.heldType){
+      case "interval":
+        const isIntervalCapped = dim.interval <= dim.intervalPurchaseCap;
+        if (isIntervalCapped) dim.ascend();
+        else dim.buyInterval();
+        break;
+      case "DM":
+        dim.buyPowerDM();
+        break;
+      case "DE":
+        dim.buyPowerDE();
+        break;
+      default:
+        throw new Error("Console user who doesn't know what you are doing you are very funny");
+    }
+  }
+
   if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
     if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
     if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){

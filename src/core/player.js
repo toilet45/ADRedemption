@@ -924,6 +924,10 @@ window.player = {
       singularityCapIncreases: 0,
       lastCheckedMilestones: 0,
       milestoneGlow: true,
+      isHoldingLClick: false,
+      holdStart: 0,
+      heldTier: 0,
+      heldType: "",
     },
     pelle: {
       doomed: false,
