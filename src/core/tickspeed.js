@@ -16,8 +16,8 @@ export function effectiveBaseGalaxies() {
   // Effects.sum is intentional here - if EC8 is not completed,
   // this value should not be contributed to total replicanti galaxies
   if(EternityChallenge(8).completions >= 1){
-    if(!Ra.unlocks.improvedECRewards.isUnlocked) replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).reward.effectValue;
-    else replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).vReward.effectValue;
+    replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).reward.effectValue;
+    if(Ra.unlocks.improvedECRewards.isUnlocked) replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).vReward.effectValue;
   }
   let freeGalaxies = player.dilation.totalTachyonGalaxies;
   freeGalaxies *= 1 + Math.max(0, Replicanti.amount.log10() / 1e6) * AlchemyResource.alternation.effectValue;

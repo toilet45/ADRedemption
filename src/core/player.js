@@ -1226,8 +1226,7 @@ export const Player = {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
     if (V.isSuperRunning && !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     if (V.isSuperRunning && player.reality.warped) return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
-    let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
-    if (inCel || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if ((Pelle.isDoomed && Pelle.hasGalaxyGenerator) || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 

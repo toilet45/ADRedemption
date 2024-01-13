@@ -23,7 +23,7 @@ export const galaxies = {
       let rg = Replicanti.galaxies.bought;
       rg *= (1 + Effects.sum(TimeStudy(132), TimeStudy(133)));
       rg += Replicanti.galaxies.extra;
-      rg += Math.min(Replicanti.galaxies.bought, ReplicantiUpgrade.galaxies.value) * ((!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(8).completions >= 1)? EternityChallenge(8).reward.effectValue : 1);
+      rg += Math.min(Replicanti.galaxies.bought, ReplicantiUpgrade.galaxies.value) * ((EternityChallenge(8).completions >= 1)? EternityChallenge(8).reward.effectValue : 1);
       const mult = rg / Math.clampMin(num, 1) * MultiplierTabHelper.globalGalaxyMult();
       return `${formatInt(num)}, ${formatX(mult, 2, 2)} strength`;
     },
@@ -31,7 +31,7 @@ export const galaxies = {
       let rg = Replicanti.galaxies.bought;
       rg *= (1 + Effects.sum(TimeStudy(132), TimeStudy(133)));
       rg += Replicanti.galaxies.extra;
-      rg += Math.min(Replicanti.galaxies.bought, ReplicantiUpgrade.galaxies.value) * ((!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(8).completions >= 1)? EternityChallenge(8).reward.effectValue : 1);
+      rg += Math.min(Replicanti.galaxies.bought, ReplicantiUpgrade.galaxies.value) * ((EternityChallenge(8).completions >= 1)? EternityChallenge(8).reward.effectValue : 1);
       return Decimal.pow10(rg);
     },
     isActive: () => Replicanti.areUnlocked,

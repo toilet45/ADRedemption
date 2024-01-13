@@ -183,7 +183,7 @@ export const TD = {
       }
       return Decimal.pow(allMult, dim ? 1 : MultiplierTabHelper.activeDimCount("TD"));
     },
-    isActive: () => EternityChallenge(1).completions > 0,// && !Ra.unlocks.improvedECRewards.isUnlocked,
+    isActive: () => EternityChallenge(1).completions > 0,
     icon: MultiplierTabIcons.CHALLENGE("eternity")
   },
   tickspeed: {

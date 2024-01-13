@@ -150,7 +150,7 @@ export class Galaxy {
       TimeStudy(224),
       GlyphSacrifice.power
     );
-    if(!Ra.unlocks.improvedECRewards.isunlocked && EternityChallenge(5).completions >= 1) x += EternityChallenge(5).reward.effectValue;
+    if(EternityChallenge(5).completions >= 1) x += EternityChallenge(5).reward.effectValue;
     return x;
   }
 

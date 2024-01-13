@@ -20,10 +20,10 @@ export function infinityDimensionCommonMultiplier() {
       PelleRifts.recursion.milestones[1]
     );
   
-  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(4).completions >= 1) {
+  if (Pelle.isDoomed && EternityChallenge(4).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(4).reward);
   }
-  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(9).completions >= 1) {
+  if (Pelle.isDoomed && EternityChallenge(9).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(9).reward);
   }
   if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
@@ -126,7 +126,7 @@ class InfinityDimensionState extends DimensionState {
     if (tier === 8) {
       // We need a extra 10x here (since ID8 production is per-second and
       // other ID production is per-10-seconds).
-      if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
+      if (EternityChallenge(7).completions >= 1) EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
       if (EternityChallenge(7).isRunning) EternityChallenge(7).applyEffect(v => toGain = v.times(10));
     } else {
       toGain = InfinityDimension(tier + 1).productionPerSecond;
@@ -165,7 +165,7 @@ class InfinityDimensionState extends DimensionState {
         tier === 4 ? TimeStudy(72) : null,
         TimeStudy(312),
       );
-    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(2).completions >= 1){
+    if (EternityChallenge(2).completions >= 1){
       mult = mult.timesEffectsOf(
         tier === 1 ? EternityChallenge(2).reward : null,
       );
@@ -188,7 +188,7 @@ class InfinityDimensionState extends DimensionState {
       if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
       if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
     }
-    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(4).completions >= 1) {
+    if (EternityChallenge(4).completions >= 1) {
       mult = mult.timesEffectsOf(EternityChallenge(4).reward);
     }
 
@@ -226,7 +226,7 @@ class InfinityDimensionState extends DimensionState {
 
   get costMultiplier() {
     let costMult = this._costMultiplier;
-    if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) costMult = Math.pow(costMult, EternityChallenge(12).reward.effectValue);
+    if(EternityChallenge(12).completions >= 1) costMult = Math.pow(costMult, EternityChallenge(12).reward.effectValue);
     return costMult;
   }
 

@@ -27,7 +27,6 @@ export default {
       completions: 0,
       showGoalSpan: false,
       lastGoal: "",
-      hasAltRewards: false,
     };
   },
   computed: {
@@ -47,7 +46,7 @@ export default {
     },
     currentRewardConfig() {
       const challenge = this.challenge;
-      let x = Ra.unlocks.improvedECRewards.isUnlocked ? this.config.vReward : this.config.reward;
+      let x = this.config.reward;
       const config = x;
       return {
         effect: () => config.effect(challenge.completions),
@@ -57,7 +56,27 @@ export default {
     },
     nextRewardConfig() {
       const challenge = this.challenge;
-      let x = Ra.unlocks.improvedECRewards.isUnlocked ? this.config.vReward : this.config.reward;
+      let x = this.config.reward;
+      const config = x;
+      return {
+        effect: () => config.effect(challenge.completions + 1),
+        formatEffect: config.formatEffect,
+        cap: config.cap,
+      };
+    },
+    currentVRewardConfig() {
+      const challenge = this.challenge;
+      let x = this.config.vReward;
+      const config = x;
+      return {
+        effect: () => config.effect(challenge.completions),
+        formatEffect: config.formatEffect,
+        cap: config.cap,
+      };
+    },
+    nextVRewardConfig() {
+      const challenge = this.challenge;
+      let x = this.config.vReward;
       const config = x;
       return {
         effect: () => config.effect(challenge.completions + 1),
@@ -71,7 +90,6 @@ export default {
   },
   methods: {
     update() {
-      this.hasAltRewards = Ra.unlocks.improvedECRewards.isUnlocked;
       const challenge = this.challenge;
       this.isUnlocked = challenge.isUnlocked;
       this.isRunning = challenge.isRunning;
@@ -119,18 +137,10 @@ export default {
       <span v-if="showGoalSpan">
         Goal Span: {{ firstGoal }} IP - {{ lastGoal }} IP
       </span>
-      <span v-if="!hasAltRewards">
+      <span>
         Reward:
         <DescriptionDisplay
           :config="config.reward"
-          :length="55"
-          name="c-challenge-box__reward-description"
-        />
-      </span>
-      <span v-else>
-        Reward:
-        <DescriptionDisplay
-          :config="config.vReward"
           :length="55"
           name="c-challenge-box__reward-description"
         />
@@ -144,6 +154,27 @@ export default {
         <EffectDisplay
           v-if="completions < 5"
           :config="nextRewardConfig"
+          label="Next"
+          :ignore-capped="true"
+        />
+      </span>
+      <span>
+        Ra V 30 Empowered Reward:
+        <DescriptionDisplay
+          :config="config.vReward"
+          :length="55"
+          name="c-challenge-box__reward-description"
+        />
+      </span>
+      <span>
+        <EffectDisplay
+          v-if="completions > 0"
+          :config="currentVRewardConfig"
+        />
+        <span v-if="completions > 0 && completions < 5">|</span>
+        <EffectDisplay
+          v-if="completions < 5"
+          :config="nextVRewardConfig"
           label="Next"
           :ignore-capped="true"
         />

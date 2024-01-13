@@ -130,10 +130,10 @@ export function timeDimensionCommonMultiplier() {
       PelleRifts.chaos
     );
 
-  if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1){
+  if(EternityChallenge(1).completions >= 1){
     mult = mult.timesEffectsOf(EternityChallenge(1).reward);
   }
-  if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1){
+  if(EternityChallenge(10).completions >= 1){
     mult = mult.timesEffectsOf(EternityChallenge(10).reward);
   }
   if (EternityChallenge(9).isRunning) {
@@ -405,7 +405,7 @@ export const TimeDimensions = {
       TimeDimension(1).produceCurrency(Currency.timeShards, diff);
     }
 
-    if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1){ EternityChallenge(7).reward.applyEffect(production => {
+    if(EternityChallenge(7).completions >= 1){ EternityChallenge(7).reward.applyEffect(production => {
       InfinityDimension(8).amount = InfinityDimension(8).amount.plus(production.times(new Decimal(diff).div(1000)));
     });
   }

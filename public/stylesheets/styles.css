@@ -3669,7 +3669,7 @@ br {
 }
 
 .c-challenge-box--eternity {
-  height: 18rem;
+  height: 21rem;
   color: var(--color-text);
   background-color: var(--color-prestige--accent);
   border-color: var(--color-eternity);
