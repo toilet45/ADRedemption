@@ -708,7 +708,25 @@ export const migrations = {
     player.celestials.laitela.holdStart = 0;
     player.celestials.laitela.heldTier = 0;
     player.celestials.laitela.heldType = "";
-  }
+  },
+  51.023: player => {
+    player.celestials.ra.rebuyables = {
+      weakenTeresaScaling: 0,
+      weakenEffarigScaling: 0,
+      weakenEnslavedScaling: 0,
+      weakenVScaling: 0,
+      weakenRaScaling: 0,
+      weakenLaitelaScaling: 0,
+      weakenPelleScaling: 0,
+      incTeresaXPGain: 0,
+      incEffarigXPGain: 0,
+      incEnslavedXPGain: 0,
+      incVXPGain: 0,
+      incRaXPGain: 0,
+      incLaitelaXPGain: 0,
+      incPelleXPGain: 0,
+    };
+  },
 },
 
   normalizeTimespans(player) {

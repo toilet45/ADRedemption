@@ -72,8 +72,6 @@ export default {
       switch(this.pet.id){
         case "enslaved":
           return "Nameless";
-        case "laitela":
-          return "Lai";
         default:
           return this.name;
       }

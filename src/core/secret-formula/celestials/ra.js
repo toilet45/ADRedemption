@@ -44,7 +44,7 @@ export const ra = {
       color: "#f1aa7f",
       chunkGain: "Time Shards",
       memoryGain: "total time played",
-      secondaryMemoryChunkGain: "Based game speed",
+      secondaryMemoryChunkGain: "Game speed",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.enslavedUnlock),
       rawMemoryChunksPerSecond: () =>{
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(getGameSpeedupFactor())/100) : 1;

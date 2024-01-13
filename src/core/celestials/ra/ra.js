@@ -138,7 +138,7 @@ class RaPetState extends GameMechanicState {
   }
 
   get requiredMemories() {
-    return Ra.requiredMemoriesForLevel(this.level);
+    return Ra.requiredMemoriesForLevel(this.level) / this.shopWeakenScalingEffect;
   }
 
   get memoryChunksPerSecond() {
@@ -192,11 +192,11 @@ class RaPetState extends GameMechanicState {
   }
 
   get memoryUpgradeCapped() {
-    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1);
+    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1) / this.shopWeakenScalingEffect;
   }
 
   get chunkUpgradeCapped() {
-    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1);
+    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1) / this.shopWeakenScalingEffect;
   }
 
   purchaseMemoryUpgrade() {
@@ -240,7 +240,7 @@ class RaPetState extends GameMechanicState {
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
     const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult, MendingUpgrade(15).isBought?1.5:1);
+      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1);
 
     let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
@@ -261,6 +261,14 @@ class RaPetState extends GameMechanicState {
     this.data.memoryChunks = 0;
     this.data.memoryUpgrades = 0;
     this.data.chunkUpgrades = 0;
+  }
+
+  get shopMemMultEffect(){
+    return RaUpgrade[`inc${this.id.charAt(0).toUpperCase()}${this.id.substring(1)}XPGain`].effectValue;
+  }
+
+  get shopWeakenScalingEffect(){
+    return RaUpgrade[`weaken${this.id.charAt(0).toUpperCase()}${this.id.substring(1)}Scaling`].effectValue;
   }
 }
 
@@ -345,7 +353,7 @@ export const Ra = {
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
     let primeAnswer=Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
-    if(level>=60) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    if (level>=60) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
@@ -356,15 +364,29 @@ export const Ra = {
     //sxy
 
     // Quadratic formula for growth (uses constant growth for a = 0)
-    const x = MendingUpgrade(15).isBought? 1.5:1;
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond, x) / 2;
-    const b = Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks, x);
+      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffectEffect;
+    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect;
     const c = -expToGain;
     const estimate = a === 0
-      ? -c / b
-      : (Math.sqrt(Math.pow(b, 2) - 4 * a * c) - b) / (2 * a);
+      ? MendingUpgrade(15).isBought 
+      ? -c / Math.pow(b, 1.5)
+      : -c / b
+      : MendingUpgrade(15).isBought
+      // derivation for the formula in latex(paste this into any latex editor and compile it) - asw
+      // \int_0^t (at + b)^{1.5} dt + c = 0 \\
+      // \left[\frac{2(at + b)^{2.5}}{5a}\right]_0^t + c = 0 \\
+      // \frac{2(at + b)^{2.5}}{5a} - \frac{2b^{2.5}}{5a} + c = 0 \\
+      // 2(at + b)^{2.5} - 2b^{2.5} + 5ac = 0 \\
+      // (at + b)^{2.5} - b^{2.5} + \frac{5ac}{2} = 0 \\
+      // (at + b)^{2.5} + \frac{5ac}{2} = b^{2.5} \\
+      // (at + b)^{2.5} = b^{2.5} - \frac{5ac}{2} \\
+      // at + b = (b^{2.5} - \frac{5ac}{2})^{0.4} \\
+      // at = (b^{2.5} - \frac{5ac}{2})^{0.4} - b \\
+      // t = \frac{(b^{2.5} - \frac{5ac}{2})^{0.4} - b}{a}
+      ? (Math.pow(Math.pow(b, 2.5) - 5 * a * c / 2, 0.4) - b) / a
+      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a);
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }
