@@ -32,10 +32,10 @@ export const mendingMilestones = {
     mends: 10,
     reward: "You can now Mend outside of Doomed Reality.",
   },
-  seven: {
+  eleven: {
     mends: 15,
     reward: "Gain a Multiversal Remain multiplier based on lowest Glyph count during the entire Reality when you reach END antimatter this Mend.",
-    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${formatX(mendingMilestoneSevenMultiplier(true),2 ,2)}, affected by Cursed Glyphs.`),
+    activeCondition: () => (`Your current MvR multiplier from this milestone ${MendingMilestone.eleven.isReached ? "is":"would be"} ${formatX(mendingMilestoneElevenMultiplier(true),2 ,2)}, affected by Cursed Glyphs.`),
     // We dont define the effect here because this codebase will shit itself if you do, so we instead define it at the MvR code.
   },
   eight: {
