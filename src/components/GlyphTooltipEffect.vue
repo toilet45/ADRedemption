@@ -1,4 +1,6 @@
 <script>
+import { Ra } from '../core/globals';
+
 export default {
   name: "GlyphTooltipEffect",
   props: {
@@ -51,7 +53,7 @@ export default {
       return this.textSplits[2] !== undefined;
     },
     isPelleDisabled() {
-      return this.effectConfig.isDisabledByDoomed;
+      return (this.effectConfig.isDisabledByDoomed&&!Ra.unlocks.unlockPelleGlyphEffects.isUnlocked)||(this.effectConfig.isDisabledByDoomedWithlvl25&&Ra.unlocks.unlockPelleGlyphEffects.isUnlocked);
     },
     convertedParts() {
       const parts = [];

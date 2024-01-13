@@ -16,7 +16,7 @@ export default {
       return GlyphEffects[this.effect.id];
     },
     formatValue() {
-      if (this.effectConfig.isDisabledByDoomed) return "";
+      if ((this.effectConfig.isDisabledByDoomed&&!Ra.unlocks.unlockPelleGlyphEffects.isUnlocked)||(this.effectConfig.isDisabledByDoomedWithlvl25&&Ra.unlocks.unlockPelleGlyphEffects.isUnlocked)) return "";
       const baseValue = this.effect.value.value;
       const value1 = this.effectConfig.formatEffect(baseValue);
       const value2 = this.effectConfig.conversion === undefined

@@ -127,10 +127,12 @@ export function getDilationGainPerSecond() {
   if (Pelle.isDoomed) {
     let x = MendingMilestone.one.isReached ? 100 : 1;
     const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
-    return new Decimal(tachyonEffect)
-      .timesEffectsOf(DilationUpgrade.dtGain, DilationUpgrade.dtGainPelle, DilationUpgrade.flatDilationMult)
-      .times(ShopPurchase.dilatedTimePurchases.currentMult ** 0.5).times(x)
-      .times(Pelle.specialGlyphEffect.dilation).div(1e5);
+    let primeAnswer = new Decimal(tachyonEffect)
+    .timesEffectsOf(DilationUpgrade.dtGain, DilationUpgrade.dtGainPelle, DilationUpgrade.flatDilationMult)
+    .times(ShopPurchase.dilatedTimePurchases.currentMult ** 0.5).times(x)
+    .times(Pelle.specialGlyphEffect.dilation).div(1e5);
+    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) primeAnswer=primeAnswer.times(getAdjustedGlyphEffect("dilationDT")).times(Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1));
+    return primeAnswer;
   }
   let dtRate = new Decimal(Currency.tachyonParticles.value)
     .timesEffectsOf(

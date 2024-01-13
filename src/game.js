@@ -349,6 +349,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 
 export function gainedInfinities() {
   if (EternityChallenge(4).isRunning || Pelle.isDisabled("InfinitiedMults")) {
+    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
     return DC.D1;
   }
   let infGain = Effects.max(
@@ -1093,7 +1094,7 @@ export function getTTPerSecond() {
 
   // Glyph TT generation
   const glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
-    ? 0
+    ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
 
   // Dilation TT generation

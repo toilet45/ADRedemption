@@ -131,11 +131,12 @@ export default {
       const alteredValue = dbEntry.conversion
         ? dbEntry.formatSecondaryEffect(dbEntry.conversion(value))
         : "";
+      let DisableBool = (dbEntry.isDisabledByDoomed&&!Ra.unlocks.unlockPelleGlyphEffects.isUnlocked)||(dbEntry.isDisabledByDoomedWithlvl25&&Ra.unlocks.unlockPelleGlyphEffects.isUnlocked);
       return {
         text: `${rawDesc}`
           .replace("{value}", singleValue)
           .replace("{value2}", alteredValue),
-        isPelleDisabled: dbEntry.isDisabledByDoomed
+        isPelleDisabled: DisableBool
       };
     },
     clickGlyph(glyph) {
