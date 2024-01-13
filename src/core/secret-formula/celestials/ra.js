@@ -618,7 +618,7 @@ export const ra = {
     rautobuyers: {
       id: 30,
       id2: 0,
-      reward: "Unlock Autobuyers for Memory Levels, Recollections and Fragmentations (kept on Mend).",
+      reward: "(Kept without Ra 30) Unlock Autobuyers for Memory Levels, Recollections and Fragmentations",
       pet: "ra",
       level: 2,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
@@ -664,13 +664,13 @@ export const ra = {
       level: 25,
       displayIcon: '*'
     },
-    imaginaryBoostsRa: {
+    raNoReset: {
       id: 4,
       id2: 1,
-      reward: "Free Dimension Boosts are effective in Ra's Reality",
+      reward: "Ra no longer resets on Mend",
       pet: "ra",
       level: 30,
-      displayIcon: "*"
+      displayIcon: '<i class="fa-solid fa-check-double"></i>'
     },
     remembranceAlwaysActiveAndShopUnlock: {
       id: 5,
@@ -688,13 +688,13 @@ export const ra = {
       level: 50,
       displayIcon: "*"
     },
-    raNoReset: {
+    imaginaryBoostsRa: {
       id: 7,
       id2: 1,
-      reward: "Ra no longer resets on Mend",
+      reward: "Free Dimension Boosts are effective in Ra's Reality",
       pet: "ra",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: "*"
     },
     freeDimBoosts: {
       id: 8,
@@ -798,7 +798,7 @@ export const ra = {
     dmdAuto1: {
       id: 20,
       id2: 1,
-      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for all Dark Matter Dimensions",
+      reward: "(Kept without Ra 30) Unlock Permanent autobuyers for all Dark Matter Dimensions",
       pet: "laitela",
       level: 50,
       displayIcon: `<span class="fas fa-sync-alt"</span>`
@@ -806,7 +806,7 @@ export const ra = {
     dmdAuto2: {
       id: 21,
       id2: 1,
-      reward: "(Kept without Ra 65) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.",
+      reward: "(Kept without Ra 30) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.",
       pet: "laitela",
       level: 65,
       displayIcon: `<span class="fas fa-sync-alt"</span>` 
