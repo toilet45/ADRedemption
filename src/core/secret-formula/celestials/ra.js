@@ -553,10 +553,11 @@ export const ra = {
     improvedECRewards: {
       id: 22,
       id2: 0,
-      reward: "Each Eternity Challenge Gains an Additional Reward",
+      reward: "Each Eternity Challenge Gains an Additional Reward, Increasing Based on V Level",
       pet: "v",
       level: 30,
-      displayIcon: '*'
+      displayIcon: '*',
+      disabledByPelle: true
     },
     unlockSHardV: {
       id: 23,
