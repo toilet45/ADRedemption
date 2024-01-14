@@ -280,9 +280,9 @@ export const DarkMatterDimensions = {
       DarkMatterDimension(4).amount = DarkMatterDimension(4).amount
         .plus(SingularityMilestone.dim4Generation.effectValue * realDiff / 1000);
     }
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) {
-      DarkMatterDimension(1).produceDimensions(TimeDimension(8), realDiff / 50);
-    }
+    if(EternityChallenge(7).completions >= 1 && Ra.unlocks.improvedECRewards.isUnlocked){ EternityChallenge(7).vReward.applyEffect(production => {
+      TimeDimension(8).amount = TimeDimension(8).amount.plus(production.times(new Decimal(Enslaved.nextTickDiff).div(1000)));
+    })}
   },
 
   reset() {

@@ -280,10 +280,12 @@ class TimeDimensionState extends DimensionState {
 
   get rateOfChange() {
     const tier = this._tier;
+    let toGain = DC.D0;
     if (tier === 8) {
-      return DC.D0;
+      if (Ra.unlocks.improvedECRewards.isUnlocked) EternityChallenge(7).vReward.applyEffect(v => toGain = v);
+    } else {
+      toGain = TimeDimension(tier + 1).productionPerSecond;
     }
-    const toGain = TimeDimension(tier + 1).productionPerSecond;
     const current = Decimal.max(this.totalAmount, 1);
     return toGain.times(10).dividedBy(current).times(getGameSpeedupForDisplay());
   }
