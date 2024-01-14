@@ -2,6 +2,7 @@
 import { MendingUpgrade } from "../../../core/mending-upgrades";
 import RaPetLevelBar from "./RaPetLevelBar";
 import RaUpgradeIcon from "./RaUpgradeIcon";
+import { DEV } from "@/env";
 
 export default {
   name: "RaPet",
@@ -37,7 +38,9 @@ export default {
       nextMemoryUpgradeEstimate: "",
       nextMemoryChunkUpgradeEstimate: "",
       mu19Bought: false,
-      secondSource: false
+      secondSource: false,
+      baseMemoryChunksPerSecond: 0,
+      DEV: DEV
     };
   },
   computed: {
@@ -105,6 +108,7 @@ export default {
 
       this.mu19Bought = MendingUpgrade(19).isBought;
       this.secondSource = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked;
+      this.baseMemoryChunksPerSecond = pet.memoryChunksPerSecond / this.currentChunkMult;
     },
     nextUnlockLevel() {
       const levelCap = MendingUpgrade(19).isBought?100:25;
@@ -273,6 +277,12 @@ export default {
         </div>
         <div>
           Gaining {{ quantify("Memory Chunk", memoryChunksPerSecond, 2, 2) }}/sec
+          <span :ach-tooltip="chunkTooltip">
+            <i class="fas fa-question-circle" />
+          </span>
+        </div>
+        <div v-if="DEV">
+          Gaining {{ quantify("Base Memory Chunk", baseMemoryChunksPerSecond, 2, 2) }}/sec
           <span :ach-tooltip="chunkTooltip">
             <i class="fas fa-question-circle" />
           </span>

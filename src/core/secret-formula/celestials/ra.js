@@ -437,7 +437,7 @@ export const ra = {
     alchSetToCapAndCapIncrease: {
       id: 8,
       id2: 0,
-      reward: () => `Alchemy passively occurs, and increase the hardcap by ${formatInt(10)} per level`,
+      reward: () => `Alchemy passively occurs, and increase the hardcap by ${formatInt(5)} per level`,
       effect: () => 10 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
@@ -553,7 +553,7 @@ export const ra = {
     improvedECRewards: {
       id: 22,
       id2: 0,
-      reward: "Improve some Eternity Challenge rewards",
+      reward: "Each Eternity Challenge Gains an Additional Reward",
       pet: "v",
       level: 30,
       displayIcon: '*'
