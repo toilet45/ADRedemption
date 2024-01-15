@@ -349,7 +349,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 
 export function gainedInfinities() {
   if (EternityChallenge(4).isRunning || Pelle.isDisabled("InfinitiedMults")) {
-    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
+    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked && Pelle.isDoomed) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
     return DC.D1;
   }
   let infGain = Effects.max(
