@@ -15,11 +15,11 @@ export default {
   computed: {
     events() {
       // eslint-disable-next-line no-nested-ternary
-      const sorted = this.unsortedEvents.sort((a, b) => (a.timestamp === b.timestamp
+      const sorted = this.unsortedEvents.sort((a, b) => (a.timestamp.eq(b.timestamp)
         ? (a.thisReality === b.thisReality
           ? a.line - b.line
           : a.thisReality - b.thisReality)
-        : a.timestamp - b.timestamp));
+        : a.timestamp.minus(b.timestamp)));
       return this.newestFirst ? sorted.reverse() : sorted;
     },
     clearTooltip() {
