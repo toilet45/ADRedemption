@@ -187,7 +187,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Infinity Dimension multiplier based on Tickspeed ⌬",
-      effect: () => Decimal.pow(10, Tickspeed.perSecond * ((Ra.pets.v.level - 25) / 75) / 10),
+      effect: () => Decimal.pow(10, Tickspeed.perSecond.times((Ra.pets.v.level - 25) / 75).div(10)),
       formatEffect: value => formatX(value, 3, 3)
     }
   },
