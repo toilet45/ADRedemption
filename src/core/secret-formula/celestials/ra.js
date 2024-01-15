@@ -515,7 +515,7 @@ export const ra = {
       reward: "Unlock the 3rd Black Hole which costs Imaginary Machines and boosts Game Speed exponentially instead of multiplicatively",
       pet: "enslaved",
       level: 50,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-circle"></i>'
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
