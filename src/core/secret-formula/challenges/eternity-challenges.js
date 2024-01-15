@@ -167,7 +167,7 @@ export const eternityChallenges = [
       description: "⌬ Time Shards strengthen all Galaxy types ⌬",
       effect: completions => {
         const timeShards = Math.log10(Currency.timeShards.value.pLog10() + 1);
-        return Math.max(0, (Math.pow(timeShards, 0.03 * completions) - 1) * ((Ra.pets.v.level - 25) / 75));
+        return Math.max(0, (Math.pow(timeShards, 0.03 * completions) - 1) * ((Ra.pets.v.level - 25) / 75) / 10);
       },
       formatEffect: value => formatPercents(value, 2)
     }
@@ -187,7 +187,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Infinity Dimension multiplier based on Tickspeed ⌬",
-      effect: () => Decimal.pow(10, Tickspeed.totalUpgrades * ((Ra.pets.v.level - 25) / 75)),
+      effect: () => Decimal.pow(10, Tickspeed.perSecond * ((Ra.pets.v.level - 25) / 75) / 10),
       formatEffect: value => formatX(value, 3, 3)
     }
   },
@@ -219,7 +219,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Time Dimension power based on Infinities ⌬",
-      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 50000  * ((Ra.pets.v.level - 25) / 75)),
+      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 500000  * ((Ra.pets.v.level - 25) / 75)),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -242,7 +242,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Reduce free Tickspeed upgrade scaling ⌬",
-      effect: completions => 1 - (0.0005 * completions) * ((Ra.pets.v.level - 25) / 75),
+      effect: completions => 1 - (0.00005 * completions) * ((Ra.pets.v.level - 25) / 75),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -267,7 +267,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Increase Infinity Dimension caps ⌬",
-      effect: completions => Math.max(1, 1/(1-(0.08 * completions) * ((Ra.pets.v.level - 25) / 75))),
+      effect: completions => Math.max(1, 1/(1-(0.008 * completions) * ((Ra.pets.v.level - 25) / 75))),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   }
