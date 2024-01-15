@@ -186,8 +186,8 @@ export const eternityChallenges = [
       formatEffect: value => formatX(value, 2, 1)
     },
     vReward:{
-      description: "⌬ Infinity Dimension multiplier based on Tickspeed ⌬",
-      effect: () => Decimal.pow(10, Tickspeed.perSecond.times((Ra.pets.v.level - 25) / 75).div(10)).clampMin(1),
+      description: "⌬ Infinity Dimension multiplier based on Tickspeed upgrade counts ⌬",
+      effect: () => Decimal.pow(10, new Decimal(Tickspeed.totalUpgrades).times((Ra.pets.v.level - 25) / 75).div(10)).clampMin(1),
       formatEffect: value => formatX(value, 3, 3)
     }
   },
