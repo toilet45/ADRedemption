@@ -350,7 +350,7 @@ export const Ra = {
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
     let primeAnswer = Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
-    if (level>=60) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    if (level>=65) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
     primeAnswer = primeAnswer / pet.shopWeakenScalingEffect;
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
