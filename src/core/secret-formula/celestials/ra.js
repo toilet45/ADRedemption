@@ -553,7 +553,7 @@ export const ra = {
     improvedECRewards: {
       id: 22,
       id2: 0,
-      reward: "Each Eternity Challenge Gains an Additional Reward, Increasing Based on V Level",
+      reward: "Each Eternity Challenge Gains an Additional Reward, Increasing Based on V Level and total Space Theorems",
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
