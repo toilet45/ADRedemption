@@ -79,7 +79,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
-      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 1000) / 10 * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 250) / 10 * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => formatPow(value, 3, 3),
     }
   },
@@ -242,7 +242,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Reduce free Tickspeed upgrade scaling ⌬",
-      effect: completions => 1 - (0.00005 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: completions => 1 - (0.0005 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },

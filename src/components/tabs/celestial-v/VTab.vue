@@ -130,6 +130,23 @@ export default {
     },
     vUnlock: () => VUnlocks.vAchievementUnlock,
     runMilestones() {
+      if(Ra.unlocks.unlockSHardV.isUnlocked) return[
+        [
+          VUnlocks.shardReduction,
+          VUnlocks.adPow,
+          VUnlocks.fastAutoEC
+        ],
+        [
+          VUnlocks.autoAutoClean,
+          VUnlocks.achievementBH,
+          VUnlocks.raUnlock
+        ],
+        [
+          VUnlocks.vAchMulti,
+          VUnlocks.vAchRa,
+          VUnlocks.vKeep
+        ],
+      ];
       return [
         [
           VUnlocks.shardReduction,

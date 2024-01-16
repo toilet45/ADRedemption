@@ -38,12 +38,12 @@ export const warpUpgrades = [
     noEffect: true
   }),
   rebuyable({
-    name: "Warp Upgrade 2",
+    name: "MemoryGain",
     id: 2,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Improve Ra's memory gain by ×3",
+    effect: 3,
     effectType: "×"
   }),
   rebuyable({

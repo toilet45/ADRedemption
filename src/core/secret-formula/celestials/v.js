@@ -210,7 +210,7 @@ export const v = {
       id: 10,
       name: "Ultra Slow",
       description: value => `Get ${format(Decimal.pow10(value))} Antimatter while in Dilation and EC12.`,
-      values: [1.75e15, 3e15, 4.25e15, 6.5e15, 7.75e15],
+      values: [5e13, 7.5e13, 1e14, 1.25e14, 1.5e14],
       condition: () => V.isRunning && player.dilation.active && EternityChallenge(12).isRunning,
       currentValue: () => Currency.antimatter.value.log10(),
       formatRecord: x => format(Decimal.pow10(x), 2),
@@ -224,7 +224,7 @@ export const v = {
       id: 11,
       name: "Proof of Purity",
       description: value => `Get ${format(Decimal.pow10(value))} Infinity Points with at least 7 Cursed Glyph equipped and without any Triad Studies.`,
-      values: [6e11, 7e12, 8e13, 9e14, 1e16],
+      values: [1e11, 2e12, 3e13, 4e14, 5e15],
       condition: () => V.isRunning && Glyphs.activeWithoutCompanion.filter(item => item.type==='cursed').length>=7 && player.requirementChecks.reality.noTriads,
       currentValue: () => Currency.infinityPoints.value.log10(),
       formatRecord: x => format(Decimal.pow10(x), 2),
@@ -238,12 +238,12 @@ export const v = {
       id: 12,
       name: "Painful Roads",
       description: value => `Get ${format(Decimal.pow10(value))} Infinity Points without Triad study 305 and 307.`,
-      values: [360, 480, 600, 720],
+      values: [480, 600, 720, 840],
       condition: () => V.isSuperRunning && player.requirementChecks.reality.noTriad305 && player.requirementChecks.reality.noTriad307,
       currentValue: () => Currency.infinityPoints.value.log10(),
       formatRecord: x => format(Decimal.pow10(x), 2),
       shardReduction: tiers => 200*tiers,
-      maxShardReduction: goal => goal - 360,
+      maxShardReduction: goal => goal - 480,
       perReductionStep: 1e2,
       mode: V_REDUCTION_MODE.DIVISION,
       isSuperHard: true
@@ -266,12 +266,12 @@ export const v = {
       id: 14,
       name: "In and In and In",
       description: value => `Get ${format(Decimal.pow10(value))} Antimatter in Dilation, Eternity Challenge 3 and Infinity Challenge 8.`,
-      values: [1620, 2140, 2660, 3180],
+      values: [2500, 2800, 3100, 3400],
       condition: () => V.isSuperRunning && player.dilation.active && EternityChallenge(3).isRunning && InfinityChallenge(8).isRunning,
       currentValue: () => Currency.antimatter.value.log10(),
       formatRecord: x => format(Decimal.pow10(x)),
       shardReduction: tiers => 2500 * tiers,
-      maxShardReduction: goal => goal - 1620,
+      maxShardReduction: goal => goal - 2500,
       perReductionStep: new Decimal(1e25),
       mode: V_REDUCTION_MODE.DIVISION,
       isSuperHard: true
@@ -280,12 +280,12 @@ export const v = {
       id: 15,
       name: "Usage",
       description: value => `Get ${formatInt(value)} Time Theorems without Dilation glyph, Dilation unlocked and any Triad studies.`,
-      values: [7000, 60000, 500000, 4000000],
+      values: [70000, 80000, 90000, 100000],
       condition: () => V.isSuperRunning && !PlayerProgress.dilationUnlocked() && Glyphs.activeWithoutCompanion.filter(item => item.type==='dilation').length==0 && player.requirementChecks.reality.noTriads,
       currentValue: () => Currency.timeTheorems.max.clampMax('1.7e308').toNumber(),
       formatRecord: x => formatInt(x),
       shardReduction: tiers => 50000 * tiers,
-      maxShardReduction: goal => goal - 50000,
+      maxShardReduction: goal => goal - 70000,
       perReductionStep: 500,
       mode: V_REDUCTION_MODE.SUBTRACTION,
       isSuperHard: true
@@ -294,7 +294,7 @@ export const v = {
       id: 16,
       name: "Do What Shouldn't Do",
       description: value => `Get ${formatInt(value)} Replicanti Galaxies.`,
-      values: [34000, 39000, 42000, 45000],
+      values: [40000, 42000, 44000, 46000],
       condition: () => V.isSuperRunning,
       currentValue: () => Replicanti.galaxies.total,
       formatRecord: x => formatInt(x),
@@ -376,6 +376,33 @@ export const v = {
       description: () => `Have ${formatInt(36)} V-Achievements`,
       effect: 2,
       requirement: () => V.spaceTheorems >= 36
+    },
+    vAchMulti: {
+      id: 7,
+      reward() {
+        return `Total space theorems now boosts Achievements Multiplier. [NYI]`;
+      },
+      description: () => `Have ${formatInt(330)} V-Achievements`,
+      effect: 1,
+      requirement: () => V.spaceTheorems >= 330
+    },
+    vAchRa: {
+      id: 7,
+      reward() {
+        return `Total space theorems now boosts Ra's memory gain. [NYI]`;
+      },
+      description: () => `Have ${formatInt(360)} V-Achievements`,
+      effect: 1,
+      requirement: () => V.spaceTheorems >= 360
+    },
+    vKeep: {
+      id: 7,
+      reward() {
+        return `Keep all V progress on Mend. [NYI]`;
+      },
+      description: () => `Have ${formatInt(390)} V-Achievements`,
+      effect: 1,
+      requirement: () => V.spaceTheorems >= 390
     }
   }
 };

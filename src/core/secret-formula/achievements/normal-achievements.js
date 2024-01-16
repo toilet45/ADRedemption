@@ -1417,8 +1417,12 @@ export const normalAchievements = [
   },
   {
     id: 195,
-    name: "195",
-    description: "placeholder",
+    name: "Woah, we're super halfway there",
+    get description() { return `Get ${formatInt(350)} total Ra Celestial Memory levels.`; },
+    checkRequirement: () => Ra.totalPetLevel >= 350,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    get reward() { return `Get ×10 more memories.`; },
+    effect: 10
   },
   {
     id: 196,

@@ -259,7 +259,7 @@ export const V = {
     return 1000 * Math.pow(1.15, currReductionSteps);
   },
   nextSuperHardReductionCost(currReductionSteps) {
-    return 1e24 * Math.pow(1.5, currReductionSteps);
+    return 1e21 * Math.pow(1.5, currReductionSteps);
   },
   quotes: Quotes.v,
   symbol: "⌬"

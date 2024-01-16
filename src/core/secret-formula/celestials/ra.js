@@ -562,7 +562,7 @@ export const ra = {
     unlockSHardV: {
       id: 23,
       id2: 0,
-      reward: "Unlock More V-Achievements and V's Superhard reality.",
+      reward: "Unlock More V-Achievements, V's Superhard reality and more V-Milestones",
       pet: "v",
       level: 40,
       displayIcon: `<span class="fas fa-trophy"></span>`

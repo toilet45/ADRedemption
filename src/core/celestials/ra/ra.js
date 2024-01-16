@@ -312,12 +312,13 @@ export const Ra = {
     for (const pet of Ra.pets.all) pet.tick(realDiff, generateChunks);
   },
   get productionPerMemoryChunk() {
-    let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168));
+    let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168), Achievement(195));
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res = new Decimal(res).times(pet.memoryProductionMultiplier);
     }
     if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
     if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
+    res = res.timesEffectOf(WarpUpgrade(2))
     return res.toNumber();
   },
   get memoryBoostResources() {
@@ -350,7 +351,7 @@ export const Ra = {
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
     let primeAnswer = Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
-    if (level>=65) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    if (level>=75) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
     primeAnswer = primeAnswer / pet.shopWeakenScalingEffect;
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
