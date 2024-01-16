@@ -811,13 +811,13 @@ export const normalAchievements = [
     checkRequirement: () => Currency.infinities.lte(1),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
     reward: "Multiplier to Infinity Points based on Infinities.",
-    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)),
-    cap: () => Effarig.eternityCap,
+    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)).clampMax('1e10000000000'),
+    cap: () => {return Effarig.eternityCap===undefined ? new Decimal('1e10000000000') : Effarig.eternityCap},
     formatEffect: value => {
       // Since TS31 is already accounted for in the effect prop, we need to "undo" it to display the base value here
       const mult = formatX(value, 2, 2);
       return TimeStudy(31).canBeApplied
-        ? `${formatX(value.pow(1 / TimeStudy(31).effectValue), 2, 1)} (After TS31: ${mult})`
+        ? `${formatX(value.pow(DC.D1.div(TimeStudy(31).effectValue)), 2, 1)} (After TS31: ${mult})`
         : mult;
     }
   },

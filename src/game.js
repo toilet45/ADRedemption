@@ -884,7 +884,7 @@ function passivePrestigeGen() {
     let infGen = DC.D0;
     if (BreakInfinityUpgrade.infinitiedGen.isBought) {
       // Multipliers are done this way to explicitly exclude ach87 and TS32
-      infGen = infGen.plus(Time.deltaTimeMs.toNumber() / Decimal.clampMin(50, player.records.bestInfinity.time).toNumber() / 2);
+      infGen = infGen.plus(Time.deltaTimeMs.div(Decimal.clampMin(50, player.records.bestInfinity.time)).div(2));
       infGen = infGen.timesEffectsOf(
         RealityUpgrade(5),
         RealityUpgrade(7),
