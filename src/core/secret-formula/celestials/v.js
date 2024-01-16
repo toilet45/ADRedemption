@@ -380,29 +380,31 @@ export const v = {
     vAchMulti: {
       id: 7,
       reward() {
-        return `Total space theorems now boosts Achievements Multiplier. [NYI]`;
+        return `Extra Achievements Multiplier based on total space theorems.`;
       },
-      description: () => `Have ${formatInt(330)} V-Achievements`,
-      effect: 1,
-      requirement: () => V.spaceTheorems >= 330
+      description: () => `Have ${formatInt(210)} V-Achievements`,
+      effect: () => Decimal.pow(V.spaceTheorems,2).clampMin(1),
+      format: x => formatX(x, 0, 0),
+      requirement: () => V.spaceTheorems >= 210 && Ra.unlocks.unlockSHardV.isUnlocked
     },
     vAchRa: {
-      id: 7,
+      id: 8,
       reward() {
-        return `Total space theorems now boosts Ra's memory gain. [NYI]`;
+        return `Total space theorems now boosts Ra's memory gain.`;
       },
-      description: () => `Have ${formatInt(360)} V-Achievements`,
-      effect: 1,
-      requirement: () => V.spaceTheorems >= 360
+      description: () => `Have ${formatInt(300)} V-Achievements`,
+      effect: () => Math.max(V.spaceTheorems/50,1),
+      format: x => formatX(x, 2, 2),
+      requirement: () => V.spaceTheorems >= 300 && Ra.unlocks.unlockSHardV.isUnlocked
     },
     vKeep: {
-      id: 7,
+      id: 9,
       reward() {
         return `Keep all V progress on Mend. [NYI]`;
       },
       description: () => `Have ${formatInt(390)} V-Achievements`,
       effect: 1,
-      requirement: () => V.spaceTheorems >= 390
+      requirement: () => V.spaceTheorems >= 390 && Ra.unlocks.unlockSHardV.isUnlocked
     }
   }
 };

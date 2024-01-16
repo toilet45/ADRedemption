@@ -424,6 +424,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         if (!isActive) break;
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
+        factor = factor.times(VUnlocks.vAchMulti.effectOrDefault(1));
         /*if(ExpoBlackHole(1).isUnlocked && factor.gte(1)){
           for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
             if (!i.isUnlocked) break;

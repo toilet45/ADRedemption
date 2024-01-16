@@ -318,7 +318,7 @@ export const Ra = {
     }
     if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
     if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
-    res = res.timesEffectOf(WarpUpgrade(2))
+    res = res.timesEffectOf(WarpUpgrade(2)).times(VUnlocks.vAchRa.effectOrDefault(1));
     return res.toNumber();
   },
   get memoryBoostResources() {
