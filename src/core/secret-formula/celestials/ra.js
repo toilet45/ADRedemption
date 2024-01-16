@@ -449,7 +449,7 @@ export const ra = {
       reward: "You gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-fire"></span>`
     },
     harshInstabilityDelay: {
       id: 10,
@@ -499,7 +499,7 @@ export const ra = {
       reward: "Reomve the 1e300 Gamespeed Cap",
       pet: "enslaved",
       level: 30,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-tachometer-alt"></span>`
     },
     uncap8TdPurchaseMult: {
       id: 16,
@@ -556,7 +556,7 @@ export const ra = {
       reward: "Each Eternity Challenge Gains an Additional Reward, Increasing Based on V Level",
       pet: "v",
       level: 30,
-      displayIcon: '*',
+      displayIcon: `⌬`,
       disabledByPelle: true
     },
     unlockSHardV: {
@@ -630,7 +630,7 @@ export const ra = {
       reward: "All Memory Chunks produce more Memories based on Imaginary Machines",
       pet: "ra",
       level: 5,
-      displayIcon: '*',
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`,
       effect: () => Math.max(1, Math.pow(Math.log(Math.max(1,Currency.imaginaryMachines.value)), 0.5))
     },
     upgradesDontSpendMems: {
@@ -647,7 +647,7 @@ export const ra = {
       reward: "Add a secondary source for Memory Chunk Gain for each Celestial",
       pet: "ra",
       level: 10,
-      displayIcon: "*"
+      displayIcon: '<i class="fa-solid fa-angle-double-up"></i>'
     },
     remembranceBoost: {
       id: 2,
@@ -655,7 +655,7 @@ export const ra = {
       reward: "Remembrance is ×15 as powerful",
       pet: "ra",
       level: 15,
-      displayIcon: "*"
+      displayIcon: '<i class="fa-solid fa-sun"></i>'
     },
     generateMemChunksOutOfRasReality: {
       id: 3,
@@ -663,7 +663,7 @@ export const ra = {
       reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate. Improve Ra's memory chunk formula.",
       pet: "ra",
       level: 25,
-      displayIcon: '*'
+      displayIcon: 'Ϟ'
     },
     raNoReset: {
       id: 4,
@@ -728,7 +728,7 @@ export const ra = {
       effect: () => (Ra.pets.laitela.level),
       pet: "laitela",
       level: 1,
-      displayIcon: '*'
+      displayIcon: 'ᛝ'
     },
     annihilationDarkEnergyBoost: {
       id: 12,
@@ -736,7 +736,7 @@ export const ra = {
       reward: "Annihilation increases dark energy production with reduced effect",
       pet: "laitela",
       level: 2,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-dot-circle"></i>'
     },
     laitelaXP: {
       id: 13,
@@ -745,7 +745,7 @@ export const ra = {
       effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "laitela",
       level: 5,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-star-of-david"></i>'
     },
     totalAntimatterDarkMatterBoost: {
       id: 14,
@@ -753,7 +753,7 @@ export const ra = {
       reward: "Total Antimatter boosts dark matter gain",
       pet: "laitela",
       level: 8,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: GLYPH_SYMBOLS.power
     },
     infinityPowerConversionBoost: {
       id: 15,
@@ -762,7 +762,7 @@ export const ra = {
       effect: () => .25 * Math.floor(Ra.pets.laitela.level/10),
       pet: "laitela",
       level: 10,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-infinity"></span>`
     },
     passiveAnnihilationGen: {
       id: 16,
@@ -770,7 +770,7 @@ export const ra = {
       reward: `Passively generate half of your Annihilation multiplier every second`,
       pet: "laitela",
       level: 15,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-circle-half-stroke"></span>`
     },
     unlockDMD: {
       id: 17,
@@ -778,7 +778,7 @@ export const ra = {
       reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels. Improve Lai'tela's memory chunk formula.`,
       pet: "laitela",
       level: 25,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-circle-up"></span>`
     },
     continuumBoost: {
       id: 18,
@@ -860,7 +860,7 @@ export const ra = {
       effect: () => Math.max(Math.log10(player.records.thisReality.remWithoutGG)/2, 1),
       pet: "pelle",
       level: 5,
-      displayIcon: '*'
+      displayIcon: '♅'
     },
     unlockPelleTPMult: {
       id: 28,
@@ -868,7 +868,7 @@ export const ra = {
       reward: "Re-enable Tachyon Particle Multiplier in Doomed Reality, but it's decreased to ×1.1",
       pet: "pelle",
       level: 8,
-      displayIcon: "*"
+      displayIcon: GLYPH_SYMBOLS.dilation
     },
     exitDoom: {
       id: 29,
@@ -876,7 +876,7 @@ export const ra = {
       reward: "Doomed Reality can be exitied, but it causes a Mending Reset (with no benefits)",
       pet: "pelle",
       level: 10,
-      displayIcon: "*"
+      displayIcon: '<i class="fa-solid fa-arrow-alt-circle-left"></i>'
     },
     unlockPelleIPAndEPMult: {
       id: 30,
@@ -884,7 +884,7 @@ export const ra = {
       reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.01 and ×1.5 respectively",
       pet: "pelle",
       level: 15,
-      displayIcon: "*"
+      displayIcon: `<span class="fas fa-sync-alt"</span>`
     },
     unlockPelleGlyphEffects: {
       id: 31,
@@ -900,7 +900,7 @@ export const ra = {
       reward: "Memory Gain for all Celestials is boosted in Doomed Reality",
       pet: "pelle",
       level: 30,
-      displayIcon: "*"
+      displayIcon: `<span class="fas fa-sun"</span>`
     },
     unlockPelleContinuum: {
       id: 1,
