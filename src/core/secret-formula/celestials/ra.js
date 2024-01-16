@@ -47,7 +47,7 @@ export const ra = {
       secondaryMemoryChunkGain: "Game speed",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.enslavedUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(getGameSpeedupFactor())/100) : 1;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(Decimal.max(getGameSpeedupFactor(),1))/100) : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
