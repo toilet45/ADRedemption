@@ -384,7 +384,7 @@ export const v = {
       },
       description: () => `Have ${formatInt(210)} V-Achievements`,
       effect: () => Decimal.pow(V.spaceTheorems,2).clampMin(1),
-      format: x => formatX(x, 0, 0),
+      format: x => formatX(x, 2, 2),
       requirement: () => V.spaceTheorems >= 210 && Ra.unlocks.unlockSHardV.isUnlocked
     },
     vAchRa: {
