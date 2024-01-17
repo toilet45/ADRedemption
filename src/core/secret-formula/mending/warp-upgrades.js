@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { Currency } from "../../currency";
 
 const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
@@ -39,7 +40,7 @@ export const warpUpgrades = [
     noEffect: true
   }),
   rebuyable({
-    name: "MemoryGain",
+    name: "Memory Gain",
     id: 2,
     initialCost: 1e20,
     costMult: 100,
@@ -69,17 +70,17 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 5",
+    name: "The Dedicated Way",
     id: 5,
-    cost: 1e300,
+    cost: 1e24,
     requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    hasFailed: () => !Ra.isRunning,
+    checkRequirement: () => Ra.isRunning && Currency.antimatter.exponent>=2.45e18,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
+    description: () => `Ra's basic Memory chunk gain multiplier based on current Antimatter`,
+    effect: () => Math.max(Math.log10(Currency.antimatter.exponent),1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
