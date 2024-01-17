@@ -1,13 +1,13 @@
-import { PlayerProgress } from "../player-progress";
+import { Singularity } from "../globals";
 import { AutobuyerState } from "./autobuyer";
 
-export class SingularityCapIncreaseAutobuyerState extends AutobuyerState {
+export class SingularityCapAutobuyerState extends AutobuyerState {
   get data() {
     return player.auto.singCap;
   }
 
   get name() {
-    return `Singularity cap increase`;
+    return `Singularity Cap`;
   }
 
   get isUnlocked() {
@@ -19,6 +19,9 @@ export class SingularityCapIncreaseAutobuyerState extends AutobuyerState {
   }
 
   set multiplier(value) {
+    if(value < 1){
+      value = 1
+    }
     this.data.multiplier = value;
   }
 
@@ -35,11 +38,22 @@ export class SingularityCapIncreaseAutobuyerState extends AutobuyerState {
   }
 
   get inputEntry() {
-    return "Maximum singularity time (ms)";
+    return "multiplier";
+  }
+
+  get description() {
+    return "Auto condense time (ms)";
   }
 
   tick() {
-    if ((Singularity.cap / Currency.darkEnergy.productionPerSecond) < (this.multiplier/10)) return;
-    Singularity.increaseCap();
+    const duration = Singularity.cap / Currency.darkEnergy.productionPerSecond;
+    if (duration < (this.multiplier / 1000 / Math.sqrt(10))) {
+      Singularity.increaseCap();
+      return;
+    };
+    if (duration > (this.multiplier / 1000 * Math.sqrt(10))){
+      Singularity.decreaseCap();
+      return;
+    };
   }
 }

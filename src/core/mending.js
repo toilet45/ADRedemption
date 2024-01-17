@@ -8,6 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
+import { VUnlocks } from "./globals";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -35,7 +36,7 @@ export function mendingReset() {
     Tab.dimensions.antimatter.show() // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed ||(player.isGameEnd && GameEnd.endState >= 14.5)){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(!Pelle.isDoomed || player.isGameEnd){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
@@ -79,8 +80,8 @@ export function mendingReset() {
     }
     if (!Achievement(194).isUnlocked) {
       player.records.totalAntimatter = DC.E1,
-      player.challenge.normal.bestTimes = Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 11);
-      player.challenge.infinity.bestTimes = Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 8);
+      player.challenge.normal.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11);
+      player.challenge.infinity.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8);
     }
     //Celestials
     if(!MendingMilestone.ten.isReached){
@@ -116,9 +117,11 @@ export function mendingReset() {
       player.celestials.enslaved.unlocks = [0, 1];
       player.celestials.enslaved.completed = true;
     }
+    if(!VUnlocks.vKeep.isUnlocked){
     V.reset();
     if(MendingUpgrade(14).isBought){
       player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
@@ -187,7 +190,7 @@ export function mendingReset() {
     player.celestials.pelle.collapsed.rifts = false;
     player.celestials.pelle.collapsed.galaxies = false;
     //Reality
-    player.reality.autoAutoClean = false;
+    //player.reality.autoAutoClean = false; //excuse me why you reset this option--sxy
     player.reality.glyphs.trash = 0;
     resetRealityRuns();
     player.records.thisReality = {
@@ -204,7 +207,7 @@ export function mendingReset() {
       remWithoutGG: 0
     },
     player.records.bestReality = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -309,7 +312,7 @@ export function mendingReset() {
     Currency.timeShards.reset();
     Currency.timeTheorems.reset();
     player.records.bestEternity = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
@@ -374,7 +377,7 @@ export function mendingReset() {
       bestIPminVal: DC.D0,
     },
     player.records.bestInfinity = {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,

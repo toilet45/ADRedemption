@@ -44,6 +44,11 @@ class VRunUnlockState extends GameMechanicState {
       const modifiedStepCount = (Math.pow(1.15, stepCount) - 1) / 0.15;
       return modifiedStepCount * V.nextHardReductionCost(player.celestials.v.goalReductionSteps[this.id]);
     }
+    if (this.config.isSuperHard) {
+      // The numbers come from inside of nextHardReductionCost, this is an effective bulk-buy factor
+      const modifiedStepCount = (Math.pow(1.5, stepCount) - 1) / 0.5;
+      return modifiedStepCount * V.nextSuperHardReductionCost(player.celestials.v.goalReductionSteps[this.id]);
+    }
     return stepCount * V.nextNormalReductionCost();
   }
 
@@ -174,6 +179,12 @@ export const V = {
       if (this.spaceTheorems >= 36) SpeedrunMilestones(22).tryComplete();
     }
 
+    if (this.isSuperRunning) {
+      for (const unlock of VRunUnlocks.all) {
+        unlock.tryComplete();
+      }
+    }
+
     if (VUnlocks.raUnlock.canBeApplied && !Ra.unlocks.autoTP.canBeApplied) {
       Ra.checkForUnlocks();
     }
@@ -199,9 +210,9 @@ export const V = {
     let sum = 0
     let mult = MendingUpgrade(14).isBought ? 3 : 1
     for (let i = 0; i < player.celestials.v.runUnlocks.length; i++) {
-      sum += player.celestials.v.runUnlocks[i] * mult
-      if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult
-      if (i>=12) sum += player.celestials.v.runUnlocks[i] * 3 * mult
+      sum += player.celestials.v.runUnlocks[i] * mult;
+      if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult;
+      if (i>=12) sum += player.celestials.v.runUnlocks[i] * 4 * mult;
     }
     this.spaceTheorems = sum;
   },
@@ -234,11 +245,11 @@ export const V = {
     return Ra.unlocks.unlockHardV.isUnlocked;
   },
   get isSuperFlipped() {
-    return Ra.unlocks.placeholderV2.isUnlocked;
+    return Ra.unlocks.unlockSHardV.isUnlocked;
   },
   get isFullyCompleted() {
     let x =  MendingUpgrade(14).isBought? 198 : 66;
-    //if(Ra.unlocks.placeholderV2.isUnlocked) x = bigger stuff
+    if(Ra.unlocks.unlockSHardV.isUnlocked) x = MendingUpgrade(14).isBought? 648 : 216;
     return this.spaceTheorems >= x;
   },
   nextNormalReductionCost() {
@@ -246,6 +257,9 @@ export const V = {
   },
   nextHardReductionCost(currReductionSteps) {
     return 1000 * Math.pow(1.15, currReductionSteps);
+  },
+  nextSuperHardReductionCost(currReductionSteps) {
+    return 1e20 * Math.pow(1.5, currReductionSteps);
   },
   quotes: Quotes.v,
   symbol: "⌬"

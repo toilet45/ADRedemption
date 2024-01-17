@@ -27,7 +27,7 @@ export default {
       return Autobuyer.epMult;
     },
     classObject() {
-      if (this.isDoomed) {
+      if (this.isDoomed && !this.isActiveInDoom) {
         return {
           "o-eternity-upgrade": true,
           "o-eternity-upgrade--useless": !this.isAffordable,
@@ -61,7 +61,7 @@ export default {
       this.cost.copyFrom(upgrade.cost);
       this.isAffordable = upgrade.isAffordable;
       this.isCapped = this.upgrade.isCapped;
-      this.isActiveInDoom = Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked;
+      this.isActiveInDoom = Pelle.isDoomed && Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked;
     },
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();

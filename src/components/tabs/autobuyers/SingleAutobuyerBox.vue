@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       isUnlocked: false,
+      description: "Multiplier"
     };
   },
   computed: {
@@ -30,6 +31,7 @@ export default {
   methods: {
     update() {
       this.isUnlocked = this.autobuyer.isUnlocked;
+      this.description = this.autobuyer.description;
     },
   }
 };
@@ -49,7 +51,7 @@ export default {
         v-if="autobuyer.hasInput"
         class="c-autobuyer-box__small-text"
       >
-        Multiplier:
+        {{ description }}:
         <AutobuyerInput
           class="c-small-autobuyer-input"
           :autobuyer="autobuyer"

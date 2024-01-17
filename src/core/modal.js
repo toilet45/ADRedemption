@@ -35,6 +35,8 @@ import InfoDisplayOptionsModal from "@/components/modals/options/InfoDisplayOpti
 import NewsOptionsModal from "@/components/modals/options/NewsOptionsModal";
 import PreferredTreeModal from "@/components/modals/options/PreferredTreeModal";
 import SingleGlyphAppearanceModal from "@/components/modals/options/glyph-appearance/SingleGlyphAppearanceModal";
+import SpeedUpModal from "@/components/modals/options/SpeedUpModal"
+import SpeedUpReportModal from "@/components/modals/options/SpeedUpReportModal"
 
 import DeleteCompanionGlyphModal from "@/components/modals/glyph-management/DeleteCompanionGlyphModal";
 import DeleteGlyphModal from "@/components/modals/glyph-management/DeleteGlyphModal";
@@ -232,6 +234,8 @@ Modal.newsOptions = new Modal(NewsOptionsModal);
 Modal.animationOptions = new Modal(AnimationOptionsModal);
 Modal.hiddenTabs = new Modal(HiddenTabsModal);
 Modal.preferredTree = new Modal(PreferredTreeModal);
+Modal.speedUp = new Modal(SpeedUpModal);
+Modal.speedUpReport = new Modal(SpeedUpReportModal);
 
 Modal.upgradeLock = new Modal(UpgradeMechanicLockModal, 1);
 Modal.deleteCompanion = new Modal(DeleteCompanionGlyphModal, 1);

@@ -3,6 +3,7 @@ import OpenModalHotkeysButton from "@/components/OpenModalHotkeysButton";
 import OptionsButton from "@/components/OptionsButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import SliderComponent from "@/components/SliderComponent";
+import { DEV } from "@/env";
 
 export default {
   name: "OptionsGameplayTab",
@@ -23,6 +24,7 @@ export default {
       infinityUnlocked: false,
       automatorUnlocked: false,
       automatorLogSize: 0,
+      DEV: DEV,
     };
   },
   computed: {
@@ -159,6 +161,13 @@ export default {
             @input="adjustSliderValueAutomatorLogSize($event)"
           />
         </div>
+        <OptionsButton
+          v-if="DEV"
+          class="o-primary-btn--option"
+          onclick="Modal.speedUp.show()"
+        >
+          Modify Testing Speed
+        </OptionsButton>
       </div>
       <OpenModalHotkeysButton />
     </div>

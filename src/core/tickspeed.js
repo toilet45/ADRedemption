@@ -1,6 +1,6 @@
 import { DC } from "./constants";
 import { Effects } from "./game-mechanics/effects";
-import { Ra } from "./globals";
+import { Ra, V } from "./globals";
 
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
@@ -16,14 +16,14 @@ export function effectiveBaseGalaxies() {
   // Effects.sum is intentional here - if EC8 is not completed,
   // this value should not be contributed to total replicanti galaxies
   if(EternityChallenge(8).completions >= 1){
-    if(!Ra.unlocks.improvedECRewards.isUnlocked) replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).reward.effectValue;
-    else replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).vReward.effectValue;
+    replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).reward.effectValue;
+    if(Ra.unlocks.improvedECRewards.isUnlocked && !Pelle.isDoomed) replicantiGalaxies += nonActivePathReplicantiGalaxies * EternityChallenge(8).vReward.effectValue;
   }
   let freeGalaxies = player.dilation.totalTachyonGalaxies;
   freeGalaxies *= 1 + Math.max(0, Replicanti.amount.log10() / 1e6) * AlchemyResource.alternation.effectValue;
   let x = player.galaxies;
   let y = GalaxyGenerator.galaxies;
-  if(Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(8).completions >=1){
+  if(Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(8).completions >= 1 && !Pelle.isDoomed){
     freeGalaxies *= 1 + EternityChallenge(8).vReward.effectValue;
     x *= 1 + EternityChallenge(8).vReward.effectValue;
     y *= 1 + EternityChallenge(8).vReward.effectValue;
@@ -156,9 +156,10 @@ export const Tickspeed = {
   },
 
   get current() {
-    const tickspeed = Effarig.isRunning
+    let tickspeed = Effarig.isRunning
       ? Effarig.tickspeed
-      : this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
+      : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
+    if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 
@@ -232,7 +233,7 @@ export const FreeTickspeed = {
 
   fromShards(shards) {
     let y = this.GROWTH_EXP;
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(11).completions >= 1) y = y ** EternityChallenge(11).vReward.effectValue; 
+    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(11).completions >= 1 && !Pelle.isDoomed) y = y ** EternityChallenge(11).vReward.effectValue; 
     const tickmult = (1 + (Effects.min(Effects.min(1.33, TimeStudy(171)),TimeStudy(309)) - 1) *
       Math.max(getAdjustedGlyphEffect("cursedtickspeed"), 1));
     const logTickmult = Math.log(tickmult);

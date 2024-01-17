@@ -191,7 +191,7 @@ export function initializeChallengeCompletions(isReality) {
 export function initializeResourcesAfterEternity() {
   player.sacrificed = DC.D0;
   Currency.infinities.reset();
-  player.records.bestInfinity.time = new Decimal("9.999999999999998e999999999999999900000");
+  player.records.bestInfinity.time = Decimal.pow10(Number.MAX_VALUE);
   player.records.bestInfinity.realTime = Number.MAX_VALUE;
   player.records.thisInfinity.time = DC.D0;
   player.records.thisInfinity.lastBuyTime = DC.D0;
@@ -247,7 +247,7 @@ export function gainedEternities() {
     eternityGain = eternityGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
   }
   return Pelle.isDisabled("eternityMults")
-    ? eternityGain
+    ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? eternityGain.times(getAdjustedGlyphEffect("timeetermult")) : eternityGain
     : eternityGain.times(getAdjustedGlyphEffect("timeetermult"))
       .timesEffectsOf(RealityUpgrade(3), Achievement(113))
       .pow(AlchemyResource.eternity.effectValue);
@@ -286,11 +286,11 @@ class EPMultiplierState extends GameMechanicState {
   constructor() {
     super({});
     this.cachedCost = new Lazy(() => this.costAfterCount(player.epmultUpgrades));
-    this.cachedEffectValue = (player.celestials.pelle.doomed && Ra.unlocks.placeholderP6.isUnlocked) ? new Lazy(() => Decimal.pow(1.5, player.epmultUpgrades)) : new Lazy(() => DC.D5.pow(player.epmultUpgrades));
+    this.cachedEffectValue = (player.celestials.pelle.doomed && Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked) ? new Lazy(() => Decimal.pow(1.5, player.epmultUpgrades)) : new Lazy(() => DC.D5.pow(player.epmultUpgrades));
   }
 
   get isAffordable() {
-    if (Pelle.isDoomed && Ra.unlocks.placeholderP6.isUnlocked && Currency.eternityPoints.gte(this.cost)) return true;
+    if (Pelle.isDoomed && Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked && Currency.eternityPoints.gte(this.cost)) return true;
     return !Pelle.isDoomed && !this.isCapped && Currency.eternityPoints.gte(this.cost);
   }
 

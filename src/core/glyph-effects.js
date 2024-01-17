@@ -84,6 +84,8 @@ class GlyphEffectConfig {
     this._biggerIsBetter = undefined;
     /** @type {boolean} Determines if effect is disabled while in doomed */
     this._enabledInDoomed = setup.enabledInDoomed ?? false;
+    /** @type {boolean} Determines if effect is disabled even with pelle25 */
+    this._enabledInDoomedWithlvl25 = setup.enabledInDoomedWithlvl25 ?? false;
   }
 
   /**
@@ -114,8 +116,12 @@ class GlyphEffectConfig {
     return typeof shortDesc === "function" ? shortDesc() : shortDesc;
   }
 
-  get isDisabledByDoomed() {
+  get isDisabledByDoomed() { //this looks vue only
     return Pelle.isDoomed && !this._enabledInDoomed;
+  }
+
+  get isDisabledByDoomedWithlvl25() { //this looks vue only
+    return Pelle.isDoomed && !this._enabledInDoomedWithlvl25;
   }
 
   /** @returns {number} */
@@ -138,7 +144,7 @@ class GlyphEffectConfig {
   static checkInputs(setup) {
     const KNOWN_KEYS = ["id", "bitmaskIndex", "glyphTypes", "singleDesc", "totalDesc", "genericDesc", "effect",
       "formatEffect", "formatSingleEffect", "combine", "softcap", "conversion", "formatSecondaryEffect",
-      "formatSingleSecondaryEffect", "alteredColor", "alterationType", "isGenerated", "shortDesc", "enabledInDoomed"];
+      "formatSingleSecondaryEffect", "alteredColor", "alterationType", "isGenerated", "shortDesc", "enabledInDoomed", "enabledInDoomedWithlvl25"];
     const unknownField = Object.keys(setup).find(k => !KNOWN_KEYS.includes(k));
     if (unknownField !== undefined) {
       throw new Error(`Glyph effect "${setup.id}" includes unrecognized field "${unknownField}"`);

@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { Currency } from "../../currency";
 
 const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
@@ -20,7 +21,8 @@ const rebuyable = props => {
   };
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
   if (!props.noEffect) {
-    props.formatEffect = value => formatX(value, 2, 0);
+    props.formatEffect = value => effectType + format(value, 2, 0);
+    if(props.id==3) props.formatEffect = value => effectType + format(value, 3, 3);
     props.formatCost = value => format(value, 2, 0);
   }
   return props;
@@ -38,22 +40,22 @@ export const warpUpgrades = [
     noEffect: true
   }),
   rebuyable({
-    name: "Warp Upgrade 2",
+    name: "Memory Gain",
     id: 2,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Improve Ra's memory gain by ×3",
+    effect: 3,
     effectType: "×"
   }),
   rebuyable({
-    name: "Warp Upgrade 3",
+    name: "Game speed softcap",
     id: 3,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Increase Game speed's softcap by 0.002",
+    effect: 0.002,
+    effectType: "+"
   }),
   {
     name: "Visible Galaxies",
@@ -68,17 +70,17 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 5",
+    name: "The Dedicated Way",
     id: 5,
-    cost: 1e300,
+    cost: 1e24,
     requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    hasFailed: () => !Ra.isRunning,
+    checkRequirement: () => Ra.isRunning && Currency.antimatter.exponent>=2.45e18,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
+    description: () => `Ra's basic Memory chunk gain multiplier based on current Antimatter`,
+    effect: () => Math.max(Math.log10(Currency.antimatter.exponent),1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {

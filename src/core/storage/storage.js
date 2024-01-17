@@ -493,7 +493,7 @@ export const GameStorage = {
     AutomatorBackend.initializeFromSave();
     Lazy.invalidateAll();
 
-    const rawDiff = Date.now() - player.lastUpdate;
+    const rawDiff = (Date.now() - player.lastUpdate) * (player.testSpeed ?? 1);
     // We set offlineEnabled externally on importing or loading a backup; otherwise this is just a local load
     const simulateOffline = this.offlineEnabled ?? player.options.offlineProgress;
     if (simulateOffline && !Speedrun.isPausedAtStart()) {
@@ -549,6 +549,12 @@ export const GameStorage = {
     for (const resource of AlchemyResources.all) {
       resource.before = resource.amount;
     }
+    
+    document.addEventListener("mouseup", (event) => {
+      if(event.button == 0){
+        player.celestials.laitela.isHoldingLClick = false;
+      }
+    })
   }
 };
 

@@ -4,6 +4,7 @@ import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "DilationUpgradeButton",
@@ -47,7 +48,7 @@ export default {
   },
   computed: {
     classObject() {
-      if (this.isUseless) {
+      if (this.isUseless && !(this.upgrade.id === 3 && Ra.unlocks.unlockPelleTPMult.isUnlocked)) {
         // Note: TP mult (3) is conditionally useless and IP mult (7) is always useless; we style them similarly to
         // the rest of the game - TP appears as "currently available" while IP appears as "strictly disabled"
         return {
@@ -66,7 +67,7 @@ export default {
       };
     },
     isUseless() {
-      const tp = this.upgrade.id === 3 && !this.rebuyableBoost;
+      const tp = this.upgrade.id === 3 && !this.rebuyableBoost && !Ra.unlocks.unlockPelleTPMult.isUnlocked;
       const ip = this.upgrade.id === 7;
       return Pelle.isDoomed && (tp || ip);
     }

@@ -188,7 +188,7 @@ export class TimeStudyTreeLayout {
       normalRow(          TimeStudy.timeDimension(7), TimeStudy.timeDimension(8)      ),
       normalRow(                          TimeStudy.reality                           )
     );
-    if(Ra.unlocks.placeholderV6.isUnlocked){
+    if(Ra.unlocks.unlockMyriads.isUnlocked){
       this.rows.push(
         normalRow(TS(401), TS(402), TS(403)),
         normalRow(TS(411), TS(412), TS(413))

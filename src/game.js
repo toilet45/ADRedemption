@@ -123,7 +123,8 @@ export function gainedInfinityPoints(nosoftcap = false) {
   } else if (V.isRunning) {
     ip = ip.pow(0.5);
   } else if (V.isSuperRunning) {
-    ip = new Decimal(ip).log2().toDecimal();
+    //ip = ip.log(1.0000000001).toDecimal();
+    ip = ip.pow(0.000001);
   } else if (Laitela.isRunning) {
     ip = dilatedValueOf(ip);
   }
@@ -163,7 +164,7 @@ export function gainedMendingPoints(){
     Ra.unlocks.boostMVRGain
     );
   MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
-  if (Ra.unlocks.placeholderR13.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
+  if (Ra.unlocks.mendingPointsGainMult.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
 }
@@ -176,7 +177,7 @@ export function warpReality(){
 
 function totalEPMult() {
   return Pelle.isDisabled("EPMults")
-    ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])
+    ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2]).times(getAdjustedGlyphEffect("timeEP")) : Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])
     : getAdjustedGlyphEffect("cursedEP")
       .times(ShopPurchase.EPPurchases.currentMult)
       .timesEffectsOf(
@@ -206,7 +207,8 @@ export function gainedEternityPoints() {
   } else if (V.isRunning) {
     ep = ep.pow(0.5);
   } else if (V.isSuperRunning) {
-    ep = new Decimal(ep).log2().toDecimal();
+    //ep = ep.log(1.0000000001).toDecimal();
+    ep = ep.pow(0.000001);
   } else if (Laitela.isRunning) {
     ep = dilatedValueOf(ep);
   }
@@ -347,6 +349,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 
 export function gainedInfinities() {
   if (EternityChallenge(4).isRunning || Pelle.isDisabled("InfinitiedMults")) {
+    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked && Pelle.isDoomed) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
     return DC.D1;
   }
   let infGain = Effects.max(
@@ -421,6 +424,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         if (!isActive) break;
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
+        factor = factor.times(VUnlocks.vAchMulti.effectOrDefault(1));
         /*if(ExpoBlackHole(1).isUnlocked && factor.gte(1)){
           for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
             if (!i.isUnlocked) break;
@@ -470,7 +474,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
   
   if (factor.gte(getGameSpeedupSoftcaps())) {
-    let x = 0.4321;
+    let x = getGameSpeedupSoftcapsExp(1);
     factor = factor.div(getGameSpeedupSoftcaps());
     factor = factor.pow(x); //generalized in case of future upgrades
     factor = factor.times(getGameSpeedupSoftcaps());
@@ -484,6 +488,18 @@ export function getGameSpeedupSoftcaps(capNumber = 1){ //attempt to have all fut
     case 1:
     default:
       return new Decimal(1e300);
+  }
+
+}
+export function getGameSpeedupSoftcapsExp(capNumber = 1){ 
+  switch(capNumber){
+    case 1: {
+      let x = 0.4321;
+      x += WarpUpgrade(3).effectOrDefault(0);
+      return x;
+    }
+    default:
+      return 0.4321;
   }
 
 }
@@ -570,8 +586,8 @@ export function gameLoop(passDiff, options = {}) {
   let diff = passDiff;
   const thisUpdate = Date.now();
   const realDiff = diff === undefined
-    ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7)
-    : diff;
+    ? Math.clamp(thisUpdate - player.lastUpdate, 1, 8.64e7) * (player.testSpeed ?? 1)
+    : diff * (player.testSpeed ?? 1);
   if (!GameStorage.ignoreBackupTimer) player.backupTimer += realDiff;
 
   // For single ticks longer than a minute from the GameInterval loop, we assume that the device has gone to sleep or
@@ -581,7 +597,7 @@ export function gameLoop(passDiff, options = {}) {
   // Note that we have to explicitly call all the real-time mechanics with the existing value of realDiff, because
   // simply letting it run through simulateTime seems to result in it using zero
   CorruptionData.update() //We call this here since it resets every refresh, but we cant have it directly point to player because else multiplier tab complains
-  if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4) {
+  if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4 * (player.testSpeed ?? 1)) {
     GameIntervals.gameLoop.stop();
     simulateTime(realDiff / 1000, true);
     realTimeMechanics(realDiff);
@@ -680,6 +696,29 @@ export function gameLoop(passDiff, options = {}) {
     player.celestials.ra.permanentMemories.lai65 = true;
   }
 
+  if(!document.hasFocus()){
+    player.celestials.laitela.isHoldingLClick = false;
+  }
+
+  if(player.celestials.laitela.isHoldingLClick && Date.now() - player.celestials.laitela.holdStart >= 200){
+    const dim = DarkMatterDimension(player.celestials.laitela.heldTier);
+    switch(player.celestials.laitela.heldType){
+      case "interval":
+        const isIntervalCapped = dim.interval <= dim.intervalPurchaseCap;
+        if (isIntervalCapped) dim.ascend();
+        else dim.buyInterval();
+        break;
+      case "DM":
+        dim.buyPowerDM();
+        break;
+      case "DE":
+        dim.buyPowerDE();
+        break;
+      default:
+        throw new Error("Console user who doesn't know what you are doing you are very funny");
+    }
+  }
+
   if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
     if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
     if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){
@@ -735,7 +774,7 @@ export function gameLoop(passDiff, options = {}) {
   EternityChallenge(12).tryFail();
   Achievements._power.invalidate();
 
-  TimeDimensions.tick(realDiff);
+  TimeDimensions.tick(diff);
   InfinityDimensions.tick(diff);
   AntimatterDimensions.tick(diff);
 
@@ -858,7 +897,7 @@ function passivePrestigeGen() {
     let infGen = DC.D0;
     if (BreakInfinityUpgrade.infinitiedGen.isBought) {
       // Multipliers are done this way to explicitly exclude ach87 and TS32
-      infGen = infGen.plus(Time.deltaTimeMs.toNumber() / Decimal.clampMin(50, player.records.bestInfinity.time).toNumber() / 2);
+      infGen = infGen.plus(Time.deltaTimeMs.div(Decimal.clampMin(50, player.records.bestInfinity.time)).div(2));
       infGen = infGen.timesEffectsOf(
         RealityUpgrade(5),
         RealityUpgrade(7),
@@ -1068,7 +1107,7 @@ export function getTTPerSecond() {
 
   // Glyph TT generation
   const glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
-    ? 0
+    ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
 
   // Dilation TT generation

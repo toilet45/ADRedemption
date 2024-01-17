@@ -5,6 +5,7 @@ import { AUTOMATOR_MODE, AUTOMATOR_TYPE } from "./automator/automator-backend";
 import { DC } from "./constants";
 import { deepmergeAll } from "@/utility/deepmerge";
 import { GlyphTypes } from "./glyph-effects";
+import { Ra } from "./globals";
 
 // This is actually reassigned when importing saves
 // eslint-disable-next-line prefer-const
@@ -43,12 +44,12 @@ window.player = {
   challenge: {
     normal: {
       current: 0,
-      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 11),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 11),
       completedBits: 0,
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(new Decimal("9.999999999999998e999999999999999900000"), 8),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
       completedBits: 0,
     },
     eternity: {
@@ -353,6 +354,8 @@ window.player = {
     reality: {
       noAM: true,
       noTriads: true,
+      noTriad305: true,
+      noTriad307: true,
       noPurchasedTT: true,
       noInfinities: true,
       noEternities: true,
@@ -382,11 +385,11 @@ window.player = {
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
     recentInfinities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, "", DC.D0]),
     recentRealities: Array.range(0, 10).map(() =>
-      [new Decimal("9.999999999999998e999999999999999900000"), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
+      [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, 1, "", 0, 0]),
     thisInfinity: {
       time: DC.D0,
       realTime: 0,
@@ -396,7 +399,7 @@ window.player = {
       bestIPminVal: DC.D0,
     },
     bestInfinity: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestIPminEternity: DC.D0,
       bestIPminReality: DC.D0,
@@ -412,7 +415,7 @@ window.player = {
       bestInfinitiesPerMs: DC.D0,
     },
     bestEternity: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       bestEPminReality: DC.D0,
     },
@@ -430,7 +433,7 @@ window.player = {
       remWithoutGG: 0
     },
     bestReality: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
       glyphStrength: 0,
       RM: DC.D0,
@@ -457,7 +460,7 @@ window.player = {
       maxRem: 0,
     },
     bestMend: {
-      time: new Decimal("9.999999999999998e999999999999999900000"),
+      time: Decimal.pow10(Number.MAX_VALUE),
       realTime: Number.MAX_VALUE,
     }
   },
@@ -867,7 +870,7 @@ window.player = {
       peakGamespeed: DC.D1,
       petWithRemembrance: "",
       upgrades: new Set(),
-      /* rebuyables: {
+      rebuyables: {
         weakenTeresaScaling: 0,
         weakenEffarigScaling: 0,
         weakenEnslavedScaling: 0,
@@ -882,8 +885,8 @@ window.player = {
         incRaXPGain: 0,
         incLaitelaXPGain: 0,
         incPelleXPGain: 0,
-      }, */
-      rebuyables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
+      /* rebuyables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], */
       permanentMemories: {
         ra2: false,
         lai50: false,
@@ -921,6 +924,10 @@ window.player = {
       singularityCapIncreases: 0,
       lastCheckedMilestones: 0,
       milestoneGlow: true,
+      isHoldingLClick: false,
+      holdStart: 0,
+      heldTier: 0,
+      heldType: "",
     },
     pelle: {
       doomed: false,
@@ -1192,7 +1199,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return player.isGameEnd || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || (Pelle.isDoomed && !player.isGameEnd);
+    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;
@@ -1217,10 +1224,7 @@ export const Player = {
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current;
-    if (V.isSuperRunning && !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
-    if (V.isSuperRunning && player.reality.warped) return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
-    let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
-    if (inCel || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    if ((Pelle.isDoomed && Pelle.hasGalaxyGenerator) || !player.reality.warped) return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
     return challenge === undefined ? DC.WARP_LIMIT : challenge.goal;
   },
 
@@ -1247,6 +1251,8 @@ export const Player = {
         player.requirementChecks.reality = {
           noAM: true,
           noTriads: true,
+          noTriad305: true,
+          noTriad307: true,
           noPurchasedTT: true,
           // Note that these two checks below are only used in row 2, which is in principle always before the "flow"
           // upgrades in row 3 which passively generate infinities/eternities. These upgrades won't cause a lockout

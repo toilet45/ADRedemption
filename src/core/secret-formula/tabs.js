@@ -45,7 +45,7 @@ export const tabs = [
         symbol: "?",
         component: "MultiversalDimensionsTab",
         id: 3,
-        condition: () => Ra.unlocks.placeholderL14.isUnlocked,
+        condition: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
         hidable: true,
       },
     ]

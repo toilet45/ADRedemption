@@ -37,7 +37,7 @@ import { PelleUpgradeAutobuyerState } from "./pelle-upgrade-autobuyer";
 import { GalaxyGeneratorUpgradeAutobuyerState } from "./galgen-autobuyer";
 import { GalaxyGeneratorSacrificeAutobuyerState } from "./galgen-autobuyer";
 import { MendingAutobuyerState } from "./mending-autobuyer";
-import { SingularityCapIncreaseAutobuyerState } from "./singulaity-cap-autobuyer";
+import { SingularityCapAutobuyerState } from "./singulaity-cap-autobuyer";
 
 export const Autobuyer = {
   annihilation: new AnnihilationAutobuyerState(),
@@ -79,7 +79,7 @@ export const Autobuyer = {
   galgenUpgrade: GalaxyGeneratorUpgradeAutobuyerState.createAccessor(),
   galgenSac: new GalaxyGeneratorSacrificeAutobuyerState(),
   mending: new MendingAutobuyerState(),
-  singCapInc: new SingularityCapIncreaseAutobuyerState(),
+  singCapInc: new SingularityCapAutobuyerState(),
 };
 
 export const Autobuyers = (function() {

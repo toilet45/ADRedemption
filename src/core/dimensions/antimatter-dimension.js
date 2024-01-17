@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -80,7 +81,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   } else if (V.isRunning) {
     multiplier = multiplier.pow(0.5);
   } else if (V.isSuperRunning) {
-    multiplier = multiplier.log2().toDecimal();
+    multiplier = multiplier.pow(0.000001);
   }
 
   // This power effect goes intentionally after all the nerf effects and shouldn't be moved before them
@@ -579,8 +580,7 @@ class AntimatterDimensionState extends DimensionState {
       InfinityChallenge.isRunning ||
       Enslaved.isRunning;
     const postWarp = player.reality.warped;
-    let inCel = Teresa.isRunning || Effarig.isRunning || Enslaved.isRunning || V.isRunning || Ra.isRunning || Laitela.isRunning || Pelle.isDoomed;
-    if (inCel || !postWarp) return postBreak ? Decimal.MAX_VALUE : DC.E315;
+    if ((Pelle.isDoomed && Pelle.hasGalaxyGenerator) || !postWarp) return postBreak ? Decimal.MAX_VALUE : DC.E315;
     return postBreak ? DC.WARP_LIMIT : DC.E315;
   }
 
@@ -646,7 +646,7 @@ export const AntimatterDimensions = {
     let mult = DC.D2.plusEffectsOf(
       Achievement(141).effects.buyTenMult,
     );
-    if(!Ra.unlocks.improvedECRewards.isUnlocked){
+    if(EternityChallenge(3).completions >= 1){
       mult = mult.plusEffectsOf(EternityChallenge(3).reward);
     }
     mult = mult.timesEffectsOf(

@@ -27,6 +27,7 @@ export default {
       isFlipped: false,
       isSuperFlipped: false,
       isRunning: false,
+      isSuperRunning: false,
       hasAlchemy: false,
       MU15bought: false,
       flip: "normal",
@@ -92,7 +93,7 @@ export default {
           {}
         ];
       /*return this.isFlipped && this.wantsFlipped
-        ? Ra.unlocks.placeholderV2.isUnlocked
+        ? Ra.unlocks.unlockSHardV.isUnlocked
           ? [
             VRunUnlocks.all[6],
             VRunUnlocks.all[9],
@@ -129,6 +130,23 @@ export default {
     },
     vUnlock: () => VUnlocks.vAchievementUnlock,
     runMilestones() {
+      if(Ra.unlocks.unlockSHardV.isUnlocked) return[
+        [
+          VUnlocks.shardReduction,
+          VUnlocks.adPow,
+          VUnlocks.fastAutoEC
+        ],
+        [
+          VUnlocks.autoAutoClean,
+          VUnlocks.achievementBH,
+          VUnlocks.raUnlock
+        ],
+        [
+          VUnlocks.vAchMulti,
+          VUnlocks.vAchRa,
+          VUnlocks.vKeep
+        ],
+      ];
       return [
         [
           VUnlocks.shardReduction,
@@ -146,8 +164,16 @@ export default {
       return {
         "l-v-hexagon": true,
         "c-v-run-button": true,
-        "c-v-run-button--running": this.isRunning||this.isSuperRunning,
-        //"c-v-run-button--superrunning": this.isSuperRunning,
+        "c-v-run-button--running": this.isRunning,
+        "c-celestial-run-button--clickable": !this.isDoomed,
+        "o-pelle-disabled-pointer": this.isDoomed
+      };
+    },
+    superRunButtonClassObject() {
+      return {
+        "l-v-hexagon": true,
+        "c-v-super-run-button": true,
+        "c-v-super-run-button--running": this.isSuperRunning,
         "c-celestial-run-button--clickable": !this.isDoomed,
         "o-pelle-disabled-pointer": this.isDoomed
       };
@@ -422,7 +448,7 @@ export default {
 
           <div
             v-else-if="hex.isSuperRunButton"
-            :class="runButtonClassObject"
+            :class="superRunButtonClassObject"
             @click="startSuperRun()"
           >
             <b

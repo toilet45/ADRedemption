@@ -20,10 +20,10 @@ export function infinityDimensionCommonMultiplier() {
       PelleRifts.recursion.milestones[1]
     );
   
-  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(4).completions >= 1) {
+  if (Pelle.isDoomed && EternityChallenge(4).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(4).reward);
   }
-  if ((!Ra.unlocks.improvedECRewards.isUnlocked ||  Pelle.isDoomed) && EternityChallenge(9).completions >= 1) {
+  if (Pelle.isDoomed && EternityChallenge(9).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(9).reward);
   }
   if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
@@ -126,7 +126,7 @@ class InfinityDimensionState extends DimensionState {
     if (tier === 8) {
       // We need a extra 10x here (since ID8 production is per-second and
       // other ID production is per-10-seconds).
-      if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
+      EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
       if (EternityChallenge(7).isRunning) EternityChallenge(7).applyEffect(v => toGain = v.times(10));
     } else {
       toGain = InfinityDimension(tier + 1).productionPerSecond;
@@ -165,7 +165,7 @@ class InfinityDimensionState extends DimensionState {
         tier === 4 ? TimeStudy(72) : null,
         TimeStudy(312),
       );
-    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(2).completions >= 1){
+    if (EternityChallenge(2).completions >= 1){
       mult = mult.timesEffectsOf(
         tier === 1 ? EternityChallenge(2).reward : null,
       );
@@ -188,7 +188,7 @@ class InfinityDimensionState extends DimensionState {
       if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
       if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
     }
-    if (!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(4).completions >= 1) {
+    if (EternityChallenge(4).completions >= 1) {
       mult = mult.timesEffectsOf(EternityChallenge(4).reward);
     }
 
@@ -201,7 +201,7 @@ class InfinityDimensionState extends DimensionState {
     } else if (V.isRunning) {
       mult = mult.pow(0.5);
     } else if (V.isSuperRunning) {
-      mult = mult.log2().toDecimal();
+      mult = mult.pow(0.000001);
     }
 
     if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {
@@ -226,7 +226,7 @@ class InfinityDimensionState extends DimensionState {
 
   get costMultiplier() {
     let costMult = this._costMultiplier;
-    if(!Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) costMult = Math.pow(costMult, EternityChallenge(12).reward.effectValue);
+    if(EternityChallenge(12).completions >= 1) costMult = Math.pow(costMult, EternityChallenge(12).reward.effectValue);
     return costMult;
   }
 
@@ -248,7 +248,7 @@ class InfinityDimensionState extends DimensionState {
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
      const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
      let y = this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap ** x
-     if (player.timestudy.studies.includes(310)) y = (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
+     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
      return y;
   }
 
@@ -274,7 +274,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get totalAmount() {
-    if (this.tier==8) return Decimal.min(this.amount.max(this.continuumValue*10),1e25);
+    //if (this.tier==8) return Decimal.min(this.amount.max(this.continuumValue*10),1e25);
     return this.amount.max(this.continuumValue*10);
   }
 

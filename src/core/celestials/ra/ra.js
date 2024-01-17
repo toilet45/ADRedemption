@@ -138,7 +138,7 @@ class RaPetState extends GameMechanicState {
   }
 
   get requiredMemories() {
-    return Ra.requiredMemoriesForLevel(this.level);
+    return Ra.requiredMemoriesForLevel(this, this.level);
   }
 
   get memoryChunksPerSecond() {
@@ -147,12 +147,10 @@ class RaPetState extends GameMechanicState {
       Math.max(Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality), 1);
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
+    res *= WarpUpgrade(5).effectOrDefault(1);
     if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
     if (Ra.unlocks.pelleXP.isUnlocked){
       res *= (Math.log10(player.records.bestReality.remWithoutGG + 1) / 1.6667) + 1;
-    }
-    if(Pelle.isDoomed && Ra.unlocks.placeholderP8.isUnlocked){
-      res *= 5;
     }
     if (!Ra.isRunning && Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) res /= 100;
     return res;
@@ -192,11 +190,11 @@ class RaPetState extends GameMechanicState {
   }
 
   get memoryUpgradeCapped() {
-    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1);
+    return this.memoryUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(this, Ra.levelCap - 1);
   }
 
   get chunkUpgradeCapped() {
-    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(Ra.levelCap - 1);
+    return this.chunkUpgradeCost >= 0.5 * Ra.requiredMemoriesForLevel(this, Ra.levelCap - 1);
   }
 
   purchaseMemoryUpgrade() {
@@ -240,7 +238,7 @@ class RaPetState extends GameMechanicState {
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
     const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult, MendingUpgrade(15).isBought?1.5:1);
+      this.memoryUpgradeCurrentMult * this.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1), MendingUpgrade(15).isBought ? 1.5 : 1);
 
     let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
@@ -261,6 +259,14 @@ class RaPetState extends GameMechanicState {
     this.data.memoryChunks = 0;
     this.data.memoryUpgrades = 0;
     this.data.chunkUpgrades = 0;
+  }
+
+  get shopMemMultEffect(){
+    return RaUpgrade[`inc${this.id.charAt(0).toUpperCase()}${this.id.substring(1)}XPGain`].effectValue;
+  }
+
+  get shopWeakenScalingEffect(){
+    return RaUpgrade[`weaken${this.id.charAt(0).toUpperCase()}${this.id.substring(1)}Scaling`].effectValue;
   }
 }
 
@@ -307,12 +313,13 @@ export const Ra = {
     for (const pet of Ra.pets.all) pet.tick(realDiff, generateChunks);
   },
   get productionPerMemoryChunk() {
-    let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168));
+    let res = Effects.product(Ra.unlocks.continuousTTBoost.effects.memories, Achievement(168), Achievement(195));
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res = new Decimal(res).times(pet.memoryProductionMultiplier);
     }
     if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
     if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
+    res = res.timesEffectOf(WarpUpgrade(2)).times(VUnlocks.vAchRa.effectOrDefault(1));
     return res.toNumber();
   },
   get memoryBoostResources() {
@@ -330,32 +337,59 @@ export const Ra = {
     return `${boostList.slice(0, -1).join(", ")}, and ${boostList[boostList.length - 1]}`;
   },
   // This is the exp required ON "level" in order to reach "level + 1"
-  requiredMemoriesForLevel(level) {
+  requiredMemoriesForLevel(pet, level) {
     if (level >= Ra.levelCap) return Infinity;
     let perMemScaling = 1
-    if (level >= 30) perMemScaling += 0.4 //1.4
-    if (level >= 40) perMemScaling += 0.1 //1.5
-    if (level >= 50) perMemScaling += 0.1 //1.6
-    if (level >= 65) perMemScaling += 0.1 //1.7
-    if (level >= 75) perMemScaling += 0.3 //2
-    if (level >= 90) perMemScaling += 0.25 //2.25
+    let fixCostMulti = 1
+    if (level >= 25) {fixCostMulti = 1e44}
+    if (level >= 30) {perMemScaling = 1.35;fixCostMulti = 1e48}
+    if (level >= 40) {perMemScaling = 1.35} 
+    if (level >= 50) {perMemScaling = 1.5;fixCostMulti = 1e50} 
+    if (level >= 65) {perMemScaling = 1.6} 
+    if (level >= 75) {perMemScaling = 1.75} 
+    if (level >= 90) {perMemScaling = 2} 
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
-    return Math.floor(Math.pow(Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6, perMemScaling));
+    let primeAnswer = Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
+    if (level>=75) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    primeAnswer = primeAnswer / pet.shopWeakenScalingEffect;
+    return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
+    //This function did its job well, the 0ms issue is due to Number precision lost.
+    //If the issue did need to fix, All ra should be decimalised.
+    //Which is dangerous and I suggest pushing the work later
+    //sxy
+
+    //^ it might just be due to the formula was wrong? XD
+    //asw
+
     // Quadratic formula for growth (uses constant growth for a = 0)
-    const x = MendingUpgrade(15).isBought? 1.5:1;
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond, x) / 2;
-    const b = Math.pow(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks, x);
+      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
     const c = -expToGain;
     const estimate = a === 0
-      ? -c / b
-      : (Math.sqrt(Math.pow(b, 2) - 4 * a * c) - b) / (2 * a);
+      ? (MendingUpgrade(15).isBought 
+      ? -c / Math.pow(b, 1.5)
+      : -c / b)
+      : (MendingUpgrade(15).isBought
+      // derivation for the formula in latex(paste this into any latex editor and compile it) - asw
+      // \int_0^t (at + b)^{1.5} dt + c = 0 \\
+      // \left[\frac{2(at + b)^{2.5}}{5a}\right]_0^t + c = 0 \\
+      // \frac{2(at + b)^{2.5}}{5a} - \frac{2b^{2.5}}{5a} + c = 0 \\
+      // 2(at + b)^{2.5} - 2b^{2.5} + 5ac = 0 \\
+      // (at + b)^{2.5} - b^{2.5} + \frac{5ac}{2} = 0 \\
+      // (at + b)^{2.5} + \frac{5ac}{2} = b^{2.5} \\
+      // (at + b)^{2.5} = b^{2.5} - \frac{5ac}{2} \\
+      // at + b = (b^{2.5} - \frac{5ac}{2})^{0.4} \\
+      // at = (b^{2.5} - \frac{5ac}{2})^{0.4} - b \\
+      // t = \frac{(b^{2.5} - \frac{5ac}{2})^{0.4} - b}{a}
+      ? (Math.pow(Math.pow(b, 2.5) - 5 * a * c / 2, 0.4) - b) / a
+      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a));
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }

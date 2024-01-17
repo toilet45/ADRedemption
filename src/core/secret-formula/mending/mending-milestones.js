@@ -14,11 +14,11 @@ export const mendingMilestones = {
   },
   ten: {
     mends: 4,
-    reward: "Teresa's container is no longer reset on Mend and Teresa, Effarig, Nameless, and V's Memories at Level 10",
+    reward: "Teresa's container is no longer reset on Mend and Teresa, Effarig, Nameless, and V's Memories start at Level 10",
   },
   four: {
     mends: 5,
-    reward: "Remove all requirements for Reality/Imaginary Upgrades (except for Lai'tela,  Pelle and their Unlocks) and start with 5 of each rebuyable Reality Upgrade.",
+    reward: "Remove all requirements for Reality/Imaginary Upgrades (except for Lai'tela, Pelle and their Unlocks) and start with 5 of each rebuyable Reality Upgrade.",
   },
   five: {
     mends: 7,

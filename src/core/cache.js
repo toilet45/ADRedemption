@@ -61,10 +61,10 @@ export const GameCache = {
 
   tickSpeedMultDecrease: new Lazy(() => (MendingUpgrade(8).isBought ? 1.2 : 10 - (
     BreakInfinityUpgrade.tickspeedCostMult.effectValue + 
-    ((Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(11).completions >= 1) ? EternityChallenge(11).reward.effectValue : 0)
+    ((EternityChallenge(11).completions >= 1) ? EternityChallenge(11).reward.effectValue : 0)
   ))),
 
-  dimensionMultDecrease: new Lazy(() => (MendingUpgrade(8).isBought ? 1.5 : 10 -(BreakInfinityUpgrade.dimCostMult.effectValue + (!Ra.unlocks.improvedECRewards.isUnlocked ? EternityChallenge(6).reward.effectValue : 0))
+  dimensionMultDecrease: new Lazy(() => (MendingUpgrade(8).isBought ? 1.5 : 10 -(BreakInfinityUpgrade.dimCostMult.effectValue + (EternityChallenge(6).completions >= 1 ? EternityChallenge(6).reward.effectValue : 0))
   )),
 
   timeStudies: new Lazy(() => NormalTimeStudyState.studies

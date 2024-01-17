@@ -84,13 +84,13 @@ export const dilationUpgrades = {
     increment: 20,
     incrementSC: 4000,
     description: () => {
-      if (Pelle.isDoomed) return Ra.unlocks.placeholderP4.isUnlocked ? `Multiply the amount of Tachyon Particles gained by ${format(1.1, 1, 1)}` : `Multiply the amount of Tachyon Particles gained by ${formatInt(1)}`;
+      if (Pelle.isDoomed) return Ra.unlocks.unlockPelleTPMult.isUnlocked ? `Multiply the amount of Tachyon Particles gained by ${format(1.1, 1, 1)}` : `Multiply the amount of Tachyon Particles gained by ${formatInt(1)}`;
       if (Enslaved.isRunning) return `Multiply the amount of Tachyon Particles gained
       by ${Math.pow(3, Enslaved.tachyonNerf).toFixed(2)}`;
       return "Triple the amount of Tachyon Particles gained";
     },
     effect: bought => {
-      if (Pelle.isDoomed) return Ra.unlocks.placeholderP4.isUnlocked ? Decimal.pow(1.1, bought) : DC.D1.pow(bought);
+      if (Pelle.isDoomed) return Ra.unlocks.unlockPelleTPMult.isUnlocked ? Decimal.pow(1.1, bought) : DC.D1.pow(bought);
       return DC.D3.pow(bought);
     },
     formatEffect: value => formatX(value, 2, 2),

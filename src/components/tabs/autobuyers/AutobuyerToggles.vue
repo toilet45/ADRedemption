@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     update() {
-      this.isDoomed = Pelle.isDoomed && !Ra.unlocks.placeholderP9.isunlocked;
+      this.isDoomed = Pelle.isDoomed && !Ra.unlocks.unlockPelleContinuum.isunlocked;
       this.autobuyersOn = player.auto.autobuyersOn;
       this.showContinuum = Laitela.isUnlocked;
       this.disableContinuum = player.auto.disableContinuum;

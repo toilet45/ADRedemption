@@ -24,6 +24,13 @@ Decimal.prototype.toString = function () {
     return this.toNumber().toString();
   }
 
+  const decimalOfE = new Decimal(this.e);
+
+  if (decimalOfE.e > 20){
+    const places = (decimalOfE.m.toString().split(".")[1] ?? "").length
+    return `${this.m}e${(this.e >= 0 ? "+" : "")}${decimalOfE.m.toString().split(".")[0]}${decimalOfE.m.toString().split(".")[1] ?? ""}${"0".repeat(decimalOfE.e - places)}`
+  }
+
   return this.m + "e" + (this.e >= 0 ? "+" : "") + this.e;
 };
 
