@@ -400,7 +400,7 @@ export const v = {
     vKeep: {
       id: 9,
       reward() {
-        return `Keep all V progress on Mend. [NYI]`;
+        return `Keep all V progress on Mend.`;
       },
       description: () => `Have ${formatInt(390)} V-Achievements`,
       effect: 1,

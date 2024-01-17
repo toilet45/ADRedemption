@@ -8,6 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
+import { VUnlocks } from "./globals";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -116,9 +117,11 @@ export function mendingReset() {
       player.celestials.enslaved.unlocks = [0, 1];
       player.celestials.enslaved.completed = true;
     }
+    if(!VUnlocks.vKeep.isUnlocked){
     V.reset();
     if(MendingUpgrade(14).isBought){
       player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
