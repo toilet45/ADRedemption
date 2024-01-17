@@ -474,7 +474,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
   
   if (factor.gte(getGameSpeedupSoftcaps())) {
-    let x = 0.4321;
+    let x = getGameSpeedupSoftcapsExp(1);
     factor = factor.div(getGameSpeedupSoftcaps());
     factor = factor.pow(x); //generalized in case of future upgrades
     factor = factor.times(getGameSpeedupSoftcaps());
@@ -488,6 +488,18 @@ export function getGameSpeedupSoftcaps(capNumber = 1){ //attempt to have all fut
     case 1:
     default:
       return new Decimal(1e300);
+  }
+
+}
+export function getGameSpeedupSoftcapsExp(capNumber = 1){ 
+  switch(capNumber){
+    case 1: {
+      let x = 0.4321;
+      x += WarpUpgrade(3).effectOrDefault(0);
+      return x;
+    }
+    default:
+      return 0.4321;
   }
 
 }

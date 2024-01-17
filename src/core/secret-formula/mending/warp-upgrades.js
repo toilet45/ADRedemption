@@ -20,7 +20,8 @@ const rebuyable = props => {
   };
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
   if (!props.noEffect) {
-    props.formatEffect = value => formatX(value, 2, 0);
+    props.formatEffect = value => effectType + format(value, 2, 0);
+    if(props.id==3) props.formatEffect = value => effectType + format(value, 3, 3);
     props.formatCost = value => format(value, 2, 0);
   }
   return props;
@@ -47,13 +48,13 @@ export const warpUpgrades = [
     effectType: "×"
   }),
   rebuyable({
-    name: "Warp Upgrade 3",
+    name: "Game speed softcap",
     id: 3,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Increase Game speed's softcap by 0.002",
+    effect: 0.002,
+    effectType: "+"
   }),
   {
     name: "Visible Galaxies",

@@ -61,7 +61,7 @@ export const ra = {
       secondaryMemoryChunkGain: "Achievement Multiplier for Dimensions",
       requiredUnlock: () => (MendingMilestone.ten.isReached ? undefined : Ra.unlocks.vUnlock),
       rawMemoryChunksPerSecond: () =>{
-        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(1, Math.log10(Achievements.power.toNumber())) * 4 : 1;
+        let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Decimal.max(1, Decimal.log10(Achievements.power)).times(4).toNumber() : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
