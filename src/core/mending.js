@@ -190,7 +190,7 @@ export function mendingReset() {
     player.celestials.pelle.collapsed.rifts = false;
     player.celestials.pelle.collapsed.galaxies = false;
     //Reality
-    player.reality.autoAutoClean = false;
+    //player.reality.autoAutoClean = false; //excuse me why you reset this option--sxy
     player.reality.glyphs.trash = 0;
     resetRealityRuns();
     player.records.thisReality = {
