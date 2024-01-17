@@ -58,7 +58,7 @@ export default {
       this.isPulsing = (this.baseSpeed.neq(this.pulsedSpeed)) && Enslaved.canRelease(true);
       this.hasBH3 = ExpoBlackHole(1).isUnlocked;
       this.BH3Power = ExpoBlackHole(1).power;
-      this.pastGSSoftcap = (getGameSpeedupFactor().gte(this.scOneStart))&&Ra.unlocks.uncap8TdPurchaseMult.isUnlocked;
+      this.pastGSSoftcap = (getGameSpeedupFactor().gte(this.scOneStart))&&Ra.unlocks.uncapGamespeed.isUnlocked;
       this.scOneStart = getGameSpeedupSoftcaps();
       this.scOneEffect = getGameSpeedupSoftcapsExp();
     },
