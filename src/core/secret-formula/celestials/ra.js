@@ -794,7 +794,7 @@ export const ra = {
       reward: () => `You can increase the max singularity cap by ${formatInt(2)} every ${formatInt(5)} levels`,
       pet: "laitela",
       level: 40,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-diamond"></i>'
     },
     dmdAuto1: {
       id: 20,

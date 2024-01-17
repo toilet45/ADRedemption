@@ -73,7 +73,7 @@ export const warpUpgrades = [
     name: "The Dedicated Way",
     id: 5,
     cost: 1e24,
-    requirement: "Wait 5 Hours [NYI]",
+    requirement: "Reach 1e2.450e18 Antimatter in Ra's Reality",
     hasFailed: () => !Ra.isRunning,
     checkRequirement: () => Ra.isRunning && Currency.antimatter.exponent>=2.45e18,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
