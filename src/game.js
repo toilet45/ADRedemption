@@ -473,12 +473,19 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
   // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
   
-  if (factor.gte(getGameSpeedupSoftcaps())) {
-    let x = getGameSpeedupSoftcapsExp(1);
+  let repeats = 1;
+  while (factor.gte(Decimal.pow(getGameSpeedupSoftcaps(), repeats))) {
+    factor = factor.div(getGameSpeedupSoftcaps());
+    factor = factor.pow(getGameSpeedupSoftcapsExp());
+    factor = factor.times(getGameSpeedupSoftcaps());
+    repeats += 1;
+  }
+  /*if (factor.gte(getGameSpeedupSoftcaps())) {
+    let x = getGameSpeedupSoftcapsExp();
     factor = factor.div(getGameSpeedupSoftcaps());
     factor = factor.pow(x); //generalized in case of future upgrades
     factor = factor.times(getGameSpeedupSoftcaps());
-  } // Prevent gamespeed from going fucking ballistic
+  } // Prevent gamespeed from going fucking ballistic*/
 
   return factor;
 }
@@ -487,7 +494,7 @@ export function getGameSpeedupSoftcaps(capNumber = 1){ //attempt to have all fut
   switch(capNumber){
     case 1:
     default:
-      return new Decimal(1e300);
+      return new Decimal(1e308);
   }
 
 }
@@ -677,7 +684,7 @@ export function gameLoop(passDiff, options = {}) {
 
   if(Ra.unlocks.retroactiveTeresaRealityReward.isUnlocked) {
     const currentBest = player.celestials.teresa.bestRunAM;
-    player.celestials.teresa.bestRunAM.copyFrom(player.records.totalAntimatter.sqrt().max(currentBest));
+    player.celestials.teresa.bestRunAM = (player.records.totalAntimatter.sqrt().max(currentBest));
   }
 
   if(Ra.unlocks.unlock3rdBH.isUnlocked){

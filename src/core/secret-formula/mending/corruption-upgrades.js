@@ -24,8 +24,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Game speed is multiplied based on highest score (Applies after hostilities, but weaker in Hostile multiverse)",
-    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 0.25)) : (Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 1/1.48))).clampMax(new Decimal("1e1000")),
+    description: "Game speed is multiplied based on highest score (before instability, Applies after hostilities, but weaker in Hostile multiverse)",
+    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 0.25)) : (Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 1/1.48))),
     formatEffect: value => formatX(value, 2)
   },
   {

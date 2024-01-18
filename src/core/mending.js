@@ -302,7 +302,9 @@ export function mendingReset() {
       player.reality.imaginaryUpgReqs += 32768;
       player.reality.imaginaryUpgradeBits += 32768;
     }
-    player.expoBlackHole[0].powerUpgrades = 0;
+    for(let i = 0; i < 1; i++){
+      player.expoBlackHole[i].powerUpgrades = 0;
+    }
     //Eternity
     resetEternityRuns();
     player.respec = false;
