@@ -81,7 +81,7 @@ export default {
       {{ baseText }}
     </span>
     <span v-if="isPulsing">(<i class="fas fa-expand-arrows-alt u-fa-padding" /> {{ pulseSpeedText }})</span>
-    <span v-if="pastGSSoftcap" class="c-gssoftcapone">
+    <span v-if="pastGSSoftcap">
       <br>
       Due to instability, Game Speed past {{ format(scOneStart) }} is raised {{formatPow(scOneEffect, 3, 3) }} before pulsing.
   </span>
@@ -94,8 +94,8 @@ export default {
   color: var(--color-text);
 }
 
-.c-gssoftcapone {
+/*.c-gssoftcapone {
   font-weight: bold;
   color: #FF0000;
-}
+}*/
 </style>
