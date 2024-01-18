@@ -496,7 +496,7 @@ export const ra = {
     uncapGamespeed: {
       id: 15,
       id2: 0,
-      reward: "Reomve the 1e300 Gamespeed Cap",
+      reward: "Change 1e300 Gamespeed hardcap into softcap",
       pet: "enslaved",
       level: 30,
       displayIcon: `<span class="fas fa-tachometer-alt"></span>`

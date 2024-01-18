@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     update() {
-      this.raPoints = player.celestials.ra.raPoints;
+      this.raPoints.copyFrom(player.celestials.ra.raPoints);
       this.GainPerSecond = Ra.raPointsGain(1000);
     },
   }
@@ -29,7 +29,7 @@ export default {
   <div class="l-ra-panel-container">
     <div class="c-ra-pet-title" style="font-weight: bold; color: var(--color-ra--base);">Ra's Shop</div>
     <br>
-        You currently has {{ format(raPoints,3,3) }} Ra's fantasy currency name. Gaining {{ format(GainPerSecond,3,3) }} per second.
+        You currently has {{ format(raPoints,3,3) }} Ra's Memory Crystals. Gaining {{ format(GainPerSecond,3,3) }}/s, depending on Dimension Boosts in Ra's Reality.
     <br>
     <div class="c-ra-upgrade-container">
       <RaUpgradeVue v-for="upgrade in rebuyables" :key="upgrade.config.id" :upgrade="upgrade" :isRebuyable="true" />
