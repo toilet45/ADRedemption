@@ -584,7 +584,7 @@ export const ra = {
       reward: "Replicanti increases achievement multiplier",
       pet: "v",
       level: 65,
-      displayIcon: '*'
+      displayIcon: GLYPH_SYMBOLS.replication
     },
     totalSTBoostTTGen: {
       id: 26,
