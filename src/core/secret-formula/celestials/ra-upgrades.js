@@ -9,7 +9,7 @@ const rebuyable = config => {
     id: config.id,
     celestial: config.celestial,
     description: config.description,
-    cost: () => getHybridCostScaling(
+    cost: value => /*getHybridCostScaling(
       player.celestials.ra.rebuyables[config.id],
       0,
       config.baseCost,
@@ -18,7 +18,7 @@ const rebuyable = config => {
       DC.E333,
       10,
       10 //Yes the exponential and linear here are the same. Thats on purpose, this code is easier to use for just exponential (weirdly) so thats what im doing.
-    ),
+    )*/config.baseCost*(100**player.celestials.ra.rebuyables[config.id]),//Idk how you make cost decrease --sxy
     formatCost,
     effect: config.effect,
     formatEffect: x => formatX(x, 2, 2),
@@ -62,7 +62,7 @@ export const raUpgrades = {
     description: () => `Weaken Teresa's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,//temporary, have to decide what we're gonna use (Fn its MvR for all, defined above and in ra-upgrades.js (the other one))
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenEffarigScaling: weakenScalingRebuyable({
     id: "weakenEffarigScaling",
@@ -70,7 +70,7 @@ export const raUpgrades = {
     description: () => `Weaken Effarig's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenEnslavedScaling: weakenScalingRebuyable({
     id: "weakenEnslavedScaling",
@@ -78,7 +78,7 @@ export const raUpgrades = {
     description: () => `Weaken Nameless' level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenVScaling: weakenScalingRebuyable({
     id: "weakenVScaling",
@@ -86,7 +86,7 @@ export const raUpgrades = {
     description: () => `Weaken V's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenRaScaling: weakenScalingRebuyable({
     id: "weakenRaScaling",
@@ -94,7 +94,7 @@ export const raUpgrades = {
     description: () => `Weaken Ra's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenLaitelaScaling: weakenScalingRebuyable({
     id: "weakenLaitelaScaling",
@@ -102,7 +102,7 @@ export const raUpgrades = {
     description: () => `Weaken Lai'tela's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   weakenPelleScaling: weakenScalingRebuyable({
     id: "weakenPelleScaling",
@@ -110,7 +110,7 @@ export const raUpgrades = {
     description: () => `Weaken Pelle's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incTeresaXPGain: incXpGainRebuyable({
     id: "incTeresaXPGain",
@@ -118,7 +118,7 @@ export const raUpgrades = {
     description: () => `Increase Teresa's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incEffarigXPGain: incXpGainRebuyable({
     id: "incEffarigXPGain",
@@ -126,7 +126,7 @@ export const raUpgrades = {
     description: () => `Increase Effarig's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incEnslavedXPGain: incXpGainRebuyable({
     id: "incEnslavedXPGain",
@@ -134,7 +134,7 @@ export const raUpgrades = {
     description: () => `Increase Nameless' XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incVXPGain: incXpGainRebuyable({
     id: "incVXPGain",
@@ -142,7 +142,7 @@ export const raUpgrades = {
     description: () => `Increase V's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incRaXPGain: incXpGainRebuyable({
     id: "incRaXPGain",
@@ -150,7 +150,7 @@ export const raUpgrades = {
     description: () => `Increase Ra's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incLaitelaXPGain: incXpGainRebuyable({
     id: "incLaitelaXPGain",
@@ -158,7 +158,7 @@ export const raUpgrades = {
     description: () => `Increase Lai'tela's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   incPelleXPGain: incXpGainRebuyable({
     id: "incPelleXPGain",
@@ -166,7 +166,7 @@ export const raUpgrades = {
     description: () => `Increase Pelle's XP gain by ${formatX(10)} (before exponents)`,
     baseCost: 1e11,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
   }),
   temp1: {
     id: "temp1",
@@ -174,7 +174,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp2: {
@@ -183,7 +183,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp3: {
@@ -192,7 +192,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp4: {
@@ -201,7 +201,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp5: {
@@ -210,7 +210,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp6: {
@@ -219,7 +219,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
   temp7: {
@@ -228,7 +228,7 @@ export const raUpgrades = {
     description: "Placeholder",
     cost: 0,
     currency: () => Currency.raPoints,
-    currencyLabel: "Memory Crystals",
+    currencyLabel: "Memory Crystal",
     implemented: false,
   },
 }

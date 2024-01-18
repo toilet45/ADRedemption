@@ -340,13 +340,15 @@ export const Ra = {
   raPointsGain(diff) {
     if(!Ra.isRunning) return new Decimal(0);
     let ticktime = diff/1000;
-    let base = Math.max(player.dimensionBoosts - 2.5e9,0)
+    let base = Math.max(player.dimensionBoosts - 2.5e9,0)/1e8;
     let GainPerSec = new Decimal(base*ticktime);
     return GainPerSec;
   },
   raGainPointLoop(diff){
     player.celestials.ra.raPoints = player.celestials.ra.raPoints.plus(Ra.raPointsGain(diff));
   },
+  // Why the rebuyable of ra shop has complex name wtf --sxy
+  
   // This is the exp required ON "level" in order to reach "level + 1"
   requiredMemoriesForLevel(pet, level) {
     if (level >= Ra.levelCap) return Infinity;
