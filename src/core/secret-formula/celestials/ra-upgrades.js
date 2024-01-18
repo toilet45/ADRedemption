@@ -7,6 +7,7 @@ const formatCost = c => format(c, 2);
 const rebuyable = config => {
   return {
     id: config.id,
+    num: config.num,
     celestial: config.celestial,
     description: config.description,
     cost: () => /*getHybridCostScaling(
@@ -18,7 +19,7 @@ const rebuyable = config => {
       DC.E333,
       10,
       10 //Yes the exponential and linear here are the same. Thats on purpose, this code is easier to use for just exponential (weirdly) so thats what im doing.
-    )*/config.baseCost*(100**player.celestials.ra.rebuyables[config.id]),//Idk how you make cost decrease --sxy
+    )*/config.num<=7 ? config.baseCost*(2.5**player.celestials.ra.rebuyables[config.id]) : config.baseCost*(10**player.celestials.ra.rebuyables[config.id]),//Idk how you make cost decrease --sxy
     formatCost,
     effect: config.effect,
     formatEffect: x => formatX(x, 2, 2),
@@ -32,6 +33,7 @@ const rebuyable = config => {
 const weakenScalingRebuyable = config => {
   return rebuyable({
       id: config.id,
+      num: config.num,
       celestial: config.celestial,
       description: config.description,
       baseCost: config.baseCost,
@@ -45,6 +47,7 @@ const weakenScalingRebuyable = config => {
 const incXpGainRebuyable = config => {
   return rebuyable({
       id: config.id,
+      num: config.num,
       celestial: config.celestial,
       description: config.description,
       baseCost: config.baseCost,
@@ -58,6 +61,7 @@ const incXpGainRebuyable = config => {
 export const raUpgrades = {
   weakenTeresaScaling: weakenScalingRebuyable({
     id: "weakenTeresaScaling",
+    num: 1,
     celestial: "teresa",
     description: () => `Weaken Teresa's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -66,6 +70,7 @@ export const raUpgrades = {
   }),
   weakenEffarigScaling: weakenScalingRebuyable({
     id: "weakenEffarigScaling",
+    num: 2,
     celestial: "effarig",
     description: () => `Weaken Effarig's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -74,6 +79,7 @@ export const raUpgrades = {
   }),
   weakenEnslavedScaling: weakenScalingRebuyable({
     id: "weakenEnslavedScaling",
+    num: 3,
     celestial: "enslaved",
     description: () => `Weaken Nameless' level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -82,6 +88,7 @@ export const raUpgrades = {
   }),
   weakenVScaling: weakenScalingRebuyable({
     id: "weakenVScaling",
+    num: 4,
     celestial: "v",
     description: () => `Weaken V's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -90,6 +97,7 @@ export const raUpgrades = {
   }),
   weakenRaScaling: weakenScalingRebuyable({
     id: "weakenRaScaling",
+    num: 5,
     celestial: "ra",
     description: () => `Weaken Ra's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -98,6 +106,7 @@ export const raUpgrades = {
   }),
   weakenLaitelaScaling: weakenScalingRebuyable({
     id: "weakenLaitelaScaling",
+    num: 6,
     celestial: "laitela",
     description: () => `Weaken Lai'tela's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -106,6 +115,7 @@ export const raUpgrades = {
   }),
   weakenPelleScaling: weakenScalingRebuyable({
     id: "weakenPelleScaling",
+    num: 7,
     celestial: "pelle",
     description: () => `Weaken Pelle's level cost by ${formatX(10)} (before exponents)`,
     baseCost: 1e7,
@@ -114,57 +124,64 @@ export const raUpgrades = {
   }),
   incTeresaXPGain: incXpGainRebuyable({
     id: "incTeresaXPGain",
+    num: 8,
     celestial: "teresa",
     description: () => `Increase Teresa's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incEffarigXPGain: incXpGainRebuyable({
     id: "incEffarigXPGain",
+    num: 9,
     celestial: "effarig",
     description: () => `Increase Effarig's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incEnslavedXPGain: incXpGainRebuyable({
     id: "incEnslavedXPGain",
+    num: 10,
     celestial: "enslaved",
     description: () => `Increase Nameless' XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incVXPGain: incXpGainRebuyable({
     id: "incVXPGain",
+    num: 11,
     celestial: "v",
     description: () => `Increase V's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incRaXPGain: incXpGainRebuyable({
     id: "incRaXPGain",
+    num: 12,
     celestial: "ra",
     description: () => `Increase Ra's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incLaitelaXPGain: incXpGainRebuyable({
     id: "incLaitelaXPGain",
+    num: 13,
     celestial: "laitela",
     description: () => `Increase Lai'tela's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),
   incPelleXPGain: incXpGainRebuyable({
     id: "incPelleXPGain",
+    num: 14,
     celestial: "pelle",
     description: () => `Increase Pelle's XP gain by ${formatX(10)} (before exponents)`,
-    baseCost: 1e11,
+    baseCost: 1e8,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
   }),

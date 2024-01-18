@@ -415,7 +415,7 @@ export const ra = {
       reward: "Reality Machines boost Infinity Point and Eternity Point gain",
       pet: "teresa",
       level: 75,
-      displayIcon: '*',
+      displayIcon: `<span class="fas fa-arrow-up"></span>`,
       effect: () => Decimal.log10(Currency.realityMachines) / 100
     },
     realitiesBoostInfinityAndEternityProduction: {
@@ -515,7 +515,8 @@ export const ra = {
       reward: "Unlock the 3rd Black Hole which costs Imaginary Machines and boosts Game Speed exponentially instead of multiplicatively",
       pet: "enslaved",
       level: 50,
-      displayIcon: '<i class="fa-solid fa-circle"></i>'
+      displayIcon: '<i class="fa-solid fa-circle"></i>',
+      disabledByPelle: true
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
@@ -523,7 +524,7 @@ export const ra = {
       reward: "Increase Pelle Tachyon Galaxy multiplier upgrade base based on Dilated Time",
       pet: "enslaved",
       level: 65,
-      displayIcon: '*'
+      displayIcon: '♅'
     },
     gamespeedGalaxyBoost: {
       id: 19,
@@ -565,7 +566,8 @@ export const ra = {
       reward: "Unlock More V-Achievements, V's Superhard reality and more V-Milestones",
       pet: "v",
       level: 40,
-      displayIcon: `<span class="fas fa-trophy"></span>`
+      displayIcon: `<span class="fas fa-trophy"></span>`,
+      disabledByPelle: true
     },
     vAchMilestone2AffectsIDsAndTDs: {
       id: 24,
@@ -573,7 +575,8 @@ export const ra = {
       reward: "The 5 V-Achievement milestone affects Infinity and Time Dimensions with reduced effect",
       pet: "v",
       level: 50,
-      displayIcon: '*'
+      displayIcon: `<i class="fab fa-buffer"></i>`,
+      disabledByPelle: true
     },
     repIncreasesAchMult: {
       id: 25,
@@ -679,7 +682,7 @@ export const ra = {
       reward: "Remembrance has no downside, affects all celestials and is always active, unlock Ra's Shop",
       pet: "ra",
       level: 40,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-euro"></span>`
     },
     improvedChunkGains: {
       id: 6,
