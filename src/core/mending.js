@@ -40,6 +40,12 @@ export function mendingReset() {
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
+    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+      EffarigUnlock.mend.unlock();
+      EffarigUnlock.infinity.unlock();
+      EffarigUnlock.eternity.unlock();
+      EffarigUnlock.reality.unlock();
+    }
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){

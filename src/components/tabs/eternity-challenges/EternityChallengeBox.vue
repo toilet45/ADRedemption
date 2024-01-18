@@ -27,6 +27,7 @@ export default {
       completions: 0,
       showGoalSpan: false,
       lastGoal: "",
+      altRewards: false
     };
   },
   computed: {
@@ -97,6 +98,7 @@ export default {
       this.completions = challenge.completions;
       this.showGoalSpan = PlayerProgress.realityUnlocked();
       this.canBeUnlocked = TimeStudy.eternityChallenge(challenge.id).canBeBought;
+      this.altRewards = Ra.unlocks.improvedECRewards.isUnlocked;
 
       this.lastGoal = (Enslaved.isRunning && this.challenge.id === 1)
         ? wordShift.wordCycle(this.config.scrambleText.map(x => format(x)))
@@ -158,7 +160,7 @@ export default {
           :ignore-capped="true"
         />
       </span>
-      <span>
+      <span v-if="altRewards" class="c-vreward">
         Ra V 30 Empowered Reward:
         <DescriptionDisplay
           :config="config.vReward"
@@ -184,5 +186,8 @@ export default {
 </template>
 
 <style scoped>
-
+.c-vreward {
+  font-weight: bold;
+  color: var(--color-v--base);
+}
 </style>

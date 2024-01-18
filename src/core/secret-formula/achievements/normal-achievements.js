@@ -1129,7 +1129,7 @@ export const normalAchievements = [
     get description() { return `Reality in under ${formatInt(5)} seconds (game time).`; },
     checkRequirement: () => Time.thisReality.totalSeconds.lt(5),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    get reward() { return `${formatPercents(0.1)} chance each Reality of ${formatX(2)} Realities and Perk Points.`; },
+    get reward() { return `${formatPercents(MendingMilestone.two.isReached ? 1 : 0.1)} chance each Reality of ${formatX(2)} Realities and Perk Points.`; },
     effect: 0.1
   },
   {
