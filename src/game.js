@@ -826,6 +826,7 @@ export function gameLoop(passDiff, options = {}) {
     }
   }
 
+  Ra.raGainPointLoop(realDiff);
   laitelaRealityTick(realDiff);
   Achievements.autoAchieveUpdate(diff);
   V.checkForUnlocks();

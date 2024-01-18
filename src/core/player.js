@@ -861,6 +861,7 @@ window.player = {
       quoteBits: 0,
       momentumTime: 0,
       unlockBits: 0,
+      raPoints: DC.D0,
       modUnlockBits: [0, 0, 0],
       run: false,
       charged: new Set(),

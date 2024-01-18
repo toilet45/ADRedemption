@@ -336,6 +336,17 @@ export const Ra = {
     if (boostList.length === 2) return `${boostList[0]} and ${boostList[1]}`;
     return `${boostList.slice(0, -1).join(", ")}, and ${boostList[boostList.length - 1]}`;
   },
+  // So let's make Ra currency work? --sxy
+  raPointsGain(diff) {
+    if(!Ra.isRunning) return new Decimal(0);
+    let ticktime = diff/1000;
+    let base = Math.max(player.dimensionBoosts - 2.5e9,0)
+    let GainPerSec = new Decimal(base*ticktime);
+    return GainPerSec;
+  },
+  raGainPointLoop(diff){
+    player.celestials.ra.raPoints = player.celestials.ra.raPoints.plus(Ra.raPointsGain(diff));
+  },
   // This is the exp required ON "level" in order to reach "level + 1"
   requiredMemoriesForLevel(pet, level) {
     if (level >= Ra.levelCap) return Infinity;
