@@ -9,7 +9,7 @@ const rebuyable = config => {
     id: config.id,
     celestial: config.celestial,
     description: config.description,
-    cost: value => /*getHybridCostScaling(
+    cost: () => /*getHybridCostScaling(
       player.celestials.ra.rebuyables[config.id],
       0,
       config.baseCost,
