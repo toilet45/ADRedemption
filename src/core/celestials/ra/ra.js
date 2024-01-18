@@ -341,7 +341,8 @@ export const Ra = {
     if(!Ra.isRunning) return new Decimal(0);
     let ticktime = diff/1000;
     let base = Math.max(player.dimensionBoosts - 2.5e9,0)/1e8;
-    let GainPerSec = new Decimal(base*ticktime);
+    let powered = Decimal.pow(10,base);
+    let GainPerSec = new Decimal(powered.times(ticktime));
     return GainPerSec;
   },
   raGainPointLoop(diff){
