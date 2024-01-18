@@ -360,13 +360,13 @@ export const Ra = {
     if (level >= 40) {perMemScaling = 1.35} 
     if (level >= 50) {perMemScaling = 1.5;fixCostMulti = 1e50} 
     if (level >= 65) {perMemScaling = 1.6} 
-    if (level >= 75) {perMemScaling = 1.75} 
-    if (level >= 90) {perMemScaling = 2} 
+    if (level >= 75) {perMemScaling = 1.75;fixCostMulti = 1e60} 
+    if (level >= 90) {perMemScaling = 2;fixCostMulti = 1e75} 
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));
     let primeAnswer = Math.pow(adjustedLevel, 5.52) * post15Scaling * post25Scaling * 1e6;
-    if (level>=90) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
+    //if (level>=90) primeAnswer=primeAnswer*1e300;//temporary scale for balacing
     primeAnswer = primeAnswer / pet.shopWeakenScalingEffect;
     return Math.floor(Math.pow(primeAnswer, perMemScaling) * fixCostMulti);
   },
