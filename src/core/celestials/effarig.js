@@ -71,6 +71,7 @@ export const Effarig = {
       case EFFARIG_STAGES.REALITY:
         return 2000;
       case EFFARIG_STAGES.MEND:
+        return 3500;
       default:
         return 10000;
     }
@@ -99,6 +100,9 @@ export const Effarig = {
         break;
       case EFFARIG_STAGES.ETERNITY:
         c = 29.29;
+        break;
+      case EFFARIG_STAGES.MEND:
+        c = 6000; //this needs tweaking
         break;
       case EFFARIG_STAGES.REALITY:
       default:

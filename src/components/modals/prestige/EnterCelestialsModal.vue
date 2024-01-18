@@ -75,8 +75,8 @@ export default {
       this.teresaBestAM.copyFrom(player.celestials.teresa.bestRunAM);
       this.teresaRunMult = Teresa.runRewardMultiplier;
       const effarigStage = Effarig.currentStage;
-      this.effarigDone = effarigStage === EFFARIG_STAGES.COMPLETED;
-      this.effarigLayer = [null, "Infinity", "Eternity", "Reality"][effarigStage];
+      this.effarigDone = (effarigStage === EFFARIG_STAGES.COMPLETED && !Ra.unlocks.effarigMendUnlock.isUnlocked) || effarigStage === EFFARIG_STAGES.MEND_COMPLETED;
+      this.effarigLayer = [null, "Infinity", "Eternity", "Reality", null, "Mending"][effarigStage];
       this.enslavedDone = Enslaved.isCompleted;
       this.laitelaFastest = player.celestials.laitela.fastestCompletion;
       this.laitelaTime = TimeSpan.fromSeconds(this.laitelaFastest).toStringShort();

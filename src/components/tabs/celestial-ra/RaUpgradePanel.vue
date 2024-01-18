@@ -24,15 +24,6 @@ import RaUpgradeVue from './RaUpgrade.vue';
       :isRebuyable="true"
       />
     </div>
-    <div class="line"/>
-    <div class="c-ra-upgrade-container">
-      <RaUpgradeVue
-      v-for="upgrade in rebuyables"
-      :key="upgrade.config.id"
-      :upgrade="upgrade"
-      :isRebuyable="true"
-      />
-    </div>
   </div>
 </template>
 

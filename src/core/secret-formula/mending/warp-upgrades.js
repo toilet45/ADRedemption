@@ -203,7 +203,7 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption+",
+    name: "Hostility+",
     id: 15,
     cost: 1e300,
     requirement: "Mend with an average corruption level of 6 or higher",
@@ -212,7 +212,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
+    description: () => `Hostility caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -341,7 +341,7 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Corruption++",
+    name: "Hostility++",
     id: 25,
     cost: 1e300,
     requirement: "Mend with an average corruption level of 8 or higher",
@@ -350,7 +350,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
+    description: () => `Hostility caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   }, */
