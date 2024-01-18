@@ -424,7 +424,7 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: '*'
+      displayIcon: 'τ'
     },
     postWarpRealityMachineBoost: {
       id: 6,
@@ -466,7 +466,7 @@ export const ra = {
       reward: "Relic shards boost dimensional sacrifice, replicanti speed, infinity power conversion rate, tachyon particle to dilated time factor and time dimensions",
       pet: "effarig",
       level: 65,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-ranking-star"></i>'
     },
     effarigGlyphIncreaseImCap: {
       id: 12,
@@ -474,7 +474,7 @@ export const ra = {
       reward: "Effarig Glyphs' first effect also increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`
     },
     maxGlyphRarityIncrease: {
       id: 13,
@@ -483,7 +483,7 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-star"></span>`
     },
     effarigMendUnlock: {
       id: 14,
@@ -532,7 +532,7 @@ export const ra = {
       reward: "Game Speed increases Galaxy strength",
       pet: "enslaved",
       level: 75,
-      displayIcon: '*',
+      displayIcon: '<i class="fa-solid fa-atom"></i>',
       effect: () => Math.max(1 ,1 + (Decimal.log10(getGameSpeedupFactor()) / 1000)) //this shouldn't be 100% until e1000 gamespeed
     },
     freeTickspeedSoftcapDelay: {
@@ -541,7 +541,7 @@ export const ra = {
       reward: "Tesseracts increase free tickspeed upgrade softcap",
       pet: "enslaved",
       level: 90,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-arrow-up-from-ground-water"></i>'
     },
     improvedIpowConversion: {
       id: 21,
@@ -711,7 +711,7 @@ export const ra = {
     improvedPetUpgrades: {
       id: 9,
       id2: 1,
-      reward: "Increase Recollection and Fragmentation bases based on Memories",
+      reward: "Unlock a new row of permenant upgrades in Ra's shop",
       pet: "ra",
       level: 90,
       displayIcon: "?"
