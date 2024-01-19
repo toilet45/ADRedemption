@@ -592,7 +592,7 @@ export const ra = {
       reward: "Total Space Theorems boost Time Theorem generation",
       pet: "v",
       level: 75,
-      displayIcon: '*'
+      displayIcon: `<i class="fa-solid fa-book-atlas"></i>`
     },
     unlockMyriads: {
       id: 27,
@@ -682,7 +682,7 @@ export const ra = {
       reward: "Remembrance has no downside, affects all celestials and is always active, unlock Ra's Shop",
       pet: "ra",
       level: 40,
-      displayIcon: `<span class="fas fa-euro"></span>`
+      displayIcon: `<span class="fa-solid fa-euro"></span>`
     },
     improvedChunkGains: {
       id: 6,
@@ -690,7 +690,7 @@ export const ra = {
       reward: "Base Memory Chunk formula for all Celestials is slightly improved",
       pet: "ra",
       level: 50,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-sort"></i>`
     },
     imaginaryBoostsRa: {
       id: 7,
@@ -698,7 +698,7 @@ export const ra = {
       reward: "Free Dimension Boosts are effective in Ra's Reality",
       pet: "ra",
       level: 65,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-circle-check"></i>`
     },
     freeDimBoosts: {
       id: 8,
@@ -706,7 +706,7 @@ export const ra = {
       reward: "Gain Free Dimension Boosts based on Ra Level",
       pet: "ra",
       level: 75,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-circle-arrow-up"></i>`
     },
     improvedPetUpgrades: {
       id: 9,
@@ -821,7 +821,7 @@ export const ra = {
       reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 75,
-      displayIcon: `*`
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
     },
     dmdScaling: {
       id: 23,
@@ -911,7 +911,7 @@ export const ra = {
       reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
       pet: "pelle",
       level: 40,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
     },
     pelleRarityBoost: {
       id: 2,
@@ -919,7 +919,7 @@ export const ra = {
       reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",
       pet: "pelle",
       level: 50,
-      displayIcon: "*"
+      displayIcon: `<i class="fas fa-ankh"></i>`
     },
     omegaScalingBuff: {
       id: 3,
@@ -927,7 +927,7 @@ export const ra = {
       reward: "Make the scaling at glyph level 100,000 weaker.",
       pet: "pelle",
       level: 65,
-      displayIcon: "*"
+      displayIcon: `<i class="fas fa-explosion"></i>`
     },
     Hostility: {
       id: 4,
