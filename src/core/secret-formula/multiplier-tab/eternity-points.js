@@ -1,7 +1,6 @@
 import { DC } from "../../constants";
 import { MultiplierTabIcons } from "./icons";
 import { corruptionPenalties } from "../mending/corruption";
-import { gainedEternityPoints } from "../../../game";
 
 // See index.js for documentation
 export const EP = {

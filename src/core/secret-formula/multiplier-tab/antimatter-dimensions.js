@@ -1,5 +1,4 @@
 import { DC } from "../../constants";
-import { V } from "../../globals";
 import { PlayerProgress } from "../../player-progress";
 
 import { MultiplierTabHelper } from "./helper-functions";

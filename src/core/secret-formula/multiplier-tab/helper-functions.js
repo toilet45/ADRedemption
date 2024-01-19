@@ -1,5 +1,4 @@
 import { DC } from "../../constants";
-import { EternityChallenge } from "../../eternity-challenge";
 
 export const MultiplierTabHelper = {
   // Helper method for counting enabled dimensions
