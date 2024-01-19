@@ -1,4 +1,5 @@
 <script>
+import { DC } from '../../../core/constants';
 import { CorruptionData, MendingMilestone, Ra } from '../../../core/globals';
 import { PlayerProgress } from '../../../core/player-progress';
 import MendingPointsHeader from '../../MendingPointsHeader.vue';
@@ -10,6 +11,7 @@ export default {
             gainedMvR: new Decimal(0),
             canMend: false,
             firstMend: true,
+            END: DC.END,
             needDoom: true,
             isCorrupted: false,
             noMendBonus: false,
