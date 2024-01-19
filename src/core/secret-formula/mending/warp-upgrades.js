@@ -14,7 +14,7 @@ const rebuyable = props => {
   );
   const { effect, effectType } = props;
   props.effect = () =>{ 
-    if (props.effectType === "+" || props.effectType === "-"){
+    if (props.effectType === "+" || props.effectType === "-" || props.effectType === "×1e" ){
       return effect * player.mending.warpRebuyables[props.id];
     }
     return Math.pow(effect, player.mending.warpRebuyables[props.id]);
@@ -33,11 +33,11 @@ export const warpUpgrades = [
   rebuyable({
     name: "More Infinite Power",
     id: 1,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "Infinity power softcap reduction",
-    effect: 0.002,
-    noEffect: true
+    initialCost: 1e30,
+    costMult: 1e5,
+    textTemplate: "Increase Infinite Power softcap's Thereshold by ×1e2.5e14",
+    effect: 2.5e14,
+    effectType: "×1e"
   }),
   rebuyable({
     name: "Memory Gain",
