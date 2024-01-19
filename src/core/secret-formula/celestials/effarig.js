@@ -67,7 +67,7 @@ export const effarigUnlocks = {
     id: 7,
     label: "Mend",
     get description() {
-      return ` Effarig is no longer reset on Mend. Other effects are TBD.`
+      return ` Effarig is no longer reset on Mend, Unlock the ability to auto equip Glyphs on Reality, idk if we'll have more rewards.`
     }
   }
 };
