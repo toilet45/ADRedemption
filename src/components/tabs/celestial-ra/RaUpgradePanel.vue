@@ -1,6 +1,7 @@
 <script>
 import { RaUpgrade } from '../../../core/globals';
 import RaUpgradeVue from './RaUpgrade.vue';
+import { Ra } from "../../../core/globals";
 export default {
   name: "RaUpgradePanel",
   components: {
@@ -10,6 +11,7 @@ export default {
     return {
       raPoints: new Decimal(0),
       GainPerSecond: new Decimal(0),
+      NewRow: false,
     };
   },
   computed: {
@@ -20,6 +22,7 @@ export default {
     update() {
       this.raPoints.copyFrom(player.celestials.ra.raPoints);
       this.GainPerSecond = Ra.raPointsGain(1000);
+      this.NewRow = Ra.unlocks.improvedPetUpgrades.isUnlocked
     },
   }
 }
@@ -33,6 +36,9 @@ export default {
     <br>
     <div class="c-ra-upgrade-container">
       <RaUpgradeVue v-for="upgrade in rebuyables" :key="upgrade.config.id" :upgrade="upgrade" :isRebuyable="true" />
+    </div>
+    <div class="c-ra-upgrade-container" v-if="NewRow">
+      <RaUpgradeVue v-for="upgrade in singles" :key="upgrade.config.id" :upgrade="upgrade" :isRebuyable="false" />
     </div>
   </div>
 </template>
