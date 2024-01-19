@@ -128,8 +128,8 @@ GameDatabase.celestials.descriptions = [
     name: "SuperV",
     effects() {
       const vEffect = `All Dimension multipliers, Tickspeed, Eternity Point gain, Infinity Point gain, and Dilated Time gain\
-      per second are powered to 0.000001. 
-      The Replicanti interval is five to the power of its origin.
+      per second are ^(1 / ${format(1e6, 0, 0)}). 
+      The Replicanti interval is 5^its origin.
       The Exponential Glyph Alchemy effect is disabled.`;
       return vEffect;
     }

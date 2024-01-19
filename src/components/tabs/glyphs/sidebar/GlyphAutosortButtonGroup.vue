@@ -59,7 +59,7 @@ export default {
       this.showAutoAutoClean = VUnlocks.autoAutoClean.canBeApplied;
       this.autoAutoClean = player.reality.autoAutoClean;
       this.applyFilterToPurge = player.reality.applyFilterToPurge;
-      this.showAutoEquip = true;
+      this.showAutoEquip = Effarig.currentStage >= 6;
       this.autoEquip = player.reality.autoEquip;
     },
   }

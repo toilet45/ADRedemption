@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { Currency } from "../../currency";
 
 const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
@@ -13,14 +14,15 @@ const rebuyable = props => {
   );
   const { effect, effectType } = props;
   props.effect = () =>{ 
-    if (props.effectType === "+" || props.effectType === "-"){
+    if (props.effectType === "+" || props.effectType === "-" || props.effectType === "×1e" ){
       return effect * player.mending.warpRebuyables[props.id];
     }
     return Math.pow(effect, player.mending.warpRebuyables[props.id]);
   };
   props.description = () => props.textTemplate.replace("{value}",formatInt(effect));
   if (!props.noEffect) {
-    props.formatEffect = value => formatX(value, 2, 0);
+    props.formatEffect = value => effectType + format(value, 2, 0);
+    if(props.id==3) props.formatEffect = value => effectType + format(value, 3, 3);
     props.formatCost = value => format(value, 2, 0);
   }
   return props;
@@ -31,29 +33,29 @@ export const warpUpgrades = [
   rebuyable({
     name: "More Infinite Power",
     id: 1,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "Infinity power softcap reduction",
-    effect: 0.002,
-    noEffect: true
+    initialCost: 1e30,
+    costMult: 1e5,
+    textTemplate: "Increase Infinite Power softcap's Thereshold by ×1e2.5e14",
+    effect: 2.5e14,
+    effectType: "×1e"
   }),
   rebuyable({
-    name: "Warp Upgrade 2",
+    name: "Memory Gain",
     id: 2,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Improve Ra's memory gain by ×3",
+    effect: 3,
     effectType: "×"
   }),
   rebuyable({
-    name: "Warp Upgrade 3",
+    name: "Game speed softcap",
     id: 3,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    initialCost: 1e20,
+    costMult: 100,
+    textTemplate: "Increase Game speed's softcap by 0.002",
+    effect: 0.002,
+    effectType: "+"
   }),
   {
     name: "Visible Galaxies",
@@ -68,17 +70,17 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Warp Upgrade 5",
+    name: "The Dedicated Way",
     id: 5,
-    cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    cost: 1e24,
+    requirement: "Reach 1e2.450e18 Antimatter in Ra's Reality",
+    hasFailed: () => !Ra.isRunning,
+    checkRequirement: () => Ra.isRunning && Currency.antimatter.exponent>=2.45e18,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "[TBD]",
-    effect: () => 1,
+    description: () => `Ra's basic Memory chunk gain multiplier based on current Antimatter`,
+    effect: () => Math.max(Math.log10(Currency.antimatter.exponent),1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -201,7 +203,7 @@ export const warpUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption+",
+    name: "Hostility+",
     id: 15,
     cost: 1e300,
     requirement: "Mend with an average corruption level of 6 or higher",
@@ -210,7 +212,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
+    description: () => `Hostility caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -339,7 +341,7 @@ export const warpUpgrades = [
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
   },
   {
-    name: "Corruption++",
+    name: "Hostility++",
     id: 25,
     cost: 1e300,
     requirement: "Mend with an average corruption level of 8 or higher",
@@ -348,7 +350,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Corruption caps +${formatInt(1)}`,
+    description: () => `Hostility caps +${formatInt(1)}`,
     effect: () => 1,
     formatEffect: value => formatX(value, 2, 2)
   }, */

@@ -713,8 +713,8 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6, 41],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [41],
-    description: "All Galaxies give an extra 1e-6 multiplier to all Memory gain.",
-    effect: () => new Decimal(1.000001).pow(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies),
+    description: "All Galaxies give an extra 2e-6 multiplier to all Memory gain.",
+    effect: () => new Decimal(1.000002).pow(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6,
     formatEffect: value => formatX(value, 2, 1)
   },

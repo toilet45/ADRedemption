@@ -193,10 +193,18 @@ export const speedrunMilestones = [
   },
   {
     id: 25,
-    key: "completeFullGame",
-    name: "Game Completed!",
-    description: "Complete the entire game",
-    checkRequirement: () => Achievement(188).isUnlocked,
-    checkEvent: GAME_EVENT.ACHIEVEMENT_UNLOCKED,
+    key: "completeVanillaGame",
+    name: "First Mend",
+    description: "Mend the Multiverse",
+    checkRequirement: () => PlayerProgress.mendingUnlocked(),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+  },
+  {
+    id: 26,
+    key: "warpReality",
+    name: "Warp Reality",
+    description: "Warp Reality for the first time",
+    checkRequirement: () => player.reality.warped,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
 ];

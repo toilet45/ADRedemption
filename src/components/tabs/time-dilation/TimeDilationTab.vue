@@ -182,7 +182,7 @@ export default {
     <span>
       Rebuyable costs jump and scale much faster past 5,000 purchases.
     </span>
-    <span v-if="isPastSCone" class="sc-one">
+    <span v-if="isPastSCone">
       Every {{ formatInt(scOneStart) }} Tachyon Galaxies, TG threshold is {{ formatX(scOneMult, 3, 3) }}.
     </span>
     <div class="l-dilation-upgrades-grid">
@@ -241,9 +241,9 @@ export default {
   margin: 1.2rem 1.5rem;
 }
 
-.sc-one {
+/*.sc-one {
   color: #FF0000;
-}
+}*/
 
 .sc-two {
   color: #ffA000;

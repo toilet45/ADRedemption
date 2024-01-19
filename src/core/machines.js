@@ -53,7 +53,7 @@ export const MachineHandler = {
 
   // This is iM cap based on in-game values at that instant, may be lower than the actual cap
   get projectedIMCap() {
-    return this.baseIMCap * ImaginaryUpgrade(13).effectOrDefault(1);
+    return this.baseIMCap * ImaginaryUpgrade(13).effectOrDefault(1) * (Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? Math.pow(getAdjustedGlyphEffect("effarigrm"), 0.5) : 1);
   },
 
   // Use iMCap to store the base cap; applying multipliers separately avoids some design issues the 3xTP upgrade has

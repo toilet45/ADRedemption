@@ -11,7 +11,7 @@ total: {
     icon: MultiplierTabIcons.CORRUPTION,
     },
   corruptions: {
-    name: "Corruptions",
+    name: "Hostilities",
     displayOverride: () => `${formatInt(CorruptionData.calcBaseScore(), 2, 2)} base score`,
     multValue: () => CorruptionData.calcBaseScore(),
     isActive: () => CorruptionData.isCorrupted,

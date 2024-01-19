@@ -18,8 +18,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Time Dimension power based on real time spent this Mend ⌬`,
-      effect: () => Math.min(0.5, (Math.log10(player.records.thisMend.realTime + 1) / 100)) * ((Ra.pets.v.level - 25) / 75) + 1,
-      formatEffect: value => formatPow(value, 2, 1),
+      effect: () => Math.min(0.5, (Math.log10(player.records.thisMend.realTime + 1) / 100)) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600) + 1,
+      formatEffect: value => formatPow(value, 2, 3),
     },
     // These will get notation-formatted and scrambled between for the final goal
     scrambleText: ["1e2600", "1e201600"],
@@ -38,8 +38,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Infinity Dimension power based on Infinity Power ⌬`,
-      effect: () => 1 + (Math.log10(Math.max(Currency.infinityPower.value.clampMin(1).log10(), 1)) / 500) * ((Ra.pets.v.level - 25) / 75),
-      formatEffect: value => formatPow(value, 2, 1)
+      effect: () => 1 + (Math.log10(Math.max(Currency.infinityPower.value.clampMin(1).log10(), 1)) / 500) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      formatEffect: value => formatPow(value, 2, 3)
     }
   },
   {
@@ -56,7 +56,7 @@ export const eternityChallenges = [
     vReward:{
       description: `⌬ All per-purchase multipliers raised ⌬`,
       formatEffect: value => `${formatPow(value, 3, 3)}`,
-      effect: completions => 1 + (0.0005 * completions * ((Ra.pets.v.level - 25) / 75)),
+      effect: completions => 1 + (0.0005 * completions * ((Ra.pets.v.level - 25) / 75) + V.spaceTheorems / 600),
     }
   },
   {
@@ -79,7 +79,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
-      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 1000) / 10 * ((Ra.pets.v.level - 25) / 75),
+      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 250) / 10 * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => formatPow(value, 3, 3),
     }
   },
@@ -123,7 +123,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Continuum multiplier ⌬`,
-      effect: completions => 1 + (0.01 * completions) * ((Ra.pets.v.level - 25) / 75),
+      effect: completions => 1 + (0.01 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => `${formatX(value, 2, 2)}`
     },
     scrambleText: ["cannot gain Antimatter Galaxies normally", "c㏰'퐚 gai鸭 Anti꟢at랜erﻪﶓa⁍axie㮾 䂇orma㦂l"],
@@ -144,7 +144,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ 1st Dark Matter Dimension produces 8th Time dimension ⌬",
-      effect: completions => DarkMatterDimension(1).powerDM.times(1000).div(DarkMatterDimension(1).interval).pow(0.2 * completions).minus(1).clampMin(0).mul((Ra.pets.v.level - 25) / 75),
+      effect: completions => DarkMatterDimension(1).powerDM.times(1000).div(DarkMatterDimension(1).interval).pow(0.2 * completions).minus(1).clampMin(0).mul((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => `${format(value, 2, 2)} per second`,
     }
   },
@@ -167,7 +167,7 @@ export const eternityChallenges = [
       description: "⌬ Time Shards strengthen all Galaxy types ⌬",
       effect: completions => {
         const timeShards = Math.log10(Currency.timeShards.value.pLog10() + 1);
-        return Math.max(0, (Math.pow(timeShards, 0.03 * completions) - 1) * ((Ra.pets.v.level - 25) / 75) / 10);
+        return Math.max(0, (Math.pow(timeShards, 0.03 * completions) - 1) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600) / 10);
       },
       formatEffect: value => formatPercents(value, 2)
     }
@@ -187,7 +187,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Infinity Dimension multiplier based on Tickspeed upgrade counts ⌬",
-      effect: () => Decimal.pow(10, new Decimal(Tickspeed.totalUpgrades).times((Ra.pets.v.level - 25) / 75).div(10)).clampMin(1),
+      effect: () => Decimal.pow(10, new Decimal(Tickspeed.totalUpgrades).times((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600).div(10)).clampMin(1),
       formatEffect: value => formatX(value, 3, 3)
     }
   },
@@ -219,7 +219,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Time Dimension power based on Infinities ⌬",
-      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 500000  * ((Ra.pets.v.level - 25) / 75)),
+      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 500000  * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -242,7 +242,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Reduce free Tickspeed upgrade scaling ⌬",
-      effect: completions => 1 - (0.00005 * completions) * ((Ra.pets.v.level - 25) / 75),
+      effect: completions => 1 - (0.0005 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -267,7 +267,7 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Increase Infinity Dimension caps ⌬",
-      effect: completions => Math.max(1, 1/(1-(0.008 * completions) * ((Ra.pets.v.level - 25) / 75))),
+      effect: completions => Math.max(1, 1/(1-(0.008 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600))),
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   }

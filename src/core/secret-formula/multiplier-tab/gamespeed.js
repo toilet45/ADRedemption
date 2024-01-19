@@ -105,7 +105,7 @@ export const gamespeed = {
     icon: MultiplierTabIcons.BLACK_HOLE,
   },
   CorruptionUpg: {
-    name: "Corruption Upgrade - Spacetime Distortion",
+    name: "Hostility Upgrade - Spacetime Distortion",
     multValue: () => Decimal.pow10(Math.pow(1 + CorruptionData.corruptionChallenge.recordScore, 1/1.48)),
     isActive: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
     icon: MultiplierTabIcons.UPGRADE("corruption")

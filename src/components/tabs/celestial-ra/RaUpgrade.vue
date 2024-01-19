@@ -31,7 +31,7 @@ export default {
     classObject() {
       return {
         "c-ra-upgrade--bought": this.isBought && !this.isUseless,
-        "c-ra-upgrade--unavailable": !this.isAvailableForPurchase,
+        "c-ra-upgrade--unavailable": !this.canBeBought,
       };
     },
     color() {

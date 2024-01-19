@@ -811,13 +811,13 @@ export const normalAchievements = [
     checkRequirement: () => Currency.infinities.lte(1),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
     reward: "Multiplier to Infinity Points based on Infinities.",
-    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)),
-    cap: () => Effarig.eternityCap,
+    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)).clampMax('1e10000000000'),
+    cap: () => {return Effarig.eternityCap===undefined ? new Decimal('1e10000000000') : Effarig.eternityCap},
     formatEffect: value => {
       // Since TS31 is already accounted for in the effect prop, we need to "undo" it to display the base value here
       const mult = formatX(value, 2, 2);
       return TimeStudy(31).canBeApplied
-        ? `${formatX(value.pow(1 / TimeStudy(31).effectValue), 2, 1)} (After TS31: ${mult})`
+        ? `${formatX(value.pow(DC.D1.div(TimeStudy(31).effectValue)), 2, 1)} (After TS31: ${mult})`
         : mult;
     }
   },
@@ -1129,7 +1129,7 @@ export const normalAchievements = [
     get description() { return `Reality in under ${formatInt(5)} seconds (game time).`; },
     checkRequirement: () => Time.thisReality.totalSeconds.lt(5),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    get reward() { return `${formatPercents(0.1)} chance each Reality of ${formatX(2)} Realities and Perk Points.`; },
+    get reward() { return `${formatPercents(MendingMilestone.two.isReached ? 1 : 0.1)} chance each Reality of ${formatX(2)} Realities and Perk Points.`; },
     effect: 0.1
   },
   {
@@ -1417,8 +1417,12 @@ export const normalAchievements = [
   },
   {
     id: 195,
-    name: "195",
-    description: "placeholder",
+    name: "Woah, we're super halfway there",
+    get description() { return `Get ${formatInt(350)} total Ra Celestial Memory levels.`; },
+    checkRequirement: () => Ra.totalPetLevel >= 350,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    get reward() { return `Get ×10 more memories.`; },
+    effect: 10
   },
   {
     id: 196,

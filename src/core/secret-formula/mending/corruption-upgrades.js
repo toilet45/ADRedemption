@@ -24,8 +24,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Game speed is multiplied based on highest score (Applies after hostilities, but weaker in Hostile multiverse)",
-    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
+    description: "Game speed is multiplied based on highest score (before instability, Applies after hostilities, but weaker in Hostile multiverse)",
+    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 0.25)) : (Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 1/1.48))),
     formatEffect: value => formatX(value, 2)
   },
   {
@@ -39,11 +39,11 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments. ",
-    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3), // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
+    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3) / 10, // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
     formatEffect: value => `^` + format(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 6",
+    name: "Hostility Upgrade 4",
     id: 4,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -57,7 +57,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 6",
+    name: "Hostility Upgrade 5",
     id: 5,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -71,7 +71,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 6",
+    name: "Hostility Upgrade 6",
     id: 6,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -85,7 +85,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 7",
+    name: "Hostility Upgrade 7",
     id: 7,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -99,7 +99,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 8",
+    name: "Hostility Upgrade 8",
     id: 8,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -113,7 +113,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 9",
+    name: "Hostility Upgrade 9",
     id: 9,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -127,7 +127,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 10",
+    name: "Hostility Upgrade 10",
     id: 10,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -141,7 +141,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 11",
+    name: "Hostility Upgrade 11",
     id: 11,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -155,7 +155,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 12",
+    name: "Hostility Upgrade 12",
     id: 12,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -169,7 +169,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 13",
+    name: "Hostility Upgrade 13",
     id: 13,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -183,7 +183,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 14",
+    name: "Hostility Upgrade 14",
     id: 14,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -197,7 +197,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 15",
+    name: "Hostility Upgrade 15",
     id: 15,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -277,7 +277,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 21",
+    name: "Hostility Upgrade 21",
     id: 21,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -291,7 +291,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 22",
+    name: "Hostility Upgrade 22",
     id: 22,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -305,7 +305,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 23",
+    name: "Hostility Upgrade 23",
     id: 23,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -319,7 +319,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 24",
+    name: "Hostility Upgrade 24",
     id: 24,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -333,7 +333,7 @@ export const corruptionUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Corruption Upgrade 25",
+    name: "Hostility Upgrade 25",
     id: 25,
     cost: 1e300,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",

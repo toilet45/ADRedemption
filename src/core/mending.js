@@ -8,6 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
+import { VUnlocks } from "./globals";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -39,6 +40,12 @@ export function mendingReset() {
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
+    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+      EffarigUnlock.mend.unlock();
+      EffarigUnlock.infinity.unlock();
+      EffarigUnlock.eternity.unlock();
+      EffarigUnlock.reality.unlock();
+    }
     let x = player.reality.glyphs.protectedRows;
     player.reality.glyphs.protectedRows = 0;
     for (let g = 0; g < 120; g++){
@@ -51,10 +58,10 @@ export function mendingReset() {
       if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;
-    if(Effarig.currentStage < 6){
+    /*if(Effarig.currentStage < 6){
       player.reality.glyphs.filter.trash = 0;
       player.reality.glyphs.filter.select = 1;
-    }
+    }*/ //why reset--sxy
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -116,9 +123,11 @@ export function mendingReset() {
       player.celestials.enslaved.unlocks = [0, 1];
       player.celestials.enslaved.completed = true;
     }
+    if(!VUnlocks.vKeep.isUnlocked){
     V.reset();
     if(MendingUpgrade(14).isBought){
       player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
     }
     V.updateTotalRunUnlocks();
     player.celestials.v.quoteBits = 2047;
@@ -187,8 +196,8 @@ export function mendingReset() {
     player.celestials.pelle.collapsed.rifts = false;
     player.celestials.pelle.collapsed.galaxies = false;
     //Reality
-    player.reality.autoAutoClean = false;
-    player.reality.glyphs.trash = 0;
+    //player.reality.autoAutoClean = false; //excuse me why you reset this option--sxy
+    //player.reality.glyphs.trash = 0; //exm --sxy
     resetRealityRuns();
     player.records.thisReality = {
       time: DC.D0,
@@ -293,7 +302,9 @@ export function mendingReset() {
       player.reality.imaginaryUpgReqs += 32768;
       player.reality.imaginaryUpgradeBits += 32768;
     }
-    player.expoBlackHole[0].powerUpgrades = 0;
+    for(let i = 0; i < 1; i++){
+      player.expoBlackHole[i].powerUpgrades = 0;
+    }
     //Eternity
     resetEternityRuns();
     player.respec = false;

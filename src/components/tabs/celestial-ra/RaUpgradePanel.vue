@@ -1,37 +1,44 @@
 <script>
-  import { RaUpgrade } from '../../../core/globals';
+import { RaUpgrade } from '../../../core/globals';
 import RaUpgradeVue from './RaUpgrade.vue';
-  export default{
-    name: "RaUpgradePanel",
-    components:{
-      RaUpgradeVue,
+import { Ra } from "../../../core/globals";
+export default {
+  name: "RaUpgradePanel",
+  components: {
+    RaUpgradeVue,
+  },
+  data() {
+    return {
+      raPoints: new Decimal(0),
+      GainPerSecond: new Decimal(0),
+      NewRow: false,
+    };
+  },
+  computed: {
+    rebuyables: () => RaUpgrade.rebuyables,
+    singles: () => RaUpgrade.singles,
+  },
+  methods: {
+    update() {
+      this.raPoints.copyFrom(player.celestials.ra.raPoints);
+      this.GainPerSecond = Ra.raPointsGain(1000);
+      this.NewRow = Ra.unlocks.improvedPetUpgrades.isUnlocked
     },
-    computed:{
-      rebuyables: () => RaUpgrade.rebuyables,
-      singles: () => RaUpgrade.singles,
-    }
   }
+}
 </script>
 
 <template>
   <div class="l-ra-panel-container">
     <div class="c-ra-pet-title" style="font-weight: bold; color: var(--color-ra--base);">Ra's Shop</div>
+    <br>
+        You currently have {{ format(raPoints,3,3) }} Ra's Memory Crystals. Gaining {{ format(GainPerSecond,3,3) }}/s, depending on Dimension Boosts in Ra's Reality.
+    <br>
     <div class="c-ra-upgrade-container">
-      <RaUpgradeVue
-      v-for="upgrade in rebuyables"
-      :key="upgrade.config.id"
-      :upgrade="upgrade"
-      :isRebuyable="true"
-      />
+      <RaUpgradeVue v-for="upgrade in rebuyables" :key="upgrade.config.id" :upgrade="upgrade" :isRebuyable="true" />
     </div>
-    <div class="line"/>
-    <div class="c-ra-upgrade-container">
-      <RaUpgradeVue
-      v-for="upgrade in rebuyables"
-      :key="upgrade.config.id"
-      :upgrade="upgrade"
-      :isRebuyable="true"
-      />
+    <div class="c-ra-upgrade-container" v-if="NewRow">
+      <RaUpgradeVue v-for="upgrade in singles" :key="upgrade.config.id" :upgrade="upgrade" :isRebuyable="false" />
     </div>
   </div>
 </template>
@@ -53,7 +60,8 @@ import RaUpgradeVue from './RaUpgrade.vue';
   -webkit-user-select: none;
   user-select: none;
 }
-.line{
+
+.line {
   width: 100%;
   height: .1rem;
   border: 0;
