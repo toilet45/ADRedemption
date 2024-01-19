@@ -92,7 +92,7 @@ export function breakInfinity() {
   GameUI.update();
 }
 
-export function gainedInfinityPoints(nosoftcap = false) {
+export function gainedInfinityPoints(noSoftcap = false) {
   const div = Effects.min(
     308,
     Achievement(103),
@@ -134,7 +134,7 @@ export function gainedInfinityPoints(nosoftcap = false) {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
-  if (ip.gte(Decimal.pow10(9e15)) && !nosoftcap) {
+  if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(9e15))
     ip = ip.pow(0.0298374651)
     ip = ip.times(Decimal.pow10(9e15))
@@ -191,7 +191,7 @@ function totalEPMult() {
       );
 }
 
-export function gainedEternityPoints() {
+export function gainedEternityPoints(noSoftcap = false) {
   let devisor = 308 - PelleRifts.recursion.effectValue.toNumber();
   if(player.timestudy.studies.includes(307)) devisor = devisor - 30;
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
@@ -219,7 +219,7 @@ export function gainedEternityPoints() {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
 
-  if (ep.gte(Decimal.pow10(1e18))) {
+  if (ep.gte(Decimal.pow10(1e18)) && !noSoftcap) {
     ep = ep.div(Decimal.pow10(1e18))
     ep = ep.pow(0.162738495)
     ep = ep.times(Decimal.pow10(1e18))

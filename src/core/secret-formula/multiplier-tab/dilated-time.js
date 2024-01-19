@@ -112,5 +112,11 @@ export const DT = {
     powValue: () => 1 + Math.max(0, (Currency.relicShards.value.log10() / 1337)),
     isActive: () => Ra.unlocks.relicShardBoost.isUnlocked,
     icon: MultiplierTabIcons.GENERIC_RA,
+  },
+  nerfSHardV: {
+    name: "V's Superhard Reality",
+    powValue: () => 0.000001,
+    isActive: () => V.isSuperRunning,
+    icon: MultiplierTabIcons.GENERIC_V,
   }
 };
