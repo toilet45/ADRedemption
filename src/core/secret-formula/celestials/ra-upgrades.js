@@ -20,7 +20,7 @@ const rebuyable = config => {
       DC.E333,
       10,
       10 //Yes the exponential and linear here are the same. Thats on purpose, this code is easier to use for just exponential (weirdly) so thats what im doing.
-    )*/config.num<=7 ? config.baseCost*(2.5**player.celestials.ra.rebuyables[config.id]) : config.baseCost*(10**player.celestials.ra.rebuyables[config.id]),//Idk how you make cost decrease --sxy
+    )*/config.num<=7 ? config.baseCost*(2.5**player.celestials.ra.rebuyables[config.id]) : config.baseCost*(10**(player.celestials.ra.rebuyables[config.id]*player.celestials.ra.rebuyables[config.id]*0.1+player.celestials.ra.rebuyables[config.id])),//Idk how you make cost decrease --sxy
     formatCost,
     effect: config.effect,
     formatEffect: x => formatX(x, 2, 2),
@@ -198,7 +198,7 @@ export const raUpgrades = {
   effarigUpgrade: {
     id: "effarigUpgrade",
     celestial: "effarig",
-    description: "Placeholder",
+    description: "Relic Shards gain ^1.1",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
@@ -207,7 +207,7 @@ export const raUpgrades = {
   enslavedUpgrade: {
     id: "enslavedUpgrade",
     celestial: "enslaved",
-    description: "Placeholder",
+    description: "Stored Time is always at its cap, and Stored Time affects Game Speed.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
@@ -216,7 +216,7 @@ export const raUpgrades = {
   vUpgrade: {
     id: "vUpgrade",
     celestial: "v",
-    description: "Placeholder",
+    description: "The memory rebuyable Warp Upgrade now also affect achievement multiplier.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
@@ -225,7 +225,7 @@ export const raUpgrades = {
   raUpgrade: {
     id: "raUpgrade",
     celestial: "ra",
-    description: "Placeholder",
+    description: "Improve Memory Crystal gaining formula.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
@@ -234,7 +234,7 @@ export const raUpgrades = {
   laitelaUpgrade: {
     id: "laitelaUpgrade",
     celestial: "laitela",
-    description: "Placeholder",
+    description: "Unlock more singularity milestones.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
@@ -243,7 +243,7 @@ export const raUpgrades = {
   pelleUpgrade: {
     id: "pelleUpgrade",
     celestial: "pelle",
-    description: "Placeholder",
+    description: "Placeholder™",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
