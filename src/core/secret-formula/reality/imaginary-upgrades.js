@@ -1,7 +1,9 @@
 import { DC } from "../../constants";
+//let teresaRa = player.celestials.ra.upgrades.includes('teresaUpgrade');
 
 const rebuyable = props => {
   props.cost = () => props.initialCost * Math.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]);
+  if (props.id==6) props.cost = () => player.celestials.ra.upgrades.has('teresaUpgrade') ? Math.pow(props.initialCost * Math.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]),0.85) : props.initialCost * Math.pow(props.costMult, player.reality.imaginaryRebuyables[props.id]);
   const { effect } = props;
   if (props.isDecimal) props.effect = () => Decimal.pow(effect, player.reality.imaginaryRebuyables[props.id]);
   else props.effect = () => effect * Math.min(player.reality.imaginaryRebuyables[props.id], 10);

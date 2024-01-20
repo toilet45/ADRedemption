@@ -362,7 +362,7 @@ export const Ra = {
     if (level >= 50) {perMemScaling = 1.5;fixCostMulti = 1e50} 
     if (level >= 65) {perMemScaling = 1.6} 
     if (level >= 75) {perMemScaling = 1.75;fixCostMulti = 1e60} 
-    if (level >= 90) {perMemScaling = 2;fixCostMulti = 1e75} 
+    if (level >= 90) {perMemScaling = 2.25;fixCostMulti = 1e80} 
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
     const post25Scaling = Math.pow(3, Math.max(0, level-25));

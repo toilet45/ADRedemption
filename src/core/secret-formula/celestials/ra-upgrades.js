@@ -189,7 +189,7 @@ export const raUpgrades = {
   teresaUpgrade: {
     id: "teresaUpgrade",
     celestial: "teresa",
-    description: "Square root the cost of Elliptic Materiality, and add extra Reality Machine cap based on Teresa's Reality Antimatter Record.",
+    description: "Cost of Elliptic Materiality ^0.85, and add extra Reality Machine cap based on Teresa's Reality Antimatter Record.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
