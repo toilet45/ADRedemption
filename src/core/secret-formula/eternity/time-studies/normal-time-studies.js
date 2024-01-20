@@ -844,21 +844,21 @@ export const normalTimeStudies = [
   {
     id: 401,
     cost: 0,
-    STCost: 10002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 1],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    requiresST: [],
-    description: "[TBD]",
+    requiresST: ['reality'],
+    description: "Give extra 1e11 free Dimension Boosts",
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 90
   },
   {
     id: 402,
     cost: 0,
-    STCost: 10002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 2],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    requiresST: [],
+    requiresST: ['reality'],
     description: "[TBD]",
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 92
@@ -866,10 +866,10 @@ export const normalTimeStudies = [
   {
     id: 403,
     cost: 0,
-    STCost: 10002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 3],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    requiresST: [],
+    requiresST: ['reality'],
     description: "[TBD]",
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 94
@@ -877,7 +877,7 @@ export const normalTimeStudies = [
   {
     id: 411,
     cost: 0,
-    STCost: 30002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 4, 401],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [401],
@@ -888,7 +888,7 @@ export const normalTimeStudies = [
   {
     id: 412,
     cost: 0,
-    STCost: 30002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 5, 402],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [402],
@@ -899,7 +899,7 @@ export const normalTimeStudies = [
   {
     id: 413,
     cost: 0,
-    STCost: 30002,
+    STCost: 302,
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 6, 403],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [403],

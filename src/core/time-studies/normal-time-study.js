@@ -59,6 +59,10 @@ export class NormalTimeStudyState extends TimeStudyState {
     return this.id > 300 && this.id < 400;
   }
 
+  get isMyriad() {
+    return this.id > 400 && this.id < 500;
+  }
+
   get isBought() {
     return GameCache.timeStudies.value[this.id];
   }
@@ -66,6 +70,8 @@ export class NormalTimeStudyState extends TimeStudyState {
   // The requiresST prop is an array containing IDs indicating other studies which, if ANY in the array are purchased,
   // will cause the study to also cost space theorems. This array is effectively assumed to be empty if not present.
   costsST() {
+    //since there's only one connection from reality I would code just as this. plz don't require ST more than reality.
+    if(this.config.requiresST !== undefined && this.config.requiresST.includes('reality')) return TimeStudy.reality.isBought;
     return this.config.requiresST && this.config.requiresST.some(s => TimeStudy(s).isBought);
   }
 
