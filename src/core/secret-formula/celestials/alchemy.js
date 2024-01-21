@@ -429,11 +429,11 @@ export const alchemyResources = {
     name: "Reality",
     symbol: "Ϟ",
     isBaseResource: false,
-    effect: amount => Math.floor(amount),
+    effect: amount => {if(player.celestials.ra.upgrades.has('teresaUpgrade'))return Math.floor(amount*3);return Math.floor(amount)},
     tier: 5,
     unlockedAt: 25,
     description: "can be consumed to create Reality Glyphs",
-    formatEffect: value => `Consume all Reality Resource to create a level ${formatInt(value)} Reality Glyph`,
+    formatEffect: value => {return `Consume all Reality Resource to create a level ${formatInt(value)} Reality Glyph`},
     reagents: [
       {
         resource: ALCHEMY_RESOURCE.EXPONENTIAL,
