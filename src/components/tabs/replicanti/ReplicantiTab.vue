@@ -42,6 +42,9 @@ export default {
       maxReplicanti: new Decimal(),
       estimateToMax: new Decimal(0),
       hasFree: false,
+      has310: false,
+      idCapMult: 0,
+      tdCapMult: 0
     };
   },
   computed: {
@@ -114,6 +117,10 @@ export default {
         boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.multIP)}</span>
           multiplier to Infinity Points from Glyph Alchemy`);
       }
+      if (this.has310){
+        boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.idCapMult,2 ,2)}</span> multiplier to the Infinity Dimension purchase cap`)
+        boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.tdCapMult,2 ,2)}</span> multiplier to the Time Dimension purchase cap`)
+      }
       if (boostList.length === 1) return `${boostList[0]}.`;
       if (boostList.length === 2) return `${boostList[0]}<br> and ${boostList[1]}.`;
       return `${boostList.slice(0, -1).join(",<br>")},<br> and ${boostList[boostList.length - 1]}.`;
@@ -171,6 +178,9 @@ export default {
       this.maxReplicanti.copyFrom(player.records.thisReality.maxReplicanti);
       this.estimateToMax = this.calculateEstimate();
       this.hasFree = ReplicantiUpgrade.galaxies.extra > 0;
+      this.has310 = player.timestudy.studies.includes(310);
+      this.idCapMult = Math.max(Math.log10(Currency.replicanti.value.exponent),1);
+      this.tdCapMult = Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent+1)),1);
     },
     vacuumText() {
       return wordShift.wordCycle(PelleRifts.vacuum.name);

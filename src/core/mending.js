@@ -147,6 +147,10 @@ export function mendingReset() {
       effarig: 0
     };
     player.celestials.ra.quoteBits = 16383;
+    if(true){
+      player.celestials.ra.charged = new Set();
+      player.celestials.ra.breakCharged = new Set();
+    }
     Laitela.reset();
     if (MendingUpgrade(4).isBought){
       player.celestials.laitela.difficultyTier = 8;

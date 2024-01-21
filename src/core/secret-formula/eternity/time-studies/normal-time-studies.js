@@ -701,7 +701,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5, 21],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [21],
-    description: "Infinity points gain is boosted by unused MvR",
+    description: "Infinity Point gain is boosted by unspent Multiversal Remains",
     effect: () => Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5,
     formatEffect: value => formatX(value, 2, 1)
@@ -713,7 +713,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6, 41],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [41],
-    description: "All Galaxies give an extra 2e-6 multiplier to all Memory gain.",
+    description: "Multiply Memory gain based on amount of Galaxies.",
     effect: () => new Decimal(1.000002).pow(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 6,
     formatEffect: value => formatX(value, 2, 1)
@@ -725,7 +725,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7, 101],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [101],
-    description: "Total Space theorms gives Antimatter Dimensions multiplier.",
+    description: "Antimatter Dimension multiplier based on total Space Theorems.",
     effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7,
     formatEffect: value => formatX(value, 2, 1)
@@ -737,7 +737,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 8, 102],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [102],
-    description: "Total Space theorms gives Infinity Dimensions multiplier.",
+    description: "Infinity Dimension multiplier based on total Space Theorems.",
     effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 8,
     formatEffect: value => formatX(value, 2, 1)
@@ -749,7 +749,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 9, 103],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [103],
-    description: "Total Space theorms gives Time Dimensions multiplier.",
+    description: "Time Dimension multiplier based on total Space Theorems.",
     effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 9,
     formatEffect: value => formatX(value, 2, 1)
@@ -761,7 +761,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 10, 111],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [111],
-    description: `Make Eternity points formula better log(x)/y ➜ log(x)/(y-30)`,
+    description: `Make the Eternity Point formula better log(x)/y ➜ log(x)/(y-30)`,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 10,
     effect: 30
   },
@@ -772,7 +772,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 11, 141],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [141],
-    description: "Multiplier to MvR, which decays over this Mend (real time)",
+    description: "Multiplier to Multiversal Remains, which decays over this Mend (real time)",
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 11,
     effect: () => (Decimal.log10(DC.E45.divide(thisInfinityMult(Time.thisMendRealTime.totalSeconds))).toDecimal().clampMin(1)),
     formatEffect: value => formatX(value, 2, 1)
@@ -784,7 +784,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 12, 142],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [142],
-    description: `You gain ×35 more MvR this Mend`,
+    description: `You gain ×35 more Multiversal Remains`,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 12,
     effect: new Decimal(35)
   },
@@ -795,7 +795,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 13, 143],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [143],
-    description: "Multiplier to MvR, which increases over this Mend (real time)",
+    description: "Multiplier to Multiversal Remains, which increases over this Mend (real time)",
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 13,
     effect: () => {
       const totalSeconds = Time.thisMendRealTime.totalSeconds;
@@ -810,7 +810,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 14, 151],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [151],
-    description: `×1e4 multiplier on all Dark Matter Dimensions (Both DM and DE)`,
+    description: () => `${formatX(1e4)} multiplier on all Dark Matter Dimensions (Both DM and DE)`,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 14,
     effect: 1e4
   },
@@ -821,7 +821,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 15, 171],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [171],
-    description: `Time Shard requirement for the next Tickspeed upgrade goes up more slower
+    description: `Time Shard requirement for the next Tickspeed upgrade goes up even slower
     ×1.25 ➜ ×1.20`,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 15,
     effect: TS309_MULTIPLIER
@@ -835,7 +835,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 16, 192],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [192],
-    description: `Replicanti increase the hardcap of purchase time of ID/TD`,
+    description: `Replicanti increases the purchase hardcap of Infinity and Time Dimensions`,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 16,
     effect: 20
   },
@@ -848,7 +848,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 1],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: "Give extra 1e11 free Dimension Boosts",
+    description: () => `Give an additional ${format(1e11)} free Dimension Boosts`,
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 90
   },
