@@ -6,6 +6,15 @@ export const MatterScale = {
   estimate(matter) {
     if (!matter) return ["There is no antimatter yet."];
     const distScaling = this.distanceScale(matter.log10())
+    if (matter.log10() > 4.324e26*1e14) {
+      return [
+        `How do you have so much antimatter`,
+        `There will eventually be a matter scale here`,
+        `For now, enjoy the knowledge that you are here`,
+        `A place so far that you never were meant to be`,
+        `So far, that the matter scale is lost`
+      ];
+    }
     if (matter.gt(Decimal.pow10(4.320432e21*3))) {
       return [
         `If every number in your antimatter count was a hydrogen atom,`,
