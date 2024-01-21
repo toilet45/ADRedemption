@@ -140,11 +140,11 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.pow(0.0298374651)
     ip = ip.times(Decimal.pow10(9e15))
   }
-  if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
+  /*if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(1e20))
     ip = ip.pow(0.95)
     ip = ip.times(Decimal.pow10(1e20))
-  }
+  }*/
   return ip.floor();
 }
 
@@ -373,7 +373,11 @@ export function gainedInfinities() {
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
   if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
-    infGain = infGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
+    let teresa90BaseExp=Math.pow((Math.log10(Currency.realities.value)/20), 1.111)
+    if(teresa90BaseExp>1.5){
+      teresa90BaseExp=1.5+Math.pow(teresa90BaseExp-1.5,0.75)
+    }
+    infGain = infGain.pow(teresa90BaseExp); //TODO: softcap this at ^1.5
   }
   return infGain;
 }
