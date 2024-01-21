@@ -186,7 +186,7 @@ export default {
     <br>
     <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(this.textCap) }}</span>
     <br>
-    <span v-if="atTessCap">Tesseract refuse to being exist after {{ format(this.TesseractsCap) }} due to you are already beyond intended limitation</span>
+    <span v-if="atTessCap">Tesseracts beyond {{ format(this.TesseractsCap) }} are physically impossible</span>
     <br>
     <b
       v-if="isEC8Running"

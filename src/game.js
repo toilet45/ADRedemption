@@ -118,6 +118,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.min(DC.E200);
   }
   ip = ip.times(GameCache.totalIPMult.value);
+  
   if (Teresa.isRunning) {
     ip = ip.pow(0.55);
   } else if (V.isRunning) {
@@ -138,6 +139,11 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.div(Decimal.pow10(9e15))
     ip = ip.pow(0.0298374651)
     ip = ip.times(Decimal.pow10(9e15))
+  }
+  if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
+    ip = ip.div(Decimal.pow10(1e20))
+    ip = ip.pow(0.95)
+    ip = ip.times(Decimal.pow10(1e20))
   }
   return ip.floor();
 }
