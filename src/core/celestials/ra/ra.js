@@ -241,6 +241,15 @@ class RaPetState extends GameMechanicState {
       this.memoryUpgradeCurrentMult * this.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1), MendingUpgrade(15).isBought ? 1.5 : 1);
 
     let newMemories = seconds * memsPerSecond;
+    if(CorruptionUpgrade(1).isBought){
+        if (this.id=='teresa'&&Teresa.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='effarig'&&Effarig.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='enslaved'&&Enslaved.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='v'&&V.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='ra'&&Ra.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='laitela'&&Laitela.isRunning) newMemories = newMemories*(1.5e3);
+        if (this.id=='pelle'&&Pelle.isRunning) newMemories = newMemories*(1.5e3);
+    }
     this.memoryChunks += newMemoryChunks;
     this.memories += newMemories;
   }
@@ -320,6 +329,7 @@ export const Ra = {
     if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
     if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
     res = res.timesEffectOf(WarpUpgrade(2)).times(VUnlocks.vAchRa.effectOrDefault(1));
+    
     return res.toNumber();
   },
   get memoryBoostResources() {

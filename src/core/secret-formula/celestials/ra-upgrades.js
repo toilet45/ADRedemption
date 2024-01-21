@@ -198,7 +198,7 @@ export const raUpgrades = {
   effarigUpgrade: {
     id: "effarigUpgrade",
     celestial: "effarig",
-    description: "Relic Shards gain ^1.1",
+    description: "Triple Reality Glyph level.",
     cost: 1e17,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
