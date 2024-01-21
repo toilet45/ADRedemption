@@ -225,9 +225,11 @@ export const Singularity = {
 
   get singularitiesGained() {
     const MMBoostSing = MendingMilestone.one.isReached ? 5 : 1;
+    let IU10 = ImaginaryUpgrade(10).effectOrDefault(0);
+    if(Ra.unlocks.dmdScaling.isUnlocked) IU10 = Math.pow(2,IU10);
     return Math.floor(Math.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases) *
       SingularityMilestone.singularityMult.effectOrDefault(1) *
-      (1 + ImaginaryUpgrade(10).effectOrDefault(0))) * MMBoostSing;
+      (1 + IU10)) * MMBoostSing;
   },
 
   // Time (in seconds) to go from 0 DE to the condensing requirement

@@ -97,8 +97,8 @@ export const imaginaryUpgrades = [
     initialCost: 8e9,
     costMult: 2000,
     description: () => `Increase Singularity gain`,
-    effect: 1,
-    formatEffect: value => `${formatX(1 + value, 2)}`
+    effect: /*() => Ra.unlocks.dmdScaling.isUnlocked ? 100000 : */1 ,
+    formatEffect: value => Ra.unlocks.dmdScaling.isUnlocked ? `${formatX(1 + Math.pow(2,value), 2)}`:`${formatX(1 + value, 2)}`
   }),
   {
     name: "Suspicion of Interference",
