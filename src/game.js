@@ -462,6 +462,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     }
   }
 
+  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) factor=factor.times(player.celestials.enslaved.storedReal);
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
@@ -610,6 +611,9 @@ export function gameLoop(passDiff, options = {}) {
     realTimeMechanics(realDiff);
     return;
   }
+
+  //RaUpgrade3 stuff--sxy
+  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) player.celestials.enslaved.storedReal=Enslaved.storedRealTimeCap;
 
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;

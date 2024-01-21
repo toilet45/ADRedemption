@@ -330,8 +330,12 @@ export const Tesseracts = {
     return this.costs(this.bought);
   },
 
+  get TesseractHardcap(){
+    return 15
+  },
+
   get canBuyTesseract() {
-    return Enslaved.isCompleted && Currency.infinityPoints.gte(Tesseracts.nextCost);
+    return Enslaved.isCompleted && Currency.infinityPoints.gte(Tesseracts.nextCost) && this.bought<this.TesseractHardcap;
   },
 
   capIncrease(count = this.bought) {
