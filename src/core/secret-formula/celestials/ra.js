@@ -558,7 +558,6 @@ export const ra = {
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
-      disabledByPelle: true
     },
     unlockSHardV: {
       id: 23,
@@ -706,7 +705,8 @@ export const ra = {
       reward: "Gain Free Dimension Boosts based on Ra Level",
       pet: "ra",
       level: 75,
-      displayIcon: `<i class="fa-solid fa-circle-arrow-up"></i>`
+      displayIcon: `<i class="fa-solid fa-circle-arrow-up"></i>`,
+      disabledByPelle: true
     },
     improvedPetUpgrades: {
       id: 9,
@@ -826,10 +826,10 @@ export const ra = {
     dmdScaling: {
       id: 23,
       id2: 1,
-      reward: "Slightly weaken post infinity DMD scaling, Entropic Condensing is far stronger.",
+      reward: "Entropic Condensing is far stronger.",
       pet: "laitela",
       level: 90,
-      displayIcon: "??"
+      displayIcon: `<i class="fa-solid fa-circle-h"></i>`
     },
     unlockMultiversalDimensions: {
       id: 24,
