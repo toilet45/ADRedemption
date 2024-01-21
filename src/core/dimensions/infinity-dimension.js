@@ -1,5 +1,6 @@
 import { DC } from "../constants";
 import { Currency } from "../currency";
+import { WarpUpgrade } from "../warp-upgrades";
 
 import { DimensionState } from "./dimension";
 
@@ -135,6 +136,12 @@ class InfinityDimensionState extends DimensionState {
     return toGain.times(10).dividedBy(current).times(getGameSpeedupForDisplay());
   }
 
+  get infPowerSoftcap(){
+    let x = 9e15;
+    x += WarpUpgrade(1).effectOrDefault(0)
+    return x;
+  }
+
   get productionPerSecond() {
     if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning ||
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
@@ -148,10 +155,11 @@ class InfinityDimensionState extends DimensionState {
       production = production.times(Tickspeed.perSecond);
     }
     production = production.times(this.multiplier);
-    if (this.tier == 1 & production.log10() > 9e15){
-      production = production.div(Decimal.pow10(9e15));   
+    //mend: Inf Power Gain softcap --sxy
+    if (this.tier == 1 & production.log10() > this.infPowerSoftcap){
+      production = production.div(Decimal.pow10(this.infPowerSoftcap));   
       production = production.pow(0.0123456789);
-      production = production.times(Decimal.pow10(9e15));
+      production = production.times(Decimal.pow10(this.infPowerSoftcap));
     }
     return production;
   }

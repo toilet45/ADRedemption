@@ -30,7 +30,8 @@ export const MultiplierTabHelper = {
       Achievement(178),
       InfinityChallenge(5).reward,
       PelleUpgrade.galaxyPower,
-      PelleRifts.decay.milestones[1]
+      PelleRifts.decay.milestones[1],
+      (Ra.unlocks.improvedECRewards.isUnlocked ? EternityChallenge(8).vReward.effectValue : 1)
     ) * Pelle.specialGlyphEffect.power * (player.galBoostPoints.eq(0) ? 1 : (player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber());
   },
 

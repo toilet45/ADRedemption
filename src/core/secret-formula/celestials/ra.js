@@ -415,7 +415,7 @@ export const ra = {
       reward: "Reality Machines boost Infinity Point and Eternity Point gain",
       pet: "teresa",
       level: 75,
-      displayIcon: '*',
+      displayIcon: `<span class="fas fa-arrow-up"></span>`,
       effect: () => Decimal.log10(Currency.realityMachines) / 100
     },
     realitiesBoostInfinityAndEternityProduction: {
@@ -424,7 +424,7 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: '*'
+      displayIcon: 'τ'
     },
     postWarpRealityMachineBoost: {
       id: 6,
@@ -466,7 +466,7 @@ export const ra = {
       reward: "Relic shards boost dimensional sacrifice, replicanti speed, infinity power conversion rate, tachyon particle to dilated time factor and time dimensions",
       pet: "effarig",
       level: 65,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-ranking-star"></i>'
     },
     effarigGlyphIncreaseImCap: {
       id: 12,
@@ -474,7 +474,7 @@ export const ra = {
       reward: "Effarig Glyphs' first effect also increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`
     },
     maxGlyphRarityIncrease: {
       id: 13,
@@ -483,7 +483,7 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-star"></span>`
     },
     effarigMendUnlock: {
       id: 14,
@@ -496,7 +496,7 @@ export const ra = {
     uncapGamespeed: {
       id: 15,
       id2: 0,
-      reward: "Reomve the 1e300 Gamespeed Cap",
+      reward: "Uncap 1e300 gamespeed cap",
       pet: "enslaved",
       level: 30,
       displayIcon: `<span class="fas fa-tachometer-alt"></span>`
@@ -515,7 +515,8 @@ export const ra = {
       reward: "Unlock the 3rd Black Hole which costs Imaginary Machines and boosts Game Speed exponentially instead of multiplicatively",
       pet: "enslaved",
       level: 50,
-      displayIcon: '<i class="fa-solid fa-circle"></i>'
+      displayIcon: '<i class="fa-solid fa-circle"></i>',
+      disabledByPelle: true
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
@@ -523,7 +524,7 @@ export const ra = {
       reward: "Increase Pelle Tachyon Galaxy multiplier upgrade base based on Dilated Time",
       pet: "enslaved",
       level: 65,
-      displayIcon: '*'
+      displayIcon: '♅'
     },
     gamespeedGalaxyBoost: {
       id: 19,
@@ -531,7 +532,7 @@ export const ra = {
       reward: "Game Speed increases Galaxy strength",
       pet: "enslaved",
       level: 75,
-      displayIcon: '*',
+      displayIcon: '<i class="fa-solid fa-atom"></i>',
       effect: () => Math.max(1 ,1 + (Decimal.log10(getGameSpeedupFactor()) / 1000)) //this shouldn't be 100% until e1000 gamespeed
     },
     freeTickspeedSoftcapDelay: {
@@ -540,7 +541,7 @@ export const ra = {
       reward: "Tesseracts increase free tickspeed upgrade softcap",
       pet: "enslaved",
       level: 90,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-arrow-up-from-ground-water"></i>'
     },
     improvedIpowConversion: {
       id: 21,
@@ -557,7 +558,6 @@ export const ra = {
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
-      disabledByPelle: true
     },
     unlockSHardV: {
       id: 23,
@@ -565,7 +565,8 @@ export const ra = {
       reward: "Unlock More V-Achievements, V's Superhard reality and more V-Milestones",
       pet: "v",
       level: 40,
-      displayIcon: `<span class="fas fa-trophy"></span>`
+      displayIcon: `<span class="fas fa-trophy"></span>`,
+      disabledByPelle: true
     },
     vAchMilestone2AffectsIDsAndTDs: {
       id: 24,
@@ -573,7 +574,8 @@ export const ra = {
       reward: "The 5 V-Achievement milestone affects Infinity and Time Dimensions with reduced effect",
       pet: "v",
       level: 50,
-      displayIcon: '*'
+      displayIcon: `<i class="fab fa-buffer"></i>`,
+      disabledByPelle: true
     },
     repIncreasesAchMult: {
       id: 25,
@@ -581,7 +583,7 @@ export const ra = {
       reward: "Replicanti increases achievement multiplier",
       pet: "v",
       level: 65,
-      displayIcon: '*'
+      displayIcon: GLYPH_SYMBOLS.replication
     },
     totalSTBoostTTGen: {
       id: 26,
@@ -589,7 +591,7 @@ export const ra = {
       reward: "Total Space Theorems boost Time Theorem generation",
       pet: "v",
       level: 75,
-      displayIcon: '*'
+      displayIcon: `<i class="fa-solid fa-book-atlas"></i>`
     },
     unlockMyriads: {
       id: 27,
@@ -679,7 +681,7 @@ export const ra = {
       reward: "Remembrance has no downside, affects all celestials and is always active, unlock Ra's Shop",
       pet: "ra",
       level: 40,
-      displayIcon: '*'
+      displayIcon: `<span class="fa-solid fa-euro"></span>`
     },
     improvedChunkGains: {
       id: 6,
@@ -687,7 +689,7 @@ export const ra = {
       reward: "Base Memory Chunk formula for all Celestials is slightly improved",
       pet: "ra",
       level: 50,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-sort"></i>`
     },
     imaginaryBoostsRa: {
       id: 7,
@@ -695,7 +697,7 @@ export const ra = {
       reward: "Free Dimension Boosts are effective in Ra's Reality",
       pet: "ra",
       level: 65,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-circle-check"></i>`
     },
     freeDimBoosts: {
       id: 8,
@@ -703,12 +705,13 @@ export const ra = {
       reward: "Gain Free Dimension Boosts based on Ra Level",
       pet: "ra",
       level: 75,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-circle-arrow-up"></i>`,
+      disabledByPelle: true
     },
     improvedPetUpgrades: {
       id: 9,
       id2: 1,
-      reward: "Increase Recollection and Fragmentation bases based on Memories",
+      reward: "Unlock a new row of permenant upgrades in Ra's shop",
       pet: "ra",
       level: 90,
       displayIcon: "?"
@@ -794,7 +797,7 @@ export const ra = {
       reward: () => `You can increase the max singularity cap by ${formatInt(2)} every ${formatInt(5)} levels`,
       pet: "laitela",
       level: 40,
-      displayIcon: '*'
+      displayIcon: '<i class="fa-solid fa-diamond"></i>'
     },
     dmdAuto1: {
       id: 20,
@@ -818,15 +821,15 @@ export const ra = {
       reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 75,
-      displayIcon: `*`
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
     },
     dmdScaling: {
       id: 23,
       id2: 1,
-      reward: "Slightly weaken post infinity DMD scaling, Entropic Condensing is far stronger.",
+      reward: "Entropic Condensing is far stronger.",
       pet: "laitela",
       level: 90,
-      displayIcon: "??"
+      displayIcon: `<i class="fa-solid fa-circle-h"></i>`
     },
     unlockMultiversalDimensions: {
       id: 24,
@@ -908,7 +911,7 @@ export const ra = {
       reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
       pet: "pelle",
       level: 40,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
     },
     pelleRarityBoost: {
       id: 2,
@@ -916,7 +919,7 @@ export const ra = {
       reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",
       pet: "pelle",
       level: 50,
-      displayIcon: "*"
+      displayIcon: `<i class="fas fa-ankh"></i>`
     },
     omegaScalingBuff: {
       id: 3,
@@ -924,7 +927,7 @@ export const ra = {
       reward: "Make the scaling at glyph level 100,000 weaker.",
       pet: "pelle",
       level: 65,
-      displayIcon: "*"
+      displayIcon: `<i class="fas fa-explosion"></i>`
     },
     Hostility: {
       id: 4,

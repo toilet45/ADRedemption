@@ -171,7 +171,7 @@ export default {
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>
-    <span v-if="atCap" class="sc-one">Due to instability, your Infinity Power gain is softcapped after {{ format(end) }}</span>
+    <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(end) }}</span>
     <br>
     <b
       v-if="isEC8Running"

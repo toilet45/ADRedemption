@@ -47,7 +47,7 @@ export default {
     },
     handleTestSpeedInput(){
       const testSpeed = parseFloat(this.input);
-      if(!isFinite(testSpeed) || isNaN(testSpeed) || testSpeed < 1 || testSpeed > 100){
+      if(!isFinite(testSpeed) || isNaN(testSpeed) || testSpeed < 0 || testSpeed > 100){
         this.displayText = "Invalid speed";
         this.isValidSpeed = false;
       } else {

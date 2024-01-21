@@ -329,7 +329,7 @@ class TimeDimensionState extends DimensionState {
 
   get purchaseCap() {
     let pC=5e14;
-    if (player.timestudy.studies.includes(310)) pC = pC * (Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent)),1))
+    if (player.timestudy.studies.includes(310)) pC = pC * (Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent+1)),1))
     return pC;
   }
 

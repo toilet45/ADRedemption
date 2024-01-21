@@ -1,6 +1,6 @@
 <script>
 import { DC } from '../../../core/constants';
-import { CorruptionData, GameEnd, MendingMilestone } from '../../../core/globals';
+import { CorruptionData, MendingMilestone, Ra } from '../../../core/globals';
 import { PlayerProgress } from '../../../core/player-progress';
 import MendingPointsHeader from '../../MendingPointsHeader.vue';
 
@@ -30,11 +30,11 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = (player.isGameEnd && GameEnd.endState >= 14.5) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || this.noMendBonus;
+            this.canMend = (player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || this.noMendBonus;
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
             this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
-            this.noMendBonus = Pelle.isDoomed && !player.isGameEnd;
+            this.noMendBonus = Pelle.isDoomed && !player.isGameEnd && Ra.unlocks.exitDoom.isUnlocked;
             this.MvRRate = this.gainedMvR.div(Time.thisMendRealTime.totalMinutes);
             this.frags = CorruptionData.isCorrupted ? Math.ceil(Math.log2(CorruptionData.calcScore())) : 0
         },

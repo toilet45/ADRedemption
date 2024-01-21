@@ -244,7 +244,11 @@ export function gainedEternities() {
     eternityGain = eternityGain.times(10000);
   }
   if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
-    eternityGain = eternityGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
+    let teresa90BaseExp=Math.pow((Math.log10(Currency.realities.value)/20), 1.111)
+    if(teresa90BaseExp>1.5){
+      teresa90BaseExp=1.5+Math.pow(teresa90BaseExp-1.5,0.75)
+    }
+    eternityGain = eternityGain.pow(teresa90BaseExp); //TODO: softcap this at ^1.5
   }
   return Pelle.isDisabled("eternityMults")
     ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? eternityGain.times(getAdjustedGlyphEffect("timeetermult")) : eternityGain

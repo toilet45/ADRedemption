@@ -92,7 +92,7 @@ export function breakInfinity() {
   GameUI.update();
 }
 
-export function gainedInfinityPoints(nosoftcap = false) {
+export function gainedInfinityPoints(noSoftcap = false) {
   const div = Effects.min(
     308,
     Achievement(103),
@@ -118,6 +118,7 @@ export function gainedInfinityPoints(nosoftcap = false) {
     ip = ip.min(DC.E200);
   }
   ip = ip.times(GameCache.totalIPMult.value);
+  
   if (Teresa.isRunning) {
     ip = ip.pow(0.55);
   } else if (V.isRunning) {
@@ -134,11 +135,16 @@ export function gainedInfinityPoints(nosoftcap = false) {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
-  if (ip.gte(Decimal.pow10(9e15)) && !nosoftcap) {
+  if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(9e15))
     ip = ip.pow(0.0298374651)
     ip = ip.times(Decimal.pow10(9e15))
   }
+  /*if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
+    ip = ip.div(Decimal.pow10(1e20))
+    ip = ip.pow(0.95)
+    ip = ip.times(Decimal.pow10(1e20))
+  }*/
   return ip.floor();
 }
 
@@ -191,7 +197,7 @@ function totalEPMult() {
       );
 }
 
-export function gainedEternityPoints() {
+export function gainedEternityPoints(noSoftcap = false) {
   let devisor = 308 - PelleRifts.recursion.effectValue.toNumber();
   if(player.timestudy.studies.includes(307)) devisor = devisor - 30;
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
@@ -219,7 +225,7 @@ export function gainedEternityPoints() {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
   }
 
-  if (ep.gte(Decimal.pow10(1e18))) {
+  if (ep.gte(Decimal.pow10(1e18)) && !noSoftcap) {
     ep = ep.div(Decimal.pow10(1e18))
     ep = ep.pow(0.162738495)
     ep = ep.times(Decimal.pow10(1e18))
@@ -367,7 +373,11 @@ export function gainedInfinities() {
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
   if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
-    infGain = infGain.pow(Math.pow((Math.log10(Currency.realities.value)/20), 1.111)); //TODO: softcap this at ^1.5
+    let teresa90BaseExp=Math.pow((Math.log10(Currency.realities.value)/20), 1.111)
+    if(teresa90BaseExp>1.5){
+      teresa90BaseExp=1.5+Math.pow(teresa90BaseExp-1.5,0.75)
+    }
+    infGain = infGain.pow(teresa90BaseExp); //TODO: softcap this at ^1.5
   }
   return infGain;
 }
@@ -462,6 +472,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     }
   }
 
+  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) factor=factor.times(player.celestials.enslaved.storedReal);
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
@@ -610,6 +621,9 @@ export function gameLoop(passDiff, options = {}) {
     realTimeMechanics(realDiff);
     return;
   }
+
+  //RaUpgrade3 stuff--sxy
+  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) player.celestials.enslaved.storedReal=Enslaved.storedRealTimeCap;
 
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;
@@ -833,6 +847,7 @@ export function gameLoop(passDiff, options = {}) {
     }
   }
 
+  Ra.raGainPointLoop(realDiff);
   laitelaRealityTick(realDiff);
   Achievements.autoAchieveUpdate(diff);
   V.checkForUnlocks();

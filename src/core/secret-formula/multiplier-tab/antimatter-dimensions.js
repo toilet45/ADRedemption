@@ -481,5 +481,11 @@ export const AD = {
     powValue: () => (PelleStrikes.infinity.hasStrike ? 0.5 : 1),
     isActive: () => Pelle.isDoomed,
     icon: MultiplierTabIcons.PELLE,
+  },
+  nerfSHardV: {
+    name: "V's Superhard Reality",
+    powValue: () => 0.000001,
+    isActive: () => V.isSuperRunning,
+    icon: MultiplierTabIcons.GENERIC_V,
   }
 };

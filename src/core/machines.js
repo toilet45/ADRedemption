@@ -5,7 +5,9 @@ export const MachineHandler = {
   get baseRMCap() { return DC.E1000; },
 
   get hardcapRM() {
-    return this.baseRMCap.times(ImaginaryUpgrade(6).effectOrDefault(1));
+    let primeAnswer = this.baseRMCap.times(ImaginaryUpgrade(6).effectOrDefault(1))
+    if(player.celestials.ra.upgrades.has('teresaUpgrade')) primeAnswer=primeAnswer.times(Decimal.pow(player.celestials.teresa.bestRunAM.exponent,5))
+    return primeAnswer;
   },
 
   get distanceToRMCap() {

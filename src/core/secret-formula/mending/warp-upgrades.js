@@ -14,7 +14,7 @@ const rebuyable = props => {
   );
   const { effect, effectType } = props;
   props.effect = () =>{ 
-    if (props.effectType === "+" || props.effectType === "-"){
+    if (props.effectType === "+" || props.effectType === "-" || props.effectType === "×1e" ){
       return effect * player.mending.warpRebuyables[props.id];
     }
     return Math.pow(effect, player.mending.warpRebuyables[props.id]);
@@ -33,11 +33,11 @@ export const warpUpgrades = [
   rebuyable({
     name: "More Infinite Power",
     id: 1,
-    initialCost: 1e300,
-    costMult: 30,
-    textTemplate: "Infinity power softcap reduction",
-    effect: 0.002,
-    noEffect: true
+    initialCost: 1e30,
+    costMult: 1e5,
+    textTemplate: "Increase Infinite Power softcap's Thereshold by ×1e2.5e14",
+    effect: 2.5e14,
+    effectType: "×1e"
   }),
   rebuyable({
     name: "Memory Gain",
@@ -62,9 +62,9 @@ export const warpUpgrades = [
     id: 4,
     cost: 1e300,
     requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    hasFailed: () => !V.isSuperRunning,
+    checkRequirement: () => V.isSuperRunning && false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
     description: () => `Obscure galaxy polynomial level -${formatInt(1)}`,
@@ -73,7 +73,7 @@ export const warpUpgrades = [
     name: "The Dedicated Way",
     id: 5,
     cost: 1e24,
-    requirement: "Wait 5 Hours [NYI]",
+    requirement: "Reach 1e2.450e18 Antimatter in Ra's Reality",
     hasFailed: () => !Ra.isRunning,
     checkRequirement: () => Ra.isRunning && Currency.antimatter.exponent>=2.45e18,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,

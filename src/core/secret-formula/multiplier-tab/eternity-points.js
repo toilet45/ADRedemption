@@ -112,4 +112,16 @@ export const EP = {
     isActive: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[0] > 0),
     icon: MultiplierTabIcons.CORRUPTION,
   },
+  nerfSHardV: {
+    name: "V's Reality",
+    powValue: () => 0.000001,
+    isActive: () => V.isRunning,
+    icon: MultiplierTabIcons.GENERIC_V,
+  },
+  nerfSoftcap: {
+    name: "Eternity Point Softcap",
+    powValue: () => (gainedEternityPoints().log10() / gainedEternityPoints(true).log10()),
+    isActive: () => (gainedEternityPoints().gte(Decimal.pow10(1e18))),
+    icon: MultiplierTabIcons.SOFTCAP("eternity"),
+  }
 };

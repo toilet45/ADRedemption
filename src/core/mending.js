@@ -58,10 +58,10 @@ export function mendingReset() {
       if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
     }
     player.reality.glyphs.protectedRows = x;
-    if(Effarig.currentStage < 6){
+    /*if(Effarig.currentStage < 6){
       player.reality.glyphs.filter.trash = 0;
       player.reality.glyphs.filter.select = 1;
-    }
+    }*/ //why reset--sxy
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     player.celestials.pelle.doomed = false;
@@ -197,7 +197,7 @@ export function mendingReset() {
     player.celestials.pelle.collapsed.galaxies = false;
     //Reality
     //player.reality.autoAutoClean = false; //excuse me why you reset this option--sxy
-    player.reality.glyphs.trash = 0;
+    //player.reality.glyphs.trash = 0; //exm --sxy
     resetRealityRuns();
     player.records.thisReality = {
       time: DC.D0,

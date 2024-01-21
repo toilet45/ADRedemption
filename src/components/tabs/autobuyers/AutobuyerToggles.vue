@@ -11,7 +11,7 @@ export default {
   },
   data() {
     return {
-      isDoomed: false,
+      continuumDisabled: false,
       autobuyersOn: false,
       showContinuum: false,
       disableContinuum: false,
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     update() {
-      this.isDoomed = Pelle.isDoomed && !Ra.unlocks.unlockPelleContinuum.isunlocked;
+      this.continuumDisabled = Pelle.isDoomed && !Ra.unlocks.unlockPelleContinuum.isunlocked;
       this.autobuyersOn = player.auto.autobuyersOn;
       this.showContinuum = Laitela.isUnlocked;
       this.disableContinuum = player.auto.disableContinuum;
@@ -61,7 +61,7 @@ export default {
     >
       {{ allAutobuyersDisabled ? "Enable" : "Disable" }} all autobuyers
     </PrimaryButton>
-    <span v-if="isDoomed">
+    <span v-if="continuumDisabled">
       <PrimaryButton
         v-if="showContinuum"
         class="o-primary-btn--subtab-option"
