@@ -331,7 +331,7 @@ export const Tesseracts = {
   },
 
   get TesseractHardcap(){
-    return 15
+    return 50
   },
 
   get canBuyTesseract() {
