@@ -60,10 +60,10 @@ export const warpUpgrades = [
   {
     name: "Visible Galaxies",
     id: 4,
-    cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
+    cost: 1e55,
+    requirement: "Reach 913579 total Galaxies in V's Superhard Reality.",
     hasFailed: () => !V.isSuperRunning,
-    checkRequirement: () => V.isSuperRunning && false,
+    checkRequirement: () => V.isSuperRunning && Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies>=913579,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
