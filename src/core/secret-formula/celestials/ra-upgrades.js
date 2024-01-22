@@ -234,7 +234,7 @@ export const raUpgrades = {
   laitelaUpgrade: {
     id: "laitelaUpgrade",
     celestial: "laitela",
-    description: "Unlock more singularity milestones. [WIP]",
+    description: "Singularities increases Dark Matter cap.",
     cost: 1e24,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
