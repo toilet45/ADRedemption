@@ -43,6 +43,7 @@ export function getTickSpeedMultiplier() {
     BreakInfinityUpgrade.galaxyBoost.chargedEffect,
     TimeStudy(212),
     TimeStudy(232),
+    TimeStudy(401),
     Achievement(86),
     Achievement(178),
     InfinityChallenge(5).reward,
@@ -228,6 +229,9 @@ export const FreeTickspeed = {
     if (Ra.unlocks.freeTickspeedSoftcapDelay.isUnlocked){
       softcap += (10000 * Tesseracts.effectiveCount);
     }
+    if(TimeStudy(403).isBought){
+      softcap += TimeStudy(403).effectOrDefault(0);
+    }
     return softcap;
   },
 
@@ -280,6 +284,7 @@ export const FreeTickspeed = {
     // the cost of the next upgrade.
     const next = Decimal.exp(priceToCap + boughtToCost(purchases + 1) * logTickmult);
     this.multToNext = Decimal.exp((boughtToCost(purchases + 1) - boughtToCost(purchases)) * logTickmult);
+    
     return {
       newAmount: purchases + FreeTickspeed.softcap,
       nextShards: next,

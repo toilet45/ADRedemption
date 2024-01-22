@@ -845,33 +845,39 @@ export const normalTimeStudies = [
     id: 401,
     cost: 0,
     STCost: 302,
-    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 1],
+    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 1, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: () => `Give an additional ${format(1e11)} free Dimension Boosts`,
-    effect: 1,
-    unlocked: () => Ra.pets.v.level >= 90
+    description: () => `Antimatter makes all Galaxies much stronger`,
+    effect: () => {
+      const x = Math.log10(Currency.antimatter.exponent+1)*0.5;
+      return x;
+    },
+    unlocked: () => Ra.pets.v.level >= 90,
+    formatEffect: value => `+${formatPercents(value, 4)}`
   },
   {
     id: 402,
     cost: 0,
     STCost: 302,
-    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 2],
+    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 2, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: "[TBD]",
-    effect: 1,
+    description: `Infinity Points adds Infinity power conversion`,
+    effect: () => Math.log10(Currency.infinityPoints.exponent+1),
+    formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },
   {
     id: 403,
     cost: 0,
     STCost: 302,
-    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 3],
+    requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 3, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: "[TBD]",
-    effect: 1,
+    description: `Eternity Points increase Time Shard softcap massively`,
+    effect: () => Math.pow(Math.log10(Currency.eternityPoints.exponent+1),5),
+    formatEffect: value => `+${formatInt(value)}`,
     unlocked: () => Ra.pets.v.level >= 94
   },
   {
@@ -881,8 +887,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 4, 401],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [401],
-    description: "[TBD]",
-    effect: 1,
+    description: `Antimatter boosts 1st Antimatter Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.antimatter.exponent,1));
+      let Exponent = baseExp/4 + 15;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 96
   },
   {
@@ -892,8 +904,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 5, 402],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [402],
-    description: "[TBD]",
-    effect: 1,
+    description: `Infinity Points boosts 1st Infinity Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
+      let Exponent = baseExp/5 + 16;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 98
   },
   {
@@ -903,8 +921,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 6, 403],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [403],
-    description: "[TBD]",
-    effect: 1,
+    description: `Eternity Points boosts 1st Time Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
+      let Exponent = baseExp/5 + 11;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 100
   },
 ];

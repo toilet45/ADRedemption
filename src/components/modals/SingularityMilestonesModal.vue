@@ -10,6 +10,8 @@ export default {
   },
   data() {
     return {
+      originalMilestones: [],
+      laitelaUpgradeExtraMilestones: [],
       milestones: [],
       resourceVal: 0,
       sortVal: 0,
@@ -59,6 +61,8 @@ export default {
   },
   methods: {
     update() {
+      this.originalMilestones = SingularityMilestones;
+      //this.laitelaUpgradeExtraMilestones = laitelaUpgradeExtrasingularityMilestones;
       this.milestones = SingularityMilestones.sortedForCompletions(true);
       const settings = player.celestials.laitela.singularitySorting;
       this.resourceVal = settings.displayResource;

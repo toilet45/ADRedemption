@@ -121,7 +121,8 @@ function applyNDMultipliers(mult, tier) {
         Achievement(31),
         Achievement(68),
         Achievement(71),
-        TimeStudy(234)
+        TimeStudy(234),
+        TimeStudy(411),
       );
   }
   if (tier === 8) {

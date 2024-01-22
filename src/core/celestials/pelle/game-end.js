@@ -16,6 +16,8 @@ export const END_STATE_MARKERS = {
 export const GameEnd = {
   get endState() {
     if (this.removeAdditionalEnd) return this.additionalEnd;
+    //Ra shop Pelle--sxy
+    if (player.celestials.ra.upgrades.has('pelleUpgrade')&&!player.celestials.pelle.galaxyGenerator.unlocked) return 0;
     return Math.max((Math.log10(player.celestials.pelle.records.totalAntimatter.plus(1).log10() + 1) - 8.7) /
       (Math.log10(9e15) - 8.7) + this.additionalEnd, 0);
   },
