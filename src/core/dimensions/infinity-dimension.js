@@ -183,6 +183,7 @@ class InfinityDimensionState extends DimensionState {
 
     if (tier === 1) {
       mult = mult.times(PelleRifts.decay.milestones[0].effectOrDefault(1));
+      mult = mult.times(TimeStudy(412).effectOrDefault(1));
     }
 
 

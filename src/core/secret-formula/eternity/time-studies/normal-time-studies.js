@@ -887,8 +887,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 4, 401],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [401],
-    description: `Antimatter boosts 1st Antimatter Dimension Multiplier [NYI]`,
-    effect: () => {return 1},
+    description: `Antimatter boosts 1st Antimatter Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.antimatter.exponent,1));
+      let Exponent = baseExp/4 + 15;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 96
   },
   {
@@ -898,8 +904,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 5, 402],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [402],
-    description: "[TBD]",
-    effect: 1,
+    description: `Infinity Points boosts 1st Infinity Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
+      let Exponent = baseExp/5 + 16;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 98
   },
   {
@@ -909,8 +921,14 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 6, 403],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [403],
-    description: "[TBD]",
-    effect: 1,
+    description: `Eternity Points boosts 1st Time Dimension Multiplier`,
+    effect: () => {
+      let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
+      let Exponent = baseExp/5 + 11;
+      let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
+      return answer
+    },
+    formatEffect: value => formatX(value, 0, 3),
     unlocked: () => Ra.pets.v.level >= 100
   },
 ];

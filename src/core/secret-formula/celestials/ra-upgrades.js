@@ -243,10 +243,10 @@ export const raUpgrades = {
   pelleUpgrade: {
     id: "pelleUpgrade",
     celestial: "pelle",
-    description: "Placeholder™",
-    cost: 1e16,
+    description: "Doomed Reality won't END if Galaxy Generator is not unlocked.",
+    cost: 1e24,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
-    implemented: false,
+    implemented: true,
   },
 }

@@ -491,7 +491,7 @@ export const ra = {
       reward: "Unlock Effarig's Mend",
       pet: "effarig",
       level: 100,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: `Ϙ`
     },
     uncapGamespeed: {
       id: 15,
@@ -549,7 +549,7 @@ export const ra = {
       reward: "Improve Infinity Power conversion (based on effective Tesseract count)",
       pet: "enslaved",
       level: 100,
-      displayIcon: '*'
+      displayIcon: `<span class="fas fa-infinity"></span>`
     },
     improvedECRewards: {
       id: 22,
@@ -600,7 +600,8 @@ export const ra = {
       pet: "v",
       level: 90,
       effect: () => Math.floor((Ra.pets.v.level - 90) / 2) + 1,
-      displayIcon: "?"
+      displayIcon: `<i class="fa-solid fa-triangle-circle-square"></i>`,
+      disabledByPelle: true
     },
     achMultBaseImprovementV: {
       id: 28,
@@ -608,7 +609,7 @@ export const ra = {
       reward: "Improve Base Achievemnt Multiplier",
       pet: "v",
       level: 100,
-      displayIcon: "*"
+      displayIcon: `<i class="fab fa-buffer"></i>`
     },
     raRealUncapDimboost: {
       id: 29,
@@ -722,7 +723,7 @@ export const ra = {
       reward: "Gain a Multiversal Remain Multiplier based on total Memory Levels",
       pet: "ra",
       level: 100,
-      displayIcon: "*"
+      displayIcon: `<i class="fa-solid fa-x"></i>`
     },
     increaseDarkMatterCap: {
       id: 11,
