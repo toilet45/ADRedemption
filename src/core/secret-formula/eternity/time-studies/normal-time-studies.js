@@ -864,7 +864,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
     description: `Infinity Points adds Infinity power conversion`,
-    effect: () => Math.log10(Currency.infinityPoints.exponent),
+    effect: () => Math.log10(Currency.infinityPoints.exponent+1),
     formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },
@@ -875,8 +875,9 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 3, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: `Eternity Points reduce Time Shard cost scaling [NYI]`,
-    effect: 1,
+    description: `Eternity Points increase Time Shard softcap massively`,
+    effect: () => Math.pow(Math.log10(Currency.eternityPoints.exponent+1),5),
+    formatEffect: value => `+${formatInt(value)}`,
     unlocked: () => Ra.pets.v.level >= 94
   },
   {
@@ -886,8 +887,8 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 4, 401],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [401],
-    description: "[TBD]",
-    effect: 1,
+    description: `Antimatter boosts 1st Antimatter Dimension Multiplier [NYI]`,
+    effect: () => {return 1},
     unlocked: () => Ra.pets.v.level >= 96
   },
   {
