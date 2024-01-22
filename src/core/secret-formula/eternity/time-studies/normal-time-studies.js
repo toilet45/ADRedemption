@@ -848,9 +848,13 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 1],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: () => `Give an additional ${format(1e11)} free Dimension Boosts`,
-    effect: 1,
-    unlocked: () => Ra.pets.v.level >= 90
+    description: () => `Antimatter makes all Galaxies much stronger`,
+    effect: () => {
+      const x = Math.log10(Currency.antimatter.exponent+1)*0.5;
+      return x;
+    },
+    unlocked: () => Ra.pets.v.level >= 90,
+    formatEffect: value => `+${formatPercents(value - 1, 3)}`
   },
   {
     id: 402,

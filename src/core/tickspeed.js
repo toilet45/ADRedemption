@@ -43,6 +43,7 @@ export function getTickSpeedMultiplier() {
     BreakInfinityUpgrade.galaxyBoost.chargedEffect,
     TimeStudy(212),
     TimeStudy(232),
+    TimeStudy(401),
     Achievement(86),
     Achievement(178),
     InfinityChallenge(5).reward,
