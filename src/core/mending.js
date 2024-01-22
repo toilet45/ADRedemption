@@ -36,7 +36,7 @@ export function mendingReset() {
     Tab.dimensions.antimatter.show() // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed || player.isGameEnd){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
@@ -447,7 +447,7 @@ export function mendingReset() {
       maxRem: 0,
     }
     // Finally, lets set up corruptions
-    if (CorruptionData.isCorrupted) {
+    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)) {
       let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
