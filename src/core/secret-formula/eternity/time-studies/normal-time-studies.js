@@ -854,7 +854,7 @@ export const normalTimeStudies = [
       return x;
     },
     unlocked: () => Ra.pets.v.level >= 90,
-    formatEffect: value => `+${formatPercents(value - 1, 3)}`
+    formatEffect: value => `+${formatPercents(value, 4)}`
   },
   {
     id: 402,
@@ -863,7 +863,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 2],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: "[TBD]",
+    description: `Infinity points adds Infinity power conversion [NYI]`,
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 92
   },
