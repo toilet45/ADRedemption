@@ -447,7 +447,7 @@ export function mendingReset() {
       maxRem: 0,
     }
     // Finally, lets set up corruptions
-    if (CorruptionData.isCorrupted) {
+    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.isGameEnd)) {
       let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
