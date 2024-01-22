@@ -863,8 +863,9 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 2, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: `Infinity points adds Infinity power conversion [NYI]`,
-    effect: 1,
+    description: `Infinity Points adds Infinity power conversion`,
+    effect: () => Math.log10(Currency.infinityPoints.exponent),
+    formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },
   {
@@ -874,7 +875,7 @@ export const normalTimeStudies = [
     requirement: [() => Ra.unlocks.unlockMyriads.effectOrDefault(0) >= 3, () => TimeStudy.reality.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
-    description: "[TBD]",
+    description: `Eternity Points reduce Time Shard cost scaling [NYI]`,
     effect: 1,
     unlocked: () => Ra.pets.v.level >= 94
   },
