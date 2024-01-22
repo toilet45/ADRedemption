@@ -289,3 +289,17 @@ export const singularityMilestones = {
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,
   }
 };
+
+/*export const laitelaUpgradeExtrasingularityMilestones = {
+  // Infinite
+  darkMatterCapIncrease: {
+    start: 1e300,
+    repeat: 125,
+    increaseThreshold: 20,
+    limit: Infinity,
+    description: "Increas Dark Matter Cap",
+    effect: completions => 10**completions,
+    effectFormat: x => formatX(1 + x, 2, 2),
+    upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,
+  },
+};*/

@@ -234,11 +234,11 @@ export const raUpgrades = {
   laitelaUpgrade: {
     id: "laitelaUpgrade",
     celestial: "laitela",
-    description: "Unlock more singularity milestones.",
-    cost: 1e16,
+    description: "Unlock more singularity milestones. [WIP]",
+    cost: 1e24,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
-    implemented: false,
+    implemented: true,
   },
   pelleUpgrade: {
     id: "pelleUpgrade",
