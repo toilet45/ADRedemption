@@ -38,23 +38,22 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Gain a power effect to achievement power effects, after softcaps, based on unspent corrupted fragments. ",
+    description: "Gain a power effect to achievement power effects, after softcaps, based on unspent Hostile Fragments. ",
     effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3) / 10, // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
     formatEffect: value => `^` + format(value, 2, 2)
   },
   {
     name: "Hostility Upgrade 4",
     id: 4,
-    cost: 1e300,
+    cost: 2,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
     hasFailed: () => false,
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: "Give extra 10 increase Singularity cap",
+    effect: () => 10
   },
   {
     name: "Hostility Upgrade 5",
