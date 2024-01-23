@@ -147,7 +147,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: () => `Dimension boost scaling occurs ${formatX(20)} later [WIP]`,
+    description: () => `Dimension boost scaling occurs ${formatX(20)} later`,
   },
   {
     name: "Noticeable Galaxies",

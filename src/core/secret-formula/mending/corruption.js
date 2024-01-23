@@ -28,5 +28,7 @@ export const corruptionPenalties = {
     tickExtension: [1, 2.5, 10, 40, 220, 950, 3150, 9000, 25000, 100000, 5e5, 1e7, 1e12], //these are inverse powers, so 10 actually means ^(1/10), 1000 actually means ^(1/1000), etc
     atomDilution: [1, 0.7, 0.55, 0.4, 0.38, 0.35, 0.32, 0.3, 0.288, 0.27, 0.25, 0.2],
     //sxy filling new corruption
-    secondaryRejection: [1, 0.95, 0.85, 0.75, 0.5, 0.325, 0.3, 0.275, 0.25, 0.2, 0.15, 0.1]
+    secondaryRejection: [1, 0.95, 0.85, 0.75, 0.5, 0.325, 0.3, 0.275, 0.25, 0.2, 0.15, 0.1],
+    spaceTuition: [0, 5, 10, 25, 50, 75, 100, 125, 167, 200, 250, 300],
+    alchemyNormalcy: [1, 0.7, 0.55, 0.4, 0.38, 0.35, 0.32, 0.3, 0.288, 0.27, 0.25, 0.2],
 }
