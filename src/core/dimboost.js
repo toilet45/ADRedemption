@@ -175,10 +175,10 @@ export class DimBoost {
     amount *= InfinityUpgrade.resetBoost.chargedEffect.effectOrDefault(1);
 
     // Ra ra upgrade--sxy
-    if(player.celestials.ra.upgrades.has('raUpgrade')) amount *= 1/Decimal.log10(Currency.raPoints.value.plus(1))
+    if(player.celestials.ra.upgrades.has('raUpgrade')) amount = (amount / Decimal.log10(player.celestials.ra.raPoints.plus(1)))
 
     amount = Math.round(amount);
-
+    
     return new DimBoostRequirement(tier, amount);
   }
 
@@ -309,8 +309,12 @@ function maxBuyDimBoosts() {
   // so a = req2 - req1, b = req1 - a = 2 req1 - req2, num = (dims - b) / a
   const increase = req2.amount - req1.amount;
   const dim = AntimatterDimension(req1.tier);
+  //wtf precise error here--sxy
+  //honestly shall we do a decimal here......
+  let fixedValue = (dim.totalAmount.toNumber() - req1.amount)
+  //if (increase == 0) return;
   let maxBoosts = Math.min(1e9,
-    1 + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
+    1 + Math.floor( fixedValue / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
     return;

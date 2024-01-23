@@ -155,7 +155,7 @@ export default {
             :class="runButtonClassObject"
             @click="startRun()"
           >
-            ?
+          <i class="fa-solid fa-biohazard"></i>
           </div>
           {{ runDescription }}
           <br><br>
