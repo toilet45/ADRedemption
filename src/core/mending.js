@@ -8,7 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
-import { VUnlocks } from "./globals";
+import { CorruptionUpgrade, VUnlocks } from "./globals";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -101,7 +101,8 @@ export function mendingReset() {
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
     if (MendingMilestone.seven.isReached) {
-      player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+      player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
+      if(CorruptionUpgrade(5).isBought) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
     }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     if (MendingUpgrade(9).isBought && !MendingMilestone.ten.isReached){

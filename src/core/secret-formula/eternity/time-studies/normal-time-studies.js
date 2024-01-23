@@ -1,4 +1,5 @@
 import { DC } from "../../../constants";
+import { CorruptionData } from "../../../corruption";
 import { Currency } from "../../../currency";
 
 const thisInfinityMult = thisInfinity => {
@@ -702,7 +703,11 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [21],
     description: "Infinity Point gain is boosted by unspent Multiversal Remains",
-    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).log10().toDecimal().pow(20).clampMin(1) : Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1) ,
+    effect: () => {
+      let x = Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1);
+      if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
+      return x
+    },
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -726,7 +731,11 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [101],
     description: "Antimatter Dimension multiplier based on total Space Theorems.",
-    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    effect: () => {
+      let x = Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1);
+      //if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
+      return x;
+    },
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7,
     formatEffect: value => formatX(value, 2, 1)
   },

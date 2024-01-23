@@ -1,5 +1,6 @@
 import { DC } from "./constants";
 import { MendingUpgrade } from "./mending-upgrades";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 // Slowdown parameters for replicanti growth, interval will increase by scaleFactor for every scaleLog10
 // OoM past the cap (default is 308.25 (log10 of 1.8e308), 1.2, Number.MAX_VALUE)
@@ -276,6 +277,11 @@ export function replicantiLoop(diff) {
 
   if (Pelle.isDoomed && Replicanti.amount.log10() - replicantiBeforeLoop.log10() > 308) {
     Replicanti.amount = replicantiBeforeLoop.times(1e308);
+  }
+
+  //Corruption 7, idk if this is good on math but hope it works--sxy
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    Replicanti.amount = Decimal.pow(Replicanti.amount,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
   }
 
   if (areRGsBeingBought && Replicanti.amount.gte(Decimal.NUMBER_MAX_VALUE)) {

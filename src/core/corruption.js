@@ -19,7 +19,7 @@ export const CorruptionData = {
     calcBaseScore() {
     let corruptionScores = [1, 1.2, 1.45, 1.7, 2, 2.5, 3, 3.5, 4, 5, 7, 11]
     let finalScore = corruptionScores[player.mending.corruption[0]]
-    for (let i = 1; i < 9; i++) {
+    for (let i = 1; i < 10; i++) {
         finalScore *= corruptionScores[player.mending.corruption[i]]
     }
     return finalScore
