@@ -39,6 +39,21 @@ export default {
       }
       return sum;
     },
+    dimRequirementText(){
+      return this.purchasedBoosts >= 1e9 ? "" : `: requires ${ formatInt(this.requirement.amount)} ${ dimName() } Dimensions`
+    },
+    boostScale(){
+      switch(this.type){
+        case 1:
+          return "Scaled";
+        case 2:
+          return "Superscaled";
+        case 3:
+          return "Warped";
+        default:
+          return "";
+      }
+    },
     classObject() {
       return {
         "o-primary-btn--dimboost l-dim-row__prestige-button": true,
@@ -72,8 +87,7 @@ export default {
 <template>
   <div class="c-dimension-row c-antimatter-dim-row c-antimatter-prestige-row">
     <div class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount">
-      Dimension Boost ({{ boostCountText }}):
-      requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
+      {{ boostScale }} Dimension Boost ({{ boostCountText }}) {{ dimRequirementText }}
     </div>
     <PrimaryButton
       :enabled="isBuyable"

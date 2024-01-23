@@ -89,6 +89,9 @@ export default {
       }
       return undefined;
     },
+    galRequirementText(){
+      return this.galaxies.normal > 500000 ? "" : `: requires ${ formatInt(this.requirement.amount) } ${ this.dimName } Dimensions`
+    },
     classObject() {
       return {
         "o-primary-btn--galaxy l-dim-row__prestige-button": true,
@@ -131,8 +134,7 @@ export default {
     <div
       class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount l-text-wrapper"
     >
-      {{ typeName }} ({{ sumText }}):
-      requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
+      {{ typeName }} ({{ sumText }}) {{ galRequirementText }}
       <div class="l-scaling-text-wrapper">
         {{ hasIncreasedScaling ? costScalingText : "" }}
       </div>

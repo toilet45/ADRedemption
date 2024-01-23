@@ -702,7 +702,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [21],
     description: "Infinity Point gain is boosted by unspent Multiversal Remains",
-    effect: () => Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1),
+    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).log10().toDecimal().pow(20).clampMin(1) : Decimal.pow(Currency.mendingPoints.value,Decimal.log(Currency.mendingPoints.value,1.00000001)).pow(500000).clampMin(1) ,
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 5,
     formatEffect: value => formatX(value, 2, 1)
   },
