@@ -56,7 +56,7 @@ export const TD = {
     name: () => `Amount of highest Dimension`,
     displayOverride: () => {
       const dim = MultiplierTabHelper.activeDimCount("TD");
-      return `TD ${dim}, ${formatInt(TimeDimension(dim).amount)}`;
+      return `TD ${dim}, ${format(TimeDimension(dim).amount)}`;
     },
     multValue: () => TimeDimension(MultiplierTabHelper.activeDimCount("TD")).amount,
     isActive: () => TimeDimension(1).isProducing,

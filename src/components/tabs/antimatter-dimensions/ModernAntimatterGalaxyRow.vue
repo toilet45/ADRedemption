@@ -27,6 +27,7 @@ export default {
         remote: null,
       },
       hasTutorial: false,
+      showText: false
     };
   },
   computed: {
@@ -116,6 +117,7 @@ export default {
         };
       }
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.GALAXY);
+      this.showText = this.galaxies.normal < 500000;
     },
     buyGalaxy(bulk) {
       if (!this.canBeBought) return;
@@ -131,7 +133,7 @@ export default {
 <template>
   <div class="reset-container galaxy">
     <h4>{{ typeName }} ({{ sumText }})</h4>
-    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
+    <span v-if="showText">Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
     <span v-if="hasIncreasedScaling">{{ costScalingText }}</span>
     <button
       :class="classObject"

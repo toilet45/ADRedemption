@@ -73,7 +73,7 @@ export default {
       :class="classObject"
       @click="clicked"
     >
-    Reality is Warped
+    REALITY IS WARPED
   </button>
     </div>
       <div
@@ -84,7 +84,7 @@ export default {
         :class="classObject"
         @click="clicked"
         >
-      Warp Reality
+      WARP REALITY
     </button>
   </div>
     <div

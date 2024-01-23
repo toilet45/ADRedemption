@@ -1,4 +1,6 @@
 <script>
+import { DimBoost } from '../../../core/dimboost';
+
 export default {
   name: "ModernDimensionBoostRow",
   data() {
@@ -16,6 +18,9 @@ export default {
       requirementText: null,
       hasTutorial: false,
       type: DIMBOOST_TYPE.BOOST,
+      seeText: true,
+      scaledBoost: false,
+      scaledBoostStart: 0
     };
   },
   computed: {
@@ -26,9 +31,9 @@ export default {
     typeName() {
       switch (this.type) {
         case DIMBOOST_TYPE.BOOST: return "Dimension Boosts";
-        case DIMBOOST_TYPE.SHIFT: return "Dimension Shift";
-        case DIMBOOST_TYPE.WARP: return "Dimension Warp";
-        case DIMBOOST_TYPE.SCALE: return "Obscure Antimatter Galaxies"
+        case DIMBOOST_TYPE.SHIFT: return "Scaled Dimension Boosts";
+        case DIMBOOST_TYPE.WARP: return "Superscaled Dimension Boosts";
+        case DIMBOOST_TYPE.SCALE: return "Warped Dimension Boosts"
       }
       return undefined;
     },
@@ -67,6 +72,9 @@ export default {
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
       if (this.isDoomed) this.requirementText = formatInt(this.purchasedBoosts);
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.DIMBOOST);
+      this.seeText = this.purchasedBoosts < 1e9;
+      this.scaledBoost = this.type > 0;
+      this.scaledBoostStart = DimBoost.shiftStart;
     },
     dimensionBoost(bulk) {
       if (!DimBoost.requirement.isSatisfied || !DimBoost.canBeBought) return;
@@ -79,7 +87,8 @@ export default {
 <template>
   <div class="reset-container dimboost">
     <h4>{{ typeName }} ({{ boostCountText }})</h4>
-    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter Dimensions</span>
+    <span v-if="seeText">Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter Dimensions</span>
+    <span v-if="scaledBoost">Dimension Boost cost scaling increases past {{ format(scaledBoostStart, 2, 2)  }} Dimension Boosts</span>
     <button
       :class="classObject"
       @click.exact="dimensionBoost(true)"
