@@ -1,4 +1,6 @@
 import { DC } from "./constants";
+import { Currency } from "./currency";
+import { WarpUpgrade } from "./warp-upgrades";
 
 export const DIMBOOST_TYPE = {
   BOOST: 0,
@@ -21,14 +23,20 @@ class DimBoostRequirement {
 
 export class DimBoost {
   static get scaleStart(){
-    return 5e13;
+    let x = 5e13;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
   static get warpStart() {
-    return 2.5e11;
+    let x =2.5e11;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
 
   static get shiftStart() {
-    return 1e9;
+    let x = 1e9;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
 
   static get power() {
@@ -165,6 +173,9 @@ export class DimBoost {
     if (InfinityChallenge(5).isCompleted) amount -= 1;
 
     amount *= InfinityUpgrade.resetBoost.chargedEffect.effectOrDefault(1);
+
+    // Ra ra upgrade--sxy
+    if(player.celestials.ra.upgrades.has('raUpgrade')) amount *= 1/Decimal.log10(Currency.raPoints.value.plus(1))
 
     amount = Math.round(amount);
 

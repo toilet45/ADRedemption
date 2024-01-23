@@ -58,16 +58,15 @@ export const corruptionUpgrades = [
   {
     name: "Hostility Upgrade 5",
     id: 5,
-    cost: 1e300,
+    cost: 2,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
     hasFailed: () => false,
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: "The first two upgrades of Perk Shop cap are massively increased.",
+    effect: () => 1
   },
   {
     name: "Hostility Upgrade 6",
