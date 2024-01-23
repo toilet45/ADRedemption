@@ -470,8 +470,8 @@ export const InfinityDimensions = {
   },
 
   get powerConversionRate() {
-    const x = Ra.unlocks.relicShardBoost.isUnlocked ? 1+(Math.max(1, Currency.relicShards.value.log10()) / 1000) : 0;
-    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Tesseracts.effectiveCount) : 0; //hpefully won't inflate if we softcap or put scaling in
+    const x = Ra.unlocks.relicShardBoost.isUnlocked ? 1+(Math.max(1, Decimal.max(Currency.relicShards.value,1).log10()) / 1000) : 0;
+    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
     const m = TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :0;
     const multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
