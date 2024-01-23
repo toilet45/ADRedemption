@@ -254,15 +254,15 @@ export default {
         Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
         <br>
         <br>
-    temp 1:
+    Secondary Rejection:
     <SliderComponent
           v-bind="corruptionSliderProps"
-          :value="corruptions[6]"
+          :value="corruptions[7]"
           :width="'100%'"
           :disabled="isRunning"
-          @input="corruptionSetSet(6, $event)"
+          @input="corruptionSetSet(7, $event)"
         />
-        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
+        Replicanti, TP and Singularty gain ^{{format(localPenalties.secondaryRejection[this.corruptions[7]], 3, 3)}}.
         <br>
         <br>
     temp 2:

@@ -2,6 +2,7 @@ import { RebuyableMechanicState, SetPurchasableMechanicState } from "./game-mech
 import { DC } from "./constants";
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
 import { SpeedrunMilestones } from "./speedrun";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export function animateAndDilate() {
   FullScreenAnimationHandler.display("a-dilate", 2);
@@ -97,6 +98,9 @@ export function buyDilationUpgrade(id, bulk = 1) {
         retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
       }
       Currency.tachyonParticles.multiply(Decimal.pow(retroactiveTPFactor, buying));
+      /*if (player.mending.corruptionChallenge.corruptedMend) {
+        Currency.tachyonParticles.value = Currency.tachyonParticles.value.pow(Currency.tachyonParticles.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
+      }*/
     }
   }
   return true;
@@ -174,6 +178,10 @@ export function tachyonGainMultiplier() {
 
 export function rewardTP() {
   Currency.tachyonParticles.bumpTo(getTP(player.records.thisEternity.maxAM, true));
+  //I hope this is the only place for TP,TP so weird--sxy
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    Currency.tachyonParticles.value = Decimal.pow(Currency.tachyonParticles.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
+  }
   player.dilation.lastEP = Currency.eternityPoints.value;
 }
 
@@ -193,7 +201,11 @@ export function getBaseTP(antimatter, requireEternity) {
 
 // Returns the TP that would be gained this run
 export function getTP(antimatter, requireEternity) {
-  return getBaseTP(antimatter, requireEternity).times(tachyonGainMultiplier());
+  let x = getBaseTP(antimatter, requireEternity).times(tachyonGainMultiplier());
+  /*if (player.mending.corruptionChallenge.corruptedMend) {
+    x = Decimal.pow(x,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
+  }*/
+  return x;
 }
 
 // Returns the amount of TP gained, subtracting out current TP; used for displaying gained TP, text on the

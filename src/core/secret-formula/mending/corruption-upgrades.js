@@ -17,7 +17,7 @@ export const corruptionUpgrades = [
   {
     name: "Spacetime Distruption",
     id: 2,
-    cost: 3,
+    cost: 2,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
     hasFailed: () => false,
     checkRequirement: () => false,
@@ -43,7 +43,7 @@ export const corruptionUpgrades = [
     formatEffect: value => `^` + format(value, 2, 2)
   },
   {
-    name: "Hostility Upgrade 4",
+    name: "Singularity Cap",
     id: 4,
     cost: 2,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -56,7 +56,7 @@ export const corruptionUpgrades = [
     effect: () => 10
   },
   {
-    name: "Hostility Upgrade 5",
+    name: "Perk Limit",
     id: 5,
     cost: 2,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",

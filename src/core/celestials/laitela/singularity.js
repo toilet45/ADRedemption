@@ -1,6 +1,7 @@
 import { GameMechanicState } from "../../game-mechanics";
 
 import { deepmergeAll } from "@/utility/deepmerge";
+import { corruptionPenalties } from "../../secret-formula/mending/corruption";
 
 class SingularityMilestoneState extends GameMechanicState {
   constructor(config) {
@@ -227,9 +228,11 @@ export const Singularity = {
     const MMBoostSing = MendingMilestone.one.isReached ? 5 : 1;
     let IU10 = ImaginaryUpgrade(10).effectOrDefault(0);
     if(Ra.unlocks.dmdScaling.isUnlocked) IU10 = Math.pow(2,IU10);
-    return Math.floor(Math.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases) *
+    let x = Math.floor(Math.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases) *
       SingularityMilestone.singularityMult.effectOrDefault(1) *
       (1 + IU10)) * MMBoostSing;
+    
+    return x;
   },
 
   // Time (in seconds) to go from 0 DE to the condensing requirement
@@ -269,7 +272,9 @@ export const Singularity = {
 
     Currency.darkEnergy.reset();
     Currency.singularities.add(this.singularitiesGained);
-
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      Currency.singularities.value = Math.pow(Currency.singularities.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
+    }
     for (const quote of Laitela.quotes.all) {
       if (quote.requirement) {
         quote.show();
