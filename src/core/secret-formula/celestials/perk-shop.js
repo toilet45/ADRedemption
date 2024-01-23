@@ -26,8 +26,16 @@ export const perkShop = {
     effect: bought => Math.pow(1.05, bought),
     formatEffect: value => formatX(value, 2, 2),
     formatCost: value => format(value, 2),
-    costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048),
-    cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? Math.pow(1.05, 20) : Math.pow(1.05, 11))
+    costCap: () => {
+      let x = (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048);
+      if(CorruptionUpgrade(5).isBought) x = Math.pow(2, 65);
+      return x;
+    },
+    cap: () => {
+      let x = (Ra.unlocks.perkShopIncrease.canBeApplied ? Math.pow(1.05, 20) : Math.pow(1.05, 11));
+      if(CorruptionUpgrade(5).isBought) x = Math.pow(1.05, 65);
+      return x;
+    }
   }),
   rmMult: rebuyable({
     id: 1,
@@ -37,8 +45,16 @@ export const perkShop = {
     effect: bought => Math.pow(2, bought),
     formatEffect: value => formatX(value, 2),
     formatCost: value => format(value, 2),
-    costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048),
-    cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048)
+    costCap: () => {
+      let x = (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048);
+      if(CorruptionUpgrade(5).isBought) x = Math.pow(2, 65);
+      return x;
+    },
+    cap: () => {
+      let x = (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048);
+      if(CorruptionUpgrade(5).isBought) x = Math.pow(2, 65);
+      return x;
+    }
   }),
   bulkDilation: rebuyable({
     id: 2,

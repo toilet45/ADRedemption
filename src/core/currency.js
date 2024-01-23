@@ -433,7 +433,7 @@ Currency.imaginaryMachines = new class extends NumberCurrency {
 Currency.darkMatter = new class extends DecimalCurrency {
   get value() { return player.celestials.laitela.darkMatter; }
   set value(value) {
-    const capped = Decimal.min(value, new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1));
+    const capped = Decimal.min(value, new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1)).times(player.celestials.ra.upgrades.has('laitelaUpgrade') ? Currency.singularities.value*Currency.singularities.value+1 : 1);
     player.celestials.laitela.darkMatter = capped;
     player.celestials.laitela.maxDarkMatter = player.celestials.laitela.maxDarkMatter.max(capped);
   }

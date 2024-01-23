@@ -71,7 +71,7 @@ export class NormalTimeStudyState extends TimeStudyState {
   // will cause the study to also cost space theorems. This array is effectively assumed to be empty if not present.
   costsST() {
     //since there's only one connection from reality I would code just as this. plz don't require ST more than reality.
-    if(this.config.requiresST !== undefined && this.config.requiresST.includes('reality')) return TimeStudy.reality.isBought;
+    if(this.config.requiresST !== undefined && this.config.requiresST.includes('reality')) return this.config.requiresST && TimeStudy.reality.isBought;
     return this.config.requiresST && this.config.requiresST.some(s => TimeStudy(s).isBought);
   }
 

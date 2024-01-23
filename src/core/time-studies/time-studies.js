@@ -1,4 +1,5 @@
 import { GameMechanicState } from "../game-mechanics";
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 
 function showSecondPreferredWarning(currTree) {
   const canPickSecond = currTree.allowedDimPathCount === 2 && currTree.currDimPathCount < 2;
@@ -165,7 +166,11 @@ export class TimeStudyState extends GameMechanicState {
   }
 
   get STCost() {
-    const base = this.config.STCost;
+    let base = this.config.STCost;
+    // owo corruption 8 idk--sxy
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      base += corruptionPenalties.spaceTuition[player.mending.corruption[8]];
+    }
     return VUnlocks.raUnlock.canBeApplied
       ? base - 2
       : base;

@@ -727,6 +727,9 @@ export const migrations = {
       incPelleXPGain: 0,
     };
   },
+  51.024: player => {
+    player.auto.singCap.multiplier = 1000;
+  }
 },
 
   normalizeTimespans(player) {

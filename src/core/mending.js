@@ -8,7 +8,7 @@ import { MendingUpgrade } from "./mending-upgrades";
 import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
-import { VUnlocks } from "./globals";
+import { CorruptionUpgrade, VUnlocks } from "./globals";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -33,10 +33,12 @@ function askMendingConfirmation() {
 }
 
 export function mendingReset() {
-    Tab.dimensions.antimatter.show() // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
+    if (!MendingMilestone.six.isReached){
+      Tab.dimensions.antimatter.show();
+    } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed || player.isGameEnd){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
@@ -99,7 +101,8 @@ export function mendingReset() {
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
     if (MendingMilestone.seven.isReached) {
-      player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+      player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
+      if(CorruptionUpgrade(5).isBought) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
     }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     if (MendingUpgrade(9).isBought && !MendingMilestone.ten.isReached){
@@ -147,6 +150,10 @@ export function mendingReset() {
       effarig: 0
     };
     player.celestials.ra.quoteBits = 16383;
+    if(true){
+      player.celestials.ra.charged = new Set();
+      player.celestials.ra.breakCharged = new Set();
+    }
     Laitela.reset();
     if (MendingUpgrade(4).isBought){
       player.celestials.laitela.difficultyTier = 8;
@@ -443,7 +450,7 @@ export function mendingReset() {
       maxRem: 0,
     }
     // Finally, lets set up corruptions
-    if (CorruptionData.isCorrupted) {
+    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)) {
       let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {

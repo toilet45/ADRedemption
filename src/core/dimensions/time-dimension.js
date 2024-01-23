@@ -226,6 +226,7 @@ class TimeDimensionState extends DimensionState {
     let mult = GameCache.timeDimensionCommonMultiplier.value
       .timesEffectsOf(
         tier === 1 ? TimeStudy(11) : null,
+        tier === 1 ? TimeStudy(413) : null,
         tier === 3 ? TimeStudy(73) : null,
         tier === 4 ? TimeStudy(227) : null,
         TimeStudy(313),

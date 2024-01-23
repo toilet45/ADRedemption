@@ -1,4 +1,9 @@
 import { DC } from "../../constants";
+import { corruptionPenalties } from "../mending/corruption";
+//general code for corruption 9 --sxy
+/*if (player.mending.corruptionChallenge.corruptedMend) {
+  x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+}*/
 
 export const alchemyResources = {
   // T1 resources (Non-Effarig "base" resources)
@@ -7,7 +12,13 @@ export const alchemyResources = {
     name: "Power",
     symbol: "Ω",
     isBaseResource: true,
-    effect: amount => 1 + amount / 200000,
+    effect: amount => {
+      let x = 1 + amount / 200000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 1,
     uiOrder: 1,
     unlockedAt: 2,
@@ -19,7 +30,13 @@ export const alchemyResources = {
     name: "Infinity",
     symbol: "∞",
     isBaseResource: true,
-    effect: amount => 1 + amount / 200000,
+    effect: amount => {
+      let x = 1 + amount / 200000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 1,
     uiOrder: 2,
     unlockedAt: 3,
@@ -31,7 +48,13 @@ export const alchemyResources = {
     name: "Time",
     symbol: "Δ",
     isBaseResource: true,
-    effect: amount => 1 + amount / 200000,
+    effect: amount => {
+      let x = 1 + amount / 200000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 1,
     uiOrder: 3,
     unlockedAt: 4,
@@ -43,7 +66,13 @@ export const alchemyResources = {
     name: "Replication",
     symbol: "Ξ",
     isBaseResource: true,
-    effect: amount => Decimal.pow10(amount / 1000),
+    effect: amount => {
+      let x = Decimal.pow10(amount / 1000);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Decimal.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 1,
     uiOrder: 4,
     unlockedAt: 5,
@@ -55,7 +84,13 @@ export const alchemyResources = {
     name: "Dilation",
     symbol: "Ψ",
     isBaseResource: true,
-    effect: amount => Decimal.pow10(amount / 2000),
+    effect: amount => {
+      let x = Decimal.pow10(amount / 2000);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Decimal.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 1,
     uiOrder: 5,
     unlockedAt: 6,
@@ -69,7 +104,13 @@ export const alchemyResources = {
     name: "Cardinality",
     symbol: "α",
     isBaseResource: false,
-    effect: amount => 1 + 0.2 / (1 + amount / 20000),
+    effect: amount => {
+      let x = 1 + amount / 20000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return 1 + 0.2 / (x);
+    },
     tier: 2,
     uiOrder: 3,
     unlockedAt: 8,
@@ -92,7 +133,13 @@ export const alchemyResources = {
     name: "Eternity",
     symbol: "τ",
     isBaseResource: false,
-    effect: amount => 1 + amount / 15000,
+    effect: amount => {
+      let x = 1 + amount / 15000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 2,
     uiOrder: 2,
     unlockedAt: 9,
@@ -114,7 +161,13 @@ export const alchemyResources = {
     name: "Dimensionality",
     symbol: "ρ",
     isBaseResource: false,
-    effect: amount => Decimal.pow10(5 * amount),
+    effect: amount => {
+      let x = Decimal.pow10(5 * amount);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Decimal.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return x;
+    },
     tier: 2,
     uiOrder: 1,
     unlockedAt: 10,
@@ -136,7 +189,13 @@ export const alchemyResources = {
     name: "Inflation",
     symbol: "λ",
     isBaseResource: false,
-    effect: amount => Decimal.pow10(6e9 - 3e5 * amount),
+    effect: amount => {
+      let x = amount;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      }
+      return Decimal.pow10(6e9 - 3e5 * x)
+    },
     tier: 2,
     uiOrder: 5,
     unlockedAt: 11,
@@ -159,7 +218,13 @@ export const alchemyResources = {
     name: "Alternation",
     symbol: "ω",
     isBaseResource: false,
-    effect: amount => amount / 200000,
+    effect: amount => {
+      let x = amount / 2000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x / 100;
+    },
     tier: 2,
     uiOrder: 4,
     unlockedAt: 12,
@@ -184,7 +249,13 @@ export const alchemyResources = {
     name: "Effarig",
     symbol: "Ϙ",
     isBaseResource: true,
-    effect: amount => Math.pow(10, amount / 2500),
+    effect: amount => {
+      let x = Math.pow(10, amount / 2500);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x;
+    },
     tier: 1,
     uiOrder: 1.5,
     unlockedAt: 7,
@@ -197,7 +268,11 @@ export const alchemyResources = {
     symbol: "π",
     isBaseResource: false,
     effect: amount => {
-      const rawValue = 0.3 + 1.3 * Math.sqrt(amount / 25000);
+      let effectValue = 1.3 * Math.sqrt(amount / 25000);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        effectValue = Math.pow(effectValue,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      let rawValue = 0.3 + effectValue;
       return Achievement(175).isUnlocked ? rawValue : Math.min(rawValue, 1);
     },
     tier: 3,
@@ -228,7 +303,13 @@ export const alchemyResources = {
     name: "Momentum",
     symbol: "μ",
     isBaseResource: false,
-    effect: amount => 1 + amount / 125000,
+    effect: amount => {
+      let x = 1 + amount / 125000;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x;
+    },
     tier: 3,
     uiOrder: 3,
     unlockedAt: 15,
@@ -256,7 +337,13 @@ export const alchemyResources = {
     name: "Decoherence",
     symbol: "ξ",
     isBaseResource: false,
-    effect: amount => 0.15 * Math.sqrt(amount / 25000),
+    effect: amount => {
+      let x = 15 * Math.sqrt(amount / 25000);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x / 100;
+    },
     tier: 3,
     uiOrder: 4,
     unlockedAt: 14,
@@ -281,7 +368,13 @@ export const alchemyResources = {
     name: "Exponential",
     symbol: "Γ",
     isBaseResource: false,
-    effect: amount => 10 * Math.pow(amount / 10000, 2),
+    effect: amount => {
+      let x = 10 * Math.pow(amount / 10000, 2);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x;
+    },
     tier: 4,
     uiOrder: 2,
     unlockedAt: 18,
@@ -303,7 +396,13 @@ export const alchemyResources = {
     name: "Force",
     symbol: "Φ",
     isBaseResource: false,
-    effect: amount => 5 * amount,
+    effect: amount => {
+      let x = 5 * amount;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x;
+    },
     tier: 4,
     uiOrder: 2,
     unlockedAt: 17,
@@ -327,7 +426,11 @@ export const alchemyResources = {
     isBaseResource: false,
     effect: amount =>{ 
       let x = BreakInfinityUpgrade.slowestChallengeMult.chargedEffect.isEffectActive ? Math.pow(Ra.pets.teresa.level, 0.5) : 1;
-      return Math.pow(160 * Math.sqrt(amount / 25000), x);
+      let y = Math.pow(160 * Math.sqrt(amount / 25000), x);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        y = Math.pow(y,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return y;
     },
     tier: 4,
     uiOrder: 3,
@@ -354,7 +457,13 @@ export const alchemyResources = {
     name: "Boundless",
     symbol: "Π",
     isBaseResource: false,
-    effect: amount => amount / 80000,
+    effect: amount => {
+      let x = amount / 800;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x / 100;
+    },
     tier: 4,
     uiOrder: 1,
     unlockedAt: 20,
@@ -376,7 +485,13 @@ export const alchemyResources = {
     name: "Multiversal",
     symbol: "Σ",
     isBaseResource: false,
-    effect: amount => 32 * Math.pow(amount / 25000, 2),
+    effect: amount => {
+      let x = 32 * Math.pow(amount / 25000, 2);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x;
+    },
     tier: 4,
     uiOrder: 5,
     unlockedAt: 16,
@@ -400,7 +515,13 @@ export const alchemyResources = {
     symbol: "Λ",
     isBaseResource: false,
     // Somewhat ugly number to make this show 70.00% at cap
-    effect: amount => amount / (10714.28 + amount),
+    effect: amount => {
+      let x = amount * 100 / (10714.28 + amount);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return x / 100;
+    },
     tier: 4,
     uiOrder: 4,
     unlockedAt: 21,
@@ -429,7 +550,14 @@ export const alchemyResources = {
     name: "Reality",
     symbol: "Ϟ",
     isBaseResource: false,
-    effect: amount => {if(player.celestials.ra.upgrades.has('effarigUpgrade'))return Math.floor(amount*3);return Math.floor(amount)},
+    effect: amount => {
+      let x = amount;
+      if(player.celestials.ra.upgrades.has('effarigUpgrade'))x*=3;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
+      };
+      return Math.floor(x);
+    },
     tier: 5,
     unlockedAt: 25,
     description: "can be consumed to create Reality Glyphs",

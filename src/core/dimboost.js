@@ -1,4 +1,6 @@
 import { DC } from "./constants";
+import { Currency } from "./currency";
+import { WarpUpgrade } from "./warp-upgrades";
 
 export const DIMBOOST_TYPE = {
   BOOST: 0,
@@ -21,14 +23,20 @@ class DimBoostRequirement {
 
 export class DimBoost {
   static get scaleStart(){
-    return 5e13;
+    let x = 5e13;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
   static get warpStart() {
-    return 2.5e11;
+    let x =2.5e11;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
 
   static get shiftStart() {
-    return 1e9;
+    let x = 1e9;
+    if(WarpUpgrade(10).isBought) x*=20;
+    return x;
   }
 
   static get power() {
@@ -166,8 +174,11 @@ export class DimBoost {
 
     amount *= InfinityUpgrade.resetBoost.chargedEffect.effectOrDefault(1);
 
-    amount = Math.round(amount);
+    // Ra ra upgrade--sxy
+    if(player.celestials.ra.upgrades.has('raUpgrade')) amount = (amount / Decimal.log10(player.celestials.ra.raPoints.plus(1)))
 
+    amount = Math.round(amount);
+    
     return new DimBoostRequirement(tier, amount);
   }
 
@@ -208,8 +219,8 @@ export class DimBoost {
   static get imaginaryBoosts() {
     let x = BreakInfinityUpgrade.autobuyMaxDimboosts.chargedEffect.isEffectActive ? Ra.pets.teresa.level : 1;
     let y = Ra.unlocks.freeDimBoosts.isUnlocked ? (1+(Ra.pets.ra.level / 100)) ** 0.5 : 1;
-    let ts401 = TimeStudy(401).isBought ? 1e11 : 0;
-    return (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y + ts401;
+    //let ts401 = TimeStudy(401).isBought ? 1e11 : 0; //useless~
+    return (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y;
   }
 
   static get totalBoosts() {
@@ -296,10 +307,14 @@ function maxBuyDimBoosts() {
   }
   // Linearly extrapolate dimboost costs. req1 = a * 1 + b, req2 = a * 2 + b
   // so a = req2 - req1, b = req1 - a = 2 req1 - req2, num = (dims - b) / a
-  const increase = req2.amount - req1.amount;
+  let increase = req2.amount - req1.amount;
   const dim = AntimatterDimension(req1.tier);
+  //wtf precise error here--sxy
+  //honestly shall we do a decimal here......
+  let fixedValue = (dim.totalAmount.toNumber() - req1.amount)
+  if (increase == 0) increase=1e-20;//temporary fix
   let maxBoosts = Math.min(1e9,
-    1 + Math.floor((dim.totalAmount.toNumber() - req1.amount) / increase));
+    1 + Math.floor( fixedValue / increase));
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
     return;
