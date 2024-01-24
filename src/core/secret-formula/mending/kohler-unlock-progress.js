@@ -1,4 +1,4 @@
-export const kohler = {
+export const kohlerProgress = {
   progressUnlocks: {
     kohlerUnlocked: {
       id: 0,
