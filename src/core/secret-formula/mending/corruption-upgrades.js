@@ -52,7 +52,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Give extra 10 increase Singularity cap",
+    description: "Give extra 10 increase Singularity cap.",
     effect: () => 10
   },
   {
@@ -69,32 +69,30 @@ export const corruptionUpgrades = [
     effect: () => 1
   },
   {
-    name: "Hostility Upgrade 6",
+    name: "Doomed Options",
     id: 6,
-    cost: 1e300,
+    cost: 3,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
     hasFailed: () => false,
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: "Give one extra Glyph slot in Doomed Reality",
+    effect: () => 1
   },
   {
-    name: "Hostility Upgrade 7",
+    name: "Help Effarig can do nothing",
     id: 7,
-    cost: 1e300,
+    cost: 3,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
     hasFailed: () => false,
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "[TBD]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: "Improve Effarig level 15 improvement. [WIP]",
+    effect: () => 1
   },
   {
     name: "Hostility Upgrade 8",

@@ -87,6 +87,9 @@ export default {
     shardVisible() {
       return Ra.unlocks.relicShardGlyphLevelBoost.canBeApplied && this.shardsGained.neq(0);
     },
+    shardImprovedVisible() {
+      return CorruptionUpgrade(7).isBought && this.shardVisible;
+    },
     singularityVisible() {
       return SingularityMilestone.glyphLevelFromSingularities.canBeApplied;
     }
@@ -371,12 +374,32 @@ function roundPreservingSum(data) {
         {{ formatPerkShop }}
       </div>
     </template>
-    <template v-if="shardVisible">
+    <template v-if="shardVisible&&!shardImprovedVisible">
       <div
         :style="rowStyle('shards')"
         class="l-glyph-levels-and-weights__factor"
       >
         {{ formatInt(100) }}×Shards{{ formatPow(2) }}
+      </div>
+      <div
+        :style="rowStyle('shards')"
+        class="l-glyph-levels-and-weights__operator"
+      >
+        +
+      </div>
+      <div
+        :style="rowStyle('shards')"
+        class="l-glyph-levels-and-weights__factor-val"
+      >
+        {{ formatFactor(factors.shardFactor) }}
+      </div>
+    </template>
+    <template v-if="shardVisible&&shardImprovedVisible">
+      <div
+        :style="rowStyle('shards')"
+        class="l-glyph-levels-and-weights__factor"
+      >
+        {{ formatInt(1000) }}×Shards(log2){{ formatPow(2) }}
       </div>
       <div
         :style="rowStyle('shards')"

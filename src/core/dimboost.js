@@ -311,10 +311,13 @@ function maxBuyDimBoosts() {
   const dim = AntimatterDimension(req1.tier);
   //wtf precise error here--sxy
   //honestly shall we do a decimal here......
-  let fixedValue = (dim.totalAmount.toNumber() - req1.amount)
   if (increase == 0) increase=1e-20;//temporary fix
+  let fixedValue = (dim.totalAmount.toNumber() - req1.amount) / increase
+  if(fixedValue == Infinity)fixedValue=1e308;
+  if(fixedValue == -Infinity)fixedValue=-1e308;
   let maxBoosts = Math.min(1e9,
-    1 + Math.floor( fixedValue / increase));
+    1 + Math.floor( fixedValue ));
+  if(maxBoosts<0) return;
   if (DimBoost.bulkRequirement(maxBoosts).isSatisfied) {
     softReset(maxBoosts);
     return;
