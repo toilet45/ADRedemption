@@ -254,7 +254,7 @@ export default {
         Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
         <br>
         <br>
-    Secondary Rejection:
+    Theory of Dilation:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[7]"
@@ -262,10 +262,10 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(7, $event)"
         />
-        Replicanti, TP and Singularty gain ^{{format(localPenalties.secondaryRejection[this.corruptions[7]], 3, 3)}}.
+        Replicanti, TP and Singularty gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}.
         <br>
         <br>
-    Space Tuition:
+    Replicative Singularities:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[8]"
@@ -273,10 +273,10 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(8, $event)"
         />
-        Every Space Therom cost +{{formatInt(localPenalties.spaceTuition[this.corruptions[8]])}}.
+        Every Space Therom cost +{{formatInt(localPenalties.repSing.rep[this.corruptions[8]])}}.
         <br>
         <br>
-    Alchemy Normalcy:
+    Study of Forever:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[9]"
@@ -284,7 +284,7 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(9, $event)"
         />
-        Avaliable Alchemy effect ^{{format(localPenalties.atomDilution[this.corruptions[9]], 3, 3)}}.
+        Avaliable Alchemy effect ^{{format(localPenalties.soF.ttcost[this.corruptions[9]], 3, 3)}}.
       </div>
     </div>
     <div
