@@ -715,7 +715,7 @@ export const ra = {
       reward: "Unlock a new row of permenant upgrades in Ra's shop",
       pet: "ra",
       level: 90,
-      displayIcon: "?"
+      displayIcon: `<i class="fa-solid fa-dollar"></i>`
     },
     mendingPointsGainMult: {
       id: 10,
