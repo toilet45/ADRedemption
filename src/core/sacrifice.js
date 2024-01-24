@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { CorruptionUpgrade } from "./corruption-upgrades";
 
 export class Sacrifice {
   // This is tied to the "buying an 8th dimension" achievement in order to hide it from new players before they reach
@@ -66,8 +67,11 @@ export class Sacrifice {
     const postIC2 = 1 + Effects.sum(Achievement(88), TimeStudy(228));
     const triad = TimeStudy(304).effectOrDefault(1);
     const effarig65 = Ra.unlocks.relicShardBoost.isUnlocked ? 1 + (Decimal.log10(Currency.relicShards.value) / 1000) : 1 ;
+    let baseAnswer = base * preIC2 * postIC2 * triad * effarig65;
 
-    return base * preIC2 * postIC2 * triad * effarig65;
+    //corruption 10
+    const corrupt = CorruptionUpgrade(10).effectOrDefault(1);
+    return baseAnswer**corrupt;
   }
 
   static get nextBoost() {
