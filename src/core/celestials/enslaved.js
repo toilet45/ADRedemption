@@ -277,7 +277,7 @@ export const Tesseracts = {
   },
 
   get extra() {
-    return this.bought * (SingularityMilestone.tesseractMultFromSingularities.effectOrDefault(1) - 1);
+    return this.bought * (SingularityMilestone.tesseractMultFromSingularities.effectOrDefault(1)*CorruptionUpgrade(8).effectOrDefault(1) - 1);
   },
 
   get effectiveCount() {

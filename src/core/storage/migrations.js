@@ -701,7 +701,7 @@ export const migrations = {
     delete player.celestials.v.wantsFlipped;
   },
   51.021: player => {
-    player.auto.singCap.multiplier = 0;
+    //player.auto.singCap.multiplier = 0; exm why this still exist--sxy
   },
   51.022: player => {
     player.isHoldingLClick = false;
@@ -729,6 +729,9 @@ export const migrations = {
   },
   51.024: player => {
     player.auto.singCap.multiplier = 1000;
+  },
+  51.025: player => {
+    player.celestials.kohler.unlockProgress = 0;
   }
 },
 
