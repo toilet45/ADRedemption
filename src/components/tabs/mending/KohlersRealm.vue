@@ -72,14 +72,15 @@ export default {
       <span>
         Actually I want to add a cool progress system so if you see anything mess here just ignore--sxy
       </span>
-      <div class="progress-container">
-        <div class="circle" v-for="(item, index) in progressItems" :key="index" :style="{ left: item.position + '%', backgroundColor: item.color }">
-          <div class="circle-inner"></div>
-          <div class="circle-text">{{ item.text }}</div>
-        </div>
-        <div class="progress-wrapper">
-          <div class="background-line"></div>
-          <div class="filled-line" :style="{ width: KohlerProgress + '%' }"></div>
+      <div class="c-kohler-progressbar">
+        <div
+            class="c-kohler-progressbar-inner c-kohler-progressbar-inner--light"
+            :style="{ width: '100%'}"
+          />
+        <div
+          class="c-kohler-progressbar-inner"
+          :style="{ width: '50%'}"
+        >
         </div>
       </div>
       <div v-if="this.unlocked">
@@ -104,56 +105,5 @@ export default {
 </template>
 
 <style scoped>
-.progress-container {
-  position: relative;
-  top: 50px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-}
 
-.circle {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: #a52a2a; /* 默认深红色 */
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.circle-inner {
-  width: 10px;
-  height: 10px;
-  background-color: #fff;
-  border-radius: 50%;
-}
-
-.circle-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #a52a2a; /* 深红色 */
-}
-
-.progress-wrapper {
-  position: relative;
-  width: 100%;
-  height: 4px;
-  background-color: #a52a2a; /* 深红色 */
-}
-
-.background-line {
-  width: 100%;
-  height: 100%;
-  background-color: #a52a2a; /* 绿色 */
-}
-
-.filled-line {
-  position: absolute;
-  height: 100%;
-  background-color: #007f5f; /* 绿色 */
-}
 </style>
