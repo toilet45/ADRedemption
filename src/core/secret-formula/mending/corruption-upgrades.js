@@ -123,7 +123,7 @@ export const corruptionUpgrades = [
     formatEffect: value => `+` + formatInt(value)
   },
   {
-    name: "Hostility Upgrade 10",
+    name: "Sacrifice Exponent",
     id: 10,
     cost: 3,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
