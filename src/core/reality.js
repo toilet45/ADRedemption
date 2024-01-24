@@ -308,7 +308,7 @@ function giveRealityRewards(realityProps) {
   if (multiplier > 1 && Enslaved.boostReality) {
     // Real time amplification is capped at 1 second of reality time; if it's faster then using all time at once would
     // be wasteful. Being faster than 1 second will only use as much time as needed to get the 1-second factor instead.
-    if (Time.thisRealityRealTime.totalSeconds < 1) {
+    if (Time.thisRealityRealTime.totalSeconds.lte(1)) {
       player.celestials.enslaved.storedReal *= 1 - Time.thisRealityRealTime.totalSeconds;
     } else {
       player.celestials.enslaved.storedReal = 0;
@@ -474,7 +474,7 @@ export function beginProcessReality(realityProps) {
         GameIntervals.stop();
         ui.$viewModel.modal.progressBar = {
           label: "Simulating Amplified Reality",
-          info: () => `The game is currently calculating all the resources you would gain from repeating the
+          info: `The game is currently calculating all the resources you would gain from repeating the
             Reality you just completed ${formatInt(glyphsToProcess)} more times. Pressing "Quick Glyphs" with
             more than ${formatInt(glyphsToSample)} Glyphs remaining will speed up the calculation by automatically
             sacrificing all the remaining Glyphs you would get. Pressing "Skip Glyphs" will ignore all resources
