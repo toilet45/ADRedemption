@@ -13,9 +13,15 @@ export default {
   data() {
     return {
       unlocked: false,
+      kohlerProgress: 0,
       time: new Date().getTime(),
       bestAM: new Decimal(0),
       isRunning: false,
+      progressItems: [
+        { position: 10, text: 'text1' },
+        { position: 50, text: 'text2' }
+        // Add more items as needed, thank you GPT--sxy
+      ]
     };
   },
   computed: {
@@ -48,6 +54,7 @@ export default {
     update() {
       this.now = new Date().getTime();
       this.unlocked = false;
+      this.kohlerProgress = 50;//temporary number
     },
     startRun() {
       return;
@@ -62,6 +69,20 @@ export default {
 <template>
     <div class="kohler-celestial-tab">
       <h1>Coming in 5 Hours(tm)</h1>
+      <span>
+        Actually I want to add a cool progress system so if you see anything mess here just ignore--sxy
+      </span>
+      <div class="c-kohler-progressbar">
+        <div
+            class="c-kohler-progressbar-inner c-kohler-progressbar-inner--light"
+            :style="{ width: '100%'}"
+          />
+        <div
+          class="c-kohler-progressbar-inner"
+          :style="{ width: '50%'}"
+        >
+        </div>
+      </div>
       <div v-if="this.unlocked">
       <CelestialQuoteHistory celestial="kohler" />
       </div>

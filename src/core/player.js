@@ -1002,6 +1002,7 @@ window.player = {
     kohler:{
       run: false,
       quoteBits: 0,
+      unlockProgress: 0,
     }
   },
   isGameEnd: false,

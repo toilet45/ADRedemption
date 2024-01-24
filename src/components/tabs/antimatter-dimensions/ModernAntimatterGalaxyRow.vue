@@ -80,7 +80,7 @@ export default {
             .join(", ").capitalize()}`;
         }
         case GALAXY_TYPE.THIRD:
-          let x = 750000 + (5000 * player.mending.rebuyables[16]); //plus whatever
+          let x = 750000 + (5000 * player.mending.rebuyables[16]) + CorruptionUpgrade(9).effectOrDefault(0); //plus whatever
           return MendingUpgrade(17).isBought ? `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies` : `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies, after Remote scaling`;
       }
       return undefined;
