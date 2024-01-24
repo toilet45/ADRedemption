@@ -21,6 +21,7 @@ export * from "./new-game";
 
 export * from "./celestials/quotes";
 export * from "./celestials/teresa";
+export * from "./celestials/kohler";
 export * from "./celestials/effarig";
 export * from "./celestials/enslaved";
 export * from "./celestials/V";

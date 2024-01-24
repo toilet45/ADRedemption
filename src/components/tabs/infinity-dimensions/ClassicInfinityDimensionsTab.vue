@@ -38,6 +38,12 @@ export default {
       atCap: false,
       end: new Decimal("1e9000000000000000"),
       capExpo: 1,
+      textCap: 0,
+      capExpo: 1,
+      trueID8cap: 0,
+      IPcap: 0,
+      TesseractsCap: 20,
+      atTessCap: false,
     };
   },
   computed: {
@@ -80,9 +86,13 @@ export default {
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = ((GameEnd.creditsEverClosed && !PlayerProgress.mendingUnlocked()) || (PlayerProgress.mendingUnlocked() && player.isGameEnd));
-      this.atCap = player.infinityPower.exponent >= 9e15;
-      this.end = new Decimal("1e9000000000000000");
+      this.IPcap = InfinityDimension(8).infPowerSoftcap;
+      this.atCap = player.infinityPower.exponent >= this.IPcap;
+      this.textCap = Decimal.pow(10,this.IPcap);
       this.capExpo = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1;
+      this.trueID8cap = player.timestudy.studies.includes(310) ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : 1e10;
+      this.TesseractsCap = Tesseracts.TesseractHardcap;
+      this.atTessCap = Tesseracts.bought>=Tesseracts.TesseractHardcap;
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -171,7 +181,9 @@ export default {
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <br>
-    <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(end) }}</span>
+    <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(this.textCap) }}</span>
+    <br>
+    <span v-if="atTessCap">Tesseracts beyond {{ format(this.TesseractsCap) }} are physically impossible</span>
     <br>
     <b
       v-if="isEC8Running"

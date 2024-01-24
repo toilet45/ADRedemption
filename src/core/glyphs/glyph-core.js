@@ -1,5 +1,5 @@
 import { GameMechanicState } from "../game-mechanics";
-import { MendingUpgrade, V } from "../globals";
+import { CorruptionUpgrade, MendingUpgrade, V } from "../globals";
 import { RealityUpgrade } from "../reality-upgrades";
 
 export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "timepow",
@@ -53,7 +53,9 @@ export const Glyphs = {
   bestUndoGlyphCount: 0,
   get maxSlots() {
     if (Pelle.isDoomed){
-      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+      let p = PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+      if(CorruptionUpgrade(6).isBought) p+=1;
+      return p;
     }
     else{
       let i = 3;
@@ -102,7 +104,9 @@ export const Glyphs = {
   },
   get activeSlotCount() {
     if (Pelle.isDoomed) {
-      return PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+      let p = PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
+      if(CorruptionUpgrade(6).isBought) p+=1;
+      return p;
     }
     return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },

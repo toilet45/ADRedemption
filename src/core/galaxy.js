@@ -20,7 +20,7 @@ class GalaxyRequirement {
 export class Galaxy {
   static get scalingThreeStart(){
     let x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(5).vReward.effectValue : 0;
-    return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + x;
+    return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + CorruptionUpgrade(9).effectOrDefault(0) + x;
   }
   static get remoteStart() {
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);

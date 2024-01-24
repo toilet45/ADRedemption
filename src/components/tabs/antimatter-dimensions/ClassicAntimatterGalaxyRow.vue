@@ -84,8 +84,8 @@ export default {
             .join(", ").capitalize()}`;
         }
         case GALAXY_TYPE.THIRD:
-        let x = 750000 + (5000 * player.mending.rebuyables[16]); //plus whatever
-          return MendingUpgrade(17).isBought ? `the Remote Galaxy cost scaling is reinstated and applied twice past ${formatInt(x)} Galaxies` : `the Remote Galaxy cost scaling is applied twice past ${formatInt(x)} Galaxies`;
+        let x = 750000 + (5000 * player.mending.rebuyables[16]) + CorruptionUpgrade(9).effectOrDefault(0); //plus whatever
+          return MendingUpgrade(17).isBought ? `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies` : `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies, after Remote scaling`;
       }
       return undefined;
     },

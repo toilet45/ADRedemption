@@ -10301,3 +10301,29 @@ input.o-automator-block-input {
 }
 
 /* #endregion Corrupt tab */
+
+/* #region Kohler tab*/
+
+.c-kohler-progressbar {
+  width: 50rem;
+  height: 3rem;
+  position: relative;
+  border: 0.1rem solid black;
+  border-radius: var(--var-border-radius, 0.4rem);
+  margin: auto;
+}
+
+.c-kohler-progressbar-inner {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: var(--color-mending);
+  box-shadow : 0px 2px 2px -0.5px var(--color-mending), 0px -2px 2px -0.5px var(--color-mending);
+}
+
+.c-kohler-progressbar-inner--light {
+  opacity: 0.5;
+}
+
+/* #endregion Kohler tab*/
