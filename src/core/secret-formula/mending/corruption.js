@@ -85,7 +85,7 @@ export const corruptionPenalties = {
     repSing: {
         rep: [1, 0.25, 0.05, 0.01, 0.004, 0.00065, 0.0001, 1e-5, 1e-8, 1e-20, 0, 0],
         sing: [1, 0.25, 0.1, 0.025, 0.01, 0.0025, 0.001, 2.5e-4, 1e-4, 1e-5, 1e-8, 0],
-        dm: [1, 0.2, 0.01, 1e-4,, 3e-8, 2e-15, 1e-45, 1e-80, 1e-150, 0, 0, 0],
+        dm: [1, 0.2, 0.01, 1e-4, 3e-8, 2e-15, 1e-45, 1e-80, 1e-150, 0, 0, 0],
         presGain: [1, 0.1, 0.07, 0.021, 0.0044, 0, 0, 0, 0, 0, 0, 0],
         hiddenFour: [false, false, false, false, false, true, true, true, true, true, true, true]
     },
