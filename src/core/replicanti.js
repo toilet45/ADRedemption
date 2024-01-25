@@ -280,9 +280,9 @@ export function replicantiLoop(diff) {
   }
 
   //Corruption 7, idk if this is good on math but hope it works--sxy
-  if (player.mending.corruptionChallenge.corruptedMend) {
+  /*if (player.mending.corruptionChallenge.corruptedMend) {
     Replicanti.amount = Decimal.pow(Replicanti.amount,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
-  }
+  }*/
 
   if (areRGsBeingBought && Replicanti.amount.gte(Decimal.NUMBER_MAX_VALUE)) {
     const buyer = Autobuyer.replicantiGalaxy;

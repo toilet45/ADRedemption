@@ -179,9 +179,9 @@ export function tachyonGainMultiplier() {
 export function rewardTP() {
   Currency.tachyonParticles.bumpTo(getTP(player.records.thisEternity.maxAM, true));
   //I hope this is the only place for TP,TP so weird--sxy
-  if (player.mending.corruptionChallenge.corruptedMend) {
+  /*if (player.mending.corruptionChallenge.corruptedMend) {
     Currency.tachyonParticles.value = Decimal.pow(Currency.tachyonParticles.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
-  }
+  }*/
   player.dilation.lastEP = Currency.eternityPoints.value;
 }
 
