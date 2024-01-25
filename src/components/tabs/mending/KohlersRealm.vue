@@ -47,7 +47,7 @@ export default {
     },
     unlockInfoTooltipArrowStyle() {
       return {
-        borderRight: "0.5rem solid var(--color-mending)"
+        borderBottom: "0.5rem solid var(--color-mending)"
       };
     },
     isDoomed: () => Pelle.isDoomed,
