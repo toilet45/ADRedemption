@@ -9,8 +9,11 @@ export const kohlerProgress = {
     hostileScore: {
       id: 1,
       progress: 20,
-      condition:false,
-      description: "Reach idk Hostile score: idk adward.",
+      condition: () => {
+        if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
+        return false;
+      },
+      description: "Reach 1e6 Hostile score: idk adward.",
     },
     placeholder: {
       id: 2,

@@ -18,11 +18,6 @@ export default {
       time: new Date().getTime(),
       bestAM: new Decimal(0),
       isRunning: false,
-      progressItems: [
-        { position: 10, text: 'text1' },
-        { position: 50, text: 'text2' }
-        // Add more items as needed, thank you GPT--sxy
-      ]
     };
   },
   computed: {
@@ -56,7 +51,7 @@ export default {
     update() {
       this.now = new Date().getTime();
       this.unlocked = false;
-      this.kohlerProgress = 50;//temporary number
+      this.kohlerProgress = Kohler.unlockProgress;//temporary number
     },
     startRun() {
       return;
@@ -101,7 +96,7 @@ export default {
           />
         <div
           class="c-kohler-progressbar-inner"
-          :style="{ width: '50%'}"
+          :style="{ width: kohlerProgress + '%'}"
         >
         </div>
         <CustomizeableTooltip

@@ -18,6 +18,12 @@ export const Kohler = {
     return false ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
   },
 
+  get unlockProgress() {
+    let Progress = 5;
+    let stage1 = Math.min(15*CorruptionData.corruptionChallenge.recordScore/1e6,15)
+    Progress += stage1;
+    return parseFloat(Progress.toFixed(2));
+  },
   checkForUnlocks() {
     for (const info of KohlerProgressUnlocks.all) {
       info.unlock();
@@ -33,8 +39,8 @@ class KohlerProgressUnlockState extends BitUpgradeState {
     return this.isUnlocked;
   }
 
-  get canBeUnlocked() {
-    return !this.isUnlocked && this.config.condition;
+  get isUnlocked() {
+    return /*!this.isUnlocked &&*/ typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
   }
 
   get description() {
