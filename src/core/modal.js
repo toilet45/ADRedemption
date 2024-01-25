@@ -81,6 +81,7 @@ import UiChoiceModal from "@/components/modals/UiChoiceModal";
 import UndoGlyphModal from "@/components/modals/UndoGlyphModal";
 import UpgradeMechanicLockModal from "@/components/modals/UpgradeMechanicLockModal";
 import WarpRealityModal from "@/components/modals/WarpRealityModal";
+import CorruptionFullEffectsModal from "@/components/modals/CorruptionFullEffectsModal";
 
 import S12GamesModal from "@/components/modals/secret-themes/S12GamesModal";
 
@@ -276,6 +277,7 @@ Modal.sacrifice = new Modal(SacrificeModal, 1, GAME_EVENT.DIMBOOST_AFTER);
 Modal.breakInfinity = new Modal(BreakInfinityModal, 1, GAME_EVENT.ETERNITY_RESET_AFTER);
 Modal.respecIAP = new Modal(RespecIAPModal);
 Modal.warpReality = new Modal(WarpRealityModal);
+Modal.corruptionFullEffects = new Modal(CorruptionFullEffectsModal);
 
 Modal.s12Games = new Modal(S12GamesModal);
 
