@@ -126,7 +126,10 @@ export default {
     },
     id(row, column) {
       return (row - 1) * 5 + column - 1;
-    }   
+    },
+    showModal() {
+      Modal.corruptionFullEffects.show();
+    },   
   }
 };
 </script>
@@ -254,7 +257,7 @@ export default {
         Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
         <br>
         <br>
-    Secondary Rejection:
+    Theory of Dilation:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[7]"
@@ -262,10 +265,10 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(7, $event)"
         />
-        Replicanti, TP and Singularty gain ^{{format(localPenalties.secondaryRejection[this.corruptions[7]], 3, 3)}}.
+        Replicanti, TP and Singularty gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}.
         <br>
         <br>
-    Space Tuition:
+    Replicative Singularities:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[8]"
@@ -273,10 +276,10 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(8, $event)"
         />
-        Every Space Therom cost +{{formatInt(localPenalties.spaceTuition[this.corruptions[8]])}}.
+        Every Space Therom cost +{{formatInt(localPenalties.repSing.rep[this.corruptions[8]])}}.
         <br>
         <br>
-    Alchemy Normalcy:
+    Study of Forever:
     <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[9]"
@@ -284,8 +287,16 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(9, $event)"
         />
-        Avaliable Alchemy effect ^{{format(localPenalties.atomDilution[this.corruptions[9]], 3, 3)}}.
+        Avaliable Alchemy effect ^{{format(localPenalties.soF.ttcost[this.corruptions[9]], 3, 3)}}.
       </div>
+    </div>
+    <div class="button-container">
+      <button
+        class="o-pelle-button"
+        @click="showModal"
+      >
+        Show full nerf effects of specific Hostilities
+      </button>
     </div>
     <div
       v-for="row in 5"
@@ -305,5 +316,21 @@ export default {
 .c-fragments-amount__accent {
   font-size: 2rem;
   color: var(--color-pelle--base);
+}
+
+.o-pelle-button {
+  font-family: Typewriter;
+  color: var(--color-text);
+  background: var(--color-text-inverted);
+  border: 0.1rem solid var(--color-pelle--base);
+  border-radius: var(--var-border-radius, 0.5rem);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  transition-duration: 0.12s;
+  cursor: pointer;
+}
+
+.o-pelle-button:hover {
+  box-shadow: 0.1rem 0.1rem 0.3rem var(--color-pelle--base);
 }
 </style>
