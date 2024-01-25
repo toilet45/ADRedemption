@@ -2,13 +2,14 @@
 
 import PrimaryButton from "@/components/PrimaryButton";
 import CelestialQuoteHistory from "../../CelestialQuoteHistory.vue";
-
+import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 
 export default {
   name: "KohlersRealm",
   components: {
     PrimaryButton,
-    CelestialQuoteHistory
+    CelestialQuoteHistory,
+    CustomizeableTooltip
   },
   data() {
     return {
@@ -25,6 +26,7 @@ export default {
     };
   },
   computed: {
+    unlockInfos: () => KohlerProgressUnlocks.all,
     showRunReward() {
       return this.bestAM.gt(1);
     },
@@ -45,7 +47,7 @@ export default {
     },
     unlockInfoTooltipArrowStyle() {
       return {
-        borderRight: "0.5rem solid var(--color-kohler--base)"
+        borderRight: "0.5rem solid var(--color-mending)"
       };
     },
     isDoomed: () => Pelle.isDoomed,
@@ -61,8 +63,28 @@ export default {
       /*if (this.isDoomed) return;
       Modal.celestials.show({ name: "Teresa's", number: 0 });*/
     },
+
+    unlockDescriptionWidth(unlockInfo) {
+      const pos = unlockInfo.config.progress;
+      return `${pos}%`;
+    },
+    hasUnlock(unlockInfo) {
+      return unlockInfo.isUnlocked;
+    },
+    unlockInfoTooltipClass(unlockInfo) {
+      return {
+        "c-kohler-progressunlock-description": true,
+        "c-kohler-progressunlock-description--unlocked": this.hasUnlock(unlockInfo)
+      };
+    },
+    unlockDescriptionBottom(unlockInfo) {
+      const pos = -unlockInfo.config.id % 2 *60 -1;
+      return `${pos}px`;
+    },
   }
 };
+
+
 
 </script>
 
@@ -82,6 +104,23 @@ export default {
           :style="{ width: '50%'}"
         >
         </div>
+        <CustomizeableTooltip
+            v-for="unlockInfo in unlockInfos"
+            :key="unlockInfo.id"
+            content-class="c-kohler-progressunlock-description--hover-area"
+            :left="unlockDescriptionWidth(unlockInfo)"
+            :bottom="unlockDescriptionBottom(unlockInfo)"
+            mode="bottom"
+            :show="true"
+            :tooltip-arrow-style="unlockInfoTooltipArrowStyle"
+            :tooltip-class="unlockInfoTooltipClass(unlockInfo)"
+        >
+          <template #tooltipContent>
+            <b>
+              {{ unlockInfo.description }}
+            </b>
+          </template>
+        </CustomizeableTooltip>
       </div>
       <div v-if="this.unlocked">
       <CelestialQuoteHistory celestial="kohler" />

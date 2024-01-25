@@ -10326,4 +10326,25 @@ input.o-automator-block-input {
   opacity: 0.5;
 }
 
+.c-kohler-progressunlock-description--hover-area {
+  display: flex;
+  width: 100%;
+  height: 3rem;
+  position: absolute;
+  align-items: center;
+}
+
+.c-kohler-progressunlock-description {
+  width: 14rem;
+  font-size: 1rem;
+  color: var(--color-mending);
+  background-color: var(--color-mending-dark);
+  border: 0.1rem solid var(--color-mending);
+}
+
+.c-kohler-progressunlock-description--unlocked {
+  color: var(--color-mending);
+  background-color: var(--color-mending-light);
+}
+
 /* #endregion Kohler tab*/
