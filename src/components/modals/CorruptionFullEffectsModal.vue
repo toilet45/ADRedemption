@@ -16,6 +16,10 @@ export default {
         `Placeholder with format number: ${format(Number.MAX_VALUE, 2)}`,
         `Placeholder with Precentage number: ${formatPercents(0.5)} as effective`,
         `Placeholder with Int number: ${formatInt(10)}`,
+        "Time Compression:",
+        "Game time recieves an exponent, then a divisor",
+        "Begin from level 4, IP gain will recieve an exponent: Placeholder",
+        "Begin from level 8, AD will recieve an exponent: Placeholder"
       ];
     }
   }
