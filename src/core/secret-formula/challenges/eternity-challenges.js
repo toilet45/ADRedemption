@@ -13,12 +13,16 @@ export const eternityChallenges = [
     reward: {
       description: "Time Dimension multiplier based on time spent this Eternity",
       effect: completions =>
-        Decimal.pow(Decimal.max(player.records.thisEternity.time.div(10), 0.9), 0.3 + (completions * 0.05)),
+        {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
+          return Decimal.pow(Decimal.max(player.records.thisEternity.time.div(10), 0.9), 0.3 + (completions * 0.05))
+        },
       formatEffect: value => formatX(value, 2, 1),
     },
     vReward:{
       description: `⌬ Time Dimension power based on real time spent this Mend ⌬`,
-      effect: () => Math.min(0.5, (Math.log10(player.records.thisMend.realTime + 1) / 100)) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600) + 1,
+      effect: () => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return Math.min(0.5, (Math.log10(player.records.thisMend.realTime + 1) / 100)) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600) + 1
+      },
       formatEffect: value => formatPow(value, 2, 3),
     },
     // These will get notation-formatted and scrambled between for the final goal
@@ -32,13 +36,15 @@ export const eternityChallenges = [
     goalIncrease: DC.E175,
     reward: {
       description: "1st Infinity Dimension multiplier based on Infinity Power",
-      effect: completions => Currency.infinityPower.value.pow(1.5 / (700 - completions * 100)).clampMin(1),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
+        return Currency.infinityPower.value.pow(1.5 / (700 - completions * 100)).clampMin(1)},
       cap: DC.E100,
       formatEffect: value => formatX(value, 2, 1),
     },
     vReward:{
       description: `⌬ Infinity Dimension power based on Infinity Power ⌬`,
-      effect: () => 1 + (Math.log10(Math.max(Currency.infinityPower.value.clampMin(1).log10(), 1)) / 500) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: () => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 + (Math.log10(Math.max(Currency.infinityPower.value.clampMin(1).log10(), 1)) / 500) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)},
       formatEffect: value => formatPow(value, 2, 3)
     }
   },
@@ -50,13 +56,15 @@ export const eternityChallenges = [
     goalIncrease: DC.E75,
     reward: {
       description: () => `Increase the multiplier for buying ${formatInt(10)} Antimatter Dimensions`,
-      effect: completions => completions * 0.72,
+      effect: completions => { if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 0;
+        return completions * 0.72},
       formatEffect: value => `+${format(value, 2, 2)}`,
     },
     vReward:{
       description: `⌬ All per-purchase multipliers raised ⌬`,
       formatEffect: value => `${formatPow(value, 3, 3)}`,
-      effect: completions => 1 + (0.0005 * completions * ((Ra.pets.v.level - 25) / 75) + V.spaceTheorems / 600),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 + (0.0005 * completions * ((Ra.pets.v.level - 25) / 75) + V.spaceTheorems / 600)},
     }
   },
   {
@@ -73,13 +81,16 @@ export const eternityChallenges = [
     failedRestriction: "(Too many Infinities for more)",
     reward: {
       description: "Infinity Dimension multiplier based on unspent IP",
-      effect: completions => Currency.infinityPoints.value.pow(0.003 + completions * 0.002),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
+        return Currency.infinityPoints.value.pow(0.003 + completions * 0.002)
+      },
       cap: DC.E200,
       formatEffect: value => formatX(value, 2, 1),
     },
     vReward:{
       description: `⌬ All Dimension power based on Multiversal Remains ⌬`,
-      effect: () => 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 250) / 10 * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: () => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 + (Decimal.log10(Currency.mendingPoints.value.add(1)) / 250) / 10 * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)},
       formatEffect: value => formatPow(value, 3, 3),
     }
   },
@@ -92,12 +103,14 @@ export const eternityChallenges = [
     goalIncrease: DC.E400,
     reward: {
       description: "Distant Galaxy cost scaling starts later",
-      effect: completions => completions * 5,
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 0;
+        return completions * 5},
       formatEffect: value => `${formatInt(value)} AG later`,
     },
     vReward:{
       description: `⌬ Obscure Galaxy scaling starts later ⌬`,
-      effect: completions => 500 * completions * ((Ra.pets.v.level - 25) / 75),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 0;
+        return 500 * completions * ((Ra.pets.v.level - 25) / 75)},
       formatEffect: value => `${formatInt(value)} AG later`,
     }
   },
@@ -123,7 +136,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: `⌬ Continuum multiplier ⌬`,
-      effect: completions => 1 + (0.01 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 + (0.01 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)},
       formatEffect: value => `${formatX(value, 2, 2)}`
     },
     scrambleText: ["cannot gain Antimatter Galaxies normally", "c㏰'퐚 gai鸭 Anti꟢at랜erﻪﶓa⁍axie㮾 䂇orma㦂l"],
@@ -139,12 +153,14 @@ export const eternityChallenges = [
     effect: () => TimeDimension(1).productionPerSecond,
     reward: {
       description: "1st Time Dimension produces 8th Infinity Dimensions",
-      effect: completions => TimeDimension(1).productionPerSecond.pow(completions * 0.2).minus(1).clampMin(0),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(0);
+        return TimeDimension(1).productionPerSecond.pow(completions * 0.2).minus(1).clampMin(0)},
       formatEffect: value => `${format(value, 2, 1)} per second`,
     },
     vReward:{
       description: "⌬ 1st Dark Matter Dimension produces 8th Time dimension ⌬",
-      effect: completions => DarkMatterDimension(1).powerDM.times(1000).div(DarkMatterDimension(1).interval).pow(0.2 * completions).minus(1).clampMin(0).mul((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(0);
+        return DarkMatterDimension(1).powerDM.times(1000).div(DarkMatterDimension(1).interval).pow(0.2 * completions).minus(1).clampMin(0).mul((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)},
       formatEffect: value => `${format(value, 2, 2)} per second`,
     }
   },
@@ -158,6 +174,7 @@ export const eternityChallenges = [
     reward: {
       description: "Infinity Power strengthens Replicanti Galaxies",
       effect: completions => {
+        if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 0;
         const infinityPower = Math.log10(Currency.infinityPower.value.pLog10() + 1);
         return Math.max(0, Math.pow(infinityPower, 0.03 * completions) - 1);
       },
@@ -166,6 +183,7 @@ export const eternityChallenges = [
     vReward: {
       description: "⌬ Time Shards strengthen all Galaxy types ⌬",
       effect: completions => {
+        if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 0;
         const timeShards = Math.log10(Currency.timeShards.value.pLog10() + 1);
         return Math.max(0, (Math.pow(timeShards, 0.03 * completions) - 1) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600) / 10);
       },
@@ -181,13 +199,15 @@ export const eternityChallenges = [
     goalIncrease: DC.E250,
     reward: {
       description: "Infinity Dimension multiplier based on Time Shards",
-      effect: completions => Currency.timeShards.value.pow(completions * 0.1).clampMin(1),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
+        return Currency.timeShards.value.pow(completions * 0.1).clampMin(1)},
       cap: DC.E400,
       formatEffect: value => formatX(value, 2, 1)
     },
     vReward:{
       description: "⌬ Infinity Dimension multiplier based on Tickspeed upgrade counts ⌬",
-      effect: () => Decimal.pow(10, new Decimal(Tickspeed.totalUpgrades).times((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600).div(10)).clampMin(1),
+      effect: () => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
+        return Decimal.pow(10, new Decimal(Tickspeed.totalUpgrades).times((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600).div(10)).clampMin(1)},
       formatEffect: value => formatX(value, 3, 3)
     }
   },
@@ -206,10 +226,12 @@ export const eternityChallenges = [
     reward: {
       description: "Time Dimension multiplier based on Infinities",
       effect: completions => {
+        if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return new Decimal(1);
         const mult = Currency.infinitiesTotal.value.times(2.783e-6).pow(0.4 + 0.1 * completions).clampMin(1);
         return mult.powEffectOf(TimeStudy(31));
       },
       formatEffect: value => {
+        if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return "×1.0";
         // Since TS31 is already accounted for in the effect prop, we need to "undo" it to display the base value here
         const mult = formatX(value, 2, 1);
         return TimeStudy(31).canBeApplied
@@ -219,7 +241,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Time Dimension power based on Infinities ⌬",
-      effect: () => 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 500000  * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)),
+      effect: () => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 + (Decimal.log10(Currency.infinities.value.add(1)) / 500000  * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600))},
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -242,7 +265,8 @@ export const eternityChallenges = [
     },
     vReward:{
       description: "⌬ Reduce free Tickspeed upgrade scaling ⌬",
-      effect: completions => 1 - (0.0005 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 - (0.0005 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)},
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   },
@@ -262,12 +286,14 @@ export const eternityChallenges = [
     failedRestriction: "(Too slow for more)",
     reward: {
       description: "Infinity Dimension cost multipliers are reduced",
-      effect: completions => 1 - completions * 0.008,
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return 1 - completions * 0.008},
       formatEffect: value => `x${formatPow(value, 3, 3)}`
     },
     vReward:{
       description: "⌬ Increase Infinity Dimension caps ⌬",
-      effect: completions => Math.max(1, 1/(1-(0.008 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600))),
+      effect: completions => {if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[9]>=8) return 1;
+        return Math.max(1, 1/(1-(0.008 * completions) * ((Ra.pets.v.level - 25) / 75 + V.spaceTheorems / 600)))},
       formatEffect: value => `${formatPow(value, 3, 3)}`
     }
   }

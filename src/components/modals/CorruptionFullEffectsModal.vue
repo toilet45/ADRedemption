@@ -19,10 +19,7 @@ export default {
     nerfs() {
       return [
         // Does this that hard? What on earth making you so arrogant that you could nerf player without telling them why? --sxy
-        "Placeholder for general nerfs like 305,311~313",
-        `Placeholder with format number: ${format(Number.MAX_VALUE, 2)}`,
-        `Placeholder with Precentage number: ${formatPercents(0.5)} as effective`,
-        `Placeholder with Int number: ${formatInt(10)}`,
+        "Triad study 305, 311, 312, 313 are severely nerfed",
         "　",
         "Prestige Limits:",
         "All prestige currencies recieve an exponent",
@@ -72,7 +69,7 @@ export default {
         "TT cost is more expensive",
         "TT generation from glyphs is disabled",
         "TD gain an exponent",
-        "Begin from level 4, Triad studies are disabled and some studies recieve heavy nerfs",
+        "[Nerf discussing] Begin from level 4, Triad studies are disabled and some studies recieve heavy nerfs",
         "Begin from level 8, Charged upgrades are disabled and so are EC rewards",
       ];
     }

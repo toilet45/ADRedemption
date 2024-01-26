@@ -1,5 +1,6 @@
 import { GameMechanicState, SetPurchasableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 class ChargedInfinityUpgradeState extends GameMechanicState {
   constructor(config, upgrade) {
@@ -64,6 +65,7 @@ export class InfinityUpgradeState extends SetPurchasableMechanicState {
   }
 
   get canCharge() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.hiddenEight[player.mending.corruption[9]]) return false;
     return this.isBought &&
       this.hasChargeEffect &&
       !this.isCharged &&

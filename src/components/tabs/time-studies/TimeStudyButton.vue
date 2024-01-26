@@ -125,8 +125,8 @@ export default {
     },
     customCostStr() {
       const ttStr = this.setup.isSmall
-        ? `${formatInt(this.costNumber)} TT`
-        : quantifyInt("Time Theorem", this.costNumber);
+        ? `${formatInt(this.config.cost)} TT`
+        : quantifyInt("Time Theorem", this.config.cost);
       const stStr = this.setup.isSmall
         ? `${formatInt(this.STCost)} ST`
         : quantifyInt("Space Theorem", this.STCost);

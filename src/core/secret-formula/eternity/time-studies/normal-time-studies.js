@@ -733,7 +733,7 @@ export const normalTimeStudies = [
     description: "Antimatter Dimension multiplier based on total Space Theorems.",
     effect: () => {
       let x = Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1);
-      //if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
+      if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
       return x;
     },
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 7,
@@ -747,7 +747,11 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [102],
     description: "Infinity Dimension multiplier based on total Space Theorems.",
-    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    effect: () => {
+      let x = Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1)
+      if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
+      return x;
+    },
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 8,
     formatEffect: value => formatX(value, 2, 1)
   },
@@ -759,7 +763,11 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: [103],
     description: "Time Dimension multiplier based on total Space Theorems.",
-    effect: () => Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1),
+    effect: () => {
+      let x = Decimal.pow(V.spaceTheorems,V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).pow(V.spaceTheorems).max(1)
+      if(CorruptionData.isCorrupted) x=Decimal.pow(Decimal.log2(x.plus(1)),20);
+      return x;
+    },
     unlocked: () => Ra.unlocks.unlockHardV.effectOrDefault(0) >= 9,
     formatEffect: value => formatX(value, 2, 1)
   },
