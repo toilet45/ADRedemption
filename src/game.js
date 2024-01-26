@@ -1132,9 +1132,12 @@ export function getTTPerSecond() {
   if (GlyphAlteration.isAdded("dilation")) ttMult.times(getSecondaryGlyphEffect("dilationTTgen"));
 
   // Glyph TT generation
-  const glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
+  let glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
     ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.ttgen[player.mending.corruption[9]]) {
+      glyphTT=0;
+    }
 
   // Dilation TT generation
   const dilationTT = DilationUpgrade.ttGenerator.isBought

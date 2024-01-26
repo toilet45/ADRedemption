@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 
 import { DimensionState } from "./dimension";
 
@@ -256,6 +257,10 @@ class TimeDimensionState extends DimensionState {
       mult = mult.pow(0.5);
     } else if (V.isSuperRunning) {
       mult = mult.pow(0.000001);
+    }
+
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      mult = mult.pow(corruptionPenalties.soF.tdpow[player.mending.corruption[9]])
     }
 
     return mult;

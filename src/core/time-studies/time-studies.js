@@ -162,6 +162,9 @@ export class TimeStudyState extends GameMechanicState {
   }
 
   get cost() {
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      return this.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]];
+    }
     return this.config.cost;
   }
 

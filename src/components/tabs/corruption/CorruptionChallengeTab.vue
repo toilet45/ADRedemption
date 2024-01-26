@@ -291,7 +291,8 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(9, $event)"
         />
-        Avaliable Alchemy effect ^{{format(localPenalties.soF.ttcost[this.corruptions[9]], 3, 3)}}.
+        Studies TT cost ×{{format(localPenalties.soF.ttcost[this.corruptions[9]], 0, 0)}}. <br>
+        TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}.
       </div>
     </div>
     <div class="button-container">
