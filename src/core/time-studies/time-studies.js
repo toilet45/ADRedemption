@@ -181,6 +181,9 @@ export class TimeStudyState extends GameMechanicState {
   }
 
   get isAffordable() {
+    if (player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[5]>=6&&this.type==3) {
+      return false;
+    }
     return Currency.timeTheorems.gte(this.cost);
   }
 

@@ -92,7 +92,7 @@ class AlchemyResourceState extends GameMechanicState {
         case 5:
           return 1.2;
         case 8:
-          return Decimal.pow10(6e9);
+          return Decimal.pow10(9e99);
         case 11:
           return 0.3;
       }
