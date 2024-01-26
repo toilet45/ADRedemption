@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 /**
  * @abstract
@@ -82,7 +83,12 @@ TimeTheoremPurchaseType.am = new class extends TimeTheoremPurchaseType {
 
   get currency() { return Currency.antimatter; }
   get costBase() { return DC.E20000; }
-  get costIncrement() { return DC.E20000; }
+  get costIncrement() { 
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      return DC.E20000.times(corruptionPenalties.toD.hiddenFive[player.mending.corruption[7]]);
+    }
+    return DC.E20000; 
+  }
 }();
 
 TimeTheoremPurchaseType.ip = new class extends TimeTheoremPurchaseType {
@@ -91,7 +97,12 @@ TimeTheoremPurchaseType.ip = new class extends TimeTheoremPurchaseType {
 
   get currency() { return Currency.infinityPoints; }
   get costBase() { return DC.D1; }
-  get costIncrement() { return DC.E100; }
+  get costIncrement() { 
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      return DC.E100.times(corruptionPenalties.toD.hiddenFive[player.mending.corruption[7]]);
+    }
+    return DC.E100; 
+  }
 }();
 
 TimeTheoremPurchaseType.ep = new class extends TimeTheoremPurchaseType {
@@ -100,7 +111,12 @@ TimeTheoremPurchaseType.ep = new class extends TimeTheoremPurchaseType {
 
   get currency() { return Currency.eternityPoints; }
   get costBase() { return DC.D1; }
-  get costIncrement() { return DC.D2; }
+  get costIncrement() { 
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      return DC.D2.times(corruptionPenalties.toD.hiddenFive[player.mending.corruption[7]]);
+    }
+    return DC.D2; 
+  }
 
   bulkCost(amount) {
     if (Perk.ttFree.canBeApplied) return this.cost.times(this.costIncrement.pow(amount - 1));

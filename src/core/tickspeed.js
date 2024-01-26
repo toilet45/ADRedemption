@@ -1,6 +1,7 @@
 import { DC } from "./constants";
 import { Effects } from "./game-mechanics/effects";
 import { Ra, V } from "./globals";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
@@ -77,9 +78,14 @@ export function getTickSpeedMultiplier() {
   galaxies *= 1 + ImaginaryUpgrade(9).effectOrDefault(0);
   if (Pelle.isDoomed) galaxies *= 0.5;
 
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    galaxies *= (corruptionPenalties.galWeak.strength[player.mending.corruption[3]])
+  };
+
   galaxies *= Pelle.specialGlyphEffect.power;
   const perGalaxy = DC.D0_965;
-  return perGalaxy.pow(galaxies - 2).times(baseMultiplier);
+  let finalAnswer = perGalaxy.pow(galaxies - 2).times(baseMultiplier);
+  return finalAnswer;
 }
 
 export function buyTickSpeed() {
@@ -160,7 +166,11 @@ export const Tickspeed = {
     let tickspeed = Effarig.isRunning
       ? Effarig.tickspeed
       : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
-    if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        let corruptPen = new Decimal(1).div(corruptionPenalties.tickExtension[player.mending.corruption[5]]);
+        tickspeed = tickspeed.pow(corruptPen);
+      };
+      if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 
@@ -279,11 +289,17 @@ export const FreeTickspeed = {
       oldApproximation = approximation;
       approximation = newtonsMethod(approximation);
     } while (approximation < oldApproximation && ++counter < 100);
-    const purchases = Math.floor(approximation);
+    let purchases = Math.floor(approximation);
+    let originalPurchases = purchases;
     // This undoes the function we're implicitly applying to costs (the "+ 1") is because we want
     // the cost of the next upgrade.
-    const next = Decimal.exp(priceToCap + boughtToCost(purchases + 1) * logTickmult);
-    this.multToNext = Decimal.exp((boughtToCost(purchases + 1) - boughtToCost(purchases)) * logTickmult);
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      purchases /= corruptionPenalties.tickExtension[player.mending.corruption[5]];
+      purchases = Math.floor(purchases);
+    };
+
+    const next = Decimal.exp(priceToCap + boughtToCost(originalPurchases + 1) * logTickmult);
+    this.multToNext = Decimal.exp((boughtToCost(originalPurchases + 1) - boughtToCost(originalPurchases)) * logTickmult);
     
     return {
       newAmount: purchases + FreeTickspeed.softcap,

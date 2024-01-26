@@ -162,15 +162,18 @@ export class TimeStudyState extends GameMechanicState {
   }
 
   get cost() {
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      return this.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]];
+    }
     return this.config.cost;
   }
 
   get STCost() {
     let base = this.config.STCost;
     // owo corruption 8 idk--sxy
-    if (player.mending.corruptionChallenge.corruptedMend) {
+    /*if (player.mending.corruptionChallenge.corruptedMend) {
       base += corruptionPenalties.spaceTuition[player.mending.corruption[8]];
-    }
+    }*/
     return VUnlocks.raUnlock.canBeApplied
       ? base - 2
       : base;
@@ -181,6 +184,9 @@ export class TimeStudyState extends GameMechanicState {
   }
 
   get isAffordable() {
+    if (player.mending.corruptionChallenge.corruptedMend&&(player.mending.corruption[5]>=6||corruptionPenalties.soF.hiddenThree[player.mending.corruption[9]])&&this.type==3) {
+      return false;
+    }
     return Currency.timeTheorems.gte(this.cost);
   }
 

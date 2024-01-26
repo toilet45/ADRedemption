@@ -1,5 +1,6 @@
 import { DC } from "../constants";
 import { Currency } from "../currency";
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { WarpUpgrade } from "../warp-upgrades";
 
 import { DimensionState } from "./dimension";
@@ -475,7 +476,10 @@ export const InfinityDimensions = {
 
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
     const m = TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :0;
-    const multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
+    let multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])
+    }
     return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
   }
 };

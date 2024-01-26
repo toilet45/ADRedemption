@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     update() {
-      this.isCapped = this.config.upgrade.value === 0;
+      this.isCapped = (this.config.upgrade.value === 0);
       this.isAffordable = this.config.upgrade.isAffordable && !this.isCapped;
       //const hasAutobuyer = this.config.upgrade.hasAutobuyer;
       //const autobuyer = Autobuyer.blackHolePower(this.config.upgrade.id);

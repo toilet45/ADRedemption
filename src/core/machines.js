@@ -31,6 +31,7 @@ export const MachineHandler = {
     rmGain = rmGain.times(this.realityMachineMultiplier);
     if (player.mending.corruptionChallenge.corruptedMend) {
       rmGain = rmGain.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+      rmGain = rmGain.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
     }
     return rmGain.floor();
   },

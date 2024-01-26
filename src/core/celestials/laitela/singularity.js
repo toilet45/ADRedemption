@@ -231,7 +231,9 @@ export const Singularity = {
     let x = Math.floor(Math.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases) *
       SingularityMilestone.singularityMult.effectOrDefault(1) *
       (1 + IU10)) * MMBoostSing;
-    
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        x = Math.ceil(x**corruptionPenalties.repSing.sing[player.mending.corruption[8]]);
+      }//this looks useless bruh--sxy
     return x;
   },
 
@@ -272,9 +274,9 @@ export const Singularity = {
 
     Currency.darkEnergy.reset();
     Currency.singularities.add(this.singularitiesGained);
-    if (player.mending.corruptionChallenge.corruptedMend) {
+    /*if (player.mending.corruptionChallenge.corruptedMend) {
       Currency.singularities.value = Math.pow(Currency.singularities.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
-    }
+    }*/
     for (const quote of Laitela.quotes.all) {
       if (quote.requirement) {
         quote.show();

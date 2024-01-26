@@ -1,5 +1,6 @@
 <script>
 import CostDisplay from "@/components/CostDisplay";
+import { corruptionPenalties } from "../../../core/secret-formula/mending/corruption";
 
 export default {
   name: "TimeStudyButton",
@@ -110,11 +111,17 @@ export default {
       return this.eternityChallengeRunning ? "o-time-study-eternity-challenge--running" : "";
     },
     config() {
-      return { ...this.study.config, formatCost: value => (value >= 1e6 ? format(value) : formatInt(value)) };
+      return { ...this.study.config, cost: (player.mending.corruptionChallenge.corruptedMend?this.study.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]]:this.study.config.cost), formatCost: value => (value >= 1e6 ? format(value) : formatInt(value)) };
     },
     showDefaultCostDisplay() {
       const costCond = (this.showCost && !this.showStCost) || this.STCost === 0;
       return !this.setup.isSmall && !this.doomedRealityStudy && costCond;
+    },
+    costNumber(){
+      if (player.mending.corruptionChallenge.corruptedMend) {
+      return this.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]];
+    }
+    return this.config.cost;
     },
     customCostStr() {
       const ttStr = this.setup.isSmall

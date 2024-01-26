@@ -1,5 +1,5 @@
 <script>
-import ExpoBlackHoleUpgradeButton from "@/components/tabs/black-hole/BlackHoleUpgradeButton";
+import ExpoBlackHoleUpgradeButton from "@/components/tabs/black-hole/ExpoBlackHoleUpgradeButton";
 
 export default {
   name: "ExpoBlackHoleUpgradeRow",

@@ -16,7 +16,19 @@ export const Kohler = {
   quotes: Quotes.kohler,
   get symbol(){ 
     return false ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
-  }
+  },
+
+  get unlockProgress() {
+    let Progress = 5;
+    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/6,15)
+    Progress += stage1;
+    return parseFloat(Progress.toFixed(2));
+  },
+  checkForUnlocks() {
+    for (const info of KohlerProgressUnlocks.all) {
+      info.unlock();
+    }
+  },
 };
 
 class KohlerProgressUnlockState extends BitUpgradeState {
@@ -24,11 +36,11 @@ class KohlerProgressUnlockState extends BitUpgradeState {
   set bits(value) { player.celestials.kohler.unlockProgress = value; }
 
   get isEffectActive() {
-    return true;
+    return this.isUnlocked;
   }
 
-  get canBeUnlocked() {
-    return !this.isUnlocked && this.condition;
+  get isUnlocked() {
+    return /*!this.isUnlocked &&*/ typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
   }
 
   get description() {
@@ -44,3 +56,5 @@ export const KohlerProgressUnlocks = mapGameDataToObject(
   GameDatabase.mending.kohlerUnlockProgress.progressUnlocks,
   config => new KohlerProgressUnlockState(config)
 );
+
+EventHub.logic.on(GAME_EVENT.GAME_LOAD, () => Kohler.checkForUnlocks());

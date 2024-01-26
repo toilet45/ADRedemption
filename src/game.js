@@ -134,6 +134,8 @@ export function gainedInfinityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
+    ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
   if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(9e15))
@@ -223,6 +225,7 @@ export function gainedEternityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
 
   if (ep.gte(Decimal.pow10(1e18)) && !noSoftcap) {
@@ -478,6 +481,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (player.mending.corruptionChallenge.corruptedMend == true) {
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
+    factor = factor.pow(corruptionPenalties.galWeak.hiddenSix[player.mending.corruption[3]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
   factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
@@ -1128,9 +1132,12 @@ export function getTTPerSecond() {
   if (GlyphAlteration.isAdded("dilation")) ttMult.times(getSecondaryGlyphEffect("dilationTTgen"));
 
   // Glyph TT generation
-  const glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
+  let glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
     ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.ttgen[player.mending.corruption[9]]) {
+      glyphTT=0;
+    }
 
   // Dilation TT generation
   const dilationTT = DilationUpgrade.ttGenerator.isBought
