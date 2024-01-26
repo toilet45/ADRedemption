@@ -3,6 +3,7 @@ import { DC } from "./constants";
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
 import { MendingUpgrade } from "./mending-upgrades";
 import { Currency } from "./currency";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 function giveEternityRewards(auto) {
   player.records.bestEternity.time = Decimal.min(player.records.thisEternity.time, player.records.bestEternity.time);
@@ -294,6 +295,7 @@ class EPMultiplierState extends GameMechanicState {
   }
 
   get isAffordable() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return false;
     if (Pelle.isDoomed && Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked && Currency.eternityPoints.gte(this.cost)) return true;
     return !Pelle.isDoomed && !this.isCapped && Currency.eternityPoints.gte(this.cost);
   }

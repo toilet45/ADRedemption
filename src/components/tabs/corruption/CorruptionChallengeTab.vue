@@ -243,7 +243,8 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(5, $event)"
         />
-        Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
+        Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}. <br>
+        Time Shard Gain /{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
         <br>
         <br>
     Atomic Dilution:
@@ -265,7 +266,8 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(7, $event)"
         />
-        Replicanti, TP and Singularty gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}.
+        DT and TP gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}. <br>
+        DT gain ×{{localPenalties.toD.mult[this.corruptions[7]].toString()}}.
         <br>
         <br>
     Replicative Singularities:
@@ -276,7 +278,9 @@ export default {
           :disabled="isRunning"
           @input="corruptionSetSet(8, $event)"
         />
-        Every Space Therom cost +{{formatInt(localPenalties.repSing.rep[this.corruptions[8]])}}.
+        Replicanti gain ^{{localPenalties.repSing.rep[this.corruptions[8]].toString()}}. <br>
+        Sigularity gain ^{{localPenalties.repSing.sing[this.corruptions[8]].toString()}}. <br>
+        Dark Matter gain ^{{localPenalties.repSing.dm[this.corruptions[8]].toString()}}.
         <br>
         <br>
     Study of Forever:

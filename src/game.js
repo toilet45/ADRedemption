@@ -135,6 +135,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
     ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
+    ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
   if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(9e15))
@@ -224,6 +225,7 @@ export function gainedEternityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
 
   if (ep.gte(Decimal.pow10(1e18)) && !noSoftcap) {

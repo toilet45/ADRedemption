@@ -359,10 +359,14 @@ class AntimatterDimensionState extends DimensionState {
    * @returns {ExponentialCostScaling}
    */
   get costScale() {
+    let corruptionPen = 1
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      corruptionPen = corruptionPenalties.toD.hiddenEight[player.mending.corruption[7]];
+    }
     return new ExponentialCostScaling({
       baseCost: NormalChallenge(6).isRunning ? this._c6BaseCost : this._baseCost,
       baseIncrease: NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier,
-      costScale: Player.dimensionMultDecrease,
+      costScale: Player.dimensionMultDecrease**corruptionPen,
       scalingCostThreshold: Number.MAX_VALUE
     });
   }
@@ -371,7 +375,8 @@ class AntimatterDimensionState extends DimensionState {
    * @returns {Decimal}
    */
   get cost() {
-    return this.costScale.calculateCost(Math.floor(this.bought / 10) + this.costBumps);
+    let primeAnswer = this.costScale.calculateCost(Math.floor(this.bought / 10) + this.costBumps);
+    return primeAnswer;
   }
 
   /** @returns {number} */

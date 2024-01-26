@@ -78,14 +78,14 @@ export const corruptionPenalties = {
     atomDilution: [1, 0.7, 0.55, 0.4, 0.38, 0.35, 0.32, 0.3, 0.288, 0.27, 0.25, 0.2],
     toD: {
         power: [1, 0.65, 0.33, 0.19, 0.1, 0.045, 0.02, 0.006, 0.002, 0, 0],
-        mult: [1, 1e-2, 1e8, 1e-22, 1e-65, 1e-185, 1e-300, new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
+        mult: [1, 1e-2, 1e8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
         hiddenFive: [1, 1, 1, 1, 1, 3, 12, 50, 500, 6000, 15000, 1e5],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 8, 75, 1050, 11752]
     },
     repSing: {
         rep: [1, 0.25, 0.05, 0.01, 0.004, 0.00065, 0.0001, 1e-5, 1e-8, 1e-20, 0, 0],
-        sing: [1, 0.25, 0.1, 0.025, 0.01, 0.0025, 0.001, 2.5e-4, 1e-4, 1e-5, 1e-8, 0],
-        dm: [1, 0.2, 0.01, 1e-4, 3e-8, 2e-15, 1e-45, 1e-80, 1e-150, 0, 0, 0],
+        sing: [1, 0.9, 0.75, 0.5, 0.325, 0.15, 0.01, 0.001, 1e-4, 1e-5, 1e-8, 0],
+        dm: [1, 0.75, 0.5, 0.325, 0.15, 0.075, 0.001, 1e-4, 1e-6, 0, 0, 0],//Laitela is a place where vue display and actuall game number won't match. So like each dimensions' upgrade effect are in fact not exist. Better just dm pow.--sxy
         presGain: [1, 0.1, 0.07, 0.021, 0.0044, 0, 0, 0, 0, 0, 0, 0],
         hiddenFour: [false, false, false, false, false, true, true, true, true, true, true, true]
     },

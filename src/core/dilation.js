@@ -160,6 +160,10 @@ export function getDilationGainPerSecond() {
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
   if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    dtRate = Decimal.pow(dtRate,corruptionPenalties.toD.power[player.mending.corruption[7]]);
+    dtRate = dtRate.times(corruptionPenalties.toD.mult[player.mending.corruption[7]]);
+  }
   return dtRate;
 }
 
@@ -179,9 +183,9 @@ export function tachyonGainMultiplier() {
 export function rewardTP() {
   Currency.tachyonParticles.bumpTo(getTP(player.records.thisEternity.maxAM, true));
   //I hope this is the only place for TP,TP so weird--sxy
-  /*if (player.mending.corruptionChallenge.corruptedMend) {
-    Currency.tachyonParticles.value = Decimal.pow(Currency.tachyonParticles.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
-  }*/
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    Currency.tachyonParticles.value = Decimal.pow(Currency.tachyonParticles.value,corruptionPenalties.toD.power[player.mending.corruption[7]]);
+  }
   player.dilation.lastEP = Currency.eternityPoints.value;
 }
 

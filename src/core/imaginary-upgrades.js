@@ -1,5 +1,6 @@
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 class ImaginaryUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
@@ -135,6 +136,7 @@ class RebuyableImaginaryUpgradeState extends RebuyableMechanicState {
   }
 
   get boughtAmount() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return 0;
     return player.reality.imaginaryRebuyables[this.id];
   }
 

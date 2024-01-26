@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { corruptionPenalties } from "../mending/corruption";
 
 function dimInfinityMult() {
   return Currency.infinitiesTotal.value.times(0.2).plus(1);
@@ -237,6 +238,7 @@ export const infinityUpgrades = {
     // Normally the multiplier caps at e993k or so with 3300000 purchases, but if the cost is capped then we just give
     // an extra e7k to make the multiplier look nice
     effect: () => {
+      if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return new Decimal(1);
       if(Pelle.isDoomed && Ra.unlocks.unlockPelleIPAndEPMult.isUnlocked) return (player.IPMultPurchases >= 3300000 ? new Decimal("1e14265") : Decimal.pow(new Decimal(1.01), player.IPMultPurchases));
       return (player.IPMultPurchases >= 3300000 ? DC.E1E6 : DC.D2.pow(player.IPMultPurchases));
     },

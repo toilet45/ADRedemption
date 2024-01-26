@@ -1,5 +1,6 @@
 import { DC } from "../../constants";
 import { DimensionState } from "../../dimensions/dimension";
+import { corruptionPenalties } from "../../secret-formula/mending/corruption";
 import { TimeStudy } from "../../time-studies/normal-time-study";
 
 /**
@@ -83,7 +84,7 @@ export class DarkMatterDimensionState extends DimensionState {
 
   get powerDM() {
     if (!this.isUnlocked) return new Decimal(0);
-    return new Decimal(1 + 2 * Math.pow(1.15, this.data.powerDMUpgrades))
+    let primeAnswer= new Decimal(1 + 2 * Math.pow(1.15, this.data.powerDMUpgrades))
       .times(Laitela.realityReward)
       .times(Laitela.darkMatterMult)
       .times(this.commonDarkMult)
@@ -93,6 +94,10 @@ export class DarkMatterDimensionState extends DimensionState {
         SingularityMilestone.multFromInfinitied,
         TimeStudy(308))
       .dividedBy(Math.pow(1e4, Math.pow(this.tier - 1, 0.5)));
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        primeAnswer = primeAnswer.pow(corruptionPenalties.repSing.dm[player.mending.corruption[8]]);
+      }
+    return primeAnswer;
   }
 
   get powerDE() {
