@@ -87,8 +87,8 @@ class AlchemyResourceState extends GameMechanicState {
         case 6:
         case 7:
         case 10:
+        case 12:
           return 1;
-          
         case 5:
           return 1.2;
         case 8:
