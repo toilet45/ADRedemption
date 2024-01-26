@@ -565,7 +565,7 @@ export const ra = {
     unlockSHardV: {
       id: 23,
       id2: 0,
-      reward: "Unlock More V-Achievements, V's Superhard reality and more V-Milestones",
+      reward: "Unlock More Hard V-Achievements (not affected by Mending Upgrade 14, except Space Theorem gain), V's Superhard Reality (and assiocated Achievements) and more V-Milestones",
       pet: "v",
       level: 40,
       displayIcon: `<span class="fas fa-trophy"></span>`,
@@ -752,7 +752,7 @@ export const ra = {
       effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "laitela",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-star-of-david"></i>'
+      displayIcon: '<i class="fa-solid fa-dice-d6"></i>'
     },
     totalAntimatterDarkMatterBoost: {
       id: 14,

@@ -491,11 +491,11 @@ export const credits = {
     },
     {
       name: "sxy62146214",
-      roles: 15
+      roles: 14
     },
     {
       name: "aswefljkd",
-      roles: 18
+      roles: 14
     },
     {
       name: "beni",

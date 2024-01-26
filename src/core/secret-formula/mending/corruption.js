@@ -96,4 +96,6 @@ export const corruptionPenalties = {
         hiddenThree: [false, false, false, false, true, true, true, true, true, true, true, true],
         hiddenEight: [false, false, false, false, false, false, true, true, true, true, true, true]
     },
+    alchemyNormalcy: [1,1,1,1,1,1,1,1,1,1,1,1],
+    secondaryRejection: [1,1,1,1,1,1,1,1,1,1,1,1],
 }
