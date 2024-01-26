@@ -1,3 +1,5 @@
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
+
 export const GALAXY_TYPE = {
   NORMAL: 0,
   DISTANT: 1,
@@ -111,6 +113,12 @@ export class Galaxy {
     if (GlyphAlteration.isAdded("power")) amount *= getSecondaryGlyphEffect("powerpow");
 
     amount = Math.floor(amount);
+
+    //how do I understand galaxy scaling harder......I'll just let amount powered here--sxy
+    if (player.mending.corruptionChallenge.corruptedMend&&type !== GALAXY_TYPE.NORMAL) {
+      amount = Math.floor(amount**(corruptionPenalties.galWeak.scaling[player.mending.corruption[3]]))
+    }
+
     const tier = Galaxy.requiredTier;
     return new GalaxyRequirement(tier, amount);
   }

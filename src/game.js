@@ -134,6 +134,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
   }
   if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
     ip = ip.div(Decimal.pow10(9e15))
@@ -478,6 +479,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   if (player.mending.corruptionChallenge.corruptedMend == true) {
     factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
+    factor = factor.pow(corruptionPenalties.galWeak.hiddenSix[player.mending.corruption[3]])
     factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
   }
   factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))

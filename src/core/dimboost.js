@@ -1,5 +1,6 @@
 import { DC } from "./constants";
 import { Currency } from "./currency";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 import { WarpUpgrade } from "./warp-upgrades";
 
 export const DIMBOOST_TYPE = {
@@ -80,10 +81,13 @@ export class DimBoost {
   }
 
   static get maxBoosts() {
+    //woah nice design here--sxy
+    let corruptionMax = 1e15;
+    if (player.mending.corruptionChallenge.corruptedMend) corruptionMax = corruptionPenalties.galWeak.hiddenThree[player.mending.corruption[3]];
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
       // when giving initial boosts, so the player will still get those.
-      return Ra.unlocks.raRealUncapDimboost.isUnlocked ? Infinity : 0;
+      return Ra.unlocks.raRealUncapDimboost.isUnlocked ? corruptionMax : 0;
     }
     if (InfinityChallenge(1).isRunning) {
       // Usually, in Challenge 8, the only boosts that are useful are the first 5
@@ -99,7 +103,7 @@ export class DimBoost {
       // this case would trigger when we're in IC1.
       return 5;
     }
-    return 1e15;
+    return corruptionMax;//this might be extended later.--sxy
   }
 
   static get type() {

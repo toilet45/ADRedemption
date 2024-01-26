@@ -272,9 +272,9 @@ export const Singularity = {
 
     Currency.darkEnergy.reset();
     Currency.singularities.add(this.singularitiesGained);
-    if (player.mending.corruptionChallenge.corruptedMend) {
+    /*if (player.mending.corruptionChallenge.corruptedMend) {
       Currency.singularities.value = Math.pow(Currency.singularities.value,corruptionPenalties.secondaryRejection[player.mending.corruption[7]]);
-    }
+    }*/
     for (const quote of Laitela.quotes.all) {
       if (quote.requirement) {
         quote.show();

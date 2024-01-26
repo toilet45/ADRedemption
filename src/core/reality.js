@@ -21,6 +21,8 @@ export const GlyphSelection = {
   },
 
   glyphUncommonGuarantee(glyphList, rng) {
+    // lmao this should be disabled in Corruption lmfao--sxy
+    if (player.mending.corruptionChallenge.corruptedMend) return;
     // If no choices are rare enough and the player has the uncommon glyph perk, randomly generate
     // rarities until the threshold is passed and then assign that rarity to a random glyph
     const strengthThreshold = 1.5;

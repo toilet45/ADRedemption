@@ -6,6 +6,7 @@
  * using it, call finalize on it to write the seed out.
  */
 import { deepmerge } from "@/utility/deepmerge";
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 
 class GlyphRNG {
   static get SECOND_GAUSSIAN_DEFAULT_VALUE() {
@@ -218,7 +219,13 @@ export const GlyphGenerator = {
     // Technically getting this upgrade really changes glyph gen but at this point almost all
     // the RNG is gone anyway.
     const rarityBoost = Ra.unlocks.maxGlyphRarityIncrease.effectOrDefault(0);
-    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || MendingUpgrade(12).isBought) return rarityToStrength(100 + rarityBoost);
+    let afterRaAnswer = 100 + rarityBoost;
+    if (player.mending.corruptionChallenge.corruptedMend) {
+      afterRaAnswer = Math.pow(afterRaAnswer,corruptionPenalties.compGlyphs.rarity[player.mending.corruption[4]]);
+      afterRaAnswer *= (corruptionPenalties.compGlyphs.rarity[player.mending.corruption[4]]);
+      afterRaAnswer = Math.ceil(afterRaAnswer*100)/100;
+    };
+    if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied || MendingUpgrade(12).isBought) return rarityToStrength(afterRaAnswer);
     let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
     const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
     const increasedRarity = relicShardFactor * Effarig.maxRarityBoost +

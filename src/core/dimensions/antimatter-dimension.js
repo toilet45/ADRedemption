@@ -84,6 +84,10 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = multiplier.pow(0.000001);
   }
 
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    multiplier = multiplier.pow(corruptionPenalties.timeCompression.hiddenEight[player.mending.corruption[2]])
+  }
+
   // This power effect goes intentionally after all the nerf effects and shouldn't be moved before them
   if (AlchemyResource.inflation.isUnlocked && multiplier.gte(AlchemyResource.inflation.effectValue)) {
     multiplier = multiplier.pow(1.05);

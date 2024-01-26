@@ -64,13 +64,13 @@ export const corruptionPenalties = {
     galWeak: {
         scaling: [1, 1.1, 1.3, 1.5, 2, 2.55, 4, 7, 12, 20, 50, 450],
         strength: [1, 0.98, 0.95, 0.85, 0.8, 0.725, 0.6, 0.4, 0.25, 0.1, 0.025],
-        hiddenThree: [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE, 1e8, 1e7, 999999, 88888, 7777, 666, 55, 4, 3],
+        hiddenThree: [1e15, 1e15, 1e15, 1e8, 1e7, 999999, 88888, 7777, 666, 55, 4, 3],//so that I realize default cap is 1e15--sxy
         hiddenSix: [1, 1, 1, 1, 1, 1, 0.99, 0.96, 0.9, 0.7, 0.4, 0.1],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 9]
     },
     compGlyphs: {
         level: [1, 0.99, 0.95, 0.9, 0.8, 0.75, 0.4, 0.4, 0.25, 0.2, 0.15, 0.05],
-        rarity: [1, 0.99, 0.975, 0.95, 0.9, 0.75, 0.8, 0.5, 0.5, 0.4, 0.2, 0.1],
+        rarity: [1, 0.99, 0.975, 0.95, 0.9, 0.8, 0.8, 0.5, 0.5, 0.4, 0.2, 0.1],//below 0.7 will freeze the game, investigating--sxy
         hiddenFour: [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 6, 8],
         hiddenSeven: [false, false, false, false, false, false, false, true, true, true, true, true] // Dumb, i know, but atleast its clearly defined HERE and not around the place
     },

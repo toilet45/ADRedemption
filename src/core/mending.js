@@ -9,6 +9,7 @@ import { GameUI } from "./ui";
 import { Currency } from "./currency";
 import { CorruptionData } from "./corruption";
 import { CorruptionUpgrade, VUnlocks } from "./globals";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
@@ -240,9 +241,7 @@ export function mendingReset() {
     player.reality.unlockedEC = 0;
     Perks.find(0).isBought = true; //give START to fix a bug for hardcoded first Reality Glyph reward
     Perks.find(0).onPurchased();
-    if (MendingUpgrade(2).isBought){
-      Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: 70, rawLevel:70 },undefined, 'power'));
-    } // thanks to yodi555
+    
     player.realities = MendingUpgrade(2).isBought ? 10000 : 0;
     for (const perkId of [10, 12, 13, 14, 15, 16, 17, 30, 31, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 70, 71, 72, 73, 80, 81, 82, 83, 100, 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205]) {
       const perk = Perks.find(perkId); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
@@ -467,6 +466,22 @@ export function mendingReset() {
       player.mending.corruptionChallenge.corruptedMend = true
     }
     CorruptionData.update()
+
+    if (MendingUpgrade(2).isBought){
+      let MedingInitLevel=70;
+      let MedingInitRarity=70;
+      if (player.mending.corruptionChallenge.corruptedMend) {
+        MedingInitLevel = Math.pow(MedingInitLevel,corruptionPenalties.compGlyphs.level[player.mending.corruption[4]]);
+        MedingInitLevel *= (corruptionPenalties.compGlyphs.level[player.mending.corruption[4]]);
+        MedingInitLevel = Math.ceil(MedingInitLevel);
+        MedingInitRarity = Math.pow(MedingInitRarity,corruptionPenalties.compGlyphs.rarity[player.mending.corruption[4]]);
+        MedingInitRarity *= (corruptionPenalties.compGlyphs.rarity[player.mending.corruption[4]]);
+        MedingInitRarity = Math.ceil(MedingInitRarity*100)/100;
+      };
+      Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: MedingInitLevel, rawLevel:MedingInitRarity },undefined, 'power'));
+    } // thanks to yodi555
+    // this has to be moved here to get corrupt condition--sxy
+
     Player.resetRequirements("mending");
     //end reseting all the things
 

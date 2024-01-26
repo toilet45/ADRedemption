@@ -168,9 +168,9 @@ export class TimeStudyState extends GameMechanicState {
   get STCost() {
     let base = this.config.STCost;
     // owo corruption 8 idk--sxy
-    if (player.mending.corruptionChallenge.corruptedMend) {
+    /*if (player.mending.corruptionChallenge.corruptedMend) {
       base += corruptionPenalties.spaceTuition[player.mending.corruption[8]];
-    }
+    }*/
     return VUnlocks.raUnlock.canBeApplied
       ? base - 2
       : base;

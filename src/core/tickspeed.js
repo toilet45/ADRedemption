@@ -1,6 +1,7 @@
 import { DC } from "./constants";
 import { Effects } from "./game-mechanics/effects";
 import { Ra, V } from "./globals";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
@@ -76,6 +77,10 @@ export function getTickSpeedMultiplier() {
   galaxies *= getAdjustedGlyphEffect("realitygalaxies");
   galaxies *= 1 + ImaginaryUpgrade(9).effectOrDefault(0);
   if (Pelle.isDoomed) galaxies *= 0.5;
+
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    galaxies *= (corruptionPenalties.galWeak.strength[player.mending.corruption[3]])
+  };
 
   galaxies *= Pelle.specialGlyphEffect.power;
   const perGalaxy = DC.D0_965;

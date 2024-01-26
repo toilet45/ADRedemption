@@ -1,3 +1,5 @@
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
+
 export const AutoGlyphProcessor = {
   get scoreMode() {
     return player.reality.glyphs.filter.select;
@@ -363,6 +365,11 @@ export function getGlyphLevelInputs() {
   if (Achievement(193).isUnlocked){
     scaledLevel *= 1.0808;
   }
+  if (player.mending.corruptionChallenge.corruptedMend) {
+    scaledLevel = Math.pow(scaledLevel,corruptionPenalties.compGlyphs.level[player.mending.corruption[4]]);
+    scaledLevel *= (corruptionPenalties.compGlyphs.level[player.mending.corruption[4]]);
+    scaledLevel = Math.ceil(Math.max(1,scaledLevel));
+  };
   return {
     ep: sources.ep,
     repl: sources.repl,

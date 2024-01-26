@@ -20,7 +20,7 @@ export const Kohler = {
 
   get unlockProgress() {
     let Progress = 5;
-    let stage1 = Math.min(15*CorruptionData.corruptionChallenge.recordScore/1e6,15)
+    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/6,15)
     Progress += stage1;
     return parseFloat(Progress.toFixed(2));
   },
