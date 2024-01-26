@@ -63,7 +63,7 @@ export class BigCrunchAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   set time(value) {
-    this.data.time = value;
+    this.data.time = new Decimal(value);
   }
 
   get xHighest() {
