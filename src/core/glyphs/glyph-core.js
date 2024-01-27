@@ -1,6 +1,7 @@
 import { GameMechanicState } from "../game-mechanics";
 import { CorruptionUpgrade, MendingUpgrade, V } from "../globals";
 import { RealityUpgrade } from "../reality-upgrades";
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 
 export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "timepow",
   "dilationpow", "timeshardpow", "powermult", "powerdimboost", "powerbuy10",
@@ -347,6 +348,7 @@ export const Glyphs = {
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
+      //so here is equipment
       this.removeFromInventory(glyph);
       this.saveUndo(targetSlot);
       player.reality.glyphs.active.push(glyph);
@@ -370,6 +372,11 @@ export const Glyphs = {
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
      if (!Pelle.isDoomed) {
+      if (player.mending.corruptionChallenge.corruptedMend&&Glyphs.activeWithoutCompanion.filter(item => item.type==='cursed').length==corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]&&["cursed"].includes(this.active[targetSlot].type)&&!["cursed"].includes(glyph.type)) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
+        Modal.message.show(`You must have the min amount of cursed Glyphs equipped!`,
+          { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
+        return;
+      }//here for swap I think--sxy
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -385,6 +392,7 @@ export const Glyphs = {
     }
     else {
       //if (this.active[targetSlot].type == glyph.type) {
+        
         this.swapIntoActive(glyph, targetSlot);
         return;
       //}
@@ -422,6 +430,12 @@ export const Glyphs = {
       this.active[glyph.idx] = null;
       this.addToInventory(glyph, freeIndex, true);
     }
+    if(player.mending.corruptionChallenge.corruptedMend&&!Pelle.isDoomed){
+      for(let i=0;i<corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];i++){
+        const corruptionGlyph = Glyphs.findById(i+3)//it is very strage that they give cursed begin from 3 but whatever.--sxy
+        Glyphs.equip(corruptionGlyph,i);
+      }
+    }
     this.updateRealityGlyphEffects();
     this.updateMaxGlyphCount(true);
 
@@ -430,7 +444,8 @@ export const Glyphs = {
     // for realities shorter than a few seconds in order to stop a UI-based softlock; however at this point the time
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
-    const stillEquipped = player.reality.glyphs.active.length;
+    let stillEquipped = player.reality.glyphs.active.length;
+    if(player.mending.corruptionChallenge.corruptedMend) stillEquipped-=corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]
     const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
     if (stillEquipped && !fastReality) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
