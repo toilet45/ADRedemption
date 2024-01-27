@@ -41,7 +41,7 @@ export default {
         "Complex Glyphs:",
         "Glyph level recieves a power effect",
         "Glyph rarity recieves a power effect",
-        `Begin from level 4, some glyph slots will be forced Cursed glyphs except in Doomed: ${formatInt(this.corruptionInfos.compGlyphs.hiddenFour[this.corruptions[4]])} slots`,
+        `Begin from level 4, some glyph slots will be forced Cursed glyphs, also forbidding you being Doomed: ${formatInt(this.corruptionInfos.compGlyphs.hiddenFour[this.corruptions[4]])} slots`,
         "Begin from level 7, Alchemy is disabled",
         "　",
         "Tick Extension:",

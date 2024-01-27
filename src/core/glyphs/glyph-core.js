@@ -372,8 +372,8 @@ export const Glyphs = {
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
      if (!Pelle.isDoomed) {
-      if (player.mending.corruptionChallenge.corruptedMend&&Glyphs.activeWithoutCompanion.filter(item => item.type==='cursed').length==corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]&&["cursed"].includes(this.active[targetSlot].type)&&!["cursed"].includes(glyph.type)) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
-        Modal.message.show(`You must have the min amount of cursed Glyphs equipped!`,
+      if (player.mending.corruptionChallenge.corruptedMend&&["cursed"].includes(this.active[targetSlot].type)&&this.active[targetSlot].id>=3&&this.active[targetSlot].id<=2+corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
+        Modal.message.show(`The forced Cursed Glyphs cannot be touched!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }//here for swap I think--sxy
