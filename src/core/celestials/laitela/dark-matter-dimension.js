@@ -94,9 +94,9 @@ export class DarkMatterDimensionState extends DimensionState {
         SingularityMilestone.multFromInfinitied,
         TimeStudy(308))
       .dividedBy(Math.pow(1e4, Math.pow(this.tier - 1, 0.5)));
-      if (player.mending.corruptionChallenge.corruptedMend) {
+      /*if (player.mending.corruptionChallenge.corruptedMend) {
         primeAnswer = primeAnswer.pow(corruptionPenalties.repSing.dm[player.mending.corruption[8]]);
-      }
+      }*/
     return primeAnswer;
   }
 
@@ -271,7 +271,10 @@ export const DarkMatterDimensions = {
       dim.timeSinceLastUpdate += realDiff;
       if (dim.interval < dim.timeSinceLastUpdate) {
         const ticks = Math.floor(dim.timeSinceLastUpdate / dim.interval);
-        const productionDM = dim.amount.times(ticks).times(dim.powerDM);
+        let productionDM = dim.amount.times(ticks).times(dim.powerDM);
+        if (player.mending.corruptionChallenge.corruptedMend) {
+          productionDM = productionDM.pow(corruptionPenalties.repSing.dm[player.mending.corruption[8]]);
+        }
         if (tier === 1) {
           Currency.darkMatter.add(productionDM);
         } else {
