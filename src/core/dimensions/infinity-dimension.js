@@ -157,10 +157,19 @@ class InfinityDimensionState extends DimensionState {
     }
     production = production.times(this.multiplier);
     //mend: Inf Power Gain softcap --sxy
-    if (this.tier == 1 & production.log10() > this.infPowerSoftcap){
+    let repeats = 1;
+    /*while (factor.gte(Decimal.pow(getGameSpeedupSoftcaps(), repeats))) {
+    factor = factor.div(getGameSpeedupSoftcaps());
+    factor = factor.pow(getGameSpeedupSoftcapsExp());
+    factor = factor.times(getGameSpeedupSoftcaps());
+    repeats += 1;
+    }*/
+    if (this.tier == 1){
+      while (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcap)*repeats) {
       production = production.div(Decimal.pow10(this.infPowerSoftcap));   
       production = production.pow(0.0123456789);
       production = production.times(Decimal.pow10(this.infPowerSoftcap));
+      repeats += 1}
     }
     return production;
   }
