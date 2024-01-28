@@ -266,7 +266,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on glyph levels and Complex Glyphs level [NYI]",
+    description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on glyph levels and Complex Glyphs level.",
     effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[4] >= 4) ? 1 + Math.log(Math.log(player.mending.corruption[4] * Math.max(1,player.records.bestReality.glyphLevel)))/2 : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
