@@ -63,13 +63,13 @@ export default {
         "Singularity gains a power exponent",
         "DM gain gains a power exponent",
         `Prestige gain recieves an exponent: ^${format(this.corruptionInfos.repSing.presGain[this.corruptions[8]], 3, 3)}`,
-        "Begin from level 5, rebuyable upgrades below Celestial level are disabled",
+        "Begin from level 5, some rebuyable upgrades below Celestial level are disabled",
         "　",
         "Study of Forever:",
         "TT cost is more expensive",
         "TT generation from glyphs is disabled",
         "TD gain an exponent",
-        "[Nerf discussing] Begin from level 4, Triad studies are disabled and some studies recieve heavy nerfs",
+        "Begin from level 4, Triad studies are disabled",//studies are no longer important
         "Begin from level 8, Charged upgrades are disabled and so are EC rewards",
       ];
     }

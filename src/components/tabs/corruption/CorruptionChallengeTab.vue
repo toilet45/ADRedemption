@@ -111,6 +111,7 @@ export default {
       else {
         player.mending.corruptionChallenge.corruptedMend = false
         /*this.isRunning*/CorruptionData.isCorrupted = false
+        this.isRunning = false;
         this.nextCorrupted = false
       }
     },
@@ -156,7 +157,7 @@ export default {
           </span>
           <div
             :class="runButtonClassObject"
-            @click="startRun()"
+            @click="startRun();update()"
           >
           <i class="fa-solid fa-biohazard"></i>
           </div>

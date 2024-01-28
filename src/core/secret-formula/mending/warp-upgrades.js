@@ -86,7 +86,7 @@ export const warpUpgrades = [
   {
     name: "Hostility+",
     id: 6,
-    cost: 1e300,
+    cost: 1e60,
     requirement: () => Ra.unlocks.Hostility.isUnlocked ? "Mend with a total hostility level of at least 60" : "Reach Pelle Level 75 to see unlock condition",
     hasFailed: () => !player.mending.corruptionChallenge.corruptedMend || !player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 60,
     checkRequirement: () => player.mending.corruptionChallenge.corruptedMend && player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) >= 60,

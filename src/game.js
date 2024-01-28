@@ -170,6 +170,7 @@ export function gainedMendingPoints(){
     TimeStudy(321),
     TimeStudy(322),
     TimeStudy(323),
+    CorruptionUpgrade(13),
     MendingUpgradeMultiplier,
     Ra.unlocks.boostMVRGain
     );

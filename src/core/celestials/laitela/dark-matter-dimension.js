@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { CorruptionUpgrade } from "../../corruption-upgrades";
 import { DimensionState } from "../../dimensions/dimension";
 import { corruptionPenalties } from "../../secret-formula/mending/corruption";
 import { TimeStudy } from "../../time-studies/normal-time-study";
@@ -291,6 +292,7 @@ export const DarkMatterDimensions = {
     if(EternityChallenge(7).completions >= 1 && Ra.unlocks.improvedECRewards.isUnlocked){ EternityChallenge(7).vReward.applyEffect(production => {
       TimeDimension(8).amount = TimeDimension(8).amount.plus(production.times(new Decimal(Enslaved.nextTickDiff).div(1000)));
     })}
+    //if(CorruptionUpgrade(15).isBought&&DarkMatterDimension(8).isUnlocked) DarkMatterDimension(8).amount=DarkMatterDimension(8).amount.plus(CorruptionUpgrade(15).effectValue*realDiff/1000)
   },
 
   reset() {
