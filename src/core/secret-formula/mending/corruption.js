@@ -86,7 +86,7 @@ export const corruptionPenalties = {
         rep: [1, 0.25, 0.05, 0.01, 0.004, 0.00065, 0.0001, 1e-5, 1e-8, 1e-20, 0, 0],
         sing: [1, 0.9, 0.75, 0.5, 0.325, 0.15, 0.01, 0.001, 1e-4, 1e-5, 1e-8, 0],
         dm: [1, 0.75, 0.5, 0.325, 0.15, 0.075, 0.001, 1e-4, 1e-6, 0, 0, 0],//Laitela is a place where vue display and actuall game number won't match. So like each dimensions' upgrade effect are in fact not exist. Better just dm pow.--sxy
-        presGain: [1, 0.1, 0.07, 0.021, 0.0044, 0, 0, 0, 0, 0, 0, 0],
+        presGain: [1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.5, 0.4, 0.25],
         hiddenFour: [false, false, false, false, false, true, true, true, true, true, true, true]
     },
     soF: {

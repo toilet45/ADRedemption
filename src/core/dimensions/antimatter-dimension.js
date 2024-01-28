@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-import { V } from "../globals";
+import { CorruptionUpgrade, V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -180,6 +180,10 @@ function applyNDPowers(mult, tier) {
 
   multiplier = multiplier.pow(VUnlocks.adPow.effectOrDefault(1));
 
+  if (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1]>=5) {
+    multiplier = multiplier.pow(CorruptionUpgrade(17).effectOrDefault(1));
+  }
+      
   if (PelleStrikes.infinity.hasStrike && !MendingUpgrade(10).isBought) {
     multiplier = multiplier.pow(0.5);
   }

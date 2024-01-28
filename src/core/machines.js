@@ -30,7 +30,9 @@ export const MachineHandler = {
     if (rmGain.gte(1) && rmGain.lt(10)) rmGain = new Decimal(27 / 4000 * log10FinalEP - 26);
     rmGain = rmGain.times(this.realityMachineMultiplier);
     if (player.mending.corruptionChallenge.corruptedMend) {
-      rmGain = rmGain.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+      let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
+    if(CorruptionUpgrade(20).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
+      rmGain = rmGain.pow(corruptionPrestigeLimits)
       rmGain = rmGain.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
     }
     return rmGain.floor();

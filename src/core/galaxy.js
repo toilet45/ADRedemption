@@ -1,3 +1,4 @@
+import { CorruptionUpgrade } from "./corruption-upgrades";
 import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export const GALAXY_TYPE = {
@@ -116,7 +117,9 @@ export class Galaxy {
 
     //how do I understand galaxy scaling harder......I'll just let amount powered here--sxy
     if (player.mending.corruptionChallenge.corruptedMend&&type !== GALAXY_TYPE.NORMAL) {
-      amount = Math.floor(amount**(corruptionPenalties.galWeak.scaling[player.mending.corruption[3]]))
+      let galWeakScaling = corruptionPenalties.galWeak.scaling[player.mending.corruption[3]];
+      if(CorruptionUpgrade(19).isBought) galWeakScaling = Math.pow(galWeakScaling,0.5)
+      amount = Math.floor(amount**(galWeakScaling))
     }
 
     const tier = Galaxy.requiredTier;

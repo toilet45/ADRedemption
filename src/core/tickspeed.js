@@ -79,7 +79,9 @@ export function getTickSpeedMultiplier() {
   if (Pelle.isDoomed) galaxies *= 0.5;
 
   if (player.mending.corruptionChallenge.corruptedMend) {
-    galaxies *= (corruptionPenalties.galWeak.strength[player.mending.corruption[3]])
+    let galWeakStrength = corruptionPenalties.galWeak.strength[player.mending.corruption[3]];
+    if(CorruptionUpgrade(19).isBought) galWeakStrength = Math.min(galWeakStrength*1.4,1)
+    galaxies *= (galWeakStrength)
   };
 
   galaxies *= Pelle.specialGlyphEffect.power;
