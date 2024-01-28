@@ -134,7 +134,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
-    if(CorruptionUpgrade(20).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
+    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
     ip = ip.pow(corruptionPrestigeLimits)
     ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
     ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
@@ -227,7 +227,7 @@ export function gainedEternityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
-    if(CorruptionUpgrade(20).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
+    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
     ep = ep.pow(corruptionPrestigeLimits)
     ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
