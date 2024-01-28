@@ -110,7 +110,7 @@ export default {
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false
-        this.isRunning = false
+        /*this.isRunning*/CorruptionData.isCorrupted = false
         this.nextCorrupted = false
       }
     },

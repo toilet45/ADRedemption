@@ -50,6 +50,7 @@ export const Teresa = {
     return Math.max(250 * Math.pow(this.pouredAmount / 1e24, 0.1), 1);
   },
   get runRewardMultiplier() {
+    if(this.rewardMultiplier(player.celestials.teresa.bestRunAM)===Infinity) return 1e308;
     return this.rewardMultiplier(player.celestials.teresa.bestRunAM);
   },
   get isRunning() {

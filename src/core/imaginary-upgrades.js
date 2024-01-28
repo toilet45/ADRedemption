@@ -141,7 +141,12 @@ class RebuyableImaginaryUpgradeState extends RebuyableMechanicState {
   }
 
   get canBeApplied() {
-    return super.canBeApplied && !this.pelleDisabled;
+    return super.canBeApplied && !this.pelleDisabled && corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]];
+  }
+
+  get isAvailableForPurchase() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return false;
+    return true;
   }
 
   get pelleDisabled() {

@@ -133,6 +133,11 @@ class RebuyableRealityUpgradeState extends RebuyableMechanicState {
     return player.reality.rebuyables[this.id];
   }
 
+  get isAvailableForPurchase() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return false;
+    return true;
+  }
+
   set boughtAmount(value) {
     player.reality.rebuyables[this.id] = value;
   }

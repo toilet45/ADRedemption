@@ -228,7 +228,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: () => `If Dimensional Limitations corruption is 5 or higher, Antimatter dimensions gain a power effect based on highest Glyph Level this mend.`,
-    effect: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length!=0) ? 1 + Math.log(player.records.bestReality.glyphLevelSet) : 1,
+    effect: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length!=0) ? 1 + Math.log(player.records.bestReality.glyphLevel)/10 : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
   {

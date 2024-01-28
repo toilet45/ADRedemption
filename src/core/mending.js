@@ -456,7 +456,7 @@ export function mendingReset() {
         player.mending.corruptionChallenge.records = player.mending.corruption
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
-     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.corruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
+     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
      player.mending.corruptionUpgradeBits = 0 // Basically a respec call
      player.mending.corruptionChallenge.corruptedMend = false
    }
