@@ -1,4 +1,5 @@
 import { DC } from "../../constants";
+import { CorruptionUpgrade } from "../../corruption-upgrades";
 import { DimensionState } from "../../dimensions/dimension";
 import { corruptionPenalties } from "../../secret-formula/mending/corruption";
 import { TimeStudy } from "../../time-studies/normal-time-study";
@@ -94,9 +95,9 @@ export class DarkMatterDimensionState extends DimensionState {
         SingularityMilestone.multFromInfinitied,
         TimeStudy(308))
       .dividedBy(Math.pow(1e4, Math.pow(this.tier - 1, 0.5)));
-      if (player.mending.corruptionChallenge.corruptedMend) {
+      /*if (player.mending.corruptionChallenge.corruptedMend) {
         primeAnswer = primeAnswer.pow(corruptionPenalties.repSing.dm[player.mending.corruption[8]]);
-      }
+      }*/
     return primeAnswer;
   }
 
@@ -271,7 +272,10 @@ export const DarkMatterDimensions = {
       dim.timeSinceLastUpdate += realDiff;
       if (dim.interval < dim.timeSinceLastUpdate) {
         const ticks = Math.floor(dim.timeSinceLastUpdate / dim.interval);
-        const productionDM = dim.amount.times(ticks).times(dim.powerDM);
+        let productionDM = dim.amount.times(ticks).times(dim.powerDM);
+        if (player.mending.corruptionChallenge.corruptedMend) {
+          productionDM = productionDM.pow(corruptionPenalties.repSing.dm[player.mending.corruption[8]]);
+        }
         if (tier === 1) {
           Currency.darkMatter.add(productionDM);
         } else {
@@ -288,6 +292,7 @@ export const DarkMatterDimensions = {
     if(EternityChallenge(7).completions >= 1 && Ra.unlocks.improvedECRewards.isUnlocked){ EternityChallenge(7).vReward.applyEffect(production => {
       TimeDimension(8).amount = TimeDimension(8).amount.plus(production.times(new Decimal(Enslaved.nextTickDiff).div(1000)));
     })}
+    if(CorruptionUpgrade(15).isBought&&DarkMatterDimension(8).isUnlocked) DarkMatterDimension(8).amount=DarkMatterDimension(8).amount.plus(CorruptionUpgrade(15).effectValue*realDiff/1000)
   },
 
   reset() {

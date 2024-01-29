@@ -1,5 +1,6 @@
 import { MultiplierTabHelper } from "./helper-functions";
 import { MultiplierTabIcons } from "./icons";
+import { corruptionPenalties } from "../mending/corruption";
 
 // See index.js for documentation
 export const gamespeed = {

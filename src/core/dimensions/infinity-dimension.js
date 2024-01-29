@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { CorruptionUpgrade } from "../corruption-upgrades";
 import { Currency } from "../currency";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { WarpUpgrade } from "../warp-upgrades";
@@ -157,10 +158,19 @@ class InfinityDimensionState extends DimensionState {
     }
     production = production.times(this.multiplier);
     //mend: Inf Power Gain softcap --sxy
-    if (this.tier == 1 & production.log10() > this.infPowerSoftcap){
+    let repeats = 1;
+    /*while (factor.gte(Decimal.pow(getGameSpeedupSoftcaps(), repeats))) {
+    factor = factor.div(getGameSpeedupSoftcaps());
+    factor = factor.pow(getGameSpeedupSoftcapsExp());
+    factor = factor.times(getGameSpeedupSoftcaps());
+    repeats += 1;
+    }*/
+    if (this.tier == 1){
+      while (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcap)*repeats) {
       production = production.div(Decimal.pow10(this.infPowerSoftcap));   
       production = production.pow(0.0123456789);
       production = production.times(Decimal.pow10(this.infPowerSoftcap));
+      repeats += 1}
     }
     return production;
   }
@@ -216,6 +226,10 @@ class InfinityDimensionState extends DimensionState {
 
     if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {
       mult = mult.pow(0.5);
+    }
+
+    if (CorruptionUpgrade(24).isBought&&player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[8]>=5){
+      mult = mult.pow(CorruptionUpgrade(24).effectOrDefault(1));
     }
     return mult;
   }

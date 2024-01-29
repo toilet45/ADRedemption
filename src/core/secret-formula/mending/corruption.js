@@ -75,7 +75,7 @@ export const corruptionPenalties = {
         hiddenSeven: [false, false, false, false, false, false, false, true, true, true, true, true] // Dumb, i know, but atleast its clearly defined HERE and not around the place
     },
     tickExtension: [1, 2.5, 10, 40, 220, 950, 3150, 9000, 25000, 100000, 5e5, 1e7, 1e12], //these are inverse powers, so 10 actually means ^(1/10), 1000 actually means ^(1/1000), etc
-    atomDilution: [1, 0.7, 0.55, 0.4, 0.38, 0.35, 0.32, 0.3, 0.288, 0.27, 0.25, 0.2],
+    atomDilution: [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.35, 0.3, 0.275, 0.25, 0.2],
     toD: {
         power: [1, 0.65, 0.33, 0.19, 0.1, 0.045, 0.02, 0.006, 0.002, 0, 0],
         mult: [1, 1e-2, 1e8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
@@ -86,7 +86,7 @@ export const corruptionPenalties = {
         rep: [1, 0.25, 0.05, 0.01, 0.004, 0.00065, 0.0001, 1e-5, 1e-8, 1e-20, 0, 0],
         sing: [1, 0.9, 0.75, 0.5, 0.325, 0.15, 0.01, 0.001, 1e-4, 1e-5, 1e-8, 0],
         dm: [1, 0.75, 0.5, 0.325, 0.15, 0.075, 0.001, 1e-4, 1e-6, 0, 0, 0],//Laitela is a place where vue display and actuall game number won't match. So like each dimensions' upgrade effect are in fact not exist. Better just dm pow.--sxy
-        presGain: [1, 0.1, 0.07, 0.021, 0.0044, 0, 0, 0, 0, 0, 0, 0],
+        presGain: [1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.5, 0.4, 0.25],
         hiddenFour: [false, false, false, false, false, true, true, true, true, true, true, true]
     },
     soF: {
@@ -94,7 +94,7 @@ export const corruptionPenalties = {
         ttgen: [false, true, true, true, true, true, true, true, true, true, true, true], // the dumbest thing ive ever put in code but again, atleast its defined here so i dont have someone bitch about this later
         tdpow: [1, 0.7, 0.3, 0.08, 0.01, 3e-3, 1e-5, 1e-8, 1e-15, 1e-33, 1e-100, 0],
         hiddenThree: [false, false, false, false, true, true, true, true, true, true, true, true],
-        hiddenEight: [false, false, false, false, false, false, true, true, true, true, true, true]
+        hiddenEight: [false, false, false, false, false, false, false, false, true, true, true, true]
     },
     alchemyNormalcy: [1,1,1,1,1,1,1,1,1,1,1,1],
     secondaryRejection: [1,1,1,1,1,1,1,1,1,1,1,1],

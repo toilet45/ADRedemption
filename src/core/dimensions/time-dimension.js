@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { CorruptionUpgrade } from "../corruption-upgrades";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 
 import { DimensionState } from "./dimension";
@@ -260,7 +261,8 @@ class TimeDimensionState extends DimensionState {
     }
 
     if (player.mending.corruptionChallenge.corruptedMend) {
-      mult = mult.pow(corruptionPenalties.soF.tdpow[player.mending.corruption[9]])
+      mult = mult.pow(corruptionPenalties.soF.tdpow[player.mending.corruption[9]]);
+      if(CorruptionUpgrade(25).isBought&&player.mending.corruption[9]>=4) mult = mult.pow(CorruptionUpgrade(25).effectOrDefault(1))
     }
 
     return mult;

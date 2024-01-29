@@ -34,6 +34,20 @@ function askMendingConfirmation() {
 }
 
 export function mendingReset() {
+    // Finally, lets set up corruptions
+    // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
+    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)) {
+      let scoreCalc = CorruptionData.calcScore()
+    // console.log(corruptionChallengeScoreCalculation())
+      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
+        player.mending.corruptionChallenge.records = player.mending.corruption
+        player.mending.corruptionChallenge.recordScore = scoreCalc
+      }
+     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
+     player.mending.corruptionUpgradeBits = 0 // Basically a respec call
+     player.mending.corruptionChallenge.corruptedMend = false
+   }
+   
     if (!MendingMilestone.six.isReached){
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
@@ -151,7 +165,7 @@ export function mendingReset() {
       effarig: 0
     };
     player.celestials.ra.quoteBits = 16383;
-    if(true){
+    if(player.mending.corruptNext || !KohlerProgressUnlocks.hostileScore.isUnlocked){
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
     }
@@ -448,18 +462,7 @@ export function mendingReset() {
       maxiM: 0,
       maxRem: 0,
     }
-    // Finally, lets set up corruptions
-    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)) {
-      let scoreCalc = CorruptionData.calcScore()
-    // console.log(corruptionChallengeScoreCalculation())
-      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
-        player.mending.corruptionChallenge.records = player.mending.corruption
-        player.mending.corruptionChallenge.recordScore = scoreCalc
-      }
-     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.corruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
-     player.mending.corruptionUpgradeBits = 0 // Basically a respec call
-     player.mending.corruptionChallenge.corruptedMend = false
-   }
+    
    // Its crucial we do this after, else the player will corrupt and instantly complete a corruption
     if (player.mending.corruptNext) {
       player.mending.corruptNext = false
@@ -467,6 +470,16 @@ export function mendingReset() {
     }
     CorruptionData.update()
 
+
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]>0) {
+      let generateLevel = 6666;
+      if(CorruptionUpgrade(12).isBought) generateLevel = 666;
+      for(let i=0;i<corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];i++){
+        Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: generateLevel, rawLevel:generateLevel },undefined, 'cursed'));
+        const glyph = Glyphs.findById(i+3)//it is very strage that they give cursed begin from 3 but whatever.--sxy
+        Glyphs.equip(glyph,i);
+      }
+    }
     if (MendingUpgrade(2).isBought){
       let MedingInitLevel=70;
       let MedingInitRarity=70;
@@ -481,6 +494,7 @@ export function mendingReset() {
       Glyphs.addToInventory(GlyphGenerator.randomGlyph({ actualLevel: MedingInitLevel, rawLevel:MedingInitRarity },undefined, 'power'));
     } // thanks to yodi555
     // this has to be moved here to get corrupt condition--sxy
+    
 
     Player.resetRequirements("mending");
     //end reseting all the things

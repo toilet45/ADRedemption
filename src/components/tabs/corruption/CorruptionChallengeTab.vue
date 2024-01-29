@@ -110,7 +110,8 @@ export default {
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false
-        this.isRunning = false
+        /*this.isRunning*/CorruptionData.isCorrupted = false
+        this.isRunning = false;
         this.nextCorrupted = false
       }
     },
@@ -156,7 +157,7 @@ export default {
           </span>
           <div
             :class="runButtonClassObject"
-            @click="startRun()"
+            @click="startRun();update()"
           >
           <i class="fa-solid fa-biohazard"></i>
           </div>
@@ -302,6 +303,8 @@ export default {
       >
         Show full nerf effects of specific Hostilities
       </button>
+      <br>
+      Last two row of Hostile Upgrades are only effective in Hostile Mends, and they won't affect the number display at this page. (sry)
     </div>
     <div
       v-for="row in 5"

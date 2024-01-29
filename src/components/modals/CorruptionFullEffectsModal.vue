@@ -41,7 +41,7 @@ export default {
         "Complex Glyphs:",
         "Glyph level recieves a power effect",
         "Glyph rarity recieves a power effect",
-        `[NYI] Begin from level 4, some glyph slots will be forced Cursed glyphs: ${formatInt(this.corruptionInfos.compGlyphs.hiddenFour[this.corruptions[4]])} slots`,
+        `Begin from level 4, some glyph slots will be forced Cursed glyphs, also forbidding you being Doomed: ${formatInt(this.corruptionInfos.compGlyphs.hiddenFour[this.corruptions[4]])} slots`,
         "Begin from level 7, Alchemy is disabled",
         "　",
         "Tick Extension:",
@@ -63,13 +63,13 @@ export default {
         "Singularity gains a power exponent",
         "DM gain gains a power exponent",
         `Prestige gain recieves an exponent: ^${format(this.corruptionInfos.repSing.presGain[this.corruptions[8]], 3, 3)}`,
-        "Begin from level 5, rebuyable upgrades below Celestial level are disabled",
+        "Begin from level 5, some rebuyable upgrades below Celestial level are disabled",
         "　",
         "Study of Forever:",
         "TT cost is more expensive",
         "TT generation from glyphs is disabled",
         "TD gain an exponent",
-        "[Nerf discussing] Begin from level 4, Triad studies are disabled and some studies recieve heavy nerfs",
+        "Begin from level 4, Triad studies are disabled",//studies are no longer important
         "Begin from level 8, Charged upgrades are disabled and so are EC rewards",
       ];
     }

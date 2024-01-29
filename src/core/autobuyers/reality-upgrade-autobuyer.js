@@ -1,3 +1,4 @@
+import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { AutobuyerState } from "./autobuyer";
 
 export class RealityUpgradeAutobuyerState extends AutobuyerState {
@@ -22,7 +23,7 @@ export class RealityUpgradeAutobuyerState extends AutobuyerState {
 
   tick() {
     const upg = RealityUpgrade(this.id);
-    while (Currency.realityMachines.gte(upg.cost)) upg.purchase();
+    while (Currency.realityMachines.gte(upg.cost)&&!(this.id<=5&&player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]])) upg.purchase();
   }
 
   static get entryCount() { return 5; }

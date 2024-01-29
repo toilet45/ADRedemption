@@ -22,6 +22,11 @@ export const Kohler = {
     let Progress = 5;
     let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/6,15)
     Progress += stage1;
+    if(stage1<15){
+      return parseFloat(Progress.toFixed(2));
+    }
+    let stage2 = Math.min(15*Math.ceil(CorruptionData.recordCorruptedFragments)/30,15);
+    Progress += stage2;
     return parseFloat(Progress.toFixed(2));
   },
   checkForUnlocks() {
@@ -29,6 +34,9 @@ export const Kohler = {
       info.unlock();
     }
   },
+  setUnlockProgress() {
+    player.celestials.kohler.unlockProgress = this.unlockProgress();
+  }
 };
 
 class KohlerProgressUnlockState extends BitUpgradeState {

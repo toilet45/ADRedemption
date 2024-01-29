@@ -1,6 +1,6 @@
 import { DC } from "./constants";
 import { Effects } from "./game-mechanics/effects";
-import { Ra, V } from "./globals";
+import { CorruptionUpgrade, Ra, V } from "./globals";
 import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
 export function effectiveBaseGalaxies() {
@@ -79,7 +79,9 @@ export function getTickSpeedMultiplier() {
   if (Pelle.isDoomed) galaxies *= 0.5;
 
   if (player.mending.corruptionChallenge.corruptedMend) {
-    galaxies *= (corruptionPenalties.galWeak.strength[player.mending.corruption[3]])
+    let galWeakStrength = corruptionPenalties.galWeak.strength[player.mending.corruption[3]];
+    if(CorruptionUpgrade(19).isBought) galWeakStrength = Math.min(galWeakStrength*1.4,1)
+    galaxies *= (galWeakStrength)
   };
 
   galaxies *= Pelle.specialGlyphEffect.power;
@@ -167,7 +169,9 @@ export const Tickspeed = {
       ? Effarig.tickspeed
       : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
       if (player.mending.corruptionChallenge.corruptedMend) {
-        let corruptPen = new Decimal(1).div(corruptionPenalties.tickExtension[player.mending.corruption[5]]);
+        let tickExtensionTickspeed = corruptionPenalties.tickExtension[player.mending.corruption[5]];
+        if(CorruptionUpgrade(21).isBought) tickExtensionTickspeed=tickExtensionTickspeed**0.5;
+        let corruptPen = new Decimal(1).div(tickExtensionTickspeed);
         tickspeed = tickspeed.pow(corruptPen);
       };
       if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
@@ -294,7 +298,9 @@ export const FreeTickspeed = {
     // This undoes the function we're implicitly applying to costs (the "+ 1") is because we want
     // the cost of the next upgrade.
     if (player.mending.corruptionChallenge.corruptedMend) {
-      purchases /= corruptionPenalties.tickExtension[player.mending.corruption[5]];
+      let tickExtensionTimeShard = corruptionPenalties.tickExtension[player.mending.corruption[5]];
+      if(CorruptionUpgrade(21).isBought) tickExtensionTimeShard=tickExtensionTimeShard**0.75;
+      purchases /= tickExtensionTimeShard;
       purchases = Math.floor(purchases);
     };
 

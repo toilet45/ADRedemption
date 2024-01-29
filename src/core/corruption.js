@@ -8,6 +8,7 @@ export const CorruptionData = {
     isCorrupted: false,
     nextCorrupted: false,
     corruptedFragments: 0,
+    recordCorruptedFragments: 0,
     update() {
         this.corruptions = player.mending.corruption
         this.corruptionChallenge.recordCorruptions = player.mending.corruptionChallenge.records
@@ -15,6 +16,7 @@ export const CorruptionData = {
         this.isCorrupted = player.mending.corruptionChallenge.corruptedMend
         this.nextCorrupted = player.mending.corruptionChallenge.corruptNext
         this.corruptedFragments = player.mending.corruptedFragments
+        this.recordCorruptedFragments = Math.log2(player.mending.corruptionChallenge.recordScore)
     },
     calcBaseScore() {
     let corruptionScores = [1, 1.2, 1.45, 1.7, 2, 2.5, 3, 3.5, 4, 5, 7, 11]

@@ -305,6 +305,7 @@ class EPMultiplierState extends GameMechanicState {
   }
 
   get boughtAmount() {
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.repSing.hiddenFour[player.mending.corruption[8]]) return 0;
     return player.epmultUpgrades;
   }
 

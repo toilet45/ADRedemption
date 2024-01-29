@@ -38,6 +38,7 @@ export * from "./celestials/pelle/galaxy-generator";
 export * from "./celestials/pelle/game-end";
 export * from "./celestials/destroyer";
 export * from "./celestials/celestials";
+export * from "./celestials/kohler";
 
 export * from "./automator";
 

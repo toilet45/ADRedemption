@@ -1,4 +1,5 @@
 import { GameMechanicState, RebuyableMechanicState, SetPurchasableMechanicState } from "./game-mechanics";
+import { corruptionPenalties } from "./secret-formula/mending/corruption";
 import { SpeedrunMilestones } from "./speedrun";
 
 class ChargedBreakInfinityUpgradeState extends GameMechanicState {

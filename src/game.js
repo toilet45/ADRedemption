@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade } from "./core/globals";
+import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -133,7 +133,9 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.pow(getSecondaryGlyphEffect("infinityIP"));
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
-    ip = ip.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
+    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
+    ip = ip.pow(corruptionPrestigeLimits)
     ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
     ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
@@ -168,6 +170,7 @@ export function gainedMendingPoints(){
     TimeStudy(321),
     TimeStudy(322),
     TimeStudy(323),
+    CorruptionUpgrade(13),
     MendingUpgradeMultiplier,
     Ra.unlocks.boostMVRGain
     );
@@ -224,7 +227,9 @@ export function gainedEternityPoints(noSoftcap = false) {
     ep = ep.pow(getSecondaryGlyphEffect("timeEP"));
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
-    ep = ep.pow(corruptionPenalties.prestigeLimits[player.mending.corruption[0]])
+    let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
+    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
+    ep = ep.pow(corruptionPrestigeLimits)
     ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
   }
 
@@ -480,9 +485,15 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
   if (player.mending.corruptionChallenge.corruptedMend == true) {
-    factor = factor.pow(corruptionPenalties.timeCompression.power[player.mending.corruption[2]])
+    let timeCompressionPower = corruptionPenalties.timeCompression.power[player.mending.corruption[2]];
+    let timeCompressionMult = corruptionPenalties.timeCompression.mult[player.mending.corruption[2]];
+    if(CorruptionUpgrade(18).isBought){
+      timeCompressionPower = Math.min(1,timeCompressionPower+0.01);
+      timeCompressionMult = Decimal.pow(timeCompressionMult,0.1);
+    }
+    factor = factor.pow(timeCompressionPower)
     factor = factor.pow(corruptionPenalties.galWeak.hiddenSix[player.mending.corruption[3]])
-    factor = factor.times(corruptionPenalties.timeCompression.mult[player.mending.corruption[2]])
+    factor = factor.times(timeCompressionMult)
   }
   factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
