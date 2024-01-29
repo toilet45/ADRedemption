@@ -146,7 +146,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Black Hole 1 & 2's base multiplier is increased.",
-    effect: () => 5,
+    effect: () => 2.5,
     formatEffect: value => formatX(value, 0, 0)
   },
   {
