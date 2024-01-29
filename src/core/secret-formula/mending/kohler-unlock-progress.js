@@ -15,6 +15,15 @@ export const kohlerProgress = {
       },
       description: "Reach 1e6 Hostile score: Keep Charged Upgrades when not entering Hostile mend.",
     },
+    hostileFragments: {
+      id: 2,
+      progress: 35,
+      condition: () => {
+        //if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
+        return false;
+      },
+      description: "Reach 30 Hostile Fragments: idk reward.",
+    },
     placeholder: {
       id: 6,
       progress: 100,
