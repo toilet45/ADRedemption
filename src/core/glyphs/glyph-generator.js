@@ -7,6 +7,7 @@
  */
 import { deepmerge } from "@/utility/deepmerge";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
+import { CorruptionUpgrade } from "../corruption-upgrades";
 
 class GlyphRNG {
   static get SECOND_GAUSSIAN_DEFAULT_VALUE() {
@@ -144,13 +145,15 @@ export const GlyphGenerator = {
     const effectBitmask = makeGlyphEffectBitmask(
       orderedEffectList.filter(effect => effect.match("cursed*"))
     );
+    let generateLevel = 6666;
+    if(CorruptionUpgrade(12).isBought) generateLevel = 666;
     return {
       id: undefined,
       idx: null,
       type: "cursed",
       strength: str,
-      level: 6666,
-      rawLevel: 6666,
+      level: generateLevel,
+      rawLevel: generateLevel,
       effects: effectBitmask,
     };
   },

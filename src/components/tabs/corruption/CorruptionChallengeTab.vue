@@ -303,6 +303,8 @@ export default {
       >
         Show full nerf effects of specific Hostilities
       </button>
+      <br>
+      Last two row of Hostile Upgrades are only effective in Hostile Mends, and they won't affect the number display at this page. (sry)
     </div>
     <div
       v-for="row in 5"

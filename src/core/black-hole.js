@@ -1,4 +1,5 @@
 import { DC } from "./constants";
+import { CorruptionUpgrade } from "./corruption-upgrades";
 import { SpeedrunMilestones } from "./speedrun";
 
 class BlackHoleUpgradeState {
@@ -85,7 +86,11 @@ class BlackHoleState {
       id: this.id,
       getAmount: () => this._data.powerUpgrades,
       setAmount: amount => this._data.powerUpgrades = amount,
-      calculateValue: amount => (180 / Math.pow(2, id)) * Math.pow(1.35, amount),
+      calculateValue: amount => {
+        let baseEffect = 1.35;
+        if(CorruptionUpgrade(11).isBought) baseEffect*=CorruptionUpgrade(11).effectValue;
+        return (180 / Math.pow(2, id)) * Math.pow(baseEffect, amount)
+      },
       initialCost: 20 * blackHoleCostMultipliers[id],
       costMult: 2,
       hasAutobuyer: true

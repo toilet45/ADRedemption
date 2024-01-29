@@ -145,7 +145,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Black Hole 1 & 2's base multiplier is increased. [NYI]",
+    description: "Black Hole 1 & 2's base multiplier is increased.",
     effect: () => 5,
     formatEffect: value => formatX(value, 0, 0)
   },
@@ -159,7 +159,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Every generated Cursed Glyph's level reduced to 666. [NYI]",
+    description: "Every generated Cursed Glyph's level reduced to 666.",
     effect: () => 1,
   },
   {
@@ -200,8 +200,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "8th Antimatter Dimension generat 8th Dark Matter Dimension (once unlocked) [NYI]",
-    effect: () => Decimal.log10(AntimatterDimensions.all[7].totalAmount.plus(1))/10,
+    description: "8th Antimatter Dimension generat 8th Dark Matter Dimension (once unlocked)",
+    effect: () => Decimal.log10(AntimatterDimensions.all[7].totalAmount.plus(1))*10,
     formatEffect: value => `${format(value, 2, 2)} per Second`
   },
   {
@@ -279,7 +279,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Tick Extension Tickspeed power ^0.5, Time shard multipler ^0.75. [NYI]`,
+    description: () => `Tick Extension Tickspeed power ^0.5, Time shard divisor ^0.75.`,
     effect: () => 1,
   },
   {
@@ -292,7 +292,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Automic Dilution power is now ×1.5, capped at ${formatInt(1)} [NYI]`,
+    description: () => `Automic Dilution power is now ×1.5, capped at ${formatInt(1)}`,
     effect: () => 1,
   },
   {
@@ -305,7 +305,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `Theory of Dilation power +0.2, and DT gain ×1e5 if level 1 or more. [NYI]`,
+    description: `Theory of Dilation power +0.2, and DT gain ×1e5 if level 1 or more.`,
     effect: () => 1,
   },
   {
@@ -318,8 +318,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ^2. [NYI]`,
-    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[8] >= 5) ? Math.min(1+(Decimal.log10(player.replicanti.amount))/1000,2) : 1,
+    description: `If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ^5.`,
+    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[8] >= 5) ? Math.min(1+(Decimal.log10(player.replicanti.amount))/1000,5) : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
@@ -332,7 +332,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ^5. [NYI]`,
+    description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ^5.`,
     effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1+(Decimal.log10(Currency.timeTheorems.value))/1000,5) : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },

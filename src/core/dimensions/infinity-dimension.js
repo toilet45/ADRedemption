@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { CorruptionUpgrade } from "../corruption-upgrades";
 import { Currency } from "../currency";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { WarpUpgrade } from "../warp-upgrades";
@@ -225,6 +226,10 @@ class InfinityDimensionState extends DimensionState {
 
     if (PelleStrikes.powerGalaxies.hasStrike && !MendingUpgrade(10).isBought) {
       mult = mult.pow(0.5);
+    }
+
+    if (CorruptionUpgrade(24).isBought&&player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[8]>=5){
+      mult = mult.pow(CorruptionUpgrade(24).effectOrDefault(1));
     }
     return mult;
   }

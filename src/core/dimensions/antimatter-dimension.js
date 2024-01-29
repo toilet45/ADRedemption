@@ -620,7 +620,9 @@ class AntimatterDimensionState extends DimensionState {
         production = Decimal.pow10(Math.pow(log10, getAdjustedGlyphEffect("effarigantimatter")));
       }
       if (player.mending.corruptionChallenge.corruptedMend) {
-        production = Decimal.pow10(Math.pow(production.log10(),corruptionPenalties.atomDilution[player.mending.corruption[6]]))
+        let atomDilutionCorruption = corruptionPenalties.atomDilution[player.mending.corruption[6]];
+        if(CorruptionUpgrade(22).isBought) atomDilutionCorruption = Math.min(1,atomDilutionCorruption*1.5)
+        production = Decimal.pow10(Math.pow(production.log10(),atomDilutionCorruption))
       }
     }
     production = production.min(this.cappedProductionInNormalChallenges);

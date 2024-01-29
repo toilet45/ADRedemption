@@ -75,7 +75,7 @@ export const corruptionPenalties = {
         hiddenSeven: [false, false, false, false, false, false, false, true, true, true, true, true] // Dumb, i know, but atleast its clearly defined HERE and not around the place
     },
     tickExtension: [1, 2.5, 10, 40, 220, 950, 3150, 9000, 25000, 100000, 5e5, 1e7, 1e12], //these are inverse powers, so 10 actually means ^(1/10), 1000 actually means ^(1/1000), etc
-    atomDilution: [1, 0.7, 0.55, 0.4, 0.38, 0.35, 0.32, 0.3, 0.288, 0.27, 0.25, 0.2],
+    atomDilution: [1, 0.85, 0.7, 0.55, 0.4, 0.375, 0.35, 0.325, 0.3, 0.275, 0.25, 0.2],
     toD: {
         power: [1, 0.65, 0.33, 0.19, 0.1, 0.045, 0.02, 0.006, 0.002, 0, 0],
         mult: [1, 1e-2, 1e8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],

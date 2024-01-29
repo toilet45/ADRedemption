@@ -3,6 +3,7 @@ import { DC } from "./constants";
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
 import { SpeedrunMilestones } from "./speedrun";
 import { corruptionPenalties } from "./secret-formula/mending/corruption";
+import { CorruptionUpgrade } from "./corruption-upgrades";
 
 export function animateAndDilate() {
   FullScreenAnimationHandler.display("a-dilate", 2);
@@ -161,8 +162,14 @@ export function getDilationGainPerSecond() {
   if (V.isRunning) dtRate = dtRate.pow(0.5);
   if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
   if (player.mending.corruptionChallenge.corruptedMend) {
-    dtRate = Decimal.pow(dtRate,corruptionPenalties.toD.power[player.mending.corruption[7]]);
-    dtRate = dtRate.times(corruptionPenalties.toD.mult[player.mending.corruption[7]]);
+    let toDpower=corruptionPenalties.toD.power[player.mending.corruption[7]];
+    let toDmult=corruptionPenalties.toD.mult[player.mending.corruption[7]]
+    if(CorruptionUpgrade(23).isBought&&player.mending.corruption[7]>=1){
+      toDpower+=0.2;
+      toDmult=toDmult.times(100000);
+    }
+    dtRate = Decimal.pow(dtRate,toDpower);
+    dtRate = dtRate.times(toDmult);
   }
   return dtRate;
 }
