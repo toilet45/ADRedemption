@@ -147,7 +147,7 @@ export const corruptionUpgrades = [
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Black Hole 1 & 2's base multiplier is increased.",
     effect: () => 2.5,
-    formatEffect: value => formatX(value, 0, 0)
+    formatEffect: value => formatX(value, 1, 1)
   },
   {
     name: "Nerf Every Curse",
