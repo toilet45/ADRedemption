@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-import { CorruptionUpgrade, V } from "../globals";
+import { CorruptionUpgrade, KohlerProgressUnlocks, V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -623,6 +623,9 @@ class AntimatterDimensionState extends DimensionState {
         let atomDilutionCorruption = corruptionPenalties.atomDilution[player.mending.corruption[6]];
         if(CorruptionUpgrade(22).isBought) atomDilutionCorruption = Math.min(1,atomDilutionCorruption*1.5)
         production = Decimal.pow10(Math.pow(production.log10(),atomDilutionCorruption))
+      }
+      if(KohlerProgressUnlocks.hostileFragments.isUnlocked){
+        production = Decimal.pow(production,1+CorruptionData.recordCorruptedFragments/200)
       }
     }
     production = production.min(this.cappedProductionInNormalChallenges);

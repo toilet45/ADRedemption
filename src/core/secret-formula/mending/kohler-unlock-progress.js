@@ -22,7 +22,7 @@ export const kohlerProgress = {
         if (CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
-      description: "Reach 30 Hostile Fragments: Antimatter exponent based on (1+HF/200) [NYI].",
+      description: "Reach 30 Hostile Fragments: Antimatter ^(1+best HF/200).",
     },
     placeholder: {
       id: 6,
