@@ -13,7 +13,9 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Math.log10(Math.max(1, Currency.perkPoints.value))/2,1) : 1;
         return 4 * Math.pow((Ra.unlocks.improvedChunkGains.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+      return Ra.unlocks.teresaXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Teresa.isRunning) ? 1500 : 1) * ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     effarig: {
       id: "effarig",
@@ -37,7 +39,9 @@ export const ra = {
         }
         return (Ra.unlocks.improvedChunkGains.isUnlocked ? 100 : 4) * Decimal.pow((primeShardsGained.times(softcapedShardGained)), (Ra.unlocks.unlockPelleContinuum.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
       },
-      memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.effarigXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Effarig.isRunning) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     enslaved: {
       id: "enslaved",
@@ -51,7 +55,9 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(Decimal.max(getGameSpeedupFactor(),1))/100) : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.enslavedXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Enslaved.isRunning) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     v: {
       id: "v",
@@ -65,7 +71,9 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Decimal.max(1, Decimal.log10(Achievements.power)).times(4).toNumber() : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.vXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && V.isRunning) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     ra: {
       id: "ra",
@@ -90,8 +98,9 @@ export const ra = {
         let primeAnswer=2 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/(Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked ? 1e2 : 1.4e11), (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
         return primeAnswer;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
-      
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.raXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Ra.isRunning) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     laitela: {
       id: "laitela",
@@ -106,7 +115,9 @@ export const ra = {
         let primeAnswer = (2 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/(Ra.unlocks.unlockDMD.isUnlocked ? 1e2 : 5e11), (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
         return primeAnswer;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.laitelaXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Laitela.isRunning) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     },
     pelle: {
       id: "pelle",
@@ -121,7 +132,9 @@ export const ra = {
         let y = Ra.unlocks.improvedChunkGains.isUnlocked ? 1.05 : 1;
         return (x * player.celestials.pelle.remnants) ** y;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.pelleXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        return Ra.unlocks.pelleXP.effectOrDefault(1) * ((CorruptionUpgrade(1).isBought && Pelle.isDoomed) ? 1500 : 1)* ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+      }
     }
   },
   unlocks: {
