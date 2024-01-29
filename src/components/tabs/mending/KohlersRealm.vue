@@ -73,7 +73,7 @@ export default {
       };
     },
     unlockDescriptionBottom(unlockInfo) {
-      const pos = -unlockInfo.config.id % 2 *60 -1;
+      const pos = -unlockInfo.config.id % 2 *70 -1;
       return `${pos}px`;
     },
   }

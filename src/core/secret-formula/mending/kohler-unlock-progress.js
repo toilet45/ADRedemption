@@ -19,10 +19,10 @@ export const kohlerProgress = {
       id: 2,
       progress: 35,
       condition: () => {
-        //if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
+        if (CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
-      description: "Reach 30 Hostile Fragments: idk reward.",
+      description: "Reach 30 Hostile Fragments: Antimatter exponent based on (1+HF/200) [NYI].",
     },
     placeholder: {
       id: 6,
