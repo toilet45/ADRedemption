@@ -13,13 +13,13 @@ export const kohlerProgress = {
         if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
         return false;
       },
-      description: "Reach 1e6 Hostile score: idk adward.",
+      description: "Reach 1e6 Hostile score: Keep Charged Upgrades when not entering Hostile mend.",
     },
     placeholder: {
-      id: 2,
-      progress: 50,
+      id: 6,
+      progress: 100,
       condition:false,
-      description: "A placeholder that cannot be unlocked to see style.",
+      description: "idk condition: Coming in 5 hours™.",
     }
   }
 };

@@ -165,7 +165,7 @@ export function mendingReset() {
       effarig: 0
     };
     player.celestials.ra.quoteBits = 16383;
-    if(true){
+    if(player.mending.corruptNext || !KohlerProgressUnlocks.hostileScore.isUnlocked){
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
     }

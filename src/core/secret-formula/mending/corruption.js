@@ -94,6 +94,6 @@ export const corruptionPenalties = {
         ttgen: [false, true, true, true, true, true, true, true, true, true, true, true], // the dumbest thing ive ever put in code but again, atleast its defined here so i dont have someone bitch about this later
         tdpow: [1, 0.7, 0.3, 0.08, 0.01, 3e-3, 1e-5, 1e-8, 1e-15, 1e-33, 1e-100, 0],
         hiddenThree: [false, false, false, false, true, true, true, true, true, true, true, true],
-        hiddenEight: [false, false, false, false, false, false, true, true, true, true, true, true]
+        hiddenEight: [false, false, false, false, false, false, false, false, true, true, true, true]
     },
 }
