@@ -107,7 +107,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "Unlock Black Hole 3 autobuyer [NYI]",
+    description: "Unlock Black Hole 3 autobuyer",
     effect: () => 1,
   },
   {
