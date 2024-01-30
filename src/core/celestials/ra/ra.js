@@ -472,11 +472,11 @@ export const Ra = {
       }
 
       //calculation
-      let estimateDecimal = new Decimal('1e308');
+      let estimateDecimal = new Decimal('2e308');
       if(a.eq(0)){
         estimateDecimal = c.times(-1).div(b)
       } else {
-        estimateDecimal = (Decimal.sqrt(Decimal.pow(b, 2).minus(a.times(2).times(c))).minus(b)).div(a);
+        estimateDecimal = (Decimal.sqrt(Decimal.pow(b, 2).minus(a.times(4).times(c))).minus(b)).div(a.times(2));
       }
 
       //toNumber
