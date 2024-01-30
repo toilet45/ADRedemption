@@ -13,7 +13,12 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Math.max(Math.log10(Math.max(1, Currency.perkPoints.value))/2,1) : 1;
         return 4 * Math.pow((Ra.unlocks.improvedChunkGains.isUnlocked ? Math.max(Currency.eternityPoints.value.ln(), 0) : Currency.eternityPoints.value.pLog10()) / 1e4, 3) * x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 1) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.teresaXP.effectOrDefault(1) * x;
+      }
     },
     effarig: {
       id: "effarig",
@@ -37,7 +42,12 @@ export const ra = {
         }
         return (Ra.unlocks.improvedChunkGains.isUnlocked ? 100 : 4) * Decimal.pow((primeShardsGained.times(softcapedShardGained)), (Ra.unlocks.unlockPelleContinuum.isUnlocked ?  0.105 : 0.1)).min(1e308).toNumber() * Math.max(1, Decimal.log10(x));
       },
-      memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 2) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.effarigXP.effectOrDefault(1) * x;
+      }
     },
     enslaved: {
       id: "enslaved",
@@ -51,7 +61,12 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ?  1 + (Decimal.log10(Decimal.max(getGameSpeedupFactor(),1))/100) : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.timeShards.value.ln(), 0) / 3e5, 2) * x : 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2) * x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 3) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.enslavedXP.effectOrDefault(1) * x;
+      }
     },
     v: {
       id: "v",
@@ -65,7 +80,12 @@ export const ra = {
         let x = Ra.unlocks.secondaryMemoryChunkGain.isUnlocked ? Decimal.max(1, Decimal.log10(Achievements.power)).times(4).toNumber() : 1;
         return Ra.unlocks.improvedChunkGains.isUnlocked ? 4 * Math.pow(Math.max(Currency.infinityPower.value.ln(),0) / 1e7, 1.5) *x : 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5) *x;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 4) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.vXP.effectOrDefault(1) * x;
+      }
     },
     ra: {
       id: "ra",
@@ -90,8 +110,12 @@ export const ra = {
         let primeAnswer=2 * Math.pow((DimBoost.purchasedBoosts + DimBoost.imaginaryBoosts)/(Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked ? 1e2 : 1.4e11), (Ra.unlocks.improvedChunkGains.isUnlocked ? 1.75 : 1.5)) * Math.max(Math.log10(Math.min(0, x)), 1);
         return primeAnswer;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.raXP.effectOrDefault(1)
-      
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 5) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.raXP.effectOrDefault(1) * x;
+      }
     },
     laitela: {
       id: "laitela",
@@ -106,7 +130,12 @@ export const ra = {
         let primeAnswer = (2 * Math.pow((AntimatterDimensions.all.reduce((totalContinuum,dim) => totalContinuum+dim.continuumValue, 0) + Tickspeed.continuumValue)/(Ra.unlocks.unlockDMD.isUnlocked ? 1e2 : 5e11), (Ra.unlocks.unlockPelleContinuum.isUnlocked ? 1.667 : 1.5))) * x;
         return primeAnswer;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.laitelaXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 6) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        return Ra.unlocks.laitelaXP.effectOrDefault(1) * x;
+      }
     },
     pelle: {
       id: "pelle",
@@ -121,7 +150,11 @@ export const ra = {
         let y = Ra.unlocks.improvedChunkGains.isUnlocked ? 1.05 : 1;
         return (x * player.celestials.pelle.remnants) ** y;
       },
-      memoryProductionMultiplier: () => Ra.unlocks.pelleXP.effectOrDefault(1)
+      memoryProductionMultiplier: () => {
+        let x = 1;
+        if (Ra.currentCelestial === 7) x*= (Ra.unlocks.boostMemoryGain.effectOrDefault(1) * CorruptionUpgrade(1).effectOrDefault(1));
+        return Ra.unlocks.pelleXP.effectOrDefault(1) * x;
+      }
     }
   },
   unlocks: {
@@ -499,7 +532,7 @@ export const ra = {
     uncapGamespeed: {
       id: 15,
       id2: 0,
-      reward: "Uncap 1e300 gamespeed cap",
+      reward: "Remove the 1e300 Gamespeed cap",
       pet: "enslaved",
       level: 30,
       displayIcon: `<span class="fas fa-tachometer-alt"></span>`
@@ -565,7 +598,7 @@ export const ra = {
     unlockSHardV: {
       id: 23,
       id2: 0,
-      reward: "Unlock More V-Achievements, V's Superhard reality and more V-Milestones",
+      reward: "Unlock More Hard V-Achievements (not affected by Mending Upgrade 14, except Space Theorem gain), V's Superhard Reality (and assiocated Achievements) and more V-Milestones",
       pet: "v",
       level: 40,
       displayIcon: `<span class="fas fa-trophy"></span>`,
@@ -752,7 +785,7 @@ export const ra = {
       effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "laitela",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-star-of-david"></i>'
+      displayIcon: '<i class="fa-solid fa-dice-d6"></i>'
     },
     totalAntimatterDarkMatterBoost: {
       id: 14,
@@ -907,7 +940,8 @@ export const ra = {
       reward: "Memory Gain for all Celestials is boosted in Doomed Reality",
       pet: "pelle",
       level: 30,
-      displayIcon: `<span class="fas fa-sun"</span>`
+      displayIcon: `<span class="fas fa-sun"</span>`,
+      effect: 500
     },
     unlockPelleContinuum: {
       id: 1,

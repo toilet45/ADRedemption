@@ -13,6 +13,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: () => `Ra memory gain is ${formatX(1500, 1)} stronger, but only when in the appropriate celestials Reality.`,
+    effect: 1500
   },
   {
     name: "Spacetime Distruption",

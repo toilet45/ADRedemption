@@ -241,15 +241,6 @@ class RaPetState extends GameMechanicState {
       this.memoryUpgradeCurrentMult * this.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1), MendingUpgrade(15).isBought ? 1.5 : 1);
 
     let newMemories = seconds * memsPerSecond;
-    if(CorruptionUpgrade(1).isBought){
-        if (this.id=='teresa'&&Teresa.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='effarig'&&Effarig.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='enslaved'&&Enslaved.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='v'&&V.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='ra'&&Ra.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='laitela'&&Laitela.isRunning) newMemories = newMemories*(1.5e3);
-        if (this.id=='pelle'&&Pelle.isRunning) newMemories = newMemories*(1.5e3);
-    }
     this.memoryChunks += newMemoryChunks;
     this.memories += newMemories;
   }
@@ -418,7 +409,7 @@ export const Ra = {
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }
-    return "";
+    return "in an exteremely long time";
   },
   get totalPetLevel() {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
@@ -521,6 +512,26 @@ export const Ra = {
   },
   get continuumActive() {
     return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;
+  },
+  get currentCelestial(){ //this returns the current celestials' number. Teresa = 1, etc.
+    switch(true){
+      case(Teresa.isRunning):
+        return 1;
+      case(Effarig.isRunning):
+        return 2;
+      case(Enslaved.isRunning):
+        return 3;
+      case(V.isRunning):
+        return 4;
+      case(Ra.isRunning):
+        return 5;
+      case(Laitela.isRunning):
+        return 6;
+      case(Pelle.isDoomed):
+        return 7;
+      default:
+        return 0;
+    }
   },
   quotes: Quotes.ra,
   symbol: "<i class='fas fa-sun'></i>"

@@ -35,7 +35,7 @@ export default {
       this.shortenTSU = FreeTickspeed.amount >= 1e11;
     },
     maxAll() {
-      tryUnlockMultiversalDimensions();
+      //tryUnlockMultiversalDimensions();
       maxAllMultiversalDimensions();
     },
     toggleAllAutobuyers() {
