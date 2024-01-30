@@ -3,6 +3,7 @@ import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
 import { normalTimeStudies } from "../../secret-formula/eternity/time-studies/normal-time-studies";
 import { DC } from "../../constants";
+import { CorruptionUpgrade } from "../../corruption-upgrades";
 
 const ts306 = normalTimeStudies.find(obj => obj.id === 306);
 
@@ -239,7 +240,15 @@ class RaPetState extends GameMechanicState {
     // for very long simulated ticks
     let memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
       this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
-    
+    if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
+      case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
+      case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
+      case 3: if(this.id=='enslaved') memsPerSecond *= 1500;break;
+      case 4: if(this.id=='v') memsPerSecond *= 1500;break;
+      case 5: if(this.id=='ra') memsPerSecond *= 1500;break;
+      case 6: if(this.id=='laitela') memsPerSecond *= 1500;break;
+      case 7: if(this.id=='pelle') memsPerSecond *= 1500;break;
+    };}
     let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
     this.memories += newMemories;
@@ -387,6 +396,16 @@ export const Ra = {
       ? 0
       : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
     const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+    //I will just leave HU1 code here haha --sxy
+    /*if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
+      case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
+      case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
+      case 3: if(this.id=='enslaved') memsPerSecond *= 1500;break;
+      case 4: if(this.id=='v') memsPerSecond *= 1500;break;
+      case 5: if(this.id=='ra') memsPerSecond *= 1500;break;
+      case 6: if(this.id=='laitela') memsPerSecond *= 1500;break;
+      case 7: if(this.id=='pelle') memsPerSecond *= 1500;break;
+    };}*/
     const c = -expToGain;
     const estimate = a === 0
       ? (MendingUpgrade(15).isBought 
