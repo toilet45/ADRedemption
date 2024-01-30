@@ -2,6 +2,7 @@ import { AnnihilationAutobuyerState } from "./annihilation-autobuyer";
 import { AntimatterDimensionAutobuyerState } from "./antimatter-dimension-autobuyer";
 import { BigCrunchAutobuyerState } from "./big-crunch-autobuyer";
 import { BlackHolePowerAutobuyerState } from "./black-hole-power-autobuyer";
+import { ExpoBlackHolePowerAutobuyerState } from "./expo-black-hole-power-autobuyer";
 import { DarkMatterDimensionAscensionAutobuyerState } from "./dark-matter-dimension-ascension-autobuyer";
 import { DarkMatterDimensionAutobuyerState } from "./dark-matter-dimension-autobuyer";
 import { DilationUpgradeAutobuyerState } from "./dilation-upgrade-autobuyer";
@@ -44,6 +45,7 @@ export const Autobuyer = {
   antimatterDimension: AntimatterDimensionAutobuyerState.createAccessor(),
   bigCrunch: new BigCrunchAutobuyerState(),
   blackHolePower: BlackHolePowerAutobuyerState.createAccessor(),
+  expoBlackHolePower: ExpoBlackHolePowerAutobuyerState.createAccessor(),
   darkMatterDimsAscension: new DarkMatterDimensionAscensionAutobuyerState(),
   darkMatterDims: new DarkMatterDimensionAutobuyerState(),
   dilationUpgrade: DilationUpgradeAutobuyerState.createAccessor(),
@@ -125,6 +127,7 @@ export const Autobuyers = (function() {
     Autobuyer.replicantiUpgrade.zeroIndexed,
     Autobuyer.dilationUpgrade.zeroIndexed,
     Autobuyer.blackHolePower.zeroIndexed,
+    Autobuyer.expoBlackHolePower.zeroIndexed,
     Autobuyer.realityUpgrade.zeroIndexed,
     Autobuyer.imaginaryUpgrade.zeroIndexed,
     Autobuyer.teresaMem.zeroIndexed,
@@ -145,6 +148,7 @@ export const Autobuyers = (function() {
     Autobuyer.replicantiUpgrade,
     Autobuyer.dilationUpgrade,
     Autobuyer.blackHolePower,
+    Autobuyer.expoBlackHolePower,
     Autobuyer.realityUpgrade,
     Autobuyer.imaginaryUpgrade,
     Autobuyer.teresaMem,

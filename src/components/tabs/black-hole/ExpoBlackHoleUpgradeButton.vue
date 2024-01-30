@@ -22,8 +22,8 @@ export default {
     return {
       isAffordable: false,
       isCapped: false,
-      //isAutoUnlocked: false,
-      //isAutobuyerOn: false
+      isAutoUnlocked: false,
+      isAutobuyerOn: false
     };
   },
   computed: {
@@ -48,18 +48,18 @@ export default {
     }
   },
   watch: {
-    /*isAutobuyerOn(newValue) {
-      Autobuyer.blackHolePower(this.config.upgrade.id).isActive = newValue;
-    }*/
+    isAutobuyerOn(newValue) {
+      Autobuyer.expoBlackHolePower(this.config.upgrade.id).isActive = newValue;
+    }
   },
   methods: {
     update() {
       this.isCapped = (this.config.upgrade.value === 0);
       this.isAffordable = this.config.upgrade.isAffordable && !this.isCapped;
-      //const hasAutobuyer = this.config.upgrade.hasAutobuyer;
-      //const autobuyer = Autobuyer.blackHolePower(this.config.upgrade.id);
-      //this.isAutoUnlocked = hasAutobuyer && autobuyer.isUnlocked;
-      //this.isAutobuyerOn = hasAutobuyer && autobuyer.isActive;
+      const hasAutobuyer = this.config.upgrade.hasAutobuyer;
+      const autobuyer = Autobuyer.expoBlackHolePower(this.config.upgrade.id);
+      this.isAutoUnlocked = hasAutobuyer && autobuyer.isUnlocked;
+      this.isAutobuyerOn = hasAutobuyer && autobuyer.isActive;
     }
   }
 };
@@ -83,12 +83,12 @@ export default {
         name="Imaginary Machine"
       />
     </button>
-    <!--<PrimaryToggleButton
+    <PrimaryToggleButton
       v-if="isAutoUnlocked"
       v-model="isAutobuyerOn"
       label="Auto:"
       class="l--spoon-btn-group__little-spoon-reality-btn o-primary-btn--reality-upgrade-toggle"
-    />--->
+    />
   </div>
 </template>
 

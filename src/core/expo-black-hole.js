@@ -14,7 +14,7 @@ class ExpoBlackHoleUpgradeState {
       1e5,
       10));
     this.id = config.id;
-    this.hasAutobuyer = false;//config.hasAutobuyer;
+    this.hasAutobuyer = config.hasAutobuyer;
     this.onPurchase = config.onPurchase;
   }
 

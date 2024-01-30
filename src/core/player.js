@@ -208,6 +208,12 @@ window.player = {
       })),
       isActive: true,
     },
+    expoBlackHolePower: {
+      all: Array.range(0, 1).map(() => ({
+        isActive: false,
+      })),
+      isActive: true,
+    },
     realityUpgrades: {
       all: Array.range(0, 5).map(() => ({
         isActive: false,
