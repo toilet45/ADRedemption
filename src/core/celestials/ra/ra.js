@@ -394,8 +394,8 @@ export const Ra = {
     // Quadratic formula for growth (uses constant growth for a = 0)
     const a = Enslaved.isStoringRealTime
       ? 0
-      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
-    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
     //I will just leave HU1 code here haha --sxy
     /*if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
       case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
