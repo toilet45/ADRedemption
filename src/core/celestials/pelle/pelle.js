@@ -237,7 +237,7 @@ export const Pelle = {
         ? Currency.infinityPoints.value.plus(1).pow(0.2)
         : DC.D1,
       time: isActive("time")
-        ? Currency.eternityPoints.value.plus(1).pow(0.3)
+        ? Decimal.min(Currency.eternityPoints.value.plus(1).pow(0.3),Decimal.pow10(1e20))
         : DC.D1,
       replication: isActive("replication")
         ? 10 ** 53 ** (PelleRifts.vacuum.percentage)
@@ -261,8 +261,8 @@ export const Pelle = {
           ? formatX(Currency.infinityPoints.value.plus(1).pow(0.2), 2)
           : formatX(DC.D1, 2)} (based on current IP)`;
       case "time":
-        return `Eternity Point gain ${formatX(Currency.eternityPoints.value.plus(1).pow(0.3), 2)}
-          (based on current EP)`;
+        return `Eternity Point gain ${formatX(Decimal.min(Currency.eternityPoints.value.plus(1).pow(0.3),Decimal.pow10(1e20)), 2)}
+          (based on current EP, max 1e1e20)`;
       case "replication":
         return `Replication speed ${formatX(10 ** 53 ** (PelleRifts.vacuum.percentage), 2)} \
         (based on ${wordShift.wordCycle(PelleRifts.vacuum.name)})`;

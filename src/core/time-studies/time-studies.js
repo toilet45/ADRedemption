@@ -174,6 +174,9 @@ export class TimeStudyState extends GameMechanicState {
     /*if (player.mending.corruptionChallenge.corruptedMend) {
       base += corruptionPenalties.spaceTuition[player.mending.corruption[8]];
     }*/
+    if(WarpUpgrade(8).isBought&&this.config.id>400&&this.config.id<500){
+      base -= 50;
+    }
     return VUnlocks.raUnlock.canBeApplied
       ? base - 2
       : base;

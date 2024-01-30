@@ -98,7 +98,7 @@ export const warpUpgrades = [
   {
     name: "Automatic of Speed",
     id: 7,
-    cost: 1e70,
+    cost: 1e75,
     requirement: "Reach 1e2300 Game Speed",
     hasFailed: () => false,
     checkRequirement: () => {
@@ -121,18 +121,17 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "Myriad study ST cost -50 [NYI]",
-    effect: () => 1,
-    formatEffect: value => formatX(value, 2, 2)
+    description: "Myriad study ST cost -50",
+    effect: () => 1
   },
   {
     name: "Living Multiverse",
     id: 9,
-    cost: 1e300,
-    requirement: "Wait 5 Hours [NYI]",
-    hasFailed: () => false,
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
+    cost: 1e75,
+    requirement: "Reach 1.845e9 total galaxies in a Doomed reality without Galaxy Generator [NYI]",
+    hasFailed: () => !Pelle.isDoomed || Pelle.hasGalaxyGenerator,
+    checkRequirement: () => (Pelle.isDoomed&&!Pelle.hasGalaxyGenerator)&&(Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies >= 1.845e9),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
     description: "Galactic Shards improve Galaxy better [NYI]",

@@ -189,6 +189,11 @@ class MultiversalDimensionState extends DimensionState {
     return this.amount;
   }
 
+  get galaxyBoost(){
+    let x=(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber();
+    return x;
+  }
+
 }
 
 /**

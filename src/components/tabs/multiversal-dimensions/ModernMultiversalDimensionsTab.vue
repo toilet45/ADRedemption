@@ -13,6 +13,7 @@ export default {
       totalUpgrades: 0,
       percentSoftcap: 0,
       boostPoints: new Decimal(0),
+      galaxyBoost: new Decimal(0),
       shardsPerSecond: new Decimal(0),
       incomeType: "",
       areAutobuyersUnlocked: false,
@@ -27,6 +28,7 @@ export default {
       this.totalUpgrades = 0;
       this.percentSoftcap = 50;
       this.boostPoints.copyFrom(Currency.galBoostPoints);
+      this.galaxyBoost = MultiversalDimension(1).galaxyBoost
       this.shardsPerSecond = MultiversalDimension(1).productionPerRealSecond.div(getGameSpeedupForDisplay());
       this.incomeType = "Galactic Shards";
       this.areAutobuyersUnlocked = false;//Autobuyer.timeDimension(1).isUnlocked;
@@ -50,9 +52,9 @@ export default {
         return `${format(0, 2, 2)}%`
       }
       else if (this.boostPoints.lte(1e50)) {
-        return `${format(this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8)), 2, 2)}%`
+        return `${format((this.galaxyBoost-1)*100, 2, 2)}%`
       }
-      return `${formatX((this.boostPoints.pow(1/(this.boostPoints.log10() ** 0.8))).div(100).add(1), 2, 2)}`
+      return `${formatX(this.galaxyBoost, 2, 2)}`
     },
     txt3() {
       if (this.boostPoints.lte(1e50)) {
