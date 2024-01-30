@@ -237,9 +237,9 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+    let memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
       this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
-
+    
     let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
     this.memories += newMemories;

@@ -15,8 +15,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 1) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 1) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.teresaXP.effectOrDefault(1) * x;
       }
     },
@@ -44,8 +44,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 2) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 2) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.effarigXP.effectOrDefault(1) * x;
       }
     },
@@ -63,8 +63,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 3) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 3) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.enslavedXP.effectOrDefault(1) * x;
       }
     },
@@ -82,8 +82,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 4) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 4) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.vXP.effectOrDefault(1) * x;
       }
     },
@@ -112,8 +112,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 5) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 5) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.raXP.effectOrDefault(1) * x;
       }
     },
@@ -132,8 +132,8 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 6) x*= CorruptionUpgrade(1).effectOrDefault(1);
-        if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
+        //if (Ra.currentCelestial === 6) x*= CorruptionUpgrade(1).effectOrDefault(1);
+        //if (Ra.currentCelestial === 7) x*= Ra.unlocks.boostMemoryGain.effectOrDefault(1);
         return Ra.unlocks.laitelaXP.effectOrDefault(1) * x;
       }
     },
@@ -152,7 +152,7 @@ export const ra = {
       },
       memoryProductionMultiplier: () => {
         let x = 1;
-        if (Ra.currentCelestial === 7) x*= (Ra.unlocks.boostMemoryGain.effectOrDefault(1) * CorruptionUpgrade(1).effectOrDefault(1));
+        //if (Ra.currentCelestial === 7) x*= (Ra.unlocks.boostMemoryGain.effectOrDefault(1) * CorruptionUpgrade(1).effectOrDefault(1));
         return Ra.unlocks.pelleXP.effectOrDefault(1) * x;
       }
     }
