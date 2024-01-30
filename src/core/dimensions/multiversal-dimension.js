@@ -1,4 +1,5 @@
 import { DC } from "../constants";
+import { WarpUpgrade } from "../warp-upgrades";
 
 import { DimensionState } from "./dimension";
 
@@ -191,6 +192,7 @@ class MultiversalDimensionState extends DimensionState {
 
   get galaxyBoost(){
     let x=(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber();
+    if(WarpUpgrade(9).isBought) x=(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.775))).div(100).add(1).add(Math.sqrt(player.galBoostPoints.log10())/100).toNumber();
     return x;
   }
 
