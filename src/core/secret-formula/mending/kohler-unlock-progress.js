@@ -24,6 +24,14 @@ export const kohlerProgress = {
       },
       description: "Reach 30 Hostile Fragments: Antimatter ^(1+best HF/200).",
     },
+    antimatterGalaxy: {
+      id: 4,
+      progress: 65,
+      condition: () => {
+        return false;
+      },
+      description: "Reach 1e1e25 Antimatter: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate. [NYI because of balancing]",
+    },
     placeholder: {
       id: 6,
       progress: 100,

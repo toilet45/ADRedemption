@@ -3,6 +3,7 @@ import { MendingUpgrade } from "../../mending-upgrades";
 import { Quotes } from "../quotes";
 import { normalTimeStudies } from "../../secret-formula/eternity/time-studies/normal-time-studies";
 import { DC } from "../../constants";
+import { CorruptionUpgrade } from "../../corruption-upgrades";
 
 const ts306 = normalTimeStudies.find(obj => obj.id === 306);
 
@@ -237,9 +238,17 @@ class RaPetState extends GameMechanicState {
       : 0;
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
-    const memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult * this.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1), MendingUpgrade(15).isBought ? 1.5 : 1);
-
+    let memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
+      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+    if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
+      case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
+      case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
+      case 3: if(this.id=='enslaved') memsPerSecond *= 1500;break;
+      case 4: if(this.id=='v') memsPerSecond *= 1500;break;
+      case 5: if(this.id=='ra') memsPerSecond *= 1500;break;
+      case 6: if(this.id=='laitela') memsPerSecond *= 1500;break;
+      case 7: if(this.id=='pelle') memsPerSecond *= 1500;break;
+    };}
     let newMemories = seconds * memsPerSecond;
     this.memoryChunks += newMemoryChunks;
     this.memories += newMemories;
@@ -382,12 +391,26 @@ export const Ra = {
     //^ it might just be due to the formula was wrong? XD
     //asw
 
+    //^ your version of this function is still chaos lmao
+    //and since this function needs decimalised anyway I'll rewrite this
+    //sxy
+
     // Quadratic formula for growth (uses constant growth for a = 0)
-    const a = Enslaved.isStoringRealTime
+    /*const a = Enslaved.isStoringRealTime
       ? 0
-      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
-    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
-    const c = -expToGain;
+      : Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect * ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+    const b = Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect * ((Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked) ? 500 : 1);
+    //I will just leave HU1 code here haha --sxy
+    /*if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
+      case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
+      case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
+      case 3: if(this.id=='enslaved') memsPerSecond *= 1500;break;
+      case 4: if(this.id=='v') memsPerSecond *= 1500;break;
+      case 5: if(this.id=='ra') memsPerSecond *= 1500;break;
+      case 6: if(this.id=='laitela') memsPerSecond *= 1500;break;
+      case 7: if(this.id=='pelle') memsPerSecond *= 1500;break;
+    };}*/
+    /*const c = -expToGain;
     const estimate = a === 0
       ? (MendingUpgrade(15).isBought 
       ? -c / Math.pow(b, 1.5)
@@ -405,7 +428,60 @@ export const Ra = {
       // at = (b^{2.5} - \frac{5ac}{2})^{0.4} - b \\
       // t = \frac{(b^{2.5} - \frac{5ac}{2})^{0.4} - b}{a}
       ? (Math.pow(Math.pow(b, 2.5) - 5 * a * c / 2, 0.4) - b) / a
-      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a));
+      : (Math.sqrt(Math.pow(b, 2) - 2 * a * c) - b) / (a));*/
+
+
+      //decimalised rewritten version of this function--sxy
+
+      //a decimalised
+      let a = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect);
+      if(Enslaved.isStoringRealTime) a = new Decimal(0);
+
+      //b decimalised
+      let b = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect);
+
+      //c decimalised
+      let c = new Decimal(-expToGain);
+
+      //MU15
+      if(MendingUpgrade(15).isBought){
+        a = Decimal.pow(a,1.5);
+        b = Decimal.pow(b,1.5);
+      }
+
+      //Pelle30
+      if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
+        a = a.times(500);
+        b = b.times(500);
+      }
+
+      //HU1
+      let HUavaliable = false;
+      if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
+        case 1: if(this.id=='teresa') HUavaliable = true;break;
+        case 2: if(this.id=='effarig') HUavaliable = true;break;
+        case 3: if(this.id=='enslaved') HUavaliable = true;break;
+        case 4: if(this.id=='v') HUavaliable = true;break;
+        case 5: if(this.id=='ra') HUavaliable = true;break;
+        case 6: if(this.id=='laitela') HUavaliable = true;break;
+        case 7: if(this.id=='pelle') HUavaliable = true;break;
+      };}
+      if(HUavaliable){
+        a = a.times(1500);
+        b = b.times(1500);
+      }
+
+      //calculation
+      let estimateDecimal = new Decimal('2e308');
+      if(a.eq(0)){
+        estimateDecimal = c.times(-1).div(b)
+      } else {
+        estimateDecimal = (Decimal.sqrt(Decimal.pow(b, 2).minus(a.times(4).times(c))).minus(b)).div(a.times(2));
+      }
+
+      //toNumber
+      let estimate = estimateDecimal.toNumber();
+
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }
