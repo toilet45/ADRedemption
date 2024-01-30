@@ -6,7 +6,7 @@ export const mendingMilestones = {
   },
   two: {
     mends: 2,
-    reward: "The Pelle-exclusive dilation upgrades are available outside of Doomed Reality (and also unlock the autobuyers for them), but they are nerfed outside of it. Dilation Autobuyers buy max. Achievement 154's reward is now 100%",
+    reward: "The Pelle-exclusive dilation upgrades are available outside of Doomed Reality (and also unlock the autobuyers for them), but they are nerfed outside of it. Dilation Autobuyers buy max. Achievement 154's reward is now 100%.",
   },
   three: {
     mends: 3,

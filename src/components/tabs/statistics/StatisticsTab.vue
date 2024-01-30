@@ -367,7 +367,7 @@ export default {
         Mending
       </div>
       <div>
-        You have mended the Mulitverse {{ quantifyInt("time", mending.count) }}.
+        You have Mended the Mulitverse {{ quantifyInt("time", mending.count) }}.
       </div>
       <div v-if="mending.hasBest">
         Your fastest Mend was {{ mending.best.toStringShort() }} ({{ mending.bestReal.toStringShort() }} real time).

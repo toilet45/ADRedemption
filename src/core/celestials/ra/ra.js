@@ -409,7 +409,7 @@ export const Ra = {
     if (Number.isFinite(estimate)) {
       return `in ${TimeSpan.fromSeconds(new Decimal(estimate)).toStringShort()}`;
     }
-    return "";
+    return "in an exteremely long time";
   },
   get totalPetLevel() {
     return this.pets.all.map(pet => (pet.isUnlocked ? pet.level : 0)).sum();
@@ -512,6 +512,26 @@ export const Ra = {
   },
   get continuumActive() {
     return Ra.unlocks.continuumAffectsIDsAndTDs.isUnlocked && Laitela.continuumActive;
+  },
+  get currentCelestial(){ //this returns the current celestials' number. Teresa = 1, etc.
+    switch(true){
+      case(Teresa.isRunning):
+        return 1;
+      case(Effarig.isRunning):
+        return 2;
+      case(Enslaved.isRunning):
+        return 3;
+      case(V.isRunning):
+        return 4;
+      case(Ra.isRunning):
+        return 5;
+      case(Laitela.isRunning):
+        return 6;
+      case(Pelle.isDoomed):
+        return 7;
+      default:
+        return 0;
+    }
   },
   quotes: Quotes.ra,
   symbol: "<i class='fas fa-sun'></i>"
