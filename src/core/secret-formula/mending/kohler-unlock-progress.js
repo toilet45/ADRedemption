@@ -4,7 +4,7 @@ export const kohlerProgress = {
       id: 0,
       progress: 5,
       condition: () => Ra.unlocks.kohlersRealmUnlock.isUnlocked,
-      description: "Kohler tab is unlocked, yet too early...",
+      description: "You may have made it here Destroyer, but I have a few more tests...",
     },
     hostileScore: {
       id: 1,
@@ -13,7 +13,7 @@ export const kohlerProgress = {
         if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
         return false;
       },
-      description: "Reach 1e6 Hostile score: Keep Charged Upgrades when not entering Hostile mend.",
+      description: () => `Reach ${format(1e6)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
     },
     hostileFragments: {
       id: 2,
@@ -22,7 +22,7 @@ export const kohlerProgress = {
         if (CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
-      description: "Reach 30 Hostile Fragments: Antimatter ^(1+best HF/200).",
+      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/200).`,
     },
     antimatterGalaxy: {
       id: 4,
@@ -30,13 +30,13 @@ export const kohlerProgress = {
       condition: () => {
         return false;
       },
-      description: "Reach 1e1e25 Antimatter: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate. [NYI because of balancing]",
+      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate. [NYI because of balancing]`,
     },
     placeholder: {
       id: 6,
       progress: 100,
       condition:false,
-      description: "idk condition: Coming in 5 hours™.",
+      description: "Now for the ultimate test...waiting 5 hours™.",
     }
   }
 };
