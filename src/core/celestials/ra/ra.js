@@ -433,52 +433,46 @@ export const Ra = {
 
       //decimalised rewritten version of this function--sxy
 
-      //a decimalised
-      let a = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunksPerSecond * pet.shopMemMultEffect);
-      if(Enslaved.isStoringRealTime) a = new Decimal(0);
+      // full rewrite
+      // multiplier can be divided from total
+      // -- wyxkk
 
-      //b decimalised
-      let b = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.memoryChunks * pet.shopMemMultEffect);
+      let power = MendingUpgrade(15).isBought ? 1.5 : 1;
 
-      //c decimalised
-      let c = new Decimal(-expToGain);
+      let multiplierInPower = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.shopMemMultEffect);
 
-      //MU15
-      if(MendingUpgrade(15).isBought){
-        a = Decimal.pow(a,1.5);
-        b = Decimal.pow(b,1.5);
-      }
-
-      //Pelle30
+      let multiplierOutPower = new Decimal(1);
       if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
-        a = a.times(500);
-        b = b.times(500);
+        multiplierOutPower = multiplierOutPower.times(500);
       }
-
-      //HU1
       let HUavaliable = false;
       if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
-        case 1: if(this.id=='teresa') HUavaliable = true;break;
-        case 2: if(this.id=='effarig') HUavaliable = true;break;
-        case 3: if(this.id=='enslaved') HUavaliable = true;break;
-        case 4: if(this.id=='v') HUavaliable = true;break;
-        case 5: if(this.id=='ra') HUavaliable = true;break;
-        case 6: if(this.id=='laitela') HUavaliable = true;break;
-        case 7: if(this.id=='pelle') HUavaliable = true;break;
+        case 1: if(pet.id=='teresa') HUavaliable = true;break;
+        case 2: if(pet.id=='effarig') HUavaliable = true;break;
+        case 3: if(pet.id=='enslaved') HUavaliable = true;break;
+        case 4: if(pet.id=='v') HUavaliable = true;break;
+        case 5: if(pet.id=='ra') HUavaliable = true;break;
+        case 6: if(pet.id=='laitela') HUavaliable = true;break;
+        case 7: if(pet.id=='pelle') HUavaliable = true;break;
       };}
       if(HUavaliable){
-        a = a.times(1500);
-        b = b.times(1500);
+        multiplierOutPower = multiplierOutPower.times(1500);
       }
 
-      //calculation
+      let a = new Decimal(pet.memoryChunksPerSecond);
+      if(Enslaved.isStoringRealTime) a = new Decimal(0);
+      let b = new Decimal(pet.memoryChunks);
+      let c = new Decimal(expToGain).div(multiplierInPower.pow(power)).div(multiplierOutPower);
+
+      // now to solve \int_0^x (at+b)^power dt = c
       let estimateDecimal = new Decimal('2e308');
       if(a.eq(0)){
-        estimateDecimal = c.times(-1).div(b)
+        estimateDecimal = c.div(b.pow(power));
       } else {
-        estimateDecimal = (Decimal.sqrt(Decimal.pow(b, 2).minus(a.times(4).times(c))).minus(b)).div(a.times(2));
+        estimateDecimal = c.times(a).times(power+1).plus(b.pow(power+1)).pow(1/(power+1)).minus(b).div(a);
       }
 
+      //estimateDecimal = estimateDecimal.div(multiplierOutPower);
       //toNumber
       let estimate = estimateDecimal.toNumber();
 

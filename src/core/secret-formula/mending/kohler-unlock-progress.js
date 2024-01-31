@@ -10,10 +10,10 @@ export const kohlerProgress = {
       id: 1,
       progress: 20,
       condition: () => {
-        if (CorruptionData.corruptionChallenge.recordScore >= 1000000) return true;
+        if (CorruptionData.corruptionChallenge.recordScore >= 10000000) return true;
         return false;
       },
-      description: () => `Reach ${format(1e6)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
+      description: () => `Reach ${format(1e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
     },
     hostileFragments: {
       id: 2,
