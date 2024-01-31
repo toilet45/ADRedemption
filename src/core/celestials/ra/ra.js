@@ -447,13 +447,13 @@ export const Ra = {
       }
       let HUavaliable = false;
       if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
-        case 1: if(this.id=='teresa') HUavaliable = true;break;
-        case 2: if(this.id=='effarig') HUavaliable = true;break;
-        case 3: if(this.id=='enslaved') HUavaliable = true;break;
-        case 4: if(this.id=='v') HUavaliable = true;break;
-        case 5: if(this.id=='ra') HUavaliable = true;break;
-        case 6: if(this.id=='laitela') HUavaliable = true;break;
-        case 7: if(this.id=='pelle') HUavaliable = true;break;
+        case 1: if(pet.id=='teresa') HUavaliable = true;break;
+        case 2: if(pet.id=='effarig') HUavaliable = true;break;
+        case 3: if(pet.id=='enslaved') HUavaliable = true;break;
+        case 4: if(pet.id=='v') HUavaliable = true;break;
+        case 5: if(pet.id=='ra') HUavaliable = true;break;
+        case 6: if(pet.id=='laitela') HUavaliable = true;break;
+        case 7: if(pet.id=='pelle') HUavaliable = true;break;
       };}
       if(HUavaliable){
         multiplierOutPower = multiplierOutPower.times(1500);
@@ -472,6 +472,7 @@ export const Ra = {
         estimateDecimal = c.times(a).times(power+1).plus(b.pow(power+1)).pow(1/(power+1)).minus(b).div(a);
       }
 
+      //estimateDecimal = estimateDecimal.div(multiplierOutPower);
       //toNumber
       let estimate = estimateDecimal.toNumber();
 

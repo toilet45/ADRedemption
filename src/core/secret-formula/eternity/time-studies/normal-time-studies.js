@@ -881,7 +881,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
     description: `Infinity Points adds Infinity power conversion`,
-    effect: () => 12.5 + Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/2,
+    effect: () => Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/1.75,
     formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },
@@ -893,7 +893,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
     description: `Eternity Points increase Time Shard softcap massively`,
-    effect: () => Math.pow(Math.log10(Currency.eternityPoints.exponent+1),5),
+    effect: () => Math.pow(Math.log10(Currency.eternityPoints.exponent+1),5.5),
     formatEffect: value => `+${formatInt(value)}`,
     unlocked: () => Ra.pets.v.level >= 94
   },
@@ -924,7 +924,7 @@ export const normalTimeStudies = [
     description: `Infinity Points boosts 1st Infinity Dimension Multiplier`,
     effect: () => {
       let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
-      let Exponent = baseExp/5 + 16;
+      let Exponent = baseExp/5 + 15;
       let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
       return answer
     },
@@ -941,7 +941,7 @@ export const normalTimeStudies = [
     description: `Eternity Points boosts 1st Time Dimension Multiplier`,
     effect: () => {
       let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
-      let Exponent = baseExp/5 + 11;
+      let Exponent = baseExp/4 + 12.5;
       let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
       return answer
     },
