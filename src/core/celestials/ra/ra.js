@@ -439,7 +439,7 @@ export const Ra = {
 
       let power = MendingUpgrade(15).isBought ? 1.5 : 1;
 
-      let multiplierInPower = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult);
+      let multiplierInPower = new Decimal(Ra.productionPerMemoryChunk * pet.memoryUpgradeCurrentMult * pet.shopMemMultEffect);
 
       let multiplierOutPower = new Decimal(1);
       if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
