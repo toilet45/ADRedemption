@@ -462,13 +462,14 @@ export const ra = {
       level: 90,
       displayIcon: 'τ'
     },
-    postWarpRealityMachineBoost: {
+    imaginaryBoost: {
       id: 6,
       id2: 0,
-      reward: "Post-Warp Reality Machine gain is affected by Elliptic Materiality",
+      reward: "Imaginary Machine cap is affected by Elliptic Materiality at a reduced Rate",
       pet: "teresa",
       level: 100,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: 'i',
+      effect: () => Math.max(Math.log2(ImaginaryUpgrade(6).effectValue.log(10)), 1)
     },
     alchSetToCapAndCapIncrease: {
       id: 8,
