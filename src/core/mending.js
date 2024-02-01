@@ -324,6 +324,7 @@ export function mendingReset() {
     }
     for(let i = 0; i < 1; i++){
       player.expoBlackHole[i].powerUpgrades = 0;
+      player.expoBlackHole[i].activations = 0;
     }
     //Eternity
     resetEternityRuns();
