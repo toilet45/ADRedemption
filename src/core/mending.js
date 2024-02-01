@@ -317,6 +317,8 @@ export function mendingReset() {
         player.blackHole[i].unlocked = true;
       }
       player.blackHole[i].activations = 0;
+      BlackHole(i+1).powerUpgrade._lazyValue.invalidate();//exm? It turns out that this was kept all along?--sxy
+      BlackHole(i+1).powerUpgrade._lazyCost.invalidate()
     }
     if (MendingUpgrade(4).isBought){
       player.reality.imaginaryUpgReqs += 32768;
