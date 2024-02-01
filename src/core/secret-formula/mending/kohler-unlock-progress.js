@@ -28,9 +28,13 @@ export const kohlerProgress = {
       id: 4,
       progress: 65,
       condition: () => {
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && Math.log10(Decimal.log10(Currency.antimatter.value))>=25) return true;
         return false;
       },
-      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate. [NYI because of balancing]`,
+      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate.`,
+      effect: () => {
+        return Math.max(Math.pow(Decimal.log10(Tickspeed.perSecond.plus(1)),0.3),1);
+      }
     },
     placeholder: {
       id: 6,

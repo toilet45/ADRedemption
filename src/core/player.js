@@ -1009,6 +1009,7 @@ window.player = {
       run: false,
       quoteBits: 0,
       unlockProgress: 0,
+      unlockMilestone: [false,false,false,false,false,false,false]
     }
   },
   isGameEnd: false,

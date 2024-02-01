@@ -33,6 +33,7 @@ export const Kohler = {
     }
     let stage3 = Math.min(30*(Math.log10(Decimal.log10(Currency.antimatter.value))-20)/5,30);
     if(stage3<0) stage3=0;
+    if(player.celestials.kohler.unlockMilestone[4]) stage3=30;
     Progress += stage3;
     return parseFloat(Progress.toFixed(2));
   },
@@ -55,7 +56,10 @@ class KohlerProgressUnlockState extends BitUpgradeState {
   }
 
   get isUnlocked() {
-    return /*!this.isUnlocked &&*/ typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
+    if(player.celestials.kohler.unlockMilestone[this.config.id]) return true;
+    let unlocked = typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
+    if (unlocked) player.celestials.kohler.unlockMilestone[this.config.id] = true;
+    return /*!this.isUnlocked &&*/ unlocked;
   }
 
   get description() {

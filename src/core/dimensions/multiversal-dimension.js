@@ -139,6 +139,10 @@ class MultiversalDimensionState extends DimensionState {
     const bought =  dim.bought;
     mult = mult.times(Decimal.pow(dim.powerMultiplier, bought));
 
+    if(tier==1){
+      if(KohlerProgressUnlocks.antimatterGalaxy.isUnlocked) mult = mult.times(KohlerProgressUnlocks.antimatterGalaxy.effectValue)
+    }
+
     return mult;
   }
 
