@@ -325,6 +325,8 @@ export function mendingReset() {
     for(let i = 0; i < 1; i++){
       player.expoBlackHole[i].powerUpgrades = 0;
       player.expoBlackHole[i].activations = 0;
+      ExpoBlackHole(i+1).powerUpgrade._lazyValue.invalidate();//there must be a better fix for this--sxy
+      ExpoBlackHole(i+1).powerUpgrade._lazyCost.invalidate()
     }
     //Eternity
     resetEternityRuns();
