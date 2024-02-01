@@ -18,10 +18,10 @@ export const corruptionChallenge = {
         )
     },
     desc: () => {
-        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend while in a more difficult Reality, in order to gain Hostile Fragments. All upgrades will be reset if you complete a reality with more Hostile Fragments then you are carrying."
+        return player.mending.corruption.countWhere(u => u > 0) == 0 ? "You have not selected any Hostilities, you cannot enter this challenge" : "Reach e9e15 antimatter and Mend without Galaxy Generator while in a more difficult Reality, in order to gain Hostile Fragments. All upgrades will be reset if you complete a reality with more Hostile Fragments then you are carrying."
     },
     reward: () => {
-        return CorruptionData.corruptedFragments > (Math.log2(CorruptionData.calcScore())) ? (`If you completed this challenge, you would not gain any Hostile Fragments, because ${player.mending.corruption.countWhere(u => u > 0) == 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments then you would gain."}`) : `If you completed this challenge, you would gain ${quantifyInt("Hostile Fragment", (Math.ceil(Math.log2(CorruptionData.calcScore())) - player.mending.corruptedFragments))}.`
+        return /*CorruptionData.recordCorruptedFragments > (Math.log2(CorruptionData.calcScore())) ? (`If you completed this challenge, you would not gain any Hostile Fragments, because ${player.mending.corruption.countWhere(u => u > 0) == 0 ? "you have no enabled Hostilities." : "you have more Hostile Fragments than you would gain."}`) :*/ `If you completed this challenge, you would gain ${quantifyInt("Hostile Fragment", (Math.ceil(Math.log2(CorruptionData.calcScore())) - player.mending.corruptedFragments))}. (Without HU20 bonus)`
     },
     unlocked: () => { return Ra.pets.pelle.level >= 75}
 }
