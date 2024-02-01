@@ -22,7 +22,7 @@ export const kohlerProgress = {
         if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
-      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/200).`,
+      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/100).`,
     },
     antimatterGalaxy: {
       id: 4,

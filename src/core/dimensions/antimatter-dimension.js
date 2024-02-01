@@ -625,7 +625,7 @@ class AntimatterDimensionState extends DimensionState {
         production = Decimal.pow10(Math.pow(production.log10(),atomDilutionCorruption))
       }
       if(KohlerProgressUnlocks.hostileFragments.isUnlocked){
-        production = Decimal.pow(production,1+CorruptionData.recordCorruptedFragments/200)
+        production = Decimal.pow(production,1+CorruptionData.recordCorruptedFragments/100)
       }
     }
     production = production.min(this.cappedProductionInNormalChallenges);
