@@ -678,7 +678,7 @@ export const ra = {
       reward: "Level Up, Recollection and Fragmentation don't spend memories",
       pet: "ra",
       level: 8,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: '<i class="fas fa-brain"></i>'
     },
     secondaryMemoryChunkGain: {
       id: 1,
@@ -710,7 +710,7 @@ export const ra = {
       reward: "Ra no longer resets on Mend",
       pet: "ra",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
     },
     remembranceAlwaysActiveAndShopUnlock: {
       id: 5,
@@ -871,10 +871,10 @@ export const ra = {
     unlockMultiversalDimensions: {
       id: 24,
       id2: 1,
-      reward: "Unlock Multiversal Dimensions [name TBD]",
+      reward: "Unlock Multiversal Dimensions",
       pet: "laitela",
       level: 100,
-      displayIcon: "*"
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
     },
     pelleAutobuyers: {
       id: 25,
@@ -891,7 +891,7 @@ export const ra = {
       effect: () => Pelle.isDoomed ? 3 : 1,
       pet: "pelle",
       level: 2,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
     },
     pelleXP: {
       id: 27,

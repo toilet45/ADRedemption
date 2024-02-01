@@ -1383,7 +1383,7 @@ export const normalAchievements = [
     description: "Mend the Multiverse.",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
-    reward: "Re-enable TTM in Doomed Reality"
+    reward: "Re-enable TTM and Achievements 118, 126, and 143 in Doomed Reality"
   },
   {
     id: 192,

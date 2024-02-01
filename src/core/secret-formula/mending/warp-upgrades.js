@@ -99,7 +99,7 @@ export const warpUpgrades = [
     name: "Automatic of Speed",
     id: 7,
     cost: 1e75,
-    requirement: () => `Reach ${format(new Decimal("1e2300"))} Game Speed`,
+    requirement: () => Ra.unlocks.uncapGamespeed.isUnlocked ? `Reach ${format(new Decimal("1e2300"))} Game Speed` : "Reach Nameless Level 30 to see unlock condition",
     hasFailed: () => false,
     checkRequirement: () => {
       return getGameSpeedupFactor().gte('1e2300');
@@ -107,7 +107,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "Unlock Black Hole 3 autobuyer",
+    description: () => Ra.unlocks.unlock3rdBH.isUnlocked ? "Unlock Black Hole 3 autobuyer" : "Reach Nameless Level 50 to see effect",
     effect: () => 1,
   },
   {
@@ -120,7 +120,7 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "Reduce Myriad Study cost by 50 Space Theorems",
+    description: () => Ra.unlocks.unlockMyriads.isUnlocked ? "Reduce Myriad Study cost by 50 Space Theorems" : "Reach V Level 90 to see effect",
     effect: () => 1
   },
   {
@@ -133,14 +133,14 @@ export const warpUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: false,
     lockEvent: "gain a Replicanti Galaxy",
-    description: "Galactic Shards improve Galaxy better",
+    description: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked ? "Galactic Shards effect uses a better formula" : "Reach Lai Level 100 to see effect",
     effect: () => 1,
   },
   {
     name: "Boost Readjustment",
     id: 10,
     cost: 1e60,
-    requirement: () => `Reach ${format(2e37)} Memory Crystals.`,
+    requirement: () => Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked ? `Reach ${format(2e37)} Memory Crystals.` : "Reach Ra Level 40 to see unlock condition",
     hasFailed: () => false,
     checkRequirement: () => Currency.raPoints.value.gte(2e37),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,

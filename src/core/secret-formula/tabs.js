@@ -43,7 +43,7 @@ export const tabs = [
       {
         key: "multiversal",
         name: "Multiversal Dimensions",
-        symbol: "?",
+        symbol: '<i class="fa-solid fa-staff-snake"></i>',
         component: "MultiversalDimensionsTab",
         id: 3,
         condition: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
