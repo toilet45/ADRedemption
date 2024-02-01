@@ -1,3 +1,4 @@
+import { Currency } from "../currency";
 import { BitUpgradeState, RebuyableMechanicState } from "../game-mechanics";
 import { GameDatabase } from "../secret-formula/game-database";
 
@@ -27,6 +28,12 @@ export const Kohler = {
     }
     let stage2 = Math.min(15*Math.ceil(CorruptionData.recordCorruptedFragments)/30,15);
     Progress += stage2;
+    if(stage2<15){
+      return parseFloat(Progress.toFixed(2));
+    }
+    let stage3 = Math.min(30*(Math.log10(Decimal.log10(Currency.antimatter.value))-20)/5,30);
+    if(stage3<0) stage3=0;
+    Progress += stage3;
     return parseFloat(Progress.toFixed(2));
   },
   checkForUnlocks() {
