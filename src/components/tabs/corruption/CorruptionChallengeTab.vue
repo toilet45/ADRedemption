@@ -99,14 +99,27 @@ export default {
       this.corruptions = [...CorruptionData.corruptions];
       this.isRunning = CorruptionData.isCorrupted;
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
+      this.nextCorrupted = player.mending.corruptNext
       // This was being annoying so this is a cheap fix that works
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
       this.corruptedFrags = player.mending.corruptedFragments
     },
+    corruptionsZeroCheck() {
+      for(let i=0;i<10;i++){
+        if(this.corruptions[i]!=0) return false;
+      }
+      return true;
+    },
     startRun() {
       if (!this.isRunning) {
-        this.nextCorrupted = !this.nextCorrupted
-        player.mending.corruptNext = this.nextCorrupted
+        if(!this.corruptionsZeroCheck()){
+        player.mending.corruptNext = !player.mending.corruptNext;
+        //player.mending.corruptNext = this.nextCorrupted
+        }
+        else{
+        player.mending.corruptNext = false;
+        this.nextCorrupted = false;
+        }
       }
       else {
         player.mending.corruptionChallenge.corruptedMend = false
@@ -146,12 +159,18 @@ export default {
         class="l-corrupt-mechanic-container"
       >
         <div class="c-corrupt-unlock c-corrupt-run-button">
-          <span v-if="!isRunning && !nextCorrupted">
+          <span v-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
               Make Next Mend Hostile
           </span>
-          <span v-else-if="!isRunning">
+          <span v-else-if="!isRunning && !nextCorrupted && corruptionsZeroCheck()">
+            You can't make full zero Hostile
+          </span>
+          <span v-else-if="!isRunning && !corruptionsZeroCheck()">
               Next Mend will be Hostile, Mend to apply Hostilities
           </span>
+          <span v-else-if="!isRunning && corruptionsZeroCheck()">
+            Next Mend shall be Hostile, but cannot be all zero
+        </span>
           <span v-else>
               Exit Hostile Mend
           </span>

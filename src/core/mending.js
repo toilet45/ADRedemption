@@ -36,7 +36,8 @@ function askMendingConfirmation() {
 export function mendingReset() {
     // Finally, lets set up corruptions
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
-    if (CorruptionData.isCorrupted && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)) {
+    if (CorruptionData.isCorrupted && (!player.celestials.pelle.galaxyGenerator.unlocked)) { //decided to allow pelle, yet not generator
+      CorruptionData.isCorrupted = false; //wtf what a chaos logic;
       let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
@@ -317,6 +318,8 @@ export function mendingReset() {
         player.blackHole[i].unlocked = true;
       }
       player.blackHole[i].activations = 0;
+      BlackHole(i+1).powerUpgrade._lazyValue.invalidate();//exm? It turns out that this was kept all along?--sxy
+      BlackHole(i+1).powerUpgrade._lazyCost.invalidate()
     }
     if (MendingUpgrade(4).isBought){
       player.reality.imaginaryUpgReqs += 32768;
@@ -324,6 +327,9 @@ export function mendingReset() {
     }
     for(let i = 0; i < 1; i++){
       player.expoBlackHole[i].powerUpgrades = 0;
+      player.expoBlackHole[i].activations = 0;
+      ExpoBlackHole(i+1).powerUpgrade._lazyValue.invalidate();//there must be a better fix for this--sxy
+      ExpoBlackHole(i+1).powerUpgrade._lazyCost.invalidate()
     }
     //Eternity
     resetEternityRuns();
@@ -465,8 +471,12 @@ export function mendingReset() {
     
    // Its crucial we do this after, else the player will corrupt and instantly complete a corruption
     if (player.mending.corruptNext) {
+      let corruptionZeroCheck = true;
+      for(let i=0;i<10;i++){
+        if(CorruptionData.corruptions[i]!=0) corruptionZeroCheck = false;
+      };
       player.mending.corruptNext = false
-      player.mending.corruptionChallenge.corruptedMend = true
+      if(!corruptionZeroCheck)player.mending.corruptionChallenge.corruptedMend = true
     }
     CorruptionData.update()
 

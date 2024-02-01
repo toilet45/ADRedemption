@@ -1,3 +1,4 @@
+import { Currency } from "../currency";
 import { BitUpgradeState, RebuyableMechanicState } from "../game-mechanics";
 import { GameDatabase } from "../secret-formula/game-database";
 
@@ -20,13 +21,20 @@ export const Kohler = {
 
   get unlockProgress() {
     let Progress = 5;
-    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/7,15)
+    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/Math.log10(5e7),15)
     Progress += stage1;
     if(stage1<15){
       return parseFloat(Progress.toFixed(2));
     }
     let stage2 = Math.min(15*Math.ceil(CorruptionData.recordCorruptedFragments)/30,15);
     Progress += stage2;
+    if(stage2<15){
+      return parseFloat(Progress.toFixed(2));
+    }
+    let stage3 = Math.min(30*(Math.log10(Decimal.log10(Currency.antimatter.value))-20)/5,30);
+    if(stage3<0) stage3=0;
+    if(player.celestials.kohler.unlockMilestone[4]) stage3=30;
+    Progress += stage3;
     return parseFloat(Progress.toFixed(2));
   },
   checkForUnlocks() {
@@ -48,7 +56,10 @@ class KohlerProgressUnlockState extends BitUpgradeState {
   }
 
   get isUnlocked() {
-    return /*!this.isUnlocked &&*/ typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
+    if(player.celestials.kohler.unlockMilestone[this.config.id]) return true;
+    let unlocked = typeof this.config.condition === "function" ? this.config.condition() : this.config.condition;
+    if (unlocked) player.celestials.kohler.unlockMilestone[this.config.id] = true;
+    return /*!this.isUnlocked &&*/ unlocked;
   }
 
   get description() {

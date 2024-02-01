@@ -78,7 +78,7 @@ export const corruptionPenalties = {
     atomDilution: [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.35, 0.3, 0.275, 0.25, 0.2],
     toD: {
         power: [1, 0.65, 0.33, 0.19, 0.1, 0.045, 0.02, 0.006, 0.002, 0, 0],
-        mult: [1, 1e-2, 1e8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
+        mult: [1, 1e-2, 1e-8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
         hiddenFive: [1, 1, 1, 1, 1, 3, 12, 50, 500, 6000, 15000, 1e5],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 8, 75, 1050, 11752]
     },

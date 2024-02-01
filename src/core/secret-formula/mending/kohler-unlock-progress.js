@@ -10,27 +10,31 @@ export const kohlerProgress = {
       id: 1,
       progress: 20,
       condition: () => {
-        if (CorruptionData.corruptionChallenge.recordScore >= 10000000) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.corruptionChallenge.recordScore >= 50000000) return true;
         return false;
       },
-      description: () => `Reach ${format(1e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
+      description: () => `Reach ${format(5e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
     },
     hostileFragments: {
       id: 2,
       progress: 35,
       condition: () => {
-        if (CorruptionData.recordCorruptedFragments > 29) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
-      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/200).`,
+      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/100).`,
     },
     antimatterGalaxy: {
       id: 4,
       progress: 65,
       condition: () => {
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && Math.log10(Decimal.log10(Currency.antimatter.value))>=25) return true;
         return false;
       },
-      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate. [NYI because of balancing]`,
+      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate.`,
+      effect: () => {
+        return Math.max(Math.pow(Decimal.log10(Tickspeed.perSecond.plus(1)),0.3),1);
+      }
     },
     placeholder: {
       id: 6,
