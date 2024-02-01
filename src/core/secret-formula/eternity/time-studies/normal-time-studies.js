@@ -924,7 +924,7 @@ export const normalTimeStudies = [
     description: `Infinity Points boosts 1st Infinity Dimension Multiplier`,
     effect: () => {
       let baseExp = Math.log10(Math.max(Currency.infinityPoints.exponent,1));
-      let Exponent = baseExp/5 + 15;
+      let Exponent = baseExp/5 + 15.5;
       let answer = Decimal.pow(10,Decimal.pow(10,Exponent));
       return answer
     },

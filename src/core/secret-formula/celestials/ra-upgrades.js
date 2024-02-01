@@ -226,7 +226,7 @@ export const raUpgrades = {
     id: "raUpgrade",
     celestial: "ra",
     description: "Memory Crystal reduces Dimension Boost cost.",
-    cost: 1e25,
+    cost: 2e22,
     currency: () => Currency.raPoints,
     currencyLabel: "Memory Crystal",
     implemented: true,

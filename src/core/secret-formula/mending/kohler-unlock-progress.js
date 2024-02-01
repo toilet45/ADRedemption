@@ -10,16 +10,16 @@ export const kohlerProgress = {
       id: 1,
       progress: 20,
       condition: () => {
-        if (CorruptionData.corruptionChallenge.recordScore >= 10000000) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.corruptionChallenge.recordScore >= 50000000) return true;
         return false;
       },
-      description: () => `Reach ${format(1e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
+      description: () => `Reach ${format(5e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
     },
     hostileFragments: {
       id: 2,
       progress: 35,
       condition: () => {
-        if (CorruptionData.recordCorruptedFragments > 29) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.recordCorruptedFragments > 29) return true;
         return false;
       },
       description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/200).`,
