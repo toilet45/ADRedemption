@@ -20,7 +20,8 @@ export default {
       areAutobuyersUnlocked: false,
       showLockedDimCostNote: true,
       shortenTSU: false,
-      trueCap: 5e14
+      trueCap: 5e14,
+      cappedMult: true
     };
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
       this.areAutobuyersUnlocked = Autobuyer.timeDimension(1).isUnlocked;
       this.shortenTSU = FreeTickspeed.amount >= 1e11;
       this.trueCap =player.timestudy.studies.includes(310) ? 5e14 * (Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent)),1)) : 5e14
+      this.cappedMult = !Ra.unlocks.uncap8TdPurchaseMult.isUnlocked;
     },
     maxAll() {
       tryUnlockTimeDimensions();
@@ -116,7 +118,9 @@ export default {
       <div v-if="showLockedDimCostNote">
         Hold shift to see the Eternity Point cost for locked Time Dimensions.
       </div>
+      <div v-if="cappedMult">
       Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
+      </div>
       <br>
       Time Dimensions can only be purchased up to {{ format(trueCap,2,2) }} times.
     </div>
