@@ -33,6 +33,7 @@ export default {
       nextCorrupted: false,
       timeCompMult: new Decimal(0),
       corruptedFrags: 0,
+      rewardedFragments: 0,
     };
   },
   computed: {
@@ -62,13 +63,13 @@ export default {
       };
     },
     runDescription() {
-      return GameDatabase.challenges.corruption.desc()
+      return GameDatabase.challenges.corruption.desc(this.corruptionsZeroCheck())
     },
     bonusInfo() {
       return GameDatabase.challenges.corruption.incBonusText()
     },
     rewardInfo() {
-      return GameDatabase.challenges.corruption.reward()
+      return GameDatabase.challenges.corruption.reward(this.rewardedFragments)
     },
     unlockInfoTooltipArrowStyle() {
       return {
@@ -102,7 +103,8 @@ export default {
       this.nextCorrupted = player.mending.corruptNext
       // This was being annoying so this is a cheap fix that works
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
-      this.corruptedFrags = player.mending.corruptedFragments
+      this.corruptedFrags = player.mending.corruptedFragments;
+      this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
     },
     corruptionsZeroCheck() {
       for(let i=0;i<10;i++){
