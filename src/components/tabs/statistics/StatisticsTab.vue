@@ -171,7 +171,7 @@ export default {
         mending.hasBest = true;
         mending.count = Decimal.floor(Currency.mends.value);
         this.bypass.copyFrom(player.records.bestMend.time);
-        this.mending.best = new TimeSpan(this.bypass)
+        this.mending.best = new TimeSpan(this.bypass.times(1))
         // this.bypass.copyFrom(new TimeSpan(bestMend.realTime));
         this.mending.bestReal = new TimeSpan(records.bestMend.realTime)
         this.bypass.copyFrom(records.thisMend.time);
