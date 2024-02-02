@@ -469,7 +469,17 @@ export const Ra = {
       if(a.eq(0)){
         estimateDecimal = c.div(b.pow(power));
       } else {
-        estimateDecimal = c.times(a).times(power+1).plus(b.pow(power+1)).pow(1/(power+1)).minus(b).div(a);
+        // estimateDecimal = c.times(a).times(power+1).plus(b.pow(power+1)).pow(1/(power+1)).minus(b).div(a);
+        // the add will cause precision lost
+        // a fix, by using ax to approximate (1+x)^a-1 when x is small
+        let midResult = c.times(a).times(power+1).div(b.pow(power+1));
+        let midResult2 = new Decimal(0);
+        if(midResult.gt(1e-6)){
+          midResult2 = midResult.plus(1).pow(1/(power+1)).minus(1);
+        } else { // the approximation is square precised, and 1e-12 level error is nothing
+          midResult2 = midResult.times(1/(power+1));
+        }
+        estimateDecimal = b.div(a).times(midResult2);
       }
 
       //estimateDecimal = estimateDecimal.div(multiplierOutPower);
