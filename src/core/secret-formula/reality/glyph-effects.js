@@ -472,7 +472,7 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["effarig"],
     singleDesc: () => {
-      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? `Reality Machine multiplier ×{value} [and\nImaginary Machine cap] ×{value3}` : `Reality Machine multiplier ×{value}`;
+      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? `Reality Machine multiplier ×{value} [and\nImaginary Machine cap] ×{value2}` : `Reality Machine multiplier ×{value}`;
     },
     genericDesc: () =>{
       return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "Reality Machine and Imaginary Machine cap multiplier" : "Reality Machine multiplier";
@@ -483,6 +483,7 @@ export const glyphEffects = {
     effect: (level, strength) => (GlyphAlteration.isEmpowered("effarig") ? Math.pow(level, 1.5) : Math.pow(level, 0.6) * strength),
     formatEffect: x => format(x, 2, 2),
     combine: GlyphCombiner.multiply,
+    conversion: x => x ** 0.5,
     alteredColor: () => GlyphAlteration.getEmpowermentColor("effarig"),
     alterationType: ALTERATION_TYPE.EMPOWER
   },

@@ -22,12 +22,10 @@ export default {
       const value2 = this.effectConfig.conversion === undefined
         ? ""
         : this.effectConfig.formatSecondaryEffect(this.effectConfig.conversion(baseValue));
-      const value3 = value1 ** 0.5;
       const desc = this.effectConfig.totalDesc;
       return desc
         .replace("{value}", value1)
-        .replace("{value2}", value2)
-        .replace("{value3}", value3);
+        .replace("{value2}", value2);
     },
     textColor() {
       if (!this.isColored) return { };

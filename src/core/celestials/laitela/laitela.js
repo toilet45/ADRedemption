@@ -50,7 +50,8 @@ export const Laitela = {
     let y =  ((1 + 0.5 * Math.pow(Decimal.pLog10(Currency.darkMatter.max) / 50, 0.4) *
       (1 + SingularityMilestone.continuumMult.effectOrDefault(0))) * (MendingUpgrade(18).isBought ? 1.5 : 1)) * (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(6).completions >= 1 && !Pelle.isDoomed ? EternityChallenge(6).vReward.effectValue : 1)+ x;
     if(Pelle.isDoomed) y = y ** 0.01;
-    return y;
+    let z = Ra.unlocks.continuumBoost.isUnlocked ? 1.05 ** Math.max((Math.floor(Currency.darkMatter.value.log(Number.MAX_VALUE))), 0) : 0;
+    return y * z;
   },
   get realityReward() {
     return Math.clampMin(Math.pow(100, this.difficultyTier) *
