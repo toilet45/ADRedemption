@@ -732,6 +732,9 @@ export const migrations = {
   },
   51.025: player => {
     player.celestials.kohler.unlockProgress = 0;
+  },
+  51.026: player => {
+    player.celestials.kohler.unlockMilestone = [false,false,false,false,false,false,false]
   }
 },
 
