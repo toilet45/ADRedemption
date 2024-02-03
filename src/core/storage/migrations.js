@@ -1,5 +1,6 @@
 import { deepmergeAll } from "@/utility/deepmerge";
 import { DC } from "../constants";
+import { dev } from "../devtools";
 import { CorruptionData } from "../corruption";
 
 // WARNING: Don't use state accessors and functions from global scope here, that's not safe in long-term
@@ -735,6 +736,17 @@ export const migrations = {
   },
   51.026: player => {
     player.celestials.kohler.unlockMilestone = [false,false,false,false,false,false,false]
+  },
+  51.300: player => {
+    // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
+    /* 
+    let isDevSave = false
+    if (player.version >= 51 && player.version <= 51.25) isDevSave = isDevSave || true
+    // Feel free to add more deletion reqs/options here
+    if (isDevSave) {
+      dev.hardReset()
+    }
+    */
   }
 },
 
