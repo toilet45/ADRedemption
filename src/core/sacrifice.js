@@ -71,7 +71,7 @@ export class Sacrifice {
 
     //corruption 10
     const corrupt = CorruptionUpgrade(10).effectOrDefault(1);
-    return baseAnswer**corrupt;
+    return baseAnswer>1 ? baseAnswer**corrupt : baseAnswer;
   }
 
   static get nextBoost() {
