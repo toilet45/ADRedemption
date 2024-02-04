@@ -133,7 +133,7 @@ export const infinityUpgrades = {
     cost: 5,
     checkRequirement: () => InfinityUpgrade.thisInfinityTimeMult.isBought,
     description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points",
-    effect: () => Currency.infinityPoints.value.dividedBy(2).pow(1.5).plus(1),
+    effect: () => Decimal.min(Currency.infinityPoints.value.dividedBy(2).pow(1.5).plus(1),Decimal.pow10(1e20)),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points, powered by Teresa level",
