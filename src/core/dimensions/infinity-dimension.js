@@ -272,7 +272,7 @@ class InfinityDimensionState extends DimensionState {
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
      const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
      let y = this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap ** x
-     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
+     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (InfinityDimensions.totalDimCap * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
      return y;
   }
 
@@ -489,7 +489,7 @@ export const InfinityDimensions = {
     const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
 
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
-    const m = TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :0;
+    const m = /*TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :*/0;
     let multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
     if (player.mending.corruptionChallenge.corruptedMend) {
       multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])
