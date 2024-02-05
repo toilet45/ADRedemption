@@ -930,7 +930,7 @@ export const ra = {
     unlockPelleGlyphEffects: {
       id: 31,
       id2: 1,
-      reward: "Baisc Glyphs' disabled effects are re-enabled in Doomed Reality.",
+      reward: "Basic Glyphs' disabled effects are re-enabled in Doomed Reality.",
       pet: "pelle",
       level: 25,
       displayIcon: `<span class="fas fa-clone"></span>`
