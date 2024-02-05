@@ -84,7 +84,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
     if ((this.id === 15 || this.id === 25) && MendingMilestone.eight.isReached){
       return true
     }
-    if(MendingMilestone.four.isReached || (this.id === 20 && MendingMilestone.three.isReached) || (this.id === 15 && MendingUpgrade(4).isBought)){
+    if((MendingMilestone.four.isReached && ![15, 25].includes(this.id)) || (this.id === 20 && MendingMilestone.three.isReached) || (this.id === 15 && MendingUpgrade(4).isBought)){
       return true;
     }
     return this.config.hasFailed ? !this.config.hasFailed() : true;
