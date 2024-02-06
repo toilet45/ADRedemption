@@ -48,7 +48,8 @@ export function mendingReset() {
       }
      player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
      player.mending.corruptionUpgradeBits = 0 // Basically a respec call
-    }
+     player.mending.corruptionChallenge.corruptedMend = false
+     CorruptionData.update();
    }
    
     if (!MendingMilestone.six.isReached){
@@ -168,6 +169,7 @@ export function mendingReset() {
       effarig: 0
     };
     player.celestials.ra.quoteBits = 16383;
+    player.celestials.ra.run = false;
     if(player.mending.corruptNext || !KohlerProgressUnlocks.hostileScore.isUnlocked){
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();

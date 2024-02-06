@@ -281,7 +281,15 @@ export const Tesseracts = {
   },
 
   get effectiveCount() {
-    return this.bought + this.extra;
+    let x = this.bought + this.extra;
+    /*let softcapOneStart = 50; // yes this is redundant, but futureproofing for upgrades
+    if (x > softcapOneStart){
+      let scOnePower = 0.05;
+      x /= softcapOneStart;
+      x **= scOnePower;
+      x *= softcapOneStart;
+    }*/
+    return x;
   },
 
   buyTesseract() {

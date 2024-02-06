@@ -1437,7 +1437,11 @@ export const normalAchievements = [
   },
   {
     id: 198,
-    name: "198",
-    description: "placeholder",
+    name: "Nicenicenicenice.",
+    get description () {
+      return `Reach ${format(new Decimal("1e69696900000000000000000"), 0, 2)} Antimatter.`;
+    },
+    checkRequirement: () => player.antimatter.gte(new Decimal("1e69696900000000000000000")),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
 ];
