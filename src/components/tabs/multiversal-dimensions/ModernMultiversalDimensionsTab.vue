@@ -60,7 +60,7 @@ export default {
       if (this.boostPoints.lte(1e50)) {
         return ` stronger`
       }
-      return ` multiplier to all galaxies`
+      return ` multiplier to Galaxy strength`
     }
   }
 };

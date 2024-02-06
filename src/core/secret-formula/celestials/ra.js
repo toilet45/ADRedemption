@@ -827,7 +827,7 @@ export const ra = {
       reward: () => `Improve Continuum effect for every ${format("1e308")} Dark Matter`,
       pet: "laitela",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: 'ᛝ'
     },
     increaseSingLimits: {
       id: 19,
