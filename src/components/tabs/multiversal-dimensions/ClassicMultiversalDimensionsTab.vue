@@ -44,7 +44,7 @@ export default {
       toggleAllMultiversalDims();
     },
     txt1() {
-      if (this.boostPoints.lte(1e50)) {
+      if (this.galaxyBoost < 10) {
         return `making all Galaxies `
       }
       return `providing an `
@@ -53,13 +53,13 @@ export default {
       if (this.boostPoints.eq(0)){
         return `${format(0, 2, 2)}%`
       }
-      else if (this.boostPoints.lte(1e50)) {
+      else if (this.galaxyBoost < 10) {
         return `${format((this.galaxyBoost-1)*100, 2, 2)}%`
       }
       return `${formatX(this.galaxyBoost, 2, 2)}`
     },
     txt3() {
-      if (this.boostPoints.lte(1e50)) {
+      if (this.galaxyBoost < 10) {
         return ` stronger`
       }
       return ` multiplier to Galaxy strength`

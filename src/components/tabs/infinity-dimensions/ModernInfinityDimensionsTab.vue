@@ -41,6 +41,9 @@ export default {
       IPcap: 0,
       TesseractsCap: 20,
       atTessCap: false,
+      atSecondCap: false,
+      scTwoStart: new Decimal(0),
+      secondTextCap: 0,
     };
   },
   computed: {
@@ -96,6 +99,9 @@ export default {
       this.trueID8cap = player.timestudy.studies.includes(310) ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : 1e10;
       this.TesseractsCap = Tesseracts.TesseractHardcap;
       this.atTessCap = Tesseracts.bought>=Tesseracts.TesseractHardcap;
+      this.scTwoStart = InfinityDimension(8).infPowerSoftcapTwo;
+      this.atSecondCap = player.infinityPower.gt(this.scTwoStart);
+      this.secondTextCap = Decimal.pow(10, this.scTwoStart)
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -186,6 +192,8 @@ export default {
     <br>
     <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(this.textCap) }}</span>
     <br>
+    <span v-if="atSecondCap" class="sc-two">Due to further instability, your Infinity Power is further softcapped after {{ format(this.secondTextCap) }}</span>
+    <br>
     <span v-if="atTessCap">Tesseracts beyond {{ format(this.TesseractsCap) }} are physically impossible</span>
     <br>
     <b
@@ -208,7 +216,7 @@ export default {
 </template>
 
 <style scoped>
-.sc-one {
-  color: #FF0000;
+.sc-two {
+  color: #FF8000;
 }
 </style>

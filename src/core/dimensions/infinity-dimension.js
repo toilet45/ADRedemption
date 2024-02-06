@@ -144,6 +144,11 @@ class InfinityDimensionState extends DimensionState {
     return x;
   }
 
+  get infPowerSoftcapTwo(){
+    let x = 1e21;
+    return x;
+  }
+
   get productionPerSecond() {
     if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning ||
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
@@ -167,10 +172,16 @@ class InfinityDimensionState extends DimensionState {
     }*/
     if (this.tier == 1){
       while (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcap)*repeats) {
-      production = production.div(Decimal.pow10(this.infPowerSoftcap));   
-      production = production.pow(0.0123456789);
-      production = production.times(Decimal.pow10(this.infPowerSoftcap));
-      repeats += 1}
+        production = production.div(Decimal.pow10(this.infPowerSoftcap));   
+        production = production.pow(0.0123456789);
+        production = production.times(Decimal.pow10(this.infPowerSoftcap));
+        if (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcapTwo)*repeats){
+          production = production.div(Decimal.pow10(this.infPowerSoftcapTwo));   
+          production = production.pow(1e-4);
+          production = production.times(Decimal.pow10(this.infPowerSoftcapTwo));
+        }
+        repeats += 1
+      }
     }
     return production;
   }
@@ -486,7 +497,7 @@ export const InfinityDimensions = {
 
   get powerConversionRate() {
     const x = Ra.unlocks.relicShardBoost.isUnlocked ? 1+(Math.max(1, Decimal.max(Currency.relicShards.value,1).log10()) / 1000) : 0;
-    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
+    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount / 3.33,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
 
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
     const m = /*TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :*/0;
@@ -494,6 +505,12 @@ export const InfinityDimensions = {
     if (player.mending.corruptionChallenge.corruptedMend) {
       multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])
     }
-    return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
+    let w = (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
+    /*if (w > 8){
+      w /= 8;
+      w **= 0.01;
+      w *= 8;
+    }*/
+    return w;
   }
 };

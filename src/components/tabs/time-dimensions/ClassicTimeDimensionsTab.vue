@@ -20,7 +20,8 @@ export default {
       areAutobuyersUnlocked: false,
       showLockedDimCostNote: true,
       shortenTSU: false,
-      cappedMult: true
+      cappedMult: true,
+      cap: 0
     };
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
       this.areAutobuyersUnlocked = Autobuyer.timeDimension(1).isUnlocked;
       this.shortenTSU = FreeTickspeed.amount >= 1e11;
       this.cappedMult = !Ra.unlocks.uncap8TdPurchaseMult.isUnlocked;
+      this.cap = 5e14 * (TimeStudy(310).isBought ? Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent+1)),1) : 1)
     },
     maxAll() {
       tryUnlockTimeDimensions();
@@ -122,7 +124,7 @@ export default {
       Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
       </div>
       <br>
-      Time Dimensions can only be purchased up to {{ format(5e14) }} times.
+      Time Dimensions can only be purchased up to {{ format(this.cap, 2, 2) }} times.
     </div>
   </div>
 </template>
