@@ -500,7 +500,7 @@ export const InfinityDimensions = {
     const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount / 3.33,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
 
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
-    const m = /*TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :*/0;
+    const m = TimeStudy(402).effectOrDefault(0);
     let multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
     if (player.mending.corruptionChallenge.corruptedMend) {
       multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])

@@ -21,7 +21,8 @@ export default {
       creditsClosed: false,
       requirementText: null,
       hasTutorial: false,
-      type: 0
+      type: 0,
+      scaledBoostStart: 0
     };
   },
   computed: {
@@ -43,6 +44,14 @@ export default {
     },
     dimRequirementText(){
       return this.purchasedBoosts >= 1e9 ? "" : `: requires ${ formatInt(this.requirement.amount)} ${ this.dimName } Dimensions`
+    },
+    softcapText(){
+      switch(this.type){
+        case 1:
+          return `Dimension Boost cost scaling increases past ${ format(this.scaledBoostStart, 2, 2)  } Dimension Boosts`
+        default:
+          return ""
+      }
     },
     boostScale(){
       switch(this.type){
@@ -78,6 +87,7 @@ export default {
       if (this.isDoomed) this.requirementText = formatInt(this.purchasedBoosts);
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.DIMBOOST);
       this.type = DimBoost.type
+      this.scaledBoostStart = DimBoost.shiftStart;
     },
     dimensionBoost(bulk) {
       if (!DimBoost.requirement.isSatisfied || !DimBoost.canBeBought) return;
@@ -91,6 +101,10 @@ export default {
   <div class="c-dimension-row c-antimatter-dim-row c-antimatter-prestige-row">
     <div class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount">
       {{ boostScale }} Dimension Boost ({{ boostCountText }}) {{ dimRequirementText }}
+    <br>
+    <div v-if="this.type > 0">
+      {{ softcapText }}
+    </div>
     </div>
     <PrimaryButton
       :enabled="isBuyable"

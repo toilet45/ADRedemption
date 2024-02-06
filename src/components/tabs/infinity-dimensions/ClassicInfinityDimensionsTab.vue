@@ -97,7 +97,7 @@ export default {
       this.TesseractsCap = Tesseracts.TesseractHardcap;
       this.atTessCap = Tesseracts.bought>=Tesseracts.TesseractHardcap;
       this.scTwoStart = InfinityDimension(8).infPowerSoftcapTwo;
-      this.atSecondCap = player.infinityPower.gt(this.scTwoStart);
+      this.atSecondCap = player.infinityPower.e >= this.scTwoStart;
       this.secondTextCap = Decimal.pow(10, this.scTwoStart)
     },
     maxAll() {
