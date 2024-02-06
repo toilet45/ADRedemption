@@ -284,7 +284,7 @@ export const singularityMilestones = {
     repeat: 0,
     limit: 1,
     description: "Singularities increase effective Tesseract count",
-    effect: () => Math.min(1 + Math.log10(Currency.singularities.value) / 80,3),
+    effect: () => 1 + Math.log10(Currency.singularities.value) / 80,
     effectFormat: x => formatX(Math.clampMin(x, 1), 2, 2),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,
   }

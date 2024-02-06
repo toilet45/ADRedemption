@@ -138,14 +138,14 @@ export const glyphEffects = {
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => {
       let a = 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 - GlyphAlteration.sacrificeBoost("dilation") / 50;
-      return Math.max(a,0.001);
+      return a;
     },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
     alterationType: ALTERATION_TYPE.BOOST,
     combine: effects => {
       const prod = effects.reduce(Number.prodReducer, 1);
-      return prod<=0 ? { value: 0.001 , capped: true } : prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3 - Math.pow(0.4 - prod, 3), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
+      return prod < 0.4 ? (Math.pow(0.4 - prod, 1.7) < 0.3) ? { value: 0.3 - Math.pow(0.4 - prod, 3), capped: true } : { value: 0.4 - Math.pow(0.4 - prod, 1.7), capped: true } : { value: prod, capped: false };
     },
     enabledInDoomed: true,
     enabledInDoomedWithlvl25: true,
