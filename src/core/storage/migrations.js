@@ -737,6 +737,29 @@ export const migrations = {
   51.026: player => {
     player.celestials.kohler.unlockMilestone = [false,false,false,false,false,false,false]
   },
+  51.027: player => {
+    player.transcendents = {
+      kohler: {
+        run: false,
+        trueRun: false
+      },
+      sxy: {
+        run: false
+      },
+      hexus:{
+        run: false
+      },
+      blight:{
+        run: false
+      },
+      asw:{
+        run: false
+      },
+      wollec:{
+        run: false
+      }
+    }
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

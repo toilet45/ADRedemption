@@ -15,7 +15,7 @@ export function buySingleTimeDimension(tier, auto = false) {
     }
   }
   if (Currency.eternityPoints.lt(dim.cost)) return false;
-  if (Enslaved.isRunning && dim.bought > 0) return false;
+  if ((Enslaved.isRunning || Kohler.isRunning) && dim.bought > 0) return false;
   if (ImaginaryUpgrade(15).isLockingMechanics && EternityChallenge(7).completions > 0) {
     if (!auto) {
       ImaginaryUpgrade(15).tryShowWarningModal(`purchase a Time Dimension,
@@ -71,7 +71,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
     }
     return false;
   }
-  if (Enslaved.isRunning) return buySingleTimeDimension(tier);
+  if (Enslaved.isRunning || Kohler.isRunning) return buySingleTimeDimension(tier);
   let bulk = null;
   try{
     bulk = bulkBuyBinarySearch(canSpend, {
@@ -251,7 +251,9 @@ class TimeDimensionState extends DimensionState {
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
       mult = dilatedValueOf(mult);
     }
-
+    if (Kohler.isRunning){
+      mult = mult.pow(5e-7);
+    }
     if (Effarig.isRunning) {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {

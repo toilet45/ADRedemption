@@ -189,7 +189,7 @@ export default {
     <br>
     <span v-if="atCap">Due to instability, your Infinity Power gain is softcapped after {{ format(this.textCap) }}</span>
     <br>
-    <span v-if="atSecondCap" class="sc-two">Due to further instability, your Infinity Power is further softcapped after {{ format(this.secondTextCap) }}</span>
+    <span v-if="atSecondCap">Due to further instability, your Infinity Power is further softcapped after {{ format(this.secondTextCap) }}</span>
     <br>
     <span v-if="atTessCap">Tesseracts beyond {{ format(this.TesseractsCap) }} are physically impossible</span>
     <br>

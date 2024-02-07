@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade } from "./core/globals";
+import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade, dilatedValueOf } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -114,11 +114,14 @@ export function gainedInfinityPoints(noSoftcap = false) {
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
     ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value.max(1)) / 100);
   }
+  if(Kohler.isRunning){
+    ip = ip.pow(5e-7);
+    ip = dilatedValueOf(ip);
+  }
   if (Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY) {
     ip = ip.min(DC.E200);
   }
   ip = ip.times(GameCache.totalIPMult.value);
-  
   if (Teresa.isRunning) {
     ip = ip.pow(0.55);
   } else if (V.isRunning) {
@@ -212,6 +215,10 @@ export function gainedEternityPoints(noSoftcap = false) {
   }
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
     ep = Decimal.pow(ep, Decimal.log10(Currency.realityMachines.value) / 100);
+  }
+  if (Kohler.isRunning){
+    ep = ep.pow(5e-7);
+    ep = dilatedValueOf(ep);
   }
   if (Teresa.isRunning) {
     ep = ep.pow(0.55);
@@ -472,6 +479,11 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // These effects should always be active, but need to be disabled during offline black hole simulations because
   // otherwise it gets applied twice
   if (effects.includes(GAME_SPEED_EFFECT.NERFS)) {
+    if(Kohler.isRunning){
+      factor = Effarig.multiplier(factor);
+      const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes.toNumber() / 10, 1);
+      factor = Decimal.pow(factor, nerfModifier);
+    }
     if (Effarig.isRunning) {
       factor = Effarig.multiplier(factor);
     } else if (Laitela.isRunning) {
@@ -1143,7 +1155,7 @@ export function getTTPerSecond() {
   if (GlyphAlteration.isAdded("dilation")) ttMult.times(getSecondaryGlyphEffect("dilationTTgen"));
 
   // Glyph TT generation
-  let glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed
+  let glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed || Kohler.isRunning
     ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
     if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.ttgen[player.mending.corruption[9]]) {

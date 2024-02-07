@@ -69,6 +69,10 @@ export function getDimensionFinalMultiplierUncached(tier) {
   multiplier = applyNDPowers(multiplier, tier);
 
   const glyphDilationPowMultiplier = getAdjustedGlyphEffect("dilationpow");
+  if (Kohler.isRunning){
+    multiplier = multiplier.pow(5e-7);
+    multiplier = dilatedValueOf(multiplier);
+  }
   if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
     multiplier = dilatedValueOf(multiplier.pow(glyphDilationPowMultiplier));
   } else if (Enslaved.isRunning) {
@@ -83,6 +87,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   } else if (V.isSuperRunning) {
     multiplier = multiplier.pow(0.000001);
   }
+
 
   if (player.mending.corruptionChallenge.corruptedMend) {
     multiplier = multiplier.pow(corruptionPenalties.timeCompression.hiddenEight[player.mending.corruption[2]])
@@ -219,7 +224,7 @@ export function buyOneDimension(tier) {
 
   const cost = dimension.cost;
 
-  if (tier === 8 && Enslaved.isRunning && AntimatterDimension(8).bought >= 1) return false;
+  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning) && AntimatterDimension(8).bought >= 1) return false;
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
 
@@ -244,7 +249,7 @@ export function buyManyDimension(tier) {
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return false;
   const cost = dimension.costUntil10;
 
-  if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
+  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.challengeCostBump();
@@ -262,7 +267,7 @@ export function buyAsManyAsYouCanBuy(tier) {
   const howMany = dimension.howManyCanBuy;
   const cost = dimension.cost.times(howMany);
 
-  if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
+  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.challengeCostBump();
@@ -494,7 +499,7 @@ class AntimatterDimensionState extends DimensionState {
     if (!this.isAvailableForPurchase) return 0;
     // Nameless limits dim 8 purchases to 1 only
     // Continuum should be no different
-    if (this.tier === 8 && Enslaved.isRunning) return 1;
+    if (this.tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return 1;
     // It's safe to use dimension.currencyAmount because this is
     // a dimension-only method (so don't just copy it over to tickspeed).
     // We need to use dimension.currencyAmount here because of different costs in NC6.

@@ -35,7 +35,7 @@ export function effectiveBaseGalaxies() {
 
 export function getTickSpeedMultiplier() {
   if (InfinityChallenge(3).isRunning) return DC.D1;
-  if (Ra.isRunning) return DC.C1D1_1245;
+  if (Ra.isRunning || Kohler.isRunning) return DC.C1D1_1245;
   let galaxies = effectiveBaseGalaxies();
   const effects = Effects.product(
     InfinityUpgrade.galaxyBoost,
@@ -165,7 +165,7 @@ export const Tickspeed = {
   },
 
   get current() {
-    let tickspeed = Effarig.isRunning
+    let tickspeed = (Effarig.isRunning || Kohler.isRunning)
       ? Effarig.tickspeed
       : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
       if (player.mending.corruptionChallenge.corruptedMend) {
@@ -174,7 +174,7 @@ export const Tickspeed = {
         let corruptPen = new Decimal(1).div(tickExtensionTickspeed);
         tickspeed = tickspeed.pow(corruptPen);
       };
-      if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
+      if(V.isSuperRunning || Kohler.isRunning) tickspeed = tickspeed.pow(0.000001);
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 

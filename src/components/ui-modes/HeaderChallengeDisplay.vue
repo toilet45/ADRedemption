@@ -18,6 +18,7 @@ export default {
       resetCelestial: false,
       inPelle: false,
       inSuperV: false,
+      inKohler: false
     };
   },
   computed: {
@@ -92,6 +93,9 @@ export default {
       return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
     },
     challengeDisplay() {
+      if (this.inKohler){
+        return "Kohler's Realm"
+      }
       if (this.inPelle && this.activeChallengeNames.length > 0) {
         return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;
       }
@@ -122,6 +126,7 @@ export default {
       this.inPelle = Pelle.isDoomed;
       this.inSuperV = V.isSuperRunning;
       this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
+      this.inKohler = Kohler.isRunning;
     },
     // Process exit requests from the inside out; Challenges first, then dilation, then Celestial Reality. If the
     // relevant option is toggled, we pass a bunch of information over to a modal - otherwise we immediately exit
