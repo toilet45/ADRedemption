@@ -38,6 +38,8 @@ export function mendingReset() {
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
     if (CorruptionData.isCorrupted && (!player.celestials.pelle.galaxyGenerator.unlocked)) { //decided to allow pelle, yet not generator
       CorruptionData.isCorrupted = false; //wtf what a chaos logic;
+      player.mending.corruptionChallenge.corruptedMend = false;
+      if(!(Pelle.isDoomed&&player.celestials.pelle.records.totalAntimatter.plus(1).log10() < 9e15)){
       let scoreCalc = CorruptionData.calcScore()
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
@@ -45,8 +47,7 @@ export function mendingReset() {
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
      player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
-     player.mending.corruptionUpgradeBits = 0 // Basically a respec call
-     player.mending.corruptionChallenge.corruptedMend = false
+     player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
      CorruptionData.update();
    }
    
