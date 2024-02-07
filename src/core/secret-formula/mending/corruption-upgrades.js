@@ -133,8 +133,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Dimension Sacrifice's exponent ^1.5",
-    effect: () => 1.5
+    description: "Dimensional Sacrifice's exponent ^1.25",
+    effect: () => 1.25
   },
   {
     name: "Black Hole",
