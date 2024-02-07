@@ -40,6 +40,7 @@ export function mendingReset() {
       CorruptionData.isCorrupted = false; //wtf what a chaos logic;
     if(!(Pelle.isDoomed&&player.celestials.pelle.records.totalAntimatter.plus(1).log10() < 9e15)){
       let scoreCalc = CorruptionData.calcScore()
+      player.mending.corruptionChallenge.corruptedMend = false;
     // console.log(corruptionChallengeScoreCalculation())
       if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
         player.mending.corruptionChallenge.records = player.mending.corruption
