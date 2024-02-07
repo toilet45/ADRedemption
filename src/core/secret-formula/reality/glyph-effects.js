@@ -138,7 +138,7 @@ export const glyphEffects = {
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => {
       let a = 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 - GlyphAlteration.sacrificeBoost("dilation") / 50;
-      return a;
+      return Math.max(a,0.001);
     },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
