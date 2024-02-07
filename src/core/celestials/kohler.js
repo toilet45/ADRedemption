@@ -14,6 +14,12 @@ export const Kohler = {
   get isUnlocked() {
     return false;
   },
+  get isRunning(){
+    return player.transcendents.kohler.run;
+  },
+  get isTrueRunning(){ //this is the final Transcendent
+    return player.transcendents.kohler.trueRun;
+  },
   quotes: Quotes.kohler,
   get symbol(){ 
     return false ? "<i class='fa-solid fa-staff-snake'></i>" : "?"

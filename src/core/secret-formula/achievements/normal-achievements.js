@@ -1427,21 +1427,29 @@ export const normalAchievements = [
   },
   {
     id: 196,
-    name: "196",
-    description: "placeholder",
+    get name(){
+      return player.celestials.ra.pets.pelle.level >= 75 ? "This Hostility doesn't exist" : "Reach Pelle Level 75 to see"
+    },
+    get description(){ 
+      return player.celestials.ra.pets.pelle.level >= 75 ? "Complete a Hostility with all Hostility nerfs are at least level 9 [NYI]" : "Reach Pelle Level 75 to see"
+    },
   },
   {
     id: 197,
-    name: "197",
-    description: "placeholder",
+    name: "Essa conquista não existe IV",
+    get description() {
+      return `Reach ${format(9.9990e99, 3, 3)} Multiversal Remains`
+    },
+    checkRequirement: () => player.mendingPoints.gte(9.9990e99),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {
     id: 198,
     name: "Nicenicenicenice.",
     get description () {
-      return `Reach ${format(new Decimal("1e69696900000000000000000"), 0, 2)} Antimatter.`;
+      return `Reach ${format(new Decimal("1e69690000000000000000000"), 0, 1)} Antimatter.`;
     },
-    checkRequirement: () => player.antimatter.gte(new Decimal("1e69696900000000000000000")),
+    checkRequirement: () => player.antimatter.gte(new Decimal("1e69690000000000000000000")),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
 ];

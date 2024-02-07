@@ -83,6 +83,7 @@ export class DimBoost {
   static get maxBoosts() {
     //woah nice design here--sxy
     let corruptionMax = 1e15;
+    if (Kohler.isRunning) return 0;
     if (player.mending.corruptionChallenge.corruptedMend) corruptionMax = corruptionPenalties.galWeak.hiddenThree[player.mending.corruption[3]];
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
@@ -133,6 +134,7 @@ export class DimBoost {
   static get lockText() {
     let boostCap = 1e12;
     if (DimBoost.purchasedBoosts >= this.maxBoosts) {
+      if (Kohler.isRunning) return "Locked (Kohler's Realm)";
       if (Ra.isRunning) return "Locked (Ra's Reality)";
       if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
       if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
@@ -224,7 +226,7 @@ export class DimBoost {
     let x = BreakInfinityUpgrade.autobuyMaxDimboosts.chargedEffect.isEffectActive ? Ra.pets.teresa.level : 1;
     let y = Ra.unlocks.freeDimBoosts.isUnlocked ? (1+(Ra.pets.ra.level / 100)) ** 0.5 : 1;
     //let ts401 = TimeStudy(401).isBought ? 1e11 : 0; //useless~
-    return (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y;
+    return (Kohler.isRunning || (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked)) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y;
   }
 
   static get totalBoosts() {

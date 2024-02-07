@@ -11,10 +11,11 @@ export class Sacrifice {
   static get canSacrifice() {
     return DimBoost.purchasedBoosts > 4 && !EternityChallenge(3).isRunning && this.nextBoost.gt(1) &&
       AntimatterDimension(8).totalAmount.gt(0) &&
-      !Enslaved.isRunning;
+      !Enslaved.isRunning && !Kohler.isRunning;
   }
 
   static get disabledCondition() {
+    if (Kohler.isRunning) return "Disabled by Kohler"
     if (NormalChallenge(10).isRunning) return "8th Dimensions are disabled";
     if (EternityChallenge(3).isRunning) return "Eternity Challenge 3";
     if (DimBoost.purchasedBoosts < 5) return `Requires ${formatInt(5)} Dimension Boosts`;

@@ -124,6 +124,9 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
   }
 
   interval = interval.divide(totalReplicantiSpeedMult(overCap));
+  if (Kohler.isRunning){
+    interval = interval.pow(10);
+  }
 
   if (V.isRunning) {
     // This is a boost if interval < 1, but that only happens in EC12
@@ -223,6 +226,9 @@ export function replicantiLoop(diff) {
     // always happen above 1000 replicanti due to how singleTickAvg is calculated, so the over-cap math is only
     // present on this path
     let postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
+    if (Kohler.isRunning){
+      postscale *= 10;
+    }
     if (V.isRunning) {
       postScale *= 2;
     }

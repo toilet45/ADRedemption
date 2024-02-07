@@ -1045,6 +1045,7 @@ export function getAdjustedGlyphLevel(glyph, realityGlyphBoost = Glyphs.levelBoo
     if (Pelle.isDoomed) return Math.min(level, Pelle.glyphMaxLevel);
     if (Enslaved.isRunning) return Math.max(level, Enslaved.glyphLevelMin);
     if (Effarig.isRunning) return Math.min(level, Effarig.glyphLevelCap);
+    if (Kohler.isRunning) return Math.min(level, 1);
   }
   if (BASIC_GLYPH_TYPES.includes(glyph.type)) return level + realityGlyphBoost;
   return level;

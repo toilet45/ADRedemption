@@ -175,7 +175,7 @@ class InfinityDimensionState extends DimensionState {
         production = production.div(Decimal.pow10(this.infPowerSoftcap));   
         production = production.pow(0.0123456789);
         production = production.times(Decimal.pow10(this.infPowerSoftcap));
-        if (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcapTwo)*repeats){
+        if (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcapTwo)*repeats && repeats === 1){
           production = production.div(Decimal.pow10(this.infPowerSoftcapTwo));   
           production = production.pow(1e-4);
           production = production.times(Decimal.pow10(this.infPowerSoftcapTwo));
@@ -226,7 +226,9 @@ class InfinityDimensionState extends DimensionState {
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
       mult = dilatedValueOf(mult);
     }
-
+    if (Kohler.isRunning){
+      mult = mult.pow(5e-7)
+    }
     if (Effarig.isRunning) {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {
@@ -277,7 +279,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get purchaseCap() {
-    if (Enslaved.isRunning) {
+    if (Enslaved.isRunning || Kohler.isRunning) {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);

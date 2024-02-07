@@ -1012,6 +1012,27 @@ window.player = {
       unlockMilestone: [false,false,false,false,false,false,false]
     }
   },
+  transcendents:{
+    kohler: {
+      run: false,
+      trueRun: false
+    },
+    sxy: {
+      run: false
+    },
+    hexus:{
+      run: false
+    },
+    blight:{
+      run: false
+    },
+    asw:{
+      run: false
+    },
+    wollec:{
+      run: false
+    }
+  },
   isGameEnd: false,
   tabNotifications: new Set(),
   triggeredTabNotificationBits: 0,
