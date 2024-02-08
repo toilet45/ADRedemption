@@ -424,7 +424,7 @@ export function beginProcessReality(realityProps) {
   // See https://datagenetics.com/blog/november22017/index.html for derivation
   const addToStats = (stats, value) => {
     const oldMean = stats.totalSacrifice.div(stats.count);
-    stats.totalSacrifice = stat.totalSacrifice.add(value);
+    stats.totalSacrifice = stats.totalSacrifice.add(value);
     stats.count = stats.count.add(1);
     const newMean = stats.totalSacrifice.div(stats.count);
     // Mathematically this is zero on the first iteration, but oldMean is NaN due to division by zero
@@ -495,7 +495,6 @@ export function beginProcessReality(realityProps) {
               // glyphs to determine what sacrifice totals to give (this is defined above)
               fastToggle = true;
               glyphSample.toGenerate = progress.remaining;
-
               // We only simulate a smaller set of glyphs for a sample, but that still might take some time to do
               progress.maxIter -= progress.remaining - glyphsToSample;
               progress.remaining = glyphsToSample;

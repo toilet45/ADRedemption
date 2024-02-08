@@ -34,6 +34,7 @@ function askMendingConfirmation() {
 }
 
 export function mendingReset() {
+    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     // Finally, lets set up corruptions
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
     if (CorruptionData.isCorrupted && (!player.celestials.pelle.galaxyGenerator.unlocked)) { //decided to allow pelle, yet not generator
@@ -55,7 +56,6 @@ export function mendingReset() {
     if (!MendingMilestone.six.isReached){
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
-    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
     if(!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());

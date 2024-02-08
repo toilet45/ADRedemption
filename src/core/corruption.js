@@ -28,6 +28,7 @@ export const CorruptionData = {
     },
     calcScore() {
     let scoreCalc = this.calcBaseScore()
+    if (scoreCalc === 1) return 1;
     scoreCalc *= [0, 1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378][Math.floor(Math.max(1, Math.min(player.mending.corruption.countWhere(u => u > 0), (player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0)/player.mending.corruption.countWhere(u => u > 0) - 1))))]
     scoreCalc = Math.pow(scoreCalc, CorruptionUpgrade(20).effectOrDefault(1))
     return scoreCalc

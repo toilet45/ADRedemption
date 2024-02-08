@@ -165,7 +165,7 @@ export default {
               Make Next Mend Hostile
           </span>
           <span v-else-if="!isRunning && !nextCorrupted && corruptionsZeroCheck()">
-            You can't make full zero Hostile
+            Set at least one Hostility to at least Level 1 to make next Mend Hostile
           </span>
           <span v-else-if="!isRunning && !corruptionsZeroCheck()">
               Next Mend will be Hostile, Mend to apply Hostilities
