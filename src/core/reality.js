@@ -428,15 +428,15 @@ export function beginProcessReality(realityProps) {
     stats.count = stats.count.add(1);
     const newMean = stats.totalSacrifice.div(stats.count);
     // Mathematically this is zero on the first iteration, but oldMean is NaN due to division by zero
-    if (stats.count.neq(1)) stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean)) * (value.sub(newMean));
+    if (stats.count.neq(1)) stats.varProdSacrifice = stats.varProdSacrifice.add(value.sub(oldMean)).times(value.sub(newMean));
   };
 
   // Helper function for pulling a random sacrifice value from the sample we gathered
   const sampleFromStats = (stats, glyphsToGenerate) => {
-    if (stats.count === 0) return 0;
-    const mean = stats.totalSacrifice / stats.count;
-    const stdev = Math.sqrt(stats.varProdSacrifice / stats.count);
-    return normalDistribution(mean * glyphsToGenerate, stdev * Math.sqrt(glyphsToGenerate));
+    if (stats.count.toNumber() === 0) return 0;
+    const mean = stats.totalSacrifice.div(stats.count);
+    const stdev = Decimal.sqrt(stats.varProdSacrifice.div(stats.count));
+    return normalDistribution(mean.times(glyphsToGenerate), stdev.times(Math.sqrt(glyphsToGenerate)));
   };
 
   // The function we run in the Async loop is either the expected "generate and filter all glyphs normally"
@@ -456,6 +456,7 @@ export function beginProcessReality(realityProps) {
       // Code and math later on is a lot simpler if we add to both a type-specific stat object and a total stats
       // object right here instead of attempting to combine the types into a total later on
       const thisTypeStats = glyphSample.sampleStats.find(s => s.type === sampleGlyph.type);
+      
       addToStats(thisTypeStats, sacGain);
       addToStats(glyphSample.totalStats, sacGain);
     } else {
@@ -567,7 +568,7 @@ export function beginProcessReality(realityProps) {
           } else {
             // Give sacrifice values proportionally according to what we found in the sampling stats
             for (const stats of glyphSample.sampleStats) {
-              const toGenerate = glyphSample.toGenerate * stats.count / glyphsToSample;
+              const toGenerate = glyphSample.toGenerate * stats.count.toNumber() / glyphsToSample;
               player.reality.glyphs.sac[stats.type].add(sampleFromStats(stats, toGenerate));
             }
           }
