@@ -6,10 +6,10 @@ import { Quotes } from "./quotes";
 
 export const Kohler = {
   get displayName(){
-    return false ? "Kohler" : "???"
+    return player.celestials.kohler.quoteBits >= 7 ? "Kohler" : "???"
   },
   get possessiveName(){
-    return false ? "Kohler's" : "???'s"
+    return player.celestials.kohler.quoteBits >= 7 ? "Kohler's" : "???'s"
   },
   get isUnlocked() {
     return false;
@@ -22,7 +22,7 @@ export const Kohler = {
   },
   quotes: Quotes.kohler,
   get symbol(){ 
-    return false ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
+    return player.celestials.kohler.quoteBits >= 7 ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
   },
 
   get unlockProgress() {
@@ -46,6 +46,14 @@ export const Kohler = {
   checkForUnlocks() {
     for (const info of KohlerProgressUnlocks.all) {
       info.unlock();
+    }
+  },
+  checkForQuotes() {
+    for (const quote of Kohler.quotes.all) {
+      // Quotes without requirements will be shown in other ways
+      if (quote.requirement) {
+        quote.show();
+      }
     }
   },
   setUnlockProgress() {

@@ -137,7 +137,7 @@ class ExpoBlackHoleState {
   }
 
   get isUnlocked() {
-    return (this._data.unlocked && !Enslaved.isRunning && !Pelle.isDisabled("blackhole") && Ra.unlocks.unlock3rdBH.isUnlocked);
+    return (this._data.unlocked && !Enslaved.isRunning && !Pelle.isDisabled("blackhole") && Ra.unlocks.unlock3rdBH.isUnlocked) && !Kohler.isRunning;
   }
 
   get isCharged() {

@@ -534,6 +534,7 @@ window.player = {
       5: 0,
     },
     corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
+    corruptionBackup: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     corruptedFragments: 0,
     corruptionChallenge: {
       corruptedMend: false,
