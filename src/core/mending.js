@@ -52,7 +52,11 @@ export function mendingReset(gain = true) {
      player.mending.corruptionChallenge.corruptedMend = false;
      CorruptionData.update();
    }
-   
+   if(player.mending.cuRespec && !player.mending.corruptionChallenge.corruptedMend) {
+    player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(CorruptionData.calcScore())))
+    player.mending.corruptionUpgradeBits = 0;
+    player.mending.cuRespec = !player.mending.cuRespec
+   }
     if (!MendingMilestone.six.isReached){
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early

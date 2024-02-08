@@ -9,6 +9,7 @@ import { playerInfinityUpgradesOnReset } from "../../../game";
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
 import { WarpUpgrade } from "../../../core/warp-upgrades";
 import { mendingReset } from "../../../core/globals";
+import PrimaryButton from "../../PrimaryButton.vue";
 
 export default {
   name: "CorruptionTab",
@@ -16,7 +17,8 @@ export default {
     CelestialQuoteHistory,
     CustomizeableTooltip,
     SliderComponent,
-    CorruptionUpgradeButton
+    CorruptionUpgradeButton,
+    PrimaryButton
   },
   data() {
     return {
@@ -34,6 +36,7 @@ export default {
       timeCompMult: new Decimal(0),
       corruptedFrags: 0,
       rewardedFragments: 0,
+      respec: false,
     };
   },
   computed: {
@@ -60,6 +63,12 @@ export default {
         "c-corrupt-run-button__icon--running": this.isRunning,
         "c-corrupt-run-button--clickable": true,
         "o-pelle-disabled-pointer": false
+      };
+    },
+    respecClassObject() {
+      return {
+        "o-primary-btn--subtab-option": true,
+        "o-primary-btn--respec-active": this.respec
       };
     },
     runDescription() {
@@ -91,6 +100,11 @@ export default {
      return CorruptionUpgrades.all.countWhere(u => u.isBought);
     },
   },
+  watch:{
+    respec(newValue) {
+      player.mending.cuRespec = newValue;
+    },
+  },
   methods: {
     update() {
       const now = new Date().getTime();
@@ -105,6 +119,7 @@ export default {
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
       this.corruptedFrags = player.mending.corruptedFragments;
       this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
+      this.respec = player.mending.cuRespec;
     },
     corruptionsZeroCheck() {
       for(let i=0;i<10;i++){
@@ -317,6 +332,12 @@ export default {
         TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}.
       </div>
     </div>
+    <PrimaryButton
+        :class="respecClassObject"
+        @click="respec = !respec"
+      >
+        Respec Hostility Upgrades on Mend
+      </PrimaryButton>
     <div class="button-container">
       <button
         class="o-pelle-button"

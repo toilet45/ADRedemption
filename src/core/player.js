@@ -505,6 +505,7 @@ window.player = {
   mending:{
     upgradeBits: 0,
     warpUpgradeBits: 0,
+    cuRespec: false,
     corruptionUpgradeBits: 0,
     corruptionUpgReqs: 0,
     warpUpgReqs: 0,

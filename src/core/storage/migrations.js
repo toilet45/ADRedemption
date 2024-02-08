@@ -763,6 +763,9 @@ export const migrations = {
   51.028: player => {
     player.mending.corruptionBackup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
+  50.0281: player => {
+    player.mending.cuRespec = false;
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 
