@@ -877,7 +877,10 @@ export function gameLoop(passDiff, options = {}) {
   Ra.raGainPointLoop(realDiff);
   laitelaRealityTick(realDiff);
   Achievements.autoAchieveUpdate(diff);
+  Effarig.checkForQuotes();
   V.checkForUnlocks();
+  Ra.checkForQuotes();
+  Kohler.checkForQuotes();
   AutomatorBackend.update(realDiff);
   Pelle.gameLoop(realDiff);
   GalaxyGenerator.loop(realDiff);

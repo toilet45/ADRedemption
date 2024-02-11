@@ -92,9 +92,6 @@ export default {
       </p>
     </div>
     <div>
-      The effectiveness of Galactic Shards decreases above {{ format(50) }}%.
-    </div>
-    <div>
       You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second, unaffected by game speed.
     </div>
     <div class="l-dimensions-container">

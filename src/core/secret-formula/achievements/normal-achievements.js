@@ -1433,6 +1433,14 @@ export const normalAchievements = [
     get description(){ 
       return player.celestials.ra.pets.pelle.level >= 75 ? "Complete a Hostility with all Hostility nerfs are at least level 9 [NYI]" : "Reach Pelle Level 75 to see"
     },
+    checkRequirement:() => {
+      let x = player.mending.corruptionChallenge.corruptedMend;
+      for (let i = 0; i < 10; i++){
+        x = x && player.mending.corruption[i] >= 9;
+      }
+      return x;
+    },
+    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
   },
   {
     id: 197,

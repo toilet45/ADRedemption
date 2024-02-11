@@ -12,7 +12,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Ra memory gain is ${formatX(1500, 1)} stronger, but only when in the appropriate celestials Reality.`,
+    description: () => `Ra memory gain is ${formatX(1500, 1)} stronger, but only when in the appropriate Celestial's Reality.`,
     effect: 1500
   },
   {
@@ -53,7 +53,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Give extra 10 increase Singularity cap.",
+    description: () => `Increase the maxium Singularity cap interval by ${formatInt(10)}`,
     effect: () => 10
   },
   {
@@ -92,7 +92,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Improve Effarig level 15 improvement.",
+    description: "Effarig level 15 unlock uses a better formula",
     effect: () => 1
   },
   {
@@ -119,7 +119,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Memory Crystal delays Obscure Galaxy scaling",
+    description: "Delay Obscure Galaxy scaling based on Memory Crystals",
     effect: () => Math.round(Decimal.log10(player.celestials.ra.raPoints.plus(1))*10),
     formatEffect: value => `+` + formatInt(value)
   },
@@ -133,7 +133,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Dimensional Sacrifice's exponent ^1.25",
+    description: () => `Dimensional Sacrifice's exponent ${formatPow(1.25,2,2)}`,
     effect: () => 1.25
   },
   {
@@ -160,7 +160,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Every generated Cursed Glyph's level reduced to 666.",
+    description: () => `Curse Glyphs now generate at Level ${formatInt(666)} instead of ${formatInt(6666)} (only applies to newly generated Glyphs)`,
     effect: () => 1,
   },
   {
@@ -201,7 +201,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "8th Antimatter Dimension generat 8th Dark Matter Dimension (once unlocked)",
+    description: "8th Antimatter Dimension generates 8th Dark Matter Dimension (once unlocked)",
     effect: () => Decimal.log10(AntimatterDimensions.all[7].totalAmount.plus(1))*10,
     formatEffect: value => `${format(value, 2, 2)} per Second`
   },
@@ -215,7 +215,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Prestige Limits power is now doubled, capped at ${formatInt(1)}`,
+    description: () => `Multiply Prestige Limits' power by ${formatX(2)}, capped at ${formatPow(1)}`,
   },
   {
     name: "Dimension Superscaling",
@@ -227,7 +227,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `If Dimensional Limitations corruption is 5 or higher, Antimatter dimensions gain a power effect based on highest Glyph Level this mend.`,
+    description: () => `If Dimensional Limitations' Hostility level is 5 or higher, Antimatter dimensions gain a power effect based on highest Glyph Level this Mend.`,
     effect: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length!=0) ? 1 + Math.log(player.records.bestReality.glyphLevel)/10 : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
@@ -241,7 +241,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Time Compression power +${format(0.01, 2, 2)} (capped at +${formatInt(1)}), Time compression devisor ${formatPow(0.1, 1, 1)}`,
+    description: () => `Time Compression's power +${format(0.01, 2, 2)} (capped at ${formatPow(1)}), Time compression divisor ${formatPow(0.1, 1, 1)}`,
   },
   {
     name: "Galaxy Strengthening",
@@ -253,7 +253,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Galactic Weakness - Scaling is ^0.5, and power is ${formatX(1.4, 1, 1)} (capped at ${formatX(1)})`,
+    description: () => `Galactic Weakness' Scaling is ${formatPow(0.5,1,1)}, and power is ${formatX(1.4, 1, 1)} (capped at ${formatPow(1)})`,
     effect: () => 1,
   },
   {
@@ -266,7 +266,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on glyph levels and Complex Glyphs level.",
+    description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on Glyph levels and Complex Glyphs level.",
     effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[4] >= 4) ? 1 + Math.log(Math.log(player.mending.corruption[4] * Math.max(1,player.records.bestReality.glyphLevel)))/2.5 : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
@@ -280,7 +280,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Tick Extension Tickspeed power ^0.5, Time shard divisor ^0.75.`,
+    description: () => `Tick Extension's Tickspeed power ${formatPow(0.5,1,1)}, Time Shard divisor ${formatPow(0.75,2,2)}`,
     effect: () => 1,
   },
   {
@@ -293,7 +293,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Automic Dilution power is now ×1.5, capped at ${formatInt(1)}`,
+    description: () => `Automic Dilution's power ${formatX(1.5,1,1)}, capped at ${formatPow(1)}`,
     effect: () => 1,
   },
   {
@@ -306,7 +306,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `Theory of Dilation power +0.2, and DT gain ×1e5 if level 1 or more.`,
+    description: () => `Theory of Dilation's power +${format(0.2,1,1)}, and Dilated Time gain ${(formatX(100000))} if Theory of Dilation is active.`,
     effect: () => 1,
   },
   {

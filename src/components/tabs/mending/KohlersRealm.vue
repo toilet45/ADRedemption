@@ -3,6 +3,7 @@
 import PrimaryButton from "@/components/PrimaryButton";
 import CelestialQuoteHistory from "../../CelestialQuoteHistory.vue";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
+import { Glyphs, Kohler } from "../../../core/globals";
 
 export default {
   name: "KohlersRealm",
@@ -21,6 +22,9 @@ export default {
     };
   },
   computed: {
+    runningText(){
+      return this.isRunning ? "Exit Kohler's Realm" : "Enter Kohler's Realm."
+    },
     unlockInfos: () => KohlerProgressUnlocks.all,
     showRunReward() {
       return this.bestAM.gt(1);
@@ -38,7 +42,7 @@ export default {
       };
     },
     runDescription() {
-      return GameDatabase.celestials.descriptions[6].effects();
+      return GameDatabase.celestials.descriptions[8].effects();
     },
     unlockInfoTooltipArrowStyle() {
       return {
@@ -52,8 +56,16 @@ export default {
       this.now = new Date().getTime();
       this.unlocked = false;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
+      this.isRunning = Kohler.isRunning
     },
     startRun() {
+      if (!Kohler.isRunning) player.mending.corruptionBackup = player.mending.corruption;
+      mendingReset(false);
+      player.celestials.ra.charged = new Set();
+      player.celestials.ra.breakCharged = new Set();
+      player.transcendents.kohler.run = !player.transcendents.kohler.run;
+      player.mending.corruptionChallenge.corruptedMend = Kohler.isRunning ? true : false;
+      player.mending.corruption = Kohler.isRunning ? [6,6,6,6,6,6,6,6,6,6] : player.mending.corruptionBackup;
       return;
       /*if (this.isDoomed) return;
       Modal.celestials.show({ name: "Teresa's", number: 0 });*/
@@ -117,6 +129,15 @@ export default {
           </template>
         </CustomizeableTooltip>
       </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <div v-if="this.unlocked">
       <CelestialQuoteHistory celestial="kohler" />
       </div>
@@ -125,7 +146,7 @@ export default {
             <div class="l-kohler-mechanic-container">
               <div class="c-kohler-unlock c-kohler-run-button">
               <span>
-              Enter Kohler's Realm.
+                {{ runningText }}
               </span>
               <div :class="runButtonClassObject" @click="startRun()">
                 <i class='fa-solid fa-staff-snake'></i>

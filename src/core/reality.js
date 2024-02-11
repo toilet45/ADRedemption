@@ -496,7 +496,6 @@ export function beginProcessReality(realityProps) {
               // glyphs to determine what sacrifice totals to give (this is defined above)
               fastToggle = true;
               glyphSample.toGenerate = progress.remaining;
-
               // We only simulate a smaller set of glyphs for a sample, but that still might take some time to do
               progress.maxIter -= progress.remaining - glyphsToSample;
               progress.remaining = glyphsToSample;

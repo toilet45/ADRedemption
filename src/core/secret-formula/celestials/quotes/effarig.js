@@ -62,5 +62,28 @@ export const effarigQuotes = {
       "And for what purpose? You could have joined, we could have cooperated.",
       "But no. It is over. Leave while I cling onto what is left.",
     ]
+  },
+  mendUnlocked:{
+    id: 8,
+    requirement: () => Tab.celestials.effarig.isOpen && Ra.pets.effarig.level >= 100,
+    lines: [
+      "So you have found my secret layer...",
+      "You already have destroyed everything else",
+      "Please, leave my Reality be"
+    ]
+  },
+  mendCompleted:{
+    id: 9,
+    lines: [
+      { text: "You have completed Effarig's Mend.", showCelestialName: false },
+      "First, you buy out my shop. Then you complete my secret layer.",
+      "GET OUT!!! NOW!!!"
+    ]
+  },
+  hasCompanion:{
+    id: 10,
+    lines:[
+      "At least you have kept my Companion Glyph safe."
+    ]
   }
 };

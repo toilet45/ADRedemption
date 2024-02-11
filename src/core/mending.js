@@ -33,7 +33,9 @@ function askMendingConfirmation() {
   }
 }
 
-export function mendingReset() {
+export function mendingReset(gain = true) {
+    let vBitsEarned = player.celestials.v.quoteBits //there seemed to be some jank with V's quoteBits being reset, lazy man's fix
+    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     // Finally, lets set up corruptions
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
     if (CorruptionData.isCorrupted && (!player.celestials.pelle.galaxyGenerator.unlocked)) { //decided to allow pelle, yet not generator
@@ -51,17 +53,27 @@ export function mendingReset() {
      player.mending.corruptionChallenge.corruptedMend = false;
      CorruptionData.update();
    }
-   
+   if(player.mending.cuRespec && !player.mending.corruptionChallenge.corruptedMend) {
+    player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(CorruptionData.calcScore())))
+    player.mending.corruptionUpgradeBits = 0;
+    player.mending.cuRespec = !player.mending.cuRespec
+   }
     if (!MendingMilestone.six.isReached){
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
-    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(gain && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
     if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+      Quotes.effarig.mendCompleted.show();
+      for (let i = 0; i < Glyphs.inventory.length; i++){
+        if (Glyphs.inventory[i].type === "companion"){
+          Quotes.effarig.hasCompanion.show();
+          break;
+        }
+      }
       EffarigUnlock.mend.unlock();
       EffarigUnlock.infinity.unlock();
       EffarigUnlock.eternity.unlock();
@@ -152,7 +164,7 @@ export function mendingReset() {
     }
     }
     V.updateTotalRunUnlocks();
-    player.celestials.v.quoteBits = 2047;
+    player.celestials.v.quoteBits |= vBitsEarned;
     if(!Ra.unlocks.raNoReset.isUnlocked) Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)
@@ -168,7 +180,7 @@ export function mendingReset() {
       dilation: 0,
       effarig: 0
     };
-    player.celestials.ra.quoteBits = 16383;
+    //player.celestials.ra.quoteBits = 16383;
     player.celestials.ra.run = false;
     if(player.mending.corruptNext || !KohlerProgressUnlocks.hostileScore.isUnlocked){
       player.celestials.ra.charged = new Set();
@@ -178,7 +190,7 @@ export function mendingReset() {
     if (MendingUpgrade(4).isBought){
       player.celestials.laitela.difficultyTier = 8;
     }
-    player.celestials.laitela.quoteBits = 1023;
+    //player.celestials.laitela.quoteBits = 1023;
     player.celestials.pelle.upgrades.clear();
     player.celestials.pelle.remnants = 0;
     player.celestials.pelle.realityShards = DC.D0;

@@ -127,4 +127,35 @@ export const raQuotes = {
       "I do not want to hurt you too.",
     ]
   },
+  mu19:{
+    id: 14,
+    requirement: () => MendingUpgrade(19).isBought,
+    lines:[
+      "What...more memories?",
+      "What else was Lai hiding from me...or rather what else did they want me to forget."
+    ]
+  },
+  ra40:{
+    id: 15,
+    requirement: () => Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked,
+    lines:[
+      "I now recall something else...",
+      "Teresa...Effarig...and I.",
+      "We all had shops.",
+      "Mine was...was the most popular...had all the customers.",
+      "Maybe they told Lai'tela to specifically erase these memories.",
+      "Destroyer...I'll...I'll reopen my shop just for you.",
+      "I don't want to put both Teresa and Effarig out of buisness."
+    ]
+  },
+  allMemsafterMU19:{
+    id: 16,
+    requirement: () => Ra.totalPetLevel >= 700 && MendingUpgrade(19).isBought,
+    lines:[
+      "Memories...",
+      "...too many memories...",
+      "...my head...",
+      "Destroyer, please...leave...need rest"
+    ]
+  }
 };

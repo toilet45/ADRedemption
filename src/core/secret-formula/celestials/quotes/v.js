@@ -90,5 +90,29 @@ export const vQuotes = {
       "No one is better than me...",
       "No one... no one... no on-",
     ],
+  },
+  v40:{
+    id: 11,
+    requirement: () => Ra.unlocks.unlockSHardV.isUnlocked && Tab.celestials.v.isOpen,
+    lines: [
+    "Ahh...",
+    "My beloved beauties",
+    "at least that evil Destroyer didn't get to...",
+    "Ack...Destroyer, why have you returned?",
+    "...",
+    "No, I won't give you my 'Precious Nine'",
+    "You will never ever in 1e100 eons earn them"
+  ]
+  },
+  maxST:{
+    id: 12,
+    requirement: () => V.spaceTheorems >= 648,
+    lines: [
+      "...",
+      "*screams internally so loud that your eardrums would pop*",
+      "My...My 'Precious Nine'. My life's work...gone.",
+      "GET OUT BEFORE I DESTROY YOU!!!",
+      "*lies on their bed crying and sucking their thumb*"
+    ]
   }
 };
