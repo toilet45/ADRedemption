@@ -34,6 +34,7 @@ function askMendingConfirmation() {
 }
 
 export function mendingReset(gain = true) {
+    let vBitsEarned = player.celestials.v.quoteBits //there seemed to be some jank with V's quoteBits being reset, lazy man's fix
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     // Finally, lets set up corruptions
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
@@ -66,6 +67,13 @@ export function mendingReset(gain = true) {
       Currency.mends.add(1);
     }
     if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+      Quotes.effarig.mendCompleted.show();
+      for (let i = 0; i < Glyphs.inventory.length; i++){
+        if (Glyphs.inventory[i].type === "companion"){
+          Quotes.effarig.hasCompanion.show();
+          break;
+        }
+      }
       EffarigUnlock.mend.unlock();
       EffarigUnlock.infinity.unlock();
       EffarigUnlock.eternity.unlock();
@@ -156,7 +164,7 @@ export function mendingReset(gain = true) {
     }
     }
     V.updateTotalRunUnlocks();
-    //player.celestials.v.quoteBits = 2047;
+    player.celestials.v.quoteBits |= vBitsEarned;
     if(!Ra.unlocks.raNoReset.isUnlocked) Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)

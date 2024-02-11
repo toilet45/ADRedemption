@@ -23,6 +23,14 @@ export const Effarig = {
     recalculateAllGlyphs();
     Tab.reality.glyphs.show(false);
   },
+  checkForQuotes() {
+    for (const quote of Effarig.quotes.all) {
+      // Quotes without requirements will be shown in other ways
+      if (quote.requirement) {
+        quote.show();
+      }
+    }
+  },
   get isRunning() {
     return player.celestials.effarig.run;
   },

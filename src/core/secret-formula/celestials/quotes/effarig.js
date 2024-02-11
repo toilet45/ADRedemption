@@ -65,6 +65,7 @@ export const effarigQuotes = {
   },
   mendUnlocked:{
     id: 8,
+    requirement: () => Tab.celestials.effarig.isOpen && Ra.pets.effarig.level >= 100,
     lines: [
       "So you have found my secret layer...",
       "You already have destroyed everything else",
