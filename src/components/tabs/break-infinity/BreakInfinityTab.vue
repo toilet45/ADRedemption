@@ -124,6 +124,7 @@ export default {
           v-for="upgrade in column"
           :key="upgrade.id"
           :upgrade="upgrade"
+          :isBreak="true"
           :class="btnClassObject(columnId)"
         />
       </div>

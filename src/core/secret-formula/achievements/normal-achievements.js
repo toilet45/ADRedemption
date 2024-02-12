@@ -889,7 +889,7 @@ export const normalAchievements = [
     reward: "Infinity Point multiplier based on time spent this Infinity.",
     effect() {
       const thisInfinity = Time.thisInfinity.totalSeconds.times(10).add(1);
-      return DC.D2.pow((Decimal.min(Decimal.pow(thisInfinity, 0.11), 500)).times(Decimal.log(thisInfinity)));
+      return DC.D2.pow((Decimal.min(Decimal.pow(thisInfinity, 0.11), 500)).times(Decimal.ln(thisInfinity)));
     },
     cap: () => Effarig.eternityCap,
     formatEffect: value => `${formatX(value, 2, 2)}`

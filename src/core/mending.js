@@ -189,6 +189,7 @@ export function mendingReset(gain = true) {
     Laitela.reset();
     if (MendingUpgrade(4).isBought){
       player.celestials.laitela.difficultyTier = 8;
+      player.celestials.laitela.fastestCompletion = 300;
     }
     //player.celestials.laitela.quoteBits = 1023;
     player.celestials.pelle.upgrades.clear();
