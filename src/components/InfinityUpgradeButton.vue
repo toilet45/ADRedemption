@@ -2,6 +2,7 @@
 import CostDisplay from "@/components/CostDisplay";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
+import { MendingUpgrade, Ra } from "../core/globals";
 
 export default {
   name: "InfinityUpgradeButton",
@@ -14,6 +15,10 @@ export default {
     upgrade: {
       type: Object,
       required: true
+    },
+    isBreak: {
+      type: Boolean,
+      required: false
     }
   },
   data() {
@@ -73,7 +78,7 @@ export default {
       // seems more likely to be read).
       const upgrade = this.upgrade;
       this.isBought = upgrade.isBought || upgrade.isCapped;
-      this.chargePossible = Ra.unlocks.chargedInfinityUpgrades.canBeApplied &&
+      this.chargePossible = ((Ra.unlocks.chargedInfinityUpgrades.canBeApplied && !this.isBreak) || Ra.unlocks.chargedBreakInfinityUpgrades.canBeApplied) &&
         upgrade.hasChargeEffect && !Pelle.isDoomed;
       this.canBeBought = upgrade.canBeBought;
       this.canBeCharged = upgrade.canCharge;
