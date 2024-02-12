@@ -149,10 +149,10 @@ class RaPetState extends GameMechanicState {
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
     res *= WarpUpgrade(5).effectOrDefault(1);
-    if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
+    /*if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
     if (Ra.unlocks.pelleXP.isUnlocked){
       res *= (Math.log10(player.records.bestReality.remWithoutGG + 1) / 1.6667) + 1;
-    }
+    }*/
     if (!Ra.isRunning && Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) res /= 100;
     return res;
   }
