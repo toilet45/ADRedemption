@@ -111,6 +111,26 @@ export const awayProgressTypes = [
     isUnlocked: () => Ra.pets.v.isUnlocked && !Ra.pets.v.isCapped,
     showOption: false,
   }, {
+    name: "raMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "memories"],
+    isUnlocked: () => Ra.pets.ra.isUnlocked && !Ra.pets.ra.isCapped,
+    showOption: false,
+  },
+  {
+    name: "laiMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "laitela", "memories"],
+    isUnlocked: () => Ra.pets.laitela.isUnlocked && !Ra.pets.laitela.isCapped,
+    showOption: false,
+  },
+  {
+    name: "pelleMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "pelle", "memories"],
+    isUnlocked: () => Ra.pets.pelle.isUnlocked && !Ra.pets.pelle.isCapped,
+    showOption: false,
+  },{
     name: "imaginaryMachines",
     reference: ["reality", "imaginaryMachines"],
     isUnlocked: () => MachineHandler.isIMUnlocked,
@@ -135,5 +155,15 @@ export const awayProgressTypes = [
     name: "multiversalRemains",
     reference: ["mending", "new content"],
     isUnlocked: () => PlayerProgress.mendingUnlocked(),
+  },
+  {
+    name: "memoryCrystals",
+    reference: ["mending", "new content"],
+    isUnlocked: () => Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked,
+  },
+  {
+    name: "galacticShards",
+    reference: ["mending", "new content"],
+    isUnlocked: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
   },
 ];

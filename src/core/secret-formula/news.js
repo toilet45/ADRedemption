@@ -3324,6 +3324,11 @@ export const news = [
     get unlocked() {return new Date().getMonth === 8 && new Date().getDate === 22}
   },
   {
+    id: "l93",
+    text: "Eternal Antimatter Sports, it's in the glyph",
+    get unlocked(){return PlayerProgress.realityUnlocked()}
+  },
+  {
     id: "r1",
     text: "This news message is 100x rarer than all the others.",
     get unlocked() { return Math.random() < 0.01; }

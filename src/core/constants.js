@@ -542,7 +542,10 @@ window.PROGRESS_STAGE = {
   IMAGINARY_MACHINES: 15,
   LAITELA: 16,
   PELLE: 17,
-  MENDING: 18
+  MENDING: 18,
+  WARPED_REALITY: 19,
+  HOSTILITIES: 20,
+  KOHLER_REALM: 21
 };
 
 window.STD_BACKEND_URL = "https://antimatterdimensionspayments.ew.r.appspot.com";

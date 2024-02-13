@@ -654,6 +654,7 @@ export function finishProcessReality(realityProps) {
   if (!PelleUpgrade.keepEternityUpgrades.canBeApplied) player.eternityUpgrades.clear();
   player.totalTickGained = 0;
   if (!PelleUpgrade.keepEternityChallenges.canBeApplied && !MendingUpgrade(3).isBought) player.eternityChalls = {};
+  EternityChallenge(1).completions = Math.min(5, EternityChallenge(1).completions) //lazy man's fix for doing EC1 in Nameless
   player.reality.unlockedEC = 0;
   player.reality.lastAutoEC = 0;
   player.challenge.eternity.current = 0;

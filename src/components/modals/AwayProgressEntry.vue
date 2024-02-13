@@ -203,17 +203,54 @@ export default {
   color: var(--color-ra-pet--v);
 }
 
+.c-modal-away-progress__ra-memories {
+  color: var(--color-ra-pet--ra);
+}
+
+.c-modal-away-progress__laitela-memories {
+  color: var(--color-ra-pet--laitela);
+}
+
+.c-modal-away-progress__pelle-memories {
+  color: var(--color-ra-pet--pelle);
+}
+
+.c-modal-away-progress__multiversal_remains {
+  color: var(--color-mending);
+}
+
+.c-modal-away-progress__memory_crystals {
+  color: var(--color-ra-pet--ra);
+}
+
+.c-modal-away-progress__galactic_shards {
+  color: #00C5FF;
+}
+
 .c-modal-away-progress__teresa-memories,
 .c-modal-away-progress__effarig-memories,
 .c-modal-away-progress__enslaved-memories,
-.c-modal-away-progress__v-memories {
+.c-modal-away-progress__v-memories,
+.c-modal-away-progress__ra-memories ,
+.c-modal-away-progress__laitela-memories ,
+.c-modal-away-progress__pelle-memories,
+.c-modal-away-progress__multiversal_remains,
+.c-modal-away-progress__memory_crystals,
+.c-modal-away-progress__galacitc_shards  
+{
   filter: brightness(0.8);
 }
 
 .t-dark .c-modal-away-progress__teresa-memories,
 .t-dark .c-modal-away-progress__effarig-memories,
 .t-dark .c-modal-away-progress__enslaved-memories,
-.t-dark .c-modal-away-progress__v-memories {
+.t-dark .c-modal-away-progress__v-memories,
+.t-dark .c-modal-away-progress__ra-memories,
+.t-dark .c-modal-away-progress__laitela-memories,
+.t-dark .c-modal-away-progress__pelle-memories,
+.t-dark .c-modal-away-progress__multiversal_remains,
+.t-dark .c-modal-away-progress__memory_crystals,
+.t-dark .c-modal-away-progress__galacitc_shards  {
   filter: none;
 }
 
