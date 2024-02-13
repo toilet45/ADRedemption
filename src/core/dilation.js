@@ -167,7 +167,7 @@ export function getDilationGainPerSecond() {
   if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
   if (player.mending.corruptionChallenge.corruptedMend) {
     let toDpower=corruptionPenalties.toD.power[player.mending.corruption[7]];
-    let toDmult=corruptionPenalties.toD.mult[player.mending.corruption[7]]
+    let toDmult=new Decimal(corruptionPenalties.toD.mult[player.mending.corruption[7]])
     if(CorruptionUpgrade(23).isBought&&player.mending.corruption[7]>=1){
       toDpower+=0.2;
       toDmult=toDmult.times(100000);
