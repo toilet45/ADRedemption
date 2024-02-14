@@ -152,18 +152,23 @@ export const awayProgressTypes = [
     isUnlocked: () => Pelle.isDoomed,
   },
   {
-    name: "multiversalRemains",
-    reference: ["mending", "new content"],
+    name: "mendingPoints",
+    forcedName: "Multiversal Remains",
     isUnlocked: () => PlayerProgress.mendingUnlocked(),
   },
   {
-    name: "memoryCrystals",
-    reference: ["mending", "new content"],
+    name: "mends",
+    isUnlocked: () => PlayerProgress.mendingUnlocked(),
+  },
+  {
+    name: "raPoints",
+    forcedName: "Memory Crystals",
+    reference: ["celestials", "ra", "raPoints"],
     isUnlocked: () => Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked,
   },
   {
-    name: "galacticShards",
-    reference: ["mending", "new content"],
+    name: "galBoostPoints",
+    forcedName: "Galacitc Shards",
     isUnlocked: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
   },
 ];

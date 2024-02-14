@@ -1166,7 +1166,9 @@ window.player = {
       blackHole: true,
       realityShards: true,
       mends: true,
-      mendingPoints: true
+      mendingPoints: true,
+      raPoints: true,
+      galBoostPoints: true
     },
     hiddenTabBits: 0,
     hiddenSubtabBits: Array.repeat(0, 11),

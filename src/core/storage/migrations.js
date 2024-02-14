@@ -766,6 +766,10 @@ export const migrations = {
   50.0281: player => {
     player.mending.cuRespec = false;
   },
+  50.029: player =>{
+    player.awayProgress.raPoints = true,
+    player.awayProgress.galBoostPoints = true
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

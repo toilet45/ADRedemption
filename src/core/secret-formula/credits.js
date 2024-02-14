@@ -528,6 +528,10 @@ export const credits = {
     {
       name: "cyxw",
       roles: 14
+    },
+    {
+      name: "Gboi",
+      roles: 15
     }
   ]
 };

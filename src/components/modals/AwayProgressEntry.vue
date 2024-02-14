@@ -75,6 +75,11 @@ export default {
       return this.isBlackHole
         ? false
         : Decimal.gt(this.before, Decimal.pow10(1e9));
+    },
+    isSuperLarge(){
+      return this.isBlackHole
+        ? false
+        : Decimal.gt(this.before, Decimal.pow10(1e18)); //if greater than ee18, do "exponent's log"
     }
   },
   methods: {
@@ -84,7 +89,8 @@ export default {
       // not any text is even shown at all and sometimes this gets checked on variables which don't have values yet
       if (number === undefined) return "";
       // Surrounding text is formatted differently to specify that this is log10
-      if (this.isVeryLarge) return formatInt(Math.floor(number.log10()));
+      if (this.isSuperLarge) return format(Math.floor(Math.log10(number.log10())), 2, 2);
+      if (this.isVeryLarge) return number.log10() >= 1e9 ? format(Math.floor(number.log10()), 2, 2) : formatInt(Math.floor(number.log10()));
       if (Decimal.lt(number, 1e9)) {
         // Both numbers and decimals get passed in here so this is needed
         // Not a fan of this solution but whatever
@@ -115,7 +121,7 @@ export default {
     </span>
     <span v-else>
       <b>{{ formattedName }}</b>
-      <i v-if="isVeryLarge"> exponent</i>
+      <i v-if="isVeryLarge"> exponent</i><i v-if="isSuperLarge">'s log</i>
       increased from
       {{ formatBefore }} to {{ formatAfter }}
     </span>
@@ -215,15 +221,19 @@ export default {
   color: var(--color-ra-pet--pelle);
 }
 
-.c-modal-away-progress__multiversal_remains {
+.c-modal-away-progress__mending-points {
   color: var(--color-mending);
 }
 
-.c-modal-away-progress__memory_crystals {
+.c-modal-away-progress__mends {
+  color: var(--color-mending);
+}
+
+.c-modal-away-progress__ra-points {
   color: var(--color-ra-pet--ra);
 }
 
-.c-modal-away-progress__galactic_shards {
+.c-modal-away-progress__gal-boost-points {
   color: #00C5FF;
 }
 
@@ -234,9 +244,10 @@ export default {
 .c-modal-away-progress__ra-memories ,
 .c-modal-away-progress__laitela-memories ,
 .c-modal-away-progress__pelle-memories,
-.c-modal-away-progress__multiversal_remains,
-.c-modal-away-progress__memory_crystals,
-.c-modal-away-progress__galacitc_shards  
+.c-modal-away-progress__mending-points,
+.c-modal-away-progress__mends,
+.c-modal-away-progress__ra-points,
+.c-modal-away-progress__gal-boost-points  
 {
   filter: brightness(0.8);
 }
@@ -248,9 +259,9 @@ export default {
 .t-dark .c-modal-away-progress__ra-memories,
 .t-dark .c-modal-away-progress__laitela-memories,
 .t-dark .c-modal-away-progress__pelle-memories,
-.t-dark .c-modal-away-progress__multiversal_remains,
-.t-dark .c-modal-away-progress__memory_crystals,
-.t-dark .c-modal-away-progress__galacitc_shards  {
+.t-dark .c-modal-away-progress__mending-points,
+.t-dark .c-modal-away-progress__ra-points,
+.t-dark .c-modal-away-progress__gal-boost-points  {
   filter: none;
 }
 
