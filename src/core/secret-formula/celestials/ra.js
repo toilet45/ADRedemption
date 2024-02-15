@@ -898,7 +898,7 @@ export const ra = {
       id: 27,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
-      effect: () => Math.max(Math.log10(player.records.thisReality.remWithoutGG)/2, 1),
+      effect: () => Math.max(Math.log10(player.records.bestReality.remWithoutGG)/2, 1),
       pet: "pelle",
       level: 5,
       displayIcon: '♅'
