@@ -85,6 +85,7 @@ export default {
         }
         case GALAXY_TYPE.THIRD:
         let x = 750000 + (5000 * player.mending.rebuyables[16]) + CorruptionUpgrade(9).effectOrDefault(0); //plus whatever
+        if(Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) x+=EternityChallenge(5).vReward.effectValue;
           return MendingUpgrade(17).isBought ? `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies` : `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies, after Remote scaling`;
       }
       return undefined;

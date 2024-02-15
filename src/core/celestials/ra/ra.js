@@ -239,7 +239,7 @@ class RaPetState extends GameMechanicState {
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
     let memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 7500 : 1);
     if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
       case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
       case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
@@ -443,7 +443,7 @@ export const Ra = {
 
       let multiplierOutPower = new Decimal(1);
       if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
-        multiplierOutPower = multiplierOutPower.times(500);
+        multiplierOutPower = multiplierOutPower.times(7500);
       }
       let HUavaliable = false;
       if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
