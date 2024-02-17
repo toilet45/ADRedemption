@@ -69,7 +69,7 @@ export function mendingReset(gain = true) {
     if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
       Quotes.effarig.mendCompleted.show();
       for (let i = 0; i < Glyphs.inventory.length; i++){
-        if (Glyphs.inventory[i].type === "companion"){
+        if (Glyphs.inventory[i]!=null && Glyphs.inventory[i].type === "companion"){
           Quotes.effarig.hasCompanion.show();
           break;
         }
