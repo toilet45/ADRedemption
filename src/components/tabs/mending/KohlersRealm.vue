@@ -60,12 +60,11 @@ export default {
     },
     startRun() {
       if (!Kohler.isRunning) player.mending.corruptionBackup = player.mending.corruption;
-      mendingReset(false);
+      mendingReset(false, true);
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
-      player.transcendents.kohler.run = !player.transcendents.kohler.run;
       player.mending.corruptionChallenge.corruptedMend = Kohler.isRunning ? true : false;
-      player.mending.corruption = Kohler.isRunning ? [6,6,6,6,6,6,6,6,6,6] : player.mending.corruptionBackup;
+      player.mending.corruption = Kohler.isRunning ? [4,0,0,4,4,0,2,4,2,2] : player.mending.corruptionBackup;
       return;
       /*if (this.isDoomed) return;
       Modal.celestials.show({ name: "Teresa's", number: 0 });*/

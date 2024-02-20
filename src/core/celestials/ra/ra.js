@@ -19,8 +19,12 @@ class RaUnlockState extends BitUpgradeState {
     return Pelle.isDoomed && this.config.disabledByPelle;
   }
 
+  get disabledByKohler() {
+    return Kohler.isRunning && this.config.disabledByKohler;
+  }
+
   get isEffectActive() {
-    return this.isUnlocked && !this.disabledByPelle;
+    return this.isUnlocked && !this.disabledByPelle && !this.disabledByKohler;
   }
 
   get requirementText() {
@@ -37,7 +41,7 @@ class RaUnlockState extends BitUpgradeState {
   }
 
   get displayIcon() {
-    return this.disabledByPelle ? `<span class="fas fa-ban"></span>` : this.config.displayIcon;
+    return this.disabledByPelle || this.disabledByKohler ? `<span class="fas fa-ban"></span>` : this.config.displayIcon;
   }
 
   get pet() {

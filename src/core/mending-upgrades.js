@@ -56,7 +56,12 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isPossible() {
+    if (Kohler.isRunning) return false;
     return this.config.hasFailed ? !this.config.hasFailed() : true;
+  }
+
+  get isBought() {
+    return Kohler.isRunning && this.id != 19 ? false : super.isBought;
   }
 
   tryUnlock() {

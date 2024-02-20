@@ -83,7 +83,7 @@ export class DimBoost {
   static get maxBoosts() {
     //woah nice design here--sxy
     let corruptionMax = 1e15;
-    if (Kohler.isRunning) return 0;
+    //if (Kohler.isRunning) return 4;
     if (player.mending.corruptionChallenge.corruptedMend) corruptionMax = corruptionPenalties.galWeak.hiddenThree[player.mending.corruption[3]];
     if (Ra.isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
@@ -181,7 +181,7 @@ export class DimBoost {
     amount *= InfinityUpgrade.resetBoost.chargedEffect.effectOrDefault(1);
 
     // Ra ra upgrade--sxy
-    if(player.celestials.ra.upgrades.has('raUpgrade')) amount = (amount / Decimal.log10(player.celestials.ra.raPoints.plus(1)))
+    if(RaUpgrade.raUpgrade.canBeApplied) amount = (amount / Decimal.log10(player.celestials.ra.raPoints.plus(1)))
 
     amount = Math.round(amount);
     

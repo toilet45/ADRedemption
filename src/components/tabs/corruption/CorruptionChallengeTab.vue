@@ -37,6 +37,7 @@ export default {
       corruptedFrags: 0,
       rewardedFragments: 0,
       respec: false,
+      externCorrupt: false
     };
   },
   computed: {
@@ -60,9 +61,9 @@ export default {
     runButtonClassObject() {
       return {
         "c-corrupt-run-button__icon": true,
-        "c-corrupt-run-button__icon--running": this.isRunning,
-        "c-corrupt-run-button--clickable": true,
-        "o-pelle-disabled-pointer": false
+        "c-corrupt-run-button__icon--running": this.isRunning && !this.externCorrupt,
+        "c-corrupt-run-button--clickable": !this.externCorrupt,
+        "o-pelle-disabled-pointer": this.externCorrupt
       };
     },
     respecClassObject() {
@@ -112,7 +113,7 @@ export default {
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
-      this.isRunning = CorruptionData.isCorrupted;
+      this.isRunning = CorruptionData.isCorrupted && this.externCorrupt;
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
       this.nextCorrupted = player.mending.corruptNext
       // This was being annoying so this is a cheap fix that works
@@ -120,6 +121,7 @@ export default {
       this.corruptedFrags = player.mending.corruptedFragments;
       this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
       this.respec = player.mending.cuRespec;
+      this.externCorrupt = Kohler.isRunning;
     },
     corruptionsZeroCheck() {
       for(let i=0;i<10;i++){
@@ -176,10 +178,13 @@ export default {
         class="l-corrupt-mechanic-container"
       >
         <div class="c-corrupt-unlock c-corrupt-run-button">
-          <span v-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
+          <span v-if="externCorrupt">
+            Hostilities cannot be adjusted due to external factors
+          </span>
+          <span v-else-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
               Make Next Mend Hostile
           </span>
-          <span v-else-if="!isRunning && !nextCorrupted && corruptionsZeroCheck()">
+          <span v-else-if="(!isRunning && !nextCorrupted && corruptionsZeroCheck())">
             Set at least one Hostility to at least Level 1 to make next Mend Hostile
           </span>
           <span v-else-if="!isRunning && !corruptionsZeroCheck()">

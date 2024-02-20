@@ -881,7 +881,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
     description: `Infinity Points adds Infinity power conversion`,
-    effect: () => Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/1.75,
+    effect: () => Math.max(Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/1.75, 0),
     formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },

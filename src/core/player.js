@@ -1233,7 +1233,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
+    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || Kohler.isRunning;
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;

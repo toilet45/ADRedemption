@@ -33,7 +33,7 @@ function askMendingConfirmation() {
   }
 }
 
-export function mendingReset(gain = true) {
+export function mendingReset(gain = true, toggleKohler = false) {
     let vBitsEarned = player.celestials.v.quoteBits //there seemed to be some jank with V's quoteBits being reset, lazy man's fix
     EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     // Finally, lets set up corruptions
@@ -62,7 +62,7 @@ export function mendingReset(gain = true) {
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
     //lockAchievementsOnMend();
-    if(gain && (!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(gain && (!Kohler.isRunning || !Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
@@ -97,6 +97,10 @@ export function mendingReset(gain = true) {
     }*/ //why reset--sxy
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
+    if (toggleKohler || Kohler.isRunning) {
+      Tab.dimensions.antimatter.show();
+      player.transcendents.kohler.run = !player.transcendents.kohler.run;
+    }
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
     //Start reseting all the things
@@ -278,7 +282,7 @@ export function mendingReset(gain = true) {
     for (const perkId of [10, 12, 13, 14, 15, 16, 17, 30, 31, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 70, 71, 72, 73, 80, 81, 82, 83, 100, 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205]) {
       const perk = Perks.find(perkId); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
       perk.isBought = false;
-      if (MendingMilestone.three.isReached){
+      if (MendingMilestone.three.isReached && !Kohler.isRunning){
         perk.isBought = true;
         perk.onPurchased();
       }
@@ -378,7 +382,7 @@ export function mendingReset(gain = true) {
       bestInfinitiesPerMs: DC.D0,
     },
     player.totalTickGained = 0;
-    if (!MendingUpgrade(3).isBought){
+    if (!MendingUpgrade(3).isBought || Kohler.isRunning){
       player.eternityChalls = {}
     }
     else{
@@ -457,11 +461,13 @@ export function mendingReset(gain = true) {
     player.IPMultPurchases = 0;
     //Pre-Infinity
     Currency.antimatter.reset();
-    if(MendingMilestone.three.isReached){
-      Currency.antimatter.bumpTo(5e130);
-    }
-    else{ //for some reason I still start with 10 AM even with r78 given, so this is a lazy man's fix
-      Currency.antimatter.bumpTo(5e25);
+    if (!Kohler.isRunning){
+      if(MendingMilestone.three.isReached){
+        Currency.antimatter.bumpTo(5e130);
+      }
+      else{ //for some reason I still start with 10 AM even with r78 given, so this is a lazy man's fix
+        Currency.antimatter.bumpTo(5e25);
+      }
     }
     player.dimensionBoosts =  0;
     player.galaxies =  0;

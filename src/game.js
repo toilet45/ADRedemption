@@ -450,6 +450,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
         factor = factor.times(VUnlocks.vAchMulti.effectOrDefault(1));
+        if (Kohler.isRunning) factor = factor.div(3);
         /*if(ExpoBlackHole(1).isUnlocked && factor.gte(1)){
           for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
             if (!i.isUnlocked) break;
@@ -492,7 +493,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     }
   }
 
-  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) factor=factor.times(player.celestials.enslaved.storedReal);
+  if(RaUpgrade.enslavedUpgrade.canBeApplied) factor=factor.times(player.celestials.enslaved.storedReal);
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
@@ -650,7 +651,7 @@ export function gameLoop(passDiff, options = {}) {
   }
 
   //RaUpgrade3 stuff--sxy
-  if(player.celestials.ra.upgrades.has('enslavedUpgrade')) player.celestials.enslaved.storedReal=Enslaved.storedRealTimeCap;
+  if(RaUpgrade.enslavedUpgrade.canBeApplied) player.celestials.enslaved.storedReal=Enslaved.storedRealTimeCap;
 
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;

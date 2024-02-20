@@ -16,7 +16,8 @@ export default {
             isCorrupted: false,
             noMendBonus: false,
             MvRRate: new Decimal(0),
-            frags: 0
+            frags: 0,
+            inKohler: false
         };
     },
     computed: {
@@ -30,13 +31,14 @@ export default {
     methods: {
         update() {
             this.gainedMvR.copyFrom(gainedMendingPoints());
-            this.canMend = (player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || this.noMendBonus;
+            this.canMend = (player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || this.noMendBonus || this.inKohler;
             this.firstMend = !PlayerProgress.mendingUnlocked();
             this.needDoom = !MendingMilestone.six.isReached;
             this.isCorrupted = player.mending.corruptionChallenge.corruptedMend;
             this.noMendBonus = Pelle.isDoomed && Currency.antimatter.exponent < 9e15 && Ra.unlocks.exitDoom.isUnlocked;
             this.MvRRate = this.gainedMvR.div(Time.thisMendRealTime.totalMinutes);
-            this.frags = CorruptionData.isCorrupted ? Math.ceil(Math.log2(CorruptionData.calcScore())) : 0
+            this.frags = CorruptionData.isCorrupted ? Math.ceil(Math.log2(CorruptionData.calcScore())) : 0;
+            this.inKohler = Kohler.isRunning;
         },
         mend() {
             mendingResetRequest();
@@ -54,6 +56,9 @@ export default {
     >
     <template v-if="firstMend">
       There is another way... You need to Mend the Multiverse.
+    </template>
+    <template v-else-if="inKohler">
+      This Multiverse is too strict...must escape.
     </template>
     <template v-else-if="noMendBonus">
       Exit Doomed Reality, but get no Mend Rewards.

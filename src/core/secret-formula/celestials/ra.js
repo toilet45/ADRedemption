@@ -164,7 +164,8 @@ export const ra = {
       pet: "teresa",
       level: 1,
       displayIcon: `<span class="fas fa-atom"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     chargedInfinityUpgrades: {
       id: 1,
@@ -174,7 +175,8 @@ export const ra = {
       pet: "teresa",
       level: 2,
       displayIcon: `<span class="fas fa-infinity"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true,
     },
     teresaXP: {
       id: 2,
@@ -291,7 +293,8 @@ export const ra = {
       pet: "enslaved",
       level: 2,
       displayIcon: `<span class="fas fa-history"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     enslavedXP: {
       id: 16,
@@ -308,7 +311,8 @@ export const ra = {
       pet: "enslaved",
       level: 10,
       displayIcon: `<span class="fas fa-expand-arrows-alt"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     vUnlock: {
       id: 18,
@@ -342,7 +346,9 @@ export const ra = {
     },
     instantECAndRealityUpgradeAutobuyers: {
       id: 21,
-      reward: "Rebuyable Reality upgrades are bought automatically and Auto-Eternity Challenges happen instantly",
+      get reward (){
+        return Kohler.isRunning ? "Rebuyable Reality upgrades are bought automatically" : "Rebuyable Reality upgrades are bought automatically and Auto-Eternity Challenges happen instantly"
+      },
       pet: "v",
       level: 1,
       displayIcon: `<span class="fas fa-sync-alt"></span>`,
@@ -354,7 +360,8 @@ export const ra = {
         ${formatInt(TimeStudy.dilation.totalTimeTheoremRequirement)} Time Theorems`,
       pet: "v",
       level: 2,
-      displayIcon: `<span class="fas fa-fast-forward"></span>`
+      displayIcon: `<span class="fas fa-fast-forward"></span>`,
+      disabledByKohler: true
     },
     vXP: {
       id: 23,
@@ -390,7 +397,8 @@ export const ra = {
       pet: "v",
       level: 10,
       displayIcon: `<span class="fas fa-university"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     achievementTTMult: {
       id: 26,
@@ -399,7 +407,8 @@ export const ra = {
       pet: "v",
       level: 15,
       displayIcon: `<span class="fas fa-graduation-cap"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     achievementPower: {
       id: 27,
@@ -511,7 +520,8 @@ export const ra = {
       reward: "Effarig Glyphs' first effect also increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: `<span class="fas fa-level-up-alt"></span>`
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`,
+      disabledByKohler: true
     },
     maxGlyphRarityIncrease: {
       id: 13,
@@ -520,7 +530,8 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: `<span class="fas fa-star"></span>`
+      displayIcon: `<span class="fas fa-star"></span>`,
+      disabledByKohler: true
     },
     effarigMendUnlock: {
       id: 14,
@@ -553,7 +564,8 @@ export const ra = {
       pet: "enslaved",
       level: 50,
       displayIcon: '<i class="fa-solid fa-circle"></i>',
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
@@ -595,6 +607,7 @@ export const ra = {
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
+      disabledByKohler: true
     },
     unlockSHardV: {
       id: 23,

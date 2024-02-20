@@ -343,7 +343,7 @@ export const EternityChallenges = {
         player.reality.lastAutoEC = Decimal.clampMax(player.reality.lastAutoEC, this.interval).toNumber();
         return;
       }
-      if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied) {
+      if (Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied && !Kohler.isRunning) {
         let next = this.nextChallenge;
         while (next !== undefined) {
           while (!next.isFullyCompleted) {

@@ -2,6 +2,7 @@
 import HeaderBlackHoleStatusText from "./HeaderBlackHoleStatusText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Kohler } from "../../core/globals";
 
 export default {
   name: "HeaderBlackHole",
@@ -48,10 +49,10 @@ export default {
       this.displaySingle = BlackHoles.arePermanent;
       if (this.displaySingle) this.singleState = BlackHole(1).displayState;
       this.pauseText = this.pauseButtonText();
-      this.canCharge = Enslaved.isUnlocked;
-      this.isCharging = Enslaved.isStoringGameTime;
+      this.canCharge = Enslaved.isUnlocked && !Kohler.isRunning;
+      this.isCharging = Enslaved.isStoringGameTime && !Kohler.isRunning;
       this.storedTime.copyFrom(player.celestials.enslaved.stored);
-      this.canAutoRelease = Ra.unlocks.autoPulseTime.canBeApplied;
+      this.canAutoRelease = Ra.unlocks.autoPulseTime.canBeApplied && !Kohler.isRunning;
       this.isAutoReleasing = player.celestials.enslaved.isAutoReleasing;
     },
     pauseButtonText() {

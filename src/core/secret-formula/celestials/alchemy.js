@@ -552,7 +552,7 @@ export const alchemyResources = {
     isBaseResource: false,
     effect: amount => {
       let x = amount;
-      if(player.celestials.ra.upgrades.has('effarigUpgrade'))x*=3;
+      if(RaUpgrade.effarigUpgrade.canBeApplied)x*=3;
       /*if (player.mending.corruptionChallenge.corruptedMend) {
         x = Math.pow(x,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);
       };*/
