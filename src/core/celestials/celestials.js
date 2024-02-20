@@ -137,12 +137,12 @@ GameDatabase.celestials.descriptions = [
   {
     name: "Kohler",
     effects(){
-      const x =`All Celestial Reality nerfs (besides Pelle's) are enabled.\
+      const x =`Most Celestial Reality nerfs are enabled.\
       Black Hole 3 is disabled.\
       Black Holes 1 & 2 are raised ${formatPow(0.33,2,2)}.\
       All Mending Upgrades, Warp Upgrade 10, and all Hostility Upgrades are disabled.\
       (Break) Infinity Upgrades cannot be charged.\
-      You are trapped in all Hostilities with levels [4,0,0,4,4,0,2,4,2,2].\
+      You are trapped in all Hostilities with levels [5,5,0,5,5,0,0,5,5,1].\
       All "Start With" rewards are disabled except Achievement 21.\
       Continuum is disabled.`;
       return x;

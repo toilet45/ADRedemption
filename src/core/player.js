@@ -503,6 +503,8 @@ window.player = {
   corruptedFragments: DC.D0,
   galBoostPoints: DC.D0,
   mending:{
+    kohlerUpgradeBits: 0,
+    kohlerUpgradeReqs: 0,
     upgradeBits: 0,
     warpUpgradeBits: 0,
     cuRespec: false,
@@ -528,6 +530,13 @@ window.player = {
       5: 0,
     },
     corruptionRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    kohlerRebuyables: {
       1: 0,
       2: 0,
       3: 0,
@@ -1196,6 +1205,7 @@ window.player = {
   mends: DC.D0,
   mendingUpgrades: new Set(),
   mvrmultUpgrades: 0,
+  kohlerPoints: new Decimal(0),
   devSave: true
 };
 

@@ -8846,6 +8846,19 @@ kbd {
   filter: grayscale(50%);
 }
 
+.c-mending-upgrade-btn--useless {
+  background-color: var(--color-pelle--base);
+  border-color: #4a110b;
+  filter: grayscale(50%);
+  cursor: default;
+}
+
+.c-mending-upgrade-btn--useless:hover {
+  color: var(--color-mending-light);
+  background-color: var(--color-pelle--base);
+  filter: grayscale(50%);
+}
+
 .c-reality-upgrade-btn--bought {
   color: var(--color-reality-light);
   background-color: var(--color-reality);
@@ -9812,6 +9825,36 @@ input.o-automator-block-input {
 }
 
 .o-mending-button--unavailable {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.o-kohler-button {
+  font-weight: bold;
+  color: #FFAEC9;
+  background-color: var(--color-prestige--accent);
+  border-color: #FFAEC9;
+  cursor: pointer;
+}
+
+.o-kohler-button:hover {
+  color: black;
+  background-color: #FFAEC9;
+}
+
+.o-kohler-button span {
+  transition-duration: 0.2s;
+}
+
+.o-kohler-button:hover span {
+  color: black;
+}
+
+.t-metro .o-kohler-button {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e;
+}
+
+.o-kohler-button--unavailable {
   opacity: 0.5;
   cursor: default;
 }

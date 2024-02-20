@@ -4,11 +4,9 @@ import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
 import HintText from "@/components/HintText";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
-import { MendingMilestone } from "../../../core/mending";
-import { Kohler } from "../../../core/globals";
 
 export default {
-  name: "WarpUpgradeButton",
+  name: "MendingUpgradeButton",
   components: {
     PrimaryToggleButton,
     DescriptionDisplay,
@@ -28,9 +26,10 @@ export default {
       canBeBought: false,
       isRebuyable: false,
       isBought: false,
-      isPossible: false,
+      isAutoUnlocked: false,
+      isAutobuyerOn: false,
       canBeLocked: false,
-      hasRequirementLock: false,
+      hasRequirementLock: false
     };
   },
   computed: {
@@ -53,27 +52,20 @@ export default {
     },
     canLock() {
       return this.config.canLock && !(this.isAvailableForPurchase || this.isBought);
-    },
-    isUseless() {
-      return Kohler.isRunning && this.upgrade.id === 10;
-    },
-  },
-  watch: {
-    /*isAutobuyerOn(newValue) {
-      Autobuyer.realityUpgrade(this.upgrade.id).isActive = newValue;
-    }*/
+    }
   },
   methods: {
     update() {
       const upgrade = this.upgrade;
-      this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
+      /*this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
       this.canBeBought = upgrade.canBeBought;
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = !upgrade.isRebuyable && upgrade.isBought;
       this.isPossible = upgrade.isPossible;
-      this.isAutoUnlocked = false;
+      this.isAutoUnlocked = Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
       this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
       this.hasRequirementLock = upgrade.hasPlayerLock;
+      //if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.mendingUpgrade(upgrade.id).isActive;*/
     },
     toggleLock(upgrade) {
       if (this.isRebuyable) return;
@@ -92,12 +84,12 @@ export default {
       @click.exact="upgrade.purchase()"
     >
       <HintText
-        type="corruptionUpgrades"
+        type="mendingUpgrades"
         class="l-hint-text--mending-upgrade c-hint-text--mending-upgrade"
       >
         {{ config.name }}
       </HintText>
-      <span :class="{ 'o-pelle-disabled': isUseless }">
+      <span>
         <DescriptionDisplay :config="config" />
         <template v-if="($viewModel.shiftDown === isAvailableForPurchase) && !isRebuyable">
           <br>
@@ -116,7 +108,7 @@ export default {
             v-if="!isBought"
             :config="config"
             br
-            name="Multiversal Remain"
+            name="Kohler Point"
           />
         </template>
       </span>

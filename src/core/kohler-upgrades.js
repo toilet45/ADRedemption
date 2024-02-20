@@ -1,6 +1,6 @@
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
 
-class WarpUpgradeState extends BitPurchasableMechanicState {
+class KohlerUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
     super(config);
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
@@ -34,7 +34,7 @@ class WarpUpgradeState extends BitPurchasableMechanicState {
   }
 
   get currency() {
-    return Currency.mendingPoints;
+    return Currency.kohlerPoints;
   }
 
   get bitIndex() {
@@ -42,30 +42,21 @@ class WarpUpgradeState extends BitPurchasableMechanicState {
   }
 
   get bits() {
-    return player.mending.warpUpgradeBits;
+    return player.mending.kohlerUpgradeBits;
   }
 
   set bits(value) {
-    player.mending.warpUpgradeBits = value;
-  }
-
-  get isBought() {
-    if (Kohler.isRunning && this.id === 10) return false;
-    return super.isBought;
-  }
-
-  get canBeBought(){
-    return (Kohler.isRunning && this.id === 10) ? false : super.canBeBought;
+    player.mending.kohlerUpgradeBits = value;
   }
 
   get hasPlayerLock() {
-    return (player.mending.reqLock.warp & (1 << this.bitIndex)) !== 0;
+    return false;// (player.reality.reqLock.reality & (1 << this.bitIndex)) !== 0;
   }
 
-  set hasPlayerLock(value) {
-    if (value) player.mending.reqLock.warp |= 1 << this.bitIndex;
-    else player.mending.reqLock.warp &= ~(1 << this.bitIndex);
-  }
+  /*set hasPlayerLock(value) {
+    /*if (value) player.reality.reqLock.reality |= 1 << this.bitIndex;
+    else player.reality.reqLock.reality &= ~(1 << this.bitIndex);
+  }*/
 
   get isLockingMechanics() {
     const shouldBypass = this.config.bypassLock?.() ?? false;
@@ -89,62 +80,64 @@ class WarpUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return (player.mending.warpUpgReqs & (1 << this.id)) !== 0;
+    return true;
   }
 
   get isPossible() {
-    return this.config.hasFailed ? !this.config.hasFailed() : true;
+    return true;
   }
 
   tryUnlock() {
-    const warpReached = player.reality.warped;
-    if (!warpReached || this.isAvailableForPurchase || !this.config.checkRequirement()) return;
-    player.mending.warpUpgReqs |= (1 << this.id);
-    GameUI.notify.reality(`You've unlocked a Warp Upgrade: ${this.config.name}`);
-    this.hasPlayerLock = false;
+    /*const realityReached = PlayerProgress.realityUnlocked() || TimeStudy.reality.isBought;
+    if (!realityReached || this.isAvailableForPurchase || !this.config.checkRequirement()) return;
+    player.reality.upgReqs |= (1 << this.id);
+    GameUI.notify.reality(`You've unlocked a Kohler Upgrade: ${this.config.name}`);
+    this.hasPlayerLock = false;*/
   }
 
   onPurchased() {
-    EventHub.dispatch(GAME_EVENT.WARP_UPGRADE_BOUGHT);
+    EventHub.dispatch(GAME_EVENT.Kohler_UPGRADE_BOUGHT);
     const id = this.id;
-    //insert code here
-    GameCache.staticGlyphWeights.invalidate();
   }
 }
 
-class RebuyableWarpUpgradeState extends RebuyableMechanicState {
+class RebuyableKohlerUpgradeState extends RebuyableMechanicState {
   get currency() {
-    return Currency.mendingPoints;
+    return Currency.kohlerPoints;
   }
 
   get boughtAmount() {
-    return player.mending.warpRebuyables[this.id];
+    return player.mending.kohlerRebuyables[this.id];
+  }
+
+  get isAvailableForPurchase() {
+    return true;
   }
 
   set boughtAmount(value) {
-    player.mending.warpRebuyables[this.id] = value;
+    player.mending.kohlerRebuyables[this.id] = value;
   }
 }
 
-WarpUpgradeState.index = mapGameData(
-  GameDatabase.mending.warpUpgrades,
-  config => (config.id < 4
-    ? new RebuyableWarpUpgradeState(config)
-    : new WarpUpgradeState(config))
+KohlerUpgradeState.index = mapGameData(
+  GameDatabase.mending.kohlerUpgrades,
+  config => (config.id < 6
+    ? new RebuyableKohlerUpgradeState(config)
+    : new KohlerUpgradeState(config))
 );
 
 /**
  * @param {number} id
- * @return {WarpUpgradeState|RebuyableWarpUpgradeState}
+ * @return {KohlerUpgradeState|RebuyableKohlerUpgradeState}
  */
-export const WarpUpgrade = id => WarpUpgradeState.index[id];
+export const KohlerUpgrade = id => KohlerUpgradeState.index[id];
 
-export const WarpUpgrades = {
+export const KohlerUpgrades = {
   /**
-   * @type {(WarpUpgradeState|RebuyableWarpUpgradeState)[]}
+   * @type {(KohlerUpgradeState|RebuyableKohlerUpgradeState)[]}
    */
-  all: WarpUpgradeState.index.compact(),
+  all: KohlerUpgradeState.index.compact(),
   get allBought() {
-    return (player.mending.warpUpgradeBits >> 3) + 1 === 1 << (GameDatabase.mending.warpUpgrades.length - 2);
+    return (player.mending.kohlerUpgradeBits >> 6) + 1 === 1 << (GameDatabase.mending.kohlerUpgrades.length - 5);
   }
 };

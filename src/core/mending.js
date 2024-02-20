@@ -66,6 +66,9 @@ export function mendingReset(gain = true, toggleKohler = false) {
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
+    if (Kohler.isRunning){
+      Currency.kohlerPoints.add(gainedKohlerPoints());
+    }
     if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
       Quotes.effarig.mendCompleted.show();
       for (let i = 0; i < Glyphs.inventory.length; i++){

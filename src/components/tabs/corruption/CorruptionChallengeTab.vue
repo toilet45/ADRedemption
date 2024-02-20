@@ -113,7 +113,7 @@ export default {
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
-      this.isRunning = CorruptionData.isCorrupted && this.externCorrupt;
+      this.isRunning = CorruptionData.isCorrupted || this.externCorrupt;
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
       this.nextCorrupted = player.mending.corruptNext
       // This was being annoying so this is a cheap fix that works

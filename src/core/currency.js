@@ -571,3 +571,21 @@ Currency.galBoostPoints = new class extends DecimalCurrency {
     //super.reset();
   }
 }();
+
+Currency.kohlerPoints = new class extends DecimalCurrency {
+  get value() { 
+    return player.kohlerPoints; 
+  }
+  set value(value) {
+    player.kohlerPoints = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();
+

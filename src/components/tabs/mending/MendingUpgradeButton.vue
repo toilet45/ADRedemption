@@ -4,6 +4,7 @@ import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
 import HintText from "@/components/HintText";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Kohler } from "../../../core/globals";
 
 export default {
   name: "MendingUpgradeButton",
@@ -52,6 +53,9 @@ export default {
     },
     canLock() {
       return this.config.canLock && !(this.isAvailableForPurchase || this.isBought);
+    },
+    isUseless(){
+      return Kohler.isRunning && this.upgrade.id != 19;
     }
   },
   methods: {
@@ -62,7 +66,7 @@ export default {
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = !upgrade.isRebuyable && upgrade.isBought;
       this.isPossible = upgrade.isPossible;
-      this.isAutoUnlocked = Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
+      this.isAutoUnlocked = false//Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
       this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
       this.hasRequirementLock = upgrade.hasPlayerLock;
       //if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.mendingUpgrade(upgrade.id).isActive;
@@ -89,7 +93,7 @@ export default {
       >
         {{ config.name }}
       </HintText>
-      <span>
+      <span :class="{ 'o-pelle-disabled': isUseless }">
         <DescriptionDisplay :config="config" />
         <template v-if="($viewModel.shiftDown === isAvailableForPurchase) && !isRebuyable">
           <br>

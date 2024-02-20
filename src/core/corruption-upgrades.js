@@ -90,10 +90,11 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return true;
+    return !Kohler.isRunning;
   }
 
   get isPossible() {
+    if (Kohler.isRunning) return false;
     return this.config.hasFailed ? !this.config.hasFailed() : true;
   }
 

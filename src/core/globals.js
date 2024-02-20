@@ -94,6 +94,7 @@ export * from "./shop";
 export * from "./tabs";
 export * from "./tab-notifications";
 export * from "./speedrun";
+export * from "./kohler-upgrades";
 
 export * from "./automator/script-templates";
 export * from "./mending";

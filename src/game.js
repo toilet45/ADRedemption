@@ -189,6 +189,12 @@ export function warpReality(){
   player.reality.warped = true;
 }
 
+export function gainedKohlerPoints(){
+  let gain = new Decimal(1);
+  //insert formula for 1 at e12, an additional every 2 (or 3) OoM
+  return player.antimatter.gte(1e12) ? gain : new Decimal(0);
+}
+
 function totalEPMult() {
   return Pelle.isDisabled("EPMults")
     ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2]).times(getAdjustedGlyphEffect("timeEP")) : Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])

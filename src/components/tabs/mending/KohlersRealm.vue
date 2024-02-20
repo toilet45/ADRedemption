@@ -4,13 +4,15 @@ import PrimaryButton from "@/components/PrimaryButton";
 import CelestialQuoteHistory from "../../CelestialQuoteHistory.vue";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import { Glyphs, Kohler } from "../../../core/globals";
+import KohlerUpgradeButton from "./KohlerUpgradeButton.vue";
 
 export default {
   name: "KohlersRealm",
   components: {
     PrimaryButton,
     CelestialQuoteHistory,
-    CustomizeableTooltip
+    CustomizeableTooltip,
+    KohlerUpgradeButton
   },
   data() {
     return {
@@ -52,9 +54,12 @@ export default {
     isDoomed: () => Pelle.isDoomed,
   },
   methods: {
+    id(row, column) {
+      return (row - 1) * 5 + column - 1;
+    },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = false;
+      this.unlocked = true;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
       this.isRunning = Kohler.isRunning
     },
@@ -64,7 +69,7 @@ export default {
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
       player.mending.corruptionChallenge.corruptedMend = Kohler.isRunning ? true : false;
-      player.mending.corruption = Kohler.isRunning ? [4,0,0,4,4,0,2,4,2,2] : player.mending.corruptionBackup;
+      player.mending.corruption = Kohler.isRunning ? [5,5,0,5,5,0,0,5,5,1] : player.mending.corruptionBackup;
       return;
       /*if (this.isDoomed) return;
       Modal.celestials.show({ name: "Teresa's", number: 0 });*/
@@ -155,9 +160,48 @@ export default {
           </div>
         </div>
       </div>
+      <div class="l-mending-upgrade-grid">
+      <div
+        v-for=" row in 2"
+        :key="row"
+        class="l-mending-upgrade-grid__row">
+      <KohlerUpgradeButton 
+        v-for="column in 5"
+        :key="id(row, column)"
+        :upgrade="upgrades[id(row, column)]"
+        class="l-mending-upgrade-grid__cell"
+        />
+      </div>
+    </div>
     </div>
 </template>
 
 <style scoped>
+.c-remains-amount {
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
 
+.l-mending-upgrade-grid{
+  display: flex;
+  flex-direction: column;
+}
+
+.l-mending-upgrade-grid__row{
+  display: flex;
+  flex-direction: row;
+}
+
+.l-mending-upgrade-grid__cell{
+  margin: 0.5rem 0.8rem;
+}
+.c-remains-amount__accent {
+  font-size: 2rem;
+  color: var(--color-mending);
+}
+.c-mending-upgrade-infotext {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin: -1rem 0 1.5rem;
+}
 </style>

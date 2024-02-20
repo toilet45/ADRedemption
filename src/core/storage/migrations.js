@@ -770,6 +770,18 @@ export const migrations = {
     player.awayProgress.raPoints = true,
     player.awayProgress.galBoostPoints = true
   },
+  50.03: player =>{
+    player.kohlerPoints = new Decimal(0);
+    player.mending.kohlerUpgradeBits = 0;
+    player.mending.kohlerUpgradeReqs = 0;
+    player.mending.kohlerRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    }
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 
