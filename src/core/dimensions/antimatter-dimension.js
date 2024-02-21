@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-import { CorruptionUpgrade, KohlerProgressUnlocks, V } from "../globals";
+import { CorruptionUpgrade, KohlerProgressUnlocks, KohlerUpgrade, V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -97,7 +97,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   if (AlchemyResource.inflation.isUnlocked && multiplier.gte(AlchemyResource.inflation.effectValue)) {
     multiplier = multiplier.pow(1.05);
   }
-
+  if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   return multiplier;
 }
 

@@ -190,8 +190,8 @@ export function warpReality(){
 }
 
 export function gainedKohlerPoints(){
-  let gain = new Decimal(1);
-  //insert formula for 1 at e12, an additional every 2 (or 3) OoM
+  let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
+  gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount))
   return player.antimatter.gte(1e12) ? gain : new Decimal(0);
 }
 
@@ -531,7 +531,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(x); //generalized in case of future upgrades
     factor = factor.times(getGameSpeedupSoftcaps());
   } // Prevent gamespeed from going fucking ballistic*/
-
+  factor = factor.times(Decimal.pow(2, KohlerUpgrade(2).boughtAmount));
   return factor;
 }
 

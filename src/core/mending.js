@@ -472,8 +472,8 @@ export function mendingReset(gain = true, toggleKohler = false) {
         Currency.antimatter.bumpTo(5e25);
       }
     }
-    player.dimensionBoosts =  0;
-    player.galaxies =  0;
+    player.dimensionBoosts = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 5 : 0;
+    player.galaxies = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 1 : 0;
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
     resetTickspeed();

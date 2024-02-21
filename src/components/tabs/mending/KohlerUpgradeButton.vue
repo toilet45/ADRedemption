@@ -57,7 +57,7 @@ export default {
   methods: {
     update() {
       const upgrade = this.upgrade;
-      /*this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
+      this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
       this.canBeBought = upgrade.canBeBought;
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = !upgrade.isRebuyable && upgrade.isBought;
@@ -65,7 +65,7 @@ export default {
       this.isAutoUnlocked = Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
       this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
       this.hasRequirementLock = upgrade.hasPlayerLock;
-      //if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.mendingUpgrade(upgrade.id).isActive;*/
+      //if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.mendingUpgrade(upgrade.id).isActive;
     },
     toggleLock(upgrade) {
       if (this.isRebuyable) return;

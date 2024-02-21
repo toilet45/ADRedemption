@@ -24,16 +24,13 @@ export default {
     };
   },
   computed: {
+    upgrades: () => KohlerUpgrades.all,
     runningText(){
       return this.isRunning ? "Exit Kohler's Realm" : "Enter Kohler's Realm."
     },
     unlockInfos: () => KohlerProgressUnlocks.all,
     showRunReward() {
       return this.bestAM.gt(1);
-    },
-    upgrades() {
-      const upgrades = [];
-      return upgrades;
     },
     runButtonClassObject() {
       return {
@@ -59,7 +56,7 @@ export default {
     },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = true;
+      this.unlocked = false;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
       this.isRunning = Kohler.isRunning
     },
@@ -160,7 +157,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="l-mending-upgrade-grid">
+      <div v-if="this.unlocked" class="l-mending-upgrade-grid">
       <div
         v-for=" row in 2"
         :key="row"

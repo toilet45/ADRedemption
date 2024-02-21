@@ -98,6 +98,14 @@ class KohlerUpgradeState extends BitPurchasableMechanicState {
   onPurchased() {
     EventHub.dispatch(GAME_EVENT.Kohler_UPGRADE_BOUGHT);
     const id = this.id;
+    switch(id){
+      case 7:
+        player.dimensionBoosts = Math.max(5, player.dimensionBoosts);
+        player.galaxies = Math.max(1, player.galaxies);
+        break;
+      default:
+
+    }
   }
 }
 
