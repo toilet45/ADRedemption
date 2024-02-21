@@ -191,7 +191,10 @@ export function warpReality(){
 
 export function gainedKohlerPoints(){
   let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
-  gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount))
+  gain = gain.timesEffectsOf(
+    KohlerUpgrade(11)
+    );
+  gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount));
   return player.antimatter.gte(1e12) ? gain : new Decimal(0);
 }
 

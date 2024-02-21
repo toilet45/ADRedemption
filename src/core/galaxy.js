@@ -122,6 +122,7 @@ export class Galaxy {
       amount = Math.floor(amount**(galWeakScaling))
     }
 
+    if (Kohler.isRunning && KohlerUpgrade(13).isBought) amount /= 10;
     const tier = Galaxy.requiredTier;
     return new GalaxyRequirement(tier, amount);
   }

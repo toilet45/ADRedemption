@@ -4,6 +4,7 @@ import { warpUpgrades } from "./warp-upgrades";
 import { corruptionUpgrades } from "./corruption-upgrades";
 import { kohlerUpgrades } from "./kohler-upgrades";
 import { kohlerProgress } from "./kohler-unlock-progress";
+import { kohlerMilestones } from "./kohler-milestones";
 
 export const mending = {
     upgrades: mendingUpgrades,
@@ -11,5 +12,6 @@ export const mending = {
     corruptionUpgrades: corruptionUpgrades,
     warpUpgrades: warpUpgrades,
     kohlerUnlockProgress: kohlerProgress,
-    kohlerUpgrades: kohlerUpgrades
+    kohlerUpgrades: kohlerUpgrades,
+    kohlerMilestones: kohlerMilestones
 };

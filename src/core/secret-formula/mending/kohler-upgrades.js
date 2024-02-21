@@ -50,10 +50,10 @@ export const kohlerUpgrades = [
   rebuyable({
     id: 3,
     name: "Kohler Upgrade 3",
-    initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "[TBD]",
-    effect: 3,
+    initialCost: 1000,
+    costMult: 50,
+    textTemplate: `Increase Base Antimatter Dimension Multiplier in Kohler's Realm by {value}`,
+    effect: 20,
     effectType: "×"
   }),
   rebuyable({
@@ -81,11 +81,6 @@ export const kohlerUpgrades = [
     description: () => `Multiply 1st Antimatter Dimension based on unspent Kohler Points, after nerfs.`,
     effect: () => {
       let x = KohlerUpgrade(10).isBought ? Decimal.pow(player.bestKohlerPoints.add(1).clampMin(1), 5) : Currency.kohlerPoints.value.add(1).clampMin(1);
-      if (x.gte(1e13)){
-        x = x.div(1e13);
-        x = x.pow(0.1);
-        x = x.times(1e13);
-      }
       return x;
     },
     effectType: "×",
@@ -118,5 +113,45 @@ export const kohlerUpgrades = [
     cost: 30,
     description: () => `Kohler Upgrade 6 effect ^5, and upgrades based on Kohler Points are based on best`,
     effect: () => 1,
+  },
+  {
+    id: 11,
+    name: "Kohler Upgrade 11",
+    cost: 4000,
+    description: () => `Gain more Kohler Points based on Antimatter`,
+    effect: () => Math.max(1, Currency.antimatter.value.log10() / 10)
+  },
+  {
+    id: 12,
+    name: "Kohler Upgrade 12",
+    cost: 10000,
+    description: () => `Antimatter Dimension cost multipliers are shifted down 2 Dimensions in Kohler's Realm runs outside of C6 (i.e. AD8 has AD6's cost multiplier, ADs 1 and 2 are x10 and x100 respectively)`,
+    effect: 1
+  },
+  {
+    id: 13,
+    name: "Kohler Upgrade 13",
+    cost: 20000,
+    description: () => `Divide Galaxy Requirements by 10, and Galaxies are ${formatX(1e8)} as powerful`,
+    effect: 1
+  },
+  {
+    id: 14,
+    name: "Kohler Upgrade 14",
+    cost: 30000,
+    description: () => `Gain an exponentally increasing multiplier to all Antimatter Dimensions similar to C3`,
+    effect: () => {
+      let x = new Decimal(1.0015).pow(player.records.thisMend.realTime / 1000);
+      return x.div(Math.max(x.log10(), 1));
+    },
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 15,
+    name: "Kohler Upgrade 15",
+    cost: 20000,
+    description: () => `[TBD]`,
+    effect: 1
   },
 ];

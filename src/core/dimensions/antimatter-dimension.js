@@ -97,6 +97,10 @@ export function getDimensionFinalMultiplierUncached(tier) {
   if (AlchemyResource.inflation.isUnlocked && multiplier.gte(AlchemyResource.inflation.effectValue)) {
     multiplier = multiplier.pow(1.05);
   }
+  if (Kohler.isRunning) {
+    multiplier = multiplier.times(Decimal.pow(20, KohlerUpgrade(3).boughtAmount));
+    multiplier = multiplier.times(KohlerUpgrade(14).effectOrDefault(1));
+  }
   if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   return multiplier;
@@ -358,7 +362,9 @@ class AntimatterDimensionState extends DimensionState {
     const BASE_COSTS = [null, 10, 100, 1e4, 1e6, 1e9, 1e13, 1e18, 1e24];
     this._baseCost = BASE_COSTS[tier];
     const BASE_COST_MULTIPLIERS = [null, 1e3, 1e4, 1e5, 1e6, 1e8, 1e10, 1e12, 1e15];
+    const BCM_POST_KOHLER_UPGRADE_12 = [null, 10 , 100, 1000, 10000, 1e5, 1e6, 1e9, 1e13];
     this._baseCostMultiplier = BASE_COST_MULTIPLIERS[tier];
+    this._bcmKU12 = BCM_POST_KOHLER_UPGRADE_12[tier];
     const C6_BASE_COSTS = [null, 10, 100, 100, 500, 2500, 2e4, 2e5, 4e6];
     this._c6BaseCost = C6_BASE_COSTS[tier];
     const C6_BASE_COST_MULTIPLIERS = [null, 1e3, 5e3, 1e4, 1.2e4, 1.8e4, 2.6e4, 3.2e4, 4.2e4];
@@ -375,7 +381,7 @@ class AntimatterDimensionState extends DimensionState {
     }
     return new ExponentialCostScaling({
       baseCost: NormalChallenge(6).isRunning ? this._c6BaseCost : this._baseCost,
-      baseIncrease: NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier,
+      baseIncrease: (Kohler.isRunning && KohlerUpgrade(12).isBought) ? this._bcmKU12 : (NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier),
       costScale: Player.dimensionMultDecrease**corruptionPen,
       scalingCostThreshold: Number.MAX_VALUE
     });

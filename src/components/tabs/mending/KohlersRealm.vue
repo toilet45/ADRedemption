@@ -5,6 +5,7 @@ import CelestialQuoteHistory from "../../CelestialQuoteHistory.vue";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import { Glyphs, Kohler } from "../../../core/globals";
 import KohlerUpgradeButton from "./KohlerUpgradeButton.vue";
+import KohlerMilestoneRow from "./KohlerMilestoneRow.vue";
 
 export default {
   name: "KohlersRealm",
@@ -12,7 +13,8 @@ export default {
     PrimaryButton,
     CelestialQuoteHistory,
     CustomizeableTooltip,
-    KohlerUpgradeButton
+    KohlerUpgradeButton,
+    KohlerMilestoneRow
   },
   data() {
     return {
@@ -21,6 +23,7 @@ export default {
       time: new Date().getTime(),
       bestAM: new Decimal(0),
       isRunning: false,
+      totalRows: [],
     };
   },
   computed: {
@@ -56,9 +59,10 @@ export default {
     },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = true;
+      this.unlocked = false;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
-      this.isRunning = Kohler.isRunning
+      this.isRunning = Kohler.isRunning;
+      this.totalRows = [...KohlerMilestones.allRows];
     },
     startRun() {
       if (!Kohler.isRunning) player.mending.corruptionBackup = player.mending.corruption;
@@ -157,9 +161,15 @@ export default {
           </div>
         </div>
       </div>
+      <div v-if="this.unlocked" class="l-achievement-grid">
+      <KohlerMilestoneRow
+        v-for="row in totalRows"
+        :row="row"
+      />
+    </div>
       <div v-if="this.unlocked" class="l-mending-upgrade-grid">
       <div
-        v-for=" row in 2"
+        v-for=" row in 3"
         :key="row"
         class="l-mending-upgrade-grid__row">
       <KohlerUpgradeButton 

@@ -39,6 +39,7 @@ window.player = {
   sacrificed: DC.D0,
   achievementBits: Array.repeat(0, 17),
   secretAchievementBits: Array.repeat(0, 4),
+  kohlerMilestoneBits: [0, 0],
   infinityUpgrades: new Set(),
   infinityRebuyables: [0, 0, 0],
   challenge: {

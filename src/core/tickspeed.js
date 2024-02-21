@@ -30,7 +30,8 @@ export function effectiveBaseGalaxies() {
     y *= 1 + EternityChallenge(8).vReward.effectValue;
   }
   let v = player.galBoostPoints.eq(0) ? 1 : /*(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber()*/ MultiversalDimension(1).galaxyBoost
-  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v);
+  let w = (KohlerUpgrade(13).isBought && Kohler.isRunning) ? 1e8 : 1;
+  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v * w);
 }
 
 export function getTickSpeedMultiplier() {

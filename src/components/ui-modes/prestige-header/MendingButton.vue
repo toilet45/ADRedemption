@@ -66,7 +66,7 @@ export default {
       This Multiverse is too strict...must escape.
     </template>
     <template v-else-if="inKohler && kpThreshold">
-      Escape this strict Multiverse for <span> {{ format(gainedKP) }}</span> Kohler {{ pluralize("Point", gainedKP) }}.
+      Escape this strict Multiverse for <span> {{ format(gainedKP, 2) }}</span> Kohler {{ pluralize("Point", gainedKP) }}.
     </template>
     <template v-else-if="noMendBonus">
       Exit Doomed Reality, but get no Mend Rewards.
