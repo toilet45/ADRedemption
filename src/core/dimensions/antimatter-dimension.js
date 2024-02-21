@@ -98,6 +98,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = multiplier.pow(1.05);
   }
   if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
+  if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   return multiplier;
 }
 

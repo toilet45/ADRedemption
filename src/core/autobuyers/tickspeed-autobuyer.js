@@ -94,7 +94,7 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
   reset() {
     super.reset();
     if (EternityMilestone.keepAutobuyers.isReached || PelleUpgrade.keepAutobuyers.canBeApplied) return;
-    this.data.mode = AUTOBUYER_MODE.BUY_SINGLE;
+    this.data.mode = AUTOBUYER_MODE.BUY_MAX;
     this.data.isUnlocked = false;
     this.data.isBought = false;
     TabNotification.newAutobuyer.clearTrigger();

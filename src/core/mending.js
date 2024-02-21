@@ -68,6 +68,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
     }
     if (Kohler.isRunning){
       Currency.kohlerPoints.add(gainedKohlerPoints());
+      player.bestKohlerPoints = Decimal.max(Currency.kohlerPoints.value, player.bestKohlerPoints);
     }
     if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
       Quotes.effarig.mendCompleted.show();
@@ -101,7 +102,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
     if (toggleKohler || Kohler.isRunning) {
-      Tab.dimensions.antimatter.show();
+      //Tab.dimensions.antimatter.show();
       player.transcendents.kohler.run = !player.transcendents.kohler.run;
     }
     player.celestials.pelle.doomed = false;
@@ -476,6 +477,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
     player.galaxies = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 1 : 0;
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
+    if (Kohler.isRunning && KohlerUpgrade(8).isBought)player.dimensions.antimatter[7].amount = new Decimal(1);
     resetTickspeed();
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;

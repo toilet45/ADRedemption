@@ -1206,6 +1206,7 @@ window.player = {
   mendingUpgrades: new Set(),
   mvrmultUpgrades: 0,
   kohlerPoints: new Decimal(0),
+  bestKohlerPoints: new Decimal(0),
   devSave: true
 };
 

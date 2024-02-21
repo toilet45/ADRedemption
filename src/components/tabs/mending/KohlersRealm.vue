@@ -56,7 +56,7 @@ export default {
     },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = false;
+      this.unlocked = true;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
       this.isRunning = Kohler.isRunning
     },

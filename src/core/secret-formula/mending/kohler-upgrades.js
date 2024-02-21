@@ -33,7 +33,7 @@ export const kohlerUpgrades = [
     id: 1,
     name: "Kohler Upgrade 1",
     initialCost: 10,
-    costMult: 100,
+    costMult: 50,
     textTemplate: `Multiply Kohler Point gain by {value}.`,
     effect: 2,
     effectType: "×"
@@ -42,8 +42,8 @@ export const kohlerUpgrades = [
     id: 2,
     name: "Kohler Upgrade 2",
     initialCost: 10,
-    costMult: 250,
-    textTemplate: "Multiply Game Speed by 4",
+    costMult: 25,
+    textTemplate: "Multiply Gamespeed by 4",
     effect: 4,
     effectType: "×"
   }),
@@ -79,7 +79,15 @@ export const kohlerUpgrades = [
     name: "Kohler Upgrade 6",
     cost: 2,
     description: () => `Multiply 1st Antimatter Dimension based on unspent Kohler Points, after nerfs.`,
-    effect: () => Currency.kohlerPoints.value.add(1).clampMin(1),
+    effect: () => {
+      let x = KohlerUpgrade(10).isBought ? Decimal.pow(player.bestKohlerPoints.add(1).clampMin(1), 5) : Currency.kohlerPoints.value.add(1).clampMin(1);
+      if (x.gte(1e13)){
+        x = x.div(1e13);
+        x = x.pow(0.1);
+        x = x.times(1e13);
+      }
+      return x;
+    },
     effectType: "×",
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -93,22 +101,22 @@ export const kohlerUpgrades = [
   {
     id: 8,
     name: "Kohler Upgrade 8",
-    cost: 1e300,
-    description: () => `[TBD]`,
+    cost: 10,
+    description: () => `Start with 1 8th Antimatter Dimension in Kohler's Realm runs and it's also affected by Kohler Upgrade 6`,
     effect: () => 1,
   },
   {
     id: 9,
     name: "Kohler Upgrade 9",
-    cost: 1e300,
-    description: () => `[TBD]`,
-    effect: () => 1,
+    cost: 20,
+    description: () => `Kohler Upgrade 6 also affects Gamespeed`,
+    effect: () => KohlerUpgrade(6).effectValue,
   },
   {
     id: 10,
-    name: "Reckoning of the Evulgate",
-    cost: 1e300,
-    description: () => `[TBD]`,
+    name: "Kohler Upgrade 10",
+    cost: 30,
+    description: () => `Kohler Upgrade 6 effect ^5, and upgrades based on Kohler Points are based on best`,
     effect: () => 1,
   },
 ];

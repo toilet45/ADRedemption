@@ -531,7 +531,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.pow(x); //generalized in case of future upgrades
     factor = factor.times(getGameSpeedupSoftcaps());
   } // Prevent gamespeed from going fucking ballistic*/
-  factor = factor.times(Decimal.pow(2, KohlerUpgrade(2).boughtAmount));
+  factor = factor.times(Decimal.pow(4, KohlerUpgrade(2).boughtAmount));
+  factor = factor.times(KohlerUpgrade(9).effectOrDefault(1));
   return factor;
 }
 

@@ -103,6 +103,9 @@ class KohlerUpgradeState extends BitPurchasableMechanicState {
         player.dimensionBoosts = Math.max(5, player.dimensionBoosts);
         player.galaxies = Math.max(1, player.galaxies);
         break;
+      case 8:
+        player.dimensions.antimatter[7].amount = Decimal.max(1, player.dimensions.antimatter[7].amount);
+        break;
       default:
 
     }
