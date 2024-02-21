@@ -5,7 +5,7 @@ export const kohlerMilestones = [
     id: 11,
     name: "Reach Infinity",
     description: "Reward: [TBD]",
-    checkRequirement: () => true,
+    checkRequirement: () => Kohler.isRunning,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
   },
   {
@@ -54,13 +54,13 @@ export const kohlerMilestones = [
     id: 24,
     name: "Have Imaginary Machines",
     description: "???",
-    checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
+    checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
     effect: 100
   },
   {
     id: 25,
     name: "Enter Pelle",
     description: "???",
-    checkEvent: GAME_EVENT.REALITY_RESET_AFTER
+    checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER
   },
 ];
