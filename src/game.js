@@ -588,7 +588,7 @@ export function realTimeMechanics(realDiff) {
   // Ra memory generation bypasses stored real time, but memory chunk generation is disabled when storing real time.
   // This is in order to prevent players from using time inside of Ra's reality for amplification as well
   Ra.memoryTick(realDiff, !Enslaved.isStoringRealTime);
-  if (Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked) {
+  if (Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied) {
     Ra.applyAlchemyReactionsAuto()
   }
   if (AlchemyResource.momentum.isUnlocked) {
@@ -1083,14 +1083,14 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  if(Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked){
+  if(Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied){
     player.celestials.ra.alchemy = Array.repeat(0, 21) //This just sets all alch resources to the cap, probably will be changed to be passive
     .map(() => ({
       amount: Ra.alchemyResourceCap,
       reaction: false
     }));
   }
-  if (Ra.unlocks.passiveRelicShardGain.isUnlocked){
+  if (Ra.unlocks.passiveRelicShardGain.canBeApplied){
     Currency.relicShards.add(Effarig.shardsGained);
   }
   if (MendingUpgrade(5).isBought && !Pelle.isDoomed){

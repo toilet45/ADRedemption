@@ -147,8 +147,8 @@ export function timeDimensionCommonMultiplier() {
   }
 
   if (Ra.unlocks.relicShardBoost.isUnlocked) mult = mult.pow(1 + ((Currency.relicShards.value.clampMin(1)).log10() / 1337));
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(1).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(10).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
   if (Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked){
     mult = mult.pow(VUnlocks.adPow.effectOrDefault(1), 0.5);
   }
@@ -292,7 +292,7 @@ class TimeDimensionState extends DimensionState {
     const tier = this._tier;
     let toGain = DC.D0;
     if (tier === 8) {
-      if (Ra.unlocks.improvedECRewards.isUnlocked) EternityChallenge(7).vReward.applyEffect(v => toGain = v);
+      if (Ra.unlocks.improvedECRewards.canBeApplied) EternityChallenge(7).vReward.applyEffect(v => toGain = v);
     } else {
       toGain = TimeDimension(tier + 1).productionPerSecond;
     }

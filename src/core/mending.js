@@ -49,7 +49,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
      player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
-     player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
+     if (!toggleKohler && !Kohler.isRunning) player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
      player.mending.corruptionChallenge.corruptedMend = false;
      CorruptionData.update();
    }
@@ -70,8 +70,9 @@ export function mendingReset(gain = true, toggleKohler = false) {
       Currency.kohlerPoints.add(gainedKohlerPoints());
       player.bestKohlerPoints = Decimal.max(Currency.kohlerPoints.value, player.bestKohlerPoints);
     }
-    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked && !Kohler.isRunning) {
       Quotes.effarig.mendCompleted.show();
+      player.celestials.effarig.maxUnlockBits |= 255;
       for (let i = 0; i < Glyphs.inventory.length; i++){
         if (Glyphs.inventory[i]!=null && Glyphs.inventory[i].type === "companion"){
           Quotes.effarig.hasCompanion.show();
@@ -131,26 +132,34 @@ export function mendingReset(gain = true, toggleKohler = false) {
       player.challenge.infinity.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8);
     }
     //Celestials
-    if(!MendingMilestone.ten.isReached){
+    if(!MendingMilestone.ten.isReached || Kohler.isRunning){
       player.celestials.teresa.pouredAmount = 0;
       player.celestials.teresa.unlockBits = 0;
     }
+    else{
+      if (MendingMilestone.ten.isReached){
+        player.celestials.teresa.pouredAmount = player.celestials.teresa.recordPouredAmount;
+        player.celestials.teresa.unlockBits = 63;
+      }
+    }
     player.celestials.teresa.run = false;
-    player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
+    player.celestials.teresa.bestRunAM = (MendingUpgrade(9).isBought && !Kohler.isRunning) ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
-    if (MendingMilestone.seven.isReached) {
+    if (MendingMilestone.seven.isReached && !Kohler.isRunning) {
       player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
-      if(CorruptionUpgrade(5).isBought) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
+      if(CorruptionUpgrade(5).isBought && !Kohler.isRunning) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
     }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     if (MendingUpgrade(9).isBought && !MendingMilestone.ten.isReached){
       player.celestials.teresa.unlockBits += 1;
     }
-    if(Effarig.currentStage < 6){
+    if(Effarig.currentStage < 6 || Kohler.isRunning){
       player.celestials.effarig.relicShards = new Decimal(0);
       player.celestials.effarig.unlockBits = 7;
     }
+    if(player.celestials.effarig.maxUnlockBits >= 255 && !Kohler.isRunning) player.celestials.effarig.unlockBits = player.celestials.effarig.maxUnlockBits;
+    if(player.celestials.effarig.unlockBits >= 255) player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = DC.D0;
     player.celestials.enslaved.storedReal = 0;
@@ -165,10 +174,15 @@ export function mendingReset(gain = true, toggleKohler = false) {
       player.celestials.enslaved.unlocks = [0, 1];
       player.celestials.enslaved.completed = true;
     }
-    if(!VUnlocks.vKeep.isUnlocked){
+    if(!VUnlocks.vKeep.isUnlocked || Kohler.isRunning){
     V.reset();
-    if(MendingUpgrade(14).isBought){
+    if(MendingUpgrade(14).isBought && !Kohler.isRunning){
       player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+    if (player.celestials.v.recordSpaceTheorems >= 390 && !Kohler.isRunning) {
+      player.celestials.v.runUnlocks = player.celestials.v.recordRunUnlocks;
+      player.celestials.v.unlockBits |= 1;
+      //this.spaceTheorems = player.celestials.v.recordSpaceTheorems;
     }
     }
     V.updateTotalRunUnlocks();

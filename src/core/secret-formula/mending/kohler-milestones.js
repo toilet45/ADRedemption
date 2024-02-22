@@ -41,7 +41,7 @@ export const kohlerMilestones = [
   {
     id: 22,
     name: "Complete Effarig's Reality",
-    description: "Buy a 7th Antimatter Dimension.",
+    description: "???",
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {

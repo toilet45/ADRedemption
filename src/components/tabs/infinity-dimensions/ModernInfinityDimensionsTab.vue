@@ -95,7 +95,7 @@ export default {
       this.IPcap = InfinityDimension(8).infPowerSoftcap;
       this.atCap = player.infinityPower.exponent >= this.IPcap;
       this.textCap = Decimal.pow(10,this.IPcap);
-      this.capExpo = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1;
+      this.capExpo = (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(12).completions >= 1) ? EternityChallenge(12).vReward.effectValue : 1;
       this.trueID8cap = player.timestudy.studies.includes(310) ? 1e11 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : 1e11;
       this.TesseractsCap = Tesseracts.TesseractHardcap;
       this.atTessCap = Tesseracts.bought>=Tesseracts.TesseractHardcap;

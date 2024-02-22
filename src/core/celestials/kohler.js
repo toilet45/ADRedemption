@@ -41,6 +41,9 @@ export const Kohler = {
     if(stage3<0) stage3=0;
     if(player.celestials.kohler.unlockMilestone[4]) stage3=30;
     Progress += stage3;
+    if (MultiversalDimension(3).amount.gt(0) && Progress === 65){
+      return 100;
+    }
     return parseFloat(Progress.toFixed(2));
   },
   checkForUnlocks() {

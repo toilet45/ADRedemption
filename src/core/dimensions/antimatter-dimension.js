@@ -689,7 +689,7 @@ export const AntimatterDimensions = {
     mult = mult.powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
     mult = mult.pow(ImaginaryUpgrade(14).effectOrDefault(1));
 
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(3).completions >= 1 && !Pelle.isDoomed){
+    if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(3).completions >= 1 && !Pelle.isDoomed){
       mult = mult.pow(EternityChallenge(3).vReward.effectValue);
     }
     return mult;

@@ -150,7 +150,7 @@ export const kohlerUpgrades = [
   {
     id: 15,
     name: "Kohler Upgrade 15",
-    cost: 20000,
+    cost: 1e300,
     description: () => `[TBD]`,
     effect: 1
   },

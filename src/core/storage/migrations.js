@@ -783,6 +783,10 @@ export const migrations = {
     },
     player.bestKohlerPoints = new Decimal(0);
     player.kohlerMilestoneBits = [0, 0];
+    player.celestials.teresa.recordPouredAmount = player.celestials.teresa.pouredAmount;
+    player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
+    player.celestials.v.recordRunUnlocks = player.celestials.v.runUnlocks;
+    player.celestials.v.recordSpaceTheorems = V.spaceTheorems;
   },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.

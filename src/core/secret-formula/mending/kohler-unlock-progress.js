@@ -36,11 +36,12 @@ export const kohlerProgress = {
         return Math.max(Math.pow(Decimal.log10(Tickspeed.perSecond.plus(1)),0.3),1);
       }
     },
-    placeholder: {
+    thirdMultiverse: {
       id: 6,
       progress: 100,
       condition:false,
-      description: "Now for the ultimate test...waiting 5 hours™.",
+      description: "Now for the ultimate test...Have 1 3rd Multiversal Dimension.",
+      condition: () => MultiversalDimension(3).amount.gt(0),
     }
   }
 };

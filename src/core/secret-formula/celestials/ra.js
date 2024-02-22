@@ -487,7 +487,8 @@ export const ra = {
       effect: () => 10 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
-      displayIcon: '<span class="fas fa-vial"</span>'
+      displayIcon: '<span class="fas fa-vial"</span>',
+      disabledByKohler: true
     },
     passiveRelicShardGain: {
       id: 9,
@@ -495,7 +496,8 @@ export const ra = {
       reward: "You gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
-      displayIcon: `<span class="fas fa-fire"></span>`
+      displayIcon: `<span class="fas fa-fire"></span>`,
+      disabledByKohler: true
     },
     harshInstabilityDelay: {
       id: 10,

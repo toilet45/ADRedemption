@@ -762,11 +762,13 @@ window.player = {
       bestRunAM: DC.D1,
       bestAMSet: [],
       perkShop: Array.repeat(0, 5),
-      lastRepeatedMachines: DC.D0
+      lastRepeatedMachines: DC.D0,
+      recordPouredAmount: 0
     },
     effarig: {
       relicShards: DC.D0,
       unlockBits: 0,
+      maxUnlockBits: 0,
       run: false,
       quoteBits: 0,
       glyphWeights: {
@@ -809,6 +811,8 @@ window.player = {
       runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       // The -10 is for glyph count, as glyph count for V is stored internally as a negative number
       runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordRunUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordSpaceTheorems: 0,
       flip: V_FLIP.NORMAL,
     },
     ra: {

@@ -285,7 +285,7 @@ export const DarkMatterDimensions = {
       DarkMatterDimension(Math.floor(Ra.pets.laitela.level / 25) + 4).amount = DarkMatterDimension(Math.floor(Ra.pets.laitela.level / 25) + 4).amount
         .plus(SingularityMilestone.dim4Generation.effectValue * realDiff / 1000);
     }
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(7).completions >= 1) {
+    if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(7).completions >= 1) {
       DarkMatterDimension(1).produceDimensions(TimeDimension(8), realDiff / 50);
     }
   },

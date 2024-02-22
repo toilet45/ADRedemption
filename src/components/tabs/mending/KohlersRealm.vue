@@ -59,7 +59,7 @@ export default {
     },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = false;
+      this.unlocked = this.kohlerProgress >= 100;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
       this.isRunning = Kohler.isRunning;
       this.totalRows = [...KohlerMilestones.allRows];

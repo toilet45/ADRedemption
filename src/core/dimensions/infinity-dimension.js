@@ -29,7 +29,7 @@ export function infinityDimensionCommonMultiplier() {
   if (Pelle.isDoomed && EternityChallenge(9).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(9).reward);
   }
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
     mult = mult.timesEffectsOf(EternityChallenge(9).vReward);
   }
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
@@ -215,7 +215,7 @@ class InfinityDimensionState extends DimensionState {
     mult = mult.powEffectOf(AlchemyResource.infinity);
     mult = mult.pow(Ra.momentumValue);
     mult = mult.powEffectOf(PelleRifts.paradox);
-    if(Ra.unlocks.improvedECRewards.isUnlocked && !Pelle.isDoomed){
+    if(Ra.unlocks.improvedECRewards.canBeApplied && !Pelle.isDoomed){
       if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
       if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
     }
@@ -283,7 +283,7 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
-     const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
+     const x = (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
      let y = this.tier == 8 ? 1e11 : InfinityDimensions.totalDimCap ** x
      if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e11 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (InfinityDimensions.totalDimCap * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
      return y;
