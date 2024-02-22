@@ -44,11 +44,11 @@ export function mendingReset(gain = true, toggleKohler = false) {
       let scoreCalc = CorruptionData.calcScore()
       player.mending.corruptionChallenge.corruptedMend = false;
     // console.log(corruptionChallengeScoreCalculation())
-      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
+      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc && !Kohler.isRunning) {
         player.mending.corruptionChallenge.records = player.mending.corruption
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
-     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
+     if(!Kohler.isRunning) player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
      if (!toggleKohler && !Kohler.isRunning) player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
      player.mending.corruptionChallenge.corruptedMend = false;
      CorruptionData.update();
