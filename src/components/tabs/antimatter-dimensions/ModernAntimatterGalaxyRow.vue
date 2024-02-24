@@ -134,7 +134,7 @@ export default {
 <template>
   <div class="reset-container galaxy">
     <h4>{{ typeName }} ({{ sumText }})</h4>
-    <span v-if="showText">Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
+    <span v-if="showText">Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter Dimensions</span>
     <span v-if="hasIncreasedScaling">{{ costScalingText }}</span>
     <button
       :class="classObject"

@@ -55,7 +55,7 @@ export default {
       return this.config.canLock && !(this.isAvailableForPurchase || this.isBought);
     },
     isUseless(){
-      return Kohler.isRunning && this.upgrade.id != 19;
+      return Kohler.isRunning && this.upgrade.id < 19;
     }
   },
   methods: {

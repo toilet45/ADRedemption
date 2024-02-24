@@ -100,6 +100,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
   if (Kohler.isRunning) {
     multiplier = multiplier.times(Decimal.pow(20, KohlerUpgrade(3).boughtAmount));
     multiplier = multiplier.times(KohlerUpgrade(14).effectOrDefault(1));
+    multiplier = multiplier.times(KohlerUpgrade(17).effectOrDefault(1));
   }
   if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
@@ -229,7 +230,7 @@ export function buyOneDimension(tier) {
 
   const cost = dimension.cost;
 
-  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning) && AntimatterDimension(8).bought >= 1) return false;
+  if (tier === 8 && Enslaved.isRunning && AntimatterDimension(8).bought >= 1) return false;
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
 
@@ -254,7 +255,7 @@ export function buyManyDimension(tier) {
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return false;
   const cost = dimension.costUntil10;
 
-  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return buyOneDimension(8);
+  if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.challengeCostBump();
@@ -272,7 +273,7 @@ export function buyAsManyAsYouCanBuy(tier) {
   const howMany = dimension.howManyCanBuy;
   const cost = dimension.cost.times(howMany);
 
-  if (tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return buyOneDimension(8);
+  if (tier === 8 && Enslaved.isRunning ) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.challengeCostBump();

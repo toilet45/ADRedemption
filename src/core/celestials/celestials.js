@@ -144,7 +144,8 @@ GameDatabase.celestials.descriptions = [
       (Break) Infinity Upgrades cannot be charged.\
       You are trapped in all Hostilities with levels [5,5,0,5,5,0,0,5,5,1].\
       All "Start With" rewards are disabled except Achievement 21.\
-      Continuum is disabled.`;
+      Continuum is disabled.\
+      Infinity Point gain is log10(IP gain)`;
       return x;
     }
   }

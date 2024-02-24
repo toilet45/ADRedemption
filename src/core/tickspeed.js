@@ -31,7 +31,8 @@ export function effectiveBaseGalaxies() {
   }
   let v = player.galBoostPoints.eq(0) ? 1 : /*(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber()*/ MultiversalDimension(1).galaxyBoost
   let w = (KohlerUpgrade(13).isBought && Kohler.isRunning) ? 1e8 : 1;
-  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v * w);
+  let u = Kohler.isRunning ? KohlerUpgrade(19).effectOrDefault(1) : 1;
+  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v * w * u);
 }
 
 export function getTickSpeedMultiplier() {

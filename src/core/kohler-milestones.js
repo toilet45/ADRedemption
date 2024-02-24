@@ -7,7 +7,7 @@ class KohlerMilestoneState extends GameMechanicState {
     super(config);
     this._row = Math.floor(this.id / 10);
     this._column = this.id % 10;
-    this._bitmask = 1 << (this.column - 1);
+    this._bitmask = 1 << (this._column - 1);
     this._inverseBitmask = ~this._bitmask;
     this.registerEvents(config.checkEvent, args => this.tryUnlock(args));
   }
@@ -45,11 +45,7 @@ class KohlerMilestoneState extends GameMechanicState {
   unlock(auto) {
     if (this.isUnlocked) return;
     player.kohlerMilestoneBits[this.row - 1] |= this._bitmask;
-    if (auto) {
-      GameUI.notify.reality(`Automatically unlocked: ${this.name}`);
-    } else {
-      GameUI.notify.success(`Kohler Milestone Reached: ${this.name}`);
-    }
+    GameUI.notify.success(`Kohler Milestone Reached: ${this.name}`);
     EventHub.dispatch(GAME_EVENT.KOHLER_MILESTONE_UNLOCKED);
   }
 

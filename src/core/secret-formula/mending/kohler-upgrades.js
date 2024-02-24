@@ -119,7 +119,9 @@ export const kohlerUpgrades = [
     name: "Kohler Upgrade 11",
     cost: 4000,
     description: () => `Gain more Kohler Points based on Antimatter`,
-    effect: () => Math.max(1, Currency.antimatter.value.log10() / 10)
+    effect: () => Math.max(1, Currency.antimatter.value.log10() / 10),
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
   },
   {
     id: 12,
@@ -132,14 +134,14 @@ export const kohlerUpgrades = [
     id: 13,
     name: "Kohler Upgrade 13",
     cost: 20000,
-    description: () => `Divide Galaxy Requirements by 10, and Galaxies are ${formatX(1e8)} as powerful`,
+    description: () => `In Kohler's Realm: Divide Galaxy Requirements by 10 and Galaxies are ${formatX(1e8)} as powerful`,
     effect: 1
   },
   {
     id: 14,
     name: "Kohler Upgrade 14",
     cost: 30000,
-    description: () => `Gain an exponentally increasing multiplier to all Antimatter Dimensions similar to C3`,
+    description: () => `In Kohler's Realm: gain an exponentally increasing multiplier to all Antimatter Dimensions similar to C3`,
     effect: () => {
       let x = new Decimal(1.0015).pow(player.records.thisMend.realTime / 1000);
       return x.div(Math.max(x.log10(), 1));
@@ -150,8 +152,59 @@ export const kohlerUpgrades = [
   {
     id: 15,
     name: "Kohler Upgrade 15",
+    cost: 50000,
+    description: () => `Multiply Kohler Point Gain based on real time spent in Kohler's Realm`,
+    effect: () => Math.max(1, Math.log(player.records.thisMend.realTime / 1000) + 1),
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 16,
+    name: "Kohler Upgrade 16",
+    cost: 200000,
+    description: () => `Square Gamespeed in Kohler's Realm (applies after other Kohler Upgrades, does not work in places with fixed Gamespeed)`,
+    effect: 2
+  },
+  {
+    id: 17,
+    name: "Kohler Upgrade 17",
+    cost: 350000,
+    description: () => ` In Kohler's Realm: Gain an Additional Antimatter Dimension Multiplier based on Galaxies`,
+    effect: () => Decimal.pow(2, player.galaxies),
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 18,
+    name: "Kohler Upgrade 18",
+    cost: 500000,
+    description: () => `1st Antimatter Dimension multiplier affects Gamespeed in Kohler's Realm at a reduced rate`,
+    effect: () => {
+      let x = Decimal.pow(AntimatterDimension(1).multiplier, 0.5);
+      if (x.gte(1e50)){
+        x = x.div(1e50);
+        x = x.pow(0.1);
+        x = x.times(1e50);
+      }
+      return x;
+    },
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 19,
+    name: "Kohler Upgrade 19",
+    cost: 1e6,
+    description: () => `In Kohler's Realm: Galaxies are more effective based on Dimension Boosts`,
+    effect: () => 1 + (0.1 * player.dimensionBoosts),
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 20,
+    name: "Kohler Upgrade 20",
     cost: 1e300,
-    description: () => `[TBD]`,
-    effect: 1
+    description: () => `Unlock additional Kohler exclusive Infinity Upgrades [NYI]`,
+    effect: 2
   },
 ];

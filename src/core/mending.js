@@ -304,6 +304,15 @@ export function mendingReset(gain = true, toggleKohler = false) {
         perk.isBought = true;
         perk.onPurchased();
       }
+      else if (Kohler.isRunning){
+        if (KohlerMilestone(11).isUnlocked){
+          for (const perkIdKR of [10, 30]) {
+            const perkKR = Perks.find(perkIdKR); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
+            perkKR.isBought = true;
+            perkKR.onPurchased();
+          }
+        }
+      }
     }
     GameUI.update();
     player.reality.upgReqs = 8192;

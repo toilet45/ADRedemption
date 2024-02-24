@@ -152,6 +152,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.pow(0.95)
     ip = ip.times(Decimal.pow10(1e20))
   }*/
+  if (Kohler.isRunning) ip = new Decimal(ip.clampMin(1).log10());
   return ip.floor();
 }
 
@@ -192,7 +193,8 @@ export function warpReality(){
 export function gainedKohlerPoints(){
   let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
   gain = gain.timesEffectsOf(
-    KohlerUpgrade(11)
+    KohlerUpgrade(11),
+    KohlerUpgrade(15)
     );
   gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount));
   return player.antimatter.gte(1e12) ? gain : new Decimal(0);
@@ -536,6 +538,10 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   } // Prevent gamespeed from going fucking ballistic*/
   factor = factor.times(Decimal.pow(4, KohlerUpgrade(2).boughtAmount));
   factor = factor.times(KohlerUpgrade(9).effectOrDefault(1));
+  if(Kohler.isRunning) {
+    factor = factor.times(KohlerUpgrade(18).effectOrDefault(1));
+    factor = factor.pow(KohlerUpgrade(16).effectOrDefault(1));
+  }
   return factor;
 }
 

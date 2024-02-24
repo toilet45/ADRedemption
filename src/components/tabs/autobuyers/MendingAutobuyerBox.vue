@@ -1,4 +1,5 @@
 <script>
+import { KohlerMilestone } from "../../../core/kohler-milestones";
 import AutobuyerBox from "./AutobuyerBox";
 import AutobuyerDropdownEntry from "./AutobuyerDropdownEntry";
 import AutobuyerInput from "./AutobuyerInput";
@@ -32,11 +33,12 @@ export default {
   },
   computed: {
     autobuyer: () => Autobuyer.mending,
-    modes: () => [
-      AUTO_MEND_MODE.AMOUNT,
-      AUTO_MEND_MODE.TIME,
-    ],
-    amountMode: () => AUTO_ETERNITY_MODE.AMOUNT
+    modes: () => {
+      let x = [AUTO_MEND_MODE.AMOUNT, AUTO_MEND_MODE.TIME];
+      //if (KohlerMilestone(21).isUnlocked) x.push(AUTO_MEND_MODE.AMOUNT_KP);
+      return x;
+    },
+    amountMode: () => AUTO_MEND_MODE.AMOUNT
   },
   watch: {
     increaseWithMult(newValue) {
@@ -53,18 +55,25 @@ export default {
     },
     modeProps(mode) {
       switch (mode) {
-        case AUTO_CRUNCH_MODE.AMOUNT: return {
+        case AUTO_MEND_MODE.AMOUNT: return {
           title: "Mend at X MvR",
           input: {
             property: "amount",
             type: "decimal"
           },
         };
-        case AUTO_CRUNCH_MODE.TIME: return {
+        case AUTO_MEND_MODE.TIME: return {
           title: "Seconds between Mends",
           input: {
             property: "time",
             type: "float"
+          },
+        };
+        case AUTO_MEND_MODE.AMOUNT_KP: return {
+          title: "Mend at X KP",
+          input: {
+            property: "amount",
+            type: "decimal"
           },
         };
       }

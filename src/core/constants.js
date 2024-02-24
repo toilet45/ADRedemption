@@ -233,7 +233,10 @@ window.AUTO_REALITY_MODE = {
 
 window.AUTO_MEND_MODE = {
   AMOUNT: 0,
-  TIME: 1
+  TIME: 1,
+  X_HIGHEST: 2,
+  AMOUNT_KP: 3,
+  X_HIGHEST_KP: 4
 };
 
 window.RECENT_PRESTIGE_RESOURCE = {
