@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, MultiversalDimensions, WarpUpgrade, dilatedValueOf } from "./core/globals";
+import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, KohlerInfinityUpgrade, KohlerUpgrade, MultiversalDimensions, WarpUpgrade, dilatedValueOf } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 import { Player, Ra } from "./core/globals";
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -152,7 +152,12 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.pow(0.95)
     ip = ip.times(Decimal.pow10(1e20))
   }*/
-  if (Kohler.isRunning) ip = new Decimal(ip.clampMin(1).log10());
+  if (Kohler.isRunning) {
+    ip = new Decimal(ip.clampMin(1).log10());
+    ip = ip.timesEffectsOf(
+      KohlerInfinityUpgrade(1)
+    )
+  }
   return ip.floor();
 }
 
@@ -398,12 +403,15 @@ export function gainedInfinities() {
   );
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
-  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){
-    let teresa90BaseExp=Math.pow((Math.log10(Currency.realities.value)/20), 1.111)
+  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.canBeApplied){
+    let teresa90BaseExp=Math.pow((Math.log10(Math.max(Currency.realities.value, 1))/20), 1.111)
     if(teresa90BaseExp>1.5){
       teresa90BaseExp=1.5+Math.pow(teresa90BaseExp-1.5,0.75)
     }
     infGain = infGain.pow(teresa90BaseExp); //TODO: softcap this at ^1.5
+  }
+  if (Kohler.isRunning){
+    infGain = infGain.times(KohlerInfinityUpgrade(3).effectOrDefault(1));
   }
   return infGain;
 }

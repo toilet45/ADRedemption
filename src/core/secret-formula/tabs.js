@@ -307,6 +307,16 @@ export const tabs = [
           PlayerProgress.infinityUnlocked(),
         id: 2,
         hidable: true,
+      },
+      {
+        key: "kohlerInfinityUpgrades",
+        name: "Kohler Upgrades",
+        symbol: `<i class='fa-solid fa-staff-snake'></i>`,
+        component: "KohlerInfinityUpgrades",
+        condition: () =>
+          KohlerUpgrade(20).isBought,
+        id: 3,
+        hidable: true,
       }
     ],
   },

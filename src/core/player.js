@@ -60,7 +60,15 @@ window.player = {
     }
   },
   infinity: {
-    upgradeBits: 0
+    upgradeBits: 0,
+    kohlerUpgradeBits: 0,
+    kohlerRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
   },
   auto: {
     autobuyersOn: true,

@@ -111,7 +111,7 @@ export const kohlerUpgrades = [
     id: 10,
     name: "Kohler Upgrade 10",
     cost: 30,
-    description: () => `Kohler Upgrade 6 effect ^5, and upgrades based on Kohler Points are based on best`,
+    description: () => `Kohler Upgrade 6 effect ^5, and is based on best Kohler Points`,
     effect: () => 1,
   },
   {
@@ -203,8 +203,7 @@ export const kohlerUpgrades = [
   {
     id: 20,
     name: "Kohler Upgrade 20",
-    cost: 1e300,
-    description: () => `Unlock additional Kohler exclusive Infinity Upgrades [NYI]`,
-    effect: 2
+    cost: 1e7,
+    description: () => `Unlock additional Kohler exclusive Infinity Upgrades`
   },
 ];

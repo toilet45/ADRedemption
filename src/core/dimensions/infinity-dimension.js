@@ -1,6 +1,7 @@
 import { DC } from "../constants";
 import { CorruptionUpgrade } from "../corruption-upgrades";
 import { Currency } from "../currency";
+import { KohlerInfinityUpgrade } from "../kohler-infinity-upgrades";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { WarpUpgrade } from "../warp-upgrades";
 
@@ -63,14 +64,29 @@ class InfinityDimensionState extends DimensionState {
       DC.E54000,
       DC.E60000,
     ];
-    this._unlockRequirement = UNLOCK_REQUIREMENTS[tier];
+
+    const UNLOCK_REQUIREMENTS_KIU6 = [
+      undefined,
+      new Decimal("1e550"),
+      new Decimal("1e950"),
+      new Decimal("1e1200"),
+      new Decimal("1e5250"),
+      new Decimal("1e15000"),
+      new Decimal("1e22500"),
+      new Decimal("1e27000"),
+      new Decimal("1e30000"),
+    ];
     const COST_MULTS = [null, 1e3, 1e6, 1e8, 1e10, 1e15, 1e20, 1e25, 1e30];
-    this._costMultiplier = COST_MULTS[tier];
     const POWER_MULTS = [null, 50, 30, 10, 5, 5, 5, 5, 5];
-    this._powerMultiplier = POWER_MULTS[tier];
     const BASE_COSTS = [null, 1e8, 1e9, 1e10, 1e20, 1e140, 1e200, 1e250, 1e280];
+    const BASE_COSTS_KIU6 = [null, 1e5, 1e6, 1e7, 1e17, 1e137, 1e197, 1e247, 1e277];
+    this._unlockRequirement = UNLOCK_REQUIREMENTS[tier];
     this._baseCost = new Decimal(BASE_COSTS[tier]);
     this.ipRequirement = BASE_COSTS[1];
+
+    this._costMultiplier = COST_MULTS[tier];
+    this._powerMultiplier = POWER_MULTS[tier];
+
   }
 
   /** @returns {Decimal} */
@@ -95,7 +111,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get amRequirement() {
-    return this._unlockRequirement;
+    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._unlockRequirement.pow(0.5) : this._unlockRequirement;
   }
 
   get antimatterRequirementReached() {
@@ -244,6 +260,13 @@ class InfinityDimensionState extends DimensionState {
     if (CorruptionUpgrade(24).isBought&&player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[8]>=5){
       mult = mult.pow(CorruptionUpgrade(24).effectOrDefault(1));
     }
+
+    if (Kohler.isRunning){
+      mult = mult.timesEffectsOf(
+        KohlerInfinityUpgrade(2),
+        KohlerInfinityUpgrade(8)
+      )
+    }
     return mult;
   }
 
@@ -258,7 +281,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get baseCost() {
-    return this._baseCost;
+    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._baseCost.div(1e3) : this._baseCost;
   }
 
   get costMultiplier() {
@@ -279,7 +302,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get purchaseCap() {
-    if (Enslaved.isRunning || Kohler.isRunning) {
+    if (Enslaved.isRunning) {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
@@ -294,7 +317,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get hardcapIPAmount() {
-    return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
+    return this.baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
   }
 
   get continuumValue() {
@@ -513,6 +536,7 @@ export const InfinityDimensions = {
       w **= 0.01;
       w *= 8;
     }*/
-    return w;
+    let kiu4Mult = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
+    return w * kiu4Mult;
   }
 };

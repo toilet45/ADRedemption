@@ -792,6 +792,16 @@ export const migrations = {
     delete player.kohlerMilestoneBits;
     player.kohlerMilestoneBits = Array.repeat(0, 2);
   },
+  50.032: player =>{
+    player.infinity.kohlerUpgradeBits = 0;
+    player.infinity.kohlerRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    }
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

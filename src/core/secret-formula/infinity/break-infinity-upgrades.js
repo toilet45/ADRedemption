@@ -109,9 +109,9 @@ export const breakInfinityUpgrades = {
     id: "infinitiedGeneration",
     cost: 2e7,
     description: "Passively generate Infinities based on your fastest Infinity",
-    effect: () => player.records.bestInfinity.time,
+    effect: () => Kohler.isRunning ? DC.D0 : player.records.bestInfinity.time,
     formatEffect: value => {
-      if (value === Number.MAX_VALUE && !Pelle.isDoomed) return "No Infinity generation";
+      if ((value === Number.MAX_VALUE && !Pelle.isDoomed) || Kohler.isRunning)  return "No Infinity generation";
       let infinities = DC.D1;
       infinities = infinities.timesEffectsOf(
         RealityUpgrade(5),
@@ -183,7 +183,7 @@ export const breakInfinityUpgrades = {
     initialCost: 1e7,
     costIncrease: 10,
     maxUpgrades: 10,
-    effect: value => Player.bestRunIPPM.times(value / 20),
+    effect: value => Kohler.isRunning ? DC.D0 : Player.bestRunIPPM.times(value / 20),
     description: () => {
       let generation = `Generate ${formatInt(5 * player.infinityRebuyables[2])}%`;
       if (!BreakInfinityUpgrade.ipGen.isCapped) {
@@ -191,7 +191,7 @@ export const breakInfinityUpgrades = {
       }
       return `${generation} of your best IP/min from your last 10 Infinities`;
     },
-    isDisabled: effect => effect.eq(0),
+    isDisabled: effect => effect.eq(0) || Kohler.isRunning,
     formatEffect: value => `${format(value, 2, 1)} IP/min`,
     noLabel: false
   })

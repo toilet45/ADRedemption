@@ -157,7 +157,7 @@ export class Galaxy {
   }
 
   static get costScalingStart() {
-    let x = 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
+    let x = ((Kohler.isRunning && KohlerInfinityUpgrade(9).isBought) ? 20000 : 100) + TimeStudy(302).effectOrDefault(0) + Effects.sum(
       TimeStudy(223),
       TimeStudy(224),
       GlyphSacrifice.power

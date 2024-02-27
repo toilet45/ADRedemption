@@ -117,6 +117,7 @@ window.GAME_EVENT = {
   EXPO_BLACK_HOLE_UNLOCKED: "EXPO_BLACK_HOLE_UNLOCKED",
   KOHLER_UPGRADE_BOUGHT: "KOHLER_UPGRADE_BOUGHT",
   KOHLER_MILESTONE_REACHED: "KOHLER_MILESTONE_REACHED",
+  KOHLER_INFINITY_UPGRADE_BOUGHT: "KOHLER_INFINITY_UPGRADE_BOUGHT",
 
   // Used by events to signify that they are triggered by a particular
   // event, not handled by the event hub

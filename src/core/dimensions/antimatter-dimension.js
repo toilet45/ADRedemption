@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-import { CorruptionUpgrade, KohlerProgressUnlocks, KohlerUpgrade, V } from "../globals";
+import { CorruptionUpgrade, KohlerInfinityUpgrade, KohlerProgressUnlocks, KohlerUpgrade, V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -101,6 +101,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = multiplier.times(Decimal.pow(20, KohlerUpgrade(3).boughtAmount));
     multiplier = multiplier.times(KohlerUpgrade(14).effectOrDefault(1));
     multiplier = multiplier.times(KohlerUpgrade(17).effectOrDefault(1));
+    multiplier = multiplier.times(KohlerInfinityUpgrade(7).effectOrDefault(1));
   }
   if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))

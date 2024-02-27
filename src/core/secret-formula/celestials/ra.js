@@ -469,7 +469,8 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: 'τ'
+      displayIcon: 'τ',
+      disabledByKohler: true
     },
     imaginaryBoost: {
       id: 6,
