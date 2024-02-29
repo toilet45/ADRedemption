@@ -184,7 +184,11 @@ export function initializeChallengeCompletions(isReality) {
   if ((!isReality && EternityMilestone.keepAutobuyers.isReached) || Pelle.isDoomed || MendingMilestone.one.isReached) {
     NormalChallenges.completeAll();
   }
-  if (Achievement(133).isUnlocked && !Pelle.isDoomed) InfinityChallenges.completeAll();
+  if (Achievement(133).isUnlocked && !Pelle.isDoomed) {
+    for (let i = 1; i < 9; i++){
+      InfinityChallenge(i).complete();
+    }
+  }
   player.challenge.normal.current = 0;
   player.challenge.infinity.current = 0;
 }

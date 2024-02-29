@@ -217,13 +217,13 @@ export const infinityUpgrades = {
     id: "ipOffline",
     cost: 1000,
     checkRequirement: () => Achievement(41).isUnlocked,
-    description: () => (player.options.offlineProgress
+    description: () => (player.options.offlineProgress && !Kohler.isRunning
       ? `Only while offline, gain ${formatPercents(0.5)} of your best IP/min without using Max All`
       : "This upgrade would give offline Infinity Point generation, but offline progress is currently disabled"),
-    effect: () => (player.options.offlineProgress
+    effect: () => (player.options.offlineProgress && !Kohler.isRunning
       ? player.records.thisEternity.bestIPMsWithoutMaxAll.times(TimeSpan.fromMinutes(1).totalMilliseconds.div(2))
       : DC.D0),
-    isDisabled: () => !player.options.offlineProgress,
+    isDisabled: () => !player.options.offlineProgress || Kohler.isRunning,
     formatEffect: value => `${format(value, 2, 2)} IP/min`,
   },
   ipMult: {

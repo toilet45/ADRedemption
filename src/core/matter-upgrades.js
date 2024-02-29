@@ -1,12 +1,12 @@
 import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mechanics";
 
-class KohlerInfinityUpgradeState extends BitPurchasableMechanicState {
+class MatterUpgradeState extends BitPurchasableMechanicState {
   constructor(config) {
     super(config);
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
   get isBought() {
-    return (this.bits & (1 << this.bitIndex)) !== 0 && Kohler.isRunning;
+    return (this.bits & (1 << this.bitIndex)) !== 0;
   }
 
   set isBought(value) {
@@ -34,7 +34,7 @@ class KohlerInfinityUpgradeState extends BitPurchasableMechanicState {
   }
 
   get currency() {
-    return Currency.infinityPoints;
+    return Currency.matter;
   }
 
   get bitIndex() {
@@ -42,11 +42,11 @@ class KohlerInfinityUpgradeState extends BitPurchasableMechanicState {
   }
 
   get bits() {
-    return player.infinity.kohlerUpgradeBits;
+    return player.infinity.matterUpgradeBits;
   }
 
   set bits(value) {
-    player.infinity.kohlerUpgradeBits = value;
+    player.infinity.matterUpgradeBits = value;
   }
 
   get hasPlayerLock() {
@@ -80,11 +80,11 @@ class KohlerInfinityUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return Kohler.isRunning && KohlerUpgrade(20).isBought;
+    return InfinityChallenge(9).isRunning;
   }
 
   get isPossible() {
-    return Kohler.isRunning && KohlerUpgrade(20).isBought;
+    return InfinityChallenge(9).isRunning;
   }
 
   tryUnlock() {
@@ -96,53 +96,51 @@ class KohlerInfinityUpgradeState extends BitPurchasableMechanicState {
   }
 
   onPurchased() {
-    EventHub.dispatch(GAME_EVENT.KOHLER_INFINITY_UPGRADE_BOUGHT);
+    EventHub.dispatch(GAME_EVENT.MATTER_UPGRADE_BOUGHT);
     const id = this.id;
     switch(id){
-      case 10:
-        GameUI.notify.infinity(`You have unlocked Infinity Challenge 9`, 7000);
       default:
     }
   }
 }
 
-class RebuyableKohlerInfinityUpgradeState extends RebuyableMechanicState {
+class RebuyableMatterUpgradeState extends RebuyableMechanicState {
   get currency() {
-    return Currency.infinityPoints;
+    return Currency.matter;
   }
 
   get boughtAmount() {
-    return player.infinity.kohlerRebuyables[this.id];
+    return player.infinity.matterRebuyables[this.id];
   }
 
   get isAvailableForPurchase() {
-    return Kohler.isRunning && KohlerUpgrade(20).isBought;
+    return InfinityChallenge(9).isRunning;
   }
 
   set boughtAmount(value) {
-    player.infinity.kohlerRebuyables[this.id] = value;
+    player.infinity.matterRebuyables[this.id] = value;
   }
 }
 
-KohlerInfinityUpgradeState.index = mapGameData(
+MatterUpgradeState.index = mapGameData(
   GameDatabase.mending.kohlerInfinityUpgrades,
   config => (config.id < 6
-    ? new RebuyableKohlerInfinityUpgradeState(config)
-    : new KohlerInfinityUpgradeState(config))
+    ? new RebuyableMatterUpgradeState(config)
+    : new MatterUpgradeState(config))
 );
 
 /**
  * @param {number} id
- * @return {KohlerInfinityUpgradeState|RebuyableKohlerInfinityUpgradeState}
+ * @return {MatterUpgradeState|RebuyableMatterUpgradeState}
  */
-export const KohlerInfinityUpgrade = id => KohlerInfinityUpgradeState.index[id];
+export const MatterUpgrade = id => MatterUpgradeState.index[id];
 
-export const KohlerInfinityUpgrades = {
+export const MatterUpgrades = {
   /**
-   * @type {(KohlerInfinityUpgradeState|RebuyableKohlerInfinityUpgradeState)[]}
+   * @type {(MatterUpgradeState|RebuyableMatterUpgradeState)[]}
    */
-  all: KohlerInfinityUpgradeState.index.compact(),
+  all: MatterUpgradeState.index.compact(),
   get allBought() {
-    return (player.infinity.kohlerUpgradeBits >> 6) + 1 === 1 << (GameDatabase.infinity.kohlerUpgrades.length - 5);
+    return (player.infinity.matterUpgradeBits >> 6) + 1 === 1 << (GameDatabase.infinity.matterUpgrades.length - 5);
   }
 };

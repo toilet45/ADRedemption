@@ -6,6 +6,7 @@ import { kohlerUpgrades } from "./kohler-upgrades";
 import { kohlerProgress } from "./kohler-unlock-progress";
 import { kohlerMilestones } from "./kohler-milestones";
 import { kohlerInfinityUpgrades } from "./kohler-infinity-upgrades";
+import { matterUpgrades } from "./matter-upgrades";
 
 export const mending = {
     upgrades: mendingUpgrades,
@@ -15,5 +16,6 @@ export const mending = {
     kohlerUnlockProgress: kohlerProgress,
     kohlerUpgrades: kohlerUpgrades,
     kohlerMilestones: kohlerMilestones,
-    kohlerInfinityUpgrades: kohlerInfinityUpgrades
+    kohlerInfinityUpgrades: kohlerInfinityUpgrades,
+    matterUpgrades: matterUpgrades
 };

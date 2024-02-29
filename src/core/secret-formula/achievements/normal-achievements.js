@@ -540,7 +540,7 @@ export const normalAchievements = [
     id: 82,
     name: "Anti-antichallenged",
     get description() { return `Complete all ${formatInt(8)} Infinity Challenges.`; },
-    checkRequirement: () => InfinityChallenges.completed.length === 8,
+    checkRequirement: () => InfinityChallenges.completed.length >= 8,
     checkEvent: [GAME_EVENT.INFINITY_CHALLENGE_COMPLETED, GAME_EVENT.REALITY_RESET_AFTER],
   },
   {
@@ -680,7 +680,13 @@ export const normalAchievements = [
     id: 97,
     name: "Like jumping on a lego",
     get description() { return `Get the sum of Infinity Challenge times under ${format(6.66, 2, 2)} seconds.`; },
-    checkRequirement: () => Time.infinityChallengeSum.totalSeconds.lt(6.66),
+    checkRequirement: () =>{
+      let x = DC.D0;
+      for (let i = 0; i < 8; i++){
+        x = x.add(player.challenge.infinity.bestTimes[i]);
+      }
+      return x.lt(6.66);
+    },
     checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.REALITY_RESET_AFTER],
   },
   {

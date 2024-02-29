@@ -213,6 +213,9 @@ export function mendingReset(gain = true, toggleKohler = false) {
       player.celestials.laitela.difficultyTier = 8;
       player.celestials.laitela.fastestCompletion = 300;
     }
+    if (Ra.unlocks.dmdAuto2.canBeApplied){
+      Currency.darkEnergy.bumpTo(2e7);
+    }
     //player.celestials.laitela.quoteBits = 1023;
     player.celestials.pelle.upgrades.clear();
     player.celestials.pelle.remnants = 0;
@@ -479,7 +482,8 @@ export function mendingReset(gain = true, toggleKohler = false) {
       player.replicanti.unl = true;
     }
     if(MendingUpgrade(2).isBought){
-      InfinityChallenges.completeAll();
+      for (let ic = 1; ic < 9; ic++)
+      InfinityChallenge(ic).complete();
     }
     else{
       InfinityChallenges.clearCompletions();

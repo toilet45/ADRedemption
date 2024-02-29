@@ -105,3 +105,4 @@ export * from "./warp-upgrades";
 export * from "./kohler-upgrades";
 export * from "./kohler-milestones";
 export * from "./kohler-infinity-upgrades";
+export * from "./matter-upgrades";

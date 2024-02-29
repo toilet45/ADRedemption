@@ -455,6 +455,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
   let factor = DC.D1;
+  if (InfinityChallenge(9).isRunning) return factor;
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative && !player.mending.corruptionChallenge.corruptedMend) {
       return factor.times(player.blackHoleNegative); //this should prevent < e-300 gamespeed outside of corruption (feel free to revert this)

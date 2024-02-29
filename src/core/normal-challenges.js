@@ -2,7 +2,7 @@ import { DC } from "./constants";
 import { GameMechanicState } from "./game-mechanics";
 
 export function updateNormalAndInfinityChallenges(diff) {
-  if (NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning) {
+  if (NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning || InfinityChallenge(9).isRunning) {
     if (AntimatterDimension(2).amount.neq(0)) {
       Currency.matter.bumpTo(1);
       // These caps are values which occur at approximately e308 IP

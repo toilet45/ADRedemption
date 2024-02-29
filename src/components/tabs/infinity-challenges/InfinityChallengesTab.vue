@@ -25,7 +25,7 @@ export default {
       const next = InfinityChallenges.nextICUnlockAM;
 
       if (first) return `The first Infinity Challenge unlocks at ${format(next)} antimatter.`;
-      return next === undefined
+      return next === undefined || this.nextIC.id === 9
         ? "All Infinity Challenges unlocked"
         : `Next Infinity Challenge unlocks at ${format(next)} antimatter.`;
     }

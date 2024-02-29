@@ -802,6 +802,19 @@ export const migrations = {
       5: 0,
     }
   },
+  50.033: player => {
+    while (player.challenge.infinity.bestTimes.length < 9){
+      player.challenge.infinity.bestTimes.push(Decimal.pow10(Number.MAX_VALUE));
+    }
+    player.infinity.matterUpgradeBits = 0,
+    player.infinity.matterRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    }
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

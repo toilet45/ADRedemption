@@ -107,7 +107,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 10,
   name: "Kohler Infinity Upgrade 10",
-  cost: 1e300,
-  description: () => `[TBD]`
+  cost: 1e9,
+  description: () => `Unlock Infinity Challenge 9`
  }
 ];

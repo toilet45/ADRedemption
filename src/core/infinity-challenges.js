@@ -2,7 +2,7 @@ import { GameMechanicState } from "./game-mechanics";
 
 export function tryCompleteInfinityChallenges() {
   if (EternityMilestone.autoIC.isReached) {
-    const toComplete = InfinityChallenges.all.filter(x => x.isUnlocked && !x.isCompleted);
+    const toComplete = InfinityChallenges.all.filter(x => x.isUnlocked && !x.isCompleted && x.id < 9);
     for (const challenge of toComplete) challenge.complete();
   }
 }
@@ -29,6 +29,7 @@ class InfinityChallengeState extends GameMechanicState {
   }
 
   get isUnlocked() {
+    if (this.id === 9) return KohlerInfinityUpgrade(10).isBought && Kohler.isRunning;
     return player.records.thisEternity.maxAM.gte(this.unlockAM) || (Achievement(133).isUnlocked && !Pelle.isDoomed) ||
       (PelleUpgrade.keepInfinityChallenges.canBeApplied && Pelle.cel.records.totalAntimatter.gte(this.unlockAM));
   }
@@ -152,7 +153,7 @@ export const InfinityChallenges = {
       // This has a reasonably high likelihood of happening when the player isn't looking at the game, so
       // we also give it a tab notification
       TabNotification.ICUnlock.clearTrigger();
-      GameUI.notify.infinity(`You have unlocked Infinity Challenge ${ic.id}`, 7000);
+      if (ic.id < 9) GameUI.notify.infinity(`You have unlocked Infinity Challenge ${ic.id}`, 7000);
       TabNotification.ICUnlock.tryTrigger();
     }
   },

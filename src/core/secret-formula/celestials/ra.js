@@ -867,7 +867,8 @@ export const ra = {
       reward: "(Kept without Ra 30) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.",
       pet: "laitela",
       level: 65,
-      displayIcon: `<span class="fas fa-sync-alt"</span>` 
+      displayIcon: `<span class="fas fa-sync-alt"</span>`,
+      disabledByPelle: true 
     },
     continuumAffectsIDsAndTDs: {
       id: 22,

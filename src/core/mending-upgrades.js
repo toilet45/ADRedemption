@@ -9,6 +9,19 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
 
+  get isBought() {
+    if (Kohler.isRunning && this.id < 19) return false;
+    return (this.bits & (1 << this.bitIndex)) !== 0;
+  }
+
+  set isBought(value) {
+    if (value) {
+      this.bits |= (1 << this.bitIndex);
+    } else {
+      this.bits &= ~(1 << this.bitIndex);
+    }
+  }
+
   get name() {
     return this.config.name;
   }

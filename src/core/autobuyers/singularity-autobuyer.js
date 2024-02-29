@@ -18,7 +18,7 @@ export class SingularityAutobuyerState extends AutobuyerState {
   }
 
   tick() {
-    if (Currency.darkEnergy.value >= Singularity.cap * SingularityMilestone.autoCondense.effectValue) {
+    if ((Currency.darkEnergy.value >= Singularity.cap * SingularityMilestone.autoCondense.effectValue) || Ra.unlocks.dmdAuto2.canBeApplied) {
       Singularity.perform();
     }
   }

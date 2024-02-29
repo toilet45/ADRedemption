@@ -50,7 +50,7 @@ window.player = {
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 9),
       completedBits: 0,
     },
     eternity: {
@@ -63,6 +63,14 @@ window.player = {
     upgradeBits: 0,
     kohlerUpgradeBits: 0,
     kohlerRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    matterUpgradeBits: 0,
+    matterRebuyables: {
       1: 0,
       2: 0,
       3: 0,
@@ -1227,7 +1235,7 @@ export const Player = {
   defaultStart: deepmergeAll([{}, player]),
 
   get isInMatterChallenge() {
-    return NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning;
+    return NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning || InfinityChallenge(9).isRunning;
   },
 
   get isInAntimatterChallenge() {
