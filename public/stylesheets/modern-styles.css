@@ -274,6 +274,10 @@ body.t-s12 {
   border-left-color: var(--color-mending);
 }
 
+.o-tab-btn--matter::after {
+  border-left-color: #4F4F4F;
+}
+
 .tab-button.shop {
   background-color: #d9bb26;
 }
@@ -436,6 +440,16 @@ body.t-s12 {
 
 .o-tab-btn--mending .o-subtab__tooltip::after {
   border-top-color: var(--color-mending);
+}
+
+.o-tab-btn--matter .o-subtab__tooltip {
+  color: #4F4F4F;
+  background: var(--color-prestige--accent);
+  border-color: #4F4F4F;
+}
+
+.o-tab-btn--matter .o-subtab__tooltip::after {
+  border-top-color: #4F4F4F;
 }
 
 

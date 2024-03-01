@@ -123,7 +123,7 @@ class RebuyableMatterUpgradeState extends RebuyableMechanicState {
 }
 
 MatterUpgradeState.index = mapGameData(
-  GameDatabase.mending.kohlerInfinityUpgrades,
+  GameDatabase.mending.matterUpgrades,
   config => (config.id < 6
     ? new RebuyableMatterUpgradeState(config)
     : new MatterUpgradeState(config))

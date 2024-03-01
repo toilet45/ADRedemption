@@ -50,6 +50,7 @@ import KohlersRealm from "./mending/KohlersRealm";
 import CorruptionTab from "./corruption/CorruptionChallengeTab";
 import MultiversalDimensionsTab from "./multiversal-dimensions/MultiversalDimensionsTab";
 import KohlerInfinityUpgrades from "./infinity-upgrades/KohlerInfinityUpgrades";
+import MatterUpgrades from "./matter/MatterUpgrades";
 
 
 const TabComponents = {
@@ -102,6 +103,7 @@ const TabComponents = {
   KohlersRealm,
   MultiversalDimensionsTab,
   KohlerInfinityUpgrades,
+  MatterUpgrades
 };
 
 export default TabComponents;

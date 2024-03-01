@@ -803,6 +803,16 @@ button:focus {
 .o-tab-btn--mending:hover {
   background: var(--color-mending);
 }
+
+.o-tab-btn--matter {
+  color: #4f4f4f;
+  background-color: var(--color-prestige--accent);
+  border-color: #4f4f4f;
+}
+
+.o-tab-btn--matter:hover {
+  background: #4f4f4f;
+}
 /* #endregion tab buttons */
 
 #loading {
@@ -2395,6 +2405,18 @@ br {
   color: var(--color-text);
   text-shadow: none;
 }
+
+.l-hint-text--matter-upgrade {
+  top: -1.7rem;
+  font-size: 1rem;
+}
+
+.c-hint-text--matter-upgrade {
+  font-weight: bold;
+  color: var(--color-text);
+  text-shadow: none;
+}
+
 
 .l-hint-text--achievement {
   top: -2rem;
@@ -8859,6 +8881,19 @@ kbd {
   filter: grayscale(50%);
 }
 
+.c-matter-upgrade-btn--useless {
+  background-color: var(--color-pelle--base);
+  border-color: #4a110b;
+  filter: grayscale(50%);
+  cursor: default;
+}
+
+.c-matter-upgrade-btn--useless:hover {
+  color: #7F7F7F;
+  background-color: var(--color-pelle--base);
+  filter: grayscale(50%);
+}
+
 .c-reality-upgrade-btn--bought {
   color: var(--color-reality-light);
   background-color: var(--color-reality);
@@ -10061,6 +10096,137 @@ input.o-automator-block-input {
   background-color: #802222;
 }
 
+.o-primary-btn--matter-upgrade-toggle {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.l-matter-button-column {
+  display: flex;
+  flex-direction: column;
+  width: 44rem;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.l-matter-button-group {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 6rem;
+  padding: 0.5rem;
+}
+
+.l-matter-upgrade-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 1.2rem;
+}
+
+.l-matter-upgrade-grid__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.l-matter-upgrade-btn {
+  display: flex;
+  flex-direction: column;
+  width: 20.5rem;
+  height: 10rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin: 1.2rem;
+  padding: 0 0.5rem;
+}
+
+.c-matter-upgrade-btn {
+  text-align: center;
+  font-family: Typewriter, serif;
+  font-size: 1rem;
+  color: #202020;
+  background-color: var(--color-background);
+  border: var(--var-border-width, 0.2rem) solid #202020;
+  border-radius: var(--var-border-radius, 0.5rem);
+  transition-duration: 0.15s;
+  cursor: pointer;
+}
+
+.s-base--dark .c-matter-upgrade-btn {
+  color: #FFFFFF;
+}
+
+.c-matter-upgrade-btn__requirement {
+  font-weight: bold;
+}
+
+.c-matter-upgrade-btn:hover {
+  color: black;
+  background-color: #7f7f7f;
+}
+
+.c-matter-upgrade-btn--unavailable {
+  color: #C0C0C0;
+  background-color: #404040;/*var(--color-glyph-undo-disabled);*/
+  cursor: default;
+}
+
+.c-matter-upgrade-btn--unavailable:hover {
+  color: #000000;
+  background-color: var(--color-glyph-undo-disabled);
+}
+
+.c-matter-upgrade-btn--bought {
+  color: #7f7f7f;
+  background-color: #4f4f4f;
+  border-color: #202020;
+  cursor: default;
+}
+
+.c-matter-upgrade-btn--bought:hover {
+  color: #7f7f7f;
+  background-color: #4f4f4f;
+}
+
+.c-matter-upgrade-btn--possible {
+  /* Text color gets inherited from other pseudo-classes; so we use !important here in order to ensure good contrast
+    specifically on reality and imaginary upgrades, the only upgrades which use this and the related --locked below */
+  color: black !important;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #A2A229,
+      #A2A229 3rem,
+      #919122 3rem,
+      #919122 6rem
+    );
+  cursor: default;
+}
+
+.c-matter-upgrade-btn--possible:hover {
+  /* This is actually a solid color, but it flickers on hover if we don't make it a linear-gradient */
+  background: linear-gradient(0deg, #919122, #919122);
+}
+
+.c-matter-upgrade-btn--locked {
+  color: white !important;
+  background: #952020;
+  background-image:
+    linear-gradient(45deg, #802222 25%, transparent 25%),
+    linear-gradient(135deg, #802222 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #802222 75%),
+    linear-gradient(135deg, transparent 75%, #802222 75%);
+  background-position: 0 0, 2rem 0, 2rem -2rem, 0 2rem;
+  background-size: 4rem 4rem;
+  cursor: default;
+}
+
+.c-matter-upgrade-btn--locked:hover {
+  background-color: #802222;
+}
+
 .o-requirement-lock {
   position: absolute;
   font-size: 5rem;
@@ -10113,6 +10279,52 @@ input.o-automator-block-input {
 }
 
 .l-mending-upgrade-grid__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.c-matter-upgrade-btn--black-hole-unlock {
+  text-shadow: -0.1rem 0.1rem 0.3rem #7f7f7f;
+  margin: auto;
+}
+
+.t-dark .c-matter-upgrade-btn--unavailable {
+  color: #7f7f7f;
+  background-color: #37474f;
+}
+
+.t-s6.c-matter-upgrade-btn:hover,
+.t-s10.c-matter-upgrade-btn:hover {
+  background-color: #7f7f7f;
+}
+
+.t-s6.c-matter-upgrade-btn--unavailable:hover,
+.t-s10.c-matter-upgrade-btn--unavailable:hover {
+  color: #7f7f7f;
+  background-color: #656565;
+}
+
+.t-s6.c-matterupgrade-btn--bought,
+.t-s10.c-matter-upgrade-btn--bought {
+  background-color: #4f4f4f;
+  border-color: #094e0b;
+}
+
+.t-s6.c-matter-upgrade-btn--bought:hover,
+.t-s10.c-matter-upgrade-btn--bought:hover {
+  color: #7f7f7f;
+  background-color: #4f4f4f;
+}
+
+.l-matter-upgrade-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 1.2rem;
+}
+
+.l-matter-upgrade-grid__row {
   display: flex;
   flex-direction: row;
 }

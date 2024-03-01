@@ -566,6 +566,25 @@ export const tabs = [
     ]
   },
   {
+    key: "matter",
+    name: "Matter",
+    hideAt: 2.7, //Sequence is disabled
+    UIClass: "o-tab-btn--matter",
+    condition: () => KohlerInfinityUpgrade(10).isBought,
+    id: 12,
+    hidable: true,
+    subtabs: [
+      {
+        key: "matterupgrades",
+        name: "Matter Upgrades",
+        symbol: "<i class='fas fa-arrow-up'></i>",
+        component: "MatterUpgrades",
+        id: 0,
+        hidable: true,
+      },
+    ]
+  },
+  {
     key: "shop",
     name: "Shop",
     ModernUIClass: "shop",
