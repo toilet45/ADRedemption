@@ -158,8 +158,11 @@ export function gainedInfinityPoints(noSoftcap = false) {
       KohlerInfinityUpgrade(1),
       MatterUpgrade(6),
       KohlerInfinityUpgrade(12),
-      KohlerInfinityUpgrade(14)
+      KohlerInfinityUpgrade(14),
+      KohlerUpgrade(4)
     )
+    ip = Decimal.pow(ip, MatterUpgrade(4).effectOrDefault(1));
+    ip = Decimal.pow(ip, KohlerInfinityUpgrade(15).effectOrDefault(1))
   }
   return ip.floor();
 }
@@ -202,7 +205,8 @@ export function gainedKohlerPoints(){
   let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
   gain = gain.timesEffectsOf(
     KohlerUpgrade(11),
-    KohlerUpgrade(15)
+    KohlerUpgrade(15),
+    MatterUpgrade(5)
     );
   gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount));
   return player.antimatter.gte(1e12) ? gain : new Decimal(0);
@@ -458,7 +462,11 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
   let factor = DC.D1;
-  if (InfinityChallenge(9).isRunning) return factor;
+  if (InfinityChallenge(9).isRunning) {
+    return factor.timesEffectsOf(
+      MatterUpgrade(3)
+    )
+  };
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative && !player.mending.corruptionChallenge.corruptedMend) {
       return factor.times(player.blackHoleNegative); //this should prevent < e-300 gamespeed outside of corruption (feel free to revert this)

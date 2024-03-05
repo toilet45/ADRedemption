@@ -14,7 +14,10 @@ export function updateNormalAndInfinityChallenges(diff) {
           MatterUpgrade(1),
           MatterUpgrade(7),
           KohlerInfinityUpgrade(13),
-          MatterUpgrade(9)
+          MatterUpgrade(9),
+          MatterUpgrade(11),
+          MatterUpgrade(13),
+          MatterUpgrade(14)
         )
         Currency.matter.add(a.pow(MatterUpgrade(2).effectOrDefault(1)));
         if (Currency.matter.value.gt(player.records.bestMatterinIC9)) player.records.bestMatterinIC9 = Currency.matter.value;

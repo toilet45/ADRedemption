@@ -136,7 +136,7 @@ export const infinityChallenges = [
   },
   {
     id: 9,
-    description: () => `Gamespeed is fixed at 1, matter is generated like C11 and IC6. This Challenge can only be entered in Kohler's Realm`,
+    description: () => `Gamespeed is fixed at 1, matter is generated like in C11 and IC6. This Challenge can only be entered in Kohler's Realm`,
     goal: DC.WARP_LIMIT,
     isQuickResettable: false,
     effect: () => 1,

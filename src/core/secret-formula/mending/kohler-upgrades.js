@@ -18,11 +18,11 @@ const rebuyable = props => {
     }
     return Math.pow(effect, player.mending.kohlerRebuyables[props.id]);
   }
-  props.description = () => props.textTemplate.replace("{value}", formatInt(effect));
+  props.description = () => props.textTemplate.replace("{value}", format(effect, 2, 2));
   props.formatEffect = value => {
     /*if (props.id === 6 || props.id === 16) return effectType + `${formatInt(value)}`
     if (props.id === 11) return effectType + `${formatFloat(value, 3)}`*/
-    return effectType + `${format(value, 2, 0)}`
+    return effectType + `${format(value, 2, 2)}`
   };
   props.formatCost = value => format(value, 2, 0);
   return props;
@@ -59,10 +59,10 @@ export const kohlerUpgrades = [
   rebuyable({
     id: 4,
     name: "Kohler Upgrade 4",
-    initialCost: 1e300,
-    costMult: 9,
-    textTemplate: "[TBD]",
-    effect: 1,
+    initialCost: 1e9,
+    costMult: 1e3,
+    textTemplate: "Multiply Infinity Point gain by {value}",
+    effect: 10,
     effectType: "×"
   }),
   rebuyable({
@@ -70,9 +70,9 @@ export const kohlerUpgrades = [
     name: "Kohler Upgrade 5",
     initialCost: 1e300,
     costMult: 9,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    textTemplate: `Raise all Dimensions by ^{value} [NYI]`,
+    effect: 1.1,
+    effectType: "^"
   }),
   {
     id: 6,

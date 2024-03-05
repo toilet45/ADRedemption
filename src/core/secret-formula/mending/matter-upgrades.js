@@ -20,8 +20,8 @@ const rebuyable = props => {
   }
   props.description = () => props.textTemplate.replace("{value}", format(effect, 2, 2));
   props.formatEffect = value => {
-    if (props.id === 2) return effectType + `${format(value, 2, 2)}`
-    /*if (props.id === 11) return effectType + `${formatFloat(value, 3)}`*/
+    if (props.id === 2 || props.id === 4) return effectType + `${format(value, 2, 2)}`
+    if (props.id === 12) return effectType + `${formatInt(value)}`
     return effectType + `${format(value, 2, 0)}`
   };
   props.formatCost = value => format(value, 2, 0);
@@ -50,28 +50,28 @@ export const matterUpgrades = [
   rebuyable({
     id: 3,
     name: "Matter Upgrade 3",
-    initialCost: 1e300,
-    costMult: 1e300,
-    textTemplate: `[TBD]`,
-    effect: 1,
+    initialCost: 1e9,
+    costMult: 1e5,
+    textTemplate: `Multiply Gamespeed in Infinity Challenge 9 by {value}`,
+    effect: 3,
     effectType: "×"
   }),
   rebuyable({
     id: 4,
     name: "Matter Upgrade 4",
-    initialCost: 1e300,
-    costMult: 1e300,
-    textTemplate: `[TBD]`,
-    effect: 1,
-    effectType: "×"
+    initialCost: 1e11,
+    costMult: 1e7,
+    textTemplate: `Raise Infinity Point gain by {value}`,
+    effect: 1.1,
+    effectType: "^"
   }),
   rebuyable({
     id: 5,
     name: "Matter Upgrade 5",
-    initialCost: 1e300,
-    costMult: 1e300,
-    textTemplate: `[TBD]`,
-    effect: 1,
+    initialCost: 1e12,
+    costMult: 1e10,
+    textTemplate: `Multiply Kohler Point gain by {value}`,
+    effect: 5,
     effectType: "×"
   }),
  {
@@ -119,4 +119,55 @@ export const matterUpgrades = [
   effectType: "^",
   formatEffect: value => formatPow(value, 2, 2) 
  }, 
+ {
+  id: 11,
+  name: "Matter Upgrade 11",
+  cost: 5e9,
+  description: () => `Total Antimatter boosts Matter gain`,
+  effect: () => Math.max(Math.log(Math.max(player.records.totalAntimatter.log10(), 1)), 1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 12,
+  name: "Matter Upgrade 12",
+  cost: 1e11,
+  description: () => `Gain free Galxies based on best Matter`,
+  effect: () => {
+    let x = player.records.bestMatterinIC9.log10()
+    if (x > 50){
+      x /= 50;
+      x = x ** 0.25;
+      x *= 50;
+    }
+    return Math.floor(x);
+  },
+  effectType: "+",
+  formatEffect: value => formatInt(value) 
+ },
+ {
+  id: 13,
+  name: "Matter Upgrade 13",
+  cost: 3e12,
+  description: () => `Multiply Matter gain based on Kohler Points`,
+  effect: () => Math.max(Currency.kohlerPoints.value.clampMin(1).log10(),1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 14,
+  name: "Matter Upgrade 14",
+  cost: 2e13,
+  description: () => `Matter gain is boosted based on Antimatter in IC9`,
+  effect: () => Math.max(Currency.antimatter.value.clampMin(1).log10() / 500, 1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 15,
+  name: "Matter Upgrade 15",
+  cost: 1e14,
+  description: () => `Unlock Matter Dimensions [NYI]`,
+  effect: () => 1,
+ }
 ];

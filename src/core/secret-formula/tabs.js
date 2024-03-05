@@ -570,7 +570,7 @@ export const tabs = [
     name: "Matter",
     hideAt: 2.7, //Sequence is disabled
     UIClass: "o-tab-btn--matter",
-    condition: () => KohlerInfinityUpgrade(10).isBought,
+    condition: () => KohlerInfinityUpgrade(10).isBought || player.records.bestMatterinIC9.gt(0),
     id: 12,
     hidable: true,
     subtabs: [

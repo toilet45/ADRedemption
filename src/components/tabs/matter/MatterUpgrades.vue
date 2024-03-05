@@ -45,7 +45,7 @@ export default {
   <div class="c-matter-upgrade-infotext">These upgrades can only be purchased in Infinity Challenge 9</div>
     <div class="l-matter-upgrade-grid">
       <div
-        v-for=" row in 2"
+        v-for=" row in 3"
         :key="row"
         class="l-matter-upgrade-grid__row">
       <MatterUpgradeButton 

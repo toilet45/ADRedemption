@@ -36,6 +36,9 @@ export default {
       this.showAllChallenges = player.options.showAllChallenges;
     },
     isChallengeVisible(challenge) {
+      if (challenge.id === 9){
+        return KohlerInfinityUpgrade(10).isBought;
+      }
       return challenge.isUnlocked || (this.showAllChallenges && PlayerProgress.eternityUnlocked());
     }
   }

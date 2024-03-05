@@ -124,7 +124,7 @@ export const kohlerInfinityUpgrades = [
   name: "Kohler Infinity Upgrade 12",
   cost: 1e12,
   description: () => `Gamespeed boosts Infinity Point Gain`,
-  effect: () => getGameSpeedupFactor().log10(),
+  effect: () => Math.max(getGameSpeedupFactor().log10(), 1),
   effectType: "×",
   formatEffect: value => formatX(value, 2, 2) 
  },
@@ -133,7 +133,7 @@ export const kohlerInfinityUpgrades = [
   name: "Kohler Infinity Upgrade 13",
   cost: 1e14,
   description: () => `Matter Gain is boosted by Infinity Points`,
-  effect: () => Currency.infinityPoints.value.log10() / 2,
+  effect: () => Math.max(Currency.infinityPoints.value.log10() / 2, 1),
   effectType: "×",
   formatEffect: value => formatX(value, 2, 2)   
  },
@@ -149,7 +149,18 @@ export const kohlerInfinityUpgrades = [
  {
   id: 15,
   name: "Kohler Infinity Upgrade 15",
-  cost: 1e300,
-  description: () => `???`
+  cost: 1e20,
+  description: () => `Infinities boost Infinity Point gain`,
+  effect: () => {
+    let x = (Currency.infinities.value.clampMin(1).log10() / 1000) + 1
+    if (x > 2){
+      x /= 2;
+      x = x ** 0.25;
+      x *= 2;
+    }
+    return x
+  },
+  effectType: "^",
+  formatEffect: value => formatPow(value, 2, 2) 
  }
 ];

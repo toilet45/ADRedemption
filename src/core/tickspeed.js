@@ -6,6 +6,7 @@ import { corruptionPenalties } from "./secret-formula/mending/corruption";
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
   let replicantiGalaxies = Replicanti.galaxies.bought;
+  let matterGalaxies = Kohler.isRunning ? MatterUpgrade(12).effectOrDefault(0) : 0;
   replicantiGalaxies *= (1 + Effects.sum(
     TimeStudy(132),
     TimeStudy(133)
@@ -32,7 +33,7 @@ export function effectiveBaseGalaxies() {
   let v = player.galBoostPoints.eq(0) ? 1 : /*(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber()*/ MultiversalDimension(1).galaxyBoost
   let w = (KohlerUpgrade(13).isBought && Kohler.isRunning) ? 1e8 : 1;
   let u = Kohler.isRunning ? KohlerUpgrade(19).effectOrDefault(1) : 1;
-  return (Math.max(x + y + replicantiGalaxies + freeGalaxies, 0) * v * w * u);
+  return (Math.max(x + y + replicantiGalaxies + freeGalaxies + matterGalaxies, 0) * v * w * u);
 }
 
 export function getTickSpeedMultiplier() {

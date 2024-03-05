@@ -13,7 +13,8 @@ export default {
       galaxies: {
         normal: 0,
         replicanti: 0,
-        dilation: 0
+        dilation: 0,
+        matter: 0
       },
       requirement: {
         tier: 1,
@@ -52,6 +53,7 @@ export default {
       if (this.galaxies.replicanti > 0) parts.push(this.galaxies.replicanti);
       if (this.galaxies.dilation > 0) parts.push(this.galaxies.dilation);
       const sum = parts.map(this.formatGalaxies).join(" + ");
+      if (this.galaxies.matter > 0) parts.push(this.galaxies.matter);
       if (parts.length >= 2) {
         return `${sum} = ${this.formatGalaxies(parts.sum())}`;
       }
@@ -104,6 +106,7 @@ export default {
       this.galaxies.normal = player.galaxies + GalaxyGenerator.galaxies;
       this.galaxies.replicanti = Replicanti.galaxies.total;
       this.galaxies.dilation = player.dilation.totalTachyonGalaxies;
+      this.galaxies.matter = MatterUpgrade(12).effectOrDefault(0);
       const requirement = Galaxy.requirement;
       this.requirement.amount = requirement.amount;
       this.requirement.tier = requirement.tier;
