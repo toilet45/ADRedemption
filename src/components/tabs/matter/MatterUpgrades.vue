@@ -9,7 +9,8 @@ export default {
   },
   data() {
     return{
-      matter: new Decimal(0)
+      matter: new Decimal(0),
+      bestMatter: new Decimal(0)
     };
   },
   computed: {
@@ -28,6 +29,7 @@ export default {
     },
     update(){
       this.matter.copyFrom(Currency.matter.value)
+      this.bestMatter.copyFrom(player.records.bestMatterinIC9)
     }
   }
 };
@@ -37,6 +39,8 @@ export default {
 <template>
 <div class="c-matter-amount">
   You have <span class="c-matter-amount__accent">{{ format(matter, 2) }}</span> Matter.
+  <br>
+  Your best Matter in IC9 is <span class="c-matter-amount__accent">{{ format(bestMatter, 2) }}</span>.
   <br><br>
   <div class="c-matter-upgrade-infotext">These upgrades can only be purchased in Infinity Challenge 9</div>
     <div class="l-matter-upgrade-grid">

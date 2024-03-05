@@ -407,6 +407,7 @@ window.player = {
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
+    bestMatterinIC9: DC.D0,
     recentInfinities: Array.range(0, 10).map(() =>
       [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>

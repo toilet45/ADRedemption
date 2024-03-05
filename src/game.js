@@ -155,7 +155,10 @@ export function gainedInfinityPoints(noSoftcap = false) {
   if (Kohler.isRunning) {
     ip = new Decimal(ip.clampMin(1).log10());
     ip = ip.timesEffectsOf(
-      KohlerInfinityUpgrade(1)
+      KohlerInfinityUpgrade(1),
+      MatterUpgrade(6),
+      KohlerInfinityUpgrade(12),
+      KohlerInfinityUpgrade(14)
     )
   }
   return ip.floor();

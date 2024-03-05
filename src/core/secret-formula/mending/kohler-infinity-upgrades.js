@@ -18,10 +18,10 @@ const rebuyable = props => {
     }
     return Math.pow(effect, player.infinity.kohlerRebuyables[props.id]);
   }
-  props.description = () => props.textTemplate.replace("{value}", formatInt(effect));
+  props.description = () => props.textTemplate.replace("{value}", format(effect, 2, 2));
   props.formatEffect = value => {
-    /*if (props.id === 6 || props.id === 16) return effectType + `${formatInt(value)}`
-    if (props.id === 11) return effectType + `${formatFloat(value, 3)}`*/
+    if (props.id === 4) return effectType + `${format(value, 2, 2)}`
+    /*if (props.id === 11) return effectType + `${formatFloat(value, 3)}`*/
     return effectType + `${format(value, 2, 0)}`
   };
   props.formatCost = value => format(value, 2, 0);
@@ -61,9 +61,9 @@ export const kohlerInfinityUpgrades = [
     name: "Kohler Infinity Upgrade 4",
     initialCost: 1e11,
     costMult: 1e6,
-    textTemplate: `Multiply Infinity Power conversion rate by {value}`,
-    effect: 2,
-    effectType: "×"
+    textTemplate: `Raise Infinity Power conversion rate by {value}`,
+    effect: 1.05,
+    effectType: "^"
   }),
   rebuyable({
     id: 5,
@@ -109,5 +109,47 @@ export const kohlerInfinityUpgrades = [
   name: "Kohler Infinity Upgrade 10",
   cost: 1e9,
   description: () => `Unlock Matter Upgrades and Infinity Challenge 9`
+ },
+ {
+  id: 11,
+  name: "Kohler Infinity Upgrade 11",
+  cost: 1e11,
+  description: () => `Kohler Infinity Upgrade 7 also applies to the 1st Antimatter Dimension`,
+  effect: () => Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).pow(0.1).clampMin(1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 12,
+  name: "Kohler Infinity Upgrade 12",
+  cost: 1e12,
+  description: () => `Gamespeed boosts Infinity Point Gain`,
+  effect: () => getGameSpeedupFactor().log10(),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 13,
+  name: "Kohler Infinity Upgrade 13",
+  cost: 1e14,
+  description: () => `Matter Gain is boosted by Infinity Points`,
+  effect: () => Currency.infinityPoints.value.log10() / 2,
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)   
+ },
+ {
+  id: 14,
+  name: "Kohler Infinity Upgrade 14",
+  cost: 1e15,
+  description: () => `Infinity Power multiplier to Antimatter Dimensions affect Infinity Point gain at a reduced rate`,
+  effect: () => Math.max(1, Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).log10() / 100),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 15,
+  name: "Kohler Infinity Upgrade 15",
+  cost: 1e300,
+  description: () => `???`
  }
 ];

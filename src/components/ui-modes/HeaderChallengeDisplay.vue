@@ -94,7 +94,7 @@ export default {
     },
     challengeDisplay() {
       if (this.inKohler){
-        return "Kohler's Realm"
+        return this.activeChallengeNames.length > 0 ? `${this.activeChallengeNames.join(" + ")} in Kohler's Realm` : "Kohler's Realm"
       }
       if (this.inPelle && this.activeChallengeNames.length > 0) {
         return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;

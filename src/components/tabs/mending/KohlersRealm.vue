@@ -29,7 +29,7 @@ export default {
   computed: {
     upgrades: () => KohlerUpgrades.all,
     runningText(){
-      return this.isRunning ? "Exit Kohler's Realm" : "Enter Kohler's Realm."
+      return this.isRunning ? "Exit Kohler's Realm" : "Enter Kohler's Realm"
     },
     unlockInfos: () => KohlerProgressUnlocks.all,
     showRunReward() {

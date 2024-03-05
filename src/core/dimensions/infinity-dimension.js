@@ -264,7 +264,8 @@ class InfinityDimensionState extends DimensionState {
     if (Kohler.isRunning){
       mult = mult.timesEffectsOf(
         KohlerInfinityUpgrade(2),
-        KohlerInfinityUpgrade(8)
+        KohlerInfinityUpgrade(8),
+        MatterUpgrade(8)
       )
     }
     return mult;
@@ -536,7 +537,7 @@ export const InfinityDimensions = {
       w **= 0.01;
       w *= 8;
     }*/
-    let kiu4Mult = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
-    return w * kiu4Mult;
+    let kiu4Pow = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
+    return w ** kiu4Pow;
   }
 };

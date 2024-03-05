@@ -40,7 +40,7 @@ export default {
   <br><br>
     <div class="l-mending-upgrade-grid">
       <div
-        v-for=" row in 2"
+        v-for=" row in 3"
         :key="row"
         class="l-mending-upgrade-grid__row">
       <KohlerInfinityUpgradeButton 

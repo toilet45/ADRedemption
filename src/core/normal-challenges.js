@@ -8,7 +8,20 @@ export function updateNormalAndInfinityChallenges(diff) {
       // These caps are values which occur at approximately e308 IP
       const cappedBase = 1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 +
         Math.clampMax(player.galaxies, 100) / 100;
-      Currency.matter.multiply(Decimal.pow(cappedBase, diff.div(20)));
+      if (InfinityChallenge(9).isRunning){
+        let a = diff.times(cappedBase).div(20);
+        a = a.timesEffectsOf(
+          MatterUpgrade(1),
+          MatterUpgrade(7),
+          KohlerInfinityUpgrade(13),
+          MatterUpgrade(9)
+        )
+        Currency.matter.add(a.pow(MatterUpgrade(2).effectOrDefault(1)));
+        if (Currency.matter.value.gt(player.records.bestMatterinIC9)) player.records.bestMatterinIC9 = Currency.matter.value;
+      }
+      else{ 
+        Currency.matter.multiply(Decimal.pow(cappedBase, diff.div(20)));
+      }
     }
     if (Currency.matter.gt(Currency.antimatter.value) && NormalChallenge(11).isRunning && !Player.canCrunch) {
       const values = [Currency.antimatter.value, Currency.matter.value];

@@ -98,12 +98,15 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = multiplier.pow(1.05);
   }
   if (Kohler.isRunning) {
-    multiplier = multiplier.times(Decimal.pow(20, KohlerUpgrade(3).boughtAmount));
-    multiplier = multiplier.times(KohlerUpgrade(14).effectOrDefault(1));
-    multiplier = multiplier.times(KohlerUpgrade(17).effectOrDefault(1));
-    multiplier = multiplier.times(KohlerInfinityUpgrade(7).effectOrDefault(1));
+    multiplier = multiplier.timesEffectsOf(KohlerUpgrade(3),
+      KohlerUpgrade(14),
+      KohlerUpgrade(17),
+      KohlerInfinityUpgrade(7)
+      );
   }
-  if (tier === 1) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
+  if (tier === 1) multiplier = multiplier.timesEffectsOf(
+    KohlerUpgrade(6),
+    KohlerInfinityUpgrade(11))
   if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   return multiplier;
 }
@@ -636,6 +639,7 @@ class AntimatterDimensionState extends DimensionState {
       if (player.mending.corruptionChallenge.corruptedMend) {
         let atomDilutionCorruption = corruptionPenalties.atomDilution[player.mending.corruption[6]];
         if(CorruptionUpgrade(22).isBought) atomDilutionCorruption = Math.min(1,atomDilutionCorruption*1.5)
+        if(Kohler.isRunning) atomDilutionCorruption = Math.min(1, atomDilutionCorruption ** MatterUpgrade(10).effectOrDefault(1))
         production = Decimal.pow10(Math.pow(production.log10(),atomDilutionCorruption))
       }
       if(KohlerProgressUnlocks.hostileFragments.isUnlocked){
