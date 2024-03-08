@@ -168,7 +168,7 @@ export const awayProgressTypes = [
   },
   {
     name: "galBoostPoints",
-    forcedName: "Galacitc Shards",
+    forcedName: "Galactic Shards",
     isUnlocked: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
   },
 ];

@@ -121,8 +121,11 @@ export default {
     },
     isObscured(row) {
       switch(true){
+        case Achievement(201).isUnlocked:{
+          return false;
+        }
         case PlayerProgress.mendingUnlocked():{
-          return false; //temporary show all until Rapture (or Kohler's Realm) is implemented
+          return row >= 19; //temporary show all until Rapture (or Kohler's Realm) is implemented
         }
         case this.isDoomed:{ //show row 18*, but not beyond, don't want to spoil the new content for people that don't read the feature list *(row is a zero based index)
           return row >= 18; //acutally >=17

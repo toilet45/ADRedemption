@@ -36,6 +36,10 @@ class AchievementState extends GameMechanicState {
     return this.row < 19;
   }
 
+  get isPreMend() {
+    return this.row < 20;
+  }
+
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -122,6 +126,10 @@ export const Achievements = {
 
   get preMend() {
     return Achievements.all.filter(ach => ach.isPreMend);
+  },
+
+  get preKohler() {
+    return Achievements.all.filter(ach => ach.isPreKohler);
   },
 
   get allRows() {

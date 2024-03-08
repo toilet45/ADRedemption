@@ -1466,4 +1466,76 @@ export const normalAchievements = [
     checkRequirement: () => player.antimatter.gte(new Decimal("1e69690000000000000000000")),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
+  {
+    id: 201,
+    name: "Antimatter Dimensions 2: Hell in the Multiverse",
+    get description () {
+      return `Enter Kohler's Realm`;
+    },
+    checkRequirement: () => Kohler.isRunning,
+    checkEvent: GAME_EVENT.MENDING_RESET_AFTER
+  },
+  {
+    id: 202,
+    name: "202",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 203,
+    name: "203",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 204,
+    name: "204",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 205,
+    name: "205",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 206,
+    name: "206",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 207,
+    name: "207",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 208,
+    name: "208",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  }
 ];

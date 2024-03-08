@@ -132,7 +132,8 @@ export const raQuotes = {
     requirement: () => MendingUpgrade(19).isBought,
     lines:[
       "What...more memories?",
-      "What else was Lai hiding from me...or rather what else did they want me to forget."
+      "What else was Lai hiding from me...",
+      "...or rather what else did they want me to forget."
     ]
   },
   ra40:{
