@@ -97,6 +97,14 @@ export const GameCache = {
   antimatterDimensionFinalMultipliers: Array.range(0, 9)
     .map(tier => new Lazy(() => getDimensionFinalMultiplierUncached(tier))),
 
+      // The effect is defined in antimatter_dimensions.js because that's where the non-cached
+  // code originally lived.
+  matterDimensionCommonMultiplier: new Lazy(() => atterDimensionCommonMultiplier()),
+
+  // 0 will cause a crash if invoked; this way the tier can be used as an index
+  matterDimensionFinalMultipliers: Array.range(0, 5)
+    .map(tier => new Lazy(() => getDimensionFinalMultiplierUncached(tier))),
+
   infinityDimensionCommonMultiplier: new Lazy(() => infinityDimensionCommonMultiplier()),
 
   timeDimensionCommonMultiplier: new Lazy(() => timeDimensionCommonMultiplier()),

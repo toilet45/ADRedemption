@@ -816,6 +816,14 @@ export const migrations = {
     },
     player.records.bestMatterinIC9 = DC.D0;
   },
+  50.034: player =>{
+    player.dimensions.matter = Array.range(0, 4).map(() => ({
+      bought: 0,
+      costBumps: 0,
+      amount: DC.D0,
+      matterBoosts: 0
+    }));
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

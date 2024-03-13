@@ -589,3 +589,37 @@ Currency.kohlerPoints = new class extends DecimalCurrency {
   }
 }();
 
+Currency.energy = new class extends DecimalCurrency {
+  get value() { 
+    return player.energy; 
+  }
+  set value(value) {
+    player.energy = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();
+
+Currency.weakMatter = new class extends DecimalCurrency {
+  get value() { 
+    return player.weakMatter; 
+  }
+  set value(value) {
+    player.weakMatter = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();
+

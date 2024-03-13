@@ -582,6 +582,15 @@ export const tabs = [
         id: 0,
         hidable: true,
       },
+      {
+        key: "matterdims",
+        name: "Matter Dimensions",
+        symbol: "?",
+        component: "MatterDimensionsTab",
+        id: 1,
+        hidable: true,
+        condition: () => MatterUpgrade(15).isBought
+      },
     ]
   },
   {

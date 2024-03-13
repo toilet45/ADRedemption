@@ -11,11 +11,14 @@ import { Ra } from "./globals";
 // eslint-disable-next-line prefer-const
 window.player = {
   antimatter: DC.E1,
+  weakMatter: DC.D0,
+  energy: DC.D0,
   dimensions: {
     antimatter: Array.range(0, 8).map(() => ({
       bought: 0,
       costBumps: 0,
-      amount: DC.D0
+      amount: DC.D0,
+      matterBoosts: 0
     })),
     infinity: Array.range(0, 8).map(tier => ({
       isUnlocked: false,
@@ -33,7 +36,12 @@ window.player = {
       cost: [new Decimal(1e25), new Decimal(1e55), new Decimal(1e105), new Decimal(1e215), new Decimal("1e333"), new Decimal("1e456"), new Decimal("1e678"), new Decimal("9.99e999")][tier],
       amount: DC.D0,
       bought: 0
-    }))
+    })),
+    matter: Array.range(0, 4).map(() => ({
+      bought: 0,
+      costBumps: 0,
+      amount: DC.D0
+    })),
   },
   buyUntil10: true,
   sacrificed: DC.D0,

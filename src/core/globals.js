@@ -66,6 +66,7 @@ export * from "./dimensions/antimatter-dimension";
 export * from "./dimensions/infinity-dimension";
 export * from "./dimensions/time-dimension";
 export * from "./dimensions/multiversal-dimension";
+export * from "./dimensions/matter-dimension";
 
 export * from "./time-studies";
 
