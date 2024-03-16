@@ -35,6 +35,8 @@ export default {
       isCostsAD: false,
       formattedAmount: null,
       hasTutorial: false,
+      isBoostAffordable: false,
+      energy: new Decimal(0)
     };
   },
   computed: {
@@ -85,6 +87,7 @@ export default {
   methods: {
     update() {
       const tier = this.tier;
+      this.energy.copyFrom(Currency.energy.value);
       if (tier === 4) this.formattedAmount = formatInt(this.amount);
       if (tier === 4 && MatterDimension(4).totalAmount.gte(1e12)) this.formattedAmount = format(this.amount, 2);
       if (tier > DimBoost.maxDimensionsUnlockable) return;
@@ -97,11 +100,12 @@ export default {
       this.bought = dimension.bought;
       this.boughtBefore10 = dimension.boughtBefore10;
       this.singleCost.copyFrom(dimension.cost);
-      this.until10Cost.copyFrom(dimension.costUntil10);
+      this.until10Cost.copyFrom(dimension.boostCost);
       if (tier < 4) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);
       }
       this.isAffordable = dimension.isAffordable;
+      this.isBoostAffordable = this.energy.gte(dimension.boostCost);
       this.isAffordableUntil10 = dimension.isAffordableUntil10;
       this.isContinuumActive = false;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
@@ -165,7 +169,7 @@ export default {
         />
       </PrimaryButton>
       <PrimaryButton
-        :enabled="(isAffordableUntil10 || isContinuumActive) && !isCapped && isUnlocked"
+        :enabled="isBoostAffordable && !isCapped && isUnlocked"
         :class="buyTenClass"
         @click="buyBoost"
       >

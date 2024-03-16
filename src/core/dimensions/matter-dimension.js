@@ -139,7 +139,7 @@ export function buyMaxMatterDimension(tier, bulk = Infinity) {
 class MatterDimensionState extends DimensionState {
   constructor(tier) {
     super(() => player.dimensions.matter, tier);
-    const BASE_COSTS = [null, 10, 100, 1e4, 1e6];
+    const BASE_COSTS = [null, 1e15, 1e20, 1e25, 1e30];
     this._baseCost = BASE_COSTS[tier];
     const BASE_COST_MULTIPLIERS = [null, 1e3, 1e4, 1e5, 1e6];
     this._baseCostMultiplier = BASE_COST_MULTIPLIERS[tier];
@@ -371,13 +371,8 @@ export const MatterDimensions = {
   },
 
   tick(diff) {
-    // Stop producing antimatter at Big Crunch goal because all the game elements
-    // are hidden when pre-break Big Crunch button is on screen.
-
-    let maxTierProduced = EternityChallenge(3).isRunning ? 3 : 7;
-    let nextTierOffset = 1;
-    for (let tier = maxTierProduced; tier >= 1; --tier) {
-      MatterDimension(tier + nextTierOffset).produceDimensions(MatterDimension(tier), new Decimal(diff).div(10));
+    for (let tier = 4; tier > 1; tier--) {
+      MatterDimension(tier).produceDimensions(MatterDimension(tier - 1), new Decimal(diff).div(10));
     }
     MatterDimension(1).produceCurrency(Currency.weakMatter, diff);
   }
