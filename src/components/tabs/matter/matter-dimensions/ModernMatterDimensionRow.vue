@@ -31,12 +31,15 @@ export default {
       isShown: false,
       amountDisplay: "",
       hasTutorial: false,
+      boostCost: new Decimal(0),
+      isBoostAffordable: false,
+      energy: new Decimal(0)
     };
   },
   computed: {
     isDoomed: () => Pelle.isDoomed,
     name() {
-      return `${AntimatterDimension(this.tier).shortDisplayName} Antimatter Dimension`;
+      return `${MatterDimension(this.tier).shortDisplayName} Matter Dimension`;
     },
     costDisplay() {
       return this.buyUntil10 ? format(this.until10Cost) : format(this.singleCost);
@@ -49,18 +52,24 @@ export default {
       return this.isShown || this.isUnlocked || this.amount.gt(0);
     },
     boughtTooltip() {
-      if (this.isCapped) return `Nameless prevents the purchase of more than ${format(1)} 8th Antimatter Dimension`;
+      if (this.isCapped) return `Capped`;
       if (this.isContinuumActive) return "Continuum produces all your Antimatter Dimensions";
       return `Purchased ${quantifyInt("time", this.bought)}`;
     },
     costUnit() {
-      return `${AntimatterDimension(this.tier - 2).shortDisplayName} AD`;
+      return `${AntimatterDimension(this.tier - 2).shortDisplayName} MD`;
     },
     buttonPrefix() {
       if (!this.isUnlocked) return "Locked";
-      if (this.isCapped) return "Shattered by Nameless";
+      if (this.isCapped) return "Capped";
       if (this.isContinuumActive) return "Continuum: ";
       return `Buy ${formatInt(this.howManyCanBuy)}`;
+    },
+    boostPrefix(){
+      return `Boost this Dimension`
+    },
+    boostValue(){
+      return `Cost: ${format(this.boostCost)} Energy`
     },
     buttonValue() {
       if (this.isCapped) return "";
@@ -87,6 +96,7 @@ export default {
       this.howManyCanBuy = buyUntil10 ? dimension.howManyCanBuy : Math.min(dimension.howManyCanBuy, 1);
       this.singleCost.copyFrom(dimension.cost);
       this.until10Cost.copyFrom(dimension.cost.times(Math.max(dimension.howManyCanBuy, 1)));
+      this.boostCost.copyFrom(dimension.boostCost);
       if (tier < 4) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);
       }
@@ -96,7 +106,9 @@ export default {
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
       this.isShown = true;
       this.amountDisplay = this.tier < 44 ? format(this.amount, 2) : (MatterDimension(4).totalAmount.gte(1e12)? format(this.amount, 2) : formatInt(this.amount));
-      this.hasTutorial = false
+      this.hasTutorial = false,
+      this.isBoostAffordable = this.energy.gte(dimension.boostCost);
+      this.energy.copyFrom(Currency.energy.value);
     },
     buy() {
       if (this.isContinuumActive) return;
@@ -106,8 +118,22 @@ export default {
         buyAsManyMDAsYouCanBuy(this.tier);
       }
     },
+    buyBoost(){
+      if (this.isContinuumActive) return;
+      buyMatterBoost(this.tier);
+    },
     showCostTitle(value) {
       return value.exponent < 1000000;
+    },
+    isLongText(str) {
+      return str.length > 20;
+    },
+    boostButtonClass(){
+      return {
+        "o-primary-btn o-primary-btn--new": true,
+        "o-primary-btn--disabled": !this.isBoostAffordable || !this.isUnlocked || this.isCapped,
+        "l-dim-row-small-text": this.isLongText(this.boostPrefix) || !this.showCostTitle(this.boostValue),
+      };
     },
     buttonClass() {
       return {
@@ -174,15 +200,15 @@ export default {
         </div>
       </button>
       <button
-        :class="buttonClass()"
-        @click="buy"
+        :class="boostButtonClass()"
+        @click="buyBoost"
       >
         <div :class="buttonTextClass()">
           <div>
-            {{ buttonPrefix }}
+            {{ boostPrefix }}
           </div>
           <div :class="{ 'l-dim-row-small-text': hasLongText }">
-            {{ buttonValue }}
+            {{ boostValue }}
           </div>
           <div
             v-if="hasTutorial"

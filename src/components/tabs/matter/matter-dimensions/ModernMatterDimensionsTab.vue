@@ -3,7 +3,7 @@ import MatterDimensionRow from "@/components/tabs/matter/matter-dimensions/Moder
 import PrimaryButton from "@/components/PrimaryButton";
 
 export default {
-  name: "ModernAntimatterDimensionsTab",
+  name: "ModernMatteratterDimensionsTab",
   components: {
     PrimaryButton,
     MatterDimensionRow,
@@ -24,9 +24,6 @@ export default {
   methods: {
     maxAll() {
       maxAll();
-    },
-    sacrifice() {
-      sacrificeBtnClick();
     },
     // Toggle single/10 without Continuum, otherwise cycle through all 3 if it's unlocked
     changeBuyMode() {
@@ -50,15 +47,13 @@ export default {
     },
     update() {
       this.buyUntil10 = player.buyUntil10;
-      this.hasContinuum = Laitela.continuumUnlocked;
-      this.isContinuumActive = Laitela.continuumActive;
+      this.hasContinuum = false;
+      this.isContinuumActive = false;
       this.isQuickResetAvailable = Player.isInAntimatterChallenge && Player.antimatterChallenge.isQuickResettable;
 
       this.buy10Mult.copyFrom(AntimatterDimensions.buyTenMultiplier);
 
       this.multiplierText = `Buy 10 Dimension purchase multiplier: ${formatX(this.buy10Mult, 2, 2)}`;
-      this.disabledCondition = Sacrifice.disabledCondition;
-      this.multiplierText += sacText;
     }
   }
 };

@@ -13,11 +13,15 @@ export function matterDimensionCommonMultiplier() {
 export function getMatterDimensionFinalMultiplierUncached(tier) {
   if (tier < 1 || tier > 4) throw new Error(`Invalid Matter Dimension tier ${tier}`);
   let multiplier = DC.D1;
+  multiplier = multiplier.times(applyMDMultipliers(multiplier, tier));
   return multiplier;
 }
 
 function applyMDMultipliers(mult, tier) {
-  let multiplier = mult;
+  let multiplier = mult.times(GameCache.matterDimensionCommonMultiplier.value);
+  let buy10Value = Math.floor(MatterDimension(tier).bought / 10);
+
+  multiplier = multiplier.times(Decimal.pow(MatterDimensions.buyTenMultiplier, buy10Value));
 
   multiplier = multiplier.clampMin(1);
 
@@ -353,8 +357,11 @@ export const MatterDimensions = {
   all: MatterDimension.index.compact(),
 
   reset() {
-    for (const dimension of MatterDimensions.all) {
-      dimension.reset();
+    this.resetAmountUpToTier(4);
+    for (let j = 1; j < 5; j++){
+      MatterDimension(j).bought = 0;
+      MatterDimension(j).costBumps = 0;
+      MatterDimension(j).boostCostBumps = 0;
     }
     GameCache.dimensionMultDecrease.invalidate();
   },
@@ -375,5 +382,6 @@ export const MatterDimensions = {
       MatterDimension(tier).produceDimensions(MatterDimension(tier - 1), new Decimal(diff).div(10));
     }
     MatterDimension(1).produceCurrency(Currency.weakMatter, diff);
+    Currency.energy.add(Currency.weakMatter.value);
   }
 };

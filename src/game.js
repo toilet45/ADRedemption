@@ -722,6 +722,8 @@ export function gameLoop(passDiff, options = {}) {
   // change a multiplier.
   GameCache.antimatterDimensionCommonMultiplier.invalidate();
   GameCache.antimatterDimensionFinalMultipliers.invalidate();
+  GameCache.matterDimensionCommonMultiplier.invalidate();
+  GameCache.matterDimensionFinalMultipliers.invalidate();
   GameCache.infinityDimensionCommonMultiplier.invalidate();
   GameCache.timeDimensionCommonMultiplier.invalidate();
   GameCache.totalIPMult.invalidate();
@@ -862,6 +864,7 @@ export function gameLoop(passDiff, options = {}) {
   TimeDimensions.tick(diff);
   InfinityDimensions.tick(diff);
   AntimatterDimensions.tick(diff);
+  MatterDimensions.tick(diff);
 
   const gain = Math.clampMin(FreeTickspeed.fromShards(Currency.timeShards.value).newAmount - player.totalTickGained, 0);
   player.totalTickGained += gain;

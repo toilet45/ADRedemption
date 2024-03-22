@@ -1,7 +1,7 @@
 <script>
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
-import { MatterDimension } from "../../../../core/globals";
+import { MatterDimension, buyManyMatterDimension } from "../../../../core/globals";
 
 export default {
   name: "ClassicMatterDimensionRow",
@@ -36,7 +36,8 @@ export default {
       formattedAmount: null,
       hasTutorial: false,
       isBoostAffordable: false,
-      energy: new Decimal(0)
+      energy: new Decimal(0),
+      boostCost: new Decimal(0)
     };
   },
   computed: {
@@ -56,6 +57,14 @@ export default {
       return `${prefix} ${format(this.singleCost)} ${suffix}`;
     },
     until10Text() {
+      if (this.isCapped) return "Capped";
+      //if (this.isContinuumActive) return `Continuum: ${this.continuumString}`;
+
+      const prefix = `Until ${formatInt(10)},${this.showCostTitle(this.until10Cost) ? " Cost" : ""}`;
+      const suffix = this.isCostsAD ? `${this.costUnit}` : "Matter";
+      return `${prefix} ${format(this.until10Cost)} ${suffix}`;
+    },
+    boostText() {
       const prefix = `Boost this Dimension,${this.showCostTitle(this.until10Cost) ? " Cost" : ""}`;
       const suffix = this.isCostsAD ? `${this.costUnit}` : "Energy";
       return `${prefix} ${format(this.until10Cost)} ${suffix}`;
@@ -100,7 +109,8 @@ export default {
       this.bought = dimension.bought;
       this.boughtBefore10 = dimension.boughtBefore10;
       this.singleCost.copyFrom(dimension.cost);
-      this.until10Cost.copyFrom(dimension.boostCost);
+      this.until10Cost.copyFrom(dimension.cost.times(Math.max(dimension.howManyCanBuy, 1)));
+      this.boostCost.copyFrom(dimension.boostCost);
       if (tier < 4) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);
       }
@@ -116,6 +126,10 @@ export default {
     buySingle() {
       if (this.isContinuumActive) return;
       buyOneMatterDimension(this.tier);
+    },
+    buyUntil10(){
+      if (this.isContinuumActive) return;
+      buyManyMatterDimension(this.tier)
     },
     buyBoost() {
       if (this.isContinuumActive) return;
@@ -169,14 +183,21 @@ export default {
         />
       </PrimaryButton>
       <PrimaryButton
-        :enabled="isBoostAffordable && !isCapped && isUnlocked"
+        :enabled="(isAffordableUntil10) && !isCapped && isUnlocked"
         :class="buyTenClass"
-        @click="buyBoost"
+        @click="buyUntil10"
       >
         {{ until10Text }}
         <div class="c-dim-purchase-count-tooltip">
           {{ boughtTooltip }}
         </div>
+      </PrimaryButton>
+      <PrimaryButton
+        :enabled="isBoostAffordable && !isCapped && isUnlocked"
+        :class="buyTenClass"
+        @click="buyBoost"
+      >
+        {{ boostText }}
       </PrimaryButton>
     </div>
   </div>

@@ -32,9 +32,12 @@ export default {
 
 <template>
   <div class="l-classic-antimatter-dim-tab">
-    <span>You have {{ weakMatter }} Weak Matter (y/sec) which is producing z Energy per second</span>
-    <br>
-    <span>You have {{ energy }} energy which translates to a v multiplier to u</span>
+    <p>
+    You have <span class="c-infinity-dim-description__accent">{{ format(weakMatter, 2, 1) }}</span> Weak Matter which is producing y Energy per second
+    </p>
+    <p>
+    You have <span class="c-infinity-dim-description__accent">{{ format(energy, 2, 1) }}</span> energy which translates to a v boost to u
+    </p>
     <div class="l-dimensions-container">
       <MatterDimensionRow
         v-for="tier in 4"
