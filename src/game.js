@@ -185,6 +185,7 @@ export function gainedMendingPoints(){
     TimeStudy(321),
     TimeStudy(322),
     TimeStudy(323),
+    WarpUpgrade(12),
     CorruptionUpgrade(13),
     MendingUpgradeMultiplier,
     Ra.unlocks.boostMVRGain

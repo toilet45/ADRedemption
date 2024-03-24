@@ -40,8 +40,8 @@ export const kohlerProgress = {
       id: 6,
       progress: 100,
       condition:false,
-      description: "Now for the ultimate test...Have 1 3rd Multiversal Dimension.",
-      condition: () => MultiversalDimension(3).amount.gt(0),
+      description: "Now for the ultimate test...Have 5 3rd Multiversal Dimensions.",
+      condition: () => MultiversalDimension(3).amount.gte(5),
     }
   }
 };

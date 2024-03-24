@@ -44,7 +44,7 @@ export default {
     corruptionSliderProps() {
       return {
         min: 0,
-        max: 9+(WarpUpgrade(6).isBought + WarpUpgrade(12).isBought),
+        max: 9+(WarpUpgrade(6).isBought),// + WarpUpgrade(12).isBought),
         width: "27rem",
         valueInDot: true,
         tooltip: "never",

@@ -358,6 +358,11 @@ export const Ra = {
     let base = Math.max(player.dimensionBoosts - 2.5e9,0)/1e8;
     let powered = Decimal.pow(10,base).minus(1);
     let GainPerSec = new Decimal(powered.times(ticktime));
+    if (GainPerSec.gte(1e40)){
+      GainPerSec = GainPerSec.div(1e40);
+      GainPerSec = GainPerSec.pow(0.1);
+      GainPerSec = GainPerSec.times(1e40);
+    }
     return GainPerSec;
   },
   raGainPointLoop(diff){
