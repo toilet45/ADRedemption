@@ -22,6 +22,7 @@ function applyMDMultipliers(mult, tier) {
   let buy10Value = Math.floor(MatterDimension(tier).bought / 10);
 
   multiplier = multiplier.times(Decimal.pow(MatterDimensions.buyTenMultiplier, buy10Value));
+  multiplier = multiplier.times(Decimal.pow(matterBoostPower(tier), MatterDimension(tier).boughtBoosts));
 
   multiplier = multiplier.clampMin(1);
 
@@ -35,6 +36,11 @@ function applyMDPowers(mult, tier) {
 
 function onBuyDimension(tier) {
 
+}
+
+export function matterBoostPower(tier){
+  let x = 3;
+  return x;
 }
 
 export function buyOneMatterDimension(tier) {
@@ -55,8 +61,8 @@ export function buyOneMatterDimension(tier) {
 
 export function buyMatterBoost(tier) {
   const dimension = MatterDimension(tier);
-  const cost = dimension.boostCost;
-  //dimension.currencyAmount = dimension.currencyAmount.minus(cost);
+  const boostCost = dimension.boostCost;
+  Currency.energy.value = Currency.energy.value.minus(boostCost);
 
   /*if (dimension.boughtBefore10 === 9) {
     dimension.challengeCostBump();
@@ -196,9 +202,9 @@ class MatterDimensionState extends DimensionState {
   set costBumps(value) { this.data.costBumps = value; }
 
   /** @returns {number} */
-  get boostCostBumps() { return this.data.costBumps; }
+  get boostCostBumps() { return this.data.boostCostBumps; }
   /** @param {number} value */
-  set boostCostBumps(value) { this.data.costBumps = value; }
+  set boostCostBumps(value) { this.data.boostCostBumps = value; }
 
   /**
    * @returns {number}
