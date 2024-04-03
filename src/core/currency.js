@@ -602,7 +602,7 @@ Currency.energy = new class extends DecimalCurrency {
   }
 
   reset() {
-    //super.reset();
+    super.reset();
   }
 }();
 
@@ -619,7 +619,7 @@ Currency.weakMatter = new class extends DecimalCurrency {
   }
 
   reset() {
-    //super.reset();
+    super.reset();
   }
 }();
 

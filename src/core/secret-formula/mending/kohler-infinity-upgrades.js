@@ -4,11 +4,11 @@ const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
     player.infinity.kohlerRebuyables[props.id],
     1e30,
-    props.initialCost,
+    1e30 * props.initialCost,
     props.costMult,
     props.costMult / 10,
     DC.E309,
-    1e3,
+    1e20,
     props.initialCost * props.costMult
   );
   const { effect, effectType } = props;
@@ -20,7 +20,7 @@ const rebuyable = props => {
   }
   props.description = () => props.textTemplate.replace("{value}", format(effect, 2, 2));
   props.formatEffect = value => {
-    if (props.id === 4) return effectType + `${format(value, 2, 2)}`
+    if (props.id === 4 || props.id === 5) return effectType + `${format(value, 2, 2)}`
     /*if (props.id === 11) return effectType + `${formatFloat(value, 3)}`*/
     return effectType + `${format(value, 2, 0)}`
   };
@@ -60,7 +60,7 @@ export const kohlerInfinityUpgrades = [
     id: 4,
     name: "Kohler Infinity Upgrade 4",
     initialCost: 1e11,
-    costMult: 1e6,
+    costMult: 1e20,
     textTemplate: `Raise Infinity Power conversion rate by {value}`,
     effect: 1.05,
     effectType: "^"
@@ -68,11 +68,11 @@ export const kohlerInfinityUpgrades = [
   rebuyable({
     id: 5,
     name: "Kohler Infinity Upgrade 5",
-    initialCost: 1e300,
-    costMult: 1e300,
-    textTemplate: "[TBD]",
-    effect: 1,
-    effectType: "×"
+    initialCost: 1e170,
+    costMult: 1e50,
+    textTemplate: `Raise Replicanti Speed by {value}`,
+    effect: 1.1,
+    effectType: "^"
   }),
  {
   id: 6,
@@ -162,5 +162,44 @@ export const kohlerInfinityUpgrades = [
   },
   effectType: "^",
   formatEffect: value => formatPow(value, 2, 2) 
+ },
+ {
+  id: 16,
+  name: "Kohler Infinity Upgrade 16",
+  cost: 1e50,
+  description: () => `Infinity Points boost Energy gain at a reduced rate`,
+  effect: () => Math.max((Currency.infinityPoints.value.clampMin(1)).log10() / 10, 1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)
+ },
+ {
+  id: 17,
+  name: "Kohler Infinity Upgrade 17",
+  cost: 1e120,
+  description: () => `Infinity Points delay Remote Galaxy scaling`,
+  effect: () => Math.max(1, Math.log10(Currency.infinityPoints.value.log10())) ** 0.02,
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)
+ },
+ {
+  id: 18,
+  name: "Kohler Infinity Upgrade 18",
+  cost: 1e300,
+  description: () => `TBD`,
+  effect: () => 1
+ },
+ {
+  id: 19,
+  name: "Kohler Infinity Upgrade 19",
+  cost: 1e300,
+  description: () => `TBD`,
+  effect: () => 1
+ },
+ {
+  id: 20,
+  name: "Kohler Infinity Upgrade 20",
+  cost: 1e300,
+  description: () => `TBD`,
+  effect: () => 1
  }
 ];

@@ -40,6 +40,7 @@ window.player = {
     matter: Array.range(0, 4).map(() => ({
       bought: 0,
       costBumps: 0,
+      boostCostBumps: 0,
       amount: DC.D0,
       matterBoosts: 0
     })),

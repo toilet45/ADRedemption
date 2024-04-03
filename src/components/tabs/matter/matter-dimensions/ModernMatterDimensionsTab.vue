@@ -16,7 +16,10 @@ export default {
       isQuickResetAvailable: false,
       hasContinuum: false,
       isContinuumActive: false,
-      multiplierText: "",
+      energy: new Decimal(0),
+      energyRate: new Decimal(0),
+      energyEffect: new Decimal(0),
+      weakMatter: new Decimal(0)
     };
   },
   computed: {
@@ -50,10 +53,10 @@ export default {
       this.hasContinuum = false;
       this.isContinuumActive = false;
       this.isQuickResetAvailable = Player.isInAntimatterChallenge && Player.antimatterChallenge.isQuickResettable;
-
-      this.buy10Mult.copyFrom(AntimatterDimensions.buyTenMultiplier);
-
-      this.multiplierText = `Buy 10 Dimension purchase multiplier: ${formatX(this.buy10Mult, 2, 2)}`;
+      this.energy.copyFrom(Currency.energy.value);
+      this.energyRate = this.weakMatter.times((energyGainMult()));
+      this.energyEffect = energyEffect();
+      this.weakMatter.copyFrom(Currency.weakMatter.value);
     }
   }
 };
@@ -75,7 +78,12 @@ export default {
         Max All (M)
       </button>
     </div>
-    <span>{{ multiplierText }}</span>
+    <p>
+    You have <span class="c-infinity-dim-description__accent">{{ format(weakMatter, 2, 1) }}</span> Weak Matter which is producing {{format(energyRate, 2, 2)}} energy per in-game second in IC9
+    </p>
+    <p>
+    You have <span class="c-infinity-dim-description__accent">{{ format(energy, 2, 1) }}</span> energy which raises Tickspeed in Kohler's Realm by <span class="c-infinity-dim-description__accent">{{ formatPow(energyEffect, 3, 3) }}</span>
+    </p>
     <div class="l-dimensions-container">
       <MatterDimensionRow
         v-for="tier in 4"

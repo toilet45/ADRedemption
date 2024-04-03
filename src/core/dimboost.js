@@ -248,7 +248,7 @@ export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false
   const bulk = Math.min(tempBulk, DimBoost.maxBoosts - player.dimensionBoosts);
   EventHub.dispatch(GAME_EVENT.DIMBOOST_BEFORE, bulk);
   player.dimensionBoosts = Math.max(0, player.dimensionBoosts + bulk);
-  resetChallengeStuff();
+  if(!InfinityChallenge(9).isRunning || !KohlerMilestone(12).isUnlocked) resetChallengeStuff();
   const canKeepDimensions = Pelle.isDoomed
     ? PelleUpgrade.dimBoostResetsNothing.canBeApplied
     : Perk.antimatterNoReset.canBeApplied;

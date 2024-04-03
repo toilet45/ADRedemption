@@ -206,4 +206,41 @@ export const kohlerUpgrades = [
     cost: 1e7,
     description: () => `Unlock additional Kohler exclusive Infinity Upgrades`
   },
+  {
+    id: 21,
+    name: "Kohler Upgrade 21",
+    cost: 1e14,
+    description: () => 'Kohler Points boost Energy gain',
+    effect: () => Math.max(1, (Currency.kohlerPoints.value.add(1)).log10()) / 3,
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
+  },
+  {
+    id: 22,
+    name: "Kohler Upgrade 22",
+    cost: 1e300,
+    description: () => '[TBD]',
+    effect: () => 1
+  },
+  {
+    id: 23,
+    name: "Kohler Upgrade 23",
+    cost: 1e300,
+    description: () => '[TBD]',
+    effect: () => 1
+  },
+  {
+    id: 24,
+    name: "Kohler Upgrade 24",
+    cost: 1e300,
+    description: () => '[TBD]',
+    effect: () => 1
+  },
+  {
+    id: 25,
+    name: "Kohler Upgrade 25",
+    cost: 1e300,
+    description: () => '[TBD]',
+    effect: () => 1
+  }
 ];

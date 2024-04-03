@@ -67,7 +67,7 @@ export default {
     boostText() {
       const prefix = `Boost this Dimension,${this.showCostTitle(this.until10Cost) ? " Cost" : ""}`;
       const suffix = this.isCostsAD ? `${this.costUnit}` : "Energy";
-      return `${prefix} ${format(this.until10Cost)} ${suffix}`;
+      return `${prefix} ${format(this.boostCost)} ${suffix}`;
     },
     continuumString() {
       return format(this.continuumValue, 2, 2);
@@ -109,7 +109,7 @@ export default {
       this.bought = dimension.bought;
       this.boughtBefore10 = dimension.boughtBefore10;
       this.singleCost.copyFrom(dimension.cost);
-      this.until10Cost.copyFrom(dimension.cost.times(Math.max(dimension.howManyCanBuy, 1)));
+      this.until10Cost.copyFrom(dimension.costUntil10);
       this.boostCost.copyFrom(dimension.boostCost);
       if (tier < 4) {
         this.rateOfChange.copyFrom(dimension.rateOfChange);

@@ -26,6 +26,9 @@ export class Galaxy {
     return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + CorruptionUpgrade(9).effectOrDefault(0) + x;
   }
   static get remoteStart() {
+    if (Kohler.isRunning){
+      return Math.floor((new Decimal(800).timesEffectsOf(KohlerInfinityUpgrade(17))).toNumber())
+    }
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }
 
@@ -215,7 +218,7 @@ export function manualRequestGalaxyReset(bulk) {
 // to restrict galaxy count for RUPG7's requirement here and nowhere else
 export function requestGalaxyReset(bulk, limit = Number.MAX_VALUE) {
   const restrictedLimit = RealityUpgrade(7).isLockingMechanics ? 1 : limit;
-  if (EternityMilestone.autobuyMaxGalaxies.isReached && bulk) return maxBuyGalaxies(restrictedLimit);
+  if ((EternityMilestone.autobuyMaxGalaxies.isReached || (Kohler.isRunning && KohlerMilestone(12).isUnlocked)) && bulk) return maxBuyGalaxies(restrictedLimit);
   if (player.galaxies >= restrictedLimit || !Galaxy.canBeBought || !Galaxy.requirement.isSatisfied) return false;
   Tutorial.turnOffEffect(TUTORIAL_STATE.GALAXY);
   galaxyReset();

@@ -10,6 +10,12 @@ export function matterDimensionCommonMultiplier() {
   return multiplier;
 }
 
+export function energyGainMult(){
+  let x = DC.D1;
+  x = x.timesEffectsOf(MatterUpgrade(19), KohlerInfinityUpgrade(16));
+  return x;
+}
+
 export function getMatterDimensionFinalMultiplierUncached(tier) {
   if (tier < 1 || tier > 4) throw new Error(`Invalid Matter Dimension tier ${tier}`);
   let multiplier = DC.D1;
@@ -22,7 +28,7 @@ function applyMDMultipliers(mult, tier) {
   let buy10Value = Math.floor(MatterDimension(tier).bought / 10);
 
   multiplier = multiplier.times(Decimal.pow(MatterDimensions.buyTenMultiplier, buy10Value));
-  multiplier = multiplier.times(Decimal.pow(matterBoostPower(tier), MatterDimension(tier).boughtBoosts));
+  multiplier = multiplier.times(Decimal.pow(matterBoostPower(tier), matterBoostAmount(tier)));
 
   multiplier = multiplier.clampMin(1);
 
@@ -45,6 +51,7 @@ export function matterBoostPower(tier){
 
 export function buyOneMatterDimension(tier) {
   const dimension = MatterDimension(tier);
+  if (!dimension.isAvailableForPurchase || !dimension.isAffordable) return false;
   const cost = dimension.cost;
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
 
@@ -61,6 +68,7 @@ export function buyOneMatterDimension(tier) {
 
 export function buyMatterBoost(tier) {
   const dimension = MatterDimension(tier);
+  if (!dimension.isBoostAffordable) return false;
   const boostCost = dimension.boostCost;
   Currency.energy.value = Currency.energy.value.minus(boostCost);
 
@@ -68,13 +76,14 @@ export function buyMatterBoost(tier) {
     dimension.challengeCostBump();
   }*/
 
-  dimension.boostAmount = dimension.boostAmount.plus(1);
-  dimension.boughtBoosts++;
+  player.dimensions.matter[tier - 1].matterBoosts++;
+  //dimension.boughtBoosts++;
   return true;
 }
 
 export function buyManyMatterDimension(tier) {
   const dimension = MatterDimension(tier);
+  if (!dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return false;
   const cost = dimension.costUntil10;
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.amount = dimension.amount.plus(dimension.remainingUntil10);
@@ -146,6 +155,15 @@ export function buyMaxMatterDimension(tier, bulk = Infinity) {
   dimension.currencyAmount = dimension.currencyAmount.minus(Decimal.pow10(maxBought.logPrice));
 }
 
+export function matterBoostAmount(tier){
+  return player.dimensions.matter[tier - 1].matterBoosts;
+}
+
+export function energyEffect(){
+  let x = new Decimal((Currency.energy.value.clampMin(1)).log10()).pow(0.1).clampMin(1);
+  return x;
+}
+
 class MatterDimensionState extends DimensionState {
   constructor(tier) {
     super(() => player.dimensions.matter, tier);
@@ -192,7 +210,7 @@ class MatterDimensionState extends DimensionState {
   }
 
   get boostCost() {
-    let primeAnswer = this.boostCostScale.calculateCost(Math.floor(this.bought / 10) + this.boostCostBumps);
+    let primeAnswer = this.boostCostScale.calculateCost(matterBoostAmount(this.tier) + this.boostCostBumps);
     return primeAnswer;
   }
 
@@ -303,6 +321,13 @@ class MatterDimensionState extends DimensionState {
   }
 
   /**
+    * @returns {boolean}
+    */
+  get isBoostAffordable() {
+    return this.boostCost.lte(Currency.energy.value) && Kohler.isRunning;
+  }
+
+  /**
    * @returns {boolean}
    */
   get isAffordableUntil10() {
@@ -368,6 +393,9 @@ export const MatterDimensions = {
       MatterDimension(j).bought = 0;
       MatterDimension(j).costBumps = 0;
       MatterDimension(j).boostCostBumps = 0;
+      player.dimensions.matter[j - 1].matterBoosts = 0;
+      Currency.weakMatter.reset();
+      Currency.energy.reset();
     }
     GameCache.dimensionMultDecrease.invalidate();
   },
@@ -388,6 +416,6 @@ export const MatterDimensions = {
       MatterDimension(tier).produceDimensions(MatterDimension(tier - 1), new Decimal(diff).div(10));
     }
     MatterDimension(1).produceCurrency(Currency.weakMatter, diff);
-    Currency.energy.add(Currency.weakMatter.value);
+    Currency.energy.add(Currency.weakMatter.value.times(energyGainMult()));
   }
 };

@@ -178,6 +178,7 @@ export const Tickspeed = {
         tickspeed = tickspeed.pow(corruptPen);
       };
       if(V.isSuperRunning || Kohler.isRunning) tickspeed = tickspeed.pow(0.000001);
+      if (Kohler.isRunning) tickspeed = tickspeed.pow(energyEffect());
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },
 

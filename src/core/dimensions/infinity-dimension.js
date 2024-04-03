@@ -538,6 +538,14 @@ export const InfinityDimensions = {
       w *= 8;
     }*/
     let kiu4Pow = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
+    let scK = 20;
+    if (Kohler.isRunning && (w ** kiu4Pow > scK)){
+      let d = w ** kiu4Pow;
+      d /= scK;
+      d **= 0.1;
+      d *= scK;
+      return d
+    }
     return w ** kiu4Pow;
   }
 };

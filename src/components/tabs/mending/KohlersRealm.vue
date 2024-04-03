@@ -169,7 +169,7 @@ export default {
     </div>
       <div v-if="this.unlocked" class="l-mending-upgrade-grid">
       <div
-        v-for=" row in 4"
+        v-for=" row in 5"
         :key="row"
         class="l-mending-upgrade-grid__row">
       <KohlerUpgradeButton 

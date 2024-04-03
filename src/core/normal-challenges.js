@@ -17,9 +17,11 @@ export function updateNormalAndInfinityChallenges(diff) {
           MatterUpgrade(9),
           MatterUpgrade(11),
           MatterUpgrade(13),
-          MatterUpgrade(14)
+          MatterUpgrade(14),
+          MatterUpgrade(16)
         )
-        Currency.matter.add(a.pow(MatterUpgrade(2).effectOrDefault(1)));
+        let expo = Effects.product(MatterUpgrade(2), MatterUpgrade(20));
+        Currency.matter.add(a.pow(expo));
         if (Currency.matter.value.gt(player.records.bestMatterinIC9)) player.records.bestMatterinIC9 = Currency.matter.value;
       }
       else{ 

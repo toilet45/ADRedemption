@@ -11,8 +11,9 @@ export const kohlerMilestones = [
   {
     id: 12,
     name: "Complete IC4",
-    description: "???",
-    checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
+    description: `Reward: Galaxy Autobuyer buys max and Matter no longer resets on Dimension Boost in IC9`,
+    checkRequirement: () => InfinityChallenge(4).isCompleted,
+    checkEvent: GAME_EVENT.BIG_CRUNCH_AFTER,
   },
   {
     id: 13,

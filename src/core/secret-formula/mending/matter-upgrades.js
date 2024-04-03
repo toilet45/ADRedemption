@@ -4,11 +4,11 @@ const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
     player.infinity.matterRebuyables[props.id],
     1e30,
-    props.initialCost,
+    1e15 * props.initialCost,
     props.costMult,
     props.costMult / 10,
     DC.E309,
-    1e3,
+    1e50,
     props.initialCost * props.costMult
   );
   const { effect, effectType } = props;
@@ -167,7 +167,66 @@ export const matterUpgrades = [
   id: 15,
   name: "Matter Upgrade 15",
   cost: 1e14,
-  description: () => `Unlock Matter Dimensions [NYI]`,
+  description: () => `Unlock Matter Dimensions`,
   effect: () => 1,
+ },
+ {
+  id: 16,
+  name: "Matter Upgrade 16",
+  cost: 5e17,
+  description: () => `Weak Matter boosts Matter gain`,
+  effect: () => new Decimal((Currency.weakMatter.value).clampMin(1).log10()).clampMin(1),
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
+ },
+ {
+  id: 17,
+  name: "Matter Upgrade 17",
+  cost: 5e18,
+  description: () => `Energy effect boosts Infinity Point gain`,
+  effect: () => {
+    let x = energyEffect();
+    if (x.gt(1.4)){
+      x = x.div(1.4);
+      x = x.pow(0.33);
+      x = x.times(1.4)
+    }
+    return x;
+  },
+  effectType: "^",
+  formatEffect: value => formatPow(value, 2, 2) 
+ },
+ {
+  id: 18,
+  name: "Matter Upgrade 18",
+  cost: 1.5e19,
+  description: () => `Energy effect boosts Gamespeed in Infinity Challenge 9`,
+  effect: () => energyEffect(),
+  effectType: "^",
+  formatEffect: value => formatPow(value, 2, 2) 
+ },
+ {
+  id: 19,
+  name: "Matter Upgrade 19",
+  cost: 5e19,
+  description: () => `Improve the Weak Matter to Energy conversion`,
+  effect: () => 5
+ },
+ {
+  id: 20,
+  name: "Matter Upgrade 20",
+  cost: 1e20,
+  description: () => `Energy effect affects Matter Gain`,
+  effect: () =>{
+    let x = energyEffect();
+    if (x.gt(1.3)){
+      x = x.div(1.3);
+      x = x.pow(0.25);
+      x = x.times(1.3)
+    }
+    return x;
+  },
+  effectType: "^",
+  formatEffect: value => formatPow(value, 2, 2) 
  }
 ];

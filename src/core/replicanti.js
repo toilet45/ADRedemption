@@ -149,6 +149,7 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
 // value in the multiplier tab too
 export function totalReplicantiSpeedMult(overCap) {
   let totalMult = DC.D1;
+  let speedPow = DC.D1;
 
   // These are the only effects active in Pelle - the function shortcuts everything else if we're in Pelle
   totalMult = totalMult.times(PelleRifts.decay.effectValue);
@@ -187,7 +188,11 @@ export function totalReplicantiSpeedMult(overCap) {
   }
   totalMult = totalMult.timesEffectsOf(AlchemyResource.replication);
 
-  return totalMult;
+  if (Kohler.isRunning){
+    speedPow = speedPow.timesEffectOf(KohlerInfinityUpgrade(5))
+  }
+
+  return totalMult.pow(speedPow);
 }
 
 export function replicantiCap() {

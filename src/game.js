@@ -162,7 +162,8 @@ export function gainedInfinityPoints(noSoftcap = false) {
       KohlerUpgrade(4)
     )
     ip = Decimal.pow(ip, MatterUpgrade(4).effectOrDefault(1));
-    ip = Decimal.pow(ip, KohlerInfinityUpgrade(15).effectOrDefault(1))
+    ip = Decimal.pow(ip, KohlerInfinityUpgrade(15).effectOrDefault(1));
+    ip = Decimal.pow(ip, MatterUpgrade(17).effectOrDefault(1));
   }
   return ip.floor();
 }
@@ -464,9 +465,11 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   let factor = DC.D1;
   if (InfinityChallenge(9).isRunning) {
-    return factor.timesEffectsOf(
+    factor = factor.timesEffectsOf(
       MatterUpgrade(3)
-    )
+    );
+    factor = factor.pow(MatterUpgrade(18).effectOrDefault(1));
+    return factor;
   };
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative && !player.mending.corruptionChallenge.corruptedMend) {
@@ -483,12 +486,6 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
         factor = factor.times(VUnlocks.vAchMulti.effectOrDefault(1));
         if (Kohler.isRunning) factor = factor.div(3);
-        /*if(ExpoBlackHole(1).isUnlocked && factor.gte(1)){
-          for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
-            if (!i.isUnlocked) break;
-            factor = Decimal.pow(factor, i.power);
-          }
-        }*/
       }
     }
   }
@@ -865,7 +862,7 @@ export function gameLoop(passDiff, options = {}) {
   TimeDimensions.tick(diff);
   InfinityDimensions.tick(diff);
   AntimatterDimensions.tick(diff);
-  MatterDimensions.tick(diff);
+  if (InfinityChallenge(9).isRunning) MatterDimensions.tick(diff);
 
   const gain = Math.clampMin(FreeTickspeed.fromShards(Currency.timeShards.value).newAmount - player.totalTickGained, 0);
   player.totalTickGained += gain;

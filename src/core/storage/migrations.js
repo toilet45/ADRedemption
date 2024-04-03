@@ -821,7 +821,8 @@ export const migrations = {
       bought: 0,
       costBumps: 0,
       amount: DC.D0,
-      matterBoosts: 0
+      matterBoosts: 0,
+      boostCostBumps: 0
     }));
   },
   51.300: player => {
