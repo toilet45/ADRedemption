@@ -43,7 +43,7 @@ class KohlerMilestoneState extends GameMechanicState {
   }
 
   unlock(auto) {
-    if (this.isUnlocked) return;
+    if (this.isUnlocked || !Kohler.isRunning) return;
     player.kohlerMilestoneBits[this.row - 1] |= this._bitmask;
     GameUI.notify.success(`Kohler Milestone Reached: ${this.name}`);
     EventHub.dispatch(GAME_EVENT.KOHLER_MILESTONE_UNLOCKED);

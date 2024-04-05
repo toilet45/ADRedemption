@@ -5,7 +5,7 @@ export const kohlerMilestones = [
     id: 11,
     name: "Reach Infinity",
     description: `Reward: Start Kohler's Realm with SAM and ANR`,
-    checkRequirement: () => Kohler.isRunning,
+    checkRequirement: () => true,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
   },
   {
