@@ -4,7 +4,7 @@ const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
     player.infinity.matterRebuyables[props.id],
     1e30,
-    1e15 * props.initialCost,
+    1e30 * props.initialCost,
     props.costMult,
     props.costMult / 10,
     DC.E309,

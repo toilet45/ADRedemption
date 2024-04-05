@@ -27,7 +27,7 @@ export class Galaxy {
   }
   static get remoteStart() {
     if (Kohler.isRunning){
-      return Math.floor((new Decimal(800).timesEffectsOf(KohlerInfinityUpgrade(17))).toNumber())
+      return Math.floor((new Decimal(800).timesEffectsOf(KohlerInfinityUpgrade(18))).toNumber())
     }
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }

@@ -12,7 +12,7 @@ export function matterDimensionCommonMultiplier() {
 
 export function energyGainMult(){
   let x = DC.D1;
-  x = x.timesEffectsOf(MatterUpgrade(19), KohlerInfinityUpgrade(16));
+  x = x.timesEffectsOf(MatterUpgrade(19), KohlerInfinityUpgrade(16), KohlerInfinityUpgrade(20));
   return x;
 }
 
@@ -29,6 +29,9 @@ function applyMDMultipliers(mult, tier) {
 
   multiplier = multiplier.times(Decimal.pow(MatterDimensions.buyTenMultiplier, buy10Value));
   multiplier = multiplier.times(Decimal.pow(matterBoostPower(tier), matterBoostAmount(tier)));
+  if (tier === 1){
+    multiplier = multiplier.timesEffectOf(KohlerInfinityUpgrade(19));
+  }
 
   multiplier = multiplier.clampMin(1);
 
@@ -45,7 +48,7 @@ function onBuyDimension(tier) {
 }
 
 export function matterBoostPower(tier){
-  let x = 3;
+  let x = 10;
   return x;
 }
 
@@ -160,7 +163,7 @@ export function matterBoostAmount(tier){
 }
 
 export function energyEffect(){
-  let x = new Decimal((Currency.energy.value.clampMin(1)).log10()).pow(0.1).clampMin(1);
+  let x = new Decimal((Currency.energy.value.clampMin(1)).log10()).pow(new Decimal(0.1).timesEffectOf(KohlerInfinityUpgrade(17))).clampMin(1);
   return x;
 }
 

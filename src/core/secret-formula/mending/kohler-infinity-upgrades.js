@@ -175,31 +175,35 @@ export const kohlerInfinityUpgrades = [
  {
   id: 17,
   name: "Kohler Infinity Upgrade 17",
-  cost: 1e120,
-  description: () => `Infinity Points delay Remote Galaxy scaling`,
-  effect: () => Math.max(1, Math.log10(Currency.infinityPoints.value.log10())) ** 0.02,
-  effectType: "×",
-  formatEffect: value => formatX(value, 2, 2)
+  cost: 1e60,
+  description: () => `Energy effect uses a better formula`,
+  effect: () => 2
  },
  {
   id: 18,
   name: "Kohler Infinity Upgrade 18",
-  cost: 1e300,
-  description: () => `TBD`,
-  effect: () => 1
+  cost: 1e70,
+  description: () => `Infinity Points delay Remote Galaxy scaling`,
+  effect: () => Math.max(1, Math.log10(Currency.infinityPoints.value.log10())) ** 0.4,
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)
  },
  {
   id: 19,
   name: "Kohler Infinity Upgrade 19",
-  cost: 1e300,
-  description: () => `TBD`,
-  effect: () => 1
+  cost: 1e75,
+  description: () => `Kohler Infinity Upgrade 2 also affects 1st Matter Dimension`,
+  effect: () => Math.log10(KohlerInfinityUpgrade(2).effectValue) * 100,
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)
  },
  {
   id: 20,
   name: "Kohler Infinity Upgrade 20",
-  cost: 1e300,
-  description: () => `TBD`,
-  effect: () => 1
+  cost: 1e80,
+  description: () => `1st Matter Dimension multiplier affects Energy gain`,
+  effect: () => MatterDimension(1).multiplier,
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2)
  }
 ];

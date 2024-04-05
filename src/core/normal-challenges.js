@@ -18,7 +18,8 @@ export function updateNormalAndInfinityChallenges(diff) {
           MatterUpgrade(11),
           MatterUpgrade(13),
           MatterUpgrade(14),
-          MatterUpgrade(16)
+          MatterUpgrade(16),
+          KohlerUpgrade(22)
         )
         let expo = Effects.product(MatterUpgrade(2), MatterUpgrade(20));
         Currency.matter.add(a.pow(expo));

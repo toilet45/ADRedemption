@@ -218,9 +218,11 @@ export const kohlerUpgrades = [
   {
     id: 22,
     name: "Kohler Upgrade 22",
-    cost: 1e300,
-    description: () => '[TBD]',
-    effect: () => 1
+    cost: 1e15,
+    description: () => '1st Matter Dimension Multiplier affects Matter gain',
+    effect: () => MatterDimension(1).multiplier,
+    effectType: "×",
+    formatEffect: value => formatX(value, 2, 2) 
   },
   {
     id: 23,
