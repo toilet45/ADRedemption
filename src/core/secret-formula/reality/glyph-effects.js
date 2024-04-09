@@ -478,7 +478,7 @@ export const glyphEffects = {
       return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "Reality Machine and Imaginary Machine cap multiplier" : "Reality Machine multiplier";
     },
     shortDesc: () => {
-      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "RM ×{value} and iM cap ×{value3}" : "RM ×{value}";
+      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "RM ×{value} and iM cap ×{value2}" : "RM ×{value}";
     },
     effect: (level, strength) => (GlyphAlteration.isEmpowered("effarig") ? Math.pow(level, 1.5) : Math.pow(level, 0.6) * strength),
     formatEffect: x => format(x, 2, 2),

@@ -170,11 +170,11 @@ export function energyEffect(){
 class MatterDimensionState extends DimensionState {
   constructor(tier) {
     super(() => player.dimensions.matter, tier);
-    const BASE_COSTS = [null, 1e15, 1e20, 1e25, 1e30];
+    const BASE_COSTS = [null, 1e14, 1e19, 1e24, 1e29];
     this._baseCost = BASE_COSTS[tier];
     const BASE_COST_MULTIPLIERS = [null, 1e3, 1e4, 1e5, 1e6];
     this._baseCostMultiplier = BASE_COST_MULTIPLIERS[tier];
-    const BASE_BOOST_COSTS = [null, 1e20, 1e40, 1e60, 1e80];
+    const BASE_BOOST_COSTS = [null, 1e10, 1e20, 1e30, 1e40];
     this._baseBoostCost = BASE_BOOST_COSTS[tier];
     const BASE_BOOST_COST_MULTIPLIERS = [null, 1e10, 1e20, 1e30, 1e40];
     this._baseBoostCostMultiplier = BASE_BOOST_COST_MULTIPLIERS[tier];

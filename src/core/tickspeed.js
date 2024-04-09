@@ -6,7 +6,7 @@ import { corruptionPenalties } from "./secret-formula/mending/corruption";
 export function effectiveBaseGalaxies() {
   // Note that this already includes the "50% more" active path effect
   let replicantiGalaxies = Replicanti.galaxies.bought;
-  let matterGalaxies = Kohler.isRunning ? MatterUpgrade(12).effectOrDefault(0) : 0;
+  let matterGalaxies = 0;//Kohler.isRunning ? MatterUpgrade(12).effectOrDefault(0) : 0;
   replicantiGalaxies *= (1 + Effects.sum(
     TimeStudy(132),
     TimeStudy(133)

@@ -4,7 +4,7 @@ const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
     player.infinity.kohlerRebuyables[props.id],
     1e30,
-    1e30 * props.initialCost,
+    props.initialCost,
     props.costMult,
     props.costMult / 10,
     DC.E309,
@@ -32,43 +32,43 @@ export const kohlerInfinityUpgrades = [
   rebuyable({
     id: 1,
     name: "Kohler Infinity Upgrade 1",
-    initialCost: 10,
-    costMult: 50,
+    initialCost: 1e5,
+    costMult: 1e5,
     textTemplate: `Multiply Infinity Point gain by {value} after softcaps`,
-    effect: 3,
+    effect: 10,
     effectType: "×"
   }),
   rebuyable({
     id: 2,
     name: "Kohler Infinity Upgrade 2",
     initialCost: 1e8,
-    costMult: 100,
+    costMult: 1e8,
     textTemplate: "Multiply Infinity Dimensions by {value} after softcaps",
-    effect: 5,
+    effect: 20,
     effectType: "×"
   }),
   rebuyable({
     id: 3,
     name: "Kohler Infinity Upgrade 3",
     initialCost: 1e10,
-    costMult: 1e4,
+    costMult: 1e10,
     textTemplate: `Multiply Infinity gain by {value}`,
-    effect: 2,
+    effect: 2000,
     effectType: "×"
   }),
   rebuyable({
     id: 4,
     name: "Kohler Infinity Upgrade 4",
-    initialCost: 1e11,
-    costMult: 1e20,
+    initialCost: 1e15,
+    costMult: 1e10,
     textTemplate: `Raise Infinity Power conversion rate by {value}`,
-    effect: 1.05,
+    effect: 1.025,
     effectType: "^"
   }),
   rebuyable({
     id: 5,
     name: "Kohler Infinity Upgrade 5",
-    initialCost: 1e170,
+    initialCost: 1e150,
     costMult: 1e50,
     textTemplate: `Raise Replicanti Speed by {value}`,
     effect: 1.1,
@@ -83,7 +83,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 7,
   name: "Kohler Infinity Upgrade 7",
-  cost: 1e7,
+  cost: 1e6,
   description: () => `Infinity Dimension multiplier to Antimatter Dimensions applies again after Kohler nerfs at a reduced rate`,
   effect: () => Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).pow(0.1).clampMin(1),
   effectType: "×",
@@ -107,13 +107,13 @@ export const kohlerInfinityUpgrades = [
  {
   id: 10,
   name: "Kohler Infinity Upgrade 10",
-  cost: 1e9,
+  cost: 1.5e8,
   description: () => `Unlock Matter Upgrades and Infinity Challenge 9`
  },
  {
   id: 11,
   name: "Kohler Infinity Upgrade 11",
-  cost: 1e11,
+  cost: 3e9,
   description: () => `Kohler Infinity Upgrade 7 also applies to the 1st Antimatter Dimension`,
   effect: () => Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).pow(0.1).clampMin(1),
   effectType: "×",
@@ -122,7 +122,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 12,
   name: "Kohler Infinity Upgrade 12",
-  cost: 1e12,
+  cost: 5e10,
   description: () => `Gamespeed boosts Infinity Point Gain`,
   effect: () => Math.max(getGameSpeedupFactor().log10(), 1),
   effectType: "×",
@@ -131,7 +131,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 13,
   name: "Kohler Infinity Upgrade 13",
-  cost: 1e14,
+  cost: 2e12,
   description: () => `Matter Gain is boosted by Infinity Points`,
   effect: () => Math.max(Currency.infinityPoints.value.log10() / 2, 1),
   effectType: "×",
@@ -166,7 +166,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 16,
   name: "Kohler Infinity Upgrade 16",
-  cost: 1e50,
+  cost: 1e40,
   description: () => `Infinity Points boost Energy gain at a reduced rate`,
   effect: () => Math.max((Currency.infinityPoints.value.clampMin(1)).log10() / 10, 1),
   effectType: "×",
@@ -175,14 +175,14 @@ export const kohlerInfinityUpgrades = [
  {
   id: 17,
   name: "Kohler Infinity Upgrade 17",
-  cost: 1e60,
+  cost: 1e50,
   description: () => `Energy effect uses a better formula`,
   effect: () => 2
  },
  {
   id: 18,
   name: "Kohler Infinity Upgrade 18",
-  cost: 1e70,
+  cost: 1e60,
   description: () => `Infinity Points delay Remote Galaxy scaling`,
   effect: () => Math.max(1, Math.log10(Currency.infinityPoints.value.log10())) ** 0.4,
   effectType: "×",
@@ -191,7 +191,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 19,
   name: "Kohler Infinity Upgrade 19",
-  cost: 1e75,
+  cost: 1e65,
   description: () => `Kohler Infinity Upgrade 2 also affects 1st Matter Dimension`,
   effect: () => Math.log10(KohlerInfinityUpgrade(2).effectValue) * 100,
   effectType: "×",
@@ -200,7 +200,7 @@ export const kohlerInfinityUpgrades = [
  {
   id: 20,
   name: "Kohler Infinity Upgrade 20",
-  cost: 1e80,
+  cost: 1e70,
   description: () => `1st Matter Dimension multiplier affects Energy gain`,
   effect: () => MatterDimension(1).multiplier,
   effectType: "×",

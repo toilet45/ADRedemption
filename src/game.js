@@ -206,6 +206,7 @@ export function warpReality(){
 export function gainedKohlerPoints(){
   let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
   gain = gain.timesEffectsOf(
+    Achievement(202),
     KohlerUpgrade(11),
     KohlerUpgrade(15),
     MatterUpgrade(5)

@@ -109,7 +109,7 @@ export default {
       this.galaxies.normal = player.galaxies + GalaxyGenerator.galaxies;
       this.galaxies.replicanti = Replicanti.galaxies.total;
       this.galaxies.dilation = player.dilation.totalTachyonGalaxies;
-      this.galaxies.matter = MatterUpgrade(12).effectOrDefault(0);
+      this.galaxies.matter = 0;//MatterUpgrade(12).effectOrDefault(0);
       const requirement = Galaxy.requirement;
       this.requirement.amount = requirement.amount;
       this.requirement.tier = requirement.tier;

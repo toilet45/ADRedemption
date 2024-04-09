@@ -4,7 +4,7 @@ const rebuyable = props => {
   props.cost = () => getHybridCostScaling(
     player.infinity.matterRebuyables[props.id],
     1e30,
-    1e30 * props.initialCost,
+    props.initialCost,
     props.costMult,
     props.costMult / 10,
     DC.E309,
@@ -18,9 +18,9 @@ const rebuyable = props => {
     }
     return Math.pow(effect, player.infinity.matterRebuyables[props.id]);
   }
-  props.description = () => props.textTemplate.replace("{value}", format(effect, 2, 2));
+  props.description = () => props.textTemplate.replace("{value}", format(effect, 3, 3));
   props.formatEffect = value => {
-    if (props.id === 2 || props.id === 4) return effectType + `${format(value, 2, 2)}`
+    if (props.id === 2 || props.id === 4) return effectType + `${format(value, 3, 3)}`
     if (props.id === 12) return effectType + `${formatInt(value)}`
     return effectType + `${format(value, 2, 0)}`
   };
@@ -32,26 +32,26 @@ export const matterUpgrades = [
   rebuyable({
     id: 1,
     name: "Matter Upgrade 1",
-    initialCost: 100,
-    costMult: 1e3,
+    initialCost: 50000,
+    costMult: 2e6,
     textTemplate: `Multiply Matter gain by {value} in Infinity Challenge 9`,
-    effect: 2,
+    effect: 5,
     effectType: "×"
   }),
   rebuyable({
     id: 2,
     name: "Matter Upgrade 2",
-    initialCost: 1e8,
-    costMult: 1e4,
+    initialCost: 1e15,
+    costMult: 1e20,
     textTemplate: `Raise Matter gain by {value}`,
-    effect: 1.05,
+    effect: 1.025,
     effectType: "^"
   }),
   rebuyable({
     id: 3,
     name: "Matter Upgrade 3",
     initialCost: 1e9,
-    costMult: 1e5,
+    costMult: 1e6,
     textTemplate: `Multiply Gamespeed in Infinity Challenge 9 by {value}`,
     effect: 3,
     effectType: "×"
@@ -59,10 +59,10 @@ export const matterUpgrades = [
   rebuyable({
     id: 4,
     name: "Matter Upgrade 4",
-    initialCost: 1e11,
-    costMult: 1e7,
+    initialCost: 1e12,
+    costMult: 1e6,
     textTemplate: `Raise Infinity Point gain by {value}`,
-    effect: 1.1,
+    effect: 1.025,
     effectType: "^"
   }),
   rebuyable({
@@ -104,7 +104,7 @@ export const matterUpgrades = [
  {
   id: 9,
   name: "Matter Upgrade 9",
-  cost: 2.5e7,
+  cost: 1e7,
   description: () => `1st Antimatter Dimension multiplier boosts Matter gain`,
   effect: () => AntimatterDimension(1).multiplier.clampMin(1).log10() / 10,
   effectType: "×",
@@ -113,7 +113,7 @@ export const matterUpgrades = [
  {
   id: 10,
   name: "Matter Upgrade 10",
-  cost: 1e9,
+  cost: 1e8,
   description: () => `Best Matter in IC9 boosts Antimatter Exponent`,
   effect: () => 1 + (player.records.bestMatterinIC9.log10() / 50),
   effectType: "^",
@@ -122,7 +122,7 @@ export const matterUpgrades = [
  {
   id: 11,
   name: "Matter Upgrade 11",
-  cost: 5e9,
+  cost: 1.5e8,
   description: () => `Total Antimatter boosts Matter gain`,
   effect: () => Math.max(Math.log(Math.max(player.records.totalAntimatter.log10(), 1)), 1),
   effectType: "×",
@@ -131,24 +131,24 @@ export const matterUpgrades = [
  {
   id: 12,
   name: "Matter Upgrade 12",
-  cost: 1e11,
-  description: () => `Gain free Galxies based on best Matter`,
+  cost: 5e9,
+  description: () => `Gain more Matter based on Galaxies`,
   effect: () => {
-    let x = player.records.bestMatterinIC9.log10()
+    let x = player.galaxies + Replicanti.galaxies.bought + player.dilation.totalTachyonGalaxies
     if (x > 50){
       x /= 50;
       x = x ** 0.25;
       x *= 50;
     }
-    return Math.floor(x);
+    return x;
   },
-  effectType: "+",
-  formatEffect: value => formatInt(value) 
+  effectType: "×",
+  formatEffect: value => formatX(value, 2, 2) 
  },
  {
   id: 13,
   name: "Matter Upgrade 13",
-  cost: 3e12,
+  cost: 2.5e11,
   description: () => `Multiply Matter gain based on Kohler Points`,
   effect: () => Math.max(Currency.kohlerPoints.value.clampMin(1).log10(),1),
   effectType: "×",
@@ -157,9 +157,9 @@ export const matterUpgrades = [
  {
   id: 14,
   name: "Matter Upgrade 14",
-  cost: 2e13,
+  cost: 3e12,
   description: () => `Matter gain is boosted based on Antimatter in IC9`,
-  effect: () => Math.max(Currency.antimatter.value.clampMin(1).log10() / 500, 1),
+  effect: () => Math.max(Currency.antimatter.value.clampMin(1).log10() / 33, 1),
   effectType: "×",
   formatEffect: value => formatX(value, 2, 2) 
  },
@@ -173,7 +173,7 @@ export const matterUpgrades = [
  {
   id: 16,
   name: "Matter Upgrade 16",
-  cost: 5e17,
+  cost: 1e16,
   description: () => `Weak Matter boosts Matter gain`,
   effect: () => new Decimal((Currency.weakMatter.value).clampMin(1).log10()).clampMin(1),
   effectType: "×",
@@ -182,14 +182,14 @@ export const matterUpgrades = [
  {
   id: 17,
   name: "Matter Upgrade 17",
-  cost: 5e18,
+  cost: 5e16,
   description: () => `Energy effect boosts Infinity Point gain`,
   effect: () => {
-    let x = energyEffect();
-    if (x.gt(1.4)){
-      x = x.div(1.4);
-      x = x.pow(0.33);
-      x = x.times(1.4)
+    let x = energyEffect().pow(1.5);
+    if (x.gt(2)){
+      x = x.div(2);
+      x = x.pow(0.5);
+      x = x.times(2);
     }
     return x;
   },
@@ -199,7 +199,7 @@ export const matterUpgrades = [
  {
   id: 18,
   name: "Matter Upgrade 18",
-  cost: 1.5e19,
+  cost: 1e17,
   description: () => `Energy effect boosts Gamespeed in Infinity Challenge 9`,
   effect: () => energyEffect(),
   effectType: "^",
@@ -208,14 +208,14 @@ export const matterUpgrades = [
  {
   id: 19,
   name: "Matter Upgrade 19",
-  cost: 5e19,
+  cost: 1e18,
   description: () => `Improve the Weak Matter to Energy conversion`,
   effect: () => 5
  },
  {
   id: 20,
   name: "Matter Upgrade 20",
-  cost: 1e20,
+  cost: 1e19,
   description: () => `Energy effect affects Matter Gain`,
   effect: () =>{
     let x = energyEffect();

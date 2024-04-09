@@ -1477,29 +1477,34 @@ export const normalAchievements = [
   },
   {
     id: 202,
-    name: "202",
+    name: "I already told you we could afford 9",
     get description () {
-      return `placeholder`;
+      return `Have exactly 9 Kohler Points`;
     },
-    checkRequirement: () => false,
-    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+    checkRequirement: () => Currency.kohlerPoints.value.eq(9),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    get reward(){
+      return `Kohler Points are multiplied based on your Mend amount`
+    },
+    effect: () => Math.max(1, Currency.mends.value.log10() * 2),
+    formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
     id: 203,
-    name: "203",
+    name: "That challenge doesn't exist",
     get description () {
-      return `placeholder`;
+      return `Start Infinity Challenge 9`;
     },
-    checkRequirement: () => false,
+    checkRequirement: () => InfinityChallenge(9).isRunning,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
     id: 204,
-    name: "204",
+    name: "It's not called Antimatter Dimensions is it...wait",
     get description () {
-      return `placeholder`;
+      return `Unlock Matter Dimensions`;
     },
-    checkRequirement: () => false,
+    checkRequirement: () => MatterUpgrade(15).isBought,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {

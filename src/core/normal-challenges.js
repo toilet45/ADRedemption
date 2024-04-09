@@ -16,6 +16,7 @@ export function updateNormalAndInfinityChallenges(diff) {
           KohlerInfinityUpgrade(13),
           MatterUpgrade(9),
           MatterUpgrade(11),
+          MatterUpgrade(12),
           MatterUpgrade(13),
           MatterUpgrade(14),
           MatterUpgrade(16),

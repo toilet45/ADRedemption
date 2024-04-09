@@ -80,6 +80,10 @@ export default {
         ? `${this.formatDecimalAmount(num)} ${pluralize("Eternity", num.floor())}`
         : "no Eternities";
     },
+    realityCountString() {
+      const num = this.reality.count;
+      return num === 0 ? "no Realities" : `${(num >= 1e12 ? format(num, 2, 2) : formatInt(num) )} ${pluralize("Reality", Math.floor(num))}`
+    },
     fullGameCompletions() {
       return player.records.fullGameCompletions;
     },
@@ -339,9 +343,9 @@ export default {
       <div :class="realityClassObject()">
         {{ isDoomed ? "Doomed Reality" : "Reality" }}
       </div>
-      <div>You have {{reality.count >= 1e12 ? format(reality.count, 2) : formatInt(reality.count) }} {{ reality.count > 1 ? " Realities" : " Reality" }}.</div>
-      <div>Your fastest game-time Reality was {{ reality.best.toStringShort() }}.</div>
-      <div>Your fastest real-time Reality was {{ reality.bestReal.toStringShort() }}.</div>
+      <div>You have {{ realityCountString }}<span v-if="mending.isUnlocked"> this Mend</span>.</div>
+      <div>Your fastest game-time Reality <span v-if="mending.isUnlocked">this Mend</span> was {{ reality.best.toStringShort() }}.</div>
+      <div>Your fastest real-time Reality <span v-if="mending.isUnlocked">this Mend</span> was {{ reality.bestReal.toStringShort() }}.</div>
       <div :class="{ 'c-stats-tab-doomed' : isDoomed }">
         You have spent {{ reality.this.toStringShort() }}
         in this {{ isDoomed ? "Armageddon" : "Reality" }}.
