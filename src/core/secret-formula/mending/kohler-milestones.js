@@ -19,7 +19,8 @@ export const kohlerMilestones = [
     id: 13,
     name: "Reach Eternity",
     description: "???",
-    checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
   },
   {
     id: 14,

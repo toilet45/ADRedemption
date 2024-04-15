@@ -70,8 +70,8 @@ export const kohlerInfinityUpgrades = [
     name: "Kohler Infinity Upgrade 5",
     initialCost: 1e150,
     costMult: 1e50,
-    textTemplate: `Raise Replicanti Speed by {value}`,
-    effect: 1.1,
+    textTemplate: `Raise Replicanti gain by {value}`,
+    effect: 10,
     effectType: "^"
   }),
  {

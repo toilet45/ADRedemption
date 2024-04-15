@@ -187,11 +187,6 @@ export function totalReplicantiSpeedMult(overCap) {
       Math.clampMin(Decimal.log10(Replicanti.amount) * getSecondaryGlyphEffect("replicationdtgain"), 1));
   }
   totalMult = totalMult.timesEffectsOf(AlchemyResource.replication);
-
-  if (Kohler.isRunning){
-    speedPow = speedPow.timesEffectOf(KohlerInfinityUpgrade(5))
-  }
-
   return totalMult.pow(speedPow);
 }
 
@@ -232,7 +227,7 @@ export function replicantiLoop(diff) {
     // present on this path
     let postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
     if (Kohler.isRunning){
-      postscale *= 10;
+      postScale *= 10;
     }
     if (V.isRunning) {
       postScale *= 2;
@@ -292,7 +287,10 @@ export function replicantiLoop(diff) {
 
   //Corruption 7, idk if this is good on math but hope it works--sxy
   if (player.mending.corruptionChallenge.corruptedMend) {
-    Replicanti.amount = Decimal.pow(Replicanti.amount,corruptionPenalties.repSing.rep[player.mending.corruption[8]]);
+    Replicanti.amount = Decimal.pow(Replicanti.amount,(corruptionPenalties.repSing.rep[player.mending.corruption[8]]));
+    if (Kohler.isRunning){
+      Replicanti.amount = Replicanti.amount.pow(KohlerInfinityUpgrade(5).effectOrDefault(1));
+    }
   }
 
   if (areRGsBeingBought && Replicanti.amount.gte(Decimal.NUMBER_MAX_VALUE)) {

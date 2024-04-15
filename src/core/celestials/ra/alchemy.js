@@ -77,7 +77,7 @@ class AlchemyResourceState extends GameMechanicState {
 
   get effectValue() {
     // Disable when Glyph corruption lvl7--sxy
-    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.compGlyphs.hiddenSeven[player.mending.corruption[4]]) {
+    if ((player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.compGlyphs.hiddenSeven[player.mending.corruption[4]]) || Kohler.isRunning) {
       switch(this.config.id){
         case 0:
         case 1:
@@ -99,7 +99,6 @@ class AlchemyResourceState extends GameMechanicState {
       return 0
     };
     // Disable Exponential alchemy effect in V reality.
-    if (Kohler.isRunning) return 0;
     if ((V.isRunning||V.isSuperRunning) && this.config.id === 14) return 0;
     return this.config.effect(Pelle.isDisabled("alchemy") ? 0 : this.amount);
   }

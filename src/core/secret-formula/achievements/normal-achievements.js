@@ -1479,9 +1479,9 @@ export const normalAchievements = [
     id: 202,
     name: "I already told you we could afford 9",
     get description () {
-      return `Have exactly 9 Kohler Points`;
+      return `Have at least 9 Kohler Points`;
     },
-    checkRequirement: () => Currency.kohlerPoints.value.eq(9),
+    checkRequirement: () => Currency.kohlerPoints.value.gte(9),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward(){
       return `Kohler Points are multiplied based on your Mend amount`
