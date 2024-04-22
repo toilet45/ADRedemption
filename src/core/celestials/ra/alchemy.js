@@ -77,7 +77,7 @@ class AlchemyResourceState extends GameMechanicState {
 
   get effectValue() {
     // Disable when Glyph corruption lvl7--sxy
-    if ((player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.compGlyphs.hiddenSeven[player.mending.corruption[4]]) || Kohler.isRunning) {
+    if ((player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.compGlyphs.hiddenSeven[player.mending.corruption[4]])) {
       switch(this.config.id){
         case 0:
         case 1:

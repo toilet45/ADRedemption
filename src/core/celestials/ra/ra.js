@@ -4,6 +4,7 @@ import { Quotes } from "../quotes";
 import { normalTimeStudies } from "../../secret-formula/eternity/time-studies/normal-time-studies";
 import { DC } from "../../constants";
 import { CorruptionUpgrade } from "../../corruption-upgrades";
+import { Kohler } from "../kohler";
 
 const ts306 = normalTimeStudies.find(obj => obj.id === 306);
 
@@ -330,7 +331,7 @@ export const Ra = {
     for (const pet of Ra.pets.all) {
       if (pet.isUnlocked) res = new Decimal(res).times(pet.memoryProductionMultiplier);
     }
-    if (MendingMilestone.one.isReached) res = new Decimal(res).times(25);
+    if (MendingMilestone.one.isReached && !Kohler.isRunning) res = new Decimal(res).times(25);
     if (player.timestudy.studies.includes(306)) res = new Decimal(res).times(ts306.effect());
     res = res.timesEffectOf(WarpUpgrade(2)).times(VUnlocks.vAchRa.effectOrDefault(1));
     
@@ -343,7 +344,7 @@ export const Ra = {
     }
     if (Achievement(168).isUnlocked) boostList.push("Achievement 168");
     if (Ra.unlocks.continuousTTBoost.canBeApplied) boostList.push("current TT");
-    if (MendingMilestone.one.isReached) boostList.push("Mending Milestone 1");
+    if (MendingMilestone.one.isReached && !Kohler.isRunning) boostList.push("Mending Milestone 1");
     if (MendingUpgrade(15).isBought) boostList.push("Mending Upgrade 15");
 
     if (boostList.length === 1) return `${boostList[0]}`;

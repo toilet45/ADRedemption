@@ -111,7 +111,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get amRequirement() {
-    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._unlockRequirement.pow(0.5) : this._unlockRequirement;
+    return this._unlockRequirement;
   }
 
   get antimatterRequirementReached() {
@@ -243,9 +243,8 @@ class InfinityDimensionState extends DimensionState {
       mult = dilatedValueOf(mult);
     }
     if (Kohler.isRunning){
-      mult = mult.pow(5e-7)
-    }
-    if (Effarig.isRunning) {
+      mult = mult.pow(0.5);
+    } else if (Effarig.isRunning) {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {
       mult = mult.pow(0.5);
@@ -259,14 +258,6 @@ class InfinityDimensionState extends DimensionState {
 
     if (CorruptionUpgrade(24).isBought&&player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[8]>=5){
       mult = mult.pow(CorruptionUpgrade(24).effectOrDefault(1));
-    }
-
-    if (Kohler.isRunning){
-      mult = mult.timesEffectsOf(
-        KohlerInfinityUpgrade(2),
-        KohlerInfinityUpgrade(8),
-        MatterUpgrade(8)
-      )
     }
     return mult;
   }
@@ -282,7 +273,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get baseCost() {
-    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._baseCost.div(1e3) : this._baseCost;
+    return this._baseCost;
   }
 
   get costMultiplier() {
@@ -532,20 +523,6 @@ export const InfinityDimensions = {
       multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])
     }
     let w = (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
-    /*if (w > 8){
-      w /= 8;
-      w **= 0.01;
-      w *= 8;
-    }*/
-    let kiu4Pow = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
-    let scK = 20;
-    if (Kohler.isRunning && (w ** kiu4Pow > scK)){
-      let d = w ** kiu4Pow;
-      d /= scK;
-      d **= 0.1;
-      d *= scK;
-      return d
-    }
-    return w ** kiu4Pow;
+    return w;
   }
 };

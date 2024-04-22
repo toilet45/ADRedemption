@@ -11,10 +11,18 @@ import { CorruptionData } from "./corruption";
 import { CorruptionUpgrade, VUnlocks } from "./globals";
 import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
-function lockAchievementsOnMend() {
+export function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
   for (const achievement of Achievements.preMend) {
     achievement.lock();
+  }
+  player.reality.achTimer = DC.D0;
+}
+
+function unlockAchievementsOnMend() {
+  //if (Perk.achievementGroup5.isBought) return;
+  for (const achievement of Achievements.preMend) {
+    achievement.unlock();
   }
   player.reality.achTimer = DC.D0;
 }
@@ -105,6 +113,10 @@ export function mendingReset(gain = true, toggleKohler = false) {
     if (toggleKohler || Kohler.isRunning) {
       //Tab.dimensions.antimatter.show();
       player.transcendents.kohler.run = !player.transcendents.kohler.run;
+      if (!player.transcendents.kohler.run){
+        player.mending.corruptions = player.mending.corruptionBackup;
+        unlockAchievementsOnMend();
+      }
     }
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
@@ -500,11 +512,10 @@ export function mendingReset(gain = true, toggleKohler = false) {
         Currency.antimatter.bumpTo(5e25);
       }
     }
-    player.dimensionBoosts = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 5 : 0;
-    player.galaxies = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 1 : 0;
+    player.dimensionBoosts = 0;
+    player.galaxies = 0;
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
-    if (Kohler.isRunning && KohlerUpgrade(8).isBought)player.dimensions.antimatter[7].amount = new Decimal(1);
     resetTickspeed();
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;

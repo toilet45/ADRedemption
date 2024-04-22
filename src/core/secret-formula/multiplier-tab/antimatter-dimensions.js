@@ -50,10 +50,10 @@ export const AD = {
     },
     isActive: dim => (dim ? dim <= MultiplierTabHelper.activeDimCount("AD") : true),
     dilationEffect: () => {
-      const baseEff = (player.dilation.active || Enslaved.isRunning || Kohler.isRunning)
+      const baseEff = (player.dilation.active || Enslaved.isRunning)
         ? 0.75 * Effects.product(DilationUpgrade.dilationPenalty)
         : 1;
-      return baseEff * (Effarig.isRunning || Kohler.isRunning ? Effarig.multDilation : 1);
+      return baseEff * (Effarig.isRunning ? Effarig.multDilation : 1);
     },
     isDilated: true,
     overlay: ["Ω", "<i class='fas fa-cube' />"],

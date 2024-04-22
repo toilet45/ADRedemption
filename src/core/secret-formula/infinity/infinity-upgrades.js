@@ -171,7 +171,8 @@ export const infinityUpgrades = {
     // Cutting corners: this is not actual effect, but it is totalIPMult that is displyed on upgrade
     effect: () => (Teresa.isRunning || V.isRunning || V.isSuperRunning || Pelle.isDoomed || Kohler.isRunning ? DC.D0 : GameCache.totalIPMult.value),
     formatEffect: value => {
-      if (Teresa.isRunning || V.isRunning || V.isSuperRunning ) return "Disabled in this reality";
+      if (Kohler.isRunning) return "Disabled in Kohler's Realm"
+      if (Teresa.isRunning || V.isRunning || V.isSuperRunning) return "Disabled in this reality";
       if (Pelle.isDoomed || Kohler.isRunning) return "Disabled";
       if (player.records.bestInfinity.time.gt(Number.MAX_VALUE)) return "Too slow to generate";
       return `${format(value, 2)} every ${Time.bestInfinity.times(10).toStringShort()}`;

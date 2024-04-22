@@ -50,12 +50,12 @@ class WarpUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isBought() {
-    if (Kohler.isRunning && this.id === 10) return false;
+    if (Kohler.isRunning) return false;
     return super.isBought;
   }
 
   get canBeBought(){
-    return (Kohler.isRunning && this.id === 10) ? false : super.canBeBought;
+    return (Kohler.isRunning) ? false : super.canBeBought;
   }
 
   get hasPlayerLock() {

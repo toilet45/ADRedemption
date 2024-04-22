@@ -159,7 +159,7 @@ export class DimBoost {
     } else if (tier === 8) {
       amount += Math.round((targetResets - 5) * (15 - discount));
     }
-    if (EternityChallenge(5).isRunning) {
+    if (EternityChallenge(5).isRunning || Kohler.isRunning) {
       amount += Math.pow(targetResets - 1, 3) + targetResets - 1;
     }
 
@@ -226,7 +226,7 @@ export class DimBoost {
     let x = BreakInfinityUpgrade.autobuyMaxDimboosts.chargedEffect.isEffectActive ? Ra.pets.teresa.level : 1;
     let y = Ra.unlocks.freeDimBoosts.isUnlocked ? (1+(Ra.pets.ra.level / 100)) ** 0.5 : 1;
     //let ts401 = TimeStudy(401).isBought ? 1e11 : 0; //useless~
-    return (Kohler.isRunning || (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked)) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y;
+    return (Ra.isRunning && !Ra.unlocks.imaginaryBoostsRa.isUnlocked) ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1) * Math.pow(x, 0.5) * y;
   }
 
   static get totalBoosts() {

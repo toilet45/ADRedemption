@@ -125,16 +125,15 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
 
   interval = interval.divide(totalReplicantiSpeedMult(overCap));
   if (Kohler.isRunning){
-    interval = interval.pow(10);
+    interval = interval.pow(2);
   }
-
-  if (V.isRunning) {
+  else if (V.isRunning) {
     // This is a boost if interval < 1, but that only happens in EC12
     // and handling it would make the replicanti code a lot more complicated.
     interval = interval.pow(2);
   }
 
-  if (V.isSuperRunning) {
+  else if (V.isSuperRunning) {
     // This is a boost if interval < 1, but that only happens in EC12
     // and handling it would make the replicanti code a lot more complicated.
     // copypaste--sxy
@@ -155,7 +154,7 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(PelleRifts.decay.effectValue);
   totalMult = totalMult.times(Pelle.specialGlyphEffect.replication);
   totalMult = totalMult.times(ShopPurchase.replicantiPurchases.currentMult);
-  if(MendingMilestone.one.isReached){
+  if(MendingMilestone.one.isReached && !Kohler.isRunning){
     totalMult = totalMult.times(1000);
   }
   if(Ra.unlocks.relicShardBoost.isUnlocked){
@@ -227,12 +226,12 @@ export function replicantiLoop(diff) {
     // present on this path
     let postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
     if (Kohler.isRunning){
-      postScale *= 10;
-    }
-    if (V.isRunning) {
       postScale *= 2;
     }
-    if (V.isSuperRunning) {
+    else if (V.isRunning) {
+      postScale *= 2;
+    }
+    else if (V.isSuperRunning) {
       postScale *= 5;
     }
 
@@ -288,9 +287,6 @@ export function replicantiLoop(diff) {
   //Corruption 7, idk if this is good on math but hope it works--sxy
   if (player.mending.corruptionChallenge.corruptedMend) {
     Replicanti.amount = Decimal.pow(Replicanti.amount,(corruptionPenalties.repSing.rep[player.mending.corruption[8]]));
-    if (Kohler.isRunning){
-      Replicanti.amount = Replicanti.amount.pow(KohlerInfinityUpgrade(5).effectOrDefault(1));
-    }
   }
 
   if (areRGsBeingBought && Replicanti.amount.gte(Decimal.NUMBER_MAX_VALUE)) {
