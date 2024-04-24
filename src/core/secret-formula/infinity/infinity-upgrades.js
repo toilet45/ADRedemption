@@ -133,7 +133,7 @@ export const infinityUpgrades = {
     cost: 5,
     checkRequirement: () => InfinityUpgrade.thisInfinityTimeMult.isBought,
     description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points",
-    effect: () => Currency.infinityPoints.value.dividedBy(2).pow(1.5).plus(1),
+    effect: () => Decimal.min(Currency.infinityPoints.value.dividedBy(2).pow(1.5).plus(1),Decimal.pow10(1e20)),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
       description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points, powered by Teresa level",
@@ -169,10 +169,10 @@ export const infinityUpgrades = {
     checkRequirement: () => InfinityUpgrade.dimboostMult.isBought,
     description: () => `Passively generate Infinity Points ${formatInt(10)} times slower than your fastest Infinity`,
     // Cutting corners: this is not actual effect, but it is totalIPMult that is displyed on upgrade
-    effect: () => (Teresa.isRunning || V.isRunning || V.isSuperRunning || Pelle.isDoomed ? DC.D0 : GameCache.totalIPMult.value),
+    effect: () => (Teresa.isRunning || V.isRunning || V.isSuperRunning || Pelle.isDoomed || Kohler.isRunning ? DC.D0 : GameCache.totalIPMult.value),
     formatEffect: value => {
       if (Teresa.isRunning || V.isRunning || V.isSuperRunning ) return "Disabled in this reality";
-      if (Pelle.isDoomed) return "Disabled";
+      if (Pelle.isDoomed || Kohler.isRunning) return "Disabled";
       if (player.records.bestInfinity.time.gt(Number.MAX_VALUE)) return "Too slow to generate";
       return `${format(value, 2)} every ${Time.bestInfinity.times(10).toStringShort()}`;
     },
@@ -217,13 +217,13 @@ export const infinityUpgrades = {
     id: "ipOffline",
     cost: 1000,
     checkRequirement: () => Achievement(41).isUnlocked,
-    description: () => (player.options.offlineProgress
+    description: () => (player.options.offlineProgress && !Kohler.isRunning
       ? `Only while offline, gain ${formatPercents(0.5)} of your best IP/min without using Max All`
       : "This upgrade would give offline Infinity Point generation, but offline progress is currently disabled"),
-    effect: () => (player.options.offlineProgress
+    effect: () => (player.options.offlineProgress && !Kohler.isRunning
       ? player.records.thisEternity.bestIPMsWithoutMaxAll.times(TimeSpan.fromMinutes(1).totalMilliseconds.div(2))
       : DC.D0),
-    isDisabled: () => !player.options.offlineProgress,
+    isDisabled: () => !player.options.offlineProgress || Kohler.isRunning,
     formatEffect: value => `${format(value, 2, 2)} IP/min`,
   },
   ipMult: {

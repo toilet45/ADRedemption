@@ -82,7 +82,7 @@ export const Pelle = {
     }
     for (const type of BASIC_GLYPH_TYPES) Glyphs.addToInventory(GlyphGenerator.doomedGlyph(type));
     Glyphs.refreshActive();
-    player.options.confirmations.glyphReplace = true;
+    if (!PlayerProgress.mendingUnlocked) player.options.confirmations.glyphReplace = true;
     player.reality.automator.state.repeat = false;
     player.reality.automator.state.forceRestart = false;
     if (BlackHoles.arePaused) BlackHoles.togglePause();

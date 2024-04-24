@@ -291,7 +291,7 @@ EventHub.logic.on(GAME_EVENT.GAME_LOAD, () => SingularityMilestones.lastNotified
 
 EventHub.logic.on(GAME_EVENT.SINGULARITY_RESET_AFTER, () => {
   const newMilestones = SingularityMilestones.unnotifiedMilestones.length;
-  if (newMilestones === 0) return;
+  if (newMilestones === 0 || Autobuyer.singularity.isActive) return;
   if (newMilestones === 1) GameUI.notify.blackHole(`You reached a Singularity milestone!`);
   else GameUI.notify.blackHole(`You reached ${formatInt(newMilestones)} Singularity milestones!`);
   SingularityMilestones.lastNotified = Currency.singularities.value;

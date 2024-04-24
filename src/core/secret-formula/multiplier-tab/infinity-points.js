@@ -109,7 +109,7 @@ export const IP = {
     icon: MultiplierTabIcons.MENDINGMILESTONE,
   },
   ra: {
-    name: "Ra Memories",
+    name: "Teresa Level 75",
     powValue: () => (Decimal.log10(Currency.realityMachines.value.max(1)) / 100),
     isActive: () => Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked,
     icon: MultiplierTabIcons.GENERIC_RA

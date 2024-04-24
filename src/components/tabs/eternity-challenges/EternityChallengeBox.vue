@@ -98,7 +98,7 @@ export default {
       this.completions = challenge.completions;
       this.showGoalSpan = PlayerProgress.realityUnlocked();
       this.canBeUnlocked = TimeStudy.eternityChallenge(challenge.id).canBeBought;
-      this.altRewards = Ra.unlocks.improvedECRewards.isUnlocked;
+      this.altRewards = Ra.unlocks.improvedECRewards.canBeApplied;
 
       this.lastGoal = (Enslaved.isRunning && this.challenge.id === 1)
         ? wordShift.wordCycle(this.config.scrambleText.map(x => format(x)))
@@ -168,7 +168,7 @@ export default {
           name="c-challenge-box__reward-description"
         />
       </span>
-      <span>
+      <span v-if="altRewards">
         <EffectDisplay
           v-if="completions > 0"
           :config="currentVRewardConfig"

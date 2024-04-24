@@ -33,32 +33,52 @@ function askMendingConfirmation() {
   }
 }
 
-export function mendingReset() {
+export function mendingReset(gain = true, toggleKohler = false) {
+    let vBitsEarned = player.celestials.v.quoteBits //there seemed to be some jank with V's quoteBits being reset, lazy man's fix
+    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     // Finally, lets set up corruptions
     // hello, due to some upgrade need record to involve, corruption should be at first sry.--sxy
     if (CorruptionData.isCorrupted && (!player.celestials.pelle.galaxyGenerator.unlocked)) { //decided to allow pelle, yet not generator
       CorruptionData.isCorrupted = false; //wtf what a chaos logic;
+    if(!(Pelle.isDoomed&&player.celestials.pelle.records.totalAntimatter.plus(1).log10() < 9e15)){
       let scoreCalc = CorruptionData.calcScore()
+      player.mending.corruptionChallenge.corruptedMend = false;
     // console.log(corruptionChallengeScoreCalculation())
-      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc) {
+      if (CorruptionData.corruptionChallenge.recordScore < scoreCalc && !Kohler.isRunning) {
         player.mending.corruptionChallenge.records = player.mending.corruption
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
-     player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
-     player.mending.corruptionUpgradeBits = 0 // Basically a respec call
-     player.mending.corruptionChallenge.corruptedMend = false
+     if(!Kohler.isRunning) player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
+     if (!toggleKohler && !Kohler.isRunning) player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
+     player.mending.corruptionChallenge.corruptedMend = false;
+     CorruptionData.update();
    }
-   
+   if(player.mending.cuRespec && !player.mending.corruptionChallenge.corruptedMend) {
+    player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(CorruptionData.calcScore())))
+    player.mending.corruptionUpgradeBits = 0;
+    player.mending.cuRespec = !player.mending.cuRespec
+   }
     if (!MendingMilestone.six.isReached){
       Tab.dimensions.antimatter.show();
     } // So before we call anything we force the player onto the antimatter tab, to prevent going to into cel realities wayyyy too early
-    EventHub.dispatch(GAME_EVENT.MENDING_RESET_BEFORE)
     //lockAchievementsOnMend();
-    if(!Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15){ //should check if Doomed and not END so people don't get free MvR and mend stat
+    if(gain && (!Kohler.isRunning || !Pelle.isDoomed || player.celestials.pelle.records.totalAntimatter.plus(1).log10() >= 9e15)){ //should check if Doomed and not END so people don't get free MvR and mend stat
       Currency.mendingPoints.add(gainedMendingPoints());
       Currency.mends.add(1);
     }
-    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked) {
+    if (Kohler.isRunning){
+      Currency.kohlerPoints.add(gainedKohlerPoints());
+      player.bestKohlerPoints = Decimal.max(Currency.kohlerPoints.value, player.bestKohlerPoints);
+    }
+    if (Effarig.isRunning && !EffarigUnlock.mend.isUnlocked && Ra.unlocks.effarigMendUnlock.isUnlocked && !Kohler.isRunning) {
+      Quotes.effarig.mendCompleted.show();
+      player.celestials.effarig.maxUnlockBits |= 255;
+      for (let i = 0; i < Glyphs.inventory.length; i++){
+        if (Glyphs.inventory[i]!=null && Glyphs.inventory[i].type === "companion"){
+          Quotes.effarig.hasCompanion.show();
+          break;
+        }
+      }
       EffarigUnlock.mend.unlock();
       EffarigUnlock.infinity.unlock();
       EffarigUnlock.eternity.unlock();
@@ -82,6 +102,10 @@ export function mendingReset() {
     }*/ //why reset--sxy
     player.blackHoleNegative = 1;
     player.isGameEnd = false;
+    if (toggleKohler || Kohler.isRunning) {
+      //Tab.dimensions.antimatter.show();
+      player.transcendents.kohler.run = !player.transcendents.kohler.run;
+    }
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
     //Start reseting all the things
@@ -108,26 +132,34 @@ export function mendingReset() {
       player.challenge.infinity.bestTimes = Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8);
     }
     //Celestials
-    if(!MendingMilestone.ten.isReached){
+    if(!MendingMilestone.ten.isReached || Kohler.isRunning){
       player.celestials.teresa.pouredAmount = 0;
       player.celestials.teresa.unlockBits = 0;
     }
+    else{
+      if (MendingMilestone.ten.isReached){
+        player.celestials.teresa.pouredAmount = player.celestials.teresa.recordPouredAmount;
+        player.celestials.teresa.unlockBits = 63;
+      }
+    }
     player.celestials.teresa.run = false;
-    player.celestials.teresa.bestRunAM = MendingUpgrade(9).isBought ? DC.E1E10 : DC.D1;
+    player.celestials.teresa.bestRunAM = (MendingUpgrade(9).isBought && !Kohler.isRunning) ? DC.E1E10 : DC.D1;
     player.celestials.teresa.bestAMSet = [];
     player.celestials.teresa.perkShop = Array.repeat(0, 5);
-    if (MendingMilestone.seven.isReached) {
+    if (MendingMilestone.seven.isReached && !Kohler.isRunning) {
       player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
-      if(CorruptionUpgrade(5).isBought) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
+      if(CorruptionUpgrade(5).isBought && !Kohler.isRunning) player.celestials.teresa.perkShop = [65, 65, 14, 6, 0, 0]
     }
     player.celestials.teresa.lastRepeatedMachines = DC.D0;
     if (MendingUpgrade(9).isBought && !MendingMilestone.ten.isReached){
       player.celestials.teresa.unlockBits += 1;
     }
-    if(Effarig.currentStage < 6){
+    if(Effarig.currentStage < 6 || Kohler.isRunning){
       player.celestials.effarig.relicShards = new Decimal(0);
       player.celestials.effarig.unlockBits = 7;
     }
+    if(player.celestials.effarig.maxUnlockBits >= 255 && !Kohler.isRunning) player.celestials.effarig.unlockBits = player.celestials.effarig.maxUnlockBits;
+    if(player.celestials.effarig.unlockBits >= 255) player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
     player.celestials.effarig.run = false;
     player.celestials.enslaved.stored = DC.D0;
     player.celestials.enslaved.storedReal = 0;
@@ -142,14 +174,19 @@ export function mendingReset() {
       player.celestials.enslaved.unlocks = [0, 1];
       player.celestials.enslaved.completed = true;
     }
-    if(!VUnlocks.vKeep.isUnlocked){
+    if(!VUnlocks.vKeep.isUnlocked || Kohler.isRunning){
     V.reset();
-    if(MendingUpgrade(14).isBought){
+    if(MendingUpgrade(14).isBought && !Kohler.isRunning){
       player.celestials.v.runUnlocks = [3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+    if (player.celestials.v.recordSpaceTheorems >= 390 && !Kohler.isRunning) {
+      player.celestials.v.runUnlocks = player.celestials.v.recordRunUnlocks;
+      player.celestials.v.unlockBits |= 1;
+      //this.spaceTheorems = player.celestials.v.recordSpaceTheorems;
     }
     }
     V.updateTotalRunUnlocks();
-    player.celestials.v.quoteBits = 2047;
+    player.celestials.v.quoteBits |= vBitsEarned;
     if(!Ra.unlocks.raNoReset.isUnlocked) Ra.reset();
     player.celestials.ra.petWithRemembrance = "";
     player.celestials.ra.alchemy = Array.repeat(0, 21)
@@ -165,7 +202,8 @@ export function mendingReset() {
       dilation: 0,
       effarig: 0
     };
-    player.celestials.ra.quoteBits = 16383;
+    //player.celestials.ra.quoteBits = 16383;
+    player.celestials.ra.run = false;
     if(player.mending.corruptNext || !KohlerProgressUnlocks.hostileScore.isUnlocked){
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
@@ -173,8 +211,12 @@ export function mendingReset() {
     Laitela.reset();
     if (MendingUpgrade(4).isBought){
       player.celestials.laitela.difficultyTier = 8;
+      player.celestials.laitela.fastestCompletion = 300;
     }
-    player.celestials.laitela.quoteBits = 1023;
+    if (Ra.unlocks.dmdAuto2.canBeApplied){
+      Currency.darkEnergy.bumpTo(2e7);
+    }
+    //player.celestials.laitela.quoteBits = 1023;
     player.celestials.pelle.upgrades.clear();
     player.celestials.pelle.remnants = 0;
     player.celestials.pelle.realityShards = DC.D0;
@@ -261,9 +303,18 @@ export function mendingReset() {
     for (const perkId of [10, 12, 13, 14, 15, 16, 17, 30, 31, 40, 41, 42, 43, 44, 45, 46, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 70, 71, 72, 73, 80, 81, 82, 83, 100, 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205]) {
       const perk = Perks.find(perkId); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
       perk.isBought = false;
-      if (MendingMilestone.three.isReached){
+      if (MendingMilestone.three.isReached && !Kohler.isRunning){
         perk.isBought = true;
         perk.onPurchased();
+      }
+      else if (Kohler.isRunning){
+        if (KohlerMilestone(11).isUnlocked){
+          for (const perkIdKR of [10, 30]) {
+            const perkKR = Perks.find(perkIdKR); //shoutouts to earth for code, yes I could do dev.giveAllPerks or something, but I'm futureproofing for post-Mend perks
+            perkKR.isBought = true;
+            perkKR.onPurchased();
+          }
+        }
       }
     }
     GameUI.update();
@@ -361,7 +412,7 @@ export function mendingReset() {
       bestInfinitiesPerMs: DC.D0,
     },
     player.totalTickGained = 0;
-    if (!MendingUpgrade(3).isBought){
+    if (!MendingUpgrade(3).isBought || Kohler.isRunning){
       player.eternityChalls = {}
     }
     else{
@@ -431,7 +482,8 @@ export function mendingReset() {
       player.replicanti.unl = true;
     }
     if(MendingUpgrade(2).isBought){
-      InfinityChallenges.completeAll();
+      for (let ic = 1; ic < 9; ic++)
+      InfinityChallenge(ic).complete();
     }
     else{
       InfinityChallenges.clearCompletions();
@@ -440,16 +492,19 @@ export function mendingReset() {
     player.IPMultPurchases = 0;
     //Pre-Infinity
     Currency.antimatter.reset();
-    if(MendingMilestone.three.isReached){
-      Currency.antimatter.bumpTo(5e130);
+    if (!Kohler.isRunning){
+      if(MendingMilestone.three.isReached){
+        Currency.antimatter.bumpTo(5e130);
+      }
+      else{ //for some reason I still start with 10 AM even with r78 given, so this is a lazy man's fix
+        Currency.antimatter.bumpTo(5e25);
+      }
     }
-    else{ //for some reason I still start with 10 AM even with r78 given, so this is a lazy man's fix
-      Currency.antimatter.bumpTo(5e25);
-    }
-    player.dimensionBoosts =  0;
-    player.galaxies =  0;
+    player.dimensionBoosts = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 5 : 0;
+    player.galaxies = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 1 : 0;
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
+    if (Kohler.isRunning && KohlerUpgrade(8).isBought)player.dimensions.antimatter[7].amount = new Decimal(1);
     resetTickspeed();
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;

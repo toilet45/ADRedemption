@@ -27,7 +27,7 @@ const rebuyable = config => {
     currency: Currency.raPoints,
     currencyLabel: config.currencyLabel,
     rebuyable: true,
-    implemented: DEV
+    implemented: true
   }
 }
 

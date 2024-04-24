@@ -49,6 +49,9 @@ import WarpReality from "./mending/WarpReality";
 import KohlersRealm from "./mending/KohlersRealm";
 import CorruptionTab from "./corruption/CorruptionChallengeTab";
 import MultiversalDimensionsTab from "./multiversal-dimensions/MultiversalDimensionsTab";
+import KohlerInfinityUpgrades from "./infinity-upgrades/KohlerInfinityUpgrades";
+import MatterUpgrades from "./matter/MatterUpgrades";
+import MatterDimensionsTab from "./matter/matter-dimensions/MatterDimensionsTab";
 
 
 const TabComponents = {
@@ -99,7 +102,10 @@ const TabComponents = {
   WarpReality,
   CorruptionTab,
   KohlersRealm,
-  MultiversalDimensionsTab
+  MultiversalDimensionsTab,
+  KohlerInfinityUpgrades,
+  MatterUpgrades,
+  MatterDimensionsTab
 };
 
 export default TabComponents;

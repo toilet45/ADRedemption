@@ -2,13 +2,33 @@ import { DC } from "./constants";
 import { GameMechanicState } from "./game-mechanics";
 
 export function updateNormalAndInfinityChallenges(diff) {
-  if (NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning) {
+  if (NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning || InfinityChallenge(9).isRunning) {
     if (AntimatterDimension(2).amount.neq(0)) {
       Currency.matter.bumpTo(1);
       // These caps are values which occur at approximately e308 IP
       const cappedBase = 1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 +
         Math.clampMax(player.galaxies, 100) / 100;
-      Currency.matter.multiply(Decimal.pow(cappedBase, diff.div(20)));
+      if (InfinityChallenge(9).isRunning){
+        let a = diff.times(cappedBase).div(20);
+        a = a.timesEffectsOf(
+          MatterUpgrade(1),
+          MatterUpgrade(7),
+          KohlerInfinityUpgrade(13),
+          MatterUpgrade(9),
+          MatterUpgrade(11),
+          MatterUpgrade(12),
+          MatterUpgrade(13),
+          MatterUpgrade(14),
+          MatterUpgrade(16),
+          KohlerUpgrade(22)
+        )
+        let expo = Effects.product(MatterUpgrade(2), MatterUpgrade(20));
+        Currency.matter.add(a.pow(expo));
+        if (Currency.matter.value.gt(player.records.bestMatterinIC9)) player.records.bestMatterinIC9 = Currency.matter.value;
+      }
+      else{ 
+        Currency.matter.multiply(Decimal.pow(cappedBase, diff.div(20)));
+      }
     }
     if (Currency.matter.gt(Currency.antimatter.value) && NormalChallenge(11).isRunning && !Player.canCrunch) {
       const values = [Currency.antimatter.value, Currency.matter.value];
@@ -46,6 +66,7 @@ class NormalChallengeState extends GameMechanicState {
 
   get isRunning() {
     const isPartOfIC1 = this.id !== 9 && this.id !== 12;
+    if (this.id === 11 && Kohler.isRunning && InfinityChallenge(1).isRunning) return false;
     return player.challenge.normal.current === this.id || (isPartOfIC1 && InfinityChallenge(1).isRunning);
   }
 

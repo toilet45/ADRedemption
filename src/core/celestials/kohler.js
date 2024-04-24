@@ -6,27 +6,33 @@ import { Quotes } from "./quotes";
 
 export const Kohler = {
   get displayName(){
-    return false ? "Kohler" : "???"
+    return player.celestials.kohler.quoteBits >= 7 ? "Kohler" : "???"
   },
   get possessiveName(){
-    return false ? "Kohler's" : "???'s"
+    return player.celestials.kohler.quoteBits >= 7 ? "Kohler's" : "???'s"
   },
   get isUnlocked() {
     return false;
   },
+  get isRunning(){
+    return player.transcendents.kohler.run;
+  },
+  get isTrueRunning(){ //this is the final Transcendent
+    return player.transcendents.kohler.trueRun;
+  },
   quotes: Quotes.kohler,
   get symbol(){ 
-    return false ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
+    return player.celestials.kohler.quoteBits >= 7 ? "<i class='fa-solid fa-staff-snake'></i>" : "?"
   },
 
   get unlockProgress() {
     let Progress = 5;
-    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/Math.log10(5e7),15)
+    let stage1 = Math.min(15*Math.log10(CorruptionData.corruptionChallenge.recordScore)/Math.log10(5e6),15)
     Progress += stage1;
     if(stage1<15){
       return parseFloat(Progress.toFixed(2));
     }
-    let stage2 = Math.min(15*Math.ceil(CorruptionData.recordCorruptedFragments)/30,15);
+    let stage2 = Math.min(15*Math.ceil(CorruptionData.recordCorruptedFragments)/40,15);
     Progress += stage2;
     if(stage2<15){
       return parseFloat(Progress.toFixed(2));
@@ -35,11 +41,22 @@ export const Kohler = {
     if(stage3<0) stage3=0;
     if(player.celestials.kohler.unlockMilestone[4]) stage3=30;
     Progress += stage3;
+    if (MultiversalDimension(3).amount.gt(0) && Progress === 65){
+      return 100;
+    }
     return parseFloat(Progress.toFixed(2));
   },
   checkForUnlocks() {
     for (const info of KohlerProgressUnlocks.all) {
       info.unlock();
+    }
+  },
+  checkForQuotes() {
+    for (const quote of Kohler.quotes.all) {
+      // Quotes without requirements will be shown in other ways
+      if (quote.requirement) {
+        quote.show();
+      }
     }
   },
   setUnlockProgress() {

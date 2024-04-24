@@ -49,7 +49,7 @@ export class GalaxyAutobuyerState extends UpgradeableAutobuyerState {
   }
 
   get isBuyMaxUnlocked() {
-    return EternityMilestone.autobuyMaxGalaxies.isReached;
+    return EternityMilestone.autobuyMaxGalaxies.isReached || (KohlerMilestone(12).isUnlocked && Kohler.isRunning);
   }
 
   get interval() {

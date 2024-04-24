@@ -44,7 +44,7 @@ export default {
       toggleAllMultiversalDims();
     },
     txt1() {
-      if (this.boostPoints.lte(1e50)) {
+      if (this.galaxyBoost < 10) {
         return `making all Galaxies `
       }
       return `providing an `
@@ -53,16 +53,16 @@ export default {
       if (this.boostPoints.eq(0)){
         return `${format(0, 2, 2)}%`
       }
-      else if (this.boostPoints.lte(1e50)) {
+      else if (this.galaxyBoost < 10) {
         return `${format((this.galaxyBoost-1)*100, 2, 2)}%`
       }
       return `${formatX(this.galaxyBoost, 2, 2)}`
     },
     txt3() {
-      if (this.boostPoints.lte(1e50)) {
+      if (this.galaxyBoost < 10) {
         return ` stronger`
       }
-      return ` multiplier to all galaxies`
+      return ` multiplier to Galaxy strength`
     }
   }
 };
@@ -90,9 +90,6 @@ export default {
         You have gained
         <span class="c-multiversal-dim-description__accent">{{ format(boostPoints, 2, 1) }}</span> Galactic Shards, {{ txt1() }}<span class="c-multiversal-dim-description__accent">{{ txt2() }}</span>{{ txt3() }}.
       </p>
-    </div>
-    <div>
-      The effectiveness of Galactic Shards decreases above {{ format(50) }}%.
     </div>
     <div>
       You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second, unaffected by game speed.

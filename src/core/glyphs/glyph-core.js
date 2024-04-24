@@ -323,7 +323,7 @@ export const Glyphs = {
         RealityUpgrade(24).tryShowWarningModal();
         return;
       }
-      if (ImaginaryUpgrade(25).isLockingMechanics && this.activeWithoutCompanion.length === 1) {
+      if (ImaginaryUpgrade(25).isLockingMechanics && (this.maxSlots - this.activeWithoutCompanion.length === MendingMilestone.five.isReached ? 4 : 1)) {
         ImaginaryUpgrade(25).tryShowWarningModal();
         return;
       }
@@ -1045,6 +1045,7 @@ export function getAdjustedGlyphLevel(glyph, realityGlyphBoost = Glyphs.levelBoo
     if (Pelle.isDoomed) return Math.min(level, Pelle.glyphMaxLevel);
     if (Enslaved.isRunning) return Math.max(level, Enslaved.glyphLevelMin);
     if (Effarig.isRunning) return Math.min(level, Effarig.glyphLevelCap);
+    if (Kohler.isRunning) return Math.min(level, 1);
   }
   if (BASIC_GLYPH_TYPES.includes(glyph.type)) return level + realityGlyphBoost;
   return level;

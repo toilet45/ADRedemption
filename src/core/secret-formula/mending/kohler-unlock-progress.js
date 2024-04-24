@@ -10,19 +10,19 @@ export const kohlerProgress = {
       id: 1,
       progress: 20,
       condition: () => {
-        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.corruptionChallenge.recordScore >= 50000000) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.corruptionChallenge.recordScore >= 5000000) return true;
         return false;
       },
-      description: () => `Reach ${format(5e7)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
+      description: () => `Reach ${format(5e6)} Hostile score. Reward: Keep Charged Upgrades when not entering Hostile mend.`,
     },
     hostileFragments: {
       id: 2,
       progress: 35,
       condition: () => {
-        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.recordCorruptedFragments > 29) return true;
+        if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && CorruptionData.recordCorruptedFragments > 39) return true;
         return false;
       },
-      description: () => `Reach 30 Hostile Fragments. Reward: Antimatter ^(1+best HF/100).`,
+      description: () => `Reach 40 Hostile Fragments. Reward: Antimatter ^(1+best HF/100).`,
     },
     antimatterGalaxy: {
       id: 4,
@@ -36,11 +36,12 @@ export const kohlerProgress = {
         return Math.max(Math.pow(Decimal.log10(Tickspeed.perSecond.plus(1)),0.3),1);
       }
     },
-    placeholder: {
+    thirdMultiverse: {
       id: 6,
       progress: 100,
       condition:false,
-      description: "Now for the ultimate test...waiting 5 hours™.",
+      description: "Now for the ultimate test...Have 5 3rd Multiversal Dimensions.",
+      condition: () => MultiversalDimension(3).amount.gte(5),
     }
   }
 };

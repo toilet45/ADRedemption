@@ -164,7 +164,8 @@ export const ra = {
       pet: "teresa",
       level: 1,
       displayIcon: `<span class="fas fa-atom"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     chargedInfinityUpgrades: {
       id: 1,
@@ -174,7 +175,8 @@ export const ra = {
       pet: "teresa",
       level: 2,
       displayIcon: `<span class="fas fa-infinity"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true,
     },
     teresaXP: {
       id: 2,
@@ -291,7 +293,8 @@ export const ra = {
       pet: "enslaved",
       level: 2,
       displayIcon: `<span class="fas fa-history"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     enslavedXP: {
       id: 16,
@@ -308,7 +311,8 @@ export const ra = {
       pet: "enslaved",
       level: 10,
       displayIcon: `<span class="fas fa-expand-arrows-alt"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     vUnlock: {
       id: 18,
@@ -342,7 +346,9 @@ export const ra = {
     },
     instantECAndRealityUpgradeAutobuyers: {
       id: 21,
-      reward: "Rebuyable Reality upgrades are bought automatically and Auto-Eternity Challenges happen instantly",
+      get reward (){
+        return Kohler.isRunning ? "Rebuyable Reality upgrades are bought automatically" : "Rebuyable Reality upgrades are bought automatically and Auto-Eternity Challenges happen instantly"
+      },
       pet: "v",
       level: 1,
       displayIcon: `<span class="fas fa-sync-alt"></span>`,
@@ -354,7 +360,8 @@ export const ra = {
         ${formatInt(TimeStudy.dilation.totalTimeTheoremRequirement)} Time Theorems`,
       pet: "v",
       level: 2,
-      displayIcon: `<span class="fas fa-fast-forward"></span>`
+      displayIcon: `<span class="fas fa-fast-forward"></span>`,
+      disabledByKohler: true
     },
     vXP: {
       id: 23,
@@ -390,7 +397,8 @@ export const ra = {
       pet: "v",
       level: 10,
       displayIcon: `<span class="fas fa-university"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     achievementTTMult: {
       id: 26,
@@ -399,7 +407,8 @@ export const ra = {
       pet: "v",
       level: 15,
       displayIcon: `<span class="fas fa-graduation-cap"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     achievementPower: {
       id: 27,
@@ -460,7 +469,8 @@ export const ra = {
       reward: "Realities boost Infinity and Eternity production",
       pet: "teresa",
       level: 90,
-      displayIcon: 'τ'
+      displayIcon: 'τ',
+      disabledByKohler: true
     },
     imaginaryBoost: {
       id: 6,
@@ -478,7 +488,8 @@ export const ra = {
       effect: () => 10 * Ra.pets.effarig.level,
       pet: "effarig",
       level: 30,
-      displayIcon: '<span class="fas fa-vial"</span>'
+      displayIcon: '<span class="fas fa-vial"</span>',
+      disabledByKohler: true
     },
     passiveRelicShardGain: {
       id: 9,
@@ -486,7 +497,8 @@ export const ra = {
       reward: "You gain 100% of relic shards on reality every second",
       pet: "effarig",
       level: 40,
-      displayIcon: `<span class="fas fa-fire"></span>`
+      displayIcon: `<span class="fas fa-fire"></span>`,
+      disabledByKohler: true
     },
     harshInstabilityDelay: {
       id: 10,
@@ -511,7 +523,8 @@ export const ra = {
       reward: "Effarig Glyphs' first effect also increases Imaginary Machine cap",
       pet: "effarig",
       level: 75,
-      displayIcon: `<span class="fas fa-level-up-alt"></span>`
+      displayIcon: `<span class="fas fa-level-up-alt"></span>`,
+      disabledByKohler: true
     },
     maxGlyphRarityIncrease: {
       id: 13,
@@ -520,7 +533,8 @@ export const ra = {
       effect: () => 2*(Ra.pets.effarig.level-90),
       pet: "effarig",
       level: 90,
-      displayIcon: `<span class="fas fa-star"></span>`
+      displayIcon: `<span class="fas fa-star"></span>`,
+      disabledByKohler: true
     },
     effarigMendUnlock: {
       id: 14,
@@ -553,7 +567,8 @@ export const ra = {
       pet: "enslaved",
       level: 50,
       displayIcon: '<i class="fa-solid fa-circle"></i>',
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     twinTachyonGalaxyCapIncrease: {
       id: 18,
@@ -595,6 +610,7 @@ export const ra = {
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
+      disabledByKohler: true
     },
     unlockSHardV: {
       id: 23,
@@ -827,7 +843,7 @@ export const ra = {
       reward: () => `Improve Continuum effect for every ${format("1e308")} Dark Matter`,
       pet: "laitela",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-check"></i>'
+      displayIcon: 'ᛝ'
     },
     increaseSingLimits: {
       id: 19,
@@ -851,7 +867,8 @@ export const ra = {
       reward: "(Kept without Ra 30) Unlock Permanent autobuyers for Annihilation, Singularities and Singularity Caps. Manual Annihilations are 500x stronger.",
       pet: "laitela",
       level: 65,
-      displayIcon: `<span class="fas fa-sync-alt"</span>` 
+      displayIcon: `<span class="fas fa-sync-alt"</span>`,
+      disabledByPelle: true 
     },
     continuumAffectsIDsAndTDs: {
       id: 22,
@@ -898,7 +915,7 @@ export const ra = {
       id: 27,
       id2: 1,
       reward: "All Memory Chunks produce more Memories based on highest Remnants without Galaxy Generator.",
-      effect: () => Math.max(Math.log10(player.records.thisReality.remWithoutGG)/2, 1),
+      effect: () => Math.max(Math.log10(player.records.bestReality.remWithoutGG)/2, 1),
       pet: "pelle",
       level: 5,
       displayIcon: '♅'
@@ -930,7 +947,7 @@ export const ra = {
     unlockPelleGlyphEffects: {
       id: 31,
       id2: 1,
-      reward: "Baisc Glyphs' disabled effects are re-enabled in Doomed Reality.",
+      reward: "Basic Glyphs' disabled effects are re-enabled in Doomed Reality.",
       pet: "pelle",
       level: 25,
       displayIcon: `<span class="fas fa-clone"></span>`

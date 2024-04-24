@@ -540,7 +540,7 @@ export const normalAchievements = [
     id: 82,
     name: "Anti-antichallenged",
     get description() { return `Complete all ${formatInt(8)} Infinity Challenges.`; },
-    checkRequirement: () => InfinityChallenges.completed.length === 8,
+    checkRequirement: () => InfinityChallenges.completed.length >= 8,
     checkEvent: [GAME_EVENT.INFINITY_CHALLENGE_COMPLETED, GAME_EVENT.REALITY_RESET_AFTER],
   },
   {
@@ -680,7 +680,13 @@ export const normalAchievements = [
     id: 97,
     name: "Like jumping on a lego",
     get description() { return `Get the sum of Infinity Challenge times under ${format(6.66, 2, 2)} seconds.`; },
-    checkRequirement: () => Time.infinityChallengeSum.totalSeconds.lt(6.66),
+    checkRequirement: () =>{
+      let x = DC.D0;
+      for (let i = 0; i < 8; i++){
+        x = x.add(player.challenge.infinity.bestTimes[i]);
+      }
+      return x.lt(6.66);
+    },
     checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.REALITY_RESET_AFTER],
   },
   {
@@ -889,7 +895,7 @@ export const normalAchievements = [
     reward: "Infinity Point multiplier based on time spent this Infinity.",
     effect() {
       const thisInfinity = Time.thisInfinity.totalSeconds.times(10).add(1);
-      return DC.D2.pow((Decimal.min(Decimal.pow(thisInfinity, 0.11), 500)).times(Decimal.log(thisInfinity)));
+      return DC.D2.pow((Decimal.min(Decimal.pow(thisInfinity, 0.11), 500)).times(Decimal.ln(thisInfinity)));
     },
     cap: () => Effarig.eternityCap,
     formatEffect: value => `${formatX(value, 2, 2)}`
@@ -1427,17 +1433,114 @@ export const normalAchievements = [
   },
   {
     id: 196,
-    name: "196",
-    description: "placeholder",
+    get name(){
+      return player.celestials.ra.pets.pelle.level >= 75 ? "This Hostility doesn't exist" : "Reach Pelle Level 75 to see"
+    },
+    get description(){ 
+      return player.celestials.ra.pets.pelle.level >= 75 ? "Complete a Hostility with all Hostility nerfs are at least level 9 [NYI]" : "Reach Pelle Level 75 to see"
+    },
+    checkRequirement:() => {
+      let x = player.mending.corruptionChallenge.corruptedMend;
+      for (let i = 0; i < 10; i++){
+        x = x && player.mending.corruption[i] >= 9;
+      }
+      return x;
+    },
+    checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
   },
   {
     id: 197,
-    name: "197",
-    description: "placeholder",
+    name: "Essa conquista não existe IV",
+    get description() {
+      return `Reach ${format(9.9990e99, 3, 3)} Multiversal Remains`
+    },
+    checkRequirement: () => player.mendingPoints.gte(9.9990e99),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {
     id: 198,
-    name: "198",
-    description: "placeholder",
+    name: "Nicenicenicenice.",
+    get description () {
+      return `Reach ${format(new Decimal("1e69690000000000000000000"), 0, 1)} Antimatter.`;
+    },
+    checkRequirement: () => player.antimatter.gte(new Decimal("1e69690000000000000000000")),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
+  {
+    id: 201,
+    name: "Antimatter Dimensions 2: Hell in the Multiverse",
+    get description () {
+      return `Enter Kohler's Realm`;
+    },
+    checkRequirement: () => Kohler.isRunning,
+    checkEvent: GAME_EVENT.MENDING_RESET_AFTER
+  },
+  {
+    id: 202,
+    name: "I already told you we could afford 9",
+    get description () {
+      return `Have exactly 9 Kohler Points`;
+    },
+    checkRequirement: () => Currency.kohlerPoints.value.eq(9),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    get reward(){
+      return `Kohler Points are multiplied based on your Mend amount`
+    },
+    effect: () => Math.max(1, Currency.mends.value.log10() * 2),
+    formatEffect: value => `${formatX(value, 2, 2)}`
+  },
+  {
+    id: 203,
+    name: "That challenge doesn't exist",
+    get description () {
+      return `Start Infinity Challenge 9`;
+    },
+    checkRequirement: () => InfinityChallenge(9).isRunning,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 204,
+    name: "It's not called Antimatter Dimensions is it...wait",
+    get description () {
+      return `Unlock Matter Dimensions`;
+    },
+    checkRequirement: () => MatterUpgrade(15).isBought,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 205,
+    name: "205",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 206,
+    name: "206",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 207,
+    name: "207",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  },
+  {
+    id: 208,
+    name: "208",
+    get description () {
+      return `placeholder`;
+    },
+    checkRequirement: () => false,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+  }
 ];

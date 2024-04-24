@@ -520,6 +520,18 @@ export const credits = {
     {
       name: "uiinpui",
       roles: 18
+    },
+    {
+      name: "Ts-Final",
+      roles: 15
+    },
+    {
+      name: "cyxw",
+      roles: 14
+    },
+    {
+      name: "Gboi",
+      roles: 15
     }
   ]
 };

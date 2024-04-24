@@ -138,7 +138,7 @@ export const glyphEffects = {
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => {
       let a = 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 - GlyphAlteration.sacrificeBoost("dilation") / 50;
-      return a;
+      return Math.max(a,0.001);
     },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
@@ -478,7 +478,7 @@ export const glyphEffects = {
       return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "Reality Machine and Imaginary Machine cap multiplier" : "Reality Machine multiplier";
     },
     shortDesc: () => {
-      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "RM ×{value} and iM cap ×{value3}" : "RM ×{value}";
+      return Ra.unlocks.effarigGlyphIncreaseImCap.isUnlocked ? "RM ×{value} and iM cap ×{value2}" : "RM ×{value}";
     },
     effect: (level, strength) => (GlyphAlteration.isEmpowered("effarig") ? Math.pow(level, 1.5) : Math.pow(level, 0.6) * strength),
     formatEffect: x => format(x, 2, 2),

@@ -1,5 +1,5 @@
 import { DC } from "../constants";
-import { CorruptionUpgrade, KohlerProgressUnlocks, V } from "../globals";
+import { CorruptionUpgrade, KohlerInfinityUpgrade, KohlerProgressUnlocks, KohlerUpgrade, V } from "../globals";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { DimensionState } from "./dimension";
 
@@ -69,6 +69,10 @@ export function getDimensionFinalMultiplierUncached(tier) {
   multiplier = applyNDPowers(multiplier, tier);
 
   const glyphDilationPowMultiplier = getAdjustedGlyphEffect("dilationpow");
+  if (Kohler.isRunning){
+    multiplier = multiplier.pow(5e-7);
+    multiplier = dilatedValueOf(multiplier);
+  }
   if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
     multiplier = dilatedValueOf(multiplier.pow(glyphDilationPowMultiplier));
   } else if (Enslaved.isRunning) {
@@ -84,6 +88,7 @@ export function getDimensionFinalMultiplierUncached(tier) {
     multiplier = multiplier.pow(0.000001);
   }
 
+
   if (player.mending.corruptionChallenge.corruptedMend) {
     multiplier = multiplier.pow(corruptionPenalties.timeCompression.hiddenEight[player.mending.corruption[2]])
   }
@@ -92,7 +97,17 @@ export function getDimensionFinalMultiplierUncached(tier) {
   if (AlchemyResource.inflation.isUnlocked && multiplier.gte(AlchemyResource.inflation.effectValue)) {
     multiplier = multiplier.pow(1.05);
   }
-
+  if (Kohler.isRunning) {
+    multiplier = multiplier.timesEffectsOf(KohlerUpgrade(3),
+      KohlerUpgrade(14),
+      KohlerUpgrade(17),
+      KohlerInfinityUpgrade(7)
+      );
+  }
+  if (tier === 1) multiplier = multiplier.timesEffectsOf(
+    KohlerUpgrade(6),
+    KohlerInfinityUpgrade(11))
+  if (tier === 8 && KohlerUpgrade(8).isBought) multiplier = multiplier.times(KohlerUpgrade(6).effectOrDefault(1))
   return multiplier;
 }
 
@@ -262,7 +277,7 @@ export function buyAsManyAsYouCanBuy(tier) {
   const howMany = dimension.howManyCanBuy;
   const cost = dimension.cost.times(howMany);
 
-  if (tier === 8 && Enslaved.isRunning) return buyOneDimension(8);
+  if (tier === 8 && Enslaved.isRunning ) return buyOneDimension(8);
 
   dimension.currencyAmount = dimension.currencyAmount.minus(cost);
   dimension.challengeCostBump();
@@ -352,7 +367,9 @@ class AntimatterDimensionState extends DimensionState {
     const BASE_COSTS = [null, 10, 100, 1e4, 1e6, 1e9, 1e13, 1e18, 1e24];
     this._baseCost = BASE_COSTS[tier];
     const BASE_COST_MULTIPLIERS = [null, 1e3, 1e4, 1e5, 1e6, 1e8, 1e10, 1e12, 1e15];
+    const BCM_POST_KOHLER_UPGRADE_12 = [null, 10 , 100, 1000, 10000, 1e5, 1e6, 1e9, 1e13];
     this._baseCostMultiplier = BASE_COST_MULTIPLIERS[tier];
+    this._bcmKU12 = BCM_POST_KOHLER_UPGRADE_12[tier];
     const C6_BASE_COSTS = [null, 10, 100, 100, 500, 2500, 2e4, 2e5, 4e6];
     this._c6BaseCost = C6_BASE_COSTS[tier];
     const C6_BASE_COST_MULTIPLIERS = [null, 1e3, 5e3, 1e4, 1.2e4, 1.8e4, 2.6e4, 3.2e4, 4.2e4];
@@ -369,7 +386,7 @@ class AntimatterDimensionState extends DimensionState {
     }
     return new ExponentialCostScaling({
       baseCost: NormalChallenge(6).isRunning ? this._c6BaseCost : this._baseCost,
-      baseIncrease: NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier,
+      baseIncrease: (Kohler.isRunning && KohlerUpgrade(12).isBought) ? this._bcmKU12 : (NormalChallenge(6).isRunning ? this._c6BaseCostMultiplier : this._baseCostMultiplier),
       costScale: Player.dimensionMultDecrease**corruptionPen,
       scalingCostThreshold: Number.MAX_VALUE
     });
@@ -494,7 +511,7 @@ class AntimatterDimensionState extends DimensionState {
     if (!this.isAvailableForPurchase) return 0;
     // Nameless limits dim 8 purchases to 1 only
     // Continuum should be no different
-    if (this.tier === 8 && Enslaved.isRunning) return 1;
+    if (this.tier === 8 && (Enslaved.isRunning || Kohler.isRunning)) return 1;
     // It's safe to use dimension.currencyAmount because this is
     // a dimension-only method (so don't just copy it over to tickspeed).
     // We need to use dimension.currencyAmount here because of different costs in NC6.
@@ -622,6 +639,7 @@ class AntimatterDimensionState extends DimensionState {
       if (player.mending.corruptionChallenge.corruptedMend) {
         let atomDilutionCorruption = corruptionPenalties.atomDilution[player.mending.corruption[6]];
         if(CorruptionUpgrade(22).isBought) atomDilutionCorruption = Math.min(1,atomDilutionCorruption*1.5)
+        if(Kohler.isRunning) atomDilutionCorruption = Math.min(1, atomDilutionCorruption ** MatterUpgrade(10).effectOrDefault(1))
         production = Decimal.pow10(Math.pow(production.log10(),atomDilutionCorruption))
       }
       if(KohlerProgressUnlocks.hostileFragments.isUnlocked){
@@ -677,7 +695,7 @@ export const AntimatterDimensions = {
     mult = mult.powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
     mult = mult.pow(ImaginaryUpgrade(14).effectOrDefault(1));
 
-    if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(3).completions >= 1 && !Pelle.isDoomed){
+    if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(3).completions >= 1 && !Pelle.isDoomed){
       mult = mult.pow(EternityChallenge(3).vReward.effectValue);
     }
     return mult;

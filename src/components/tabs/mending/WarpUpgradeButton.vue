@@ -5,6 +5,7 @@ import EffectDisplay from "@/components/EffectDisplay";
 import HintText from "@/components/HintText";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import { MendingMilestone } from "../../../core/mending";
+import { Kohler } from "../../../core/globals";
 
 export default {
   name: "WarpUpgradeButton",
@@ -38,8 +39,8 @@ export default {
     },
     classObject() {
       return {
-        "c-mending-upgrade-btn--useless": false,//this.isUseless,
-        "c-mending-upgrade-btn--bought": this.isBought,// && !this.isUseless,
+        "c-mending-upgrade-btn--useless": this.isUseless,
+        "c-mending-upgrade-btn--bought": this.isBought && !this.isUseless,
         "c-mending-upgrade-btn--unavailable": !this.isBought && !this.canBeBought && this.isAvailableForPurchase,
         "c-mending-upgrade-btn--possible": !this.isAvailableForPurchase && this.isPossible,
         "c-mending-upgrade-btn--locked": !this.isAvailableForPurchase && !this.isPossible,
@@ -54,7 +55,7 @@ export default {
       return this.config.canLock && !(this.isAvailableForPurchase || this.isBought);
     },
     isUseless() {
-      return false;
+      return Kohler.isRunning && this.upgrade.id === 10;
     },
   },
   watch: {

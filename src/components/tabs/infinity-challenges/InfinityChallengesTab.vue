@@ -25,7 +25,7 @@ export default {
       const next = InfinityChallenges.nextICUnlockAM;
 
       if (first) return `The first Infinity Challenge unlocks at ${format(next)} antimatter.`;
-      return next === undefined
+      return next === undefined || this.nextIC.id === 9
         ? "All Infinity Challenges unlocked"
         : `Next Infinity Challenge unlocks at ${format(next)} antimatter.`;
     }
@@ -36,6 +36,9 @@ export default {
       this.showAllChallenges = player.options.showAllChallenges;
     },
     isChallengeVisible(challenge) {
+      if (challenge.id === 9){
+        return KohlerInfinityUpgrade(10).isBought;
+      }
       return challenge.isUnlocked || (this.showAllChallenges && PlayerProgress.eternityUnlocked());
     }
   }

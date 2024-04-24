@@ -63,6 +63,11 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
     return this.hasPlayerLock && this.isPossible && !shouldBypass && !this.isAvailableForPurchase;
   }
 
+  get isBought() {
+    return Kohler.isRunning ? false : super.isBought;
+  }
+
+
   // Required to be changed this way to avoid direct prop mutation in Vue components
   setMechanicLock(value) {
     this.hasPlayerLock = value;
@@ -85,10 +90,11 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return true;
+    return !Kohler.isRunning;
   }
 
   get isPossible() {
+    if (Kohler.isRunning) return false;
     return this.config.hasFailed ? !this.config.hasFailed() : true;
   }
 

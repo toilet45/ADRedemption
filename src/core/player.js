@@ -11,11 +11,14 @@ import { Ra } from "./globals";
 // eslint-disable-next-line prefer-const
 window.player = {
   antimatter: DC.E1,
+  weakMatter: DC.D0,
+  energy: DC.D0,
   dimensions: {
     antimatter: Array.range(0, 8).map(() => ({
       bought: 0,
       costBumps: 0,
-      amount: DC.D0
+      amount: DC.D0,
+      matterBoosts: 0
     })),
     infinity: Array.range(0, 8).map(tier => ({
       isUnlocked: false,
@@ -33,12 +36,20 @@ window.player = {
       cost: [new Decimal(1e25), new Decimal(1e55), new Decimal(1e105), new Decimal(1e215), new Decimal("1e333"), new Decimal("1e456"), new Decimal("1e678"), new Decimal("9.99e999")][tier],
       amount: DC.D0,
       bought: 0
-    }))
+    })),
+    matter: Array.range(0, 4).map(() => ({
+      bought: 0,
+      costBumps: 0,
+      boostCostBumps: 0,
+      amount: DC.D0,
+      matterBoosts: 0
+    })),
   },
   buyUntil10: true,
   sacrificed: DC.D0,
   achievementBits: Array.repeat(0, 17),
   secretAchievementBits: Array.repeat(0, 4),
+  kohlerMilestoneBits: Array.repeat(0, 2),
   infinityUpgrades: new Set(),
   infinityRebuyables: [0, 0, 0],
   challenge: {
@@ -49,7 +60,7 @@ window.player = {
     },
     infinity: {
       current: 0,
-      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 8),
+      bestTimes: Array.repeat(Decimal.pow10(Number.MAX_VALUE), 9),
       completedBits: 0,
     },
     eternity: {
@@ -59,7 +70,23 @@ window.player = {
     }
   },
   infinity: {
-    upgradeBits: 0
+    upgradeBits: 0,
+    kohlerUpgradeBits: 0,
+    kohlerRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    matterUpgradeBits: 0,
+    matterRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
   },
   auto: {
     autobuyersOn: true,
@@ -390,6 +417,7 @@ window.player = {
     fullGameCompletions: 0,
     previousRunRealTime: 0,
     totalAntimatter: DC.E1,
+    bestMatterinIC9: DC.D0,
     recentInfinities: Array.range(0, 10).map(() =>
       [Decimal.pow10(Number.MAX_VALUE), Number.MAX_VALUE, DC.D1, DC.D1, ""]),
     recentEternities: Array.range(0, 10).map(() =>
@@ -503,8 +531,11 @@ window.player = {
   corruptedFragments: DC.D0,
   galBoostPoints: DC.D0,
   mending:{
+    kohlerUpgradeBits: 0,
+    kohlerUpgradeReqs: 0,
     upgradeBits: 0,
     warpUpgradeBits: 0,
+    cuRespec: false,
     corruptionUpgradeBits: 0,
     corruptionUpgReqs: 0,
     warpUpgReqs: 0,
@@ -533,7 +564,15 @@ window.player = {
       4: 0,
       5: 0,
     },
+    kohlerRebuyables: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
     corruption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //There are 10 here incase we want to add more, only the first 5 are currently used.
+    corruptionBackup: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     corruptedFragments: 0,
     corruptionChallenge: {
       corruptedMend: false,
@@ -750,11 +789,13 @@ window.player = {
       bestRunAM: DC.D1,
       bestAMSet: [],
       perkShop: Array.repeat(0, 5),
-      lastRepeatedMachines: DC.D0
+      lastRepeatedMachines: DC.D0,
+      recordPouredAmount: 0
     },
     effarig: {
       relicShards: DC.D0,
       unlockBits: 0,
+      maxUnlockBits: 0,
       run: false,
       quoteBits: 0,
       glyphWeights: {
@@ -797,6 +838,8 @@ window.player = {
       runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       // The -10 is for glyph count, as glyph count for V is stored internally as a negative number
       runRecords: [-10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordRunUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordSpaceTheorems: 0,
       flip: V_FLIP.NORMAL,
     },
     ra: {
@@ -1012,6 +1055,27 @@ window.player = {
       unlockMilestone: [false,false,false,false,false,false,false]
     }
   },
+  transcendents:{
+    kohler: {
+      run: false,
+      trueRun: false
+    },
+    sxy: {
+      run: false
+    },
+    hexus:{
+      run: false
+    },
+    blight:{
+      run: false
+    },
+    asw:{
+      run: false
+    },
+    wollec:{
+      run: false
+    }
+  },
   isGameEnd: false,
   tabNotifications: new Set(),
   triggeredTabNotificationBits: 0,
@@ -1143,7 +1207,9 @@ window.player = {
       blackHole: true,
       realityShards: true,
       mends: true,
-      mendingPoints: true
+      mendingPoints: true,
+      raPoints: true,
+      galBoostPoints: true
     },
     hiddenTabBits: 0,
     hiddenSubtabBits: Array.repeat(0, 11),
@@ -1171,6 +1237,8 @@ window.player = {
   mends: DC.D0,
   mendingUpgrades: new Set(),
   mvrmultUpgrades: 0,
+  kohlerPoints: new Decimal(0),
+  bestKohlerPoints: new Decimal(0),
   devSave: true
 };
 
@@ -1178,7 +1246,7 @@ export const Player = {
   defaultStart: deepmergeAll([{}, player]),
 
   get isInMatterChallenge() {
-    return NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning;
+    return NormalChallenge(11).isRunning || InfinityChallenge(6).isRunning || InfinityChallenge(9).isRunning;
   },
 
   get isInAntimatterChallenge() {
@@ -1208,7 +1276,7 @@ export const Player = {
     return player.records.thisEternity.maxIP.gte(Player.eternityGoal);
   },
   get canMend(){
-    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15);
+    return (Ra.unlocks.exitDoom.isUnlocked ? Pelle.isDoomed : player.isGameEnd) || (MendingMilestone.six.isReached && player.antimatter.exponent >= 9e15) || Kohler.isRunning;
   },
   get bestRunIPPM() {
     return GameCache.bestRunIPPM.value;

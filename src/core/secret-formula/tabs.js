@@ -307,6 +307,16 @@ export const tabs = [
           PlayerProgress.infinityUnlocked(),
         id: 2,
         hidable: true,
+      },
+      {
+        key: "kohlerInfinityUpgrades",
+        name: "Kohler Upgrades",
+        symbol: `<i class='fa-solid fa-staff-snake'></i>`,
+        component: "KohlerInfinityUpgrades",
+        condition: () =>
+          KohlerUpgrade(20).isBought,
+        id: 3,
+        hidable: true,
       }
     ],
   },
@@ -444,14 +454,14 @@ export const tabs = [
         component: "TeresaTab",
         id: 1,
         hidable: true,
-        condition: () => Teresa.isUnlocked 
+        condition: () => Kohler.isRunning ? RealityUpgrades.allBought : Teresa.isUnlocked 
       },
       {
         key: "effarig",
         name: "Effarig",
         symbol: "Ϙ",
         component: "EffarigTab",
-        condition: () => TeresaUnlocks.effarig.isUnlocked,
+        condition: () => Kohler.isRunning ? RealityUpgrades.allBought : TeresaUnlocks.effarig.isUnlocked,
         id: 2,
         hidable: true,
       },
@@ -460,7 +470,7 @@ export const tabs = [
         name: "The Nameless Ones",
         symbol: "<div class='o-tab-btn--cel3'>\uf0c1</div>",
         component: "EnslavedTab",
-        condition: () => EffarigUnlock.eternity.isUnlocked,
+        condition: () => Kohler.isRunning ? RealityUpgrades.allBought : EffarigUnlock.eternity.isUnlocked,
         id: 3,
         hidable: true,
       },
@@ -469,7 +479,7 @@ export const tabs = [
         name: "V",
         symbol: "⌬",
         component: "VTab",
-        condition: () => Achievement(151).isUnlocked && EffarigUnlock.eternity.isUnlocked,
+        condition: () => Kohler.isRunning ? Enslaved.isCompleted : (Achievement(151).isUnlocked && EffarigUnlock.eternity.isUnlocked),
         id: 4,
         hidable: true,
       },
@@ -478,7 +488,7 @@ export const tabs = [
         name: "Ra",
         symbol: "<i class='fas fa-sun'></i>",
         component: "RaTab",
-        condition: () => (VUnlocks.raUnlock.isUnlocked && EffarigUnlock.eternity.isUnlocked) || Ra.unlocks.raNoReset.isUnlocked,
+        condition: () => Kohler.isRunning ? RealityUpgrades.allBought : (VUnlocks.raUnlock.isUnlocked && EffarigUnlock.eternity.isUnlocked) || Ra.unlocks.raNoReset.isUnlocked,
         id: 5,
         hidable: true,
       },
@@ -552,6 +562,34 @@ export const tabs = [
         id: 4,
         hidable: true,
         condition: () => Ra.unlocks.kohlersRealmUnlock.isUnlocked,
+      },
+    ]
+  },
+  {
+    key: "matter",
+    name: "Matter",
+    hideAt: 2.7, //Sequence is disabled
+    UIClass: "o-tab-btn--matter",
+    condition: () => KohlerInfinityUpgrade(10).isBought || player.records.bestMatterinIC9.gt(0),
+    id: 12,
+    hidable: true,
+    subtabs: [
+      {
+        key: "matterupgrades",
+        name: "Matter Upgrades",
+        symbol: "<i class='fas fa-arrow-up'></i>",
+        component: "MatterUpgrades",
+        id: 0,
+        hidable: true,
+      },
+      {
+        key: "matterdims",
+        name: "Matter Dimensions",
+        symbol: "?",
+        component: "MatterDimensionsTab",
+        id: 1,
+        hidable: true,
+        condition: () => MatterUpgrade(15).isBought
       },
     ]
   },

@@ -3,6 +3,7 @@ import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import { Enslaved, Pelle } from "../../../core/globals";
+import { TimeStudy } from "../../../core/time-studies/normal-time-study";
 
 export default {
   name: "ClassicTimeDimensionRow",
@@ -40,6 +41,7 @@ export default {
       currTT: new Decimal(),
       isContinuumActive: false,
       continuumValue: 0,
+      cap: 0
     };
   },
   computed: {
@@ -61,7 +63,7 @@ export default {
     tooltipContents() {
       if (this.showTTCost) return `${this.formattedEPCost}<br>${this.timeEstimate}`;
       if (this.isContinuumActive) return "Continuum produces all your Time Dimensions";
-      if (this.isCapped) return Enslaved.isRunning ? `Nameless prevents the purchase of more than ${format(1)} Time Dimension` : `Capped at ${format(5e14, 2, 2)} purchases`;
+      if (this.isCapped) return Enslaved.isRunning ? `Nameless prevents the purchase of more than ${format(1)} Time Dimension` : `Capped at ${format(this.cap, 2, 2)} purchases`;
       return this.bought >= 1e12 ? `Purchased ${format(this.bought, 2, 2)} times` : `Purchased ${quantifyInt("time", this.bought)}`;
     },
     showRow() {
@@ -94,7 +96,7 @@ export default {
     update() {
       const tier = this.tier;
       const dimension = TimeDimension(tier);
-      this.isCapped = (Enslaved.isRunning && dimension.bought > 0) || dimension.bought >= 5e14;
+      this.isCapped = (Enslaved.isRunning && dimension.bought > 0) || dimension.bought >= this.cap;
       this.isUnlocked = dimension.isUnlocked;
       this.multiplier.copyFrom(dimension.multiplier);
       this.amount.copyFrom(dimension.totalAmount);
@@ -116,6 +118,7 @@ export default {
       this.ttGen.copyFrom(getTTPerSecond().times(getGameSpeedupFactor()));
       this.isContinuumActive = Ra.continuumActive && !Pelle.isDoomed;
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
+      this.cap = 5e14 * TimeStudy(310).isBought ? Math.max(Math.sqrt(Math.log10(Currency.replicanti.value.exponent+1)),1) : 1
     },
     buyTimeDimension() {
       if (!this.isUnlocked) {

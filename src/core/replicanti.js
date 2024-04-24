@@ -124,6 +124,9 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
   }
 
   interval = interval.divide(totalReplicantiSpeedMult(overCap));
+  if (Kohler.isRunning){
+    interval = interval.pow(10);
+  }
 
   if (V.isRunning) {
     // This is a boost if interval < 1, but that only happens in EC12
@@ -146,6 +149,7 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
 // value in the multiplier tab too
 export function totalReplicantiSpeedMult(overCap) {
   let totalMult = DC.D1;
+  let speedPow = DC.D1;
 
   // These are the only effects active in Pelle - the function shortcuts everything else if we're in Pelle
   totalMult = totalMult.times(PelleRifts.decay.effectValue);
@@ -184,7 +188,11 @@ export function totalReplicantiSpeedMult(overCap) {
   }
   totalMult = totalMult.timesEffectsOf(AlchemyResource.replication);
 
-  return totalMult;
+  if (Kohler.isRunning){
+    speedPow = speedPow.timesEffectOf(KohlerInfinityUpgrade(5))
+  }
+
+  return totalMult.pow(speedPow);
 }
 
 export function replicantiCap() {
@@ -223,6 +231,9 @@ export function replicantiLoop(diff) {
     // always happen above 1000 replicanti due to how singleTickAvg is calculated, so the over-cap math is only
     // present on this path
     let postScale = Math.log10(ReplicantiGrowth.scaleFactor) / ReplicantiGrowth.scaleLog10;
+    if (Kohler.isRunning){
+      postscale *= 10;
+    }
     if (V.isRunning) {
       postScale *= 2;
     }

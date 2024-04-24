@@ -9,7 +9,7 @@ export const changelog = [
    * }
    */
   {
-    date: ["20??", "??", "??"],
+    date: [2024, 2, "??"],
     name: "idk yet",
     info: 
     `
@@ -22,7 +22,7 @@ export const changelog = [
     <li>Implemented 20 Mend Milestone</li>
     <li>Implemented Warp Reality</li>
     <li>Added Mending content to the catchup modal</li>
-    <li>Endgame: 20 Mend Milestone and about ee?? antimatter</li>
+    <li>Endgame: about e1 Oc (ee27) antimatter</li>
     </ul>
     <b>Bugfixes:</b>
     <br>
@@ -32,14 +32,14 @@ export const changelog = [
     <li>Glyph Filter Mode is set to "Lowest Total Glyph Sacrifice" on Mend</li>
     <li>Made all pre-Pelle achievements visible again on a new game</li>
     <li>Fixed progress stage not being updated on Mend</li>
+    <li>a stupid amount of stuff I don't remember</li>
     </ul>
     <b>Known Issues:</b>
     <br>
     <ul>
-    <li>When importing a Vanilla save, rebuyable Mending Upgrade costs and effects don't get initalized properly, saving and refreshing should fix it</li>
-    <li>The amount of Glyph Slots sometimes doesn't update properly when 20MM buys them, performing a Reality Reset while not on the Glyph tab should fix it</li>
     <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
     <li>There are console errors when viewing the TS tree when unlocking a Triad Study (this doesn't effect gameplay)</li>
+    <li>Some notations say "NaN undefined" after a certain value, but you should probably use Scientific at that point</li>
     </ul>`
   },
   {

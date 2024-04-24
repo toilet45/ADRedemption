@@ -95,6 +95,9 @@ export function buyDilationUpgrade(id, bulk = 1) {
         Perk.retroactiveTP3,
         Perk.retroactiveTP4
       );
+      if (Kohler.isRunning) {
+        retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
+      }
       if (Enslaved.isRunning) {
         retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
       }
@@ -158,12 +161,13 @@ export function getDilationGainPerSecond() {
   dtRate = dtRate.times(
     Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1));
   if(Ra.unlocks.relicShardBoost.isUnlocked) dtRate = dtRate.pow(1 + Math.max(0, (Currency.relicShards.value.log10() / 1337)));
+  if (Kohler.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
   if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
   if (player.mending.corruptionChallenge.corruptedMend) {
     let toDpower=corruptionPenalties.toD.power[player.mending.corruption[7]];
-    let toDmult=corruptionPenalties.toD.mult[player.mending.corruption[7]]
+    let toDmult=new Decimal(corruptionPenalties.toD.mult[player.mending.corruption[7]])
     if(CorruptionUpgrade(23).isBought&&player.mending.corruption[7]>=1){
       toDpower+=0.2;
       toDmult=toDmult.times(100000);

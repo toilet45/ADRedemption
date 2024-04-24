@@ -737,6 +737,94 @@ export const migrations = {
   51.026: player => {
     player.celestials.kohler.unlockMilestone = [false,false,false,false,false,false,false]
   },
+  51.027: player => {
+    player.transcendents = {
+      kohler: {
+        run: false,
+        trueRun: false
+      },
+      sxy: {
+        run: false
+      },
+      hexus:{
+        run: false
+      },
+      blight:{
+        run: false
+      },
+      asw:{
+        run: false
+      },
+      wollec:{
+        run: false
+      }
+    }
+  },
+  51.028: player => {
+    player.mending.corruptionBackup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  50.0281: player => {
+    player.mending.cuRespec = false;
+  },
+  50.029: player =>{
+    player.awayProgress.raPoints = true,
+    player.awayProgress.galBoostPoints = true
+  },
+  50.03: player =>{
+    player.kohlerPoints = new Decimal(0);
+    player.mending.kohlerUpgradeBits = 0;
+    player.mending.kohlerUpgradeReqs = 0;
+    player.mending.kohlerRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    player.bestKohlerPoints = new Decimal(0);
+    player.kohlerMilestoneBits = Array.repeat(0, 2);
+    player.celestials.teresa.recordPouredAmount = player.celestials.teresa.pouredAmount;
+    player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
+    player.celestials.v.recordRunUnlocks = player.celestials.v.runUnlocks;
+    player.celestials.v.recordSpaceTheorems = V.spaceTheorems;
+  },
+  50.031: player =>{
+    delete player.kohlerMilestoneBits;
+    player.kohlerMilestoneBits = Array.repeat(0, 2);
+  },
+  50.032: player =>{
+    player.infinity.kohlerUpgradeBits = 0;
+    player.infinity.kohlerRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    }
+  },
+  50.033: player => {
+    while (player.challenge.infinity.bestTimes.length < 9){
+      player.challenge.infinity.bestTimes.push(Decimal.pow10(Number.MAX_VALUE));
+    }
+    player.infinity.matterUpgradeBits = 0,
+    player.infinity.matterRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    player.records.bestMatterinIC9 = DC.D0;
+  },
+  50.034: player =>{
+    player.dimensions.matter = Array.range(0, 4).map(() => ({
+      bought: 0,
+      costBumps: 0,
+      amount: DC.D0,
+      matterBoosts: 0,
+      boostCostBumps: 0
+    }));
+  },
   51.300: player => {
     // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
     /* 

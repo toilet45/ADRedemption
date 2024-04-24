@@ -66,6 +66,7 @@ export * from "./dimensions/antimatter-dimension";
 export * from "./dimensions/infinity-dimension";
 export * from "./dimensions/time-dimension";
 export * from "./dimensions/multiversal-dimension";
+export * from "./dimensions/matter-dimension";
 
 export * from "./time-studies";
 
@@ -95,9 +96,14 @@ export * from "./tabs";
 export * from "./tab-notifications";
 export * from "./speedrun";
 
+
 export * from "./automator/script-templates";
 export * from "./mending";
 export * from "./mending-upgrades";
 export * from "./corruption";
 export * from "./corruption-upgrades";
 export * from "./warp-upgrades";
+export * from "./kohler-upgrades";
+export * from "./kohler-milestones";
+export * from "./kohler-infinity-upgrades";
+export * from "./matter-upgrades";

@@ -232,6 +232,7 @@ Currency.antimatter = new class extends DecimalCurrency {
   }
 
   get startingValue() {
+    if (Kohler.isRunning) return new Decimal(100);
     if (Pelle.isDisabled()) return new Decimal(100);
     return Effects.max(
       10,
@@ -281,7 +282,7 @@ Currency.infinityPoints = new class extends DecimalCurrency {
   }
 
   get startingValue() {
-    if (Pelle.isDisabled()) return new Decimal(0);
+    if (Pelle.isDisabled() || Kohler.isRunning) return new Decimal(0);
     return Effects.max(
       0,
       Perk.startIP1,
@@ -335,7 +336,7 @@ Currency.eternityPoints = new class extends DecimalCurrency {
   }
 
   get startingValue() {
-    if (Pelle.isDisabled()) return new Decimal(0);
+    if (Pelle.isDisabled() || Kohler.isRunning) return new Decimal(0);
     return Effects.max(
       0,
       Perk.startEP1,
@@ -433,7 +434,7 @@ Currency.imaginaryMachines = new class extends NumberCurrency {
 Currency.darkMatter = new class extends DecimalCurrency {
   get value() { return player.celestials.laitela.darkMatter; }
   set value(value) {
-    const capped = Decimal.min(value, new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1)).times(player.celestials.ra.upgrades.has('laitelaUpgrade') ? Currency.singularities.value*Currency.singularities.value+1 : 1);
+    const capped = Decimal.min(value, new Decimal(Number.MAX_VALUE).times(Ra.unlocks.increaseDarkMatterCap.isUnlocked ? Decimal.pow(1e10, Ra.pets.laitela.level) : 1)).times(RaUpgrade.laitelaUpgrade.canBeApplied ? Currency.singularities.value*Currency.singularities.value+1 : 1);
     player.celestials.laitela.darkMatter = capped;
     player.celestials.laitela.maxDarkMatter = player.celestials.laitela.maxDarkMatter.max(capped);
   }
@@ -570,3 +571,55 @@ Currency.galBoostPoints = new class extends DecimalCurrency {
     //super.reset();
   }
 }();
+
+Currency.kohlerPoints = new class extends DecimalCurrency {
+  get value() { 
+    return player.kohlerPoints; 
+  }
+  set value(value) {
+    player.kohlerPoints = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    //super.reset();
+  }
+}();
+
+Currency.energy = new class extends DecimalCurrency {
+  get value() { 
+    return player.energy; 
+  }
+  set value(value) {
+    player.energy = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    super.reset();
+  }
+}();
+
+Currency.weakMatter = new class extends DecimalCurrency {
+  get value() { 
+    return player.weakMatter; 
+  }
+  set value(value) {
+    player.weakMatter = new Decimal(value);
+  }
+
+  get startingValue() {
+    return new Decimal(0);
+  }
+
+  reset() {
+    super.reset();
+  }
+}();
+

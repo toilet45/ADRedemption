@@ -123,7 +123,7 @@ export const Enslaved = {
     let release = player.celestials.enslaved.stored;
     if (Enslaved.isRunning) {
       release = Enslaved.storedTimeInsideEnslaved(release);
-      if (Time.thisReality.totalYears + TimeSpan.fromMilliseconds(release).totalYears > 1) {
+      if (Time.thisReality.totalYears.add(TimeSpan.fromMilliseconds(release).totalYears).gt(1)) {
         EnslavedProgress.storedTime.giveProgress();
       }
     }
@@ -281,7 +281,15 @@ export const Tesseracts = {
   },
 
   get effectiveCount() {
-    return this.bought + this.extra;
+    let x = this.bought + this.extra;
+    /*let softcapOneStart = 50; // yes this is redundant, but futureproofing for upgrades
+    if (x > softcapOneStart){
+      let scOnePower = 0.05;
+      x /= softcapOneStart;
+      x **= scOnePower;
+      x *= softcapOneStart;
+    }*/
+    return x;
   },
 
   buyTesseract() {

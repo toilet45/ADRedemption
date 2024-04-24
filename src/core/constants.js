@@ -233,7 +233,10 @@ window.AUTO_REALITY_MODE = {
 
 window.AUTO_MEND_MODE = {
   AMOUNT: 0,
-  TIME: 1
+  TIME: 1,
+  X_HIGHEST: 2,
+  AMOUNT_KP: 3,
+  X_HIGHEST_KP: 4
 };
 
 window.RECENT_PRESTIGE_RESOURCE = {
@@ -542,7 +545,10 @@ window.PROGRESS_STAGE = {
   IMAGINARY_MACHINES: 15,
   LAITELA: 16,
   PELLE: 17,
-  MENDING: 18
+  MENDING: 18,
+  WARPED_REALITY: 19,
+  HOSTILITIES: 20,
+  KOHLER_REALM: 21
 };
 
 window.STD_BACKEND_URL = "https://antimatterdimensionspayments.ew.r.appspot.com";

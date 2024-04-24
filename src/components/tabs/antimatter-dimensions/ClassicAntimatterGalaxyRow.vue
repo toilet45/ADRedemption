@@ -13,7 +13,8 @@ export default {
       galaxies: {
         normal: 0,
         replicanti: 0,
-        dilation: 0
+        dilation: 0,
+        matter: 0
       },
       requirement: {
         tier: 1,
@@ -51,6 +52,7 @@ export default {
       const parts = [Math.max(this.galaxies.normal, 0)];
       if (this.galaxies.replicanti > 0) parts.push(this.galaxies.replicanti);
       if (this.galaxies.dilation > 0) parts.push(this.galaxies.dilation);
+      if (this.galaxies.matter > 0) parts.push(this.galaxies.matter);
       const sum = parts.map(this.formatGalaxies).join(" + ");
       if (parts.length >= 2) {
         return `${sum} = ${this.formatGalaxies(parts.sum())}`;
@@ -85,6 +87,7 @@ export default {
         }
         case GALAXY_TYPE.THIRD:
         let x = 750000 + (5000 * player.mending.rebuyables[16]) + CorruptionUpgrade(9).effectOrDefault(0); //plus whatever
+        if(Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) x+=EternityChallenge(5).vReward.effectValue;
           return MendingUpgrade(17).isBought ? `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies` : `Galaxy costs scale much more rapidly beyond ${formatInt(x)} Galaxies, after Remote scaling`;
       }
       return undefined;
@@ -106,6 +109,7 @@ export default {
       this.galaxies.normal = player.galaxies + GalaxyGenerator.galaxies;
       this.galaxies.replicanti = Replicanti.galaxies.total;
       this.galaxies.dilation = player.dilation.totalTachyonGalaxies;
+      this.galaxies.matter = 0;//MatterUpgrade(12).effectOrDefault(0);
       const requirement = Galaxy.requirement;
       this.requirement.amount = requirement.amount;
       this.requirement.tier = requirement.tier;

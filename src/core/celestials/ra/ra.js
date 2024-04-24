@@ -19,8 +19,12 @@ class RaUnlockState extends BitUpgradeState {
     return Pelle.isDoomed && this.config.disabledByPelle;
   }
 
+  get disabledByKohler() {
+    return Kohler.isRunning && this.config.disabledByKohler;
+  }
+
   get isEffectActive() {
-    return this.isUnlocked && !this.disabledByPelle;
+    return this.isUnlocked && !this.disabledByPelle && !this.disabledByKohler;
   }
 
   get requirementText() {
@@ -37,7 +41,7 @@ class RaUnlockState extends BitUpgradeState {
   }
 
   get displayIcon() {
-    return this.disabledByPelle ? `<span class="fas fa-ban"></span>` : this.config.displayIcon;
+    return this.disabledByPelle || this.disabledByKohler ? `<span class="fas fa-ban"></span>` : this.config.displayIcon;
   }
 
   get pet() {
@@ -149,10 +153,10 @@ class RaPetState extends GameMechanicState {
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
     res *= WarpUpgrade(5).effectOrDefault(1);
-    if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
+    /*if (Ra.unlocks.raXP.isUnlocked) res *= Math.log10((Math.max(Currency.imaginaryMachines.value, 1)));
     if (Ra.unlocks.pelleXP.isUnlocked){
       res *= (Math.log10(player.records.bestReality.remWithoutGG + 1) / 1.6667) + 1;
-    }
+    }*/
     if (!Ra.isRunning && Ra.unlocks.generateMemChunksOutOfRasReality.isUnlocked) res /= 100;
     return res;
   }
@@ -239,7 +243,7 @@ class RaPetState extends GameMechanicState {
     // Adding memories from half of the gained chunks this tick results in the best mathematical behavior
     // for very long simulated ticks
     let memsPerSecond = Math.pow((this.memoryChunks + newMemoryChunks / 2) * Ra.productionPerMemoryChunk *
-      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 500 : 1);
+      this.memoryUpgradeCurrentMult * this.shopMemMultEffect, MendingUpgrade(15).isBought ? 1.5 : 1) * (Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked ? 7500 : 1);
     if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
       case 1: if(this.id=='teresa') memsPerSecond *= 1500;break;
       case 2: if(this.id=='effarig') memsPerSecond *= 1500;break;
@@ -354,6 +358,11 @@ export const Ra = {
     let base = Math.max(player.dimensionBoosts - 2.5e9,0)/1e8;
     let powered = Decimal.pow(10,base).minus(1);
     let GainPerSec = new Decimal(powered.times(ticktime));
+    if (GainPerSec.gte(1e40)){
+      GainPerSec = GainPerSec.div(1e40);
+      GainPerSec = GainPerSec.pow(0.1);
+      GainPerSec = GainPerSec.times(1e40);
+    }
     return GainPerSec;
   },
   raGainPointLoop(diff){
@@ -443,7 +452,7 @@ export const Ra = {
 
       let multiplierOutPower = new Decimal(1);
       if(Pelle.isDoomed && Ra.unlocks.boostMemoryGain.isUnlocked){
-        multiplierOutPower = multiplierOutPower.times(500);
+        multiplierOutPower = multiplierOutPower.times(7500);
       }
       let HUavaliable = false;
       if(CorruptionUpgrade(1).isBought){switch(Ra.currentCelestial){
@@ -584,7 +593,7 @@ export const Ra = {
     }
   },
   get alchemyResourceCap() {
-    return Ra.unlocks.alchSetToCapAndCapIncrease.isUnlocked ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) + CorruptionUpgrade(14).effectOrDefault(0) : 25000;
+    return Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied ? 25000 + (5 * player.celestials.ra.pets["effarig"].level) + CorruptionUpgrade(14).effectOrDefault(0) : 25000;
   },
   get momentumValue() {
     const hoursFromUnlock = TimeSpan.fromMilliseconds(player.celestials.ra.momentumTime).totalHours;

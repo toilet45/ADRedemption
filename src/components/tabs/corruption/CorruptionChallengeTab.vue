@@ -9,6 +9,7 @@ import { playerInfinityUpgradesOnReset } from "../../../game";
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
 import { WarpUpgrade } from "../../../core/warp-upgrades";
 import { mendingReset } from "../../../core/globals";
+import PrimaryButton from "../../PrimaryButton.vue";
 
 export default {
   name: "CorruptionTab",
@@ -16,7 +17,8 @@ export default {
     CelestialQuoteHistory,
     CustomizeableTooltip,
     SliderComponent,
-    CorruptionUpgradeButton
+    CorruptionUpgradeButton,
+    PrimaryButton
   },
   data() {
     return {
@@ -34,13 +36,15 @@ export default {
       timeCompMult: new Decimal(0),
       corruptedFrags: 0,
       rewardedFragments: 0,
+      respec: false,
+      externCorrupt: false
     };
   },
   computed: {
     corruptionSliderProps() {
       return {
         min: 0,
-        max: 9+(WarpUpgrade(6).isBought + WarpUpgrade(12).isBought),
+        max: 9+(WarpUpgrade(6).isBought),// + WarpUpgrade(12).isBought),
         width: "27rem",
         valueInDot: true,
         tooltip: "never",
@@ -57,9 +61,15 @@ export default {
     runButtonClassObject() {
       return {
         "c-corrupt-run-button__icon": true,
-        "c-corrupt-run-button__icon--running": this.isRunning,
-        "c-corrupt-run-button--clickable": true,
-        "o-pelle-disabled-pointer": false
+        "c-corrupt-run-button__icon--running": this.isRunning && !this.externCorrupt,
+        "c-corrupt-run-button--clickable": !this.externCorrupt,
+        "o-pelle-disabled-pointer": this.externCorrupt
+      };
+    },
+    respecClassObject() {
+      return {
+        "o-primary-btn--subtab-option": true,
+        "o-primary-btn--respec-active": this.respec
       };
     },
     runDescription() {
@@ -91,6 +101,11 @@ export default {
      return CorruptionUpgrades.all.countWhere(u => u.isBought);
     },
   },
+  watch:{
+    respec(newValue) {
+      player.mending.cuRespec = newValue;
+    },
+  },
   methods: {
     update() {
       const now = new Date().getTime();
@@ -98,13 +113,15 @@ export default {
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
-      this.isRunning = CorruptionData.isCorrupted;
+      this.isRunning = CorruptionData.isCorrupted || this.externCorrupt;
       this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
       this.nextCorrupted = player.mending.corruptNext
       // This was being annoying so this is a cheap fix that works
       this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
       this.corruptedFrags = player.mending.corruptedFragments;
       this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
+      this.respec = player.mending.cuRespec;
+      this.externCorrupt = Kohler.isRunning;
     },
     corruptionsZeroCheck() {
       for(let i=0;i<10;i++){
@@ -161,11 +178,14 @@ export default {
         class="l-corrupt-mechanic-container"
       >
         <div class="c-corrupt-unlock c-corrupt-run-button">
-          <span v-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
+          <span v-if="externCorrupt">
+            Hostilities cannot be adjusted due to external factors
+          </span>
+          <span v-else-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
               Make Next Mend Hostile
           </span>
-          <span v-else-if="!isRunning && !nextCorrupted && corruptionsZeroCheck()">
-            You can't make full zero Hostile
+          <span v-else-if="(!isRunning && !nextCorrupted && corruptionsZeroCheck())">
+            Set at least one Hostility to at least Level 1 to make next Mend Hostile
           </span>
           <span v-else-if="!isRunning && !corruptionsZeroCheck()">
               Next Mend will be Hostile, Mend to apply Hostilities
@@ -317,6 +337,12 @@ export default {
         TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}.
       </div>
     </div>
+    <PrimaryButton
+        :class="respecClassObject"
+        @click="respec = !respec"
+      >
+        Respec Hostility Upgrades on Mend
+      </PrimaryButton>
     <div class="button-container">
       <button
         class="o-pelle-button"

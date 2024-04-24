@@ -134,4 +134,17 @@ export const infinityChallenges = [
     },
     unlockAM: DC.E28000,
   },
+  {
+    id: 9,
+    description: () => `Gamespeed is fixed at 1, matter is generated like in C11 and IC6. This Challenge can only be entered in Kohler's Realm`,
+    goal: DC.WARP_LIMIT,
+    isQuickResettable: false,
+    effect: () => 1,
+    reward:{
+      description: "[TBD]",
+      effect: () => 1,
+      formatEffect: value => formatX(value, 2, 2)
+    },
+    unlockAM: DC.D0,
+  }
 ];

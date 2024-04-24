@@ -14,12 +14,16 @@ export const Teresa = {
     return Achievement(147).isUnlocked;
   },
   pourRM(diff) {
-    if (this.pouredAmount >= Teresa.pouredAmountCap) return;
+    if (this.pouredAmount >= Teresa.pouredAmountCap) {
+      player.celestials.teresa.recordPouredAmount = this.pouredAmountCap;
+      return;
+    }
     this.timePoured += diff;
     const rm = Currency.realityMachines.value;
     const rmPoured = Math.min((this.pouredAmount + 1e6) * 0.01 * Math.pow(this.timePoured, 2), rm.toNumber());
     this.pouredAmount += Math.min(rmPoured, Teresa.pouredAmountCap - this.pouredAmount);
     Currency.realityMachines.subtract(rmPoured);
+    if (this.pouredAmount > player.celestials.teresa.recordPouredAmount) player.celestials.teresa.recordPouredAmount = this.pouredAmount;
     this.checkForUnlocks();
   },
   checkForUnlocks() {

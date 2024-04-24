@@ -8,8 +8,8 @@ const rebuyable = props => {
     props.costMult,
     props.costMult / 10,
     DC.E309,
-    1e3,
-    props.initialCost * props.costMult
+    1e30,
+    props.initialCost * props.costMult,
   );
   const { effect, effectType } = props;
   props.effect = () =>{ 

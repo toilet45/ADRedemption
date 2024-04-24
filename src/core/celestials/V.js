@@ -171,7 +171,7 @@ export const V = {
       if (unl === VUnlocks.vAchievementUnlock) continue;
       unl.unlock();
     }
-
+    if (this.spaceTheorems > player.celestials.v.recordSpaceTheorems) player.celestials.v.recordSpaceTheorems = this.spaceTheorems;
     if (this.isRunning) {
       for (const unlock of VRunUnlocks.all) {
         unlock.tryComplete();
@@ -188,6 +188,8 @@ export const V = {
     if (VUnlocks.raUnlock.canBeApplied && !Ra.unlocks.autoTP.canBeApplied) {
       Ra.checkForUnlocks();
     }
+
+    V.checkForQuotes();
   },
   get canUnlockCelestial() {
     return VUnlocks.vAchievementUnlock.canBeUnlocked;
@@ -196,6 +198,14 @@ export const V = {
     player.celestials.v.unlockBits |= (1 << VUnlocks.vAchievementUnlock.id);
     GameUI.notify.success("You have unlocked V, The Celestial Of Achievements!", 10000);
     V.quotes.unlock.show();
+  },
+  checkForQuotes() {
+    for (const quote of V.quotes.all) {
+      // Quotes without requirements will be shown in other ways
+      if (quote.requirement) {
+        quote.show();
+      }
+    }
   },
   initializeRun() {
     clearCelestialRuns();
@@ -214,18 +224,22 @@ export const V = {
       if (i>=6 && i<12) sum += player.celestials.v.runUnlocks[i] * mult;
       if (i>=12) sum += player.celestials.v.runUnlocks[i] * 4 * mult;
     }
+    let x = this.spaceTheorems;
     this.spaceTheorems = sum;
+    if (this.spaceTheorems > x) player.celestials.v.recordRunUnlocks = player.celestials.v.runUnlocks;
   },
   reset() {
     player.celestials.v = {
       unlockBits: 0,
       run: false,
-      quotes: [],
+      //quotes: [],
       runUnlocks: [0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
       goalReductionSteps: [0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
       STSpent: 0,
       runGlyphs: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       runRecords: [-10, 0, 0, 0, 0, 0, -10, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0],
+      recordRunUnlocks: player.celestials.v.recordRunUnlocks,
+      recordSpaceTheorems: player.celestials.v.recordSpaceTheorems,
     };
     this.spaceTheorems = 0;
   },

@@ -49,6 +49,15 @@ class WarpUpgradeState extends BitPurchasableMechanicState {
     player.mending.warpUpgradeBits = value;
   }
 
+  get isBought() {
+    if (Kohler.isRunning && this.id === 10) return false;
+    return super.isBought;
+  }
+
+  get canBeBought(){
+    return (Kohler.isRunning && this.id === 10) ? false : super.canBeBought;
+  }
+
   get hasPlayerLock() {
     return (player.mending.reqLock.warp & (1 << this.bitIndex)) !== 0;
   }

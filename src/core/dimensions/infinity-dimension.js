@@ -1,6 +1,7 @@
 import { DC } from "../constants";
 import { CorruptionUpgrade } from "../corruption-upgrades";
 import { Currency } from "../currency";
+import { KohlerInfinityUpgrade } from "../kohler-infinity-upgrades";
 import { corruptionPenalties } from "../secret-formula/mending/corruption";
 import { WarpUpgrade } from "../warp-upgrades";
 
@@ -29,7 +30,7 @@ export function infinityDimensionCommonMultiplier() {
   if (Pelle.isDoomed && EternityChallenge(9).completions >= 1) {
     mult = mult.timesEffectsOf(EternityChallenge(9).reward);
   }
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(9).completions >= 1 && !Pelle.isDoomed) {
     mult = mult.timesEffectsOf(EternityChallenge(9).vReward);
   }
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {
@@ -63,14 +64,29 @@ class InfinityDimensionState extends DimensionState {
       DC.E54000,
       DC.E60000,
     ];
-    this._unlockRequirement = UNLOCK_REQUIREMENTS[tier];
+
+    const UNLOCK_REQUIREMENTS_KIU6 = [
+      undefined,
+      new Decimal("1e550"),
+      new Decimal("1e950"),
+      new Decimal("1e1200"),
+      new Decimal("1e5250"),
+      new Decimal("1e15000"),
+      new Decimal("1e22500"),
+      new Decimal("1e27000"),
+      new Decimal("1e30000"),
+    ];
     const COST_MULTS = [null, 1e3, 1e6, 1e8, 1e10, 1e15, 1e20, 1e25, 1e30];
-    this._costMultiplier = COST_MULTS[tier];
     const POWER_MULTS = [null, 50, 30, 10, 5, 5, 5, 5, 5];
-    this._powerMultiplier = POWER_MULTS[tier];
     const BASE_COSTS = [null, 1e8, 1e9, 1e10, 1e20, 1e140, 1e200, 1e250, 1e280];
+    const BASE_COSTS_KIU6 = [null, 1e5, 1e6, 1e7, 1e17, 1e137, 1e197, 1e247, 1e277];
+    this._unlockRequirement = UNLOCK_REQUIREMENTS[tier];
     this._baseCost = new Decimal(BASE_COSTS[tier]);
     this.ipRequirement = BASE_COSTS[1];
+
+    this._costMultiplier = COST_MULTS[tier];
+    this._powerMultiplier = POWER_MULTS[tier];
+
   }
 
   /** @returns {Decimal} */
@@ -95,7 +111,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get amRequirement() {
-    return this._unlockRequirement;
+    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._unlockRequirement.pow(0.5) : this._unlockRequirement;
   }
 
   get antimatterRequirementReached() {
@@ -144,6 +160,11 @@ class InfinityDimensionState extends DimensionState {
     return x;
   }
 
+  get infPowerSoftcapTwo(){
+    let x = 1e21;
+    return x;
+  }
+
   get productionPerSecond() {
     if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning ||
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
@@ -167,10 +188,16 @@ class InfinityDimensionState extends DimensionState {
     }*/
     if (this.tier == 1){
       while (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcap)*repeats) {
-      production = production.div(Decimal.pow10(this.infPowerSoftcap));   
-      production = production.pow(0.0123456789);
-      production = production.times(Decimal.pow10(this.infPowerSoftcap));
-      repeats += 1}
+        production = production.div(Decimal.pow10(this.infPowerSoftcap));   
+        production = production.pow(0.0123456789);
+        production = production.times(Decimal.pow10(this.infPowerSoftcap));
+        if (Math.log10(production.log10()) > Math.log10(this.infPowerSoftcapTwo)*repeats && repeats === 1){
+          production = production.div(Decimal.pow10(this.infPowerSoftcapTwo));   
+          production = production.pow(1e-4);
+          production = production.times(Decimal.pow10(this.infPowerSoftcapTwo));
+        }
+        repeats += 1
+      }
     }
     return production;
   }
@@ -204,7 +231,7 @@ class InfinityDimensionState extends DimensionState {
     mult = mult.powEffectOf(AlchemyResource.infinity);
     mult = mult.pow(Ra.momentumValue);
     mult = mult.powEffectOf(PelleRifts.paradox);
-    if(Ra.unlocks.improvedECRewards.isUnlocked && !Pelle.isDoomed){
+    if(Ra.unlocks.improvedECRewards.canBeApplied && !Pelle.isDoomed){
       if(EternityChallenge(2).completions >= 1) mult = mult.pow(EternityChallenge(2).vReward.effectValue);
       if(EternityChallenge(4).completions >= 1) mult = mult.pow(EternityChallenge(4).vReward.effectValue);
     }
@@ -215,7 +242,9 @@ class InfinityDimensionState extends DimensionState {
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
       mult = dilatedValueOf(mult);
     }
-
+    if (Kohler.isRunning){
+      mult = mult.pow(5e-7)
+    }
     if (Effarig.isRunning) {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {
@@ -231,6 +260,14 @@ class InfinityDimensionState extends DimensionState {
     if (CorruptionUpgrade(24).isBought&&player.mending.corruptionChallenge.corruptedMend&&player.mending.corruption[8]>=5){
       mult = mult.pow(CorruptionUpgrade(24).effectOrDefault(1));
     }
+
+    if (Kohler.isRunning){
+      mult = mult.timesEffectsOf(
+        KohlerInfinityUpgrade(2),
+        KohlerInfinityUpgrade(8),
+        MatterUpgrade(8)
+      )
+    }
     return mult;
   }
 
@@ -245,7 +282,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get baseCost() {
-    return this._baseCost;
+    return (KohlerInfinityUpgrade(6).isBought && Kohler.isRunning) ? this._baseCost.div(1e3) : this._baseCost;
   }
 
   get costMultiplier() {
@@ -270,9 +307,9 @@ class InfinityDimensionState extends DimensionState {
       return 1;
     }
      // return InfinityDimensions.totalDimCap * (this.tier == 8 ? 100 : 1);
-     const x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
-     let y = this.tier == 8 ? 1e10 : InfinityDimensions.totalDimCap ** x
-     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (1e10 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
+     const x = (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(12).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(12).vReward.effectValue : 1
+     let y = this.tier == 8 ? 1e11 : InfinityDimensions.totalDimCap ** x
+     if (player.timestudy.studies.includes(310)) y = this.tier == 8 ? 1e11 * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)) : (InfinityDimensions.totalDimCap * (Math.max(Math.log10(Currency.replicanti.value.exponent),1)))**x
      return y;
   }
 
@@ -281,7 +318,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get hardcapIPAmount() {
-    return this._baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
+    return this.baseCost.times(Decimal.pow(this.costMultiplier, this.purchaseCap));
   }
 
   get continuumValue() {
@@ -486,14 +523,29 @@ export const InfinityDimensions = {
 
   get powerConversionRate() {
     const x = Ra.unlocks.relicShardBoost.isUnlocked ? 1+(Math.max(1, Decimal.max(Currency.relicShards.value,1).log10()) / 1000) : 0;
-    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
+    const y = Ra.unlocks.improvedIpowConversion.isUnlocked ? Math.log10(Math.max(Tesseracts.effectiveCount / 3.33,1)) : 0; //hpefully won't inflate if we softcap or put scaling in
 
     const z = Ra.unlocks.infinityPowerConversionBoost.isUnlocked ? 0.25 * Math.floor(Ra.pets.laitela.level / 10) : 0;
-    const m = TimeStudy(402).isBought ? TimeStudy(402).effectOrDefault(0) :0;
+    const m = TimeStudy(402).effectOrDefault(0);
     let multiplier = PelleRifts.paradox.milestones[2].effectOrDefault(1);
     if (player.mending.corruptionChallenge.corruptedMend) {
       multiplier /= (corruptionPenalties.galWeak.hiddenEight[player.mending.corruption[3]])
     }
-    return (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
+    let w = (7 + getAdjustedGlyphEffect("infinityrate") + PelleUpgrade.infConversion.effectOrDefault(0) + x + y + z + m) * multiplier;
+    /*if (w > 8){
+      w /= 8;
+      w **= 0.01;
+      w *= 8;
+    }*/
+    let kiu4Pow = (Kohler.isRunning) ? KohlerInfinityUpgrade(4).effectOrDefault(1) : 1;
+    let scK = 20;
+    if (Kohler.isRunning && (w ** kiu4Pow > scK)){
+      let d = w ** kiu4Pow;
+      d /= scK;
+      d **= 0.1;
+      d *= scK;
+      return d
+    }
+    return w ** kiu4Pow;
   }
 };

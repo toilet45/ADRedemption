@@ -33,7 +33,7 @@ export default {
       };
     },
     isUseless() {
-      return this.unlock.disabledByPelle;
+      return this.unlock.disabledByPelle || this.unlock.disabledbyKohler;
     }
   },
   methods: {

@@ -207,6 +207,7 @@ export const Tabs = (function() {
       Tab.reality,
       Tab.celestials,
       Tab.mending,
+      Tab.matter,
       Tab.shop
     ],
     Modern: [
@@ -218,6 +219,7 @@ export const Tabs = (function() {
       Tab.reality,
       Tab.celestials,
       Tab.mending,
+      Tab.matter,
       Tab.achievements,
       Tab.statistics,
       Tab.options,
@@ -233,6 +235,7 @@ export const Tabs = (function() {
       Tab.reality,
       Tab.celestials,
       Tab.mending,
+      Tab.matter,
       Tab.options,
       Tab.statistics,
       Tab.shop

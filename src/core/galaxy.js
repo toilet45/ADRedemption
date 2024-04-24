@@ -22,10 +22,13 @@ class GalaxyRequirement {
 
 export class Galaxy {
   static get scalingThreeStart(){
-    let x = (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(5).vReward.effectValue : 0;
+    let x = (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(5).vReward.effectValue : 0;
     return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + CorruptionUpgrade(9).effectOrDefault(0) + x;
   }
   static get remoteStart() {
+    if (Kohler.isRunning){
+      return Math.floor((new Decimal(800).timesEffectsOf(KohlerInfinityUpgrade(18))).toNumber())
+    }
     return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }
 
@@ -122,6 +125,7 @@ export class Galaxy {
       amount = Math.floor(amount**(galWeakScaling))
     }
 
+    if (Kohler.isRunning && KohlerUpgrade(13).isBought) amount /= 10;
     const tier = Galaxy.requiredTier;
     return new GalaxyRequirement(tier, amount);
   }
@@ -156,7 +160,7 @@ export class Galaxy {
   }
 
   static get costScalingStart() {
-    let x = 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
+    let x = ((Kohler.isRunning && KohlerInfinityUpgrade(9).isBought) ? 20000 : 100) + TimeStudy(302).effectOrDefault(0) + Effects.sum(
       TimeStudy(223),
       TimeStudy(224),
       GlyphSacrifice.power
@@ -214,7 +218,7 @@ export function manualRequestGalaxyReset(bulk) {
 // to restrict galaxy count for RUPG7's requirement here and nowhere else
 export function requestGalaxyReset(bulk, limit = Number.MAX_VALUE) {
   const restrictedLimit = RealityUpgrade(7).isLockingMechanics ? 1 : limit;
-  if (EternityMilestone.autobuyMaxGalaxies.isReached && bulk) return maxBuyGalaxies(restrictedLimit);
+  if ((EternityMilestone.autobuyMaxGalaxies.isReached || (Kohler.isRunning && KohlerMilestone(12).isUnlocked)) && bulk) return maxBuyGalaxies(restrictedLimit);
   if (player.galaxies >= restrictedLimit || !Galaxy.canBeBought || !Galaxy.requirement.isSatisfied) return false;
   Tutorial.turnOffEffect(TUTORIAL_STATE.GALAXY);
   galaxyReset();

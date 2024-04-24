@@ -15,7 +15,7 @@ export function buySingleTimeDimension(tier, auto = false) {
     }
   }
   if (Currency.eternityPoints.lt(dim.cost)) return false;
-  if (Enslaved.isRunning && dim.bought > 0) return false;
+  if ((Enslaved.isRunning || Kohler.isRunning) && dim.bought > 0) return false;
   if (ImaginaryUpgrade(15).isLockingMechanics && EternityChallenge(7).completions > 0) {
     if (!auto) {
       ImaginaryUpgrade(15).tryShowWarningModal(`purchase a Time Dimension,
@@ -71,7 +71,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
     }
     return false;
   }
-  if (Enslaved.isRunning) return buySingleTimeDimension(tier);
+  if (Enslaved.isRunning || Kohler.isRunning) return buySingleTimeDimension(tier);
   let bulk = null;
   try{
     bulk = bulkBuyBinarySearch(canSpend, {
@@ -147,8 +147,8 @@ export function timeDimensionCommonMultiplier() {
   }
 
   if (Ra.unlocks.relicShardBoost.isUnlocked) mult = mult.pow(1 + ((Currency.relicShards.value.clampMin(1)).log10() / 1337));
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(1).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
-  if (Ra.unlocks.improvedECRewards.isUnlocked && EternityChallenge(10).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(1).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(1).vReward.effectValue);
+  if (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(10).completions >= 1 && !Pelle.isDoomed) mult = mult.pow(EternityChallenge(10).vReward.effectValue);
   if (Ra.unlocks.vAchMilestone2AffectsIDsAndTDs.isUnlocked){
     mult = mult.pow(VUnlocks.adPow.effectOrDefault(1), 0.5);
   }
@@ -251,7 +251,9 @@ class TimeDimensionState extends DimensionState {
     if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
       mult = dilatedValueOf(mult);
     }
-
+    if (Kohler.isRunning){
+      mult = mult.pow(5e-7);
+    }
     if (Effarig.isRunning) {
       mult = Effarig.multiplier(mult);
     } else if (V.isRunning) {
@@ -290,7 +292,7 @@ class TimeDimensionState extends DimensionState {
     const tier = this._tier;
     let toGain = DC.D0;
     if (tier === 8) {
-      if (Ra.unlocks.improvedECRewards.isUnlocked) EternityChallenge(7).vReward.applyEffect(v => toGain = v);
+      if (Ra.unlocks.improvedECRewards.canBeApplied) EternityChallenge(7).vReward.applyEffect(v => toGain = v);
     } else {
       toGain = TimeDimension(tier + 1).productionPerSecond;
     }

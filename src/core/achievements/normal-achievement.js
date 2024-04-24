@@ -36,6 +36,10 @@ class AchievementState extends GameMechanicState {
     return this.row < 19;
   }
 
+  get isPreMend() {
+    return this.row < 20;
+  }
+
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -124,6 +128,10 @@ export const Achievements = {
     return Achievements.all.filter(ach => ach.isPreMend);
   },
 
+  get preKohler() {
+    return Achievements.all.filter(ach => ach.isPreKohler);
+  },
+
   get allRows() {
     const count = Achievements.all.map(a => a.row).max();
     return Achievements.rows(1, count);
@@ -184,7 +192,7 @@ export const Achievements = {
 
   _power: new Lazy(() => {
     let vFixMult = VUnlocks.vAchMulti.effectOrDefault(1);
-    let vRaUpg = player.celestials.ra.upgrades.has('vUpgrade') ? WarpUpgrade(2).effectOrDefault(1) : 1;
+    let vRaUpg = RaUpgrade.vUpgrade.canBeApplied ? WarpUpgrade(2).effectOrDefault(1) : 1;
     const unlockedRows = Achievements.allRows
       .countWhere(row => row.every(ach => ach.isUnlocked));
     const basePower = (Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount) * vFixMult * vRaUpg) ** (Ra.unlocks.achMultBaseImprovementV.isUnlocked ? 2 : 1);

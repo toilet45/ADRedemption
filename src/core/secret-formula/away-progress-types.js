@@ -111,6 +111,26 @@ export const awayProgressTypes = [
     isUnlocked: () => Ra.pets.v.isUnlocked && !Ra.pets.v.isCapped,
     showOption: false,
   }, {
+    name: "raMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "memories"],
+    isUnlocked: () => Ra.pets.ra.isUnlocked && !Ra.pets.ra.isCapped,
+    showOption: false,
+  },
+  {
+    name: "laiMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "laitela", "memories"],
+    isUnlocked: () => Ra.pets.laitela.isUnlocked && !Ra.pets.laitela.isCapped,
+    showOption: false,
+  },
+  {
+    name: "pelleMemories",
+    awayOption: "celestialMemories",
+    reference: ["celestials", "ra", "pets", "pelle", "memories"],
+    isUnlocked: () => Ra.pets.pelle.isUnlocked && !Ra.pets.pelle.isCapped,
+    showOption: false,
+  },{
     name: "imaginaryMachines",
     reference: ["reality", "imaginaryMachines"],
     isUnlocked: () => MachineHandler.isIMUnlocked,
@@ -132,8 +152,23 @@ export const awayProgressTypes = [
     isUnlocked: () => Pelle.isDoomed,
   },
   {
-    name: "multiversalRemains",
-    reference: ["mending", "new content"],
+    name: "mendingPoints",
+    forcedName: "Multiversal Remains",
     isUnlocked: () => PlayerProgress.mendingUnlocked(),
+  },
+  {
+    name: "mends",
+    isUnlocked: () => PlayerProgress.mendingUnlocked(),
+  },
+  {
+    name: "raPoints",
+    forcedName: "Memory Crystals",
+    reference: ["celestials", "ra", "raPoints"],
+    isUnlocked: () => Ra.unlocks.remembranceAlwaysActiveAndShopUnlock.isUnlocked,
+  },
+  {
+    name: "galBoostPoints",
+    forcedName: "Galactic Shards",
+    isUnlocked: () => Ra.unlocks.unlockMultiversalDimensions.isUnlocked,
   },
 ];

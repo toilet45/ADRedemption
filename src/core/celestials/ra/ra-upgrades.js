@@ -10,6 +10,11 @@ class RaUpgradeState extends SetPurchasableMechanicState {
     return this.config.currency();
   }
 
+  get canBeApplied(){
+    if (Kohler.isRunning && this.config.id != "pelleUpgrade") return false;
+    return super.canBeApplied;
+  }
+
   get isAvailableForPurchase() {
     return this.config.implemented && player.celestials.ra.pets.ra.level >= 40;
   }

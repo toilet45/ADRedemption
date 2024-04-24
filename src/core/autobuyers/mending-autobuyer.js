@@ -98,9 +98,12 @@ export class MendingAutobuyerState extends UpgradeableAutobuyerState {
     switch (this.mode) {
       case AUTO_MEND_MODE.TIME:
         return Time.thisMendRealTime.totalSeconds.gt(this.time);
+      case AUTO_MEND_MODE.AMOUNT_KP:
+        return gainedKohlerPoints().gte(this.amount) && Kohler.isRunning;
       case AUTO_MEND_MODE.AMOUNT:
       default:
         return gainedMendingPoints().gte(this.amount);
+
       /*case AUTO_MEND_MODE.X_HIGHEST:
       default:
         return gainedMendmgPoints().gte(this.highestPrevPrestige.times(this.xHighest));*/

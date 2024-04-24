@@ -6,7 +6,7 @@ const thisInfinityMult = thisInfinity => {
   // All "this inf time" or "best inf time" mults are * 10
   const scaledInfinity = thisInfinity.times(10).add(1);
   const cappedInfinity = Decimal.min(Decimal.pow(scaledInfinity, 0.125), 500);
-  return DC.D15.pow(Decimal.log10(scaledInfinity) * cappedInfinity.toNumber());
+  return DC.D15.pow(Decimal.ln(scaledInfinity) * cappedInfinity.toNumber());
 };
 const passiveIPMult = () => {
   const isEffarigLimited = Effarig.isRunning && Effarig.currentStage === EFFARIG_STAGES.ETERNITY;
@@ -881,7 +881,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.ALL,
     requiresST: ['reality'],
     description: `Infinity Points adds Infinity power conversion`,
-    effect: () => Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/1.75,
+    effect: () => Math.max(Math.log10(Math.log(Currency.infinityPoints.exponent+1)/Math.log(1.000000001))/1.75, 0),
     formatEffect: value => `+${format(value,2,2)}`,
     unlocked: () => Ra.pets.v.level >= 92
   },
