@@ -37,7 +37,20 @@ export default {
       corruptedFrags: 0,
       rewardedFragments: 0,
       respec: false,
-      externCorrupt: false
+      externCorrupt: false,
+      showC3nerf1: false,
+      showC3nerf2: false,
+      showC4nerf1: false,
+      showC4nerf2: false,
+      showC4nerf3: false,
+      showC5nerf1: false,
+      showC5nerf2: false,
+      showC6nerf: false,
+      showC8nerf1: false,
+      showC8nerf2: false,
+      showC9nerf: false,
+      showC10nerf1: false,
+      showC10nerf2: false
     };
   },
   computed: {
@@ -122,6 +135,19 @@ export default {
       this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
       this.respec = player.mending.cuRespec;
       this.externCorrupt = Kohler.isRunning;
+      this.showC3nerf1 = this.corruptions[2] > 3;
+      this.showC3nerf2 = this.corruptions[2] > 7;
+      this.showC4nerf1 = this.corruptions[3] > 2;
+      this.showC4nerf2 = this.corruptions[3] > 5;
+      this.showC4nerf3 = this.corruptions[3] > 7;
+      this.showC5nerf1 = this.corruptions[4] > 3;
+      this.showC5nerf2 = this.corruptions[4] > 6;
+      this.showC6nerf = this.corruptions[5] > 5;
+      this.showC8nerf1 = this.corruptions[7] > 4;
+      this.showC8nerf2 = this.corruptions[7] > 7;
+      this.showC9nerf = this.corruptions[8] > 3;
+      this.showC10nerf1 = this.corruptions[9] > 3;
+      this.showC10nerf2 = this.corruptions[9] > 7;
     },
     corruptionsZeroCheck() {
       for(let i=0;i<10;i++){
@@ -253,6 +279,10 @@ export default {
         />
         Gamespeed ^{{localPenalties.timeCompression.power[this.corruptions[2]]}} and then /{{timeCompMult}}
         <br>
+        <span v-if="showC3nerf1">Infinity Point gain ^{{localPenalties.timeCompression.hiddenFour[this.corruptions[2]]}}</span>
+        <br>
+        <span v-if="showC3nerf2">Antimatter Dimension multiplier ^{{localPenalties.timeCompression.hiddenEight[this.corruptions[2]]  }}</span>
+        <br>
         <br>
     Galactic Weakness:
     <SliderComponent
@@ -263,6 +293,12 @@ export default {
           @input="corruptionSetSet(3, $event)"
         />
         Galaxy Scaling ^{{localPenalties.galWeak.scaling[this.corruptions[3]]}} and power {{formatX(localPenalties.galWeak.strength[this.corruptions[3]], 1, 2)}}
+        <br>
+        <span v-if="showC4nerf1">You are limited to {{ localPenalties.galWeak.hiddenThree[this.corruptions[3]] }} Dimension Boosts</span>
+        <br>
+        <span v-if="showC4nerf2">Gamespeed is raised to ^{{ localPenalties.galWeak.hiddenSix[this.corruptions[3]] }}</span>
+        <br>
+        <span v-if="showC4nerf3">Infinity Power conversion rate /{{ localPenalties.galWeak.hiddenEight[this.corruptions[3]] }}</span>
         <br>
         <br>
     Complex Glyphs:
@@ -276,6 +312,9 @@ export default {
         Glyph Level ^{{localPenalties.compGlyphs.level[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.level[this.corruptions[4]], 1, 2) }}. <br>
         Glyph Rarity ^{{localPenalties.compGlyphs.rarity[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.rarity[this.corruptions[4]], 1, 2) }}.
         <br>
+        <span v-if="showC5nerf1"> You are forced to equip {{ localPenalties.compGlyphs.hiddenFour[this.corruptions[4]] }} Cursed Glyphs<br> You cannot enter Doomed Reality</span> <br>
+        <span v-if="showC5nerf2"> Alchemy is disabled</span>
+        <br>
         <br>
     Tick Extension:
     <SliderComponent
@@ -286,7 +325,8 @@ export default {
           @input="corruptionSetSet(5, $event)"
         />
         Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}. <br>
-        Time Shard Gain /{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
+        Time Shard Gain /{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}. <br>
+        <span v-if="showC6nerf"> Triad Studies cannot be purchased</span>
         <br>
         <br>
     Atomic Dilution:
@@ -309,7 +349,9 @@ export default {
           @input="corruptionSetSet(7, $event)"
         />
         DT and TP gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}. <br>
-        DT gain ×{{localPenalties.toD.mult[this.corruptions[7]].toString()}}.
+        DT gain ×{{localPenalties.toD.mult[this.corruptions[7]].toString()}}. <br>
+        <span v-if="showC8nerf1"> TT cost multiplier ×{{ localPenalties.toD.hiddenFive[this.corruptions[7]] }}</span> <br>
+        <span v-if="showC8nerf2"> Dimension cost scaling ^{{ localPenalties.toD.hiddenEight[this.corruptions[7]] }}</span>
         <br>
         <br>
     Replicative Singularities:
@@ -322,7 +364,9 @@ export default {
         />
         Replicanti gain ^{{localPenalties.repSing.rep[this.corruptions[8]].toString()}}. <br>
         Sigularity gain ^{{localPenalties.repSing.sing[this.corruptions[8]].toString()}}. <br>
-        Dark Matter gain ^{{localPenalties.repSing.dm[this.corruptions[8]].toString()}}.
+        Dark Matter gain ^{{localPenalties.repSing.dm[this.corruptions[8]].toString()}}. <br>
+        IP, EP, RM gain ^{{ localPenalties.repSing.presGain[this.corruptions[8]] }} <br>
+        <span v-if="showC9nerf"> Some Infinity, Eternity, Dilation, and Reality rebuyables are disabled</span>
         <br>
         <br>
     Study of Forever:
@@ -334,7 +378,9 @@ export default {
           @input="corruptionSetSet(9, $event)"
         />
         Studies TT cost ×{{format(localPenalties.soF.ttcost[this.corruptions[9]], 0, 0)}}. <br>
-        TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}.
+        TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}. <br>
+        <span v-if="showC10nerf1"> Triad Studies are disabled </span> <br>
+        <span v-if="showC10nerf2"> Charged (Break) Infinity Upgrades and Eternity Challenge rewards are disabled</span>
       </div>
     </div>
     <PrimaryButton
@@ -344,12 +390,12 @@ export default {
         Respec Hostility Upgrades on Mend
       </PrimaryButton>
     <div class="button-container">
-      <button
+      <!--<button
         class="o-pelle-button"
         @click="showModal"
       >
         Show full nerf effects of specific Hostilities
-      </button>
+      </button> -->
       <br>
       Last two row of Hostile Upgrades are only effective in Hostile Mends, and they won't affect the number display at this page. (sry)
     </div>

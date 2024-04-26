@@ -9,20 +9,21 @@ export const changelog = [
    * }
    */
   {
-    date: [2024, 2, "??"],
-    name: "idk yet",
+    date: [2024, 4, 25],
+    name: "The Abandoned for Break Eternity Port",
     info: 
-    `
+    `With the soon to be released Break Eternity port, we have decided to release what we have and rebrand this as AD: Redemption Legacy <br>
+    This will no longer recieve content updates aside from bug fixes.
     <br>
     <br>
     <b>New things:</b>
     <br>
     <ul>
-    <li>Implemented Mending Upgrades 6, 20, and all rebuyables</li>
-    <li>Implemented 20 Mend Milestone</li>
+    <li>Implemented all Mending Upgrades</li>
+    <li>Implemented all Mend Milestones</li>
     <li>Implemented Warp Reality</li>
     <li>Added Mending content to the catchup modal</li>
-    <li>Endgame: about e1 Oc (ee27) antimatter</li>
+    <li>Endgame: e10 Sp (ee25) antimatter</li>
     </ul>
     <b>Bugfixes:</b>
     <br>

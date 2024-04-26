@@ -50,34 +50,34 @@ export function corruptionChallengeScoreCalculation() {
 //                   Triad Disabler - Beyond SoF3, Triad studies are disabled and some studies recieve heavy nerfs (hidden)
 //                   Uncharged Infinity - Beyond SoF7, Charged upgrades are disabled and so are EC rewards (hidden)
 export const corruptionPenalties = {
-    prestigeLimits: [1, 0.85, 0.55, 0.35, 0.15, 0.06, 0.02, 0.01, 0.005, 0.001, 5e-4, 3e-5],
+    prestigeLimits: [1, 0.9, 0.8, 0.66, 0.55, 0.4, 0.25, 0.1667, 0.08, 0.025, 0.0066, 1e-4],
     dimLimits: {
         preNerf: [1, 0.85, 0.55, 0.35, 0.15, 0.06, 0.02, 0.01, 0.005, 0.001, 5e-4, 3e-5],
         postNerf: [1, 0.98, 0.915, 0.8, 0.6, 0.5, 0.3, 0.2, 0.15, 0.1, 0.06, 0.03]
     },
     timeCompression: {
-        power: [1, 0.95, 0.8, 0.65, 0.5, 0.35, 0.3, 0.05, 0.01, 0, 0, 0], // Yes in practise 1e-8, 1e-45, 1e-120, 1e-265, 1e-655, etc wouldve worked but whatever
-        mult: [1, new Decimal(1).div(1e8), new Decimal(1).div(1e45), new Decimal(1).div(1e120), new Decimal(1).div(1e265), new Decimal(1).div("1e655"), new Decimal(1).div("1e1275"), new Decimal(1).div("1e2250"), new Decimal(1).div("1e5000"), new Decimal(1).div("1e15000"), new Decimal(1).div("1e65000"), new Decimal(1).div("1e450000")],
-        hiddenFour: [1, 1, 1, 1, 0.999, 0.995, 0.99, 0.98, 0.95, 0.8, 0.5, 0.1],
+        power: [1, 0.95, 0.8, 0.65, 0.5, 0.35, 0.3, 0.166, 0.08, 0, 0, 0], // Yes in practise 1e-8, 1e-45, 1e-120, 1e-265, 1e-655, etc wouldve worked but whatever
+        mult: [1, new Decimal("1e-8"), new Decimal("1e-20"), new Decimal("1e-50"), new Decimal("1e-75"), new Decimal("1e-125"), new Decimal("1e-175"), new Decimal("1e-235"), new Decimal("1e-300"), new Decimal("1e-444"), new Decimal("1e-666"), new Decimal("1e-1000")],
+        hiddenFour: [1, 1, 1, 1, 0.999, 0.995, 0.99, 0.98, 0.95, 0.8, 0.667, 0.5],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 0.9, 0.7, 0.5, 0.3]
     }, 
     galWeak: {
         scaling: [1, 1.1, 1.3, 1.5, 2, 2.55, 4, 7, 12, 20, 50, 450],
         strength: [1, 0.98, 0.95, 0.85, 0.8, 0.725, 0.6, 0.4, 0.25, 0.1, 0.025],
         hiddenThree: [1e15, 1e15, 1e15, 1e8, 1e7, 999999, 88888, 7777, 666, 55, 4, 3],//so that I realize default cap is 1e15--sxy
-        hiddenSix: [1, 1, 1, 1, 1, 1, 0.99, 0.96, 0.9, 0.7, 0.4, 0.1],
+        hiddenSix: [1, 1, 1, 1, 1, 1, 0.99, 0.96, 0.9, 0.7, 0.5, 0.3],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 9]
     },
     compGlyphs: {
-        level: [1, 0.99, 0.95, 0.9, 0.8, 0.75, 0.4, 0.4, 0.25, 0.2, 0.15, 0.05],
+        level: [1, 0.99, 0.95, 0.9, 0.8, 0.75, 0.55, 0.4, 0.25, 0.1667, 0.08, 0.025],
         rarity: [1, 0.99, 0.975, 0.95, 0.9, 0.8, 0.8, 0.5, 0.5, 0.4, 0.2, 0.1],//below 0.7 will freeze the game, investigating--sxy
         hiddenFour: [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 6, 8],
         hiddenSeven: [false, false, false, false, false, false, false, true, true, true, true, true] // Dumb, i know, but atleast its clearly defined HERE and not around the place
     },
-    tickExtension: [1, 2.5, 10, 40, 220, 950, 3150, 9000, 25000, 100000, 5e5, 1e7, 1e12], //these are inverse powers, so 10 actually means ^(1/10), 1000 actually means ^(1/1000), etc
+    tickExtension: [1, 2.5, 10, 40, 150, 400, 1250, 3000, 9000, 25000, 1e5, 1e7, 1e10], //these are inverse powers, so 10 actually means ^(1/10), 1000 actually means ^(1/1000), etc
     atomDilution: [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.35, 0.3, 0.275, 0.25, 0.2],
     toD: {
-        power: [1, 0.65, 0.33, 0.19, 0.1, 0.045, 0.02, 0.006, 0.002, 0, 0],
+        power: [1, 0.8, 0.667, 0.5, 0.3, 0.1667, 0.05, 0.0033, 0.002, 0, 0],
         mult: [1, 1e-2, 1e-8, new Decimal(1e-22), new Decimal(1e-65), new Decimal(1e-185), new Decimal(1e-300), new Decimal("1e-1500"), new Decimal("1e-7777"), new Decimal("1e-98765"), 0, 0],
         hiddenFive: [1, 1, 1, 1, 1, 3, 12, 50, 500, 6000, 15000, 1e5],
         hiddenEight: [1, 1, 1, 1, 1, 1, 1, 1, 8, 75, 1050, 11752]

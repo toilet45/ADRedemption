@@ -17,6 +17,9 @@ export function lockAchievementsOnMend() {
     achievement.lock();
   }
   player.reality.achTimer = DC.D0;
+  Achievement(22).unlock();
+  Achievement(51).unlock();
+  Achievement(61).unlock();
 }
 
 function unlockAchievementsOnMend() {

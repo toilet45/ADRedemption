@@ -1434,15 +1434,15 @@ export const normalAchievements = [
   {
     id: 196,
     get name(){
-      return player.celestials.ra.pets.pelle.level >= 75 ? "This Hostility doesn't exist" : "Reach Pelle Level 75 to see"
+      return player.celestials.ra.pets.pelle.level >= 75 ? "We couldn't afford 5" : "Reach Pelle Level 75 to see"
     },
     get description(){ 
-      return player.celestials.ra.pets.pelle.level >= 75 ? "Complete a Hostility with all Hostility nerfs are at least level 9 [NYI]" : "Reach Pelle Level 75 to see"
+      return player.celestials.ra.pets.pelle.level >= 75 ? "Complete a Hostility with all Hostility nerfs are at least level 4" : "Reach Pelle Level 75 to see"
     },
     checkRequirement:() => {
       let x = player.mending.corruptionChallenge.corruptedMend;
       for (let i = 0; i < 10; i++){
-        x = x && player.mending.corruption[i] >= 9;
+        x = x && player.mending.corruption[i] >= 4;
       }
       return x;
     },
@@ -1459,13 +1459,14 @@ export const normalAchievements = [
   },
   {
     id: 198,
-    name: "Nicenicenicenice.",
+    name: "insert NG+3 reference here",
     get description () {
-      return `Reach ${format(new Decimal("1e69690000000000000000000"), 0, 1)} Antimatter.`;
+      return `Reach ${format(Decimal.pow10(1e25), 0, 1)} Antimatter.`;
     },
-    checkRequirement: () => player.antimatter.gte(new Decimal("1e69690000000000000000000")),
+    checkRequirement: () => player.antimatter.gte(Decimal.pow10(1e25)),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-  },
+    reward: "Reach Endgame"
+  }/*,
   {
     id: 201,
     name: "Antimatter Dimensions 2: Hell in the Multiverse",
@@ -1479,12 +1480,12 @@ export const normalAchievements = [
     id: 202,
     name: "I already told you we could afford 9",
     get description () {
-      return `Have at least 9 Kohler Points`;
+      return `Have at least 9 Fragmented Remains`;
     },
     checkRequirement: () => Currency.kohlerPoints.value.gte(9),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward(){
-      return `Kohler Points are multiplied based on your Mend amount`
+      return `Fragmented Remains are multiplied based on your Mend amount`
     },
     effect: () => Math.max(1, Currency.mends.value.log10() * 2),
     formatEffect: value => `${formatX(value, 2, 2)}`
@@ -1542,5 +1543,5 @@ export const normalAchievements = [
     },
     checkRequirement: () => false,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
-  }
+  }*/
 ];

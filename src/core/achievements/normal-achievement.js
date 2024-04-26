@@ -166,7 +166,7 @@ export const Achievements = {
   },
 
   autoAchieveUpdate(diff) {
-    if (!PlayerProgress.realityUnlocked()) return;
+    if (!PlayerProgress.realityUnlocked() || Kohler.isRunning) return;
     if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics) {
       player.reality.achTimer = Decimal.clampMax(player.reality.achTimer.add(diff), this.period);
       return;

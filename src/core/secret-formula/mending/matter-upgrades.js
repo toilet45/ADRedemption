@@ -149,7 +149,7 @@ export const matterUpgrades = [
   id: 13,
   name: "Matter Upgrade 13",
   cost: 2.5e11,
-  description: () => `Multiply Matter gain based on Kohler Points`,
+  description: () => `Multiply Matter gain based on Fragmented Remains`,
   effect: () => Math.max(Currency.kohlerPoints.value.clampMin(1).log10(),1),
   effectType: "×",
   formatEffect: value => formatX(value, 2, 2) 
