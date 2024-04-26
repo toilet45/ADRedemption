@@ -1239,7 +1239,7 @@ window.player = {
   mvrmultUpgrades: 0,
   kohlerPoints: new Decimal(0),
   bestKohlerPoints: new Decimal(0),
-  devSave: true
+  devSave: false
 };
 
 export const Player = {

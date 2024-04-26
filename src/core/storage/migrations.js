@@ -834,6 +834,9 @@ export const migrations = {
   52: player => {
     player.options.awayProgress.raPoints = true;
     player.options.awayProgress.galBoostPoints = true;
+  },
+  53: player => {
+    player.devSave = false;
   }
 },
 
