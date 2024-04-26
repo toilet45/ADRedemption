@@ -766,10 +766,6 @@ export const migrations = {
   50.0281: player => {
     player.mending.cuRespec = false;
   },
-  50.029: player =>{
-    player.awayProgress.raPoints = true;
-    player.awayProgress.galBoostPoints = true;
-  },
   50.03: player =>{
     player.kohlerPoints = new Decimal(0);
     player.mending.kohlerUpgradeBits = 0;
@@ -826,15 +822,14 @@ export const migrations = {
     }));
   },
   51.300: player => {
-    // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
-    /* 
+    player.awayProgress.raPoints = true;
+    player.awayProgress.galBoostPoints = true;
     let isDevSave = false
     if (player.version >= 51 && player.version <= 51.25) isDevSave = isDevSave || true
     // Feel free to add more deletion reqs/options here
     if (isDevSave) {
-      dev.hardReset()
+      dev.hardReset();
     }
-    */
   }
 },
 
