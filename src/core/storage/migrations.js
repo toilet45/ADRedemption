@@ -822,14 +822,18 @@ export const migrations = {
     }));
   },
   51.300: player => {
-    player.awayProgress.raPoints = true;
-    player.awayProgress.galBoostPoints = true;
+    player.options.awayProgress.raPoints = true;
+    player.options.awayProgress.galBoostPoints = true;
     let isDevSave = false
     if (player.version >= 51 && player.version <= 51.25) isDevSave = isDevSave || true
     // Feel free to add more deletion reqs/options here
     if (isDevSave) {
       dev.hardReset();
     }
+  },
+  52: player => {
+    player.options.awayProgress.raPoints = true;
+    player.options.awayProgress.galBoostPoints = true;
   }
 },
 
