@@ -767,8 +767,8 @@ export const migrations = {
     player.mending.cuRespec = false;
   },
   50.029: player =>{
-    player.awayProgress.raPoints = true,
-    player.awayProgress.galBoostPoints = true
+    player.awayProgress.raPoints = true;
+    player.awayProgress.galBoostPoints = true;
   },
   50.03: player =>{
     player.kohlerPoints = new Decimal(0);
