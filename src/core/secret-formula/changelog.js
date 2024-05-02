@@ -9,6 +9,36 @@ export const changelog = [
    * }
    */
   {
+    date: [2024, 5, 2],
+    name: "Messy launch bugifx",
+    info: 
+    `Just some bugfixes.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>none</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed MU14 affecting V-40</li>
+    <li>Hid "Modify Testing Speed"</li>
+    <li>Fixed Slowest Challenge time Break Infinity upgrade</li>
+    <li>A certain charged upgrade actually works now</li>
+    <li>Pelle 75 content no longer appears in the multiplier tab eariler than intended</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    <li>There are console errors when viewing the TS tree when unlocking a Triad Study (this doesn't effect gameplay)</li>
+    <li>Some notations say "NaN undefined" after a certain value, but you should probably use Scientific at that point</li>
+    <li>Record Hostiliities still update when adjusting the sliders</li>
+    </ul>`
+  },
+  {
     date: [2024, 4, 25],
     name: "The Abandoned for Break Eternity Port",
     info: 
