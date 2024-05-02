@@ -568,9 +568,9 @@ export const tabs = [
   {
     key: "matter",
     name: "Matter",
-    hideAt: 2.7, //Sequence is disabled
+    hideAt: 0, //Sequence is disabled
     UIClass: "o-tab-btn--matter",
-    condition: () => KohlerInfinityUpgrade(10).isBought || player.records.bestMatterinIC9.gt(0),
+    condition: () => false,
     id: 12,
     hidable: true,
     subtabs: [

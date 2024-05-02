@@ -161,13 +161,13 @@ export default {
             @input="adjustSliderValueAutomatorLogSize($event)"
           />
         </div>
-        <OptionsButton
+        <!--<OptionsButton
           v-if="DEV"
           class="o-primary-btn--option"
           onclick="Modal.speedUp.show()"
         >
           Modify Testing Speed
-        </OptionsButton>
+        </OptionsButton>-->
       </div>
       <OpenModalHotkeysButton />
     </div>

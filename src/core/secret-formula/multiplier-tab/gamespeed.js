@@ -108,7 +108,7 @@ export const gamespeed = {
   CorruptionUpg: {
     name: "Hostility Upgrade - Spacetime Distortion",
     multValue: () => Decimal.pow10(Math.pow(1 + CorruptionData.corruptionChallenge.recordScore, 1/1.48)),
-    isActive: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48)),
+    isActive: () => CorruptionUpgrade(2).isBought && (player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 0.25)) : Decimal.pow10(Math.pow(1 + player.mending.corruptionChallenge.recordScore, 1/1.48))),
     icon: MultiplierTabIcons.UPGRADE("corruption")
   },
   nerfCorruptions: {

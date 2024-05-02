@@ -134,7 +134,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
       }
       case 14:{
         player.celestials.v.runUnlocks.forEach((unlock, index) => {
-          player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
+          player.celestials.v.runUnlocks[index] = Math.max(unlock, (index < 9 ? 3: 0));
         });
         V.updateTotalRunUnlocks();
         break;
