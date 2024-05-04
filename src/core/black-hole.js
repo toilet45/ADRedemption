@@ -88,8 +88,8 @@ class BlackHoleState {
       setAmount: amount => this._data.powerUpgrades = amount,
       calculateValue: amount => {
         let baseEffect = 1.35;
-        if(CorruptionUpgrade(11).isBought) baseEffect*=CorruptionUpgrade(11).effectValue;
-        return (180 / Math.pow(2, id)) * Math.pow(baseEffect, amount)
+        if(CorruptionUpgrade(11).isBought) baseEffect *= CorruptionUpgrade(11).effectValue;
+        return (180 / Math.pow(2, id)) * Math.pow(baseEffect, amount);
       },
       initialCost: 20 * blackHoleCostMultipliers[id],
       costMult: 2,

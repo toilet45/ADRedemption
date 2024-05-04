@@ -83,7 +83,7 @@ export function getTickSpeedMultiplier() {
 
   if (player.mending.corruptionChallenge.corruptedMend) {
     let galWeakStrength = corruptionPenalties.galWeak.strength[player.mending.corruption[3]];
-    if(CorruptionUpgrade(19).isBought) galWeakStrength = Math.min(galWeakStrength*1.4,1)
+    if(CorruptionUpgrade(19).isBought) galWeakStrength = Math.min(galWeakStrength * 1.4, CorruptionUpgrade(19).effectValue)
     galaxies *= (galWeakStrength)
   };
 

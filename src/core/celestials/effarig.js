@@ -95,7 +95,8 @@ export const Effarig = {
   },
   get shardsGained() {
     if (!TeresaUnlocks.effarig.canBeApplied) return new Decimal(0);
-    return (Decimal.floor(Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount)).times(AlchemyResource.effarig.effectValue));
+    return (Decimal.floor(Decimal.pow(Currency.eternityPoints.exponent / 7500, this.glyphEffectAmount))
+      .times(AlchemyResource.effarig.effectValue));
   },
   get maxRarityBoost() {
     return 5 * Math.log10(Decimal.log10(Currency.relicShards.value.plus(10)));
@@ -110,7 +111,8 @@ export const Effarig = {
         c = 29.29;
         break;
       case EFFARIG_STAGES.MEND:
-        c = 6000; //this needs tweaking
+        // Buffed from 6k to 15k, hopefully still doable lmao
+        c = 15000;
         break;
       case EFFARIG_STAGES.REALITY:
       default:

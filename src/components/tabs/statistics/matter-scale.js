@@ -5,16 +5,22 @@ export const MatterScale = {
 
   estimate(matter) {
     if (!matter) return ["There is no antimatter yet."];
-    const distScaling = this.distanceScale(matter.log10())
+
+    const logscale = this.macroScale(new Decimal(matter.log10()))
+    const logamount = format(new Decimal(matter.log10()).dividedBy(logscale.amount), 2, 1);
+    if (matter.log10() > (4.324e38 * 1e8/53)) {
+      return [
+      `If every number in your antimatter count was a hydrogen atom`,
+      `you would have enough to ${logscale.verb} ${logamount} ${logscale.name}`
+      ]
+    }
     if (matter.log10() > 4.324e26*1e14) {
       return [
-        `How do you have so much antimatter`,
-        `There will eventually be a matter scale here`,
-        `For now, enjoy the knowledge that you are here`,
-        `A place so far that you never were meant to be`,
-        `So far, that the matter scale is lost`
+        `If every number in your antimatter count was a hydrogen atom`,
+        `you would have a line of atoms stretching ${format(matter.log10() / (4.324e26 * 1e12 / 53), 2, 2)} universes`
       ];
     }
+    const distScaling = this.distanceScale(matter.log10())
     if (matter.gt(Decimal.pow10(4.320432e21*3))) {
       return [
         `If every number in your antimatter count was a hydrogen atom,`,
