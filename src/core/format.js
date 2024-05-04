@@ -1,4 +1,5 @@
 function isEND() {
+  if (GameEnd == undefined) return false;
   const threshold = GameEnd?.endState > END_STATE_MARKERS.END_NUMBERS
     ? 1
     : (GameEnd?.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
