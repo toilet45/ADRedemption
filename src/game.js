@@ -11,9 +11,9 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, KohlerInfinityUpgrade, KohlerUpgrade, MultiversalDimensions, WarpUpgrade, dilatedValueOf } from "./core/globals";
+import { CorruptionData, CorruptionUpgrade, Currency, dilatedValueOf, ExpoBlackHole, KohlerInfinityUpgrade, KohlerUpgrade, MultiversalDimensions, Player, Ra, WarpUpgrade } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
-import { Player, Ra } from "./core/globals";
+
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
 import { TimeStudy } from "./core/time-studies/normal-time-study";
 
@@ -99,7 +99,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
     TimeStudy(111)
   );
   if (Pelle.isDisabled("IPMults")) {
-    let x = MendingMilestone.one.isReached ? 1e20 : 1;
+    const x = MendingMilestone.one.isReached ? 1e20 : 1;
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)
       .times(Pelle.specialGlyphEffect.infinity).times(x)
@@ -108,13 +108,13 @@ export function gainedInfinityPoints(noSoftcap = false) {
   let ip = player.break
     ? Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
     : new Decimal(308 / div);
-  if(MendingMilestone.one.isReached){
+  if (MendingMilestone.one.isReached) {
     ip = ip.times(1e20);
   }
-  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
+  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked) {
     ip = Decimal.pow(ip, Decimal.log10(Currency.realityMachines.value.max(1)) / 100);
   }
-  if(Kohler.isRunning){
+  if (Kohler.isRunning) {
     ip = ip.pow(5e-7);
     ip = dilatedValueOf(ip);
   }
@@ -127,8 +127,8 @@ export function gainedInfinityPoints(noSoftcap = false) {
   } else if (V.isRunning) {
     ip = ip.pow(0.5);
   } else if (V.isSuperRunning) {
-    //ip = ip.log(1.0000000001).toDecimal();
-    ip = ip.pow(0.000001);
+    // Ip = ip.log(1.0000000001).toDecimal();
+    ip = ip.pow(1e-6);
   } else if (Laitela.isRunning) {
     ip = dilatedValueOf(ip);
   }
@@ -137,21 +137,21 @@ export function gainedInfinityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
-    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
-    ip = ip.pow(corruptionPrestigeLimits)
-    ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]])
-    ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
+    if (CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1, corruptionPrestigeLimits * 2);
+    ip = ip.pow(corruptionPrestigeLimits);
+    ip = ip.pow(corruptionPenalties.timeCompression.hiddenFour[player.mending.corruption[2]]);
+    ip = ip.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]]);
   }
   if (ip.gte(Decimal.pow10(9e15)) && !noSoftcap) {
-    ip = ip.div(Decimal.pow10(9e15))
-    ip = ip.pow(0.0298374651)
-    ip = ip.times(Decimal.pow10(9e15))
+    ip = ip.div(Decimal.pow10(9e15));
+    ip = ip.pow(0.0298374651);
+    ip = ip.times(Decimal.pow10(9e15));
   }
-  /*if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
-    ip = ip.div(Decimal.pow10(1e20))
-    ip = ip.pow(0.95)
-    ip = ip.times(Decimal.pow10(1e20))
-  }*/
+  // If (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
+  // ip = ip.div(Decimal.pow10(1e20))
+  // ip = ip.pow(0.95)
+  // ip = ip.times(Decimal.pow10(1e20))
+  // }
   if (Kohler.isRunning) {
     ip = new Decimal(ip.clampMin(1).log10());
     ip = ip.timesEffectsOf(
@@ -160,7 +160,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
       KohlerInfinityUpgrade(12),
       KohlerInfinityUpgrade(14),
       KohlerUpgrade(4)
-    )
+    );
     ip = Decimal.pow(ip, MatterUpgrade(4).effectOrDefault(1));
     ip = Decimal.pow(ip, KohlerInfinityUpgrade(15).effectOrDefault(1));
     ip = Decimal.pow(ip, MatterUpgrade(17).effectOrDefault(1));
@@ -168,17 +168,17 @@ export function gainedInfinityPoints(noSoftcap = false) {
   return ip.floor();
 }
 
-export function mendingMilestoneElevenMultiplier(display = false){
-  if(!MendingMilestone.eleven.isReached && !display) return DC.D1;
+export function mendingMilestoneElevenMultiplier(display = false) {
+  if (!MendingMilestone.eleven.isReached && !display) return DC.D1;
   const reqCheck = player.requirementChecks.mending.mmeleven;
-  let mult = reqCheck <= 0 ? (3 - reqCheck) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - reqCheck];
+  const mult = reqCheck <= 0 ? (3 - reqCheck) * 3 : [1, 1, 2, 2, 3, 4, 5, 7][8 - reqCheck];
   return new Decimal(mult);
 }
 
-export function gainedMendingPoints(){
-  let MvRGain = (player.reality.warped && !Pelle.isDoomed) ?
-    (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15))) :
-    DC.D1;
+export function gainedMendingPoints(hu13 = false) {
+  let MvRGain = (player.reality.warped && !Pelle.isDoomed)
+    ? (Decimal.pow(10000, Math.log10(player.antimatter.exponent / 9e15)))
+    : DC.D1;
 
   MvRGain = MvRGain.timesEffectsOf(
     MendingUpgrade(1),
@@ -187,36 +187,38 @@ export function gainedMendingPoints(){
     TimeStudy(322),
     TimeStudy(323),
     WarpUpgrade(12),
-    CorruptionUpgrade(13),
     MendingUpgradeMultiplier,
     Ra.unlocks.boostMVRGain
-    );
+  );
+  MvRGain.mul(hu13 ? CorruptionUpgrade(13).effectValue : 1)
   MvRGain = MvRGain.times(mendingMilestoneElevenMultiplier());
   if (Ra.unlocks.mendingPointsGainMult.isUnlocked) MvRGain = MvRGain.times(Ra.totalPetLevel / 10).clampMin(1);
 
   return MvRGain;
 }
 
-export function warpReality(){
+export function warpReality() {
   Currency.mendingPoints.subtract(new Decimal(1e7));
   Quotes.kohler.postWarp.show();
   player.reality.warped = true;
 }
 
-export function gainedKohlerPoints(){
-  let gain = Math.floor((Currency.antimatter.value.log10() - 9)/3).toDecimal();
+export function gainedKohlerPoints() {
+  let gain = Math.floor((Currency.antimatter.value.log10() - 9) / 3).toDecimal();
   gain = gain.timesEffectsOf(
     Achievement(202),
     KohlerUpgrade(11),
     KohlerUpgrade(15),
     MatterUpgrade(5)
-    );
+  );
   gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount));
   return player.antimatter.gte(1e12) ? gain : new Decimal(0);
 }
 
 function totalEPMult() {
+  // eslint-disable-next-line no-nested-ternary
   return Pelle.isDisabled("EPMults")
+    // eslint-disable-next-line max-len
     ? (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2]).times(getAdjustedGlyphEffect("timeEP")) : Pelle.specialGlyphEffect.time.timesEffectOf(PelleRifts.vacuum.milestones[2])
     : getAdjustedGlyphEffect("cursedEP")
       .times(ShopPurchase.EPPurchases.currentMult)
@@ -233,16 +235,16 @@ function totalEPMult() {
 
 export function gainedEternityPoints(noSoftcap = false) {
   let devisor = 308 - PelleRifts.recursion.effectValue.toNumber();
-  if(player.timestudy.studies.includes(307)) devisor = devisor - 30;
+  if (player.timestudy.studies.includes(307)) devisor -= 30;
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
     gainedInfinityPoints()).log10() / devisor - 0.7).times(totalEPMult());
-  if (MendingMilestone.one.isReached){
+  if (MendingMilestone.one.isReached) {
     ep = ep.times(1e5);
   }
-  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked){
+  if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked) {
     ep = Decimal.pow(ep, Decimal.log10(Currency.realityMachines.value) / 100);
   }
-  if (Kohler.isRunning){
+  if (Kohler.isRunning) {
     ep = ep.pow(5e-7);
     ep = dilatedValueOf(ep);
   }
@@ -251,8 +253,8 @@ export function gainedEternityPoints(noSoftcap = false) {
   } else if (V.isRunning) {
     ep = ep.pow(0.5);
   } else if (V.isSuperRunning) {
-    //ep = ep.log(1.0000000001).toDecimal();
-    ep = ep.pow(0.000001);
+    // Ep = ep.log(1.0000000001).toDecimal();
+    ep = ep.pow(1e-6);
   } else if (Laitela.isRunning) {
     ep = dilatedValueOf(ep);
   }
@@ -261,15 +263,15 @@ export function gainedEternityPoints(noSoftcap = false) {
   }
   if (player.mending.corruptionChallenge.corruptedMend) {
     let corruptionPrestigeLimits = corruptionPenalties.prestigeLimits[player.mending.corruption[0]];
-    if(CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1,corruptionPrestigeLimits*2)
-    ep = ep.pow(corruptionPrestigeLimits)
-    ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]])
+    if (CorruptionUpgrade(16).isBought) corruptionPrestigeLimits = Math.min(1, corruptionPrestigeLimits * 2);
+    ep = ep.pow(corruptionPrestigeLimits);
+    ep = ep.pow(corruptionPenalties.repSing.presGain[player.mending.corruption[8]]);
   }
 
   if (ep.gte(Decimal.pow10(1e18)) && !noSoftcap) {
-    ep = ep.div(Decimal.pow10(1e18))
-    ep = ep.pow(0.162738495)
-    ep = ep.times(Decimal.pow10(1e18))
+    ep = ep.div(Decimal.pow10(1e18));
+    ep = ep.pow(0.162738495);
+    ep = ep.times(Decimal.pow10(1e18));
   }
   return ep.floor();
 }
@@ -396,7 +398,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 
 export function gainedInfinities() {
   if (EternityChallenge(4).isRunning || Pelle.isDisabled("InfinitiedMults")) {
-    if(Ra.unlocks.unlockPelleGlyphEffects.isUnlocked && Pelle.isDoomed) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
+    if (Ra.unlocks.unlockPelleGlyphEffects.isUnlocked && Pelle.isDoomed) return new Decimal(getAdjustedGlyphEffect("infinityinfmult"));
     return DC.D1;
   }
   let infGain = Effects.max(
@@ -413,14 +415,14 @@ export function gainedInfinities() {
   );
   infGain = infGain.times(getAdjustedGlyphEffect("infinityinfmult"));
   infGain = infGain.powEffectOf(SingularityMilestone.infinitiedPow);
-  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.canBeApplied){
-    let teresa90BaseExp=Math.pow((Math.log10(Math.max(Currency.realities.value, 1))/20), 1.111)
-    if(teresa90BaseExp>1.5){
-      teresa90BaseExp=1.5+Math.pow(teresa90BaseExp-1.5,0.75)
+  if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.canBeApplied) {
+    let teresa90BaseExp = Math.pow((Math.log10(Math.max(Currency.realities.value, 1)) / 20), 1.111);
+    if (teresa90BaseExp > 1.5) {
+      teresa90BaseExp = 1.5 + Math.pow(teresa90BaseExp - 1.5, 0.75);
     }
-    infGain = infGain.pow(teresa90BaseExp); //TODO: softcap this at ^1.5
+    infGain = infGain.pow(teresa90BaseExp); // TODO: softcap this at ^1.5
   }
-  if (Kohler.isRunning){
+  if (Kohler.isRunning) {
     infGain = infGain.times(KohlerInfinityUpgrade(3).effectOrDefault(1));
   }
   return infGain;
@@ -471,12 +473,12 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     );
     factor = factor.pow(MatterUpgrade(18).effectOrDefault(1));
     return factor;
-  };
+  }
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative && !player.mending.corruptionChallenge.corruptedMend) {
-      return factor.times(player.blackHoleNegative); //this should prevent < e-300 gamespeed outside of corruption (feel free to revert this)
-      //factor = factor.times(player.blackHoleNegative);
-    } else if (!BlackHoles.arePaused) {
+      return factor.times(player.blackHoleNegative); // This should prevent < e-300 gamespeed outside of corruption (feel free to revert this)
+      // factor = factor.times(player.blackHoleNegative);
+    } if (!BlackHoles.arePaused) {
       for (const blackHole of BlackHoles.list) {
         if (!blackHole.isUnlocked) break;
         const isActive = blackHolesActiveOverride === undefined
@@ -510,7 +512,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // These effects should always be active, but need to be disabled during offline black hole simulations because
   // otherwise it gets applied twice
   if (effects.includes(GAME_SPEED_EFFECT.NERFS)) {
-    if(Kohler.isRunning){
+    if (Kohler.isRunning) {
       factor = Effarig.multiplier(factor);
       const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes.toNumber() / 10, 1);
       factor = Decimal.pow(factor, nerfModifier);
@@ -523,25 +525,25 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     }
   }
 
-  if(RaUpgrade.enslavedUpgrade.canBeApplied) factor=factor.times(player.celestials.enslaved.storedReal);
+  if (RaUpgrade.enslavedUpgrade.canBeApplied) factor = factor.times(player.celestials.enslaved.storedReal);
 
   factor = factor.times(PelleUpgrade.timeSpeedMult.effectOrDefault(1));
 
   if (player.mending.corruptionChallenge.corruptedMend == true) {
     let timeCompressionPower = corruptionPenalties.timeCompression.power[player.mending.corruption[2]];
     let timeCompressionMult = corruptionPenalties.timeCompression.mult[player.mending.corruption[2]];
-    if(CorruptionUpgrade(18).isBought){
-      timeCompressionPower = Math.min(1,timeCompressionPower+0.01);
-      timeCompressionMult = Decimal.pow(timeCompressionMult,0.1);
+    if (CorruptionUpgrade(18).isBought) {
+      timeCompressionPower = Math.min(1, timeCompressionPower + 0.01);
+      timeCompressionMult = Decimal.pow(timeCompressionMult, 0.1);
     }
-    factor = factor.pow(timeCompressionPower)
-    factor = factor.pow(corruptionPenalties.galWeak.hiddenSix[player.mending.corruption[3]])
-    factor = factor.times(timeCompressionMult)
+    factor = factor.pow(timeCompressionPower);
+    factor = factor.pow(corruptionPenalties.galWeak.hiddenSix[player.mending.corruption[3]]);
+    factor = factor.times(timeCompressionMult);
   }
-  factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1))
+  factor = factor.times(CorruptionUpgrade(2).effectOrDefault(1));
   factor = Decimal.clamp(factor, (player.mending.corruptionChallenge.corruptedMend || Ra.unlocks.uncapGamespeed.isUnlocked ? 0 : 1e-300), Ra.unlocks.uncapGamespeed.isUnlocked ? Decimal.pow10(1e300) : Decimal.pow10(300));
   // We will bypass capped gamespeed for below e-300 while corrupted incase some dumbass gets corruption before nameless 30
-  
+
   let repeats = 1;
   while (factor.gte(Decimal.pow(getGameSpeedupSoftcaps(), repeats))) {
     factor = factor.div(getGameSpeedupSoftcaps());
@@ -549,31 +551,31 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
     factor = factor.times(getGameSpeedupSoftcaps());
     repeats += 1;
   }
-  /*if (factor.gte(getGameSpeedupSoftcaps())) {
-    let x = getGameSpeedupSoftcapsExp();
-    factor = factor.div(getGameSpeedupSoftcaps());
-    factor = factor.pow(x); //generalized in case of future upgrades
-    factor = factor.times(getGameSpeedupSoftcaps());
-  } // Prevent gamespeed from going fucking ballistic*/
+  // If (factor.gte(getGameSpeedupSoftcaps())) {
+  // let x = getGameSpeedupSoftcapsExp();
+  // factor = factor.div(getGameSpeedupSoftcaps());
+  // factor = factor.pow(x); //generalized in case of future upgrades
+  // factor = factor.times(getGameSpeedupSoftcaps());
+  // } // Prevent gamespeed from going fucking ballistic
   factor = factor.times(Decimal.pow(4, KohlerUpgrade(2).boughtAmount));
   factor = factor.times(KohlerUpgrade(9).effectOrDefault(1));
-  if(Kohler.isRunning) {
+  if (Kohler.isRunning) {
     factor = factor.times(KohlerUpgrade(18).effectOrDefault(1));
     factor = factor.pow(KohlerUpgrade(16).effectOrDefault(1));
   }
   return factor;
 }
 
-export function getGameSpeedupSoftcaps(capNumber = 1){ //attempt to have all future GS softcaps in 1 function, capNumber is the softcap number (1 is the first, etc)
-  switch(capNumber){
+export function getGameSpeedupSoftcaps(capNumber = 1) { // Attempt to have all future GS softcaps in 1 function, capNumber is the softcap number (1 is the first, etc)
+  switch (capNumber) {
     case 1:
     default:
       return new Decimal(1e308);
   }
 
 }
-export function getGameSpeedupSoftcapsExp(capNumber = 1){ 
-  switch(capNumber){
+export function getGameSpeedupSoftcapsExp(capNumber = 1) {
+  switch (capNumber) {
     case 1: {
       let x = 0.4321;
       x += WarpUpgrade(3).effectOrDefault(0);
@@ -598,10 +600,10 @@ export function getGameSpeedupForDisplay() {
   return speedFactor;
 }
 
-export function getBaseGameSpeedup(){
+export function getBaseGameSpeedup() {
   let x = getGameSpeedupFactor();
 
-  for (const i of ExpoBlackHoles.list){ //I know we only have BH3, but this is futureproofing
+  for (const i of ExpoBlackHoles.list) { // I know we only have BH3, but this is futureproofing
     if (!i.isUnlocked) break;
     x = Decimal.pow(x, 1 / i.power);
   }
@@ -614,7 +616,7 @@ export function realTimeMechanics(realDiff) {
   // This is in order to prevent players from using time inside of Ra's reality for amplification as well
   Ra.memoryTick(realDiff, !Enslaved.isStoringRealTime);
   if (Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied) {
-    Ra.applyAlchemyReactionsAuto()
+    Ra.applyAlchemyReactionsAuto();
   }
   if (AlchemyResource.momentum.isUnlocked) {
     player.celestials.ra.momentumTime += realDiff * Achievement(175).effectOrDefault(1);
@@ -623,8 +625,8 @@ export function realTimeMechanics(realDiff) {
   DarkMatterDimensions.tick(realDiff);
   MultiversalDimensions.tick(realDiff);
 
-  if(Ra.unlocks.passiveAnnihilationGen.isUnlocked){
-    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain * realDiff / 500; //Think its now 50%/s? (Also this is real time why was it in gametime mechanics?)
+  if (Ra.unlocks.passiveAnnihilationGen.isUnlocked) {
+    player.celestials.laitela.darkMatterMult += Laitela.darkMatterMultGain * realDiff / 500; // Think its now 50%/s? (Also this is real time why was it in gametime mechanics?)
   }
 
   // When storing real time, skip everything else having to do with production once stats are updated
@@ -662,7 +664,7 @@ export function gameLoop(passDiff, options = {}) {
   }
 
   if (Player.canMend && player.requirementChecks.reality.maxGlyphs < player.requirementChecks.mending.mmeleven) {
-    player.requirementChecks.mending.mmeleven = player.requirementChecks.reality.maxGlyphs
+    player.requirementChecks.mending.mmeleven = player.requirementChecks.reality.maxGlyphs;
   }
   let diff = passDiff;
   const thisUpdate = Date.now();
@@ -677,7 +679,7 @@ export function gameLoop(passDiff, options = {}) {
   // result in a ~1 second tick rate for browsers.
   // Note that we have to explicitly call all the real-time mechanics with the existing value of realDiff, because
   // simply letting it run through simulateTime seems to result in it using zero
-  CorruptionData.update() //We call this here since it resets every refresh, but we cant have it directly point to player because else multiplier tab complains
+  CorruptionData.update(); // We call this here since it resets every refresh, but we cant have it directly point to player because else multiplier tab complains
   if (player.options.hibernationCatchup && passDiff === undefined && realDiff > 6e4 * (player.testSpeed ?? 1)) {
     GameIntervals.gameLoop.stop();
     simulateTime(realDiff / 1000, true);
@@ -685,8 +687,8 @@ export function gameLoop(passDiff, options = {}) {
     return;
   }
 
-  //RaUpgrade3 stuff--sxy
-  if(RaUpgrade.enslavedUpgrade.canBeApplied) player.celestials.enslaved.storedReal=Enslaved.storedRealTimeCap;
+  // RaUpgrade3 stuff--sxy
+  if (RaUpgrade.enslavedUpgrade.canBeApplied) player.celestials.enslaved.storedReal = Enslaved.storedRealTimeCap;
 
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;
@@ -739,7 +741,7 @@ export function gameLoop(passDiff, options = {}) {
       speedFactor = options.blackHoleSpeedup;
     }
 
-    diff = new Decimal(diff)
+    diff = new Decimal(diff);
     if (Enslaved.isStoringGameTime && !fixedSpeedActive) {
       // These variables are the actual game speed used and the game speed unaffected by time storage, respectively
       const reducedTimeFactor = getGameSpeedupFactor();
@@ -747,8 +749,8 @@ export function gameLoop(passDiff, options = {}) {
         GAME_SPEED_EFFECT.BLACK_HOLE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE]);
       const amplification = Ra.unlocks.improvedStoredTime.effects.gameTimeAmplification.effectOrDefault(1);
       const beforeStore = new Decimal(player.celestials.enslaved.stored);
-      let x = new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor).times(amplification))
-      let y = new Decimal(Enslaved.timeCap())
+      const x = new Decimal(player.celestials.enslaved.stored).plus(diff.times(totalTimeFactor).times(amplification));
+      const y = new Decimal(Enslaved.timeCap());
       player.celestials.enslaved.stored = Decimal.min(x, y); // This code is split into 3 else it just has a panic attack for some reason
       Enslaved.currentBlackHoleStoreAmountPerMs = new Decimal(player.celestials.enslaved.stored.sub(beforeStore)).div(diff);
       speedFactor = reducedTimeFactor;
@@ -761,34 +763,34 @@ export function gameLoop(passDiff, options = {}) {
   player.celestials.ra.peakGamespeed = Decimal.max(player.celestials.ra.peakGamespeed, getGameSpeedupFactor());
   Enslaved.isReleaseTick = false;
 
-  if(Ra.unlocks.retroactiveTeresaRealityReward.isUnlocked) {
+  if (Ra.unlocks.retroactiveTeresaRealityReward.isUnlocked) {
     const currentBest = player.celestials.teresa.bestRunAM;
     player.celestials.teresa.bestRunAM = (player.records.totalAntimatter.sqrt().max(currentBest));
   }
 
-  if(Ra.unlocks.unlock3rdBH.isUnlocked){
+  if (Ra.unlocks.unlock3rdBH.isUnlocked) {
     ExpoBlackHoles.unlock();
   }
 
-  if(Ra.unlocks.rautobuyers.isUnlocked && !player.celestials.ra.permanentMemories.ra2){
+  if (Ra.unlocks.rautobuyers.isUnlocked && !player.celestials.ra.permanentMemories.ra2) {
     player.celestials.ra.permanentMemories.ra2 = true;
   }
 
-  if(Ra.unlocks.dmdAuto1.isUnlocked && !player.celestials.ra.permanentMemories.lai50){
+  if (Ra.unlocks.dmdAuto1.isUnlocked && !player.celestials.ra.permanentMemories.lai50) {
     player.celestials.ra.permanentMemories.lai50 = true;
   }
 
-  if(Ra.unlocks.dmdAuto2.isUnlocked && !player.celestials.ra.permanentMemories.lai65){
+  if (Ra.unlocks.dmdAuto2.isUnlocked && !player.celestials.ra.permanentMemories.lai65) {
     player.celestials.ra.permanentMemories.lai65 = true;
   }
 
-  if(!document.hasFocus()){
+  if (!document.hasFocus()) {
     player.celestials.laitela.isHoldingLClick = false;
   }
 
-  if(player.celestials.laitela.isHoldingLClick && Date.now() - player.celestials.laitela.holdStart >= 200){
+  if (player.celestials.laitela.isHoldingLClick && Date.now() - player.celestials.laitela.holdStart >= 200) {
     const dim = DarkMatterDimension(player.celestials.laitela.heldTier);
-    switch(player.celestials.laitela.heldType){
+    switch (player.celestials.laitela.heldType) {
       case "interval":
         const isIntervalCapped = dim.interval <= dim.intervalPurchaseCap;
         if (isIntervalCapped) dim.ascend();
@@ -805,9 +807,9 @@ export function gameLoop(passDiff, options = {}) {
     }
   }
 
-  if(Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked){
+  if (Pelle.isDoomed && Ra.unlocks.pelleXP.isUnlocked) {
     if (GalaxyGenerator.generatedGalaxies === 0) player.records.thisReality.remWithoutGG = Currency.remnants.value;
-    if(player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG){
+    if (player.records.thisReality.remWithoutGG > player.records.bestReality.remWithoutGG) {
       player.records.bestReality.remWithoutGG = player.records.thisReality.remWithoutGG;
     }
   }
@@ -817,9 +819,9 @@ export function gameLoop(passDiff, options = {}) {
   // expects to see identical numbers. We also don't increment the timers if the game has been beaten (Achievement 188)
   if (!Achievement(188).isUnlocked || (PlayerProgress.mendingUnlocked() && !player.isGameEnd)) {
     player.records.realTimeDoomed = Math.min(1e308, player.records.realTimeDoomed + realDiff);
-    player.records.realTimePlayed = Math.min(1e308,player.records.realTimePlayed + realDiff);
-    player.records.thisInfinity.realTime = Math.min(1e308,player.records.thisInfinity.realTime + realDiff);
-    player.records.thisEternity.realTime= Math.min(1e308, player.records.thisEternity.realTime + realDiff);
+    player.records.realTimePlayed = Math.min(1e308, player.records.realTimePlayed + realDiff);
+    player.records.thisInfinity.realTime = Math.min(1e308, player.records.thisInfinity.realTime + realDiff);
+    player.records.thisEternity.realTime = Math.min(1e308, player.records.thisEternity.realTime + realDiff);
 
     player.records.thisReality.realTime = Math.min(1e308, player.records.thisReality.realTime + realDiff);
     player.records.thisMend.realTime = Math.min(1e308, player.records.thisMend.realTime + realDiff);
@@ -827,8 +829,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisInfinity.time = player.records.thisInfinity.time.add(diff);
     if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff.times(Currency.eternities.value.clampMax(1e66).add(1)));
-    }
-    else {
+    } else {
       player.records.thisEternity.time = player.records.thisEternity.time.add(diff);
     }
     player.records.thisReality.time = player.records.thisReality.time.add(diff);
@@ -1068,7 +1069,7 @@ function laitelaRealityTick(realDiff) {
             ${TimeSpan.fromSeconds(laitelaInfo.fastestCompletion).toStringShort()}
             <br>Highest Active Dimension: ${formatInt(8 - laitelaInfo.difficultyTier)}`;
         }
-      } else if (Time.thisRealityRealTime.totalSeconds.lt(30) ) {
+      } else if (Time.thisRealityRealTime.totalSeconds.lt(30)) {
         // Second+ attempt - destabilising
         completionText += `<br>Best Completion Time: ${TimeSpan.fromSeconds(oldInfo.fastestCompletion).toStringShort()}
           ➜ Destabilized
@@ -1111,20 +1112,19 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  if(Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied){
-    player.celestials.ra.alchemy = Array.repeat(0, 21) //This just sets all alch resources to the cap, probably will be changed to be passive
-    .map(() => ({
-      amount: Ra.alchemyResourceCap,
-      reaction: false
-    }));
+  if (Ra.unlocks.alchSetToCapAndCapIncrease.canBeApplied) {
+    player.celestials.ra.alchemy = Array.repeat(0, 21) // This just sets all alch resources to the cap, probably will be changed to be passive
+      .map(() => ({
+        amount: Ra.alchemyResourceCap,
+        reaction: false
+      }));
   }
-  if (Ra.unlocks.passiveRelicShardGain.canBeApplied){
+  if (Ra.unlocks.passiveRelicShardGain.canBeApplied) {
     Currency.relicShards.add(Effarig.shardsGained);
   }
-  if (MendingUpgrade(5).isBought && !Pelle.isDoomed){
+  if (MendingUpgrade(5).isBought && !Pelle.isDoomed) {
     Currency.infinityPoints.add(gainedInfinityPoints().times(CorruptionData.isCorrupted ? 0.01 : Time.deltaTime.div(100)).timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
-  }
-  else{
+  } else {
     Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
   }
 
@@ -1139,11 +1139,11 @@ function applyAutoprestige(diff) {
     Currency.realityMachines.add(addedRM);
   }
 
-  if(Pelle.isDoomed && MendingUpgrade(5).isBought){
+  if (Pelle.isDoomed && MendingUpgrade(5).isBought) {
     let am = player.celestials.pelle.records.totalAntimatter.plus(1).log10();
     let ip = player.celestials.pelle.records.totalInfinityPoints.plus(1).log10();
     let ep = player.celestials.pelle.records.totalEternityPoints.plus(1).log10();
-    let MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
+    const MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
 
     if (PelleStrikes.dilation.hasStrike) {
       am *= 500;
@@ -1152,9 +1152,9 @@ function applyAutoprestige(diff) {
     }
 
     const gain = (
-      ((Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) * MMBoostRem)/ 1.64
+      ((Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) * MMBoostRem) / 1.64
     ) ** 7.5;
-    let curr = player.celestials.pelle.remnants;
+    const curr = player.celestials.pelle.remnants;
     player.celestials.pelle.remnants = Math.max(curr, gain);
   }
 
@@ -1172,15 +1172,15 @@ function updateTachyonGalaxies() {
   const tachyonGalaxyMult = Effects.max(1, DilationUpgrade.doubleGalaxies);
   const tachyonGalaxyThreshold = 1000;
   const thresholdMult = getTachyonGalaxyMult();
-  /*
-  base = bulkBuyBinarySearch(Currency.dilatedTime.value,
-    {
-      costFunction: x => getTachyonGalaxyMult(undefined, x).pow(x),
-      firstCost: 1000,
-      cumulative: false,
-    },
-    0)
-  */
+  //
+  // base = bulkBuyBinarySearch(Currency.dilatedTime.value,
+  // {
+  //     costFunction: x => getTachyonGalaxyMult(undefined, x).pow(x),
+  //     firstCost: 1000,
+  //     cumulative: false,
+  // },
+  // 0)
+  //
   player.dilation.baseTachyonGalaxies = Math.min(1e6, Math.max(player.dilation.baseTachyonGalaxies,
     1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult))));
   player.dilation.nextThreshold = DC.E3.times(new Decimal(thresholdMult)
@@ -1190,7 +1190,7 @@ function updateTachyonGalaxies() {
 
 export function getTTPerSecond() {
   // All TT multipliers (note that this is equal to 1 pre-Ra)
-  let ttMult = Effects.product(
+  const ttMult = Effects.product(
     Achievement(137),
     Achievement(156),
   ).toDecimal().times(Ra.unlocks.achievementTTMult.config.canBeApplied ? Ra.unlocks.achievementTTMult.config.effectValue : 1).times(Ra.unlocks.continuousTTBoost.config.canBeApplied ? Ra.unlocks.continuousTTBoost.effects.ttGen : 1);
@@ -1200,9 +1200,9 @@ export function getTTPerSecond() {
   let glyphTT = Teresa.isRunning || Enslaved.isRunning || Pelle.isDoomed || Kohler.isRunning
     ? (Pelle.isDoomed && Ra.unlocks.unlockPelleGlyphEffects.isUnlocked) ? new Decimal(getAdjustedGlyphEffect("dilationTTgen")) : 0
     : new Decimal(getAdjustedGlyphEffect("dilationTTgen")).times(ttMult);
-    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.ttgen[player.mending.corruption[9]]) {
-      glyphTT=0;
-    }
+  if (player.mending.corruptionChallenge.corruptedMend && corruptionPenalties.soF.ttgen[player.mending.corruption[9]]) {
+    glyphTT = 0;
+  }
 
   // Dilation TT generation
   const dilationTT = DilationUpgrade.ttGenerator.isBought
@@ -1215,8 +1215,8 @@ export function getTTPerSecond() {
     finalTT = finalTT.pow(SingularityMilestone.theoremPowerFromSingularities.effectOrDefault(1));
   }
 
-  //V Level 75
-  if (Ra.unlocks.totalSTBoostTTGen.isUnlocked){
+  // V Level 75
+  if (Ra.unlocks.totalSTBoostTTGen.isUnlocked) {
     finalTT = finalTT.pow((1 + (Math.max(Math.log10(V.spaceTheorems + 1), 0) / 10)));
   }
 

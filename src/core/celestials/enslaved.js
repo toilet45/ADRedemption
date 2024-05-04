@@ -171,7 +171,7 @@ export const Enslaved = {
   },
   completeRun() {
     player.celestials.enslaved.completed = true;
-    if (EternityChallenge(1).completions > 5){
+    if (EternityChallenge(1).completions > 5) {
       EternityChallenge(1).completions = 5;
     }
     this.quotes.completeReality.show();
@@ -194,7 +194,7 @@ export const Enslaved = {
   },
   storedTimeInsideEnslaved(stored) {
     if (stored.lt(1e3)) return stored;
-    return Decimal.pow(10, Decimal.pow(Decimal.log10(stored.div(1e3), 0.55))).times(1e3);
+    return Decimal.pow10(Math.pow(Decimal.log10(stored.div(1e3)), 0.55)).times(1e3);
   },
   feelEternity() {
     if (this.feltEternity) {

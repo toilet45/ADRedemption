@@ -259,7 +259,7 @@ export const ra = {
     relicShardGlyphLevelBoost: {
       id: 12,
       reward: "Glyph level is increased based on Relic Shards gained",
-      effect: () => CorruptionUpgrade(7).isBought ? 1000 * Math.pow(Decimal.log2(Decimal.max(Effarig.shardsGained, 1)), 2) : 100 * Math.pow(Decimal.log10(Decimal.max(Effarig.shardsGained, 1)), 2)
+      effect: () => 100 * Math.pow(Decimal.log10(Decimal.max(Effarig.shardsGained, 1)), 2)
         //if(CorruptionUpgrade(7).isBought) return 1000 * Math.pow(Decimal.log2(Decimal.max(Effarig.shardsGained, 1)), 2)
       ,
       pet: "effarig",
@@ -530,7 +530,7 @@ export const ra = {
       id: 13,
       id2: 0,
       reward: () => `Maximum Glyph rarity is increased by ${formatPercents(.02)} per level past ${formatInt(90)}`,
-      effect: () => 2*(Ra.pets.effarig.level-90),
+      effect: () => 2 * (Ra.pets.effarig.level - 90) * (corruptionUpgrades(7).effectOrDefault(0) + 1),
       pet: "effarig",
       level: 90,
       displayIcon: `<span class="fas fa-star"></span>`,

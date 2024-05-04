@@ -26,7 +26,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Game speed is multiplied based on highest score (before instability, Applies after hostilities, but weaker in Hostile multiverse)",
-    effect: () => player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 0.25)) : (Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 1/1.48))),
+    effect: () => (player.mending.corruptionChallenge.corruptedMend ? Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 0.25)) : (Decimal.pow10(Math.pow(player.mending.corruptionChallenge.recordScore, 1 / 1.48)))),
     formatEffect: value => formatX(value, 2)
   },
   {
@@ -40,8 +40,8 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Gain a power effect to achievement power effects, after softcaps, based on unspent Hostile Fragments. ",
-    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)/3) / 10, // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
-    formatEffect: value => `^` + format(value, 2, 2)
+    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments) / 3) / 10, // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
+    formatEffect: value => `^${format(value, 2, 2)}`
   },
   {
     name: "Singularity Cap",
@@ -92,8 +92,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Effarig level 15 unlock uses a better formula",
-    effect: () => 1
+    description: "Effarig level 90 is stronger based on unspent Corrupted Fragments",
+    effect: () => Math.log(1 + (player.mending.corruptedFragments))
   },
   {
     name: "Tesseract Movement",
@@ -120,8 +120,8 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Delay Obscure Galaxy scaling based on Memory Crystals",
-    effect: () => Math.round(Decimal.log10(player.celestials.ra.raPoints.plus(1))*10),
-    formatEffect: value => `+` + formatInt(value)
+    effect: () => Math.round(Decimal.log10(player.celestials.ra.raPoints.plus(1)) * 10),
+    formatEffect: value => `+${formatInt(value)}`
   },
   {
     name: "Sacrifice Exponent",
@@ -133,7 +133,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Dimensional Sacrifice's exponent ${formatPow(1.25,2,2)}`,
+    description: () => `Dimensional Sacrifice's exponent ${formatPow(1.25, 2, 2)}`,
     effect: () => 1.25
   },
   {
@@ -146,8 +146,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Black Hole 1 & 2's base multiplier is increased.",
-    effect: () => 2.5,
+    description: "Black Hole 1 & 2's multiplier base is increased.",
+    effect: () => 1.5 + Math.log10(player.mending.corruptionChallenge.recordScore) / 3,
     formatEffect: value => formatX(value, 1, 1)
   },
   {
@@ -174,7 +174,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Multiplier to Multiversal Remains based on your record score.",
-    effect: () => Math.max(CorruptionData.corruptionChallenge.recordScore,1),
+    effect: () => Math.max(CorruptionData.corruptionChallenge.recordScore, 1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -188,7 +188,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "Increase Alchemy hardcap based on your record score.",
-    effect: () => Math.round(Math.log(CorruptionData.corruptionChallenge.recordScore+1)/Math.log(1.005)),
+    effect: () => Math.round(Math.log(CorruptionData.corruptionChallenge.recordScore + 1) / Math.log(1.005)),
     formatEffect: value => `+${formatInt(value)}`
   },
   {
@@ -202,7 +202,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "8th Antimatter Dimension generates 8th Dark Matter Dimension (once unlocked)",
-    effect: () => Decimal.log10(AntimatterDimensions.all[7].totalAmount.plus(1))*10,
+    effect: () => Decimal.log10(AntimatterDimensions.all[7].totalAmount.plus(1)) * 10,
     formatEffect: value => `${format(value, 2, 2)} per Second`
   },
   {
@@ -228,7 +228,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: () => `If Dimensional Limitations' Hostility level is 5 or higher, Antimatter dimensions gain a power effect based on highest Glyph Level this Mend.`,
-    effect: () => (player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length!=0) ? 1 + Math.log(player.records.bestReality.glyphLevel)/10 : 1,
+    effect: () => ((player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length != 0) ? 1 + Math.log(player.records.bestReality.glyphLevel) / 10 : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
@@ -253,8 +253,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Galactic Weakness' Scaling is ${formatPow(0.5,1,1)}, and power is ${formatX(1.4, 1, 1)} (capped at ${formatPow(1)})`,
-    effect: () => 1,
+    description: () => `Galactic Weakness' Scaling is ${formatPow(0.5, 1, 1)}, and power is ${formatX(1.4, 1, 1)} (capped at ${formatPow(1 + Math.floor((player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) / 25)))}`,
+    effect: () => 1 + Math.floor((player.mending.corruption.reduce((partialSum, a) => partialSum + a, 0) / 25)),
   },
   {
     name: "Rewarding Glyphs",
@@ -267,7 +267,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: "If Complex Glyphs is level 4 or higher, gain a power effect to score, based on Glyph levels and Complex Glyphs level.",
-    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[4] >= 4) ? 1 + Math.log(Math.log(player.mending.corruption[4] * Math.max(1,player.records.bestReality.glyphLevel)))/2.5 : 1,
+    effect: () => (player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[4] >= 4) ? 1 + Math.log(Math.log(player.mending.corruption[4] * Math.max(1, player.records.bestReality.glyphLevel))) / 2.5 : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
@@ -280,7 +280,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Tick Extension's Tickspeed power ${formatPow(0.5,1,1)}, Time Shard divisor ${formatPow(0.75,2,2)}`,
+    description: () => `Tick Extension's Tickspeed power ${formatPow(0.5, 1, 1)}, Time Shard divisor ${formatPow(0.75, 2, 2)}`,
     effect: () => 1,
   },
   {
@@ -293,7 +293,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Automic Dilution's power ${formatX(1.5,1,1)}, capped at ${formatPow(1)}`,
+    description: () => `Automic Dilution's power ${formatX(1.5, 1, 1)}, capped at ${formatPow(1)}`,
     effect: () => 1,
   },
   {
@@ -306,7 +306,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Theory of Dilation's power +${format(0.2,1,1)}, and Dilated Time gain ${(formatX(100000))} if Theory of Dilation is active.`,
+    description: () => `Theory of Dilation's power +${format(0.2, 1, 1)}, and Dilated Time gain ${(formatX(100000))} if Theory of Dilation is active.`,
     effect: () => 1,
   },
   {
@@ -319,8 +319,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ^5.`,
-    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[8] >= 5) ? Math.min(1+(Decimal.log10(player.replicanti.amount))/1000,5) : 1,
+    description: `If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ${formatPow(15)}.`,
+    effect: () => (player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[8] >= 5) ? Math.min(1 + (Decimal.log10(player.replicanti.amount)) / 654, 15) : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
@@ -333,8 +333,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ^5.`,
-    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1+(Decimal.log10(Currency.timeTheorems.value))/1000,5) : 1,
+    description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ${formatPow(7.5)}.`,
+    effect: () => (player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1 + (Decimal.log10(Currency.timeTheorems.value)) / 666, 7.5) : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
 ];

@@ -1,15 +1,24 @@
+<!-- eslint-disable no-negated-condition -->
 <script>
-import { DC } from "@/core/constants";
 import { corruptionPenalties } from "../../../core/secret-formula/mending/corruption";
+
+import { playerInfinityUpgradesOnReset } from "../../../game";
+
+import { WarpUpgrade } from "../../../core/warp-upgrades";
+
+import { CorruptionData, mendingReset } from "../../../core/globals";
+
+import PrimaryButton from "../../PrimaryButton.vue";
+
+import { DC } from "@/core/constants";
 
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import SliderComponent from "@/components/SliderComponent";
-import { playerInfinityUpgradesOnReset } from "../../../game";
+
+
 import CorruptionUpgradeButton from "./CorruptionUpgradeButton.vue";
-import { WarpUpgrade } from "../../../core/warp-upgrades";
-import { mendingReset } from "../../../core/globals";
-import PrimaryButton from "../../PrimaryButton.vue";
+
 
 export default {
   name: "CorruptionTab",
@@ -44,7 +53,7 @@ export default {
     corruptionSliderProps() {
       return {
         min: 0,
-        max: 9+(WarpUpgrade(6).isBought),// + WarpUpgrade(12).isBought),
+        max: 9 + (WarpUpgrade(6).isBought), // + WarpUpgrade(12).isBought),
         width: "27rem",
         valueInDot: true,
         tooltip: "never",
@@ -73,13 +82,13 @@ export default {
       };
     },
     runDescription() {
-      return GameDatabase.challenges.corruption.desc(this.corruptionsZeroCheck())
+      return GameDatabase.challenges.corruption.desc(this.corruptionsZeroCheck());
     },
     bonusInfo() {
-      return GameDatabase.challenges.corruption.incBonusText()
+      return GameDatabase.challenges.corruption.incBonusText();
     },
     rewardInfo() {
-      return GameDatabase.challenges.corruption.reward(this.rewardedFragments)
+      return GameDatabase.challenges.corruption.reward(this.rewardedFragments);
     },
     unlockInfoTooltipArrowStyle() {
       return {
@@ -95,13 +104,13 @@ export default {
       unlocked the upgrade.`,
     grid: () => [],
     tooltip() {
-      return undefined
+      return undefined;
     },
     totalUpgFunc() {
-     return CorruptionUpgrades.all.countWhere(u => u.isBought);
+      return CorruptionUpgrades.all.countWhere(u => u.isBought);
     },
   },
-  watch:{
+  watch: {
     respec(newValue) {
       player.mending.cuRespec = newValue;
     },
@@ -109,47 +118,47 @@ export default {
   methods: {
     update() {
       const now = new Date().getTime();
-      this.time = now;;
+      this.time = now;
       this.recordScore = CorruptionData.corruptionChallenge.recordScore;
       this.corruptionSet = [...CorruptionData.corruptionChallenge.recordCorruptions];
       this.corruptions = [...CorruptionData.corruptions];
       this.isRunning = CorruptionData.isCorrupted || this.externCorrupt;
-      this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked
-      this.nextCorrupted = player.mending.corruptNext
+      this.dimLimNerf = Ra.unlocks.DimLimitCorruptionImprovementPelle.isUnlocked;
+      this.nextCorrupted = player.mending.corruptNext;
       // This was being annoying so this is a cheap fix that works
-      this.timeCompMult = format(new Decimal(1).div(this.localPenalties.timeCompression.mult[this.corruptions[2]]))
+      this.timeCompMult = format(this.localPenalties.timeCompression.mult[this.corruptions[2]]);
       this.corruptedFrags = player.mending.corruptedFragments;
       this.rewardedFragments = Math.ceil(Math.log2(CorruptionData.calcScore()));
       this.respec = player.mending.cuRespec;
       this.externCorrupt = Kohler.isRunning;
     },
     corruptionsZeroCheck() {
-      for(let i=0;i<10;i++){
-        if(this.corruptions[i]!=0) return false;
+      for (let i = 0; i < 10; i++) {
+        if (this.corruptions[i] !== 0) return false;
       }
       return true;
     },
     startRun() {
+      CorruptionData.update();
       if (!this.isRunning) {
-        if(!this.corruptionsZeroCheck()){
-        player.mending.corruptNext = !player.mending.corruptNext;
-        //player.mending.corruptNext = this.nextCorrupted
+        if (!this.corruptionsZeroCheck()) {
+          player.mending.corruptNext = !player.mending.corruptNext;
+        // Player.mending.corruptNext = this.nextCorrupted
+        } else {
+          player.mending.corruptNext = false;
+          this.nextCorrupted = false;
         }
-        else{
-        player.mending.corruptNext = false;
-        this.nextCorrupted = false;
-        }
-      }
-      else {
-        player.mending.corruptionChallenge.corruptedMend = false
-        /*this.isRunning*/CorruptionData.isCorrupted = false
+      } else {
+        player.mending.corruptionChallenge.corruptedMend = false;
+        CorruptionData.isCorrupted = false;
         this.isRunning = false;
-        this.nextCorrupted = false
+        this.nextCorrupted = false;
       }
     },
     corruptionSetSet(id, value) {
       this.corruptions[id] = value;
-      player.mending.corruption[id] = value
+      player.mending.corruption[id] = value;
+      CorruptionData.update();
     },
     unlockInfoTooltipClass(unlockInfo) {
       return {
@@ -162,15 +171,15 @@ export default {
     },
     showModal() {
       Modal.corruptionFullEffects.show();
-    },   
+    },
   }
 };
 </script>
 
 <template>
   <div class="l-corrupt-celestial-tab">
-    <div text-left> 
-    You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Hostile Fragments.
+    <div text-left>
+      You have <span class="c-fragments-amount__accent">{{ formatInt(corruptedFrags, 2) }}</span> Hostile Fragments.
     </div>
     <br>
     <div class="l-mechanics-container">
@@ -182,36 +191,36 @@ export default {
             Hostilities cannot be adjusted due to external factors
           </span>
           <span v-else-if="!isRunning && !nextCorrupted && !corruptionsZeroCheck()">
-              Make Next Mend Hostile
+            Make Next Mend Hostile
           </span>
           <span v-else-if="(!isRunning && !nextCorrupted && corruptionsZeroCheck())">
             Set at least one Hostility to at least Level 1 to make next Mend Hostile
           </span>
           <span v-else-if="!isRunning && !corruptionsZeroCheck()">
-              Next Mend will be Hostile, Mend to apply Hostilities
+            Next Mend will be Hostile, Mend to apply Hostilities
           </span>
           <span v-else-if="!isRunning && corruptionsZeroCheck()">
-            Next Mend shall be Hostile, but cannot be all zero
-        </span>
+            Next Mend will not be hostile unless you select one Hostility to atleast level 1
+          </span>
           <span v-else>
-              Exit Hostile Mend
+            Exit Hostile Mend
           </span>
           <div
             :class="runButtonClassObject"
             @click="startRun();update()"
           >
-          <i class="fa-solid fa-biohazard"></i>
+            <i class="fa-solid fa-biohazard" />
           </div>
           {{ runDescription }}
           <br><br>
-          {{  bonusInfo }}
+          {{ bonusInfo }}
           <br><br>
-          {{  rewardInfo }}
+          {{ rewardInfo }}
           <br><br>
           <div>
             <span v-if="recordScore > 0">
               Your record score is {{ format(recordScore, 2) }},
-              achieved with {{corruptionSet[0]}}/{{corruptionSet[1]}}/{{corruptionSet[2]}}/{{corruptionSet[3]}}/{{corruptionSet[4]}}/{{corruptionSet[5]}}/{{corruptionSet[6]}}/{{corruptionSet[7]}}/{{corruptionSet[8]}}/{{corruptionSet[9]}}
+              achieved with {{ corruptionSet[0] }}/{{ corruptionSet[1] }}/{{ corruptionSet[2] }}/{{ corruptionSet[3] }}/{{ corruptionSet[4] }}/{{ corruptionSet[5] }}/{{ corruptionSet[6] }}/{{ corruptionSet[7] }}/{{ corruptionSet[8] }}/{{ corruptionSet[9] }}
             </span>
             <span v-else>
               You have not mended in a
@@ -220,129 +229,129 @@ export default {
           </div>
         </div>
       </div>
-    <div>
-    Prestige Limits:
-    <SliderComponent
+      <div>
+        Prestige Limits:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[0]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(0, $event)"
         />
-        IP, EP, and RM gain by ^{{localPenalties.prestigeLimits[this.corruptions[0]]}}.
+        IP, EP, and RM gain by ^{{ localPenalties.prestigeLimits[corruptions[0]] }}.
         <br>
         <br>
-    Dimensional Limitations:
-    <SliderComponent
+        Dimensional Limitations:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[1]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(1, $event)"
         />
-        AD, ID, and TD multipliers ^{{format(dimLimNerf ? localPenalties.dimLimits.postNerf[[this.corruptions[1]]] : localPenalties.dimLimits.preNerf[[this.corruptions[1]]], 2, 3)}}
+        AD, ID, and TD multipliers ^{{ format(dimLimNerf ? localPenalties.dimLimits.postNerf[[corruptions[1]]] : localPenalties.dimLimits.preNerf[[corruptions[1]]], 2, 3) }}
         <br>
         <br>
-    Time Compression:
-    <SliderComponent
+        Time Compression:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[2]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(2, $event)"
         />
-        Gamespeed ^{{localPenalties.timeCompression.power[this.corruptions[2]]}} and then /{{timeCompMult}}
+        Gamespeed ^{{ localPenalties.timeCompression.power[corruptions[2]] }} and then /{{ timeCompMult }}
         <br>
         <br>
-    Galactic Weakness:
-    <SliderComponent
+        Galactic Weakness:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[3]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(3, $event)"
         />
-        Galaxy Scaling ^{{localPenalties.galWeak.scaling[this.corruptions[3]]}} and power {{formatX(localPenalties.galWeak.strength[this.corruptions[3]], 1, 2)}}
+        Galaxy Scaling ^{{ localPenalties.galWeak.scaling[corruptions[3]] }} and power {{ formatX(localPenalties.galWeak.strength[corruptions[3]], 1, 2) }}
         <br>
         <br>
-    Complex Glyphs:
-    <SliderComponent
+        Complex Glyphs:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[4]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(4, $event)"
         />
-        Glyph Level ^{{localPenalties.compGlyphs.level[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.level[this.corruptions[4]], 1, 2) }}. <br>
-        Glyph Rarity ^{{localPenalties.compGlyphs.rarity[this.corruptions[4]]}} and then {{ formatX(localPenalties.compGlyphs.rarity[this.corruptions[4]], 1, 2) }}.
+        Glyph Level ^{{ localPenalties.compGlyphs.level[corruptions[4]] }} and then {{ formatX(localPenalties.compGlyphs.level[corruptions[4]], 1, 2) }}. <br>
+        Glyph Rarity ^{{ localPenalties.compGlyphs.rarity[corruptions[4]] }} and then {{ formatX(localPenalties.compGlyphs.rarity[corruptions[4]], 1, 2) }}.
         <br>
         <br>
-    Tick Extension:
-    <SliderComponent
+        Tick Extension:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[5]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(5, $event)"
         />
-        Tickspeed ^{{formatInt(1)}}/{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}. <br>
-        Time Shard Gain /{{format(localPenalties.tickExtension[this.corruptions[5]], 2, 1)}}.
+        Tickspeed ^{{ formatInt(1) }}/{{ format(localPenalties.tickExtension[corruptions[5]], 2, 1) }}. <br>
+        Time Shard Gain /{{ format(localPenalties.tickExtension[corruptions[5]], 2, 1) }}.
         <br>
         <br>
-    Atomic Dilution:
-    <SliderComponent
+        Atomic Dilution:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[6]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(6, $event)"
         />
-        Antimatter exponent ^{{format(localPenalties.atomDilution[this.corruptions[6]], 3, 3)}}.
+        Antimatter exponent ^{{ format(localPenalties.atomDilution[corruptions[6]], 3, 3) }}.
         <br>
         <br>
-    Theory of Dilation:
-    <SliderComponent
+        Theory of Dilation:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[7]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(7, $event)"
         />
-        DT and TP gain ^{{format(localPenalties.toD.power[this.corruptions[7]], 3, 3)}}. <br>
-        DT gain ×{{localPenalties.toD.mult[this.corruptions[7]].toString()}}.
+        DT and TP gain ^{{ format(localPenalties.toD.power[corruptions[7]], 3, 3) }}. <br>
+        DT gain ×{{ localPenalties.toD.mult[corruptions[7]].toString() }}.
         <br>
         <br>
-    Replicative Singularities:
-    <SliderComponent
+        Replicative Singularities:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[8]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(8, $event)"
         />
-        Replicanti gain ^{{localPenalties.repSing.rep[this.corruptions[8]].toString()}}. <br>
-        Sigularity gain ^{{localPenalties.repSing.sing[this.corruptions[8]].toString()}}. <br>
-        Dark Matter gain ^{{localPenalties.repSing.dm[this.corruptions[8]].toString()}}.
+        Replicanti gain ^{{ localPenalties.repSing.rep[corruptions[8]].toString() }}. <br>
+        Sigularity gain ^{{ localPenalties.repSing.sing[corruptions[8]].toString() }}. <br>
+        Dark Matter gain ^{{ localPenalties.repSing.dm[corruptions[8]].toString() }}.
         <br>
         <br>
-    Study of Forever:
-    <SliderComponent
+        Study of Forever:
+        <SliderComponent
           v-bind="corruptionSliderProps"
           :value="corruptions[9]"
           :width="'100%'"
           :disabled="isRunning"
           @input="corruptionSetSet(9, $event)"
         />
-        Studies TT cost ×{{format(localPenalties.soF.ttcost[this.corruptions[9]], 0, 0)}}. <br>
-        TD mult ^{{localPenalties.soF.tdpow[this.corruptions[9]].toString()}}.
+        Studies TT cost ×{{ format(localPenalties.soF.ttcost[corruptions[9]], 0, 0) }}. <br>
+        TD mult ^{{ localPenalties.soF.tdpow[corruptions[9]].toString() }}.
       </div>
     </div>
     <PrimaryButton
-        :class="respecClassObject"
-        @click="respec = !respec"
-      >
-        Respec Hostility Upgrades on Mend
-      </PrimaryButton>
+      :class="respecClassObject"
+      @click="respec = !respec"
+    >
+      Respec Hostility Upgrades on Mend
+    </PrimaryButton>
     <div class="button-container">
       <button
         class="o-pelle-button"

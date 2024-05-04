@@ -5,9 +5,6 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
     super(config);
     this.registerEvents(config.checkEvent, () => this.tryUnlock());
   }
-  get isBought() {
-    return (this.bits & (1 << this.bitIndex)) !== 0;
-  }
 
   set isBought(value) {
     if (value) {
@@ -64,7 +61,7 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isBought() {
-    return Kohler.isRunning ? false : super.isBought;
+    return (this.bits & (1 << this.bitIndex)) !== 0 && Kohler.isRunning ? false : super.isBought;
   }
 
 
@@ -82,11 +79,6 @@ class CorruptionUpgradeState extends BitPurchasableMechanicState {
     if (this.isPossible && !this.isAvailableForPurchase) {
       Modal.upgradeLock.show({ upgrade: this, isImaginary: false, specialLockText });
     }
-  }
-
-  respecCorruptionUpgrades() {
-    Currency.corruptionFragments.respecCall()
-    player.mending.corruptionUpgradeBits = 0
   }
 
   get isAvailableForPurchase() {

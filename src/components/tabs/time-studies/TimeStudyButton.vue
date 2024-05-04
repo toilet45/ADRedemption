@@ -111,17 +111,18 @@ export default {
       return this.eternityChallengeRunning ? "o-time-study-eternity-challenge--running" : "";
     },
     config() {
-      return { ...this.study.config, cost: ((player.mending.corruptionChallenge.corruptedMend&&this.study.type!=TIME_STUDY_TYPE.DILATION)?this.study.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]]:this.study.config.cost), formatCost: value => (value >= 1e6 ? format(value) : formatInt(value)) };
+      // eslint-disable-next-line max-len
+      return { ...this.study.config, cost: ((player.mending.corruptionChallenge.corruptedMend && this.study.type != TIME_STUDY_TYPE.DILATION) ? this.study.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]]:this.study.config.cost), formatCost: value => (value >= 1e6 ? format(value) : formatInt(value)) };
     },
     showDefaultCostDisplay() {
       const costCond = (this.showCost && !this.showStCost) || this.STCost === 0;
       return !this.setup.isSmall && !this.doomedRealityStudy && costCond;
     },
-    costNumber(){
+    costNumber() {
       if (player.mending.corruptionChallenge.corruptedMend && this.study.type!=TIME_STUDY_TYPE.DILATION) {
-      return this.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]];
-    }
-    return this.config.cost;
+        return this.config.cost * corruptionPenalties.soF.ttcost[player.mending.corruption[9]];
+      }
+      return this.config.cost;
     },
     customCostStr() {
       const ttStr = this.setup.isSmall
@@ -200,7 +201,7 @@ export class TimeStudySetup {
       name="Time Theorem"
     />
     <div v-else-if="!doomedRealityStudy">
-      Cost: {{ customCostStr }}
+      Cost: {{ format(customCostStr) }}
     </div>
   </button>
 </template>

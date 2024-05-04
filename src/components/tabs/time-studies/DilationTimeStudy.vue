@@ -32,7 +32,7 @@ export default {
     requirement() {
       if (this.id === 1) {
         return `Requirement: ${formatInt(5)} EC11 and EC12 completions
-          and ${formatInt(this.maxTT)}/${formatInt(TimeStudy.dilation.totalTimeTheoremRequirement)}
+          and ${this.maxTT.lt(1e6) ? format(this.maxTT) : format(this.maxTT)}/${formatInt(TimeStudy.dilation.totalTimeTheoremRequirement)}
           total Time Theorems`;
       }
       if (this.id === 6) {

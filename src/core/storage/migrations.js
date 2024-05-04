@@ -1,7 +1,9 @@
-import { deepmergeAll } from "@/utility/deepmerge";
+/* eslint-disable no-unused-expressions */
 import { DC } from "../constants";
 import { dev } from "../devtools";
 import { CorruptionData } from "../corruption";
+
+import { deepmergeAll } from "@/utility/deepmerge";
 
 // WARNING: Don't use state accessors and functions from global scope here, that's not safe in long-term
 export const migrations = {
@@ -96,7 +98,7 @@ export const migrations = {
         player.lastTenEternities[i][2] = player.lastTenEternities[i][0];
         player.lastTenRuns[i][2] = player.lastTenRuns[i][0];
       }
-      player.options.UIType == 'Classic';
+      player.options.UIType == "Classic";
       window.uiChoiceModalInterval = setInterval(() => {
         if (GameUI.initialized) {
           Modal.uiChoice.show();
@@ -408,11 +410,11 @@ export const migrations = {
       }
     },
     32: player => {
-      //this is the 8-16-23 Redemption Release
+      // This is the 8-16-23 Redemption Release
 
-      player.auto.dilationUpgrades.all[11] = { isActive: false, lastTick: 0};
-      player.auto.dilationUpgrades.all[12] = { isActive: false, lastTick: 0};
-      player.auto.dilationUpgrades.all[13] = { isActive: false, lastTick: 0};
+      player.auto.dilationUpgrades.all[11] = { isActive: false, lastTick: 0 };
+      player.auto.dilationUpgrades.all[12] = { isActive: false, lastTick: 0 };
+      player.auto.dilationUpgrades.all[13] = { isActive: false, lastTick: 0 };
       player.requirementChecks.mending = {
         isEnd: false
       };
@@ -446,7 +448,7 @@ export const migrations = {
         quoteBits: 0,
       };
       player.options.confirmations.mending = true;
-      player.options.awayProgress = {      
+      player.options.awayProgress = {
         mends: true,
         mendingPoints: true
       };
@@ -455,12 +457,12 @@ export const migrations = {
       player.mendingUpgrades = new Set();
       player.mvrmultUpgrades = 0;
     },
-    34: player =>{
+    34: player => {
       player.options.hiddenTabBits = 0;
       player.mendingPoints = player.mending.mendingPoints;
     },
-    35: player =>{
-      if (MendingMilestone.three.isReached){
+    35: player => {
+      if (MendingMilestone.three.isReached) {
         player.celestials.ra.unlockBits += 2097152;
       }
     },
@@ -468,13 +470,13 @@ export const migrations = {
       player.auto.dilationUpgrades.all = Array.range(0, 3).concat(Array.range(11, 14)).map(() => ({
         isActive: false,
         lastTick: 0,
-      }))
-      player.mends = new Decimal(player.mends)
-      player.mendingPoints = new Decimal(player.mendingPoints)
+      }));
+      player.mends = new Decimal(player.mends);
+      player.mendingPoints = new Decimal(player.mendingPoints);
     },
     40: player => {
-      if (MendingUpgrade(2).isPurchased){
-       player.mendingPoints = player.mendingPoints.add(1);
+      if (MendingUpgrade(2).isPurchased) {
+        player.mendingPoints = player.mendingPoints.add(1);
       }
       if (MendingUpgrade(3).isPurchased) {
         player.mendingPoints = player.mendingPoints.add(4);
@@ -488,20 +490,20 @@ export const migrations = {
     },
     41: player => {
       if (player.mends.gte(8)) {
-        player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0]
+        player.celestials.teresa.perkShop = [20, 20, 14, 6, 0, 0];
       }
       player.auto.musicglyph = {
         isUnlocked: false,
         isActive: false,
-      }
+      };
     },
     42: player => {
       player.options.showHintText.mendingUpgrades = true;
     },
-     43: player =>{
-      if(player.records.thisMend.time < 1e308) player.records.thisMend.time = new Decimal(1e308);
+    43: player => {
+      if (player.records.thisMend.time < 1e308) player.records.thisMend.time = new Decimal(1e308);
     },
-    45: player =>{
+    45: player => {
       player.auto.mending = {
         mode: 0,
         amount: DC.D1,
@@ -513,7 +515,7 @@ export const migrations = {
         lastTick: 0
       };
     },
-    46: player =>{
+    46: player => {
       player.celestials.kohler = {
         quoteBits: 0,
       };
@@ -528,315 +530,304 @@ export const migrations = {
         upgradeBits: Math.max(0, player.mending.upgradeBits)
       };
     },
-  47: player => {
-    //for some reason doing this in dev-migrations threw errors, so idk
+    47: player => {
+    // For some reason doing this in dev-migrations threw errors, so idk
       player.auto.nrru = {
         isActive: false,
         lastTick: 0
-      }
+      };
       player.auto.nriu = {
         isActive: false,
         lastTick: 0
-      }    
-      player.options.UIType = player.options.newUI ? "Modern" : "Classic"
-      ui.view.UIType = player.options.UIType
+      };
+      player.options.UIType = player.options.newUI ? "Modern" : "Classic";
+      ui.view.UIType = player.options.UIType;
     },
-  50: player => {
+    50: player => {
       player.celestials.kohler = {
         run: false,
+      };
+    },
+    51: player => {
+      player.requirementChecks.mend = {
+        mmeleven: 8
+      };
+    },
+    51.001: player => {
+      player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
+        ({
+          amount: DC.D1,
+          intervalUpgrades: 0,
+          powerDMUpgrades: 0,
+          powerDEUpgrades: 0,
+          timeSinceLastUpdate: 0,
+          ascensionCount: 0
+        })));
+    },
+    51.002: player => {
+      player.mending.corruption = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 10 here incase we add more, only 5 are used
+    },
+    51.003: player => {
+      player.mending.corruptedFragments = 0;
+    },
+    51.004: player => {
+      player.mending.corruptionChallenge = {
+        corruptedMend: false,
+        records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      };
+    },
+    51.005: player => {
+      player.mending.corruptionChallenge.recordScore = 0;
+    },
+    51.006: player => {
+      player.mending.corruptNext = false;
+    },
+    51.007: player => {
+      player.mending.spentCF = 0;
+    },
+    51.008: player => {
+    // Apparently these can be real numbers, but I'm sticking to integers for now)
+      player.corruptedFragments = player.mending.corruptedFragments.toDecimal();
+      player.mending.warpRebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+      player.mending.corruptionRebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+      player.mending.warpUpgradeBits = 0;
+      player.mending.corruptionUpgradeBits = 0;
+      player.mending.warpUpgReqs = 0;
+      player.mending.corruptionUpgReqs = 0;
+      player.mending.reqLock = {
+        mending: 0,
+        warp: 0,
+        corruption: 0,
+      };
+    },
+    51.009: player => {
+      player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
+      player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
+      player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
+      player.records.thisReality.time = new Decimal(player.records.thisReality.time);
+      player.records.thisMend.time = new Decimal(player.records.thisMend.time);
+    },
+    51.010: player => {
+      player.celestials.ra.upgradeBits = 0,
+      player.celestials.ra.raPoints = DC.D0,
+      player.celestials.ra.rebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+    },
+    51.011: player => {
+      player.records.bestMend.time = new Decimal(player.records.bestMend.time);
+      player.expoBlackHole = Array.range(0, 1).map(id => ({
+        id,
+        intervalUpgrades: 0,
+        powerUpgrades: 0,
+        durationUpgrades: 0,
+        phase: 0,
+        active: false,
+        unlocked: false,
+        activations: 0,
+      })),
+      player.expoBlackHolePause = false;
+      player.expoBlackHoleAutoPauseMode = 0;
+      player.expoBlackHolePauseTime = 0;
+      player.expoBlackHoleNegative = 1;
+    },
+    51.012: player => {
+      player.celestials.ra.permanentMemories = {
+        ra2: false,
+        lai50: false,
+        lai65: false,
+      };
+    },
+    51.013: player => {
+      player.records.thisReality.remWithoutGG = 0;
+      player.records.bestReality.remWithoutGG = 0;
+    },
+    51.014: player => {
+      player.galBoostPoints = new Decimal(0);
+    },
+    51.015: player => {
+      for (let i = 0; i < 11; i++) {
+        player.challenge.normal.bestTimes[i] = new Decimal(player.challenge.normal.bestTimes[i]);
+      }
+      for (let i = 0; i < 8; i++) {
+        player.challenge.infinity.bestTimes[i] = new Decimal(player.challenge.infinity.bestTimes[i]);
       }
     },
-  51: player => {
-    player.requirementChecks.mend = {
-      mmeleven: 8
-    }
-  },
-  51.001: player => {
-    player.celestials.laitela.dimensions = player.celestials.laitela.dimensions.concat(Array.range(0, 4).map(() =>
-    ({
-      amount: DC.D1,
-      intervalUpgrades: 0,
-      powerDMUpgrades: 0,
-      powerDEUpgrades: 0,
-      timeSinceLastUpdate: 0,
-      ascensionCount: 0
-    })))
-  },
-  51.002: player => {
-    player.mending.corruption = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] //10 here incase we add more, only 5 are used
-  },
-  51.003: player => {
-    player.mending.corruptedFragments = 0
-  },
-  51.004: player => {
-    player.mending.corruptionChallenge = {
-      corruptedMend: false,
-      records: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    }
-  },
-  51.005: player => {
-    player.mending.corruptionChallenge.recordScore = 0
-  },
-  51.006: player => {
-    player.mending.corruptNext = false
-  },
-  51.007: player => {
-    player.mending.spentCF = 0;
-  },
-  51.008: player =>{
-    //apparently these can be real numbers, but I'm sticking to integers for now)
-    player.corruptedFragments = player.mending.corruptedFragments.toDecimal();
-    player.mending.warpRebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    };
-    player.mending.corruptionRebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    };
-    player.mending.warpUpgradeBits = 0;
-    player.mending.corruptionUpgradeBits = 0;
-    player.mending.warpUpgReqs = 0;
-    player.mending.corruptionUpgReqs = 0;
-    player.mending.reqLock = {
-      mending: 0,
-      warp: 0,
-      corruption: 0,
-    }
-  },
-  51.009: player =>{
-    player.records.totalTimePlayed = new Decimal(player.records.totalTimePlayed);
-    player.records.thisInfinity.time = new Decimal(player.records.thisInfinity.time);
-    player.records.thisEternity.time = new Decimal(player.records.thisEternity.time);
-    player.records.thisReality.time = new Decimal(player.records.thisReality.time);
-    player.records.thisMend.time = new Decimal(player.records.thisMend.time);
-  },
-  51.010: player =>{
-    player.celestials.ra.upgradeBits = 0,
-    player.celestials.ra.raPoints = DC.D0,
-    player.celestials.ra.rebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    }
-  },
-  51.011: player =>{
-    player.records.bestMend.time = new Decimal(player.records.bestMend.time);
-    player.expoBlackHole = Array.range(0, 1).map(id => ({
-      id,
-      intervalUpgrades: 0,
-      powerUpgrades: 0,
-      durationUpgrades: 0,
-      phase: 0,
-      active: false,
-      unlocked: false,
-      activations: 0,
-    })),
-    player.expoBlackHolePause = false;
-    player.expoBlackHoleAutoPauseMode = 0;
-    player.expoBlackHolePauseTime = 0;
-    player.expoBlackHoleNegative = 1;
-  },
-  51.012: player =>{
-    player.celestials.ra.permanentMemories = {
-      ra2: false,
-      lai50: false,
-      lai65: false,
-    };
-  },
-  51.013: player =>{
-    player.records.thisReality.remWithoutGG = 0;
-    player.records.bestReality.remWithoutGG = 0;
-  },
-  51.014: player => {
-    player.galBoostPoints = new Decimal(0);
-  },
-  51.015: player => {
-    for (let i = 0; i < 11 /* 11 here because c1 doesnt count */ ; i++) {
-      player.challenge.normal.bestTimes[i] =  new Decimal(player.challenge.normal.bestTimes[i])
-    }
-    for (let i = 0; i < 8; i++) {
-      player.challenge.infinity.bestTimes[i] =  new Decimal(player.challenge.infinity.bestTimes[i])
-    }
-  },
-  51.016: player => {
-    delete player.mending.spentCF
-  },
-  51.017: player => {
-    player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player.reality.achTimer = new Decimal(player.reality.achTimer)
-  },
-  51.018: player => {
-    player.reality.glyphs.sac.power = new Decimal(player.reality.glyphs.sac.power);
-    player.reality.glyphs.sac.infinity = new Decimal(player.reality.glyphs.sac.infinity);
-    player.reality.glyphs.sac.time = new Decimal(player.reality.glyphs.sac.time);
-    player.reality.glyphs.sac.replication = new Decimal(player.reality.glyphs.sac.replication);
-    player.reality.glyphs.sac.dilation = new Decimal(player.reality.glyphs.sac.dilation);
-    player.reality.glyphs.sac.effarig = new Decimal(player.reality.glyphs.sac.effarig);
-    player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality);
-  },
-  51.019: player => {
-    player.celestials.v.runUnlocks = player.celestials.v.runUnlocks.concat(Array.range(0, 18).map(() => (0)));
-    player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 18).map(() => (0)));
-    player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 18).map(() =>([])));
-    player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 18).map(() =>(0)));
-    player.celestials.v.wantsSuperFlipped = false;
-  },
-  51.020: player => {
-    if (player.celestials.v.wantsSuperFlipped) {
-      player.celestials.v.flip = V_FLIP.SUPER;
-    } else if (player.celestials.v.wantsFlipped) {
-      player.celestials.v.flip = V_FLIP.HARD;
-    } else {
-      player.celestials.v.flip = V_FLIP.NORMAL;
-    }
-    delete player.celestials.v.wantsSuperFlipped;
-    delete player.celestials.v.wantsFlipped;
-  },
-  51.021: player => {
-    //player.auto.singCap.multiplier = 0; exm why this still exist--sxy
-  },
-  51.022: player => {
-    player.isHoldingLClick = false;
-    player.celestials.laitela.holdStart = 0;
-    player.celestials.laitela.heldTier = 0;
-    player.celestials.laitela.heldType = "";
-  },
-  51.023: player => {
-    player.celestials.ra.rebuyables = {
-      weakenTeresaScaling: 0,
-      weakenEffarigScaling: 0,
-      weakenEnslavedScaling: 0,
-      weakenVScaling: 0,
-      weakenRaScaling: 0,
-      weakenLaitelaScaling: 0,
-      weakenPelleScaling: 0,
-      incTeresaXPGain: 0,
-      incEffarigXPGain: 0,
-      incEnslavedXPGain: 0,
-      incVXPGain: 0,
-      incRaXPGain: 0,
-      incLaitelaXPGain: 0,
-      incPelleXPGain: 0,
-    };
-  },
-  51.024: player => {
-    player.auto.singCap.multiplier = 1000;
-  },
-  51.025: player => {
-    player.celestials.kohler.unlockProgress = 0;
-  },
-  51.026: player => {
-    player.celestials.kohler.unlockMilestone = [false,false,false,false,false,false,false]
-  },
-  51.027: player => {
-    player.transcendents = {
-      kohler: {
-        run: false,
-        trueRun: false
-      },
-      sxy: {
-        run: false
-      },
-      hexus:{
-        run: false
-      },
-      blight:{
-        run: false
-      },
-      asw:{
-        run: false
-      },
-      wollec:{
-        run: false
+    51.016: player => {
+      delete player.mending.spentCF;
+    },
+    51.017: player => {
+      player.celestials.ra.rebuyables = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      player.reality.achTimer = new Decimal(player.reality.achTimer);
+    },
+    51.018: player => {
+      player.reality.glyphs.sac.power = new Decimal(player.reality.glyphs.sac.power);
+      player.reality.glyphs.sac.infinity = new Decimal(player.reality.glyphs.sac.infinity);
+      player.reality.glyphs.sac.time = new Decimal(player.reality.glyphs.sac.time);
+      player.reality.glyphs.sac.replication = new Decimal(player.reality.glyphs.sac.replication);
+      player.reality.glyphs.sac.dilation = new Decimal(player.reality.glyphs.sac.dilation);
+      player.reality.glyphs.sac.effarig = new Decimal(player.reality.glyphs.sac.effarig);
+      player.reality.glyphs.sac.reality = new Decimal(player.reality.glyphs.sac.reality);
+    },
+    51.019: player => {
+      player.celestials.v.runUnlocks = player.celestials.v.runUnlocks.concat(Array.range(0, 18).map(() => (0)));
+      player.celestials.v.goalReductionSteps = player.celestials.v.goalReductionSteps.concat(Array.range(0, 18).map(() => (0)));
+      player.celestials.v.runGlyphs = player.celestials.v.runGlyphs.concat(Array.range(0, 18).map(() => ([])));
+      player.celestials.v.runRecords = player.celestials.v.runRecords.concat(Array.range(0, 18).map(() => (0)));
+      player.celestials.v.wantsSuperFlipped = false;
+    },
+    51.020: player => {
+      if (player.celestials.v.wantsSuperFlipped) {
+        player.celestials.v.flip = V_FLIP.SUPER;
+      } else if (player.celestials.v.wantsFlipped) {
+        player.celestials.v.flip = V_FLIP.HARD;
+      } else {
+        player.celestials.v.flip = V_FLIP.NORMAL;
       }
-    }
-  },
-  51.028: player => {
-    player.mending.corruptionBackup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  },
-  50.0281: player => {
-    player.mending.cuRespec = false;
-  },
-  50.029: player =>{
-    player.awayProgress.raPoints = true,
-    player.awayProgress.galBoostPoints = true
-  },
-  50.03: player =>{
-    player.kohlerPoints = new Decimal(0);
-    player.mending.kohlerUpgradeBits = 0;
-    player.mending.kohlerUpgradeReqs = 0;
-    player.mending.kohlerRebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
+      delete player.celestials.v.wantsSuperFlipped;
+      delete player.celestials.v.wantsFlipped;
     },
-    player.bestKohlerPoints = new Decimal(0);
-    player.kohlerMilestoneBits = Array.repeat(0, 2);
-    player.celestials.teresa.recordPouredAmount = player.celestials.teresa.pouredAmount;
-    player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
-    player.celestials.v.recordRunUnlocks = player.celestials.v.runUnlocks;
-    player.celestials.v.recordSpaceTheorems = V.spaceTheorems;
-  },
-  50.031: player =>{
-    delete player.kohlerMilestoneBits;
-    player.kohlerMilestoneBits = Array.repeat(0, 2);
-  },
-  50.032: player =>{
-    player.infinity.kohlerUpgradeBits = 0;
-    player.infinity.kohlerRebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    }
-  },
-  50.033: player => {
-    while (player.challenge.infinity.bestTimes.length < 9){
-      player.challenge.infinity.bestTimes.push(Decimal.pow10(Number.MAX_VALUE));
-    }
-    player.infinity.matterUpgradeBits = 0,
-    player.infinity.matterRebuyables = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
+    51.021: player => {
+    // Player.auto.singCap.multiplier = 0; exm why this still exist--sxy
     },
-    player.records.bestMatterinIC9 = DC.D0;
+    51.022: player => {
+      player.isHoldingLClick = false;
+      player.celestials.laitela.holdStart = 0;
+      player.celestials.laitela.heldTier = 0;
+      player.celestials.laitela.heldType = "";
+    },
+    51.023: player => {
+      player.celestials.ra.rebuyables = {
+        weakenTeresaScaling: 0,
+        weakenEffarigScaling: 0,
+        weakenEnslavedScaling: 0,
+        weakenVScaling: 0,
+        weakenRaScaling: 0,
+        weakenLaitelaScaling: 0,
+        weakenPelleScaling: 0,
+        incTeresaXPGain: 0,
+        incEffarigXPGain: 0,
+        incEnslavedXPGain: 0,
+        incVXPGain: 0,
+        incRaXPGain: 0,
+        incLaitelaXPGain: 0,
+        incPelleXPGain: 0,
+      };
+    },
+    51.024: player => {
+      player.auto.singCap.multiplier = 1000;
+    },
+    51.025: player => {
+      player.celestials.kohler.unlockProgress = 0;
+    },
+    51.026: player => {
+      player.celestials.kohler.unlockMilestone = [false, false, false, false, false, false, false];
+    },
+    51.027: player => {
+      player.transcendents = {
+        kohler: {
+          run: false,
+          trueRun: false
+        },
+        sxy: {
+          run: false
+        },
+        hexus: {
+          run: false
+        },
+        blight: {
+          run: false
+        },
+        asw: {
+          run: false
+        },
+        wollec: {
+          run: false
+        }
+      };
+    },
+    51.028: player => {
+      player.mending.corruptionBackup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    },
+    50.0281: player => {
+      player.mending.cuRespec = false;
+    },
+    50.029: player => {
+      player.awayProgress.raPoints = true,
+      player.awayProgress.galBoostPoints = true;
+    },
+    50.03: player => {
+      player.kohlerPoints = new Decimal(0);
+      player.mending.kohlerUpgradeBits = 0;
+      player.mending.kohlerUpgradeReqs = 0;
+      player.mending.kohlerRebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
+      player.bestKohlerPoints = new Decimal(0);
+      player.kohlerMilestoneBits = Array.repeat(0, 2);
+      player.celestials.teresa.recordPouredAmount = player.celestials.teresa.pouredAmount;
+      player.celestials.effarig.maxUnlockBits = player.celestials.effarig.unlockBits;
+      player.celestials.v.recordRunUnlocks = player.celestials.v.runUnlocks;
+      player.celestials.v.recordSpaceTheorems = V.spaceTheorems;
+    },
+    50.031: player => {
+      delete player.kohlerMilestoneBits;
+      player.kohlerMilestoneBits = Array.repeat(0, 2);
+    },
+    50.032: player => {
+      player.infinity.kohlerUpgradeBits = 0;
+      player.infinity.kohlerRebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+    },
+    50.033: player => {
+      while (player.challenge.infinity.bestTimes.length < 9) {
+        player.challenge.infinity.bestTimes.push(Decimal.pow10(Number.MAX_VALUE));
+      }
+      player.infinity.matterUpgradeBits = 0,
+      player.infinity.matterRebuyables = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
+      player.records.bestMatterinIC9 = DC.D0;
+    },
+    50.034: player => {
+      player.dimensions.matter = Array.range(0, 4).map(() => ({
+        bought: 0,
+        costBumps: 0,
+        amount: DC.D0,
+        matterBoosts: 0,
+        boostCostBumps: 0
+      }));
+    },
   },
-  50.034: player =>{
-    player.dimensions.matter = Array.range(0, 4).map(() => ({
-      bought: 0,
-      costBumps: 0,
-      amount: DC.D0,
-      matterBoosts: 0,
-      boostCostBumps: 0
-    }));
-  },
-  51.300: player => {
-    // This is code that should be enabled on release. Do not enable it earlier. All previous migrations should be shifted up 0.3 on release.
-    /* 
-    let isDevSave = false
-    if (player.version >= 51 && player.version <= 51.25) isDevSave = isDevSave || true
-    // Feel free to add more deletion reqs/options here
-    if (isDevSave) {
-      dev.hardReset()
-    }
-    */
-  }
-},
 
   normalizeTimespans(player) {
     player.realTimePlayed *= 100;
