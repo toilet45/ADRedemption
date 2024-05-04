@@ -1,9 +1,9 @@
 function isEND() {
-  const threshold = GameEnd.endState > END_STATE_MARKERS.END_NUMBERS
+  const threshold = GameEnd?.endState > END_STATE_MARKERS.END_NUMBERS
     ? 1
-    : (GameEnd.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
+    : (GameEnd?.endState - END_STATE_MARKERS.FADE_AWAY) / 2;
   // Using the Pelle.isDoomed getter here causes this to not update properly after a game restart
-  return (player.celestials.pelle.doomed && Math.random() < threshold);// || player.antimatter.exponent >= 9e15;
+  return (player.celestials.pelle.doomed && Math.random() < threshold); // || player.antimatter.exponent >= 9e15;
 }
 
 window.format = function format(value, places = 0, placesUnder1000 = 0) {
