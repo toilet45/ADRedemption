@@ -534,7 +534,7 @@ export const ra = {
       id: 13,
       id2: 0,
       reward: () => `Maximum Glyph rarity is increased by ${formatPercents(.02)} per level past ${formatInt(90)}`,
-      effect: () => 2 * (Ra.pets.effarig.level - 90) * (corruptionUpgrades(7).effectOrDefault(0) + 1),
+      effect: () => 2 * (Ra.pets.effarig.level - 90) * (CorruptionUpgrade(7).effectOrDefault(0) + 1),
       pet: "effarig",
       level: 90,
       displayIcon: `<span class="fas fa-star"></span>`,
