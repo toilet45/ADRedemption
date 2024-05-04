@@ -700,8 +700,24 @@ export const migrations = {
       } else {
         player.celestials.v.flip = V_FLIP.NORMAL;
       }
-      delete player.celestials.v.wantsSuperFlipped;
-      delete player.celestials.v.wantsFlipped;
+    }
+  },
+  51.028: player => {
+    player.mending.corruptionBackup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  50.0281: player => {
+    player.mending.cuRespec = false;
+  },
+  50.03: player =>{
+    player.kohlerPoints = new Decimal(0);
+    player.mending.kohlerUpgradeBits = 0;
+    player.mending.kohlerUpgradeReqs = 0;
+    player.mending.kohlerRebuyables = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
     },
     51.021: player => {
     // Player.auto.singCap.multiplier = 0; exm why this still exist--sxy
@@ -828,6 +844,33 @@ export const migrations = {
       }));
     },
   },
+  50.034: player =>{
+    player.dimensions.matter = Array.range(0, 4).map(() => ({
+      bought: 0,
+      costBumps: 0,
+      amount: DC.D0,
+      matterBoosts: 0,
+      boostCostBumps: 0
+    }));
+  },
+  51.300: player => {
+    player.options.awayProgress.raPoints = true;
+    player.options.awayProgress.galBoostPoints = true;
+    let isDevSave = false
+    if (player.version >= 51 && player.version <= 51.25) isDevSave = isDevSave || true
+    // Feel free to add more deletion reqs/options here
+    if (isDevSave) {
+      dev.hardReset();
+    }
+  },
+  52: player => {
+    player.options.awayProgress.raPoints = true;
+    player.options.awayProgress.galBoostPoints = true;
+  },
+  53: player => {
+    player.devSave = false;
+  }
+},
 
   normalizeTimespans(player) {
     player.realTimePlayed *= 100;

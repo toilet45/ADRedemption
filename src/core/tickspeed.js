@@ -31,8 +31,8 @@ export function effectiveBaseGalaxies() {
     y *= 1 + EternityChallenge(8).vReward.effectValue;
   }
   let v = player.galBoostPoints.eq(0) ? 1 : /*(player.galBoostPoints.pow(1/(player.galBoostPoints.log10() ** 0.8))).div(100).add(1).toNumber()*/ MultiversalDimension(1).galaxyBoost
-  let w = (KohlerUpgrade(13).isBought && Kohler.isRunning) ? 1e8 : 1;
-  let u = Kohler.isRunning ? KohlerUpgrade(19).effectOrDefault(1) : 1;
+  let w = 1;
+  let u = 1;
   return (Math.max(x + y + replicantiGalaxies + freeGalaxies + matterGalaxies, 0) * v * w * u);
 }
 
@@ -168,7 +168,7 @@ export const Tickspeed = {
   },
 
   get current() {
-    let tickspeed = (Effarig.isRunning || Kohler.isRunning)
+    let tickspeed = Effarig.isRunning
       ? Effarig.tickspeed
       : /*V.isSuperRunning ? this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower).reciprocal().log2().toDecimal().reciprocal() : */this.baseValue.powEffectOf(DilationUpgrade.tickspeedPower);
       if (player.mending.corruptionChallenge.corruptedMend) {
@@ -177,7 +177,7 @@ export const Tickspeed = {
         let corruptPen = new Decimal(1).div(tickExtensionTickspeed);
         tickspeed = tickspeed.pow(corruptPen);
       };
-      if(V.isSuperRunning || Kohler.isRunning) tickspeed = tickspeed.pow(0.000001);
+      if(V.isSuperRunning) tickspeed = tickspeed.pow(0.000001);
       if (Kohler.isRunning) tickspeed = tickspeed.pow(energyEffect());
     return player.dilation.active || PelleStrikes.dilation.hasStrike ? dilatedValueOf(tickspeed) : tickspeed;
   },

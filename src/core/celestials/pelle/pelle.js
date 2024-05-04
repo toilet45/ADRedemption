@@ -119,7 +119,7 @@ export const Pelle = {
       player.options.hiddenSubtabBits[tabIndex] &= ignoredIDs.includes(tabIndex) ? -1 : 0;
     }
 
-    if(MendingMilestone.one.isReached){
+    if(MendingMilestone.one.isReached && !Kohler.isRunning){
       PelleUpgrade.antimatterDimAutobuyers1.isBought = true;
       PelleUpgrade.antimatterDimAutobuyers2.isBought = true;
       PelleUpgrade.tickspeedAutobuyer.isBought = true;
@@ -298,7 +298,7 @@ export const Pelle = {
     let am = this.cel.records.totalAntimatter.plus(1).log10();
     let ip = this.cel.records.totalInfinityPoints.plus(1).log10();
     let ep = this.cel.records.totalEternityPoints.plus(1).log10();
-    let MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
+    let MMBoostRem = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 1.1 : 1;
 
     if (PelleStrikes.dilation.hasStrike) {
       am *= 500;
@@ -314,7 +314,7 @@ export const Pelle = {
   },
 
   realityShardGain(remnants) {
-    const MMBoostRS = MendingMilestone.one.isReached ? 10 : 1;
+    const MMBoostRS = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 10 : 1;
     return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3).times(MMBoostRS);
   },
 

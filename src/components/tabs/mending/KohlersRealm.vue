@@ -59,7 +59,7 @@ export default {
     },
     update() {
       this.now = new Date().getTime();
-      this.unlocked = this.kohlerProgress >= 100;
+      this.unlocked = false; //this.kohlerProgress >= 100;
       this.kohlerProgress = Kohler.unlockProgress;//temporary number
       this.isRunning = Kohler.isRunning;
       this.totalRows = [...KohlerMilestones.allRows];
@@ -67,10 +67,12 @@ export default {
     startRun() {
       if (!Kohler.isRunning) player.mending.corruptionBackup = player.mending.corruption;
       mendingReset(false, true);
+      if (Kohler.isRunning) lockAchievementsOnMend();
       player.celestials.ra.charged = new Set();
       player.celestials.ra.breakCharged = new Set();
-      player.mending.corruptionChallenge.corruptedMend = Kohler.isRunning ? true : false;
-      player.mending.corruption = Kohler.isRunning ? [5,5,0,5,5,0,0,5,5,1] : player.mending.corruptionBackup;
+      player.mending.corruptionChallenge.corruptedMend = Kohler.isRunning;
+      player.mending.corruption = Kohler.isRunning ?  [4, 4, 2, 4, 4, 4, 0, 4, 4, 4] : player.mending.corruptionBackup;
+      if (Kohler.isRunning) lockAchievementsOnMend();
       return;
       /*if (this.isDoomed) return;
       Modal.celestials.show({ name: "Teresa's", number: 0 });*/
@@ -102,7 +104,7 @@ export default {
 
 <template>
     <div class="kohler-celestial-tab">
-      <h1>Coming in 5 Hours(tm)</h1>
+      <h1>Coming in Rewritten</h1>
       <span>
         Actually I want to add a cool progress system so if you see anything mess here just ignore--sxy
       </span>

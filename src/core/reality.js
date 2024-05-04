@@ -296,8 +296,8 @@ function giveRealityRewards(realityProps) {
     player.records.thisReality.time, player.records.thisReality.realTime, gainedRM,
     realityProps.gainedGlyphLevel.actualLevel, realityAndPPMultiplier, multiplier,
     MachineHandler.projectedIMCap);
-  Currency.realities.add(realityAndPPMultiplier * (MendingMilestone.one.isReached ? 5 : 1));
-  if(MendingMilestone.one.isReached){
+  Currency.realities.add(realityAndPPMultiplier * (MendingMilestone.one.isReached && !Kohler.isRunning ? 5 : 1));
+  if(MendingMilestone.one.isReached && !Kohler.isRunning){
     Currency.perkPoints.add(5 * realityAndPPMultiplier);
   }
   else{

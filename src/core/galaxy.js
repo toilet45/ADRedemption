@@ -23,13 +23,14 @@ class GalaxyRequirement {
 export class Galaxy {
   static get scalingThreeStart(){
     let x = (Ra.unlocks.improvedECRewards.canBeApplied && EternityChallenge(5).completions >= 1 && !Pelle.isDoomed) ? EternityChallenge(5).vReward.effectValue : 0;
+    if (Kohler.isRunning && EternityChallenge(5).isRunning) return 100;
     return 750000 + (5000 * MendingUpgrade(16).boughtAmount) + CorruptionUpgrade(9).effectOrDefault(0) + x;
   }
   static get remoteStart() {
-    if (Kohler.isRunning){
-      return Math.floor((new Decimal(800).timesEffectsOf(KohlerInfinityUpgrade(18))).toNumber())
+    if (Kohler.isRunning && EternityChallenge(5).isRunning){
+      return 0;
     }
-    return MendingUpgrade(17).isBought ? Infinity : RealityUpgrade(21).effectOrDefault(800);
+    return MendingUpgrade(17).canBeApplied ? Infinity : RealityUpgrade(21).effectOrDefault(800);
   }
 
   static get requirement() {
@@ -61,7 +62,7 @@ export class Galaxy {
 
     const type = Galaxy.typeAt(galaxies);
 
-    if (type === GALAXY_TYPE.DISTANT && EternityChallenge(5).isRunning) {
+    if (type === GALAXY_TYPE.DISTANT && ((EternityChallenge(5).isRunning && !Kohler.isRunning)|| Kohler.isRunning)) {
       amount += Math.pow(galaxies, 2) + galaxies;
     } else if (type === GALAXY_TYPE.DISTANT || type === GALAXY_TYPE.REMOTE) {
       const galaxyCostScalingStart = this.costScalingStart;
@@ -124,8 +125,6 @@ export class Galaxy {
       if(CorruptionUpgrade(19).isBought) galWeakScaling = Math.pow(galWeakScaling,0.5)
       amount = Math.floor(amount**(galWeakScaling))
     }
-
-    if (Kohler.isRunning && KohlerUpgrade(13).isBought) amount /= 10;
     const tier = Galaxy.requiredTier;
     return new GalaxyRequirement(tier, amount);
   }
@@ -160,7 +159,7 @@ export class Galaxy {
   }
 
   static get costScalingStart() {
-    let x = ((Kohler.isRunning && KohlerInfinityUpgrade(9).isBought) ? 20000 : 100) + TimeStudy(302).effectOrDefault(0) + Effects.sum(
+    let x = 100 + TimeStudy(302).effectOrDefault(0) + Effects.sum(
       TimeStudy(223),
       TimeStudy(224),
       GlyphSacrifice.power
@@ -177,10 +176,10 @@ export class Galaxy {
     if (galaxies >= Galaxy.scalingThreeStart) {
       return GALAXY_TYPE.THIRD;
     }
-    if (galaxies >= Galaxy.remoteStart) {
+    if (galaxies >= Galaxy.remoteStart || (EternityChallenge(5).isRunning && Kohler.isRunning)) {
       return GALAXY_TYPE.REMOTE;
     }
-    if (EternityChallenge(5).isRunning || galaxies >= this.costScalingStart) {
+    if ((EternityChallenge(5).isRunning && !Kohler.isRunning) || Kohler.isRunning || galaxies >= this.costScalingStart) {
       return GALAXY_TYPE.DISTANT;
     }
     return GALAXY_TYPE.NORMAL;
@@ -218,7 +217,7 @@ export function manualRequestGalaxyReset(bulk) {
 // to restrict galaxy count for RUPG7's requirement here and nowhere else
 export function requestGalaxyReset(bulk, limit = Number.MAX_VALUE) {
   const restrictedLimit = RealityUpgrade(7).isLockingMechanics ? 1 : limit;
-  if ((EternityMilestone.autobuyMaxGalaxies.isReached || (Kohler.isRunning && KohlerMilestone(12).isUnlocked)) && bulk) return maxBuyGalaxies(restrictedLimit);
+  if ((EternityMilestone.autobuyMaxGalaxies.isReached) && bulk) return maxBuyGalaxies(restrictedLimit);
   if (player.galaxies >= restrictedLimit || !Galaxy.canBeBought || !Galaxy.requirement.isSatisfied) return false;
   Tutorial.turnOffEffect(TUTORIAL_STATE.GALAXY);
   galaxyReset();

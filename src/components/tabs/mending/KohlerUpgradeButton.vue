@@ -108,7 +108,7 @@ export default {
             v-if="!isBought"
             :config="config"
             br
-            name="Kohler Point"
+            name="Fragmented Remain"
           />
         </template>
       </span>

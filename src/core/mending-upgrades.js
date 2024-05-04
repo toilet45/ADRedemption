@@ -10,7 +10,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isBought() {
-    if (Kohler.isRunning && this.id < 19) return false;
+    if (Kohler.isRunning && this.id !== 19) return false;
     return (this.bits & (1 << this.bitIndex)) !== 0;
   }
 
@@ -69,16 +69,16 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isPossible() {
-    if (Kohler.isRunning && this.id < 19) return false;
+    if (Kohler.isRunning && this.id !== 19) return false;
     return this.config.hasFailed ? !this.config.hasFailed() : true;
   }
 
   get canBeBought(){
-    return (Kohler.isRunning && this.id < 19) ? false : super.canBeBought;
+    return (Kohler.isRunning && this.id !== 19) ? false : super.canBeBought;
   }
 
   get isBought() {
-    return Kohler.isRunning && this.id < 19 ? false : super.isBought;
+    return Kohler.isRunning && this.id !== 19 ? false : super.isBought;
   }
 
   tryUnlock() {
@@ -134,7 +134,7 @@ class MendingUpgradeState extends BitPurchasableMechanicState {
       }
       case 14:{
         player.celestials.v.runUnlocks.forEach((unlock, index) => {
-          player.celestials.v.runUnlocks[index] = Math.max(unlock, 3);
+          player.celestials.v.runUnlocks[index] = Math.max(unlock, (index < 9 ? 3: 0));
         });
         V.updateTotalRunUnlocks();
         break;

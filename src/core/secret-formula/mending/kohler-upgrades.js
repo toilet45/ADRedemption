@@ -78,7 +78,7 @@ export const kohlerUpgrades = [
     id: 6,
     name: "Kohler Upgrade 6",
     cost: 2,
-    description: () => `Multiply 1st Antimatter Dimension based on unspent Kohler Points, after nerfs.`,
+    description: () => `Multiply 1st Antimatter Dimension based on unspent Fragmented Remains, after nerfs.`,
     effect: () => {
       let x = KohlerUpgrade(10).isBought ? Decimal.pow(player.bestKohlerPoints.add(1).clampMin(1), 5) : Currency.kohlerPoints.value.add(1).clampMin(1);
       return x;
@@ -111,14 +111,14 @@ export const kohlerUpgrades = [
     id: 10,
     name: "Kohler Upgrade 10",
     cost: 30,
-    description: () => `Kohler Upgrade 6 effect ^5, and is based on best Kohler Points`,
+    description: () => `Kohler Upgrade 6 effect ^5, and is based on best Fragmented Remains`,
     effect: () => 1,
   },
   {
     id: 11,
     name: "Kohler Upgrade 11",
     cost: 4000,
-    description: () => `Gain more Kohler Points based on Antimatter`,
+    description: () => `Gain more Fragmented Remains based on Antimatter`,
     effect: () => Math.max(1, Currency.antimatter.value.log10() / 10),
     effectType: "×",
     formatEffect: value => formatX(value, 2, 2) 
@@ -210,7 +210,7 @@ export const kohlerUpgrades = [
     id: 21,
     name: "Kohler Upgrade 21",
     cost: 1e14,
-    description: () => 'Kohler Points boost Energy gain',
+    description: () => 'Fragmented Remains boost Energy gain',
     effect: () => Math.max(1, (Currency.kohlerPoints.value.add(1)).log10()) / 3,
     effectType: "×",
     formatEffect: value => formatX(value, 2, 2) 

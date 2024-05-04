@@ -225,7 +225,7 @@ export const Singularity = {
   },
 
   get singularitiesGained() {
-    const MMBoostSing = MendingMilestone.one.isReached ? 5 : 1;
+    const MMBoostSing = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 5 : 1;
     let IU10 = ImaginaryUpgrade(10).effectOrDefault(0);
     if(Ra.unlocks.dmdScaling.isUnlocked) IU10 = Math.pow(2,IU10);
     let x = Math.floor(Math.pow(this.gainPerCapIncrease, player.celestials.laitela.singularityCapIncreases) *

@@ -30,7 +30,7 @@ export default {
     {{ pluralize("Multiversal Remain", mendingPoints) }}.
     <span v-if="isKPVisible">
       <br>
-      You have <span class="c-mending-tab__mending-points">{{ formatNE(kohlerPoints, 2) }}</span> {{ pluralize("Kohler Point", kohlerPoints) }}.</span>
+      You have <span class="c-mending-tab__mending-points">{{ formatNE(kohlerPoints, 2) }}</span> {{ pluralize("Fragmented Remain", kohlerPoints) }}.</span>
   </div>
 </template>
 <!--<template>

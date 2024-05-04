@@ -11,7 +11,7 @@ import { supportedBrowsers } from "./supported-browsers";
 
 import Payments from "./core/payments";
 import { MendingUpgrade } from "./core/mending-upgrades";
-import { CorruptionData, CorruptionUpgrade, Currency, dilatedValueOf, ExpoBlackHole, KohlerInfinityUpgrade, KohlerUpgrade, MultiversalDimensions, Player, Ra, WarpUpgrade } from "./core/globals";
+import { CorruptionData, CorruptionUpgrade, Currency, ExpoBlackHole, Kohler, KohlerInfinityUpgrade, KohlerUpgrade, MultiversalDimensions, WarpUpgrade, dilatedValueOf } from "./core/globals";
 import { MendingMilestone } from "./core/mending";
 
 import { corruptionPenalties } from "./core/secret-formula/mending/corruption";
@@ -100,6 +100,7 @@ export function gainedInfinityPoints(noSoftcap = false) {
   );
   if (Pelle.isDisabled("IPMults")) {
     const x = MendingMilestone.one.isReached ? 1e20 : 1;
+    let x = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 1e20 : 1;
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)
       .times(Pelle.specialGlyphEffect.infinity).times(x)
@@ -108,7 +109,8 @@ export function gainedInfinityPoints(noSoftcap = false) {
   let ip = player.break
     ? Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
     : new Decimal(308 / div);
-  if (MendingMilestone.one.isReached) {
+    
+  if(MendingMilestone.one.isReached && !Kohler.isRunning){
     ip = ip.times(1e20);
   }
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked) {
@@ -122,7 +124,9 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.min(DC.E200);
   }
   ip = ip.times(GameCache.totalIPMult.value);
-  if (Teresa.isRunning) {
+  if (Kohler.isRunning){
+    ip = ip.pow(0.275);
+  } else if (Teresa.isRunning) {
     ip = ip.pow(0.55);
   } else if (V.isRunning) {
     ip = ip.pow(0.5);
@@ -147,24 +151,11 @@ export function gainedInfinityPoints(noSoftcap = false) {
     ip = ip.pow(0.0298374651);
     ip = ip.times(Decimal.pow10(9e15));
   }
-  // If (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
-  // ip = ip.div(Decimal.pow10(1e20))
-  // ip = ip.pow(0.95)
-  // ip = ip.times(Decimal.pow10(1e20))
-  // }
-  if (Kohler.isRunning) {
-    ip = new Decimal(ip.clampMin(1).log10());
-    ip = ip.timesEffectsOf(
-      KohlerInfinityUpgrade(1),
-      MatterUpgrade(6),
-      KohlerInfinityUpgrade(12),
-      KohlerInfinityUpgrade(14),
-      KohlerUpgrade(4)
-    );
-    ip = Decimal.pow(ip, MatterUpgrade(4).effectOrDefault(1));
-    ip = Decimal.pow(ip, KohlerInfinityUpgrade(15).effectOrDefault(1));
-    ip = Decimal.pow(ip, MatterUpgrade(17).effectOrDefault(1));
-  }
+  /*if (ip.gte(Decimal.pow10(1e20)) && !noSoftcap) {
+    ip = ip.div(Decimal.pow10(1e20))
+    ip = ip.pow(0.95)
+    ip = ip.times(Decimal.pow10(1e20))
+  }*/
   return ip.floor();
 }
 
@@ -203,16 +194,10 @@ export function warpReality() {
   player.reality.warped = true;
 }
 
-export function gainedKohlerPoints() {
-  let gain = Math.floor((Currency.antimatter.value.log10() - 9) / 3).toDecimal();
-  gain = gain.timesEffectsOf(
-    Achievement(202),
-    KohlerUpgrade(11),
-    KohlerUpgrade(15),
-    MatterUpgrade(5)
-  );
-  gain = gain.times(Decimal.pow(2, KohlerUpgrade(1).boughtAmount));
-  return player.antimatter.gte(1e12) ? gain : new Decimal(0);
+export function gainedKohlerPoints(){
+  let x = Math.log10(Currency.antimatter.value.log10())
+  let gain = Decimal.pow(x, x);
+  return gain;
 }
 
 function totalEPMult() {
@@ -238,17 +223,15 @@ export function gainedEternityPoints(noSoftcap = false) {
   if (player.timestudy.studies.includes(307)) devisor -= 30;
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
     gainedInfinityPoints()).log10() / devisor - 0.7).times(totalEPMult());
-  if (MendingMilestone.one.isReached) {
+  if (MendingMilestone.one.isReached && !Kohler.isRunning){
     ep = ep.times(1e5);
   }
   if (Ra.unlocks.realityMachinesBoostIpAndEpGain.isUnlocked) {
     ep = Decimal.pow(ep, Decimal.log10(Currency.realityMachines.value) / 100);
   }
-  if (Kohler.isRunning) {
-    ep = ep.pow(5e-7);
-    ep = dilatedValueOf(ep);
-  }
-  if (Teresa.isRunning) {
+  if (Kohler.isRunning){
+    ep = ep.pow(0.275)
+  } else if (Teresa.isRunning) {
     ep = ep.pow(0.55);
   } else if (V.isRunning) {
     ep = ep.pow(0.5);
@@ -422,9 +405,6 @@ export function gainedInfinities() {
     }
     infGain = infGain.pow(teresa90BaseExp); // TODO: softcap this at ^1.5
   }
-  if (Kohler.isRunning) {
-    infGain = infGain.times(KohlerInfinityUpgrade(3).effectOrDefault(1));
-  }
   return infGain;
 }
 
@@ -488,7 +468,6 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
         factor = factor.times(Decimal.pow(blackHole.power, BlackHoles.unpauseAccelerationFactor));
         factor = factor.times(VUnlocks.achievementBH.effectOrDefault(1));
         factor = factor.times(VUnlocks.vAchMulti.effectOrDefault(1));
-        if (Kohler.isRunning) factor = factor.div(3);
       }
     }
   }
@@ -512,11 +491,6 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // These effects should always be active, but need to be disabled during offline black hole simulations because
   // otherwise it gets applied twice
   if (effects.includes(GAME_SPEED_EFFECT.NERFS)) {
-    if (Kohler.isRunning) {
-      factor = Effarig.multiplier(factor);
-      const nerfModifier = Math.clampMax(Time.thisRealityRealTime.totalMinutes.toNumber() / 10, 1);
-      factor = Decimal.pow(factor, nerfModifier);
-    }
     if (Effarig.isRunning) {
       factor = Effarig.multiplier(factor);
     } else if (Laitela.isRunning) {
@@ -559,10 +533,6 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   // } // Prevent gamespeed from going fucking ballistic
   factor = factor.times(Decimal.pow(4, KohlerUpgrade(2).boughtAmount));
   factor = factor.times(KohlerUpgrade(9).effectOrDefault(1));
-  if (Kohler.isRunning) {
-    factor = factor.times(KohlerUpgrade(18).effectOrDefault(1));
-    factor = factor.pow(KohlerUpgrade(16).effectOrDefault(1));
-  }
   return factor;
 }
 
@@ -1143,7 +1113,7 @@ function applyAutoprestige(diff) {
     let am = player.celestials.pelle.records.totalAntimatter.plus(1).log10();
     let ip = player.celestials.pelle.records.totalInfinityPoints.plus(1).log10();
     let ep = player.celestials.pelle.records.totalEternityPoints.plus(1).log10();
-    const MMBoostRem = MendingMilestone.one.isReached ? 1.1 : 1;
+    let MMBoostRem = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 1.1 : 1;
 
     if (PelleStrikes.dilation.hasStrike) {
       am *= 500;

@@ -232,8 +232,7 @@ Currency.antimatter = new class extends DecimalCurrency {
   }
 
   get startingValue() {
-    if (Kohler.isRunning) return new Decimal(100);
-    if (Pelle.isDisabled()) return new Decimal(100);
+    if (Pelle.isDisabled() || Kohler.isRunning) return new Decimal(100);
     return Effects.max(
       10,
       Perk.startAM,
@@ -336,7 +335,7 @@ Currency.eternityPoints = new class extends DecimalCurrency {
   }
 
   get startingValue() {
-    if (Pelle.isDisabled() || Kohler.isRunning) return new Decimal(0);
+    if (Pelle.isDisabled()) return new Decimal(0);
     return Effects.max(
       0,
       Perk.startEP1,
