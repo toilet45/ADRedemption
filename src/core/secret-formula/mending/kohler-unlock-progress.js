@@ -31,17 +31,10 @@ export const kohlerProgress = {
         if (Ra.unlocks.kohlersRealmUnlock.isUnlocked && Math.log10(Decimal.log10(Currency.antimatter.value))>=25) return true;
         return false;
       },
-      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Tickspeed affect 1st Multiversal Dimension with ultra reduced rate.`,
+      description: () => `Reach ${format(new Decimal("1e10000000000000000000000000"))} Antimatter. Reward: Wait for AD:Redemption Rewritten`,
       effect: () => {
         return Math.max(Math.pow(Decimal.log10(Tickspeed.perSecond.plus(1)),0.3),1);
       }
-    },
-    thirdMultiverse: {
-      id: 6,
-      progress: 100,
-      condition:false,
-      description: "Now for the ultimate test...Have 5 3rd Multiversal Dimensions.",
-      condition: () => MultiversalDimension(3).amount.gte(5),
     }
   }
 };

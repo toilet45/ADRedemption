@@ -517,7 +517,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 58,
+  version: 60,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,
@@ -1239,7 +1239,7 @@ window.player = {
   mvrmultUpgrades: 0,
   kohlerPoints: new Decimal(0),
   bestKohlerPoints: new Decimal(0),
-  devSave: true
+  devSave: false
 };
 
 export const Player = {

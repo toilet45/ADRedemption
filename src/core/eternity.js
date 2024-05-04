@@ -181,7 +181,7 @@ export function animateAndEternity(callback) {
 export function initializeChallengeCompletions(isReality) {
   NormalChallenges.clearCompletions();
   if (!PelleUpgrade.keepInfinityChallenges.canBeApplied) InfinityChallenges.clearCompletions();
-  if ((!isReality && EternityMilestone.keepAutobuyers.isReached) || Pelle.isDoomed || MendingMilestone.one.isReached) {
+  if ((!isReality && EternityMilestone.keepAutobuyers.isReached) || Pelle.isDoomed || (MendingMilestone.one.isReached && !Kohler.isRunning)) {
     NormalChallenges.completeAll();
   }
   if (Achievement(133).isUnlocked && !Pelle.isDoomed) {
@@ -245,7 +245,7 @@ function askEternityConfirmation() {
 
 export function gainedEternities() {
   let eternityGain = new Decimal(1);
-  if (MendingMilestone.one.isReached){
+  if (MendingMilestone.one.isReached && !Kohler.isRunning){
     eternityGain = eternityGain.times(10000);
   }
   if (Ra.unlocks.realitiesBoostInfinityAndEternityProduction.isUnlocked){

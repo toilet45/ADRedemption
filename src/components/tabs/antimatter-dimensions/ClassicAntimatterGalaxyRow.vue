@@ -114,7 +114,7 @@ export default {
       this.requirement.amount = requirement.amount;
       this.requirement.tier = requirement.tier;
       this.canBeBought = requirement.isSatisfied && Galaxy.canBeBought;
-      this.distantStart = EternityChallenge(5).isRunning ? 0 : Galaxy.costScalingStart;
+      this.distantStart = (EternityChallenge(5).isRunning && !Kohler.isRunning) || Kohler.isRunning ? 0 : Galaxy.costScalingStart;
       this.remoteStart = Galaxy.remoteStart;
       this.lockText = Galaxy.lockText;
       this.canBulkBuy = EternityMilestone.autobuyMaxGalaxies.isReached;

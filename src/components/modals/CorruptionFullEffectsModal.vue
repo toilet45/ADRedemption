@@ -62,7 +62,7 @@ export default {
         "Replicanti gains a power exponent",
         "Singularity gains a power exponent",
         "DM gain gains a power exponent",
-        `Prestige gain recieves an exponent: ^${format(this.corruptionInfos.repSing.presGain[this.corruptions[8]], 3, 3)}`,
+        `Begin from level 2, Prestige gain recieves an exponent: ^${format(this.corruptionInfos.repSing.presGain[this.corruptions[8]], 3, 3)}`,
         "Begin from level 5, some rebuyable upgrades below Celestial level are disabled",
         "　",
         "Study of Forever:",

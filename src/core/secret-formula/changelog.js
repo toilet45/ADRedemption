@@ -9,20 +9,51 @@ export const changelog = [
    * }
    */
   {
-    date: [2024, 2, "??"],
-    name: "idk yet",
+    date: [2024, 5, 2],
+    name: "Messy launch bugifx",
     info: 
-    `
+    `Just some bugfixes.
     <br>
     <br>
     <b>New things:</b>
     <br>
     <ul>
-    <li>Implemented Mending Upgrades 6, 20, and all rebuyables</li>
-    <li>Implemented 20 Mend Milestone</li>
+    <li>none</li>
+    </ul>
+    <b>Bugfixes:</b>
+    <br>
+    <ul>
+    <li>Fixed MU14 affecting V-40</li>
+    <li>Hid "Modify Testing Speed"</li>
+    <li>Fixed Slowest Challenge time Break Infinity upgrade</li>
+    <li>A certain charged upgrade actually works now</li>
+    <li>Pelle 75 content no longer appears in the multiplier tab eariler than intended</li>
+    </ul>
+    <b>Known Issues:</b>
+    <br>
+    <ul>
+    <li>TS192's visibility is random in Nameless' Reality. However it should still be completeable</li>
+    <li>There are console errors when viewing the TS tree when unlocking a Triad Study (this doesn't effect gameplay)</li>
+    <li>Some notations say "NaN undefined" after a certain value, but you should probably use Scientific at that point</li>
+    <li>Record Hostiliities still update when adjusting the sliders</li>
+    </ul>`
+  },
+  {
+    date: [2024, 4, 25],
+    name: "The Abandoned for Break Eternity Port",
+    info: 
+    `With the soon to be released Break Eternity port, we have decided to release what we have and rebrand this as AD: Redemption Legacy <br>
+    This will no longer recieve content updates aside from bug fixes.
+    <br>
+    <br>
+    <b>New things:</b>
+    <br>
+    <ul>
+    <li>Implemented all Mending Upgrades</li>
+    <li>Implemented all Mend Milestones</li>
     <li>Implemented Warp Reality</li>
     <li>Added Mending content to the catchup modal</li>
-    <li>Endgame: about e1 Oc (ee27) antimatter</li>
+    <li>Endgame: e10 Sp (ee25) antimatter</li>
     </ul>
     <b>Bugfixes:</b>
     <br>

@@ -11,10 +11,21 @@ import { CorruptionData } from "./corruption";
 import { CorruptionUpgrade, VUnlocks } from "./globals";
 import { corruptionPenalties } from "./secret-formula/mending/corruption";
 
-function lockAchievementsOnMend() {
+export function lockAchievementsOnMend() {
   //if (Perk.achievementGroup5.isBought) return;
   for (const achievement of Achievements.preMend) {
     achievement.lock();
+  }
+  player.reality.achTimer = DC.D0;
+  Achievement(22).unlock();
+  Achievement(51).unlock();
+  Achievement(61).unlock();
+}
+
+function unlockAchievementsOnMend() {
+  //if (Perk.achievementGroup5.isBought) return;
+  for (const achievement of Achievements.preMend) {
+    achievement.unlock();
   }
   player.reality.achTimer = DC.D0;
 }
@@ -48,8 +59,15 @@ export function mendingReset(gain = true, toggleKohler = false) {
         player.mending.corruptionChallenge.records = player.mending.corruption
         player.mending.corruptionChallenge.recordScore = scoreCalc
       }
-     if(!Kohler.isRunning) player.mending.corruptedFragments = Math.ceil(Math.max(CorruptionData.recordCorruptedFragments, Math.log2(scoreCalc))) // Make sure the player doesnt decrease their own corrupted frag count
-     if (!toggleKohler && !Kohler.isRunning) player.mending.corruptionUpgradeBits = 0 }// Basically a respec call
+      let x = 0;
+      for (let i = 1; i < 26; i++){
+        if (CorruptionUpgrade(i).isBought) x += CorruptionUpgrade(i).cost;
+      }
+     if(!Kohler.isRunning) {
+      if (Math.log2(scoreCalc) > CorruptionData.recordCorruptedFragments) player.mending.corruptedFragments +=  Math.log2(scoreCalc) - x;// Make sure the player doesnt decrease their own corrupted frag count
+     }
+    /* if (!toggleKohler && !Kohler.isRunning) player.mending.corruptionUpgradeBits = 0*/
+  }// Basically a respec call
      player.mending.corruptionChallenge.corruptedMend = false;
      CorruptionData.update();
    }
@@ -105,6 +123,10 @@ export function mendingReset(gain = true, toggleKohler = false) {
     if (toggleKohler || Kohler.isRunning) {
       //Tab.dimensions.antimatter.show();
       player.transcendents.kohler.run = !player.transcendents.kohler.run;
+      if (!player.transcendents.kohler.run){
+        player.mending.corruptions = player.mending.corruptionBackup;
+        unlockAchievementsOnMend();
+      }
     }
     player.celestials.pelle.doomed = false;
     player.options.hiddenTabBits = 0;
@@ -500,11 +522,10 @@ export function mendingReset(gain = true, toggleKohler = false) {
         Currency.antimatter.bumpTo(5e25);
       }
     }
-    player.dimensionBoosts = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 5 : 0;
-    player.galaxies = (Kohler.isRunning && KohlerUpgrade(7).isBought) ? 1 : 0;
+    player.dimensionBoosts = 0;
+    player.galaxies = 0;
     player.sacrificed = DC.D0;
     AntimatterDimensions.reset();
-    if (Kohler.isRunning && KohlerUpgrade(8).isBought)player.dimensions.antimatter[7].amount = new Decimal(1);
     resetTickspeed();
     if (player.records.thisMend.realTime < player.records.bestMend.realTime){
       player.records.bestMend.realTime = player.records.thisMend.realTime;

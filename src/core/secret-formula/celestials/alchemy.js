@@ -425,7 +425,7 @@ export const alchemyResources = {
     symbol: "Θ",
     isBaseResource: false,
     effect: amount =>{ 
-      let x = BreakInfinityUpgrade.slowestChallengeMult.chargedEffect.isEffectActive ? Math.pow(Ra.pets.teresa.level, 0.5) : 1;
+      let x = BreakInfinityUpgrade.infinitiedGen.chargedEffect.isEffectActive ? Math.pow(Ra.pets.teresa.level, 0.5) : 1;
       let y = Math.pow(160 * Math.sqrt(amount / 25000), x);
       /*if (player.mending.corruptionChallenge.corruptedMend) {
         y = Math.pow(y,corruptionPenalties.alchemyNormalcy[player.mending.corruption[9]]);

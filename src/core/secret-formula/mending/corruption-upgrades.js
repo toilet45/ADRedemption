@@ -334,7 +334,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ^5.`,
-    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1+(Decimal.log10(Currency.timeTheorems.value))/1000,5) : 1,
+    effect: () => player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1+(Decimal.log10(Currency.timeTheorems.value.add(1)))/1000,5) : 1,
     formatEffect: value => formatPow(value, 2, 2)
   },
 ];

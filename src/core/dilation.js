@@ -95,9 +95,6 @@ export function buyDilationUpgrade(id, bulk = 1) {
         Perk.retroactiveTP3,
         Perk.retroactiveTP4
       );
-      if (Kohler.isRunning) {
-        retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
-      }
       if (Enslaved.isRunning) {
         retroactiveTPFactor = Math.pow(retroactiveTPFactor, Enslaved.tachyonNerf);
       }
@@ -133,7 +130,7 @@ export function getTachyonGalaxyMult(thresholdUpgrade, amnt) {
 
 export function getDilationGainPerSecond() {
   if (Pelle.isDoomed) {
-    let x = MendingMilestone.one.isReached ? 100 : 1;
+    let x = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 100 : 1;
     const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
     let primeAnswer = new Decimal(tachyonEffect)
     .timesEffectsOf(DilationUpgrade.dtGain, DilationUpgrade.dtGainPelle, DilationUpgrade.flatDilationMult)
@@ -153,7 +150,7 @@ export function getDilationGainPerSecond() {
       Ra.unlocks.peakGamespeedDT,
       DilationUpgrade.dtGainPelle,
     );
-  if (MendingMilestone.one.isReached){
+  if (MendingMilestone.one.isReached && !Kohler.isRunning){
     dtRate = dtRate.times(100);
   }
   dtRate = dtRate.times(getAdjustedGlyphEffect("dilationDT"));
@@ -161,10 +158,12 @@ export function getDilationGainPerSecond() {
   dtRate = dtRate.times(
     Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1));
   if(Ra.unlocks.relicShardBoost.isUnlocked) dtRate = dtRate.pow(1 + Math.max(0, (Currency.relicShards.value.log10() / 1337)));
-  if (Kohler.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
-  if (V.isRunning) dtRate = dtRate.pow(0.5);
-  if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
+  if (Kohler.isRunning){
+    dtRate = dtRate.pow(0.5);
+  }
+  else if (V.isRunning) dtRate = dtRate.pow(0.5);
+  else if (V.isSuperRunning) dtRate = dtRate.pow(0.000001);
   if (player.mending.corruptionChallenge.corruptedMend) {
     let toDpower=corruptionPenalties.toD.power[player.mending.corruption[7]];
     let toDmult=new Decimal(corruptionPenalties.toD.mult[player.mending.corruption[7]])

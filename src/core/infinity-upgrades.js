@@ -65,7 +65,7 @@ export class InfinityUpgradeState extends SetPurchasableMechanicState {
   }
 
   get canCharge() {
-    if (Kohler.isRunning || (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.hiddenEight[player.mending.corruption[9]])) return false;
+    if (player.mending.corruptionChallenge.corruptedMend&&corruptionPenalties.soF.hiddenEight[player.mending.corruption[9]]) return false;
     return this.isBought &&
       this.hasChargeEffect &&
       !this.isCharged &&

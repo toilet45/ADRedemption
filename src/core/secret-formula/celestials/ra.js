@@ -361,7 +361,6 @@ export const ra = {
       pet: "v",
       level: 2,
       displayIcon: `<span class="fas fa-fast-forward"></span>`,
-      disabledByKohler: true
     },
     vXP: {
       id: 23,
@@ -398,7 +397,6 @@ export const ra = {
       level: 10,
       displayIcon: `<span class="fas fa-university"></span>`,
       disabledByPelle: true,
-      disabledByKohler: true
     },
     achievementTTMult: {
       id: 26,
@@ -408,7 +406,6 @@ export const ra = {
       level: 15,
       displayIcon: `<span class="fas fa-graduation-cap"></span>`,
       disabledByPelle: true,
-      disabledByKohler: true
     },
     achievementPower: {
       id: 27,
@@ -436,7 +433,8 @@ export const ra = {
       pet: "teresa",
       level: 40,
       displayIcon: "∝",
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     uncapGlyphSacEffects: {
       id: 2,
@@ -444,7 +442,8 @@ export const ra = {
       reward: "Some Glyph Sacrifice effects are uncapped",
       pet: "teresa",
       level: 50,
-      displayIcon: `<span class="fas fa-clone"></span>`
+      displayIcon: `<span class="fas fa-clone"></span>`,
+      disabledByKohler: true
     },
     retroactiveTeresaRealityReward: {
       id: 3,
@@ -452,7 +451,8 @@ export const ra = {
       reward: () => `Your record antimatter in Teresa's Reality is retroactively set to the square root of your total antimatter`,
       pet: "teresa",
       level: 65,
-      displayIcon: "Ϟ"
+      displayIcon: "Ϟ",
+      disabledByKohler: true
     },
     realityMachinesBoostIpAndEpGain: {
       id: 4,
@@ -461,7 +461,8 @@ export const ra = {
       pet: "teresa",
       level: 75,
       displayIcon: `<span class="fas fa-arrow-up"></span>`,
-      effect: () => Decimal.log10(Currency.realityMachines) / 100
+      effect: () => Decimal.log10(Currency.realityMachines) / 100,
+      disabledByKohler: true
     },
     realitiesBoostInfinityAndEternityProduction: {
       id: 5,
@@ -479,7 +480,8 @@ export const ra = {
       pet: "teresa",
       level: 100,
       displayIcon: 'i',
-      effect: () => Math.max(Math.log2(ImaginaryUpgrade(6).effectValue.log(10)), 1)
+      effect: () => Math.max(Math.log2(ImaginaryUpgrade(6).effectValue.log(10)), 1),
+      disabledByKohler: true
     },
     alchSetToCapAndCapIncrease: {
       id: 8,
@@ -507,7 +509,8 @@ export const ra = {
       effect: () => 500*Math.floor((Ra.pets.effarig.level-50)/5),
       pet: "effarig",
       level: 50,
-      displayIcon: '<i class="fa-solid fa-check-double"></i>'
+      displayIcon: '<i class="fa-solid fa-check-double"></i>',
+      disabledByKohler: true
     },
     relicShardBoost: {
       id: 11,
@@ -515,7 +518,8 @@ export const ra = {
       reward: "Relic shards boost dimensional sacrifice, replicanti speed, infinity power conversion rate, tachyon particle to dilated time factor and time dimensions",
       pet: "effarig",
       level: 65,
-      displayIcon: '<i class="fa-solid fa-ranking-star"></i>'
+      displayIcon: '<i class="fa-solid fa-ranking-star"></i>',
+      disabledByKohler: true
     },
     effarigGlyphIncreaseImCap: {
       id: 12,
@@ -542,7 +546,8 @@ export const ra = {
       reward: "Unlock Effarig's Mend",
       pet: "effarig",
       level: 100,
-      displayIcon: `Ϙ`
+      displayIcon: `Ϙ`,
+      disabledByKohler: true
     },
     uncapGamespeed: {
       id: 15,
@@ -550,7 +555,8 @@ export const ra = {
       reward: "Remove the 1e300 Gamespeed cap",
       pet: "enslaved",
       level: 30,
-      displayIcon: `<span class="fas fa-tachometer-alt"></span>`
+      displayIcon: `<span class="fas fa-tachometer-alt"></span>`,
+      disabledByKohler: true
     },
     uncap8TdPurchaseMult: {
       id: 16,
@@ -558,7 +564,8 @@ export const ra = {
       reward: "Uncap 8th Time Dimension purchase multiplier",
       pet: "enslaved",
       level: 40,
-      displayIcon: 'Δ'
+      displayIcon: 'Δ',
+      disabledByKohler: true
     },
     unlock3rdBH: {
       id: 17,
@@ -576,7 +583,8 @@ export const ra = {
       reward: "Increase Pelle Tachyon Galaxy multiplier upgrade base based on Dilated Time",
       pet: "enslaved",
       level: 65,
-      displayIcon: '♅'
+      displayIcon: '♅',
+      disabledByKohler: true
     },
     gamespeedGalaxyBoost: {
       id: 19,
@@ -585,7 +593,8 @@ export const ra = {
       pet: "enslaved",
       level: 75,
       displayIcon: '<i class="fa-solid fa-atom"></i>',
-      effect: () => Math.max(1 ,1 + (Decimal.log10(getGameSpeedupFactor()) / 1000)) //this shouldn't be 100% until e1000 gamespeed
+      effect: () => Math.max(1 ,1 + (Decimal.log10(getGameSpeedupFactor()) / 1000)), //this shouldn't be 100% until e1000 gamespeed
+      disabledByKohler: true
     },
     freeTickspeedSoftcapDelay: {
       id: 20,
@@ -593,7 +602,8 @@ export const ra = {
       reward: "Tesseracts increase free tickspeed upgrade softcap",
       pet: "enslaved",
       level: 90,
-      displayIcon: '<i class="fa-solid fa-arrow-up-from-ground-water"></i>'
+      displayIcon: '<i class="fa-solid fa-arrow-up-from-ground-water"></i>',
+      disabledByKohler: true,
     },
     improvedIpowConversion: {
       id: 21,
@@ -601,7 +611,8 @@ export const ra = {
       reward: "Improve Infinity Power conversion (based on effective Tesseract count)",
       pet: "enslaved",
       level: 100,
-      displayIcon: `<span class="fas fa-infinity"></span>`
+      displayIcon: `<span class="fas fa-infinity"></span>`,
+      disabledByKohler: true
     },
     improvedECRewards: {
       id: 22,
@@ -610,7 +621,7 @@ export const ra = {
       pet: "v",
       level: 30,
       displayIcon: `⌬`,
-      disabledByKohler: true
+      disabledByKohler: true,
     },
     unlockSHardV: {
       id: 23,
@@ -619,7 +630,8 @@ export const ra = {
       pet: "v",
       level: 40,
       displayIcon: `<span class="fas fa-trophy"></span>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     vAchMilestone2AffectsIDsAndTDs: {
       id: 24,
@@ -628,7 +640,8 @@ export const ra = {
       pet: "v",
       level: 50,
       displayIcon: `<i class="fab fa-buffer"></i>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     repIncreasesAchMult: {
       id: 25,
@@ -636,7 +649,8 @@ export const ra = {
       reward: "Replicanti increases achievement multiplier",
       pet: "v",
       level: 65,
-      displayIcon: GLYPH_SYMBOLS.replication
+      displayIcon: GLYPH_SYMBOLS.replication,
+      disabledByKohler: true
     },
     totalSTBoostTTGen: {
       id: 26,
@@ -644,7 +658,8 @@ export const ra = {
       reward: "Total Space Theorems boost Time Theorem generation",
       pet: "v",
       level: 75,
-      displayIcon: `<i class="fa-solid fa-book-atlas"></i>`
+      displayIcon: `<i class="fa-solid fa-book-atlas"></i>`,
+      disabledByKohler: true
     },
     unlockMyriads: {
       id: 27,
@@ -662,7 +677,8 @@ export const ra = {
       reward: "Improve Base Achievemnt Multiplier",
       pet: "v",
       level: 100,
-      displayIcon: `<i class="fab fa-buffer"></i>`
+      displayIcon: `<i class="fab fa-buffer"></i>`,
+      disabledByKohler: true
     },
     raRealUncapDimboost: {
       id: 29,
@@ -670,7 +686,8 @@ export const ra = {
       reward: "Uncap Dimension Boosts in Ra's reality",
       pet: "ra",
       level: 1,
-      displayIcon: GLYPH_SYMBOLS.power
+      displayIcon: GLYPH_SYMBOLS.power,
+      disabledByKohler: true
     },
     rautobuyers: {
       id: 30,
@@ -687,7 +704,8 @@ export const ra = {
       pet: "ra",
       level: 5,
       displayIcon: `<span class="fas fa-level-up-alt"></span>`,
-      effect: () => Math.max(1, Math.pow(Math.log(Math.max(1,Currency.imaginaryMachines.value)), 0.5))
+      effect: () => Math.max(1, Math.pow(Math.log(Math.max(1,Currency.imaginaryMachines.value)), 0.5)),
+      disabledByKohler: true
     },
     upgradesDontSpendMems: {
       id: 0,
@@ -703,7 +721,8 @@ export const ra = {
       reward: "Add a secondary source for Memory Chunk Gain for each Celestial",
       pet: "ra",
       level: 10,
-      displayIcon: '<i class="fa-solid fa-angle-double-up"></i>'
+      displayIcon: '<i class="fa-solid fa-angle-double-up"></i>',
+      disabledByKohler: true
     },
     remembranceBoost: {
       id: 2,
@@ -711,7 +730,8 @@ export const ra = {
       reward: "Remembrance is ×15 as powerful",
       pet: "ra",
       level: 15,
-      displayIcon: '<i class="fa-solid fa-sun"></i>'
+      displayIcon: '<i class="fa-solid fa-sun"></i>',
+      disabledByKohler: true
     },
     generateMemChunksOutOfRasReality: {
       id: 3,
@@ -719,7 +739,8 @@ export const ra = {
       reward: "You can generate Memory Chunks outside of Ra's reality at a heavily reduced rate. Improve Ra's memory chunk formula.",
       pet: "ra",
       level: 25,
-      displayIcon: 'Ϟ'
+      displayIcon: 'Ϟ',
+      disabledByKohler: true
     },
     raNoReset: {
       id: 4,
@@ -727,7 +748,8 @@ export const ra = {
       reward: "Ra no longer resets on Mend",
       pet: "ra",
       level: 30,
-      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>',
+      disabledByKohler: true
     },
     remembranceAlwaysActiveAndShopUnlock: {
       id: 5,
@@ -735,7 +757,8 @@ export const ra = {
       reward: "Remembrance has no downside, affects all celestials and is always active, unlock Ra's Shop",
       pet: "ra",
       level: 40,
-      displayIcon: `<span class="fa-solid fa-euro"></span>`
+      displayIcon: `<span class="fa-solid fa-euro"></span>`,
+      disabledByKohler: true
     },
     improvedChunkGains: {
       id: 6,
@@ -743,7 +766,8 @@ export const ra = {
       reward: "Base Memory Chunk formula for all Celestials is slightly improved",
       pet: "ra",
       level: 50,
-      displayIcon: `<i class="fa-solid fa-sort"></i>`
+      displayIcon: `<i class="fa-solid fa-sort"></i>`,
+      disabledByKohler: true
     },
     imaginaryBoostsRa: {
       id: 7,
@@ -751,7 +775,8 @@ export const ra = {
       reward: "Free Dimension Boosts are effective in Ra's Reality",
       pet: "ra",
       level: 65,
-      displayIcon: `<i class="fa-solid fa-circle-check"></i>`
+      displayIcon: `<i class="fa-solid fa-circle-check"></i>`,
+      disabledByKohler: true
     },
     freeDimBoosts: {
       id: 8,
@@ -760,7 +785,8 @@ export const ra = {
       pet: "ra",
       level: 75,
       displayIcon: `<i class="fa-solid fa-circle-arrow-up"></i>`,
-      disabledByPelle: true
+      disabledByPelle: true,
+      disabledByKohler: true
     },
     improvedPetUpgrades: {
       id: 9,
@@ -768,7 +794,8 @@ export const ra = {
       reward: "Unlock a new row of permenant upgrades in Ra's shop",
       pet: "ra",
       level: 90,
-      displayIcon: `<i class="fa-solid fa-dollar"></i>`
+      displayIcon: `<i class="fa-solid fa-dollar"></i>`,
+      disabledByKohler: true
     },
     mendingPointsGainMult: {
       id: 10,
@@ -776,7 +803,8 @@ export const ra = {
       reward: "Gain a Multiversal Remain Multiplier based on total Memory Levels",
       pet: "ra",
       level: 100,
-      displayIcon: `<i class="fa-solid fa-x"></i>`
+      displayIcon: `<i class="fa-solid fa-x"></i>`,
+      disabledByKohler: true
     },
     increaseDarkMatterCap: {
       id: 11,
@@ -785,7 +813,8 @@ export const ra = {
       effect: () => (Ra.pets.laitela.level),
       pet: "laitela",
       level: 1,
-      displayIcon: 'ᛝ'
+      displayIcon: 'ᛝ',
+      disabledByKohler: true
     },
     annihilationDarkEnergyBoost: {
       id: 12,
@@ -793,7 +822,8 @@ export const ra = {
       reward: "Annihilation increases dark energy production with reduced effect",
       pet: "laitela",
       level: 2,
-      displayIcon: '<i class="fa-solid fa-dot-circle"></i>'
+      displayIcon: '<i class="fa-solid fa-dot-circle"></i>',
+      disabledByKohler: true
     },
     laitelaXP: {
       id: 13,
@@ -802,7 +832,8 @@ export const ra = {
       effect: () => Math.max(Math.log10(Currency.singularities.value) / 10, 1),
       pet: "laitela",
       level: 5,
-      displayIcon: '<i class="fa-solid fa-dice-d6"></i>'
+      displayIcon: '<i class="fa-solid fa-dice-d6"></i>',
+      disabledByKohler: true
     },
     totalAntimatterDarkMatterBoost: {
       id: 14,
@@ -810,7 +841,8 @@ export const ra = {
       reward: "Total Antimatter boosts dark matter gain",
       pet: "laitela",
       level: 8,
-      displayIcon: GLYPH_SYMBOLS.power
+      displayIcon: GLYPH_SYMBOLS.power,
+      disabledByKohler: true
     },
     infinityPowerConversionBoost: {
       id: 15,
@@ -819,7 +851,8 @@ export const ra = {
       effect: () => .25 * Math.floor(Ra.pets.laitela.level/10),
       pet: "laitela",
       level: 10,
-      displayIcon: `<span class="fas fa-infinity"></span>`
+      displayIcon: `<span class="fas fa-infinity"></span>`,
+      disabledByKohler: true
     },
     passiveAnnihilationGen: {
       id: 16,
@@ -827,7 +860,8 @@ export const ra = {
       reward: `Passively generate half of your Annihilation multiplier every second`,
       pet: "laitela",
       level: 15,
-      displayIcon: `<span class="fas fa-circle-half-stroke"></span>`
+      displayIcon: `<span class="fas fa-circle-half-stroke"></span>`,
+      disabledByKohler: true
     },
     unlockDMD: {
       id: 17,
@@ -835,7 +869,8 @@ export const ra = {
       reward: () => `Unlock a new Dark Matter Dimension every ${formatInt(25)} levels. Improve Lai'tela's memory chunk formula.`,
       pet: "laitela",
       level: 25,
-      displayIcon: `<span class="fas fa-circle-up"></span>`
+      displayIcon: `<span class="fas fa-circle-up"></span>`,
+      disabledByKohler: true
     },
     continuumBoost: {
       id: 18,
@@ -843,7 +878,8 @@ export const ra = {
       reward: () => `Improve Continuum effect for every ${format("1e308")} Dark Matter`,
       pet: "laitela",
       level: 30,
-      displayIcon: 'ᛝ'
+      displayIcon: 'ᛝ',
+      disabledByKohler: true
     },
     increaseSingLimits: {
       id: 19,
@@ -851,7 +887,8 @@ export const ra = {
       reward: () => `You can increase the max singularity cap by ${formatInt(2)} every ${formatInt(5)} levels`,
       pet: "laitela",
       level: 40,
-      displayIcon: '<i class="fa-solid fa-diamond"></i>'
+      displayIcon: '<i class="fa-solid fa-diamond"></i>',
+      disabledByKohler: true
     },
     dmdAuto1: {
       id: 20,
@@ -876,7 +913,8 @@ export const ra = {
       reward: "Continuum affects Infinity and Time Dimensions (With reduced effect)",
       pet: "laitela",
       level: 75,
-      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`,
+      disabledByKohler: true
     },
     dmdScaling: {
       id: 23,
@@ -884,7 +922,8 @@ export const ra = {
       reward: "Entropic Condensing is far stronger.",
       pet: "laitela",
       level: 90,
-      displayIcon: `<i class="fa-solid fa-circle-h"></i>`
+      displayIcon: `<i class="fa-solid fa-circle-h"></i>`,
+      disabledByKohler: true
     },
     unlockMultiversalDimensions: {
       id: 24,
@@ -892,7 +931,8 @@ export const ra = {
       reward: "Unlock Multiversal Dimensions",
       pet: "laitela",
       level: 100,
-      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>',
+      disabledByKohler: true
     },
     pelleAutobuyers: {
       id: 25,
@@ -900,7 +940,8 @@ export const ra = {
       reward: "Pelle Upgrades are purchased automatically",
       pet: "pelle",
       level: 1,
-      displayIcon: `<span class="fas fa-sync-alt"</span>`
+      displayIcon: `<span class="fas fa-sync-alt"</span>`,
+      disabledByKohler: true
     },
     boostMVRGain: {
       id: 26,
@@ -909,7 +950,8 @@ export const ra = {
       effect: () => Pelle.isDoomed ? 3 : 1,
       pet: "pelle",
       level: 2,
-      displayIcon: '<i class="fa-solid fa-staff-snake"></i>'
+      displayIcon: '<i class="fa-solid fa-staff-snake"></i>',
+      disabledByKohler: true
     },
     pelleXP: {
       id: 27,
@@ -918,7 +960,8 @@ export const ra = {
       effect: () => Math.max(Math.log10(player.records.bestReality.remWithoutGG)/2, 1),
       pet: "pelle",
       level: 5,
-      displayIcon: '♅'
+      displayIcon: '♅',
+      disabledByKohler: true
     },
     unlockPelleTPMult: {
       id: 28,
@@ -926,7 +969,8 @@ export const ra = {
       reward: "Re-enable Tachyon Particle Multiplier in Doomed Reality, but it's decreased to ×1.1",
       pet: "pelle",
       level: 8,
-      displayIcon: GLYPH_SYMBOLS.dilation
+      displayIcon: GLYPH_SYMBOLS.dilation,
+      disabledByKohler: true
     },
     exitDoom: {
       id: 29,
@@ -942,7 +986,8 @@ export const ra = {
       reward: "Doomed Reality no longer disables rebuyable IP and EP multipliers, but they are decreased to ×1.01 and ×1.5 respectively",
       pet: "pelle",
       level: 15,
-      displayIcon: `<span class="fas fa-sync-alt"</span>`
+      displayIcon: `<span class="fas fa-sync-alt"</span>`,
+      disabledByKohler: true
     },
     unlockPelleGlyphEffects: {
       id: 31,
@@ -950,7 +995,8 @@ export const ra = {
       reward: "Basic Glyphs' disabled effects are re-enabled in Doomed Reality.",
       pet: "pelle",
       level: 25,
-      displayIcon: `<span class="fas fa-clone"></span>`
+      displayIcon: `<span class="fas fa-clone"></span>`,
+      disabledByKohler: true
     },
     boostMemoryGain: {
       id: 0,
@@ -959,7 +1005,8 @@ export const ra = {
       pet: "pelle",
       level: 30,
       displayIcon: `<span class="fas fa-sun"</span>`,
-      effect: 500
+      effect: 500,
+      disabledByKohler: true
     },
     unlockPelleContinuum: {
       id: 1,
@@ -967,7 +1014,8 @@ export const ra = {
       reward: "Continuum is re-enabled in Doomed Reality, but is severely weakened, and only effective for Antimatter Dimensions",
       pet: "pelle",
       level: 40,
-      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`
+      displayIcon: `<i class="fa-solid fa-bars-progress"></i>`,
+      disabledByKohler: true
     },
     pelleRarityBoost: {
       id: 2,
@@ -975,7 +1023,8 @@ export const ra = {
       reward: "Glyph Rarity in Doomed Reality is boosted based on Memory Levels past 50",
       pet: "pelle",
       level: 50,
-      displayIcon: `<i class="fas fa-ankh"></i>`
+      displayIcon: `<i class="fas fa-ankh"></i>`,
+      disabledByKohler: true
     },
     omegaScalingBuff: {
       id: 3,
@@ -983,7 +1032,8 @@ export const ra = {
       reward: "Make the scaling at glyph level 100,000 weaker.",
       pet: "pelle",
       level: 65,
-      displayIcon: `<i class="fas fa-explosion"></i>`
+      displayIcon: `<i class="fas fa-explosion"></i>`,
+      disabledByKohler: true
     },
     Hostility: {
       id: 4,
@@ -999,7 +1049,8 @@ export const ra = {
       reward: () => Ra.unlocks.Hostility.isUnlocked ? "Make Dimensional Limitations slightly Weaker" : "Reach Pelle 75 to see reward",
       pet: "pelle",
       level: 90,
-      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-biohazard"></i>`:"?"
+      displayIcon: () => Ra.unlocks.Hostility.isUnlocked ?`<i class="fa-solid fa-biohazard"></i>`:"?",
+      disabledByKohler: true
     },
     kohlersRealmUnlock: {
       id: 6,

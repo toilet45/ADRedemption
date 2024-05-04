@@ -193,7 +193,7 @@ export const realityUpgrades = [
     id: 13,
     cost: 50,
     requirement: () => { 
-      return MendingMilestone.one.isReached ? "None (1 Mend Milestone)" : `Eternity for ${format(DC.E4000)} Eternity Points without Time Dim. 5-8`;
+      return (MendingMilestone.one.isReached && !Kohler.isRunning) ? "None (1 Mend Milestone)" : `Eternity for ${format(DC.E4000)} Eternity Points without Time Dim. 5-8`;
     },
     hasFailed: () => !Array.range(5, 4).every(i => TimeDimension(i).amount.equals(0)),
     checkRequirement: () => Currency.eternityPoints.exponent >= 4000 &&
