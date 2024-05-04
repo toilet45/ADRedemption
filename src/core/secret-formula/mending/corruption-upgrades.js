@@ -284,7 +284,7 @@ export const corruptionUpgrades = [
     effect: () => 1,
   },
   {
-    name: "Automic Dilution",
+    name: "Atomic Dilution",
     id: 22,
     cost: 5,
     requirement: "Please send your save to the devs with an image of this - You should never be able to see this",
@@ -293,7 +293,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: () => `Automic Dilution's power ${formatX(1.5, 1, 1)}, capped at ${formatPow(1)}`,
+    description: () => `Atomic Dilution's power ${formatX(1.5, 1, 1)}, capped at ${formatPow(1)}`,
     effect: () => 1,
   },
   {
