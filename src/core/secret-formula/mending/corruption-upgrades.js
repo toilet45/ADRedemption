@@ -319,7 +319,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ${formatPow(15)}.`,
+    description: () =>`If Replicative Singularities corruption is 5 or higher, Infinity dimensions gain a power effect based on current Replicanti. Capped at ${formatPow(15)}.`,
     effect: () => (player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[8] >= 5) ? Math.min(1 + (Decimal.log10(player.replicanti.amount)) / 654, 15) : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
@@ -333,7 +333,7 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ${formatPow(7.5)}.`,
+    description: () => `If Study of Forever corruption is 4 or higher, Time dimensions gain a power effect based on current Time Theorems. Capped at ${formatPow(7.5)}.`,
     effect: () => (player.mending.corruptionChallenge.corruptedMend && (player.mending.corruption[9] >= 4) ? Math.min(1 + (Decimal.log10(Currency.timeTheorems.value)) / 666, 7.5) : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },

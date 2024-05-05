@@ -99,7 +99,6 @@ export function gainedInfinityPoints(noSoftcap = false) {
     TimeStudy(111)
   );
   if (Pelle.isDisabled("IPMults")) {
-    const x = MendingMilestone.one.isReached ? 1e20 : 1;
     let x = (MendingMilestone.one.isReached && !Kohler.isRunning) ? 1e20 : 1;
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)

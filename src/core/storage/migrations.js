@@ -718,16 +718,17 @@ export const migrations = {
       3: 0,
       4: 0,
       5: 0,
-    },
-    51.021: player => {
+    }
+  },
+  51.021: player => {
     // Player.auto.singCap.multiplier = 0; exm why this still exist--sxy
-    },
-    51.022: player => {
-      player.isHoldingLClick = false;
-      player.celestials.laitela.holdStart = 0;
-      player.celestials.laitela.heldTier = 0;
-      player.celestials.laitela.heldType = "";
-    },
+  },
+  51.022: player => {
+    player.isHoldingLClick = false;
+    player.celestials.laitela.holdStart = 0;
+    player.celestials.laitela.heldTier = 0;
+    player.celestials.laitela.heldType = "";
+  },
     51.023: player => {
       player.celestials.ra.rebuyables = {
         weakenTeresaScaling: 0,
@@ -843,7 +844,6 @@ export const migrations = {
         boostCostBumps: 0
       }));
     },
-  },
   50.034: player =>{
     player.dimensions.matter = Array.range(0, 4).map(() => ({
       bought: 0,
@@ -869,8 +869,7 @@ export const migrations = {
   },
   53: player => {
     player.devSave = false;
-  }
-},
+  },
 
   normalizeTimespans(player) {
     player.realTimePlayed *= 100;
