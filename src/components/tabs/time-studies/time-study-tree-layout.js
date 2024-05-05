@@ -1,3 +1,9 @@
+// Dont ask why but these dont work if we move them down below so they stay here
+
+/* eslint-disable indent */
+/* eslint-disable max-len */
+/* eslint-disable complexity */
+
 import { TimeStudyConnectionSetup } from "./TimeStudyConnection";
 import { TimeStudySetup } from "./TimeStudyButton";
 
@@ -54,8 +60,9 @@ export class TimeStudyTreeLayout {
     /**
      * @type {TimeStudyRow[]}
      */
+
     /* eslint-disable no-multi-spaces, space-in-parens, func-call-spacing */
-    
+
     this.rows = [
       normalRow(                       null,   TS(11),   null                         ),
       normalRow(                           TS(21), TS(22)                             )
@@ -95,7 +102,7 @@ export class TimeStudyTreeLayout {
     }
 
     this.rows.push(
-      
+
       normalRow(                      TS(71),  TS(72),  TS(73)                        ),
       normalRow(                      TS(81),  TS(82),  TS(83)                        ),
       normalRow(                      TS(91),  TS(92),  TS(93)                        ),
@@ -119,7 +126,7 @@ export class TimeStudyTreeLayout {
     }
 
     this.rows.push(
-      
+
       normalRow(                      TS(121), TS(122), TS(123)                       ),
       normalRow(               EC(6), TS(131), TS(132), TS(133), EC(8)                ),
       normalRow(                      TS(141), TS(142), TS(143)                       )
@@ -133,7 +140,7 @@ export class TimeStudyTreeLayout {
     } else {
       this.rows.push(
       normalRow(               null,   EC(9), TS(151),   null,   EC(4)                )
-      )
+      );
     }
 
     this.rows.push(
@@ -166,7 +173,7 @@ export class TimeStudyTreeLayout {
     } else {
       this.rows.push(
         normalRow(                               TS(201)                                ),
-      )
+      );
     }
 
     this.rows.push(
@@ -188,10 +195,10 @@ export class TimeStudyTreeLayout {
       normalRow(          TimeStudy.timeDimension(7), TimeStudy.timeDimension(8)      ),
       normalRow(                          TimeStudy.reality                           )
     );
-    if(Ra.unlocks.unlockMyriads.isUnlocked&&!Pelle.isDoomed){
+    if (Ra.unlocks.unlockMyriads.isUnlocked && !Pelle.isDoomed) {
       this.rows.push(
-        normalRow(TS(401), TS(402), TS(403)),
-        normalRow(TS(411), TS(412), TS(413))
+        normalRow(          TS(401),          TS(402),              TS(403)           ),
+        normalRow(          TS(411),          TS(412),              TS(413)           )
     );
     }
     /* eslint-enable no-multi-spaces, space-in-parens, func-call-spacing */

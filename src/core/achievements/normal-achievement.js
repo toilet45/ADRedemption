@@ -32,14 +32,6 @@ class AchievementState extends GameMechanicState {
     return this.row < 18;
   }
 
-  get isPreMend() {
-    return this.row < 19;
-  }
-
-  get isPreMend() {
-    return this.row < 20;
-  }
-
   get isUnlocked() {
     return (player.achievementBits[this.row - 1] & this._bitmask) !== 0;
   }
@@ -93,7 +85,7 @@ class AchievementState extends GameMechanicState {
 
   // Additional Code Starts Here
 
-  get isPreMend(){
+  get isPreMend() {
     return this.row < 19;
   }
 }
@@ -191,17 +183,23 @@ export const Achievements = {
   },
 
   _power: new Lazy(() => {
-    let vFixMult = VUnlocks.vAchMulti.effectOrDefault(1);
-    let vRaUpg = RaUpgrade.vUpgrade.canBeApplied ? WarpUpgrade(2).effectOrDefault(1) : 1;
+    const vFixMult = VUnlocks.vAchMulti.effectOrDefault(1);
+    const vRaUpg = RaUpgrade.vUpgrade.canBeApplied ? WarpUpgrade(2).effectOrDefault(1) : 1;
     const unlockedRows = Achievements.allRows
       .countWhere(row => row.every(ach => ach.isUnlocked));
-    const basePower = (Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount) * vFixMult * vRaUpg) ** (Ra.unlocks.achMultBaseImprovementV.isUnlocked ? 2 : 1);
-    let x = BreakInfinityUpgrade.achievementMult.chargedEffect.isEffectActive ? BreakInfinityUpgrade.achievementMult.chargedEffect.effectValue : 1;
-    let y = Ra.unlocks.repIncreasesAchMult.isUnlocked ? Math.max(1, ((1 + Math.log10(Decimal.log10(Currency.replicanti.value))) / 25)) : 1;
-    let z = CorruptionUpgrade(3).isUnlocked ? Math.max(1, CorruptionUpgrade(3).effectValue) : 1;
-    let exponent = (getAdjustedGlyphEffect("effarigachievement").toDecimal()).times(Ra.unlocks.achievementPower.effectOrDefault(1)).times(x).times(Math.max(y, 1)).times(z);
-    let primeAnswer = Decimal.pow(basePower, exponent);
-    
+    // eslint-disable-next-line max-len
+    const basePower = (Math.pow(1.25, unlockedRows) * Math.pow(1.03, Achievements.effectiveCount) * vFixMult * vRaUpg) **
+    (Ra.unlocks.achMultBaseImprovementV.isUnlocked ? 2 : 1);
+    const x = BreakInfinityUpgrade.achievementMult.chargedEffect.isEffectActive
+      ? BreakInfinityUpgrade.achievementMult.chargedEffect.effectValue : 1;
+    const y = Ra.unlocks.repIncreasesAchMult.isUnlocked ? Math.max(1, ((1 + Math.log10(Decimal
+      .log10(Currency.replicanti.value))) / 25)) : 1;
+    const z = CorruptionUpgrade(3).isUnlocked ? Math.max(1, CorruptionUpgrade(3).effectValue) : 1;
+    const exponent = (getAdjustedGlyphEffect("effarigachievement").toDecimal())
+      .times(Ra.unlocks.achievementPower.effectOrDefault(1))
+      .times(x).times(Math.max(y, 1)).pow(z).toNumber();
+    const primeAnswer = Decimal.pow(basePower, exponent);
+
     return primeAnswer;
   }),
 

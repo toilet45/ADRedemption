@@ -121,7 +121,7 @@ export const glyphEffects = {
       return a;
     },
     formatEffect: x => format(x, 2, 1),
-    combine: effects =>{
+    combine: effects => {
       const a = effects.reduce(Decimal.prodReducer, DC.D1);
       return a.gte(DC.E500) ? a.div(DC.E500).pow(0.5).times(DC.E500) : a;
     },
@@ -139,7 +139,7 @@ export const glyphEffects = {
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => {
       const a = 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 - GlyphAlteration.sacrificeBoost("dilation") / 50;
-      return Math.max(a,0.001);
+      return Math.max(a, 0.001);
     },
     formatEffect: x => format(x, 3, 3),
     alteredColor: () => GlyphAlteration.getBoostColor("dilation"),
@@ -207,7 +207,7 @@ export const glyphEffects = {
     shortDesc: "Replication speed ×{value}",
     effect: (level, strength) => ((GlyphAlteration.isEmpowered("replication") ? DC.D1_007.pow(level).times(10) : Decimal.times(level, strength).times(3))),
     formatEffect: x => format(x, 2, 1),
-    combine: effects =>{
+    combine: effects => {
       const a = effects.reduce(Decimal.prodReducer, DC.D1);
       return a.gte(new Decimal("1e500")) ? a.div("1e500").pow(0.45).times("1e500") : a;
     },
@@ -307,7 +307,8 @@ export const glyphEffects = {
     formatSingleEffect: x => format(x - 1, 3, 3),
     combine: effects => {
       const a = effects.reduce(Number.sumReducer, 1 - effects.length);
-      return a > 1.75 ? (a - 1.75) / 3 + 1.75 : a;
+      // eslint-disable-next-line no-nested-ternary
+      return a > 1.75 ? (a > 4 ? (a - 4) / 12 + 2.5 : (a - 1.75) / 3 + 1.75) : a;
     },
     alteredColor: () => GlyphAlteration.getBoostColor("infinity"),
     alterationType: ALTERATION_TYPE.BOOST,
@@ -330,7 +331,7 @@ export const glyphEffects = {
       return a;
     },
     formatEffect: x => format(x, 2, 2),
-    combine: effects =>{
+    combine: effects => {
       const x = effects.reduce(Number.sumReducer, 0);
       return x > 0.5 ? (x - 0.5) / 20 + 0.5 : x;
     },
@@ -403,9 +404,10 @@ export const glyphEffects = {
     effect: (level, strength) => 1.015 + Math.pow(level, 0.2) * Math.pow(strength, 0.4) / 75,
     formatEffect: x => format(x, 3, 3),
     formatSingleEffect: x => format(x - 1, 3, 3),
-    combine: effects =>{
+    combine: effects => {
       const a = effects.reduce(Number.sumReducer, 1 - effects.length);
-      return a > 1.4 ? (a - 1.4) / 6 + 1.4 : a;
+      // eslint-disable-next-line no-nested-ternary
+      return a > 1.4 ? ((a - 1.4) / 6 > 3.6 ? (a - 5) / 20 + 2 : (a - 1.4) / 6 + 1.4) : a;
     },
     conversion: x => 2 / (x + 1),
     formatSecondaryEffect: x => format(x, 3, 3),
@@ -491,9 +493,9 @@ export const glyphEffects = {
       return a;
     },
     formatEffect: x => formatInt(x),
-    combine: effects =>{
+    combine: effects => {
       const x = effects.reduce(Number.sumReducer, 0);
-      return x > 5000 ? (x-5000)/5 + 5000: x;
+      return x > 5000 ? (x - 5000) / 5 + 5000 : x;
     },
   },
   effarigblackhole: {
@@ -552,7 +554,7 @@ export const glyphEffects = {
       return a;
     },
     formatEffect: x => format(x, 2, 2),
-    combine: effects =>{
+    combine: effects => {
       const x = effects.reduce(Number.sumReducer, 0);
       return x > 100 ? (x - 100) / 5 + 100 : x;
     },
@@ -684,11 +686,11 @@ export const glyphEffects = {
     effect: level => {
       const a = 1 + Math.pow(level / 100000, 0.5);
       return a;
-  },
+    },
     formatEffect: x => formatPercents(x - 1, 2),
     combine: effects => {
       const x = effects.reduce(Number.prodReducer, 1);
-      return x >= 1.6 ? (x-1.6)/4 +1.6 : x;
+      return x >= 1.6 ? (x - 1.6) / 4 + 1.6 : x;
     },
   },
   realityrow1pow: {
@@ -701,8 +703,8 @@ export const glyphEffects = {
     shortDesc: "Amplifier Multiplier ^{value}",
     effect: level => {
       const a = 1 + level / 125000;
-      if (a > 1.2){
-        return a ** 0.2;
+      if (a > 1.2) {
+        return (a - 1.2) ** 0.2 + 1.2;
       }
       return a;
     },
@@ -720,10 +722,14 @@ export const glyphEffects = {
       ➜ ^(${format(1.3, 1, 1)} + {value})`,
     genericDesc: "Dilated Time factor for Glyph level",
     shortDesc: "DT pow. for level +{value}",
-    // You can only get this effect on level 25000 reality glyphs anyway, might as well make it look nice
-    effect: () => 0.1,
+    // Basically 0.1 on 25000, 0.8 on 100,000.
+    effect: () => (Math.pow(level / 25000, 2) / Math.sqrt(level / 25)) * 10,
     formatEffect: x => format(x, 2, 2),
-    combine: GlyphCombiner.add,
+    // 2 level 100k reality glyphs will give exactly +0.2 with this formula.
+    combine: effects => {
+      const x = effects.reduce(GlyphCombiner.add);
+      return x > 0.1 ? (x - 0.1) / 15 + 0.1 : x;
+    },
   },
   companiondescription: {
     id: "companiondescription",
@@ -737,7 +743,7 @@ export const glyphEffects = {
     effect: () => {
       if (Enslaved.isRunning) return 0;
       const cursedCount = Glyphs.active.countWhere(g => g?.type === "cursed");
-      if (cursedCount > 0) return Math.pow(0.2 + 0.2 * Math.random(), cursedCount);
+      if (cursedCount > 0) return Math.pow(0.2 + 0.75 * Math.random(), cursedCount);
       return 0.4 + 0.6 * Math.random();
     },
     formatEffect: x => formatPercents(x, 2, 2),
