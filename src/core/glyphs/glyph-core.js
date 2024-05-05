@@ -432,6 +432,9 @@ export const Glyphs = {
     }
     if(player.mending.corruptionChallenge.corruptedMend&&!Pelle.isDoomed){
       for(let i=0;i<corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];i++){
+        let generateLevel = CorruptionUpgrade(12).isBought ? 666 : 6666;
+        Glyphs.addToInventory(GlyphGenerator.randomGlyph(
+          { actualLevel: generateLevel, rawLevel: generateLevel }, undefined, "cursed"));
         const corruptionGlyph = Glyphs.findById(i+3)//it is very strage that they give cursed begin from 3 but whatever.--sxy
         Glyphs.equip(corruptionGlyph,i);
       }

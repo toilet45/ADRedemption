@@ -6,7 +6,7 @@ import { playerInfinityUpgradesOnReset } from "../../../game";
 
 import { WarpUpgrade } from "../../../core/warp-upgrades";
 
-import { CorruptionData, mendingReset } from "../../../core/globals";
+import { CorruptionData, Glyphs, mendingReset } from "../../../core/globals";
 
 import PrimaryButton from "../../PrimaryButton.vue";
 
@@ -176,6 +176,17 @@ export default {
         }
       } else {
         player.mending.corruptionChallenge.corruptedMend = false;
+        const x = player.reality.glyphs.protectedRows;
+        player.reality.glyphs.protectedRows = 0;
+        for (let g = 0; g < 120; g++) {
+          const glyph = Glyphs.inventory[g];
+          if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
+        }
+        Glyphs.unequipAll(true);
+        for (let h = 0; h < 120; h++) {
+          const glyph = Glyphs.inventory[h];
+          if (glyph != null && glyph.type != "companion") GlyphSacrificeHandler.deleteGlyph(glyph, true);
+        }
         CorruptionData.isCorrupted = false;
         this.isRunning = false;
         this.nextCorrupted = false;

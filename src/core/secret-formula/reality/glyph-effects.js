@@ -727,7 +727,7 @@ export const glyphEffects = {
     formatEffect: x => format(x, 2, 2),
     // 2 level 100k reality glyphs will give exactly +0.2 with this formula.
     combine: effects => {
-      const x = effects.reduce(GlyphCombiner.add);
+      const x = effects.reduce(Number.sumReducer, 1);
       return x > 0.1 ? (x - 0.1) / 15 + 0.1 : x;
     },
   },

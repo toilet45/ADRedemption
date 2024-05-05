@@ -563,18 +563,6 @@ export function mendingReset(gain = true, toggleKohler = false) {
   }
   CorruptionData.update();
 
-
-  if (player.mending.corruptionChallenge.corruptedMend &&
-    corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]] > 0) {
-    let generateLevel = 6666;
-    if (CorruptionUpgrade(12).isBought) generateLevel = 666;
-    for (let i = 0; i < corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]; i++) {
-      Glyphs.addToInventory(GlyphGenerator.randomGlyph(
-        { actualLevel: generateLevel, rawLevel: generateLevel }, undefined, "cursed"));
-      const glyph = Glyphs.findById(i + 3);// It is very strage that they give cursed begin from 3 but whatever.--sxy
-      Glyphs.equip(glyph, i);
-    }
-  }
   if (MendingUpgrade(2).isBought) {
     let MedingInitLevel = 70;
     let MedingInitRarity = 70;
