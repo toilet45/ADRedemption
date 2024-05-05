@@ -36,13 +36,13 @@ export function mendingReset(gain = true, toggleKohler = false) {
   const HU20wasBought = CorruptionUpgrade(20).isBought;
   // Same from 13, for later
   const HU13wasBought = CorruptionUpgrade(13).isBought;
-  if (player.mending.cuRespec) {
-    let cuPreRespec = 0;
-    for (let i = 1; i <= 25; i++) {
-      if (CorruptionUpgrade(i).isBought) {
-        cuPreRespec += CorruptionUpgrade(i).cost;
-      }
+  let cuPreRespec = 0;
+  for (let i = 1; i <= 25; i++) {
+    if (CorruptionUpgrade(i).isBought) {
+      cuPreRespec += CorruptionUpgrade(i).cost;
     }
+  }
+  if (player.mending.cuRespec) {
     player.mending.corruptedFragments += cuPreRespec;
     player.mending.corruptionUpgradeBits = 0;
   }
@@ -55,8 +55,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
     player.mending.corruptionChallenge.corruptedMend = false;
     // Calculate fragments, and take either this value or cuPreRespec (if respecing)
     const fragsFromScore = Math.log2(player.mending.corruptionChallenge.recordScore);
-    player.mending.corruptedFragments = player.mending.cuRespec ? Math.max(fragsFromScore,
-      player.mending.corruptedFragments) : fragsFromScore;
+    player.mending.corruptedFragments += fragsFromScore - (cuPreRespec + player.mending.corruptedFragments);
     if (recScore) {
       player.mending.corruptionChallenge.records = player.mending.corruption;
     }
