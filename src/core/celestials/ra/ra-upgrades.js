@@ -38,7 +38,7 @@ class RebuyableRaUpgradeState extends RebuyableMechanicState {
   }
 
   get boughtAmount() {
-    return player.celestials.ra.rebuyables[this.id];
+    return player.celestials.ra.rebuyables[this.id] ?? player.celestials.ra.rebuyables[this.num];
   }
 
   set boughtAmount(value) {

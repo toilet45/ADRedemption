@@ -5,13 +5,12 @@ import DilationTimeStudy from "./DilationTimeStudy";
 import ECTimeStudy from "./ECTimeStudy";
 import EnslavedTimeStudy from "./EnslavedTimeStudy";
 import HiddenTimeStudyConnection from "./HiddenTimeStudyConnection";
+import MyriadTimeStudy from "./MyriadTimeStudy";
 import NormalTimeStudy from "./NormalTimeStudy";
 import PrimaryButton from "@/components/PrimaryButton";
 import SecretTimeStudy from "./SecretTimeStudy";
 import TimeStudyConnection from "./TimeStudyConnection";
 import TriadTimeStudy from "./TriadTimeStudy";
-import MyriadTimeStudy from "./MyriadTimeStudy";
-import KohlerTimeStudy from "./KohlerTimeStudy";
 
 export default {
   name: "TimeStudiesTab",
@@ -26,7 +25,6 @@ export default {
     TimeStudyConnection,
     HiddenTimeStudyConnection,
     MyriadTimeStudy,
-    //KohlerTimeStudy
   },
   data() {
     return {
@@ -124,7 +122,6 @@ export default {
         case TIME_STUDY_TYPE.DILATION: return DilationTimeStudy;
         case TIME_STUDY_TYPE.TRIAD: return TriadTimeStudy;
         case TIME_STUDY_TYPE.MYRIAD: return MyriadTimeStudy;
-        case TIME_STUDY_TYPE.KOHLER_EXCLUSIVE: return KohlerTimeStudy;
       }
       throw "Unknown Time Study type";
     },

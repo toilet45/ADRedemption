@@ -1,5 +1,4 @@
-import { DC } from "../../constants";
-
+/* eslint-disable max-len */
 
 export const corruptionUpgrades = [
   {
@@ -39,8 +38,9 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Gain a power effect to achievement power effects, after softcaps, based on unspent Hostile Fragments. ",
-    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments) / 3) / 10, // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
+    description: "Gain a power effect to achievement power effects after softcaps, based on unspent Hostile Fragments.",
+    // We do math.log not math.log10 here since we do want the natural log of CF, not the base 10 log
+    effect: () => 1 + Math.log(1 + (player.mending.corruptedFragments)) / 10,
     formatEffect: value => `^${format(value, 2, 2)}`
   },
   {
@@ -92,8 +92,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Effarig level 90 is stronger based on unspent Corrupted Fragments",
-    effect: () => Math.log(1 + (player.mending.corruptedFragments))
+    description: "Effarig level 90 is stronger based on unspent Hostile Fragments",
+    effect: () => Math.log10(1 + (player.mending.corruptedFragments))
   },
   {
     name: "Tesseract Movement",
@@ -146,8 +146,8 @@ export const corruptionUpgrades = [
     checkEvent: GAME_EVENT.MENDING_RESET_BEFORE,
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
-    description: "Black Hole 1 & 2's multiplier base is increased.",
-    effect: () => 1.5 + Math.log10(player.mending.corruptionChallenge.recordScore + 1) / 3,
+    description: "Black Hole 1 & 2's multiplier base is increased, based on record score",
+    effect: () => 1.5 + Math.log10(player.mending.corruptionChallenge.recordScore + 1) / 6,
     formatEffect: value => formatX(value, 1, 1)
   },
   {
@@ -228,7 +228,7 @@ export const corruptionUpgrades = [
     canLock: false,
     lockEvent: "Illegal lock called - Please report this with your save and what you did.",
     description: () => `If Dimensional Limitations' Hostility level is 5 or higher, Antimatter dimensions gain a power effect based on highest Glyph Level this Mend.`,
-    effect: () => ((player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length != 0) ? 1 + Math.log(player.records.bestReality.glyphLevel) / 10 : 1),
+    effect: () => ((player.mending.corruptionChallenge.corruptedMend && player.mending.corruption[1] >= 5 && player.records.bestReality.glyphLevelSet.length !== 0) ? 1 + Math.log(player.records.bestReality.glyphLevel) / 10 : 1),
     formatEffect: value => formatPow(value, 2, 2)
   },
   {
