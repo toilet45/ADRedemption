@@ -54,7 +54,7 @@ export function mendingReset(gain = true, toggleKohler = false) {
     player.mending.corruptionChallenge.recordScore = Math.max(player.mending.corruptionChallenge.recordScore, score);
     player.mending.corruptionChallenge.corruptedMend = false;
     // Calculate fragments, and take either this value or cuPreRespec (if respecing)
-    const fragsFromScore = Math.log2(player.mending.corruptionChallenge.recordScore);
+    const fragsFromScore = Math.ceil(Math.log2(player.mending.corruptionChallenge.recordScore));
     player.mending.corruptedFragments += fragsFromScore - (cuPreRespec + player.mending.corruptedFragments);
     if (recScore) {
       player.mending.corruptionChallenge.records = player.mending.corruption;
