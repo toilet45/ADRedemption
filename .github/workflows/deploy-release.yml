@@ -28,7 +28,7 @@ jobs:
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GH_PUBLISH_TOKEN }}
-          repository-name: IvarK/AntimatterDimensions
+          repository-name: glitchyfishys/ADRedemption
           branch: master
           folder: dist
           single-commit: true
