@@ -468,8 +468,7 @@ export const Glyphs = {
     this.unequipped = [];
     const targetRegion = forceToUnprotected ? false : player.options.respecIntoProtected;
     let repeat = 0
-    let total = 5
-    if (MendingMilestone.five.isReached) total = 8
+    let total = MendingMilestone.five.isReached ? 8 : 5
     while (repeat < total) {
       const freeIndex = this.findFreeIndex(targetRegion);
       if (freeIndex < 0) break;
@@ -956,6 +955,9 @@ export const Glyphs = {
     }
   },
   swapIntoActive(glyph, targetSlot) {
+    // for if you have more active
+    const maxforced = 1
+    if(Glyphs.active[targetslot].type == "cursed" && Glyphs.active.filter(x => x.type == "cursed").length <= maxforced && CorruptionData.corruptions[4] >= 4) return
     this.removeFromInventory(glyph);
     this.unequip(targetSlot, glyph.idx);
     finishProcessReality({
