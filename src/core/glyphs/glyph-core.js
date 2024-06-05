@@ -430,13 +430,18 @@ export const Glyphs = {
       this.active[glyph.idx] = null;
       this.addToInventory(glyph, freeIndex, true);
     }
-    if(player.mending.corruptionChallenge.corruptedMend&&!Pelle.isDoomed){
+    if(player.mending.corruptionChallenge.corruptedMend && !Pelle.isDoomed){
       for(let i=0;i<corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];i++){
-        let generateLevel = CorruptionUpgrade(12).isBought ? 666 : 6666;
-        Glyphs.addToInventory(GlyphGenerator.randomGlyph(
-          { actualLevel: generateLevel, rawLevel: generateLevel }, undefined, "cursed"));
-        const corruptionGlyph = Glyphs.findById(i+3)//it is very strage that they give cursed begin from 3 but whatever.--sxy
-        Glyphs.equip(corruptionGlyph,i);
+        
+        const cga = 1;
+        for(let i=0;i<cga;i++) {
+          if((Glyphs.inventory.filter(x => x == null ? false :(x.type == "cursed")).length + Glyphs.active.filter(x => x == null ? false :(x.type == "cursed")).length) < cga) Glyphs.addToInventory(GlyphGenerator.cursedGlyph());
+        };
+        for(let i=0;i<cga;i++) {
+          Glyphs.equip(player.reality.glyphs.inventory.filter(x=> x.type == "cursed")[0],i);
+        };
+        // this should work -glitch 
+        
       }
     }
     this.updateRealityGlyphEffects();
