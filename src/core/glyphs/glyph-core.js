@@ -334,17 +334,15 @@ export const Glyphs = {
       throw new Error("Inconsistent inventory indexing");
     }
     let canEquipSpecial = false;
-    let maxSpecial = 1;
-    if (MendingMilestone.five.isReached){
-      maxSpecial = 2;
-    }
+    let maxSpecial = MendingMilestone.five.isReached ? 2 : 1;
+
     if (["effarig", "reality"].includes(glyph.type)) {
       canEquipSpecial = this.active.countWhere(x => x && x.type === glyph.type) < maxSpecial;
     }
     let equippedInDoom = this.active.countWhere(x => x && x.type === glyph.type) > 0;
     if (this.active[targetSlot] === null) { //if slot is empty
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { //have we hit the max number of special glyphs?
-        Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
+        Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped! (${maxSpecial})`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
       }
@@ -372,7 +370,7 @@ export const Glyphs = {
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
      if (!Pelle.isDoomed) {
-      if (player.mending.corruptionChallenge.corruptedMend&&["cursed"].includes(this.active[targetSlot].type)&&this.active[targetSlot].id>=3&&this.active[targetSlot].id<=2+corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
+      if (player.mending.corruptionChallenge.corruptedMend && ["cursed"].includes(this.active[targetSlot].type) && this.active[targetSlot].id>=3 && this.active[targetSlot].id<=2+corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
         Modal.message.show(`The forced Cursed Glyphs cannot be touched!`,
           { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
         return;
@@ -430,14 +428,17 @@ export const Glyphs = {
       this.active[glyph.idx] = null;
       this.addToInventory(glyph, freeIndex, true);
     }
-    if(player.mending.corruptionChallenge.corruptedMend&&!Pelle.isDoomed){
-      for(let i=0;i<corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];i++){
-        let generateLevel = CorruptionUpgrade(12).isBought ? 666 : 6666;
-        Glyphs.addToInventory(GlyphGenerator.randomGlyph(
-          { actualLevel: generateLevel, rawLevel: generateLevel }, undefined, "cursed"));
-        const corruptionGlyph = Glyphs.findById(i+3)//it is very strage that they give cursed begin from 3 but whatever.--sxy
-        Glyphs.equip(corruptionGlyph,i);
-      }
+    if(player.mending.corruptionChallenge.corruptedMend && !Pelle.isDoomed){
+
+      const cga = corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];
+      for(let i=0;i<cga;i++) {
+        if((Glyphs.inventory.filter(x => x == null ? false : (x.type == "cursed")).length + Glyphs.active.filter(x => x == null ? false :(x.type == "cursed")).length) < cga) Glyphs.addToInventory(GlyphGenerator.cursedGlyph());
+      };
+      for(let i=0;i<cga;i++) {
+        Glyphs.equip(Glyphs.inventory.filter(x => x == null ? false : (x.type == "cursed"))[0],i);
+      };
+      // this should work -glitch 
+        
     }
     this.updateRealityGlyphEffects();
     this.updateMaxGlyphCount(true);
@@ -447,17 +448,18 @@ export const Glyphs = {
     // for realities shorter than a few seconds in order to stop a UI-based softlock; however at this point the time
     // has already been reset, so we just use the most recent real time record (this leads to some inconsistent behavior
     // when restarting, but that's not easily avoidable)
+    const cursed = corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];
+
     let stillEquipped = player.reality.glyphs.active.length;
-    if(player.mending.corruptionChallenge.corruptedMend) stillEquipped-=corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]
     const fastReality = new Decimal(player.records.recentRealities[0][1]).lt(3000);
-    if (stillEquipped && !fastReality) {
+    if (stillEquipped && !fastReality && cursed != Glyphs.active.filter(x => x == null ? false : (x.type == "cursed")).length) {
       const target = player.options.respecIntoProtected ? "Protected slots" : "Main Inventory";
       const hasOther = this.findFreeIndex(!player.options.respecIntoProtected) !== -1;
       setTimeout(() => Modal.message.show(`${quantifyInt("Glyph", stillEquipped)} could not be unequipped due to lack
         of space. Free up some space in your ${target}${hasOther ? " or switch where you are unequipping to" : ""}
         in order to unequip ${stillEquipped === 1 ? "it" : "them"}.`, { closeEvent: GAME_EVENT.GLYPHS_CHANGED }),
       50);
-    }
+    } else if (cursed.length != 0) Modal.message.show(`${quantifyInt("Glyph", stillEquipped)} can not be remove due to being force equiped`, { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
 
     EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
     EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
@@ -468,8 +470,7 @@ export const Glyphs = {
     this.unequipped = [];
     const targetRegion = forceToUnprotected ? false : player.options.respecIntoProtected;
     let repeat = 0
-    let total = 5
-    if (MendingMilestone.five.isReached) total = 8
+    let total = MendingMilestone.five.isReached ? 8 : 5
     while (repeat < total) {
       const freeIndex = this.findFreeIndex(targetRegion);
       if (freeIndex < 0) break;
@@ -956,6 +957,12 @@ export const Glyphs = {
     }
   },
   swapIntoActive(glyph, targetSlot) {
+    // for if you have more active
+    const maxforced = corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]];
+    if(Glyphs.active[targetSlot].type == "cursed" && Glyphs.active.filter(x => x == null ? false : (x.type == "cursed")).length <= maxforced && CorruptionData.corruptions[4] >= 4) {
+      Modal.message.show("can not be swaped due to being a forced cursed glyph", { closeEvent: GAME_EVENT.GLYPHS_CHANGED })
+      return
+    }
     this.removeFromInventory(glyph);
     this.unequip(targetSlot, glyph.idx);
     finishProcessReality({

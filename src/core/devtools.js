@@ -12,6 +12,21 @@ dev.hardReset = function() {
   GameStorage.hardReset();
 };
 
+dev.unlockmend = function(){
+  player.mends = new Decimal(20);
+  player.mending.upgradeBits = 2029500;
+  player.mendingPoints = new Decimal(1e15);
+}
+
+dev.fullwarp = function(){
+  player.mends = new Decimal(20);
+  player.mending.upgradeBits = 2029500;
+  player.mendingPoints = new Decimal(1e35);
+  player.reality.warped = true;
+  player.mending.warpUpgReqs=(2**13)-1;
+  player.mending.warpUpgradeBits=(2**13)-1;
+}
+
 dev.giveAllAchievements = function() {
   const allAchievements = Achievements.all.concat(SecretAchievements.all);
   for (const achievement of allAchievements) achievement.unlock();
