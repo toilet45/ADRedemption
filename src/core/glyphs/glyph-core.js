@@ -437,6 +437,7 @@ export const Glyphs = {
       for(let i=0;i<cga;i++) {
         Glyphs.equip(Glyphs.inventory.filter(x => x == null ? false : (x.type == "cursed"))[0],i);
       };
+      this.clearUndo();
       // this should work -glitch 
         
     }
