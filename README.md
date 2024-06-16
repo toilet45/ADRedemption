@@ -1,5 +1,4 @@
-# Antimatter Dimensions (Redemption)
-
+# Antimatter Dimensions
 ## Run
 
 To run the game locally, you will need to install
@@ -23,6 +22,3 @@ be displayed in your terminal. The server **doesn't** need to be restarted
 after you've made changes - just reload the page. The server **can**
 occasionally crash, so check your terminal from time to time and run `serve`
 again if needed.
-
-
-also i don't know how to make the page
