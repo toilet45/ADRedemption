@@ -53,25 +53,8 @@ export const Glyphs = {
   factorsOpen: false,
   bestUndoGlyphCount: 0,
   get maxSlots() {
-    if (Pelle.isDoomed){
-      let p = PelleRifts.vacuum.milestones[0].canBeApplied ? 1 : 0;
-      if(CorruptionUpgrade(6).isBought) p+=1;
-      return p;
-    }
-    else{
-      let i = 3;
-      if (RealityUpgrade(9).isBought){
-        i++
-      }
-      if (RealityUpgrade(24).isBought){
-        i++
-      }
-      if (MendingMilestone.five.isReached){
-        i += 3;
-      }
-      return i
-    }
-    //return MendingMilestone.five.isReached ? 8 : 5
+    return this.activeSlotCount;
+    // can't you just do this?
   }, //will be a function later for further upgrades
   get inventoryList() {
     return player.reality.glyphs.inventory;
@@ -109,6 +92,7 @@ export const Glyphs = {
       if(CorruptionUpgrade(6).isBought) p+=1;
       return p;
     }
+      // it would be funny to have 12 glyphs for a challenge
     return MendingMilestone.five.isReached ? 6 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24)) : 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24))
   },
   get protectedSlots() {
@@ -370,11 +354,6 @@ export const Glyphs = {
       */
      //Hexa saved me from a ton of spagetti code, so thanks to him
      if (!Pelle.isDoomed) {
-      if (player.mending.corruptionChallenge.corruptedMend && ["cursed"].includes(this.active[targetSlot].type) && this.active[targetSlot].id>=3 && this.active[targetSlot].id<=2+corruptionPenalties.compGlyphs.hiddenFour[player.mending.corruption[4]]) { //1.already force cursed number? 2.target is cursed? 3.the swapper is NOT cursed?
-        Modal.message.show(`The forced Cursed Glyphs cannot be touched!`,
-          { closeEvent: GAME_EVENT.GLYPHS_CHANGED });
-        return;
-      }//here for swap I think--sxy
       if (!canEquipSpecial && ["effarig", "reality"].includes(glyph.type)) { // Can we not equip a Special and is the glyph we are trying to equip a special?
         if (!(this.active[targetSlot].type == glyph.type)) { // Is the glyph we are trying to equip not replacing its own type?
            Modal.message.show(`You have the max amount of ${glyph.type.capitalize()} Glyphs equipped!`,
@@ -438,7 +417,7 @@ export const Glyphs = {
         Glyphs.equip(Glyphs.inventory.filter(x => x == null ? false : (x.type == "cursed"))[0],i);
       };
       this.clearUndo();
-      // this should work -glitch 
+      // this should work -glitch
         
     }
     this.updateRealityGlyphEffects();
@@ -607,13 +586,13 @@ export const Glyphs = {
   removeFromInventory(glyph) {
     // This can get called on a glyph not in inventory, during auto sacrifice.
     if (glyph.idx === null) return;
-    this.validate();
+    this.idate();
     const index = player.reality.glyphs.inventory.indexOf(glyph);
     if (index < 0) return;
     this.inventory[glyph.idx] = null;
     player.reality.glyphs.inventory.splice(index, 1);
     EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
-    this.validate();
+    this.idate();
   },
   validate() {
     for (const glyph of player.reality.glyphs.inventory) {
