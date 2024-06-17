@@ -586,13 +586,13 @@ export const Glyphs = {
   removeFromInventory(glyph) {
     // This can get called on a glyph not in inventory, during auto sacrifice.
     if (glyph.idx === null) return;
-    this.idate();
+    this.validate();
     const index = player.reality.glyphs.inventory.indexOf(glyph);
     if (index < 0) return;
     this.inventory[glyph.idx] = null;
     player.reality.glyphs.inventory.splice(index, 1);
     EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
-    this.idate();
+    this.validate();
   },
   validate() {
     for (const glyph of player.reality.glyphs.inventory) {
