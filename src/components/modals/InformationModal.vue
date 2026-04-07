@@ -41,7 +41,7 @@ export default {
       <InformationModalButton
         name="Antimatter Dimensions Redemption: Discord Server"
         icon="fa-brands fa-discord"
-        link="https://discord.gg/3RuXAz7rwe"
+        link="https://discord.gg/QyWMbUrekH"
       />
       <InformationModalButton
         name="Vanilla Antimatter Dimensions Discord Server"
